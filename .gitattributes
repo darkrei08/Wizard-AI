@@ -4,6 +4,7 @@
 * text=auto
 
 setup.sh text eol=lf
+cli.js text eol=lf
 bin/ai-* text eol=lf
 bin/book-to-skill text eol=lf
 *.sh text eol=lf
