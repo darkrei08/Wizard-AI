@@ -74,6 +74,7 @@ After installation, these commands are available in your terminal:
 
 | Command | Tool | Description |
 |---|---|---|
+| `ai-hub` | Local GUI | Open the dashboard and marketplace in your browser |
 | `ai-help` | Hub | Show all available tools with usage examples |
 | `ai-graph [path]` | Graphify | Build knowledge graphs from code/docs |
 | `ai-compress --file f.txt` | LLMLingua | Compress prompts/context up to 20x |
@@ -152,6 +153,62 @@ echo $WIZARD_AI_DIR
 # → /home/you/wizard-ai
 ```
 This allows skills and wrappers to reference the repo portably, regardless of where you cloned it.
+
+---
+
+## 💎 
+
+### 🎯 The Problem We're Solving
+
+Today's AI market is upside down: **end users and small companies pay outrageous fees to centralized providers** (OpenAI, Anthropic, Google) for generic, closed-source tools with **serious security flaws**:
+
+| ❌ Current Model (Centralized) | ✅ Wizard-AI Model (Local + Open) |
+|---|---|
+| Your source code is sent to remote servers | **Your data stays on your machine** |
+| Zero control over how data is used/stored | **Full control, zero third-party dependency** |
+| Expensive subscriptions for generic tools | **Specialized tools, free forever** |
+| Vendor lock-in: tied to a single provider | **Agnostic: works with any AI agent** |
+| Community skills only enrich the provider | **Creators participate in profits** |
+
+> **Our mission: flip this model. We want large corporations to pay us for our specialized, secure skills — not the other way around.**
+
+### 🏢 Enterprise Version / Corporate API (Roadmap)
+
+We are building a **Premium cloud-hosted** version designed exclusively for large enterprises:
+
+- 🔐 **Hardened deployment**: private instances, full audit trail, enterprise compliance
+- 🛡️ **Zero data leakage**: unlike centralized providers, corporate data never leaves the authorized perimeter
+- ⚡ **Curated & certified skills**: access to a hub of community-validated, tested, and maintained tools
+- 📊 **Governance dashboard**: centralized monitoring of all AI agents across the organization
+- 🔧 **Dedicated support & SLA**: priority assistance and uptime guarantees
+
+Enterprises will pay a subscription to access this ecosystem — **individual users and the open-source version will remain free forever**.
+
+### 🤑  — Revenue Share ()
+
+Here's the most revolutionary part: **profits won't stay with the project alone**. Thanks to our legal infrastructure (AGPLv3 + [CLA](CLA.md)), we've built a redistribution system:
+
+| How It Works | Details |
+|---|---|
+| 🛠️ **Build a skill or tool** | Develop something exceptional and submit a Pull Request |
+| ✅ **It gets accepted & integrated** | Your contribution enters the official ecosystem |
+| 📈 **It gets used by enterprises** | We track skill usage across Enterprise contracts |
+| 💰 **You get your share** | Revenue (enterprise contracts + donations) is redistributed to creators proportionally based on usage and value of their skill |
+
+> 🧠 **Why is this different from contributing to any other open-source project?**
+>
+> In nearly every open-source ecosystem, your free labor enriches corporations that will never give you anything back. Here it's different: **every line of code you contribute today builds your right to a revenue share tomorrow**. You retain the copyright of your work, and when corporations pay for our ecosystem, you'll receive your portion.
+
+### 📣 Call to Developers
+
+Are you a developer with a brilliant idea for an AI tool? **Now is the right time to join us:**
+
+1. 🍴 Fork this repository
+2. 🔧 Create your skill following the [guide](CONTRIBUTING.md)
+3. 📬 Open a Pull Request
+4. 🎉 Join the  and get ready to reap the rewards
+
+**Don't give away your talent to closed ecosystems. Build here, where your work matters — and where you'll be rewarded.**
 
 ---
 
