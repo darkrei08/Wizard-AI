@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+# ai-help — Central hub for all AI tools and skills
+# Shows all available AI CLI tools with descriptions and usage hints
+
+set -euo pipefail
+
+BOLD='\033[1m'
+CYAN='\033[0;36m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+MAGENTA='\033[0;35m'
+RESET='\033[0m'
+
+check_cmd() {
+  command -v "$1" &>/dev/null && echo "✅" || echo "❌"
+}
+
+echo ""
+echo -e "${BOLD}${CYAN}╔══════════════════════════════════════════════════════════╗${RESET}"
+echo -e "${BOLD}${CYAN}║         🤖  AI Tools & Skills Hub — $(hostname)        ║${RESET}"
+echo -e "${BOLD}${CYAN}╚══════════════════════════════════════════════════════════╝${RESET}"
+echo ""
+
+echo -e "${BOLD}${YELLOW}📊 KNOWLEDGE GRAPH${RESET}"
+echo -e "  $(check_cmd graphify) ${BOLD}graphify${RESET}         Build knowledge graphs from any codebase/docs"
+echo -e "     ${BLUE}ai-graph .${RESET}                  → Run Graphify on current directory"
+echo -e "     ${BLUE}graphify query \"how does X work?\"${RESET}"
+echo ""
+
+echo -e "${BOLD}${YELLOW}🗜️  TOKEN OPTIMIZATION${RESET}"
+echo -e "  $(check_cmd ai-compress) ${BOLD}ai-compress${RESET}      Compress prompts/context up to 20x (LLMLingua)"
+echo -e "     ${BLUE}ai-compress --file doc.txt --ratio 0.5${RESET}"
+echo -e "  $(check_cmd ai-rerank) ${BOLD}ai-rerank${RESET}        Re-rank passages by relevance (FlashRank RAG)"
+echo -e "     ${BLUE}ai-rerank --query \"X\" --passages docs.json${RESET}"
+echo -e "  $(check_cmd sqz) ${BOLD}sqz${RESET}              Compress CLI output / JSON / logs"
+echo -e "     ${BLUE}command | ai-squeeze${RESET}"
+echo -e "  $(check_cmd markitdown) ${BOLD}markitdown${RESET}       Convert any file to Markdown for LLM ingestion"
+echo -e "     ${BLUE}ai-convert document.pdf${RESET}"
+echo ""
+
+echo -e "${BOLD}${YELLOW}🌐 LLM GATEWAY${RESET}"
+echo -e "  $(check_cmd litellm) ${BOLD}litellm${RESET}          Unified API for 100+ LLM providers + cost tracking"
+echo -e "     ${BLUE}litellm --model gemini/gemini-2.0-flash --port 4000${RESET}"
+echo ""
+
+echo -e "${BOLD}${YELLOW}📈 USAGE & MONITORING${RESET}"
+echo -e "  $(check_cmd ai-usage) ${BOLD}ai-usage${RESET}          Track Gemini CLI token/context usage"
+echo -e "     ${BLUE}ai-usage${RESET}"
+echo ""
+
+echo -e "${BOLD}${YELLOW}🧠 MEMORY & CONTEXT${RESET}"
+if [ -d "$HOME/.ai-skills/claude-mem" ]; then
+  echo -e "  ✅ ${BOLD}claude-mem${RESET}       Persistent semantic memory across sessions"
+else
+  echo -e "  ❌ ${BOLD}claude-mem${RESET}       Persistent semantic memory (not installed)"
+fi
+echo -e "     ${BLUE}ai-mem store \"user prefers Python\"${RESET}"
+echo -e "     ${BLUE}ai-mem search \"tech preferences\"${RESET}"
+echo ""
+
+echo -e "${BOLD}${YELLOW}🔍 CODE INTELLIGENCE${RESET}"
+if command -v serena &>/dev/null; then
+  echo -e "  ✅ ${BOLD}serena${RESET}           Semantic code search & LSP navigation (MCP + CLI)"
+else
+  echo -e "  ❌ ${BOLD}serena${RESET}           Semantic code search (install: uv tool install serena)"
+fi
+echo -e "     ${BLUE}serena find-usages MyClass${RESET}"
+echo ""
+
+echo -e "${BOLD}${YELLOW}📚 KNOWLEDGE BUILDING${RESET}"
+echo -e "  $(check_cmd book-to-skill) ${BOLD}book-to-skill${RESET}    Convert books/PDFs into AI skills"
+echo -e "     ${BLUE}book-to-skill document.pdf${RESET}"
+echo ""
+
+echo -e "${BOLD}${YELLOW}⚙️  FRAMEWORK${RESET}"
+if [ -d "$HOME/.ai-skills/ECC" ]; then
+  ECC_SKILLS=$(ls ~/.ai-skills/ECC/skills/ 2>/dev/null | wc -l)
+  echo -e "  ✅ ${BOLD}ECC${RESET}              $ECC_SKILLS+ production-ready agent skills & hooks"
+else
+  echo -e "  ❌ ${BOLD}ECC${RESET}              Agent skills framework (not installed)"
+fi
+echo -e "     ${BLUE}ls ~/.ai-skills/ECC/skills/${RESET}"
+echo ""
+
+echo -e "${BOLD}${MAGENTA}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+echo -e "${BOLD}Skills directory:${RESET} ~/.gemini/config/skills/"
+echo -e "${BOLD}Tools directory:${RESET}  ~/.ai-skills/"
+echo -e "${BOLD}CLIs:${RESET}             ~/.local/bin/"
+echo -e ""
+echo -e "${CYAN}Tip: all tools work as pipes → cmd | ai-compress | ai-rerank${RESET}"
+echo ""

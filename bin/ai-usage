@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# ai-usage — Track Gemini/AI token usage across sessions
+# Source: https://github.com/rmedranollamas/geminiusage
+#
+# Wrapper around gemini-usage with a built-in help fallback.
+
+set -euo pipefail
+
+SKILL_DIR="$HOME/.ai-skills/geminiusage"
+GEMINI_USAGE_BIN="$HOME/.local/bin/gemini-usage"
+
+if [[ ! -d "$SKILL_DIR" ]]; then
+  echo "❌ geminiusage not found at $SKILL_DIR" >&2
+  echo ""
+  echo "Install with:"
+  echo "  git clone https://github.com/rmedranollamas/geminiusage.git $SKILL_DIR"
+  echo ""
+  echo "Or re-run setup.sh to install everything automatically."
+  exit 1
+fi
+
+if [[ $# -eq 0 ]]; then
+  echo "ai-usage — Track Gemini CLI token usage and session costs"
+  echo ""
+  echo "Usage:"
+  echo "  ai-usage                   Show current session usage"
+  echo "  ai-usage --today           Consumption today"
+  echo "  ai-usage --rolling-24h     Last 24 hours"
+  echo "  ai-usage --quota           Quota status"
+  echo "  ai-usage --history         Full usage history"
+  echo ""
+  echo "Aliases: gemini-usage (same binary)"
+  echo ""
+fi
+
+exec "$GEMINI_USAGE_BIN" "$@"

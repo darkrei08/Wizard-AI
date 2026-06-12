@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+# ai-mem — Persistent semantic memory for LLM sessions (claude-mem)
+# Source: https://github.com/thedotmack/claude-mem
+
+set -euo pipefail
+
+MEM_DIR="$HOME/.ai-skills/claude-mem"
+MEM_STORE="$HOME/.ai-skills/mem-store"
+
+if [[ ! -d "$MEM_DIR" ]]; then
+  echo "❌ claude-mem not found." >&2
+  echo "   Clone: git clone https://github.com/thedotmack/claude-mem $MEM_DIR" >&2
+  exit 1
+fi
+
+mkdir -p "$MEM_STORE"
+
+show_help() {
+  echo "ai-mem — Persistent semantic memory across AI sessions"
+  echo ""
+  echo "Usage:"
+  echo "  ai-mem store <text>          Store a memory"
+  echo "  ai-mem store --tag X <text>  Store with a tag"
+  echo "  ai-mem search <query>        Semantic search memories"
+  echo "  ai-mem list [--tag X]        List all memories"
+  echo "  ai-mem delete <id>           Delete a memory"
+  echo "  ai-mem export [file.json]    Export all memories"
+  echo "  ai-mem import <file.json>    Import memories"
+  echo ""
+  echo "Examples:"
+  echo "  ai-mem store \"User prefers Python over JavaScript\""
+  echo "  ai-mem store --tag project \"Uses PostgreSQL 16 and Redis 7\""
+  echo "  ai-mem search \"technology stack\""
+  echo "  ai-mem list --tag project"
+}
+
+if [[ $# -eq 0 ]]; then
+  show_help
+  exit 0
+fi
+
+# Check if claude-mem has a CLI entry point
+if [[ -f "$MEM_DIR/mem.py" ]]; then
+  exec python3 "$MEM_DIR/mem.py" "$@"
+elif [[ -f "$MEM_DIR/claude_mem/cli.py" ]]; then
+  exec python3 -m claude_mem.cli "$@"
+elif command -v claude-mem &>/dev/null; then
+  exec claude-mem "$@"
+else
+  # Fallback: simple JSON-based memory store
+  ACTION="$1"
+  shift || true
+  MEM_FILE="$MEM_STORE/memories.json"
+  
+  # Initialize if not exists
+  if [[ ! -f "$MEM_FILE" ]]; then
+    echo '{"memories":[]}' > "$MEM_FILE"
+  fi
+
+  case "$ACTION" in
+    store)
+      TEXT="$*"
+      ID=$(date +%s%N | md5sum | cut -c1-8)
+      TS=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+      python3 -c "
+import json, sys
+with open('$MEM_FILE') as f: data = json.load(f)
+data['memories'].append({'id': '$ID', 'text': '$TEXT', 'ts': '$TS'})
+with open('$MEM_FILE', 'w') as f: json.dump(data, f, indent=2)
+print(f'✅ Stored memory: $ID')
+"
+      ;;
+    list)
+      python3 -c "
+import json
+with open('$MEM_FILE') as f: data = json.load(f)
+mems = data['memories']
+if not mems:
+    print('No memories stored.')
+else:
+    for m in mems[-20:]:
+        print(f\"[{m['id']}] {m['ts']} — {m['text'][:80]}\")
+print(f'\nTotal: {len(mems)} memories stored in $MEM_FILE')
+"
+      ;;
+    search)
+      QUERY="$*"
+      python3 -c "
+import json
+query = '$QUERY'.lower()
+with open('$MEM_FILE') as f: data = json.load(f)
+results = [m for m in data['memories'] if any(w in m['text'].lower() for w in query.split())]
+if not results:
+    print('No matching memories found.')
+else:
+    for m in results:
+        print(f\"[{m['id']}] {m['text']}\")
+"
+      ;;
+    export)
+      cat "$MEM_FILE"
+      ;;
+    *)
+      show_help
+      exit 1
+      ;;
+  esac
+fi

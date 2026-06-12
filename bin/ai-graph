@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# ai-graph — Graphify wrapper with convenient shortcuts
+# Source: https://github.com/safishamsi/graphify
+
+set -euo pipefail
+
+GRAPHIFY_BIN="${HOME}/.local/bin/graphify"
+
+show_help() {
+  echo "ai-graph — Graphify knowledge graph builder"
+  echo ""
+  echo "Usage:"
+  echo "  ai-graph [path]              Build graph for path (default: current dir)"
+  echo "  ai-graph <github-url>        Clone repo and build graph"
+  echo "  ai-graph query \"<question>\"  Query existing graph"
+  echo "  ai-graph update              Incremental update (only changed files)"
+  echo "  ai-graph open                Open graph.html in browser"
+  echo "  ai-graph report              Show GRAPH_REPORT.md"
+  echo "  ai-graph wiki                Build agent-crawlable wiki"
+  echo ""
+  echo "Options:"
+  echo "  --deep          Thorough extraction, richer edges"
+  echo "  --directed      Build directed graph (preserves edge direction)"  
+  echo "  --no-viz        Skip visualization, just report + JSON"
+  echo "  --mcp           Start MCP stdio server for agent access"
+  echo "  --help, -h      Show this help"
+  echo ""
+  echo "Examples:"
+  echo "  ai-graph .                   # Current directory"
+  echo "  ai-graph ~/projects/myapp    # Specific project"
+  echo "  ai-graph https://github.com/user/repo"
+  echo "  ai-graph query \"how does auth work?\""
+  echo "  ai-graph open                # Open in browser"
+}
+
+if [[ $# -eq 0 ]] || [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
+  show_help
+  exit 0
+fi
+
+# Special subcommands
+case "$1" in
+  open)
+    GRAPH_HTML=$(find . -name "graph.html" -path "*/graphify-out/*" 2>/dev/null | head -1)
+    if [[ -z "$GRAPH_HTML" ]]; then
+      echo "❌ No graph.html found. Run 'ai-graph .' first."
+      exit 1
+    fi
+    echo "Opening: $GRAPH_HTML"
+    xdg-open "$GRAPH_HTML" 2>/dev/null || open "$GRAPH_HTML" 2>/dev/null || \
+      echo "Open manually: $GRAPH_HTML"
+    exit 0
+    ;;
+  report)
+    REPORT=$(find . -name "GRAPH_REPORT.md" -path "*/graphify-out/*" 2>/dev/null | head -1)
+    if [[ -z "$REPORT" ]]; then
+      echo "❌ No GRAPH_REPORT.md found. Run 'ai-graph .' first."
+      exit 1
+    fi
+    cat "$REPORT"
+    exit 0
+    ;;
+  update)
+    shift
+    exec "$GRAPHIFY_BIN" "${@:-.}" --update
+    ;;
+  query|path|explain|add)
+    exec "$GRAPHIFY_BIN" "$@"
+    ;;
+esac
+
+# Default: run graphify with all remaining args
+exec "$GRAPHIFY_BIN" "$@"

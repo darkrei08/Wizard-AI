@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# gemini-usage - Track Gemini CLI token usage and context
+# Source: https://github.com/rmedranollamas/geminiusage
+SKILL_DIR="$HOME/.ai-skills/geminiusage"
+if [[ ! -d "$SKILL_DIR" ]]; then
+  echo "ERROR: geminiusage not found. Run: git clone https://github.com/rmedranollamas/geminiusage.git ~/.ai-skills/geminiusage" >&2
+  exit 1
+fi
+exec python3 "$SKILL_DIR/scripts/token_usage.py" "$@"

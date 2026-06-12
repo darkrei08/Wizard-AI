@@ -1,0 +1,53 @@
+# =============================================================
+# Wizard-AI — .gitignore
+# =============================================================
+
+# ----- Dati personali e privati -----
+Risorse/.antigravitycli/
+Risorse/Prompts/
+Risorse/Prompts/Sicurezza-Deploy/
+
+# ----- Repository esterni (cloni locali — NON submoduli) -----
+# Questi vengono scaricati dal setup.sh, non appartengono al repo
+Risorse/Repositories-Skills/ECC/
+Risorse/Repositories-Skills/claude-mem/
+Risorse/Repositories-Skills/serena/
+Risorse/Repositories-Skills/wiki-brain-skill/
+Risorse/Repositories-Skills/impeccable/
+Risorse/Repositories-Skills/spec-kit/
+# Se hai clonato altri repo qui, aggiungili manualmente
+Risorse/Repositories-Skills/*/
+
+# ----- Python -----
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ----- Ambienti virtuali -----
+.venv/
+venv/
+env/
+.env
+
+# ----- Output generati da tool -----
+graphify-out/
+*.log
+
+# ----- Sistema operativo -----
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+
+# ----- Editor -----
+.vscode/
+.idea/
+*.swp
+*.swo
+.cursor/

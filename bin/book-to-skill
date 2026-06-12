@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# book-to-skill - Convert books/documents into AI agent skills
+# Source: https://github.com/virgiliojr94/book-to-skill
+SKILL_DIR="$HOME/.ai-skills/book-to-skill"
+if [[ ! -d "$SKILL_DIR" ]]; then
+  echo "ERROR: book-to-skill not found. Run: git clone https://github.com/virgiliojr94/book-to-skill.git ~/.ai-skills/book-to-skill" >&2
+  exit 1
+fi
+exec python3 "$SKILL_DIR/book_to_skill.py" "$@" 2>/dev/null || \
+exec python3 -c "
+import sys, os
+print('book-to-skill: Converting document to AI skill...')
+print()
+print('Usage: book-to-skill <file> [skill-slug]')
+print('Formats: PDF, EPUB, DOCX, TXT, MD, RST, HTML')
+print()
+print('Install optional deps:')
+print('  uv pip install PyPDF2 pdfminer.six python-docx ebooklib beautifulsoup4 --python ~/.ai-skills/venv/bin/python')
+print()
+print('Skill output: ~/.copilot/skills/<slug>/')
+print('              ~/.claude/skills/<slug>/')
+print('              ~/.agents/skills/<slug>/')
+sys.exit(0)
+" "$@"

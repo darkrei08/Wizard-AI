@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# ai-convert — markitdown wrapper for converting files to Markdown
+# Source: https://github.com/microsoft/markitdown
+
+set -euo pipefail
+
+MARKITDOWN_BIN="${HOME}/.local/bin/markitdown"
+
+if [[ ! -x "$MARKITDOWN_BIN" ]] && ! command -v markitdown &>/dev/null; then
+  echo "❌ markitdown not found." >&2
+  echo "   Install: uv tool install markitdown" >&2
+  exit 1
+fi
+
+MD_CMD=$(command -v markitdown 2>/dev/null || echo "$MARKITDOWN_BIN")
+
+if [[ $# -eq 0 ]]; then
+  echo "ai-convert — Convert any file to Markdown for LLM ingestion"
+  echo ""
+  echo "Usage:"
+  echo "  ai-convert <file>              Convert file to Markdown (stdout)"
+  echo "  ai-convert <file> -o out.md    Save to file"
+  echo "  ai-convert <url>               Convert URL to Markdown"
+  echo "  ai-convert *.pdf               Convert multiple files"
+  echo ""
+  echo "Supported formats:"
+  echo "  Documents: PDF, DOCX, PPTX, XLSX, ODT, EPUB"
+  echo "  Web:       HTML, HTM, URLs"
+  echo "  Text:      TXT, CSV, JSON, XML, YAML"
+  echo "  Images:    PNG, JPG, GIF (OCR text extraction)"
+  echo "  Audio:     MP3, WAV, M4A (speech-to-text)"
+  echo "  Archives:  ZIP (recursive conversion)"
+  echo ""
+  echo "Examples:"
+  echo "  ai-convert report.pdf > report.md"
+  echo "  ai-convert https://docs.example.com/api"
+  echo "  ai-convert presentation.pptx -o slides.md"
+  exit 0
+fi
+
+# Handle multiple files
+if [[ $# -gt 1 ]] && [[ "$1" != "-o" ]] && [[ "$1" != "--output" ]]; then
+  for f in "$@"; do
+    if [[ -f "$f" ]]; then
+      OUTNAME="${f%.*}.md"
+      echo "Converting: $f → $OUTNAME" >&2
+      "$MD_CMD" "$f" -o "$OUTNAME"
+    fi
+  done
+  exit 0
+fi
+
+exec "$MD_CMD" "$@"
