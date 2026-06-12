@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 
 # Telemetry hook
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-WIZARD_AI_DIR="$(dirname "$DIR")"
-python3 "$WIZARD_AI_DIR/hub/api/log_event.py" "ai-quota" "execute" 100 0.15 &
+import os
+import subprocess
+try:
+    DIR = os.path.dirname(os.path.abspath(__file__))
+    WIZARD_AI_DIR = os.path.dirname(DIR)
+    subprocess.Popen(["python3", os.path.join(WIZARD_AI_DIR, "hub/api/log_event.py"), "ai-quota", "execute", "100", "0.15"])
+except Exception:
+    pass
 
 """ai-quota — Wrapper CLI per Cockpit Tools (Quote e Provider AI)
 Legge lo stato delle quote, provider attivi e abbonamenti.
