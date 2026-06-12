@@ -27,18 +27,35 @@ Tutti gli strumenti vengono installati una sola volta e resi **disponibili a ogn
 
 ---
 
-## 🚀 Avvio Rapido (3 Passaggi)
+## 🚀 Avvio Rapido
+
+### ⚡ Opzione A — Un solo comando via npm (consigliata)
+
+Se hai [Node.js](https://nodejs.org) (≥ 14) e `git` installati, funziona allo stesso modo su Linux, macOS e Windows:
+
+```bash
+npx wizard-ai-cli
+```
+
+Il launcher clona il repository in `~/.wizard-ai` ed esegue automaticamente l'installatore della tua piattaforma (`setup.sh` o `setup.ps1`). Rieseguendo il comando, un'installazione esistente viene aggiornata. Puoi anche installarlo come comando globale:
+
+```bash
+npm install -g wizard-ai-cli
+wizard-ai
+```
+
+### 🔧 Opzione B — Installazione manuale (3 passaggi)
 
 Per essere completamente autonomo, segui questi passaggi per installare e iniziare a usare l'ecosistema:
 
-### 1️⃣ Clona il Repository
+#### 1️⃣ Clona il Repository
 Clona il repository sul tuo computer locale:
 ```bash
 git clone https://github.com/darkrei08/Wizard-AI.git ~/wizard-ai
 cd ~/wizard-ai
 ```
 
-### 2️⃣ Esegui l'Installatore
+#### 2️⃣ Esegui l'Installatore
 Esegui lo script principale di setup. È progettato per essere interamente non-interattivo e configura tutto automaticamente:
 
 **Linux / macOS:**
@@ -52,7 +69,7 @@ chmod +x setup.sh
 powershell -ExecutionPolicy Bypass -File setup.ps1
 ```
 
-### 3️⃣ Verifica l'Installazione
+#### 3️⃣ Verifica l'Installazione
 Ricarica la shell per caricare le nuove variabili d'ambiente, poi avvia il menu di aiuto:
 ```bash
 source ~/.bashrc   # o source ~/.zshrc — su Windows apri semplicemente un nuovo terminale
@@ -130,6 +147,8 @@ wizard-ai/
 ├── local/                  # Cartella ignorata (configurazione e cloni esterni)
 ├── setup.sh                # Installatore automatico (Linux / macOS)
 ├── setup.ps1               # Installatore automatico (Windows)
+├── cli.js                  # Launcher npm (npx wizard-ai-cli)
+├── package.json            # Manifest del pacchetto npm (wizard-ai-cli)
 ├── CONTRIBUTING.md         # Come aggiungere nuove skill
 ├── LICENSE                 # Licenza AGPLv3
 └── README.md               # Questo file
