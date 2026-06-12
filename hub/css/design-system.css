@@ -1,29 +1,41 @@
 :root {
     /* Colors - Dark Theme (Default) */
-    --bg-primary: #0f1117;
-    --bg-secondary: #1a1d27;
-    --bg-tertiary: #252a36;
+    --bg-primary: #0a0c10;
+    --bg-secondary: #12151c;
+    --bg-tertiary: #1c212b;
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
     --text-muted: #64748b;
     
-    /* Accents */
+    /* Accents & Gradients */
     --accent-primary: #6366f1; /* Indigo */
     --accent-hover: #4f46e5;
     --accent-glow: rgba(99, 102, 241, 0.2);
+    --gradient-primary: linear-gradient(135deg, #6366f1, #a855f7);
+    --gradient-accent: linear-gradient(135deg, #a855f7, #ec4899);
     
     --success: #10b981;
+    --success-bg: rgba(16, 185, 129, 0.1);
     --warning: #f59e0b;
+    --warning-bg: rgba(245, 158, 11, 0.1);
     --error: #ef4444;
+    --error-bg: rgba(239, 68, 68, 0.1);
+    
+    /* Glassmorphism (Apple Style) */
+    --glass-bg: rgba(28, 33, 43, 0.45);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-blur: blur(24px);
+    --glass-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
     
     /* Typography */
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Roboto', sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
     
-    /* Metrics */
-    --radius-sm: 0.25rem;
-    --radius-md: 0.5rem;
-    --radius-lg: 0.75rem;
+    /* Metrics (Apple Squircles) */
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
     --radius-full: 9999px;
     
     --spacing-1: 0.25rem;
@@ -33,10 +45,16 @@
     --spacing-6: 1.5rem;
     --spacing-8: 2rem;
     
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    /* Shadows (Material Elevation) */
+    --elevation-1: 0 1px 3px 0 rgba(0,0,0,0.3), 0 1px 2px 0 rgba(0,0,0,0.15);
+    --elevation-2: 0 4px 8px 0 rgba(0,0,0,0.3), 0 2px 4px 0 rgba(0,0,0,0.15);
+    --elevation-3: 0 8px 16px 0 rgba(0,0,0,0.3), 0 4px 8px 0 rgba(0,0,0,0.15);
+    --elevation-4: 0 16px 32px 0 rgba(0,0,0,0.3), 0 8px 16px 0 rgba(0,0,0,0.15);
+    
+    --shadow-sm: var(--elevation-1);
+    --shadow-md: var(--elevation-2);
+    --shadow-lg: var(--elevation-3);
+    --shadow-glow: 0 0 24px rgba(99, 102, 241, 0.25);
 }
 
 * {
@@ -52,6 +70,9 @@ body {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     overflow: hidden; /* App-like feel */
+    background-image: 
+        radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.04), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.04), transparent 25%);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -70,6 +91,34 @@ a:hover {
     color: var(--accent-hover);
 }
 
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+.animate-slide-up { animation: slideUp 0.5s ease-out forwards; }
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+
 /* Layout */
 .app-container {
     display: flex;
@@ -79,11 +128,14 @@ a:hover {
 
 .sidebar {
     width: 260px;
-    background-color: var(--bg-secondary);
-    border-right: 1px solid var(--bg-tertiary);
+    background-color: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border-right: 1px solid var(--glass-border);
     display: flex;
     flex-direction: column;
     padding: var(--spacing-6) 0;
+    z-index: 10;
+    transition: transform 0.3s ease;
 }
 
 .sidebar-header {
@@ -96,7 +148,7 @@ a:hover {
 
 .sidebar-header h2 {
     font-size: 1.25rem;
-    background: linear-gradient(135deg, #a855f7, #6366f1);
+    background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -122,8 +174,9 @@ a:hover {
 }
 
 .nav-links a:hover {
-    background-color: var(--bg-tertiary);
+    background-color: rgba(255, 255, 255, 0.03);
     color: var(--text-primary);
+    transform: translateX(2px);
 }
 
 .nav-links a.active {
@@ -144,10 +197,55 @@ a:hover {
 
 .main-content {
     flex-grow: 1;
-    background-color: var(--bg-primary);
+    background-color: transparent;
     overflow-y: auto;
     padding: var(--spacing-8);
     position: relative;
+    scroll-behavior: smooth;
+}
+
+/* Mobile Toggle (Hidden by default on desktop) */
+.mobile-nav-toggle {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 50;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    box-shadow: var(--shadow-lg);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+        box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+    }
+    
+    .main-content {
+        padding: var(--spacing-4);
+    }
+    
+    .mobile-nav-toggle {
+        display: flex;
+    }
 }
 
 /* Helpers */
@@ -155,6 +253,8 @@ a:hover {
 .text-center { text-align: center; }
 .text-muted { color: var(--text-muted); }
 .text-success { color: var(--success); }
+.text-error { color: var(--error); }
+.text-warning { color: var(--warning); }
 .mb-2 { margin-bottom: var(--spacing-2); }
 .mb-4 { margin-bottom: var(--spacing-4); }
 .mb-6 { margin-bottom: var(--spacing-6); }
