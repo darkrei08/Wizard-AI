@@ -90,6 +90,12 @@ clone_if_missing "geminiusage"      "https://github.com/rmedranollamas/geminiusa
 clone_if_missing "book-to-skill"    "https://github.com/virgiliojr94/book-to-skill.git"
 clone_if_missing "ECC"              "https://github.com/affaan-m/ECC.git"
 clone_if_missing "wiki-brain-skill" "https://github.com/tenfoldmarc/wiki-brain-skill"
+clone_if_missing "cockpit-tools"    "https://github.com/jlcodes99/cockpit-tools.git"
+clone_if_missing "awesome-design-md" "https://github.com/VoltAgent/awesome-design-md.git"
+clone_if_missing "taste-skill"       "https://github.com/leonxlnx/taste-skill.git"
+clone_if_missing "lean-ctx"          "https://github.com/yvgude/lean-ctx.git"
+clone_if_missing "nuxt"              "https://github.com/nuxt/nuxt.git"
+clone_if_missing "express-typescript-starter" "https://github.com/ToniR7/express-typescript-starter.git"
 
 # Install claude-mem Python package if setup.py/pyproject.toml is present
 if [ -f "$HOME/.ai-skills/claude-mem/pyproject.toml" ] || \
@@ -121,6 +127,25 @@ if ! command -v serena &>/dev/null; then
   echo -e "${GREEN}  ✓ serena installed.${NC}"
 else
   echo -e "${GREEN}✓ serena already installed.${NC}"
+fi
+
+# Install lean-ctx (context intelligence binary)
+echo -e "${YELLOW}Checking lean-ctx (context intelligence)...${NC}"
+if command -v lean-ctx &>/dev/null; then
+  echo -e "${GREEN}✓ lean-ctx already installed.${NC}"
+else
+  # Pre-flight check for node/npm
+  if command -v npm &>/dev/null; then
+    echo -e "${BLUE}  NPM detected, installing lean-ctx-bin...${NC}"
+    npm install -g lean-ctx-bin 2>/dev/null && echo -e "${GREEN}  ✓ lean-ctx installed via npm.${NC}" || \
+      echo -e "${RED}  ✗ lean-ctx installation via npm failed.${NC}"
+  elif command -v cargo &>/dev/null; then
+    echo -e "${BLUE}  NPM not found, but Cargo detected. You can install lean-ctx via Cargo:${NC}"
+    echo -e "  ${CYAN}cargo install lean-ctx${NC}"
+  else
+    echo -e "${YELLOW}  ⚠ lean-ctx requires Node.js (npm) or Rust (cargo). Neither found.${NC}"
+    echo -e "  Please install Node.js (https://nodejs.org) to enable context intelligence."
+  fi
 fi
 
 # 5. Fix sqz binary (pre-compiled native binary for token compression)
@@ -196,6 +221,11 @@ echo -e "  ${CYAN}ai-rerank${NC}    - Re-rank list components for RAG via FlashR
 echo -e "  ${CYAN}ai-squeeze${NC}   - Compress CLI outputs / files via Sqz"
 echo -e "  ${CYAN}ai-convert${NC}   - Extract clean Markdown from PDF, DOCX, images, etc."
 echo -e "  ${CYAN}ai-mem${NC}       - Access persistent semantic memory (claude-mem)"
+echo -e "  ${CYAN}ai-design${NC}    - Browse & apply DESIGN.md files for UI generation"
+echo -e "  ${CYAN}ai-taste${NC}     - Apply anti-slop frontend design skill"
+echo -e "  ${CYAN}ai-lean${NC}      - Lean Context Intelligence (60-90% token savings)"
+echo -e "  ${CYAN}ai-scaffold${NC}  - Scaffold Express/Nuxt projects from templates"
+echo -e "  ${CYAN}ai-quota${NC}     - View AI provider quotas and subscriptions"
 echo -e "  ${CYAN}ai-sync-skills${NC} - Sync skills across all AI agents"
 echo -e ""
 echo -e "${YELLOW}Important: Reload your shell to activate the environment:${NC}"
