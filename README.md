@@ -27,18 +27,35 @@ All tools are installed once and **available to every AI agent** through a share
 
 ---
 
-## 🚀 Quick Start (3 Steps)
+## 🚀 Quick Start
+
+### ⚡ Option A — One command via npm (recommended)
+
+If you have [Node.js](https://nodejs.org) (≥ 14) and `git` installed, this works the same on Linux, macOS and Windows:
+
+```bash
+npx wizard-ai-cli
+```
+
+The launcher clones the repository into `~/.wizard-ai` and runs the platform installer (`setup.sh` or `setup.ps1`) automatically. Re-running the command updates an existing install. You can also install it as a global command:
+
+```bash
+npm install -g wizard-ai-cli
+wizard-ai
+```
+
+### 🔧 Option B — Manual install (3 steps)
 
 To make you fully autonomous, follow these steps to install and start using the ecosystem:
 
-### 1️⃣ Clone the Repository
+#### 1️⃣ Clone the Repository
 Clone the repository to your local machine:
 ```bash
 git clone https://github.com/darkrei08/Wizard-AI.git ~/wizard-ai
 cd ~/wizard-ai
 ```
 
-### 2️⃣ Run the Installer
+#### 2️⃣ Run the Installer
 Run the main setup script. It is designed to be completely non-interactive and handles all configurations automatically:
 
 **Linux / macOS:**
@@ -52,7 +69,7 @@ chmod +x setup.sh
 powershell -ExecutionPolicy Bypass -File setup.ps1
 ```
 
-### 3️⃣ Verify the Installation
+#### 3️⃣ Verify the Installation
 Reload your shell to load the new environment variables and paths, then run the central help menu:
 ```bash
 source ~/.bashrc   # or source ~/.zshrc — on Windows just open a new terminal
@@ -130,6 +147,8 @@ wizard-ai/
 ├── local/                  # Ignored folder for personal config & cloned repos
 ├── setup.sh                # One-command installer (Linux / macOS)
 ├── setup.ps1               # One-command installer (Windows)
+├── cli.js                  # npm launcher (npx wizard-ai-cli)
+├── package.json            # npm package manifest (wizard-ai-cli)
 ├── CONTRIBUTING.md         # How to add new skills
 ├── LICENSE                 # AGPLv3
 └── README.md               # This file
