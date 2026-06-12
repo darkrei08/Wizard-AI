@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# ai-hub — Apre la GUI locale di Wizard-AI
+set -euo pipefail
+
+# Trova la directory root (o usa WIZARD_AI_DIR se settata)
+if [ -z "${WIZARD_AI_DIR:-}" ]; then
+  # Fallback a due livelli sopra la cartella bin
+  SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  WIZARD_AI_DIR="$(dirname "$SCRIPT_DIR")"
+fi
+
+HUB_DIR="$WIZARD_AI_DIR/hub"
+
+if [ ! -d "$HUB_DIR" ]; then
+    echo "❌ Errore: Cartella hub/ non trovata in $WIZARD_AI_DIR"
+    exit 1
+fi
+
+# Trova una porta libera casuale
+PORT=$(python3 -c 'import socket; s=socket.socket(); s.bind(("",0)); print(s.getsockname()[1]); s.close()')
+
+echo "🧙‍♂️ Avvio Wizard-AI Hub su http://localhost:$PORT"
+echo "   Premi Ctrl+C per chiudere."
+echo "   (Nessun dato esce dal tuo computer)"
+
+# Avvia il mini-server API in background
+python3 "$HUB_DIR/api/server.py" --port "$PORT" &
+SERVER_PID=$!
+
+# Attendi che il server sia pronto
+sleep 1
+
+# Apri il browser
+if command -v xdg-open &> /dev/null; then
+    xdg-open "http://localhost:$PORT" 2>/dev/null
+elif command -v open &> /dev/null; then
+    open "http://localhost:$PORT" 2>/dev/null
+else
+    echo "🌐 Apri manualmente: http://localhost:$PORT nel tuo browser."
+fi
+
+# Attendi Ctrl+C
+trap "kill $SERVER_PID 2>/dev/null; echo ''; echo '👋 Hub chiuso correttamente.'" EXIT
+wait $SERVER_PID

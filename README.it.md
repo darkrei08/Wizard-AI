@@ -74,6 +74,7 @@ Dopo l'installazione, questi comandi saranno disponibili nel tuo terminale:
 
 | Comando | Strumento | Descrizione |
 |---|---|---|
+| `ai-hub` | GUI Locale | Apre la dashboard e il marketplace nel browser |
 | `ai-help` | Hub | Mostra tutti gli strumenti con esempi d'uso |
 | `ai-graph [path]` | Graphify | Costruisce un grafo di conoscenza del codice |
 | `ai-compress --file f.txt` | LLMLingua | Comprime prompt/contesti fino a 20x |
@@ -152,6 +153,62 @@ echo $WIZARD_AI_DIR
 # → /home/utente/wizard-ai
 ```
 Questo consente agli script e alle skill di fare riferimento a file interni in modo dinamico e portabile.
+
+---
+
+## 💎 Visione Futura e Programma Creatori (Monetizzazione)
+
+### 🎯 Il Problema Che Stiamo Risolvendo
+
+Oggi il mercato dell'AI è capovolto: **gli utenti finali e le piccole aziende pagano cifre spropositate ai grandi fornitori centralizzati** (OpenAI, Anthropic, Google) per strumenti generici, chiusi e con **gravi problemi di sicurezza**:
+
+| ❌ Modello Attuale (Centralizzato) | ✅ Modello Wizard-AI (Locale + Open) |
+|---|---|
+| Il tuo codice sorgente viene inviato a server remoti | **I tuoi dati restano sulla tua macchina** |
+| Zero controllo su come i dati vengono usati/archiviati | **Pieno controllo, zero dipendenza da terzi** |
+| Abbonamenti costosi per strumenti generici | **Strumenti specializzati, gratuiti per sempre** |
+| Lock-in: sei legato a un singolo provider | **Agnostico: funziona con qualsiasi agente AI** |
+| Le skill della community arricchiscono solo il provider | **I creatori partecipano ai profitti** |
+
+> **La nostra missione: capovolgere questo modello. Vogliamo che siano le grandi corporation a pagare noi per usare le nostre skill specializzate e sicure — non il contrario.**
+
+### 🏢 Versione Enterprise / API Aziendale (Roadmap)
+
+Stiamo costruendo una versione **Premium cloud-hosted** pensata esclusivamente per le grandi aziende:
+
+- 🔐 **Deployment blindato**: istanze private, audit trail completo, compliance enterprise
+- 🛡️ **Zero data leakage**: a differenza dei provider centrali, i dati aziendali non lasciano mai il perimetro autorizzato
+- ⚡ **Skill curate e certificate**: accesso a un hub di strumenti validati dalla community, testati e mantenuti
+- 📊 **Dashboard di governance**: monitoraggio centralizzato di tutti gli agenti AI in azienda
+- 🔧 **Supporto dedicato e SLA**: assistenza prioritaria e garanzie di uptime
+
+Le aziende pagheranno un canone per accedere a questo ecosistema — **gli utenti individuali e la versione open-source resteranno sempre gratuiti**.
+
+### 🤑 Programma Creatori — Revenue Share (Robin Hood delle AI)
+
+Ecco la parte più rivoluzionaria: **i profitti non resteranno solo al progetto**. Grazie alla nostra infrastruttura legale (AGPLv3 + [CLA](CLA.it.md)), abbiamo costruito un sistema di redistribuzione:
+
+| Come Funziona | Dettaglio |
+|---|---|
+| 🛠️ **Crea una skill o un tool** | Sviluppa qualcosa di eccezionale e invia una Pull Request |
+| ✅ **Viene accettata e integrata** | Il tuo contributo entra nell'ecosistema ufficiale |
+| 📈 **Viene usata dalle aziende** | Tracciamo l'utilizzo delle skill nei contratti Enterprise |
+| 💰 **Ricevi la tua fetta** | I ricavi (contratti aziendali + donazioni) vengono redistribuiti ai creatori in proporzione all'utilizzo e al valore della loro skill |
+
+> 🧠 **Perché è diverso dal contribuire a un progetto open-source qualsiasi?**
+>
+> In quasi tutti gli ecosistemi open-source, il tuo lavoro gratuito arricchisce aziende che non ti daranno mai nulla in cambio. Qui è diverso: **ogni riga di codice che contribuisci oggi costruisce il tuo diritto a un revenue share domani**. Mantieni il copyright del tuo lavoro, e quando le corporation pagheranno per il nostro ecosistema, tu riceverai la tua parte.
+
+### 📣 Chiamata agli Sviluppatori
+
+Sei uno sviluppatore con un'idea geniale per uno strumento AI? **Questo è il momento giusto per unirti a noi:**
+
+1. 🍴 Fai un fork di questo repo
+2. 🔧 Crea la tua skill seguendo la [guida](CONTRIBUTING.it.md)
+3. 📬 Apri una Pull Request
+4. 🎉 Entra nel Programma Creatori e preparati a raccogliere i frutti
+
+**Non regalare il tuo talento a ecosistemi chiusi. Costruisci qui, dove il tuo lavoro conta — e dove verrai ricompensato.**
 
 ---
 
