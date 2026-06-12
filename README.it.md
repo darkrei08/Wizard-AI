@@ -5,8 +5,8 @@
 > 🇬🇧 [Read this README in English](README.md)
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](LICENSE)
-[![Platform: Linux](https://img.shields.io/badge/Platform-Linux-blue.svg)]()
-[![Shell: Bash](https://img.shields.io/badge/Shell-Bash-green.svg)]()
+[![Platform: Linux | macOS | Windows](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-blue.svg)]()
+[![Shell: Bash | PowerShell](https://img.shields.io/badge/Shell-Bash%20%7C%20PowerShell-green.svg)]()
 [![Requires: uv](https://img.shields.io/badge/Requires-uv-orange.svg)](https://docs.astral.sh/uv/)
 
 ---
@@ -27,28 +27,52 @@ Tutti gli strumenti vengono installati una sola volta e resi **disponibili a ogn
 
 ---
 
-## 🚀 Avvio Rapido (3 Passaggi)
+## 🚀 Avvio Rapido
+
+### ⚡ Opzione A — Un solo comando via npm (consigliata)
+
+Se hai [Node.js](https://nodejs.org) (≥ 14) e `git` installati, funziona allo stesso modo su Linux, macOS e Windows:
+
+```bash
+npx wizard-ai-cli
+```
+
+Il launcher clona il repository in `~/.wizard-ai` ed esegue automaticamente l'installatore della tua piattaforma (`setup.sh` o `setup.ps1`). Rieseguendo il comando, un'installazione esistente viene aggiornata. Puoi anche installarlo come comando globale:
+
+```bash
+npm install -g wizard-ai-cli
+wizard-ai
+```
+
+### 🔧 Opzione B — Installazione manuale (3 passaggi)
 
 Per essere completamente autonomo, segui questi passaggi per installare e iniziare a usare l'ecosistema:
 
-### 1️⃣ Clona il Repository
+#### 1️⃣ Clona il Repository
 Clona il repository sul tuo computer locale:
 ```bash
 git clone https://github.com/darkrei08/Wizard-AI.git ~/wizard-ai
 cd ~/wizard-ai
 ```
 
-### 2️⃣ Esegui l'Installatore
+#### 2️⃣ Esegui l'Installatore
 Esegui lo script principale di setup. È progettato per essere interamente non-interattivo e configura tutto automaticamente:
+
+**Linux / macOS:**
 ```bash
 chmod +x setup.sh
 ./setup.sh
 ```
 
-### 3️⃣ Verifica l'Installazione
+**Windows (PowerShell):**
+```powershell
+powershell -ExecutionPolicy Bypass -File setup.ps1
+```
+
+#### 3️⃣ Verifica l'Installazione
 Ricarica la shell per caricare le nuove variabili d'ambiente, poi avvia il menu di aiuto:
 ```bash
-source ~/.bashrc   # o source ~/.zshrc
+source ~/.bashrc   # o source ~/.zshrc — su Windows apri semplicemente un nuovo terminale
 ai-help
 ```
 Dovresti vedere una dashboard pulita che mostra lo stato di tutti gli strumenti.
@@ -116,12 +140,16 @@ Questo script eseguirà il backup nel tuo repository locale sotto `skills/` e pr
 ```
 wizard-ai/
 ├── bin/                    # Script wrapper CLI → copiati in ~/.local/bin/
+│   └── windows/            # Port PowerShell dei wrapper (Windows)
 ├── skills/                 # File SKILL.md per gli agenti AI
 ├── docs/                   # Guide e documentazione
 │   ├── WIKI.it.md          # 📚 Wiki centrale di tutte le skill e risorse
 │   └── security-prompts/   # Prompt di audit sicurezza per codice AI
 ├── local/                  # Cartella ignorata (configurazione e cloni esterni)
-├── setup.sh                # Installatore automatico
+├── setup.sh                # Installatore automatico (Linux / macOS)
+├── setup.ps1               # Installatore automatico (Windows)
+├── cli.js                  # Launcher npm (npx wizard-ai-cli)
+├── package.json            # Manifest del pacchetto npm (wizard-ai-cli)
 ├── CONTRIBUTING.md         # Come aggiungere nuove skill
 ├── LICENSE                 # Licenza AGPLv3
 └── README.md               # Questo file
@@ -151,6 +179,12 @@ Dopo aver eseguito `setup.sh`, la tua shell disporrà della variabile `$WIZARD_A
 ```bash
 echo $WIZARD_AI_DIR
 # → /home/utente/wizard-ai
+```
+
+Su Windows viene salvata come **variabile d'ambiente utente**:
+```powershell
+echo $env:WIZARD_AI_DIR
+# → C:\Users\utente\wizard-ai
 ```
 Questo consente agli script e alle skill di fare riferimento a file interni in modo dinamico e portabile.
 
