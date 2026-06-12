@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# ai-track-usage — Wizard-AI Telemetry CLI Wrapper
+# Usage: ai-track-usage <skill_id>
+set -euo pipefail
+
+if [ -z "${1:-}" ]; then
+  echo "Usage: ai-track-usage <skill_id>"
+  exit 1
+fi
+
+SKILL_ID="$1"
+
+# Trova la directory root
+if [ -z "${WIZARD_AI_DIR:-}" ]; then
+  SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  WIZARD_AI_DIR="$(dirname "$SCRIPT_DIR")"
+fi
+
+TRACKER_SCRIPT="$WIZARD_AI_DIR/sdk/telemetry/tracker.py"
+
+if [ -f "$TRACKER_SCRIPT" ]; then
+    # Run in background to avoid blocking the user's CLI flow
+    python3 "$TRACKER_SCRIPT" "$SKILL_ID" "invocation" &>/dev/null &
+fi
