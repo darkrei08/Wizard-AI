@@ -125,4 +125,4 @@ Apri una Issue su GitHub con:
 
 ## ⚖️ Licenza
 
-Contribuendo, accetti che il tuo codice sia rilasciato sotto la [MIT License](LICENSE).
+Contribuendo, accetti che il tuo codice sia rilasciato sotto la [AGPLv3 License](LICENSE). Inoltre, inviando una Pull Request, concedi al creatore del progetto (tramite Contributor License Agreement - CLA) il diritto di utilizzare, modificare, sub-licenziare e distribuire commercialmente le tue modifiche in futuro, pur mantenendo tu il copyright originale del codice che hai scritto.

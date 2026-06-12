@@ -125,4 +125,4 @@ Open a GitHub Issue including:
 
 ## ⚖️ License
 
-By contributing, you agree that your code will be released under the [MIT License](LICENSE).
+By contributing, you agree that your code will be released under the [AGPLv3 License](LICENSE). You also grant the repository owner a Contributor License Agreement (CLA), providing the right to use, modify, sub-license, and commercially distribute your contributions, while you retain the copyright to your original work.

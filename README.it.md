@@ -4,7 +4,7 @@
 
 > 🇬🇧 [Read this README in English](README.md)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](LICENSE)
 [![Platform: Linux](https://img.shields.io/badge/Platform-Linux-blue.svg)]()
 [![Shell: Bash](https://img.shields.io/badge/Shell-Bash-green.svg)]()
 [![Requires: uv](https://img.shields.io/badge/Requires-uv-orange.svg)](https://docs.astral.sh/uv/)
@@ -122,7 +122,7 @@ wizard-ai/
 ├── local/                  # Cartella ignorata (configurazione e cloni esterni)
 ├── setup.sh                # Installatore automatico
 ├── CONTRIBUTING.md         # Come aggiungere nuove skill
-├── LICENSE                 # Licenza MIT
+├── LICENSE                 # Licenza AGPLv3
 └── README.md               # Questo file
 ```
 
@@ -181,4 +181,4 @@ Wizard-AI integra questi eccellenti progetti open-source:
 
 ## ⚖️ Licenza
 
-Rilasciato sotto licenza [MIT](LICENSE) — libero utilizzo, modifica e condivisione.
+Rilasciato sotto licenza [AGPLv3](LICENSE) — libero utilizzo, modifica e condivisione.
