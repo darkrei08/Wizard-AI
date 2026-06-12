@@ -5,8 +5,8 @@
 > 🇮🇹 [Leggi questo README in Italiano](README.it.md)
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](LICENSE)
-[![Platform: Linux](https://img.shields.io/badge/Platform-Linux-blue.svg)]()
-[![Shell: Bash](https://img.shields.io/badge/Shell-Bash-green.svg)]()
+[![Platform: Linux | macOS | Windows](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-blue.svg)]()
+[![Shell: Bash | PowerShell](https://img.shields.io/badge/Shell-Bash%20%7C%20PowerShell-green.svg)]()
 [![Requires: uv](https://img.shields.io/badge/Requires-uv-orange.svg)](https://docs.astral.sh/uv/)
 
 ---
@@ -27,28 +27,52 @@ All tools are installed once and **available to every AI agent** through a share
 
 ---
 
-## 🚀 Quick Start (3 Steps)
+## 🚀 Quick Start
+
+### ⚡ Option A — One command via npm (recommended)
+
+If you have [Node.js](https://nodejs.org) (≥ 14) and `git` installed, this works the same on Linux, macOS and Windows:
+
+```bash
+npx wizard-ai-cli
+```
+
+The launcher clones the repository into `~/.wizard-ai` and runs the platform installer (`setup.sh` or `setup.ps1`) automatically. Re-running the command updates an existing install. You can also install it as a global command:
+
+```bash
+npm install -g wizard-ai-cli
+wizard-ai
+```
+
+### 🔧 Option B — Manual install (3 steps)
 
 To make you fully autonomous, follow these steps to install and start using the ecosystem:
 
-### 1️⃣ Clone the Repository
+#### 1️⃣ Clone the Repository
 Clone the repository to your local machine:
 ```bash
 git clone https://github.com/darkrei08/Wizard-AI.git ~/wizard-ai
 cd ~/wizard-ai
 ```
 
-### 2️⃣ Run the Installer
+#### 2️⃣ Run the Installer
 Run the main setup script. It is designed to be completely non-interactive and handles all configurations automatically:
+
+**Linux / macOS:**
 ```bash
 chmod +x setup.sh
 ./setup.sh
 ```
 
-### 3️⃣ Verify the Installation
+**Windows (PowerShell):**
+```powershell
+powershell -ExecutionPolicy Bypass -File setup.ps1
+```
+
+#### 3️⃣ Verify the Installation
 Reload your shell to load the new environment variables and paths, then run the central help menu:
 ```bash
-source ~/.bashrc   # or source ~/.zshrc
+source ~/.bashrc   # or source ~/.zshrc — on Windows just open a new terminal
 ai-help
 ```
 You should see a clean dashboard showing the status of all available capabilities.
@@ -116,12 +140,16 @@ This script synchronizes your modifications back to your cloned repository under
 ```
 wizard-ai/
 ├── bin/                    # CLI wrapper scripts → deployed to ~/.local/bin/
+│   └── windows/            # PowerShell ports of the wrappers (Windows)
 ├── skills/                 # SKILL.md definitions → deployed to agents
 ├── docs/                   # Reference guides and documentation
 │   ├── WIKI.md             # 📚 Central Wiki of all skills & resources
 │   └── security-prompts/   # AI-specific security audit prompts
 ├── local/                  # Ignored folder for personal config & cloned repos
-├── setup.sh                # One-command installer
+├── setup.sh                # One-command installer (Linux / macOS)
+├── setup.ps1               # One-command installer (Windows)
+├── cli.js                  # npm launcher (npx wizard-ai-cli)
+├── package.json            # npm package manifest (wizard-ai-cli)
 ├── CONTRIBUTING.md         # How to add new skills
 ├── LICENSE                 # AGPLv3
 └── README.md               # This file
@@ -151,6 +179,12 @@ After running `setup.sh`, your shell will have `$WIZARD_AI_DIR` set to the absol
 ```bash
 echo $WIZARD_AI_DIR
 # → /home/you/wizard-ai
+```
+
+On Windows it is stored as a **user environment variable**:
+```powershell
+echo $env:WIZARD_AI_DIR
+# → C:\Users\you\wizard-ai
 ```
 This allows skills and wrappers to reference the repo portably, regardless of where you cloned it.
 

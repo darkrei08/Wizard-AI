@@ -1,0 +1,33 @@
+{
+  "name": "wizard-ai-cli",
+  "version": "0.1.0",
+  "description": "Installer for the Wizard-AI environment: AI CLI tools and Claude Code skills (graphify, llmlingua, flashrank, markitdown and more). Clones the repo and runs the platform setup script.",
+  "bin": {
+    "wizard-ai": "cli.js"
+  },
+  "files": [
+    "cli.js"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darkrei08/Wizard-AI.git"
+  },
+  "homepage": "https://github.com/darkrei08/Wizard-AI#readme",
+  "bugs": {
+    "url": "https://github.com/darkrei08/Wizard-AI/issues"
+  },
+  "keywords": [
+    "ai",
+    "cli",
+    "claude",
+    "claude-code",
+    "skills",
+    "knowledge-graph",
+    "llm",
+    "token-optimization"
+  ],
+  "license": "AGPL-3.0-only"
+}
