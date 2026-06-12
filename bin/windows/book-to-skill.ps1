@@ -17,8 +17,10 @@ function Resolve-Python {
     return $null
 }
 
-$Py = Resolve-Python
-if (-not $Py) {
+# @() at the call site: PowerShell unrolls single-element arrays returned
+# from functions, which would make $Py[0] index the first character.
+$Py = @(Resolve-Python)
+if ($Py.Count -eq 0) {
     Write-Host '[X] Python not found. Install Python or run setup.ps1.' -ForegroundColor Red
     exit 1
 }
