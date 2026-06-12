@@ -13,21 +13,21 @@ const Routes = {
                 <button class="btn btn-secondary" onclick="app.navigate('chat')"><span class="icon">💬</span> Chatta con l'Assistente</button>
             </div>
         </div>
-        <div class="stats-grid">
-            <div class="card stat-card">
+        <div class="stats-grid" id="home-stats-grid">
+            <div class="card stat-card animate-fade-in delay-1">
                 <span class="icon">🗜️</span>
-                <div class="value">12</div>
+                <div class="value" id="stat-active-skills">...</div>
                 <div class="label">Skill Attive</div>
             </div>
-            <div class="card stat-card">
+            <div class="card stat-card animate-fade-in delay-2">
                 <span class="icon">🌐</span>
-                <div class="value">3</div>
+                <div class="value" id="stat-graphs">4</div>
                 <div class="label">Grafi di Conoscenza</div>
             </div>
-            <div class="card stat-card">
-                <span class="icon">🧠</span>
-                <div class="value">47</div>
-                <div class="label">Memorie Salvate</div>
+            <div class="card stat-card animate-fade-in delay-3">
+                <span class="icon">⚡</span>
+                <div class="value" id="stat-tokens-saved">...</div>
+                <div class="label">Token Risparmiati</div>
             </div>
         </div>
     `,
@@ -63,6 +63,7 @@ const Routes = {
                 <h2>🏪 Skill Marketplace</h2>
                 <p class="text-secondary">Esplora skill e tool creati dalla community.</p>
             </div>
+            <div id="marketplace-tabs-container"></div>
             <div class="flex gap-4 items-center">
                 <input type="text" class="form-control" placeholder="Cerca skill..." style="width: 200px;">
                 <button class="btn btn-outline">Filtri</button>
@@ -74,9 +75,17 @@ const Routes = {
     `,
     dashboard: `
         <div class="mb-8">
-            <h2>📊 Dashboard Creatore</h2>
-            <p class="text-secondary">Monitora i tuoi guadagni e le royalties delle tue skill.</p>
+            <h2>📊 Dashboard</h2>
+            <p class="text-secondary">Monitora i tuoi guadagni e i consumi delle tue AI.</p>
         </div>
+        
+        <div class="card mb-8">
+            <h3 class="mb-4">🔌 Cockpit Tools Status</h3>
+            <div id="cockpit-status-container" style="display: flex; gap: var(--spacing-4); flex-wrap: wrap;">
+                <p class="text-muted">Caricamento stato AI Provider...</p>
+            </div>
+        </div>
+
         <div class="dashboard-grid">
             <div class="card">
                 <h3 class="text-muted mb-2">Totale Guadagnato</h3>
@@ -133,9 +142,18 @@ const app = {
     init() {
         this.contentEl = document.getElementById('app-content');
         this.navLinks = document.querySelectorAll('.nav-links a');
+        this.sidebar = document.querySelector('.sidebar');
+        this.mobileToggle = document.getElementById('mobile-nav-toggle');
         
         this.setupNavigation();
         window.auth.init();
+        
+        // Mobile toggle event
+        if (this.mobileToggle && this.sidebar) {
+            this.mobileToggle.addEventListener('click', () => {
+                this.sidebar.classList.toggle('open');
+            });
+        }
         
         // Initial route
         this.navigate('home');
@@ -147,6 +165,11 @@ const app = {
                 e.preventDefault();
                 const route = link.dataset.route;
                 this.navigate(route);
+                
+                // Close sidebar on mobile after click
+                if (window.innerWidth <= 768 && this.sidebar) {
+                    this.sidebar.classList.remove('open');
+                }
             });
         });
     },
@@ -169,11 +192,27 @@ const app = {
         this.contentEl.innerHTML = Routes[route];
         
         // Route specific inits
+        if (route === 'home') this.loadHomeStats();
         if (route === 'installer') window.installer.init();
         if (route === 'marketplace') window.marketplace.init();
         if (route === 'dashboard') window.dashboard.init();
         if (route === 'chat') {
              setTimeout(() => document.getElementById('chat-input').focus(), 100);
+        }
+    },
+    
+    async loadHomeStats() {
+        try {
+            const res = await fetch('/api/stats');
+            const stats = await res.json();
+            if (!stats.error) {
+                const elSkills = document.getElementById('stat-active-skills');
+                const elTokens = document.getElementById('stat-tokens-saved');
+                if (elSkills) elSkills.textContent = stats.active_skills;
+                if (elTokens) elTokens.textContent = (stats.total_tokens_saved / 1000).toFixed(1) + 'k';
+            }
+        } catch (e) {
+            console.error("Failed to load home stats", e);
         }
     }
 };

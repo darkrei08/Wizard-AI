@@ -8,6 +8,10 @@ import subprocess
 import urllib.request
 import re
 import time
+from db import init_db, get_stats
+
+# Initialize local SQLite DB on startup
+init_db()
 
 # Global cache for trending skills to avoid spamming the site
 TRENDING_CACHE = {
@@ -105,6 +109,18 @@ class HubAPIHandler(http.server.SimpleHTTPRequestHandler):
             
             skills = fetch_trending_skills()
             self.wfile.write(json.dumps(skills).encode('utf-8'))
+            return
+            
+        if self.path == '/api/stats':
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.end_headers()
+            
+            try:
+                stats = get_stats()
+                self.wfile.write(json.dumps(stats).encode('utf-8'))
+            except Exception as e:
+                self.wfile.write(json.dumps({"error": str(e)}).encode('utf-8'))
             return
             
         super().do_GET()
