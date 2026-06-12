@@ -34,7 +34,7 @@ Per essere completamente autonomo, segui questi passaggi per installare e inizia
 ### 1️⃣ Clona il Repository
 Clona il repository sul tuo computer locale:
 ```bash
-git clone https://github.com/TUO_USERNAME/wizard-ai.git ~/wizard-ai
+git clone https://github.com/darkrei08/Wizard-AI.git ~/wizard-ai
 cd ~/wizard-ai
 ```
 
