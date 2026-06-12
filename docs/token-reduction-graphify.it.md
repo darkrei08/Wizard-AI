@@ -1,135 +1,132 @@
-![📌 Icona in evidenza](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
+# Riduzione dei Token con Graphify — Guida Completa al Setup
 
-Most people burn through tokens re-reading the same files every single session. There's a fix — and it takes 2 minutes to set up.
+> 🇬🇧 [Read this guide in English](token-reduction-graphify.md)
 
-Andrej Karpathy — the guy who coined "vibe coding" — posted about a problem every Claude Code user has: every time you start a new session, your AI has to re-read your entire project from scratch. That's thousands of tokens wasted before you even ask your first question.
+La maggior parte delle persone spreca token rileggendo gli stessi file ad ogni sessione. Esiste una soluzione — e richiede 2 minuti per configurarla.
 
-Someone built the fix within 48 hours. It's called Graphify — an open-source Claude Code skill that reads your files once, builds a knowledge graph, and then lets you query your entire project in plain English without re-reading a single file.
+Andrej Karpathy — colui che ha coniato il termine "vibe coding" — ha evidenziato un problema che ogni utente di Claude Code conosce: ogni volta che inizi una nuova sessione, la tua AI deve rileggere l'intero progetto da zero. Sono migliaia di token sprecati prima ancora di porre la prima domanda.
 
-The reported token reduction is 71.5x compared to raw file reading
+Qualcuno ha costruito la soluzione in 48 ore. Si chiama **Graphify** — una skill open-source per Claude Code che legge i tuoi file una sola volta, costruisce un grafo di conoscenza, e poi ti permette di interrogare l'intero progetto in linguaggio naturale senza rileggere un singolo file.
 
-It works with code (13 languages), PDFs, images, and markdown
+- La riduzione di token riportata è di **71,5x** rispetto alla lettura diretta dei file
+- Funziona con codice (13 linguaggi), PDF, immagini e markdown
+- Gira interamente in locale — nessun database, nessun cloud, nessuna API key
 
-Runs entirely locally — no database, no cloud, no API keys
+GitHub: [github.com/safishamsi/graphify](https://github.com/safishamsi/graphify)
 
-GitHub: github.com/safishamsi/graphify
+---
 
-Open Claude Code and paste this one command:
+## Step 1: Installa Graphify
 
+Apri il terminale e incolla questo comando:
+
+```bash
 pip install graphifyy && graphify install
+```
 
+Fatto. Succedono due cose: il pacchetto Python si installa e Graphify si registra come skill di Claude Code. Richiede circa 30 secondi.
 
+---
 
-That's it. Two things happen: the Python package installs, and Graphify registers itself as a Claude Code skill. Takes about 30 seconds.
+## Step 2: Costruisci il Grafo di Conoscenza
 
-Inside Claude Code, navigate to your ~/.claude folder and run the Graphify skill:
+All'interno di Claude Code, naviga nella tua cartella `~/.claude` e avvia la skill Graphify:
 
-This scans every file in your Claude configuration folder — your CLAUDE.md, skills, memory files, everything — and builds a persistent knowledge graph from it. First run takes a bit depending on how much you have in there. After that, it's incremental.
+Questo scansiona ogni file nella tua cartella di configurazione Claude — il tuo CLAUDE.md, le skill, i file di memoria, tutto — e costruisce un grafo di conoscenza persistente. La prima esecuzione richiede un po' di tempo a seconda di quanti file hai. Dopo di che, è incrementale.
 
-Once it finishes, your AI can query the entire structure of your setup in plain English without re-reading a single file.
+Una volta completato, la tua AI può interrogare l'intera struttura del tuo setup in linguaggio naturale senza rileggere un singolo file.
 
-This is the step most people skip — and it's the one that actually saves you tokens. Add this to your ~/.claude/CLAUDE.md file:
+---
 
-## Context Navigation When you need to understand the codebase, docs, or any files in this project: 1. ALWAYS query the knowledge graph first: \`/graphify query "your question"\` 2. Only read raw files if I explicitly say "read the file" or "look at the raw file" 3. Use \`graphify-out/wiki/index.md\` as your navigation entrypoint for browsing structure
+## Step 3: Aggiungi la Regola nel CLAUDE.md
 
+Questo è il passaggio che la maggior parte delle persone salta — ed è quello che effettivamente risparmia i token. Aggiungi questo al tuo file `~/.claude/CLAUDE.md`:
 
+```markdown
+## Context Navigation
+Quando devi comprendere il codebase, i docs o qualsiasi file in questo progetto:
+1. Interroga SEMPRE il grafo di conoscenza prima: `/graphify query "la tua domanda"`
+2. Leggi i file grezzi solo se dico esplicitamente "leggi il file" o "guarda il file raw"
+3. Usa `graphify-out/wiki/index.md` come punto di ingresso per navigare la struttura
+```
 
-This tells Claude to check the knowledge graph FIRST instead of re-reading your raw files every time. That's where the 71.5x token savings comes from.
+Questo dice a Claude di controllare il grafo di conoscenza PRIMA invece di rileggere i file grezzi ogni volta. È da qui che viene il risparmio di 71,5x sui token.
 
-This is optional but honestly worth it — you can visualize your entire knowledge graph in 3D and it looks insane.
+---
 
-Download Obsidian from obsidian.md if you don't have it. Open your project folder as a vault.
+## Opzionale: Visualizzazione 3D in Obsidian
 
-Install the 3D Graph plugin:
+Questo è opzionale ma onestamente ne vale la pena — puoi visualizzare l'intero grafo di conoscenza in 3D ed è spettacolare.
 
-Go to Settings → Community Plugins → Turn off Restricted Mode
+1. Scarica [Obsidian](https://obsidian.md) se non lo hai già. Apri la cartella del tuo progetto come vault.
 
-Click "Browse" and search for BRAT — install and enable it
+2. Installa il plugin 3D Graph:
+   - Vai in Impostazioni → Plugin della Comunità → Disattiva la Modalità Restrittiva
+   - Clicca "Sfoglia" e cerca **BRAT** — installalo e attivalo
+   - Apri la palette comandi (Cmd+P) e lancia "BRAT: Add a beta plugin"
+   - Incolla il repo del 3D Graph di Aryan Gupta (versione 2.4.1)
+   - Attiva il plugin nella lista dei Plugin della Comunità
 
-Open the command palette (Cmd+P) and run "BRAT: Add a beta plugin"
+3. Apri il grafo 3D dalla palette comandi: "3D Graph: Open 3D Graph View"
 
-Paste the repo for 3D Graph by Aryan Gupta (version 2.4.1)
+### Impostazioni Visive Consigliate
 
-Enable the plugin in your Community Plugins list
+Le impostazioni predefinite sono noiose. Ecco cosa modificare:
 
-Open the 3D graph from the command palette: "3D Graph: Open 3D Graph View"
+- Imposta la dimensione base dei nodi a **6-8** (il default è troppo piccolo)
+- Attiva **"Scala per connessioni"** così i concetti principali appaiono più grandi
+- **Colori dei Gruppi** (Graphify raggruppa i tuoi file in comunità):
+  - Gruppo 0 (Core/Ingresso): Blu elettrico — `#3B82F6`
+  - Gruppo 1 (Logica/Servizi): Verde smeraldo — `#10B981`
+  - Gruppo 2 (Dati/Modelli): Arancione ambra — `#F59E0B`
+  - Gruppo 3 (Config/Utility): Rosa acceso — `#EC4899`
+  - Gruppo 4 (Docs/Test): Viola — `#8B5CF6`
+  - Gruppo 5+: Cicla tra ciano `#06B6D4`, rosso `#EF4444`, lime `#84CC16`
 
-Now make it look good. Default settings are boring. Here's what to change:
+- Imposta l'opacità dei collegamenti a **0.15-0.2**
+- Imposta lo spessore dei collegamenti a **1-2**
+- Attiva bloom/glow se supportato
+- Imposta lo sfondo su **scuro/nero** per il miglior contrasto
+- Aumenta leggermente la forza di repulsione per far espandere i cluster
 
-Set the base node size to 6-8 (default is too small)
+> **Suggerimento:** Non sai quali gruppi corrispondono a cosa nel tuo progetto? Incolla questo prompt in Claude Code:
+> ```
+> Leggi graphify-out/GRAPH_REPORT.md e lista ogni numero di comunità/gruppo
+> con una breve descrizione dei file e concetti contenuti.
+> Per ogni gruppo, suggerisci un colore esadecimale che ne rappresenti visivamente lo scopo.
+> Formatta il tutto come una tabella che posso usare per configurare i colori del plugin 3D Graph in Obsidian.
+> ```
 
-Turn on "Scale by connections" so hub concepts appear larger — this makes the important nodes pop immediately
+---
 
-Group Colors: Graphify clusters your files into communities. Assign a distinct color to each group so you can instantly see how your project is organized:
+## Perché è Importante
 
-Group 0 (Core/Entry): Electric blue — #3B82F6
+Ecco la matematica a cui la maggior parte delle persone non pensa. Un progetto con 30-40 file può costare **15.000-20.000 token** solo per ristabilire il contesto all'inizio di ogni sessione. Se fai 20 sessioni a settimana, sono 300.000-400.000 token che non producono assolutamente nulla.
 
-Group 1 (Logic/Services): Emerald green — #10B981
+Con Graphify, quel costo lo paghi **una sola volta**. Il grafo persiste tra le sessioni. Ogni sessione futura inizia con la tua AI che conosce già la struttura del tuo progetto.
 
-Group 2 (Data/Models): Amber orange — #F59E0B
+Vantaggi chiave:
+- **Costo di costruzione una tantum** vs. rilettura ad ogni sessione
+- Il grafo si **aggiorna incrementalmente** quando i file cambiano
+- Puoi interrogare le **relazioni tra concetti**, non solo cercare parole chiave
+- Ha **git hooks** che ricostruiscono il grafo automaticamente ad ogni commit
 
-Group 3 (Config/Utils): Hot pink — #EC4899
+> 💡 **Installa Graphify una volta, risparmia token per sempre.** I 2 minuti necessari per configurarlo si ripagano nella prima sessione.
 
-Group 4 (Docs/Tests): Purple — #8B5CF6
+---
 
-Group 5+: Cycle through cyan #06B6D4, red #EF4444, lime #84CC16
+## L'Alternativa Automatizzata: /wiki-brain
 
-Not sure which groups map to what in your project? Paste this prompt into Claude Code and it will tell you exactly which color to assign to each group:
+Vuoi la versione chiavi in mano? La skill `/wiki-brain` esegue tutti e 3 i passaggi sopra automaticamente:
 
-Read graphify-out/GRAPH\_REPORT.md and list every community/group number with a short description of what files and concepts are in each one. For each group, suggest a hex color that visually represents its purpose. Format it as a table I can use to set up my 3D Graph plugin colors in Obsidian.
+- Ti guida nell'installazione di Obsidian (o usa il vault esistente)
+- Installa automaticamente Graphify
+- Crea la struttura delle cartelle wiki (`raw/` per le sorgenti, `wiki/` per le pagine mantenute da Claude, `log.md` per la timeline)
+- Mostra un'anteprima del blocco Context Navigation prima di aggiungerlo al CLAUDE.md
+- Installa un hook SessionEnd che ricostruisce il grafo solo quando i file sono cambiati
+- Aggiunge il comando `/wiki-brain lint` per il controllo di salute della wiki
+- Aggiunge `/recall` — mostra le ultime 5 attività
 
+Basato sul pattern LLM Wiki di Andrej Karpathy — ogni conversazione alimenta un wiki personale cumulativo che puoi sfogliare in Obsidian.
 
-
-Set link opacity to 0.15-0.2 — too high and it's a mess, too low and you lose the connections
-
-Set link thickness to 1-2
-
-Turn on bloom/glow if the plugin supports it — makes the nodes pop against a dark background
-
-Set the background to dark/black for the best contrast with your colors
-
-Increase the repulsion force slightly so clusters spread out and don't overlap
-
-The result is a 3D rotating galaxy of your entire project where you can see exactly how everything connects. Spin it around, zoom into clusters, click nodes to jump to files.
-
-Here's the math most people don't think about. A project with 30-40 files can cost 15,000-20,000 tokens just to re-establish context at the start of every session. If you're running 20 sessions a week, that's 300,000-400,000 tokens doing absolutely nothing productive.
-
-With Graphify, you pay that cost once. The graph persists across sessions. Every future session starts with your AI already knowing the structure of your project.
-
-One-time build cost vs. per-session re-reading
-
-The graph updates incrementally when files change
-
-You can query relationships between concepts, not just search for keywords
-
-It even has git hooks so the graph rebuilds automatically on commits
-
-![💡 Icona in evidenza](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)
-
-Install Graphify once, save tokens forever. The 2 minutes it takes to set up will pay for itself in your first session.
-
-UPDATE — Want the done-for-you version? I built a skill that does all 3 steps above automatically. It walks you through installing Obsidian (or uses your existing vault), installs Graphify, creates the wiki folder structure, previews the CLAUDE.md changes before touching anything, and sets up a SessionEnd hook that rebuilds the graph on the schedule you pick — every 3 days, 7 days, or manual only. It's called /wiki-brain.
-
-Install it with one command. Open Terminal and paste this:
-
-Then open Claude Code (type claude in Terminal) and type /wiki-brain. It asks 4 simple questions in plain English and handles the rest. Setup takes about 5 minutes.
-
-What it adds on top of the steps in this guide:
-
-Walks you through installing Obsidian and creating a vault if you don't already have one — with full step-by-step directions
-
-Auto-installs Graphify so you never run a pip command
-
-Creates the wiki folder structure (raw/ for sources, wiki/ for Claude-maintained pages, log.md for a timeline) automatically
-
-Previews the Context Navigation block before adding it to your CLAUDE.md — you approve every change before it's written
-
-Installs a SessionEnd hook that rebuilds the graph only when files have actually changed — no wasted compute, no background noise
-
-Adds a /wiki-brain lint command that health-checks your wiki for contradictions, stale claims, orphan pages, missing concepts, and broken links
-
-Adds /recall — shows your last 5 activities (ingests, queries, sessions) so you can pick up where you left off
-
-Based on Andrej Karpathy's LLM Wiki pattern — every conversation can feed a compounding personal wiki you browse in Obsidian. Claude gets smarter about YOUR stuff the more you use it
-
-If you're a beginner and don't want to do the 3 steps manually, /wiki-brain is the one-command version. If you want full control, the 3 steps above still work — it's the same underlying pattern.
+Apri Claude Code e digita `/wiki-brain`. Pone 4 semplici domande e gestisce tutto il resto. Il setup richiede circa 5 minuti.

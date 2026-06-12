@@ -27,7 +27,18 @@ echo "Wizard-AI repo: $WIZARD_AI_DIR"
 # If empty: source "$HOME/.config/wizard-ai/env"
 ```
 
-## 2. Step-by-Step Integration Workflow
+## 2. Step 0: Verification & Approval (CRITICAL)
+
+Before executing ANY installation commands or modifying the repository, you MUST:
+
+1. **Verify Existing Resources**: Read `$WIZARD_AI_DIR/docs/WIKI.md` (or `WIKI.it.md`) to check if the requested tool, or something similar/better, is already installed or tracked.
+2. **Request Permission / Integration**: 
+   - If a similar tool exists, inform the user and ask: *"I found [Tool] which does something similar. Do you still want to proceed with installing [New Tool]?"*
+   - If it is completely new, inform the user: *"I didn't find anything similar. To integrate this new skill permanently into the Wizard-AI ecosystem, you must submit an Issue or Pull Request on the official GitHub repository so the project owner can review it. Shall I draft the GitHub request for you?"*
+   - **Exception for the Owner**: If the user explicitly states they are the repository owner/maintainer and orders you to proceed locally, you may ask: *"As the owner, do you want me to proceed with the local integration workflow?"*
+3. **STOP AND WAIT**: Do not proceed to the Integration Workflow until the user explicitly approves (as the owner) or asks you to draft the GitHub request.
+
+## 3. Step-by-Step Integration Workflow
 
 ### Step 1: Install Locally
 
@@ -42,7 +53,7 @@ Determine what type of tool it is:
 If the new skill is a GitHub repository, clone a reference copy into the project's resource folder:
 
 ```bash
-git clone <repo-url> "$WIZARD_AI_DIR/Risorse/Repositories-Skills/<repo-name>"
+git clone <repo-url> "$WIZARD_AI_DIR/resources/Repositories-Skills/<repo-name>"
 ```
 
 > **Note**: This folder is excluded from git via `.gitignore` (it holds local reference clones only).
@@ -116,13 +127,14 @@ Then sync the updated binary:
 cp "$WIZARD_AI_DIR/bin/ai-help" "$HOME/.local/bin/ai-help"
 ```
 
-### Step 7: Update the Installed Skills List
+### Step 7: Update the Resources Wiki
 
-Append to the reference document:
+Append the new skill to the unified wiki document:
 
 ```bash
 echo "- **<tool-name>**: Description of what it does." \
-  >> "$WIZARD_AI_DIR/Risorse/Lista - Skill Installate.md"
+  >> "$WIZARD_AI_DIR/docs/WIKI.md"
+# If applicable, also append to WIKI.it.md
 ```
 
 ### Step 8: Sync Skills to All Agents

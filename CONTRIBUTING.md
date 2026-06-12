@@ -1,57 +1,59 @@
 # Contributing to Wizard-AI
 
-Grazie per voler contribuire a Wizard-AI! Questo documento spiega come aggiungere nuove skill, wrapper CLI, e migliorare l'ecosistema.
+Thank you for your interest in contributing to Wizard-AI! This document explains how to add new skills, CLI wrappers, and improvements to the ecosystem.
+
+> 🇮🇹 [Leggi questo documento in Italiano](CONTRIBUTING.it.md)
 
 ---
 
-## 📋 Struttura del Progetto
+## 📋 Project Structure
 
 ```
 wizard-ai/
-├── bin/          # Script wrapper CLI installati in ~/.local/bin/
-├── skills/       # Definizioni SKILL.md per gli agenti AI
-├── Risorse/      # Guide e documentazione di riferimento
-├── setup.sh      # Script di installazione automatico
-└── README.md     # Documentazione principale
+├── bin/          # CLI wrapper scripts installed to ~/.local/bin/
+├── skills/       # SKILL.md definitions for AI agents
+├── docs/         # Reference guides and documentation
+├── setup.sh      # Automated installation script
+└── README.md     # Main documentation
 ```
 
 ---
 
-## 🔧 Aggiungere una Nuova Skill
+## 🔧 Adding a New Skill
 
-### 1. Crea il wrapper CLI in `bin/`
+### 1. Create the CLI wrapper in `bin/`
 
 ```bash
-# Esempio: bin/ai-nuovostrumento
+# Example: bin/ai-newtool
 #!/usr/bin/env bash
-# ai-nuovostrumento — Descrizione breve
-# Source: https://github.com/autore/repo
+# ai-newtool — Short description
+# Source: https://github.com/author/repo
 
 set -euo pipefail
 
-# Verifica prerequisiti
-if ! command -v nuovostrumento &>/dev/null; then
-  echo "❌ nuovostrumento non trovato."
-  echo "   Installa: uv tool install nuovostrumento"
+# Check prerequisites
+if ! command -v newtool &>/dev/null; then
+  echo "❌ newtool not found."
+  echo "   Install: uv tool install newtool"
   exit 1
 fi
 
-exec nuovostrumento "$@"
+exec newtool "$@"
 ```
 
-### 2. Crea il file `skills/nome-skill/SKILL.md`
+### 2. Create the `skills/skill-name/SKILL.md` file
 
-La skill DEVE avere il frontmatter YAML:
+The skill MUST have YAML frontmatter:
 
 ```markdown
 ---
-name: nome-skill
-description: "Descrizione concisa che spiega QUANDO usare questa skill"
+name: skill-name
+description: "Concise description explaining WHEN to use this skill"
 ---
 
-# /nome-skill
+# /skill-name
 
-Descrizione dettagliata...
+Detailed description...
 
 ## Usage
 ...
@@ -60,31 +62,31 @@ Descrizione dettagliata...
 ...
 ```
 
-**Regole importanti per le skill:**
-- ❌ **NON inserire percorsi assoluti** — usa `$WIZARD_AI_DIR`, `$HOME`, `~`
-- ❌ **NON includere chiavi API o segreti** di nessun tipo
-- ✅ Descrivi sia il comando base che il wrapper `ai-*`
-- ✅ Includi esempi pratici
+**Important rules for skills:**
+- ❌ **DO NOT hardcode absolute paths** — use `$WIZARD_AI_DIR`, `$HOME`, `~`
+- ❌ **DO NOT include API keys or secrets** of any kind
+- ✅ Document both the base command and the `ai-*` wrapper
+- ✅ Include practical examples
 
-### 3. Aggiorna `setup.sh`
+### 3. Update `setup.sh`
 
-Aggiungi l'installazione nel blocco appropriato:
+Add the installation in the appropriate block:
 
 ```bash
-# Per tool Python:
-uv tool install nomepacchetto
+# For Python tools:
+uv tool install packagename
 
-# Per repository GitHub:
-if [ ! -d "$HOME/.ai-skills/nome-repo" ]; then
-  git clone --quiet https://github.com/autore/repo "$HOME/.ai-skills/nome-repo"
+# For GitHub repositories:
+if [ ! -d "$HOME/.ai-skills/repo-name" ]; then
+  git clone --quiet https://github.com/author/repo "$HOME/.ai-skills/repo-name"
 fi
 ```
 
-### 4. Aggiorna `bin/ai-help`
+### 4. Update `bin/ai-help`
 
-Aggiungi una riga nella sezione appropriata del menu di aiuto.
+Add a line in the appropriate section of the help menu.
 
-### 5. Sincronizza
+### 5. Sync
 
 ```bash
 ai-sync-skills
@@ -92,35 +94,35 @@ ai-sync-skills
 
 ---
 
-## 📝 Stile del Codice
+## 📝 Code Style
 
-- Script bash: usa `set -euo pipefail` all'inizio
-- Messaggi di errore: scrivi su `stderr` (`>&2`)
-- Icone: ✅ successo, ❌ errore, ⚠️ warning, 🔄 operazione in corso
-- Commenti: descrivi il "perché", non il "cosa"
-
----
-
-## 🐛 Segnalare Bug
-
-Apri una Issue su GitHub con:
-1. Output del comando che ha fallito
-2. Output di `ai-help` (per vedere cosa è installato)
-3. Sistema operativo e architettura (`uname -a`)
+- Bash scripts: use `set -euo pipefail` at the top
+- Error messages: write to `stderr` (`>&2`)
+- Icons: ✅ success, ❌ error, ⚠️ warning, 🔄 in progress
+- Comments: describe the "why", not the "what"
 
 ---
 
-## 🚀 Pull Request
+## 🐛 Reporting Bugs
 
-1. Fork del repository
-2. Crea un branch: `git checkout -b feat/nome-skill`
-3. Apporta le modifiche
-4. Testa con `bash -n setup.sh` (syntax check)
-5. Verifica: `grep -r "/home/" skills/ bin/` non deve restituire risultati
-6. Apri la PR con descrizione chiara
+Open a GitHub Issue including:
+1. Output of the failing command
+2. Output of `ai-help` (to see what's installed)
+3. Operating system and architecture (`uname -a`)
 
 ---
 
-## ⚖️ Licenza
+## 🚀 Pull Requests
 
-Contribuendo, accetti che il tuo codice sia rilasciato sotto la [MIT License](LICENSE).
+1. Fork the repository
+2. Create a branch: `git checkout -b feat/skill-name`
+3. Make your changes
+4. Test with `bash -n setup.sh` (syntax check)
+5. Verify: `grep -r "/home/" skills/ bin/` must return no results
+6. Open a PR with a clear description
+
+---
+
+## ⚖️ License
+
+By contributing, you agree that your code will be released under the [MIT License](LICENSE).

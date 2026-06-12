@@ -1,0 +1,190 @@
+# Wizard-AI Resources & Installed Skills Wiki
+
+> 🇮🇹 [Leggi questa Wiki in Italiano](WIKI.it.md)
+
+This is the central wiki tracking all core Wizard-AI tools, installed AI agent skills, and external reference technologies. 
+**Before requesting a new skill integration**, check this list to verify if a similar tool is already installed or tracked.
+
+---
+
+## 🧙‍♂️ 1. Wizard-AI Core CLI Tools
+
+These are the primary command-line wrappers installed globally on your system by Wizard-AI.
+
+- **`ai-help`**: Central hub / command directory.
+- **`ai-graph`**: Build knowledge graphs from code/docs (via Graphify).
+- **`ai-compress`**: Compress prompts/context up to 20x (via LLMLingua).
+- **`ai-rerank`**: Re-rank passages by relevance (via FlashRank).
+- **`ai-squeeze`**: Compress CLI output / JSON / logs (via Sqz).
+- **`ai-convert`**: Convert any file to clean Markdown (via MarkItDown).
+- **`ai-mem`**: Store and search persistent semantic memory (via claude-mem).
+- **`ai-usage`**: Track Gemini token consumption (via GeminiUsage).
+- **`ai-sync-skills`**: Skill synchronizer to propagate skills across agents.
+- **`book-to-skill`**: Convert books/docs into AI skills.
+- **`litellm`**: Unified LLM API gateway.
+
+---
+
+## 🔌 2. Installed Agent Skills
+
+Below is the complete list of skills currently installed and globally available to the AI agents (Antigravity, Claude Code, Amp) organized by plugin/domain:
+
+### 🌐 Web Development and Browser (Chrome DevTools Plugin & Modern Web Guidance)
+- **a11y-debugging**: Web accessibility debugging (ARAI, focus, contrast) via Chrome DevTools.
+- **chrome-devtools**: Browser automation, debugging, network inspection, and performance analysis.
+- **chrome-extensions**: Building and debugging extensions for Google Chrome (Manifest V3).
+- **debug-optimize-lcp**: Optimizing Largest Contentful Paint (LCP) and Core Web Vitals.
+- **memory-leak-debugging**: Memory leak diagnostics for JavaScript/Node.js applications.
+- **modern-web-guidance**: Search for modern web development best practices (UI, performance, APIs).
+- **troubleshooting**: Troubleshooting browser connection issues.
+
+### 🔥 Firebase Plugin
+- **firebase-ai-logic-basics**: Integration of Firebase AI Logic (Gemini API) in web apps.
+- **firebase-app-hosting-basics**: Deploying web apps (Next.js/Angular) using Firebase App Hosting.
+- **firebase-auth-basics**: Configuring Firebase Authentication (user and access management).
+- **firebase-basics**: Basic configuration of Firebase projects via CLI.
+- **firebase-crashlytics**: Implementation and analysis of crashes via Firebase Crashlytics.
+- **firebase-data-connect**: Building Firebase backends based on PostgreSQL.
+- **firebase-firestore**: Cloud Firestore database configuration, queries, and management.
+- **firebase-hosting-basics**: Deploying to classic Firebase Hosting (static sites/SPAs).
+- **firebase-remote-config-basics**: Managing remote configurations and feature flags.
+- **firebase-security-rules-auditor**: Security rules auditing and validation for Firestore.
+- **xcode-project-setup**: Secure setup for iOS/Xcode projects (integrating dependencies like Firebase).
+
+### 📱 Mobile Development (Android Plugin)
+- **android-cli**: Automation of Android tasks (project creation, SDK management, diagnostics).
+
+### 🧬 Biological & Science Research (Science Plugin)
+- **alphafold-database-fetch-and-analyze**: Analyzing protein structures predicted by AlphaFold using UniProt ID.
+- **alphagenome-single-variant-analysis**: Genetic variant and gene expression analysis (AlphaGenome).
+- **chembl-database**: Searching the ChEMBL database (bioactive molecules, targets, drugs).
+- **clinical-trials-database**: Searching ClinicalTrials.gov for clinical trials.
+- **clinvar-database**: Clinical and pathogenicity analysis of human genomic variants.
+- **dbsnp-database**: Searching and mapping short genetic variants (SNPs) on NCBI.
+- **embl-ebi-ols**: Searching the EMBL-EBI Ontology Lookup Service (OLS).
+- **encode-ccres-database**: Searching ENCODE cis-regulatory elements of the genome.
+- **ensembl-database**: Mapping IDs, extracting genomic sequences, and variant effect predictions.
+- **foldseek-structural-search**: 3D structural search for proteins against databases.
+- **gnomad-database**: Querying allele frequencies and variants from gnomAD.
+- **gtex-database**: Extracting tissue-specific RNA expression data from GTEx.
+- **human-protein-atlas-database**: Protein localization and tissue expression (HPA).
+- **interpro-database**: Identifying protein domains, families, and sites.
+- **jaspar-database**: Querying transcription factor binding profiles (TF).
+- **literature-search-arxiv**: Searching scientific papers and preprints on arXiv.
+- **literature-search-biorxiv**: Searching and downloading preprints from bioRxiv/medRxiv.
+- **literature-search-europepmc**: Searching Europe PMC for biomedical literature.
+- **literature-search-openalex**: Querying the OpenAlex scholarly database.
+- **ncbi-sequence-fetch**: Fetching protein and nucleotide sequences from NCBI databases.
+- **openfda-database**: Searching drugs, devices, and recall data (openFDA API).
+- **opentargets-database**: Identifying therapeutic targets from Open Targets.
+- **pdb-database**: Searching and downloading 3D biomolecular structures (Protein Data Bank).
+- **protein-sequence-msa**: Multiple sequence alignment (MSA) using Clustal Omega.
+- **protein-sequence-similarity-search**: Homology search for protein sequences (MMseqs2/BLAST).
+- **pubchem-database**: Searching chemical compound data on PubChem.
+- **pubmed-database**: Searching and downloading medical papers and clinical trials from PubMed.
+- **pymol**: 3D visual rendering and analysis of protein structures.
+- **quickgo-database**: Mapping genes to biological processes using QuickGO/ECO.
+- **reactome-database**: Pathway analysis and associations on the Reactome database.
+- **string-database**: Protein-protein interaction network analysis (PPI) from STRING.
+- **ucsc-conservation-and-tfbs**: Search genomic conservation and evolution (UCSC).
+- **unibind-database**: Querying transcription factor binding sites (TF-DNA) from UniBind.
+- **uniprot-database**: Searching protein metadata, taxonomy, and functions in UniProt.
+
+### 🛠️ Utilities and Core Competencies
+- **google-antigravity-sdk**: Design and implementation of agents based on the Antigravity SDK (AGY).
+- **session-context-compressor**: Synthesis and compression of session contexts to facilitate future resumption.
+- **workflow-skill-creator**: Transforming complex user workflows into reusable skills.
+- **science-skills-common**: Shared logical core (HTTP client & rate limiter) for scientific APIs.
+- **uv**: Utility for installation and verification of the Python package manager `uv`.
+- **wizard-ai-installer**: Meta-skill to autonomously install, integrate, and configure new skills, tools, and repositories into the Wizard-AI ecosystem.
+
+---
+
+## 📚 3. External Resources & Technologies
+
+Reference list of tools, repositories, and frameworks relevant to AI and development.
+
+### Agents, Memory & Personal Profile (Digital Identity)
+- [OpenHuman](https://github.com/tinyhumansai/openhuman) - Personal data platform, Obsidian integration, and desktop AI harness.
+- [QwenPaw](https://github.com/agentscope-ai/QwenPaw) - Personal multi-channel and extendable AI assistant for local deployment.
+- [syke](https://github.com/saxenauts/syke) - Long-term memory agent based on the Persona model.
+- [Mem0](https://github.com/mem0ai/mem0) - Smart, personalized long-term memory layer for AI agents and assistants.
+- [personal-graph](https://github.com/Technoculture/personal-graph) - Lightweight personal knowledge graphs for LLMs (Python).
+- [Graphify](https://github.com/safishamsi/graphify) - Transforming inputs, code, and notes into knowledge graphs for LLMs.
+- [LLMWIKI](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) - Karpathy's gist on using LLMs for compounding personal wikis (Obsidian).
+- [Portfolio & Tech Example](https://github.com/micio86dev/portfolio) - Identity seed for LLM training or user context retrieval.
+
+### Developer Tools, Optimization & Token Efficiency
+- [GeminiUsage](https://github.com/rmedranollamas/geminiusage) - CLI tool to track token and context consumption in terminal sessions.
+- [LiteLLM](https://github.com/BerriAI/litellm) - AI Gateway and unified SDK interfacing with 100+ LLM providers with cost tracking.
+- [LLMLingua](https://github.com/microsoft/LLMLingua) - Prompt compression library to reduce tokens by up to 20x with minimal performance loss.
+- [FlashRank](https://github.com/PrithivirajDamodaran/FlashRank) - Ultra-fast, CPU-optimized reranker for RAG context optimization.
+- [sqz](https://github.com/ojuschugh1/sqz) - CLI output, JSON, and log context compressor for token-efficient agent sessions.
+- [MarkItDown](https://github.com/microsoft/markitdown) - Python utility/library to convert various formats to Markdown for LLMs and RAG.
+- [Claude-Mem](https://github.com/thedotmack/claude-mem) - Long-term persistent memory and semantic indexing system for LLMs.
+- [wiki-brain-skill](https://github.com/tenfoldmarc/wiki-brain-skill) - Claude Code skill implementing Karpathy's LLM Wiki pattern using Graphify.
+- [ECC](https://github.com/affaan-m/ECC) - Optimization framework for AI agents (commands, skills, hooks, and MCP).
+- [Serena](https://github.com/oraios/serena) - LSP-based semantic code search and MCP server for programming agents.
+- [Spec-Kit](https://github.com/github/spec-kit) - Specification-driven development (SDD) toolkit for AI agents.
+- [Antigravity Awesome Skills](https://github.com/sickn33/antigravity-awesome-skills/releases/tag/v11.2.0) - Ready-to-use skill collection for AI agents.
+- [awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills) - System-level best practices and skill collection.
+- [CLI-Anything](https://github.com/HKUDS/CLI-Anything) - Framework to expose arbitrary software as a CLI for AI agents.
+- [CLI-Printing-Press](https://github.com/mvanhorn/cli-printing-press) - Compact agent-native interfaces to minimize token footprint.
+- [Book-to-Skill](https://github.com/virgiliojr94/book-to-skill/tree/master) - Convert documents and books into AI skills.
+- [Impeccable](https://github.com/pbakaus/impeccable) - High-fidelity UI/UX testing and visual regression for agents.
+
+### Audio, Video & Emotion (Multimodal)
+- [Voicebox](https://github.com/jamiepine/voicebox) - Multi-engine offline speech processing and synthesis.
+- [Easy-Vibe](https://github.com/datawhalechina/easy-vibe) - AI-powered video and image enhancement (vibe coding curriculum).
+- [OmniVoice-Studio](https://github.com/debpalash/OmniVoice-Studio) - Professional voice cloning and production (offline).
+- [Supertonic](https://github.com/supertone-inc/supertonic) - On-device audio processing and enhancement.
+- [Hyperframes](https://github.com/heygen-com/hyperframes) - HTML-based UI rendering, frame management, and video generation.
+
+### Languages & Runtimes
+- [Python](https://github.com/python/cpython)
+- [Node.js](https://nodejs.org/)
+- [Bun](https://github.com/oven-sh/bun)
+- [Deno](https://github.com/denoland/deno)
+- [QuickJS](https://github.com/quickjs-ng/quickjs)
+
+### Frontend Frameworks & UI
+- [Next.js](https://github.com/vercel/next.js)
+- [Vue.js](https://github.com/vuejs/core)
+- [React](https://github.com/facebook/react)
+- [SvelteKit](https://github.com/sveltejs/kit)
+- [Gatsby](https://github.com/gatsbyjs/gatsby)
+- [Angular](https://github.com/angular/angular)
+- [Vuetify](https://github.com/vuetifyjs/vuetify)
+- [Svelte](https://github.com/sveltejs/svelte)
+- [Nuxt](https://github.com/nuxt/nuxt)
+- [Astro](https://astro.build/)
+- [AionUi](https://github.com/iOfficeAI/AionUi/tree/main) - UI component library.
+- [phantom-ui](https://github.com/Aejkatappaja/phantom-ui) - Framework-agnostic skeleton loader (Web Components).
+- [PageSpeed Insights](https://pagespeed.web.dev/) - Web performance analysis tool.
+
+### Backend Frameworks, CMS & Databases
+- [Laravel](https://github.com/laravel/laravel)
+- [WordPress](https://github.com/WordPress/WordPress)
+- [MySQL](https://github.com/mysql/mysql-server)
+- [MongoDB](https://github.com/mongodb/mongo)
+- [Kafka](https://github.com/apache/kafka)
+- [PocketBase](https://github.com/pocketbase/pocketbase) - Single file backend with realtime DB, auth, and storage.
+- [TrailBase](https://github.com/trailbaseio/trailbase) - Rust-based realtime server and DB using SQLite.
+- [Pi.dev](https://pi.dev) - Serverless integration and development platform.
+
+### APIs & Messaging (WhatsApp Integration)
+- [go-whatsapp-web-multidevice](https://github.com/aldinokemal/go-whatsapp-web-multidevice) - Multi-device WhatsApp bridge.
+- [Wuzapi](https://github.com/asternic/wuzapi) - REST API based on whatsmeow for WhatsApp interaction.
+
+### Mobile Development
+- [Flutter](https://github.com/flutter/flutter)
+- [React Native](https://github.com/facebook/react-native)
+- [Ionic](https://github.com/ionic-team/ionic-framework)
+- [Android Studio](https://developer.android.com/studio)
+- [Firebase](https://firebase.google.com/)
+
+### Automation & Orchestration
+- [Zapier](https://zapier.com/)
+- [n8n](https://github.com/n8n-io/n8n)
+- [Airflow](https://github.com/apache/airflow)
+- [AWS Lambda](https://aws.amazon.com/lambda/)
