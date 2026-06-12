@@ -6,17 +6,18 @@ description: "Use to compress verbose CLI output, JSON payloads, logs, and agent
 # /sqz
 
 sqz compresses CLI output, JSON, and logs for token-efficient agentic sessions.
-Installed at `~/.local/bin/sqz` and `~/.local/bin/sqz-mcp`.
+
+Available as both `sqz` (base command) and `ai-squeeze` (wrapper alias) — both are installed and interchangeable.
 
 ## CLI Usage
 
 ```bash
 # Compress command output before passing to LLM
-git log --oneline -50 | sqz
-kubectl get pods -A -o json | sqz
+git log --oneline -50 | ai-squeeze
+kubectl get pods -A -o json | ai-squeeze
 
 # Compress a JSON file
-sqz < large_output.json
+ai-squeeze < large_output.json
 
 # Compress with custom compression level (1-9)
 cat verbose_log.txt | sqz --level 7
@@ -24,14 +25,11 @@ cat verbose_log.txt | sqz --level 7
 # Show compression stats
 cat data.json | sqz --stats
 
-# Output as base64 (for embedding in text)
-cat output.json | sqz --base64
-
 # Decompress
 cat compressed.sqz | sqz --decompress
 
-# Use in agentic session: pipe tool output through sqz
-npm run build 2>&1 | sqz | ai-analyze-errors
+# Pipe multiple tools together
+npm run build 2>&1 | ai-squeeze
 ```
 
 ## MCP Server
@@ -53,7 +51,7 @@ import subprocess
 
 # Compress output programmatically
 result = subprocess.run(
-    ["sqz"], 
+    ["sqz"],
     input=large_json_string.encode(),
     capture_output=True
 )
@@ -68,11 +66,11 @@ compressed = result.stdout
 - Compressing verbose logs (build logs, test output, kubectl output)
 - User asks to "compress output", "reduce tokens from this command"
 
-## Typical Pipeline
+## Full Token-Efficient Pipeline
 
 ```bash
-# Full token-efficient pipeline: compress → rerank → send to LLM
-kubectl describe pods -A | sqz | \
-  rerank --query "errors and warnings" --compact | \
-  compress-prompt --ratio 0.5
+# Compress output → rerank → compress prompt → send to LLM
+kubectl describe pods -A | ai-squeeze | \
+  ai-rerank --query "errors and warnings" --compact | \
+  ai-compress --ratio 0.5
 ```

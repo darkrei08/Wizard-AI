@@ -7,7 +7,6 @@
 set -euo pipefail
 
 SKILL_DIR="$HOME/.ai-skills/geminiusage"
-GEMINI_USAGE_BIN="$HOME/.local/bin/gemini-usage"
 
 if [[ ! -d "$SKILL_DIR" ]]; then
   echo "❌ geminiusage not found at $SKILL_DIR" >&2
@@ -33,4 +32,4 @@ if [[ $# -eq 0 ]]; then
   echo ""
 fi
 
-exec "$GEMINI_USAGE_BIN" "$@"
+exec python3 "$SKILL_DIR/scripts/token_usage.py" "$@"

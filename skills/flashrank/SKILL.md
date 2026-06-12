@@ -3,31 +3,32 @@ name: flashrank
 description: "Use to re-rank documents or passages by relevance before inserting them into LLM context — reduces wasted tokens by putting the most relevant chunks first. Use in RAG pipelines, when the user has a list of documents to filter, or when context needs to be pruned to top-K most relevant passages."
 ---
 
-# /flashrank (rerank)
+# /flashrank
 
-FlashRank is a fast, CPU-optimized reranker for RAG systems. It scores passages by relevance to a query.
-CLI available as `rerank` at `~/.local/bin/rerank`.
+FlashRank is a fast, CPU-optimized reranker for RAG systems. It scores passages by relevance to a query and returns them sorted by score.
+
+Installed inside `~/.ai-skills/venv/`. Use via the `ai-rerank` wrapper (handles venv activation automatically).
 
 ## CLI Usage
 
 ```bash
 # Re-rank JSON passages (format: [{"id": 0, "text": "..."}])
-rerank --query "How does authentication work?" --passages passages.json
+ai-rerank --query "How does authentication work?" --passages passages.json
 
 # Return top 3 results
-rerank --query "What is the API rate limit?" --passages docs.json --top-k 3
+ai-rerank --query "What is the API rate limit?" --passages docs.json --top-k 3
 
 # Pipe JSON from stdin
-echo '[{"id":0,"text":"doc1"},{"id":1,"text":"doc2"}]' | rerank --query "question"
+echo '[{"id":0,"text":"doc1"},{"id":1,"text":"doc2"}]' | ai-rerank --query "question"
 
 # Output full JSON with scores
-rerank --query "X" --passages docs.json --json
+ai-rerank --query "X" --passages docs.json --json
 
 # Output only ranked text (for piping)
-rerank --query "X" --passages docs.json --compact
+ai-rerank --query "X" --passages docs.json --compact
 
 # Use a different model
-rerank --query "X" --passages docs.json --model ms-marco-TinyBERT-L-2-v2
+ai-rerank --query "X" --passages docs.json --model ms-marco-TinyBERT-L-2-v2
 ```
 
 ## Input Format
@@ -59,7 +60,7 @@ for r in results[:3]:
     print(f"Score: {r['score']:.4f} | {r['text'][:80]}")
 ```
 
-## Available Models (CPU, fast)
+## Available Models (CPU, no GPU required)
 
 | Model | Speed | Quality |
 |-------|-------|---------|
@@ -70,6 +71,15 @@ for r in results[:3]:
 ## When to Use
 
 - RAG pipeline has too many retrieved chunks → rerank to top-K
-- User has a list of documents and wants to find the most relevant
+- User has a list of documents and wants the most relevant ones
 - Need to reduce context before sending to LLM
 - User asks about "relevance ranking", "document filtering", "RAG optimization"
+
+## Full Token-Efficient Pipeline
+
+```bash
+# Compress → Rerank → Send to LLM
+kubectl describe pods -A | ai-squeeze | \
+  ai-rerank --query "errors and warnings" --compact | \
+  ai-compress --ratio 0.5
+```

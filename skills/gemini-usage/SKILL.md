@@ -5,29 +5,34 @@ description: "Use to track Gemini CLI token usage, context window consumption, a
 
 # /gemini-usage
 
-GeminiUsage tracks token and context usage for Gemini CLI sessions.
-Installed at `~/.local/bin/gemini-usage`. Source in `~/.ai-skills/geminiusage/`.
+GeminiUsage tracks token and context usage for Gemini CLI (Antigravity) sessions.
+
+Available as both `gemini-usage` (base command) and `ai-usage` (wrapper alias) — both are installed and interchangeable.
+Source in `~/.ai-skills/geminiusage/`.
 
 ## CLI Usage
 
 ```bash
 # Show current session token usage
-gemini-usage
+ai-usage
 
-# Show usage for a specific session/log file
-gemini-usage --session ~/.gemini/logs/session-latest.json
+# Show usage for today
+ai-usage --today
 
-# Show usage stats (tokens in/out, cost estimate)
-gemini-usage --stats
+# Show last 24 hours of usage
+ai-usage --rolling-24h
 
-# Monitor usage in real-time
-gemini-usage --watch
+# Check quota status
+ai-usage --quota
 
-# Export usage report
-gemini-usage --export usage-report.csv
+# Full usage history
+ai-usage --history
 
 # Show help
-gemini-usage --help
+ai-usage --help
+
+# Also works with base command
+gemini-usage --stats
 ```
 
 ## What It Shows
@@ -48,6 +53,6 @@ gemini-usage --help
 
 ## Notes
 
-- Requires Gemini CLI to be installed and sessions to be logged
-- Works with `agy` (Antigravity) sessions automatically
+- Requires Gemini CLI (Antigravity) to be installed and sessions to be logged
+- Works with `agy` sessions automatically
 - Source: https://github.com/rmedranollamas/geminiusage

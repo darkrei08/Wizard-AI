@@ -169,9 +169,10 @@ fi
 echo -e "\n${BLUE}[6/8] Deploying custom AI CLI wrappers to ~/.local/bin/...${NC}"
 cp -p "$SCRIPT_DIR"/bin/* "$HOME/.local/bin/"
 chmod +x "$HOME/.local/bin"/ai-* 2>/dev/null || true
-chmod +x "$HOME/.local/bin"/gemini-usage 2>/dev/null || true
 chmod +x "$HOME/.local/bin"/book-to-skill 2>/dev/null || true
-echo -e "${GREEN}✓ $(ls "$SCRIPT_DIR/bin/" | wc -l) wrapper scripts installed to ~/.local/bin/${NC}"
+# Create symlink for gemini-usage pointing to ai-usage to avoid duplicate script files
+ln -sf ai-usage "$HOME/.local/bin/gemini-usage"
+echo -e "${GREEN}✓ $(ls "$SCRIPT_DIR/bin/" | wc -l) wrapper scripts installed to ~/.local/bin/ (with gemini-usage symlinked)${NC}"
 
 # 7. Install Skills for all agents
 echo -e "\n${BLUE}[7/8] Installing AI agent skills...${NC}"
