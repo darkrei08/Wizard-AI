@@ -53,13 +53,16 @@
 .chat-container {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 4rem);
+    height: calc(100vh - 14rem); /* Adjusted height to account for paddings and header */
+    min-height: 400px;
     max-width: 900px;
+    width: 100%;
     margin: 0 auto;
     background-color: var(--bg-secondary);
     border: 1px solid var(--bg-tertiary);
     border-radius: var(--radius-lg);
     overflow: hidden;
+    box-shadow: var(--shadow-lg);
 }
 
 .chat-messages {
