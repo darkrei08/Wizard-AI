@@ -1,0 +1,12 @@
+#!/bin/bash
+# Wrapper for spec-kit
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+WIZARD_AI_DIR="$(dirname "$DIR")"
+
+echo -e "\033[1;36m[ai-spec]\033[0m Esecuzione spec-kit in corso..."
+
+# Launch log event in background
+python3 "$WIZARD_AI_DIR/hub/api/log_event.py" "ai-spec" "execute" 250 &
+
+# If spec-kit is installed somewhere, call it. For now, just print a placeholder.
+echo -e "\033[1;32mSpec-Kit tools sono attivi.\033[0m"

@@ -4,6 +4,12 @@
 
 set -euo pipefail
 
+# Telemetry hook
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+WIZARD_AI_DIR="$(dirname "$DIR")"
+python3 "$WIZARD_AI_DIR/hub/api/log_event.py" "ai-squeeze" "execute" 100 0.15 &
+
+
 SQZ_BIN="${HOME}/.local/bin/sqz"
 
 if [[ ! -x "$SQZ_BIN" ]]; then
