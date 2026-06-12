@@ -41,20 +41,61 @@ def get_cockpit_status():
         "/root/.local/share/cockpit-tools/accounts.json",
         "/root/Library/Application Support/cockpit-tools/accounts.json",
         "/root/AppData/Roaming/cockpit-tools/accounts.json",
-        os.path.expanduser("~/.ai-skills/cockpit-tools/accounts.json")
+        os.path.expanduser("~/.ai-skills/cockpit-tools/accounts.json"),
+        os.path.expanduser("~/.antigravity_cockpit/accounts.json"),
+        "/root/.antigravity_cockpit/accounts.json"
     ]
     
     cockpit_db_path = None
+    is_real_cockpit = False
     for p in possible_paths:
         if os.path.exists(p):
             cockpit_db_path = p
+            if ".antigravity_cockpit" in p:
+                is_real_cockpit = True
             break
             
     if cockpit_db_path:
         try:
             with open(cockpit_db_path, "r") as f:
                 data = json.load(f)
-                # Check if this is actually Cockpit Tools by looking for 'active_provider' or 'quota' or 'status'
+                
+                # Check if it's the real Cockpit Tools format
+                if "version" in data and "accounts" in data:
+                    # Real Cockpit Tools detected!
+                    # Try to get the active account email
+                    active_email = "Sconosciuto"
+                    current_account_path = os.path.join(os.path.dirname(cockpit_db_path), "current_account.json")
+                    if os.path.exists(current_account_path):
+                        with open(current_account_path, "r") as cf:
+                            cdata = json.load(cf)
+                            active_email = cdata.get("email", active_email)
+                    elif "current_account_id" in data:
+                        # Fallback to ID
+                        curr_id = data["current_account_id"]
+                        for acc in data["accounts"]:
+                            if acc.get("id") == curr_id:
+                                active_email = acc.get("email", active_email)
+                                break
+                                
+                    return {
+                        "status": "success",
+                        "active_provider": {
+                            "name": "Cockpit AI Proxy",
+                            "type": "Multi-Provider",
+                            "status": "connected"
+                        },
+                        "quota": {
+                            "used_tokens": 0,
+                            "total_limit": 1000000,
+                            "percentage_used": 0,
+                            "reset_date": "N/A"
+                        },
+                        "active_account": active_email,
+                        "accounts_count": len(data["accounts"])
+                    }
+                    
+                # Mock format check
                 if "status" not in data and "active_provider" not in data:
                     # Not the right file format, keep searching
                     pass
@@ -138,6 +179,10 @@ def main():
             icon = "✅" if acc.get("status") == "active" else "❌"
             plan_info = f"[{acc['plan']}]" if "plan" in acc else ""
             print(f" {icon} {acc.get('name', 'N/A')} {plan_info}")
+    
+    if "active_account" in status:
+        print(f"Account in uso:  {status['active_account']}")
+        print(f"Totale accounts: {status.get('accounts_count', 1)}")
     
     print("========================================")
     print("Avvia l'app Cockpit Tools per gestire gli account.")
