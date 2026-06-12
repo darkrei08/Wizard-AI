@@ -1,0 +1,12 @@
+services:
+  wizard-ai-hub:
+    build: .
+    container_name: wizard-ai-hub
+    ports:
+      - "9742:9742"
+    volumes:
+      # Mount the configuration folder so SQLite DB is persisted and shared with the host
+      - ~/.config/wizard-ai:/root/.config/wizard-ai
+      # Mount the Cockpit Tools directory so ai-quota can read the AI provider state
+      - ~/.local/share/cockpit-tools:/root/.local/share/cockpit-tools:ro
+    restart: unless-stopped

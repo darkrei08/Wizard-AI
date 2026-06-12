@@ -69,13 +69,33 @@ chmod +x setup.sh
 powershell -ExecutionPolicy Bypass -File setup.ps1
 ```
 
-#### 3️⃣ Verify the Installation
-Reload your shell to load the new environment variables and paths, then run the central help menu:
+#### 3️⃣ Verify Installation
+Reload your shell to load the new environment variables, then launch the help menu:
 ```bash
-source ~/.bashrc   # or source ~/.zshrc — on Windows just open a new terminal
+source ~/.bashrc   # or source ~/.zshrc — on Windows simply open a new terminal
 ai-help
 ```
-You should see a clean dashboard showing the status of all available capabilities.
+You should see the list of commands.
+
+#### 4️⃣ Launch the Local Dashboard (Hub)
+The ecosystem includes a beautiful graphical interface (Hub) to explore skills and view statistics (including the Cockpit Tools Tracker).
+You can open it from the terminal with the built-in wrapper, which will start a local mini-server and automatically open the browser:
+```bash
+ai-hub
+```
+*Manual alternative to start the server*:
+```bash
+python3 $WIZARD_AI_DIR/hub/api/server.py --port 9742
+# Open http://localhost:9742 in your browser
+```
+
+### 🐳 Option C — Run via Docker (for Web GUI)
+If you prefer to keep the web environment isolated, you can run the Dashboard via Docker. The container will automatically mount your host system volumes to read the correct telemetry data:
+
+```bash
+docker compose up -d
+```
+The interface will be available at `http://localhost:9742`.
 
 ---
 
