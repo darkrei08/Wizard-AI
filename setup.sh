@@ -98,6 +98,7 @@ clone_if_missing "lean-ctx"          "https://github.com/yvgude/lean-ctx.git"
 clone_if_missing "rtk"               "https://github.com/rtk-ai/rtk.git"
 clone_if_missing "nuxt"              "https://github.com/nuxt/nuxt.git"
 clone_if_missing "express-typescript-starter" "https://github.com/ToniR7/express-typescript-starter.git"
+clone_if_missing "caveman"           "https://github.com/JuliusBrussee/caveman.git"
 
 # Install claude-mem Python package if setup.py/pyproject.toml is present
 if [ -f "$HOME/.ai-skills/claude-mem/pyproject.toml" ] || \
@@ -226,6 +227,7 @@ echo -e "  ${CYAN}ai-mem${NC}       - Access persistent semantic memory (claude-
 echo -e "  ${CYAN}ai-design${NC}    - Browse & apply DESIGN.md files for UI generation"
 echo -e "  ${CYAN}ai-taste${NC}     - Apply anti-slop frontend design skill"
 echo -e "  ${CYAN}ai-lean${NC}      - Lean Context Intelligence (60-90% token savings)"
+echo -e "  ${CYAN}ai-caveman${NC}   - Cut output tokens by ~75% while keeping accuracy"
 echo -e "  ${CYAN}ai-scaffold${NC}  - Scaffold Express/Nuxt projects from templates"
 echo -e "  ${CYAN}ai-quota${NC}     - View AI provider quotas and subscriptions"
 echo -e "  ${CYAN}ai-sync-skills${NC} - Sync skills across all AI agents"

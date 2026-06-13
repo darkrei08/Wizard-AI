@@ -188,3 +188,4 @@ Lista di riferimento di tool, repository e framework rilevanti per l'AI e lo svi
 - [n8n](https://github.com/n8n-io/n8n)
 - [Airflow](https://github.com/apache/airflow)
 - [AWS Lambda](https://aws.amazon.com/lambda/)
+- **caveman**: Una skill/plugin che fa sì che un agente AI produca meno token (riduzione di circa il 75%) mantenendo la piena accuratezza tecnica.

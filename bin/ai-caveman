@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# ai-caveman — AI skill to cut output tokens by ~75% while maintaining accuracy
+# Source: https://github.com/JuliusBrussee/caveman
+set -euo pipefail
+
+node "$HOME/.ai-skills/caveman/bin/install.js" "$@"

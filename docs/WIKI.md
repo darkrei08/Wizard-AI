@@ -188,3 +188,4 @@ Reference list of tools, repositories, and frameworks relevant to AI and develop
 - [n8n](https://github.com/n8n-io/n8n)
 - [Airflow](https://github.com/apache/airflow)
 - [AWS Lambda](https://aws.amazon.com/lambda/)
+- **caveman**: A skill/plugin that makes an AI agent output fewer tokens (~75% reduction) while keeping full technical accuracy.
