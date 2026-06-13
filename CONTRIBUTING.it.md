@@ -112,17 +112,22 @@ Apri una Issue su GitHub con:
 
 ---
 
-## 🚀 Pull Request
+## 🚀 Pull Request e Strategia di Branching
 
-1. Fork del repository
-2. Crea un branch: `git checkout -b feat/nome-skill`
-3. Apporta le modifiche
-4. Testa con `bash -n setup.sh` (syntax check)
-5. Verifica: `grep -r "/home/" skills/ bin/` non deve restituire risultati
-6. Apri la PR con descrizione chiara
+Questo progetto utilizza la skill globale `auto-branch` per gestire una logica di sviluppo basata su staging. Tutte le nuove funzionalità e correzioni devono passare per il branch `staging` prima di arrivare sul `main`.
+
+1. Effettua un Fork del repository
+2. Spostati sul branch staging: `git checkout staging`
+3. Crea un branch feature: `ai-branch feature "nome-skill"` (oppure `git checkout -b feature/nome-skill`)
+4. Apporta le tue modifiche
+5. Testa con `bash -n setup.sh` (syntax check)
+6. Verifica: `grep -r "/home/" skills/ bin/` non deve restituire risultati
+7. Apri una PR indirizzata al branch `staging` (NON `main`)
+
+Una volta che la funzionalità è testata in `staging`, i manutentori procederanno al rilascio sul `main`.
 
 ---
 
-## ⚖️ Licenza e CLA
+## ⚖️ Licenza
 
-Contribuendo, accetti che il tuo codice sia rilasciato sotto la [AGPLv3 License](LICENSE). Inoltre, inviando una Pull Request, accetti il **[Contributor License Agreement (CLA)](CLA.it.md)**, che ci concede il diritto di distribuire la tua skill commercialmente nell'ecosistema, garantendoti in cambio il diritto alle royalties. Mantieni in ogni caso il copyright originale del codice che hai scritto.
+Contribuendo, accetti che il tuo codice sia rilasciato sotto la [AGPLv3 License](LICENSE). Mantieni in ogni caso il copyright originale del codice che hai scritto.
