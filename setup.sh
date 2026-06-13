@@ -194,7 +194,7 @@ fi
 
 # 6. Copy and configure CLI Wrappers
 echo -e "\n${BLUE}[6/8] Deploying custom AI CLI wrappers to ~/.local/bin/...${NC}"
-cp -p "$SCRIPT_DIR"/bin/* "$HOME/.local/bin/"
+cp -p "$SCRIPT_DIR"/bin/* "$HOME/.local/bin/" 2>/dev/null || true
 chmod +x "$HOME/.local/bin"/ai-* 2>/dev/null || true
 chmod +x "$HOME/.local/bin"/book-to-skill 2>/dev/null || true
 # Create symlink for gemini-usage pointing to ai-usage to avoid duplicate script files
