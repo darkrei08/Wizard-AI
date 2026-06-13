@@ -189,3 +189,4 @@ Lista di riferimento di tool, repository e framework rilevanti per l'AI e lo svi
 - [Airflow](https://github.com/apache/airflow)
 - [AWS Lambda](https://aws.amazon.com/lambda/)
 - **caveman**: Una skill/plugin che fa sì che un agente AI produca meno token (riduzione di circa il 75%) mantenendo la piena accuratezza tecnica.
+- **auto-npm-publish**: Una skill per aiutare a configurare token NPM, GitHub Secrets, mantenere sincronizzato il package.json e controllare eventuali deprecazioni o warning delle GitHub Actions.

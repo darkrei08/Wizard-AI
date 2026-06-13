@@ -51,6 +51,9 @@ echo -e "     ${BLUE}ai-debug check                 ${RESET}→ full quality gat
 echo -e "     ${BLUE}ai-debug check --fix           ${RESET}→ full gate + auto-correct"
 echo -e "     ${BLUE}ai-debug log --errors          ${RESET}→ inspect SQLite debug log"
 echo ""
+echo -e "  $(check_cmd ai-npm-setup) ${BOLD}ai-npm-setup${RESET}     NPM Publish Setup: configure tokens & check workflows"
+echo -e "     ${BLUE}ai-npm-setup                   ${RESET}→ check npm secrets & GitHub actions"
+echo ""
 
 echo -e "${BOLD}${YELLOW}📊 KNOWLEDGE GRAPH${RESET}"
 echo -e "  $(check_cmd graphify) ${BOLD}graphify${RESET}         Build knowledge graphs from any codebase/docs"
