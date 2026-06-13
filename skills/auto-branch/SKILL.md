@@ -51,9 +51,9 @@ ai-branch cleanup
 ### Phase 1: Start a Feature
 
 ```bash
-# Always start from an up-to-date main
-git checkout main
-git pull origin main
+# Always start from an up-to-date staging
+git checkout staging
+git pull origin staging
 
 # Create the feature branch
 FEATURE_SLUG="file-manager-wifi"
@@ -92,23 +92,23 @@ ai-debug check   # ← triggers auto-debug skill for quality gates
 python -m ruff check .        # linting
 python -m ruff format --check . # formatting
 python -m pytest -x           # tests (if available)
-git diff main...HEAD --stat   # summary of changes
+git diff staging...HEAD --stat   # summary of changes
 ```
 
-### Phase 4: Merge to Main
+### Phase 4: Merge to Staging
 
 ```bash
 BRANCH=$(git branch --show-current)
 
-# Update main
-git checkout main
-git pull origin main
+# Update staging
+git checkout staging
+git pull origin staging
 
 # Merge with a merge commit (preserves history)
-git merge --no-ff "$BRANCH" -m "feat: merge $BRANCH into main"
+git merge --no-ff "$BRANCH" -m "feat: merge $BRANCH into staging"
 
 # Push
-git push origin main
+git push origin staging
 
 # Delete the feature branch (remote + local)
 git push origin --delete "$BRANCH"
@@ -131,17 +131,17 @@ ai-release patch   # for a fix
 # Full branch overview
 git branch -a --sort=-committerdate | head -20
 
-# Check which branches are merged into main (safe to delete)
-git branch --merged main | grep -v "main\|1.0-stable"
+# Check which branches are merged into staging (safe to delete)
+git branch --merged staging | grep -v "staging\|main\|1.0-stable"
 
-# Commits not yet in main (per branch)
-git log main..feature/my-branch --oneline
+# Commits not yet in staging (per branch)
+git log staging..feature/my-branch --oneline
 ```
 
 ## Rules for AI Agents
 
-- ALWAYS start feature branches from the latest `main`, not from other feature branches.
-- NEVER commit directly to `main` or `1.0-stable`.
+- ALWAYS start feature branches from the latest `staging`, not from other feature branches.
+- NEVER commit directly to `main` or `staging` without a PR or merge.
 - Use `--no-ff` when merging to preserve branch history in the graph.
 - Delete remote branches after merging to keep the repo clean.
 - Run `ai-debug check` before every merge to main.

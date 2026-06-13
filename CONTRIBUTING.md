@@ -112,17 +112,22 @@ Open a GitHub Issue including:
 
 ---
 
-## 🚀 Pull Requests
+## 🚀 Pull Requests & Branching Strategy
+
+This project uses the `auto-branch` global skill to manage a robust staging-based development logic. All new features and fixes must go through the `staging` branch before being merged into `main`.
 
 1. Fork the repository
-2. Create a branch: `git checkout -b feat/skill-name`
-3. Make your changes
-4. Test with `bash -n setup.sh` (syntax check)
-5. Verify: `grep -r "/home/" skills/ bin/` must return no results
-6. Open a PR with a clear description
+2. Switch to the staging branch: `git checkout staging`
+3. Create a feature branch: `ai-branch feature "skill-name"` (or `git checkout -b feature/skill-name`)
+4. Make your changes
+5. Test with `bash -n setup.sh` (syntax check)
+6. Verify: `grep -r "/home/" skills/ bin/` must return no results
+7. Open a PR targeting the `staging` branch (NOT `main`)
+
+Once a feature is tested and validated in `staging`, the maintainers will release it into `main`.
 
 ---
 
-## ⚖️ License and CLA
+## ⚖️ License
 
-By contributing, you agree that your code will be released under the [AGPLv3 License](LICENSE). Furthermore, by submitting a Pull Request, you accept the **[Contributor License Agreement (CLA)](CLA.md)**, which grants us the right to distribute your skill commercially in the ecosystem, guaranteeing you the right to royalties in return. You retain the original copyright to the code you wrote in any case.
+By contributing, you agree that your code will be released under the [AGPLv3 License](LICENSE). You retain the original copyright to the code you wrote in any case.
