@@ -34,13 +34,13 @@ Tutti gli strumenti vengono installati una sola volta e resi **disponibili a ogn
 Se hai [Node.js](https://nodejs.org) (≥ 14) e `git` installati, funziona allo stesso modo su Linux, macOS e Windows:
 
 ```bash
-npx wizard-ai-cli
+npx @darkrei08/wizard-ai-cli
 ```
 
 Il launcher clona il repository in `~/.wizard-ai` ed esegue automaticamente l'installatore della tua piattaforma (`setup.sh` o `setup.ps1`). Rieseguendo il comando, un'installazione esistente viene aggiornata. Puoi anche installarlo come comando globale:
 
 ```bash
-npm install -g wizard-ai-cli
+npm install -g @darkrei08/wizard-ai-cli
 wizard-ai
 ```
 

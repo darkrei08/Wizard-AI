@@ -34,13 +34,13 @@ All tools are installed once and **available to every AI agent** through a share
 If you have [Node.js](https://nodejs.org) (≥ 14) and `git` installed, this works the same on Linux, macOS and Windows:
 
 ```bash
-npx wizard-ai-cli
+npx @darkrei08/wizard-ai-cli
 ```
 
 The launcher clones the repository into `~/.wizard-ai` and runs the platform installer (`setup.sh` or `setup.ps1`) automatically. Re-running the command updates an existing install. You can also install it as a global command:
 
 ```bash
-npm install -g wizard-ai-cli
+npm install -g @darkrei08/wizard-ai-cli
 wizard-ai
 ```
 
