@@ -25,10 +25,6 @@ L'ecosistema Wizard-AI opera sotto un modello di Dual Licensing:
 L'uso del Wizard-AI Hub locale non richiede la creazione di un account. 
 Tuttavia, per accedere alla Dashboard Creatori e partecipare al programma di Revenue Share, è richiesto il login tramite account GitHub. Sei responsabile di mantenere la sicurezza del tuo account e di tutte le attività che avvengono sotto di esso.
 
-## 4. 
-Gli sviluppatori possono contribuire all'ecosistema creando nuove "Skill". Il programma di Revenue Share permette ai Creatori di percepire royalties basate sull'utilizzo delle loro skill, in conformità a quanto stabilito nel **[Creator Agreement](CREATOR-AGREEMENT.it.md)**.
-Wizard-AI si riserva il diritto di accettare, rifiutare o rimuovere qualsiasi Skill dal Marketplace a sua esclusiva discrezione.
-
 ## 5. Proprietà Intellettuale
 Tutti i marchi, i loghi, il design dell'Hub e le API proprietarie restano di proprietà di Wizard-AI S.r.l.
 Il codice open-source resta di proprietà dei rispettivi autori, licenziato a Wizard-AI S.r.l. tramite il **Contributor License Agreement (CLA)**.

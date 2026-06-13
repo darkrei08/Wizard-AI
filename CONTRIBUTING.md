@@ -123,18 +123,6 @@ Open a GitHub Issue including:
 
 ---
 
-## 💰 
-
-Wizard-AI adopts a "Spotify for AI" model. If you develop an exceptional skill and your PR is accepted, you will automatically enter our Creators program:
-
-1. **Passive Royalties**: You will earn between 60% and 70% of the net revenue in proportion to the use of your skill by companies and users (via anonymized telemetry).
-2. **Dashboard**: You can monitor usage and earnings via the local GUI (`ai-hub`).
-3. **Payouts**: Secure quarterly payments via Stripe Connect.
-
-For legal details, read the **[Creator Agreement](docs/legal/CREATOR-AGREEMENT.md)**.
-
----
-
 ## ⚖️ License and CLA
 
 By contributing, you agree that your code will be released under the [AGPLv3 License](LICENSE). Furthermore, by submitting a Pull Request, you accept the **[Contributor License Agreement (CLA)](CLA.md)**, which grants us the right to distribute your skill commercially in the ecosystem, guaranteeing you the right to royalties in return. You retain the original copyright to the code you wrote in any case.

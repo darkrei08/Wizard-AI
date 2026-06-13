@@ -123,18 +123,6 @@ Apri una Issue su GitHub con:
 
 ---
 
-## 💰 
-
-Wizard-AI adotta un modello "Spotify per l'AI". Se sviluppi una skill eccezionale e la tua PR viene accettata, entrerai automaticamente nel nostro programma Creatori:
-
-1. **Royalties Passive**: Guadagnerai tra il 60% e il 70% dei ricavi netti in proporzione all'utilizzo della tua skill da parte di aziende e utenti (tramite telemetria anonimizzata).
-2. **Dashboard**: Potrai monitorare l'utilizzo e i guadagni tramite la GUI locale (`ai-hub`).
-3. **Payout**: Pagamenti trimestrali sicuri tramite Stripe Connect.
-
-Per i dettagli legali, leggi il **[Creator Agreement](docs/legal/CREATOR-AGREEMENT.it.md)**.
-
----
-
 ## ⚖️ Licenza e CLA
 
 Contribuendo, accetti che il tuo codice sia rilasciato sotto la [AGPLv3 License](LICENSE). Inoltre, inviando una Pull Request, accetti il **[Contributor License Agreement (CLA)](CLA.it.md)**, che ci concede il diritto di distribuire la tua skill commercialmente nell'ecosistema, garantendoti in cambio il diritto alle royalties. Mantieni in ogni caso il copyright originale del codice che hai scritto.

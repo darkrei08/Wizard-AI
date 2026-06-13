@@ -25,10 +25,6 @@ The Wizard-AI ecosystem operates under a Dual Licensing model:
 The use of the local Wizard-AI Hub does not require account creation.
 However, to access the Creator Dashboard and participate in the Revenue Share program, login via a GitHub account is required. You are responsible for maintaining the security of your account and all activities that occur under it.
 
-## 4. 
-Developers can contribute to the ecosystem by creating new "Skills". The Revenue Share program allows Creators to earn royalties based on the use of their skills, in accordance with the terms set forth in the **[Creator Agreement](CREATOR-AGREEMENT.md)**.
-Wizard-AI reserves the right to accept, reject, or remove any Skill from the Marketplace at its sole discretion.
-
 ## 5. Intellectual Property
 All trademarks, logos, the design of the Hub, and proprietary APIs remain the property of Wizard-AI S.r.l.
 The open-source code remains the property of its respective authors, licensed to Wizard-AI S.r.l. through the **Contributor License Agreement (CLA)**.
