@@ -1,6 +1,6 @@
 {
   "name": "@darkrei08/wizard-ai-cli",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "Installer for the Wizard-AI environment: AI CLI tools and Claude Code skills (graphify, llmlingua, flashrank, markitdown and more). Clones the repo and runs the platform setup script.",
   "bin": {
     "wizard-ai": "cli.js"
