@@ -1,0 +1,621 @@
+#!/usr/bin/env bash
+# ai-os — Universal pre-install hook & meta-package-manager for Wizard-AI
+# Source: Wizard-AI skill (os-detect)
+#
+# MASTER PRE-INSTALL GATE: called by ALL Wizard-AI scripts before any installation.
+# Abstracts over: pacman | apt | dnf | zypper | apk | brew | winget | choco
+# Also handles:   uv (Python) | pip | npm | pnpm | cargo | go
+#
+# Usage:
+#   ai-os info                    Full environment report
+#   ai-os install <pkg>           System package via OS package manager
+#   ai-os ensure <pkg> [pkg...]   Install only if missing (idempotent)
+#   ai-os check <tool>            Exit 0 if installed, 1 if missing
+#   ai-os remove <pkg>            Uninstall system package
+#   ai-os python <pkg>            Python: uv tool install (global)
+#   ai-os pip <pkg>               Python: pip install (current venv)
+#   ai-os uv <pkg>                Python: uv tool install
+#   ai-os node <pkg>              Node.js: npm/pnpm install -g
+#   ai-os cargo <pkg>             Rust: cargo install
+#   ai-os go <pkg>                Go: go install <pkg>@latest
+#   ai-os pre-check               Full pre-install environment validation
+#   ai-os gh-setup                GitHub CLI install + auth
+
+set -euo pipefail
+
+BOLD='\033[1m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+CYAN='\033[0;36m'
+BLUE='\033[0;34m'
+MAGENTA='\033[0;35m'
+DIM='\033[2m'
+RESET='\033[0m'
+
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 1 — OS DETECTION ENGINE
+# ══════════════════════════════════════════════════════════════════════════════
+
+detect_os_type() {
+  case "$(uname -s)" in
+    Darwin)            echo "macos";   return ;;
+    MINGW*|MSYS*|CYGWIN*) echo "windows"; return ;;
+    Linux)
+      if grep -qi "microsoft" /proc/version 2>/dev/null; then
+        echo "wsl"
+      else
+        echo "linux"
+      fi ;;
+    *) echo "unknown" ;;
+  esac
+}
+
+detect_distro() {
+  local os
+  os=$(detect_os_type)
+  case "$os" in
+    macos)   echo "macos";   return ;;
+    windows) echo "windows"; return ;;
+  esac
+
+  if [ -f /etc/os-release ]; then
+    local id id_like
+    id=$(grep -E '^ID=' /etc/os-release \
+         | cut -d= -f2 | tr -d '"' | tr '[:upper:]' '[:lower:]')
+    id_like=$(grep -E '^ID_LIKE=' /etc/os-release \
+              | cut -d= -f2 | tr -d '"' | tr '[:upper:]' '[:lower:]' 2>/dev/null || true)
+
+    case "$id" in
+      arch|cachyos|manjaro|garuda|endeavouros|artix) echo "arch";    return ;;
+      ubuntu|linuxmint|pop|elementary|zorin)         echo "ubuntu";  return ;;
+      debian|kali|raspbian|mx)                       echo "debian";  return ;;
+      fedora|rhel|centos|rocky|almalinux)            echo "fedora";  return ;;
+      opensuse*|sled|sles)                           echo "opensuse";return ;;
+      alpine)                                        echo "alpine";  return ;;
+      void)                                          echo "void";    return ;;
+      gentoo)                                        echo "gentoo";  return ;;
+    esac
+    case "$id_like" in
+      *arch*)            echo "arch";   return ;;
+      *debian*|*ubuntu*) echo "debian"; return ;;
+      *fedora*|*rhel*)   echo "fedora"; return ;;
+    esac
+  fi
+  echo "unknown"
+}
+
+detect_package_manager() {
+  local os
+  os=$(detect_os_type)
+  case "$os" in
+    macos)
+      command -v brew    &>/dev/null && echo "brew"    && return
+      echo "none-macos";  return ;;
+    windows)
+      command -v winget  &>/dev/null && echo "winget"  && return
+      command -v choco   &>/dev/null && echo "choco"   && return
+      echo "none-windows"; return ;;
+    linux|wsl)
+      command -v pacman  &>/dev/null && echo "pacman"  && return
+      command -v apt     &>/dev/null && echo "apt"     && return
+      command -v apt-get &>/dev/null && echo "apt"     && return
+      command -v dnf     &>/dev/null && echo "dnf"     && return
+      command -v yum     &>/dev/null && echo "yum"     && return
+      command -v zypper  &>/dev/null && echo "zypper"  && return
+      command -v apk     &>/dev/null && echo "apk"     && return
+      command -v xbps-install &>/dev/null && echo "xbps" && return
+      echo "none-linux" ;;
+  esac
+}
+
+detect_distro_pretty() {
+  if [ -f /etc/os-release ]; then
+    grep -E '^PRETTY_NAME=' /etc/os-release | cut -d= -f2 | tr -d '"'
+  elif [ "$(uname -s)" = "Darwin" ]; then
+    echo "macOS $(sw_vers -productVersion 2>/dev/null || true)"
+  else
+    uname -s
+  fi
+}
+
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 2 — PACKAGE NAME RESOLUTION TABLE
+# Maps canonical tool names → distro-specific package names
+# Add new entries here as needed.
+# ══════════════════════════════════════════════════════════════════════════════
+
+resolve_pkg() {
+  local tool="$1"
+  local pm="$2"
+
+  # Tool → Package name per package manager
+  case "${tool}::${pm}" in
+    # ── GitHub CLI ──
+    gh::pacman|github-cli::pacman) echo "github-cli" ;;
+    gh::apt|gh::dnf|gh::yum|gh::zypper|gh::apk|gh::brew) echo "gh" ;;
+    gh::winget|github-cli::winget) echo "GitHub.cli" ;;
+    gh::choco)                     echo "gh" ;;
+    # ── Node.js ──
+    node::pacman)   echo "nodejs" ;;
+    node::apt)      echo "nodejs" ;;
+    node::dnf)      echo "nodejs" ;;
+    node::brew)     echo "node" ;;
+    node::winget)   echo "OpenJS.NodeJS" ;;
+    # ── Python ──
+    python::pacman)   echo "python" ;;
+    python::apt)      echo "python3" ;;
+    python::dnf)      echo "python3" ;;
+    python::brew)     echo "python@3" ;;
+    python::winget)   echo "Python.Python.3" ;;
+    python3::*)       resolve_pkg "python" "$pm" && return ;;
+    # ── Curl ──
+    curl::winget)   echo "cURL.cURL" ;;
+    # ── Git ──
+    git::winget)    echo "Git.Git" ;;
+    # ── jq ──
+    jq::winget)     echo "jqlang.jq" ;;
+    # ── ripgrep ──
+    rg::pacman|ripgrep::pacman) echo "ripgrep" ;;
+    rg::apt|ripgrep::apt)       echo "ripgrep" ;;
+    rg::brew)                   echo "ripgrep" ;;
+    rg::winget|ripgrep::winget) echo "BurntSushi.ripgrep.MSVC" ;;
+    # ── fzf ──
+    fzf::winget)  echo "junegunn.fzf" ;;
+    # ── bat ──
+    bat::winget)  echo "sharkdp.bat" ;;
+    # ── fd ──
+    fd::pacman)   echo "fd" ;;
+    fd::apt)      echo "fd-find" ;;
+    fd::winget)   echo "sharkdp.fd" ;;
+    # ── Default: tool name unchanged ──
+    *)            echo "$tool" ;;
+  esac
+}
+
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 3 — SYSTEM PACKAGE INSTALLER
+# ══════════════════════════════════════════════════════════════════════════════
+
+_sys_install() {
+  local tool="$1"
+  local pm
+  pm=$(detect_package_manager)
+  local pkg
+  pkg=$(resolve_pkg "$tool" "$pm")
+
+  echo -e "${CYAN}📦 [system] Installing ${BOLD}${tool}${RESET}${CYAN} via ${BOLD}${pm}${RESET}${CYAN} (pkg: ${DIM}${pkg}${RESET}${CYAN})...${RESET}"
+
+  case "$pm" in
+    pacman)
+      if sudo pacman -Si "$pkg" &>/dev/null 2>&1; then
+        sudo pacman -S --noconfirm "$pkg"
+      elif command -v yay  &>/dev/null; then yay  -S --noconfirm "$pkg"
+      elif command -v paru &>/dev/null; then paru -S --noconfirm "$pkg"
+      else
+        echo -e "${RED}❌ '$pkg' not in official Arch repos and no AUR helper found.${RESET}"
+        echo -e "   ${BLUE}Install yay: https://github.com/Jguer/yay${RESET}"; return 1
+      fi ;;
+    apt)
+      sudo apt-get update -qq && sudo apt-get install -y "$pkg" ;;
+    dnf)     sudo dnf     install -y "$pkg" ;;
+    yum)     sudo yum     install -y "$pkg" ;;
+    zypper)  sudo zypper  install -y "$pkg" ;;
+    apk)     sudo apk     add        "$pkg" ;;
+    xbps)    sudo xbps-install -S    "$pkg" ;;
+    brew)    brew install            "$pkg" ;;
+    winget)
+      winget install --id "$pkg" --silent \
+        --accept-source-agreements --accept-package-agreements ;;
+    choco)   choco install "$pkg" -y ;;
+    none-macos)
+      echo -e "${RED}❌ Homebrew not found.${RESET}"
+      echo -e "   ${BLUE}Install: /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"${RESET}"
+      return 1 ;;
+    none-linux|none-windows|*)
+      echo -e "${RED}❌ No supported package manager found (detected: $pm).${RESET}"
+      echo -e "   ${YELLOW}OS: $(detect_distro_pretty)${RESET}"
+      return 1 ;;
+  esac
+
+  echo -e "${GREEN}✅ [system] ${tool} installed via ${pm}${RESET}"
+}
+
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 4 — LANGUAGE ECOSYSTEM INSTALLERS
+# ══════════════════════════════════════════════════════════════════════════════
+
+_python_install() {
+  # Global Python tool via uv tool install (preferred over pip)
+  local pkg="$1"
+  echo -e "${CYAN}🐍 [python/uv] Installing ${BOLD}${pkg}${RESET}${CYAN} globally...${RESET}"
+  if command -v uv &>/dev/null; then
+    uv tool install "$pkg"
+    echo -e "${GREEN}✅ [python/uv] ${pkg} installed${RESET}"
+  elif command -v pip &>/dev/null; then
+    echo -e "${YELLOW}⚠️  uv not found, falling back to pip install --user${RESET}"
+    pip install --user "$pkg"
+    echo -e "${GREEN}✅ [pip] ${pkg} installed${RESET}"
+  elif command -v pip3 &>/dev/null; then
+    pip3 install --user "$pkg"
+    echo -e "${GREEN}✅ [pip3] ${pkg} installed${RESET}"
+  else
+    echo -e "${RED}❌ No Python package manager found (uv, pip, pip3).${RESET}"
+    echo -e "   ${BLUE}Install uv: ai-os install uv  or  curl -LsSf https://astral.sh/uv/install.sh | sh${RESET}"
+    return 1
+  fi
+}
+
+_pip_install() {
+  # pip install in current venv / user
+  local pkg="$1"
+  echo -e "${CYAN}🐍 [pip] Installing ${BOLD}${pkg}${RESET}${CYAN}...${RESET}"
+  if command -v uv &>/dev/null; then
+    # Prefer uv pip if inside a venv
+    if [ -n "${VIRTUAL_ENV:-}" ]; then
+      uv pip install "$pkg"
+    else
+      pip install --user "$pkg" 2>/dev/null || uv pip install --system "$pkg"
+    fi
+  elif command -v pip &>/dev/null; then
+    pip install "$pkg"
+  else
+    echo -e "${RED}❌ pip not found${RESET}"; return 1
+  fi
+  echo -e "${GREEN}✅ [pip] ${pkg} installed${RESET}"
+}
+
+_uv_install() {
+  # uv tool install (explicit uv global tool)
+  local pkg="$1"
+  echo -e "${CYAN}🐍 [uv] Installing ${BOLD}${pkg}${RESET}${CYAN} as global uv tool...${RESET}"
+  if command -v uv &>/dev/null; then
+    uv tool install "$pkg"
+    echo -e "${GREEN}✅ [uv] ${pkg} installed${RESET}"
+  else
+    echo -e "${RED}❌ uv not found.${RESET}"
+    echo -e "   ${BLUE}Install uv: curl -LsSf https://astral.sh/uv/install.sh | sh${RESET}"
+    return 1
+  fi
+}
+
+_node_install() {
+  local pkg="$1"
+  echo -e "${CYAN}🟨 [node] Installing ${BOLD}${pkg}${RESET}${CYAN} globally...${RESET}"
+  if command -v pnpm &>/dev/null; then
+    pnpm install -g "$pkg"
+    echo -e "${GREEN}✅ [pnpm] ${pkg} installed${RESET}"
+  elif command -v yarn &>/dev/null; then
+    yarn global add "$pkg"
+    echo -e "${GREEN}✅ [yarn] ${pkg} installed${RESET}"
+  elif command -v npm &>/dev/null; then
+    npm install -g "$pkg"
+    echo -e "${GREEN}✅ [npm] ${pkg} installed${RESET}"
+  else
+    echo -e "${RED}❌ No Node package manager found (npm, pnpm, yarn).${RESET}"
+    echo -e "   ${BLUE}Install Node.js first: ai-os install node${RESET}"
+    return 1
+  fi
+}
+
+_cargo_install() {
+  local pkg="$1"
+  echo -e "${CYAN}🦀 [cargo] Installing ${BOLD}${pkg}${RESET}${CYAN}...${RESET}"
+  if command -v cargo &>/dev/null; then
+    cargo install "$pkg"
+    echo -e "${GREEN}✅ [cargo] ${pkg} installed${RESET}"
+  else
+    echo -e "${RED}❌ cargo (Rust) not found.${RESET}"
+    echo -e "   ${BLUE}Install Rust: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh${RESET}"
+    return 1
+  fi
+}
+
+_go_install() {
+  local pkg="$1"
+  echo -e "${CYAN}🐹 [go] Installing ${BOLD}${pkg}${RESET}${CYAN}...${RESET}"
+  if command -v go &>/dev/null; then
+    # Append @latest if no version specified
+    [[ "$pkg" == *"@"* ]] || pkg="${pkg}@latest"
+    go install "$pkg"
+    echo -e "${GREEN}✅ [go] ${pkg} installed${RESET}"
+  else
+    echo -e "${RED}❌ Go not found.${RESET}"
+    echo -e "   ${BLUE}Install: ai-os install go${RESET}"
+    return 1
+  fi
+}
+
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 5 — POST-INSTALL HINTS
+# ══════════════════════════════════════════════════════════════════════════════
+
+post_install_hint() {
+  local tool="$1"
+  case "$tool" in
+    gh|github-cli)
+      echo ""
+      echo -e "${BOLD}${YELLOW}⚡ Next step — authenticate GitHub CLI:${RESET}"
+      echo -e "   ${CYAN}gh auth login${RESET}   → choose GitHub.com → HTTPS → browser auth"
+      ;;
+    brew)
+      echo ""
+      echo -e "${YELLOW}⚡ Add brew to your PATH:${RESET}"
+      echo -e "   ${CYAN}eval \"\$(/opt/homebrew/bin/brew shellenv)\"${RESET}   # Apple Silicon"
+      echo -e "   ${CYAN}eval \"\$(/usr/local/bin/brew shellenv)\"${RESET}       # Intel Mac"
+      ;;
+    node|nodejs)
+      echo ""
+      echo -e "${YELLOW}⚡ Tip: consider using pnpm for faster installs:${RESET}"
+      echo -e "   ${CYAN}ai-os uv pnpm${RESET}  or  ${CYAN}npm install -g pnpm${RESET}"
+      ;;
+    uv)
+      echo ""
+      echo -e "${YELLOW}⚡ Add uv to your PATH if needed:${RESET}"
+      echo -e "   ${CYAN}source \$HOME/.cargo/env${RESET}  or restart your shell"
+      ;;
+    rust|rustup|cargo)
+      echo ""
+      echo -e "${YELLOW}⚡ Activate Rust environment:${RESET}"
+      echo -e "   ${CYAN}source \"\$HOME/.cargo/env\"${RESET}"
+      ;;
+  esac
+}
+
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 6 — MAIN COMMAND DISPATCH
+# ══════════════════════════════════════════════════════════════════════════════
+
+usage() {
+  echo -e "${BOLD}Usage:${RESET} ai-os <command> [args...]"
+  echo ""
+  echo -e "${BOLD}${YELLOW}── Environment ───────────────────────────────${RESET}"
+  echo -e "  ${BOLD}info${RESET}                Full OS/distro/PM/tool status report"
+  echo -e "  ${BOLD}type${RESET}                OS type: linux | macos | wsl | windows"
+  echo -e "  ${BOLD}pm${RESET}                  Package manager: pacman | apt | brew …"
+  echo -e "  ${BOLD}distro${RESET}              Distro ID: arch | ubuntu | debian …"
+  echo -e "  ${BOLD}pre-check${RESET}           Full pre-install environment validation"
+  echo ""
+  echo -e "${BOLD}${YELLOW}── System Packages ───────────────────────────${RESET}"
+  echo -e "  ${BOLD}install${RESET} <pkg>       Install system package (pacman/apt/dnf/brew…)"
+  echo -e "  ${BOLD}ensure${RESET} <pkg>…       Install only if missing (idempotent)"
+  echo -e "  ${BOLD}check${RESET} <tool>        Exit 0=installed, 1=missing"
+  echo -e "  ${BOLD}remove${RESET} <pkg>        Uninstall system package"
+  echo ""
+  echo -e "${BOLD}${YELLOW}── Language Ecosystems ───────────────────────${RESET}"
+  echo -e "  ${BOLD}python${RESET} <pkg>        uv tool install (global Python tool)"
+  echo -e "  ${BOLD}pip${RESET} <pkg>           pip install (current venv or --user)"
+  echo -e "  ${BOLD}uv${RESET} <pkg>            uv tool install"
+  echo -e "  ${BOLD}node${RESET} <pkg>          npm/pnpm/yarn install -g"
+  echo -e "  ${BOLD}cargo${RESET} <pkg>         cargo install"
+  echo -e "  ${BOLD}go${RESET} <pkg>            go install <pkg>@latest"
+  echo ""
+  echo -e "${BOLD}${YELLOW}── GitHub CLI ────────────────────────────────${RESET}"
+  echo -e "  ${BOLD}gh-setup${RESET}            Install gh + run auth login"
+  echo ""
+  echo -e "${BOLD}Examples:${RESET}"
+  echo -e "  ${DIM}ai-os install gh           # GitHub CLI via pacman/apt/dnf/brew…${RESET}"
+  echo -e "  ${DIM}ai-os ensure git jq curl   # ensure multiple tools at once${RESET}"
+  echo -e "  ${DIM}ai-os python ruff          # uv tool install ruff${RESET}"
+  echo -e "  ${DIM}ai-os node prettier        # npm/pnpm install -g prettier${RESET}"
+  echo -e "  ${DIM}ai-os cargo bat            # cargo install bat${RESET}"
+  echo -e "  ${DIM}ai-os go golang.org/x/tools/cmd/goimports${RESET}"
+}
+
+cmd="${1:-info}"
+shift || true
+
+case "$cmd" in
+
+  # ── Environment Info ──────────────────────────────────────────────────────
+  info)
+    OS_TYPE=$(detect_os_type)
+    DISTRO=$(detect_distro)
+    PM=$(detect_package_manager)
+    PRETTY=$(detect_distro_pretty)
+    ARCH=$(uname -m)
+
+    echo ""
+    echo -e "${BOLD}${CYAN}╔══════════════════════════════════════════════╗${RESET}"
+    echo -e "${BOLD}${CYAN}║   🖥️  Wizard-AI — Pre-Install Environment    ║${RESET}"
+    echo -e "${BOLD}${CYAN}╚══════════════════════════════════════════════╝${RESET}"
+    echo ""
+    echo -e "  ${BOLD}OS Type:${RESET}         $OS_TYPE"
+    echo -e "  ${BOLD}Distro:${RESET}          $PRETTY"
+    echo -e "  ${BOLD}Distro ID:${RESET}       $DISTRO"
+    echo -e "  ${BOLD}Architecture:${RESET}    $ARCH"
+    echo -e "  ${BOLD}Package Manager:${RESET} ${GREEN}${BOLD}${PM}${RESET}"
+    echo ""
+    echo -e "  ${BOLD}System Tools:${RESET}"
+    for tool in git gh curl jq wget; do
+      if command -v "$tool" &>/dev/null; then
+        VER=$(command "$tool" --version 2>/dev/null | head -1 | cut -c1-45 || echo "installed")
+        echo -e "    ${GREEN}✅ ${BOLD}${tool}${RESET} — ${DIM}${VER}${RESET}"
+      else
+        echo -e "    ${RED}❌ ${tool}${RESET}   ${DIM}→ ai-os install ${tool}${RESET}"
+      fi
+    done
+    echo ""
+    echo -e "  ${BOLD}Language Runtimes:${RESET}"
+    for tool in python3 node npm uv cargo go; do
+      if command -v "$tool" &>/dev/null; then
+        VER=$(command "$tool" --version 2>/dev/null | head -1 | cut -c1-45 || echo "installed")
+        echo -e "    ${GREEN}✅ ${BOLD}${tool}${RESET} — ${DIM}${VER}${RESET}"
+      else
+        echo -e "    ${YELLOW}⚠️  ${tool}${RESET}   ${DIM}→ ai-os install ${tool}${RESET}"
+      fi
+    done
+    echo ""
+    echo -e "  ${BOLD}Machine-readable JSON:${RESET}"
+    printf '  {"os":"%s","distro":"%s","pm":"%s","arch":"%s"}\n' \
+      "$OS_TYPE" "$DISTRO" "$PM" "$ARCH"
+    echo ""
+    ;;
+
+  type)    detect_os_type ;;
+  pm)      detect_package_manager ;;
+  distro)  detect_distro ;;
+
+  # ── Pre-Install Validation ─────────────────────────────────────────────────
+  pre-check)
+    echo -e "${BOLD}${CYAN}🔍 Pre-Install Environment Check${RESET}"
+    echo ""
+    ERRORS=0
+
+    PM=$(detect_package_manager)
+    if [[ "$PM" == none-* ]]; then
+      echo -e "  ${RED}❌ No package manager found${RESET}"; ERRORS=$((ERRORS+1))
+    else
+      echo -e "  ${GREEN}✅ Package manager: ${BOLD}${PM}${RESET}"
+    fi
+
+    command -v git &>/dev/null \
+      && echo -e "  ${GREEN}✅ git available${RESET}" \
+      || { echo -e "  ${YELLOW}⚠️  git missing — ai-os install git${RESET}"; }
+
+    command -v curl &>/dev/null \
+      && echo -e "  ${GREEN}✅ curl available${RESET}" \
+      || { echo -e "  ${YELLOW}⚠️  curl missing — ai-os install curl${RESET}"; }
+
+    # Check internet
+    if curl -s --max-time 3 https://1.1.1.1 &>/dev/null; then
+      echo -e "  ${GREEN}✅ Internet reachable${RESET}"
+    else
+      echo -e "  ${YELLOW}⚠️  Internet check failed (may be offline)${RESET}"
+    fi
+
+    # Check disk space (warn if < 500MB free)
+    FREE_MB=$(df -m "$HOME" 2>/dev/null | awk 'NR==2{print $4}' || echo 9999)
+    if [ "$FREE_MB" -lt 500 ]; then
+      echo -e "  ${RED}❌ Low disk space: ${FREE_MB}MB free${RESET}"; ERRORS=$((ERRORS+1))
+    else
+      echo -e "  ${GREEN}✅ Disk space OK: ${FREE_MB}MB free${RESET}"
+    fi
+
+    echo ""
+    if [ "$ERRORS" -eq 0 ]; then
+      echo -e "${GREEN}${BOLD}✅ Environment ready — proceed with installation${RESET}"
+    else
+      echo -e "${RED}${BOLD}❌ $ERRORS issue(s) found — resolve before installing${RESET}"
+      exit 1
+    fi
+    ;;
+
+  # ── System Package: install ────────────────────────────────────────────────
+  install)
+    PKG="${1:-}"
+    [ -z "$PKG" ] && { echo -e "${RED}❌ Specify package: ai-os install <pkg>${RESET}"; exit 1; }
+    _sys_install "$PKG"
+    post_install_hint "$PKG"
+    ;;
+
+  # ── System Package: ensure (idempotent, supports multiple args) ────────────
+  ensure)
+    [ "$#" -eq 0 ] && { echo -e "${RED}❌ Specify tool(s): ai-os ensure <tool> [tool...]${RESET}"; exit 1; }
+    for tool in "$@"; do
+      # Try both the tool name and common variant (e.g. gh/github-cli)
+      if command -v "$tool" &>/dev/null; then
+        echo -e "  ${GREEN}✅ ${tool}${RESET} already installed ($(command -v "$tool"))"
+      else
+        echo -e "  ${YELLOW}⚠️  ${tool} not found — installing...${RESET}"
+        _sys_install "$tool"
+        post_install_hint "$tool"
+      fi
+    done
+    ;;
+
+  # ── System Package: check ──────────────────────────────────────────────────
+  check)
+    TOOL="${1:-}"
+    [ -z "$TOOL" ] && { echo -e "${RED}❌ Specify tool: ai-os check <tool>${RESET}"; exit 1; }
+    if command -v "$TOOL" &>/dev/null; then
+      echo -e "${GREEN}✅ ${TOOL} is installed: $(command -v "$TOOL")${RESET}"; exit 0
+    else
+      echo -e "${RED}❌ ${TOOL} is NOT installed${RESET}"; exit 1
+    fi
+    ;;
+
+  # ── System Package: remove ─────────────────────────────────────────────────
+  remove)
+    PKG="${1:-}"
+    [ -z "$PKG" ] && { echo -e "${RED}❌ Specify package: ai-os remove <pkg>${RESET}"; exit 1; }
+    PM=$(detect_package_manager)
+    pkg=$(resolve_pkg "$PKG" "$PM")
+    echo -e "${CYAN}🗑️  Removing ${BOLD}${PKG}${RESET}${CYAN} via ${PM}...${RESET}"
+    case "$PM" in
+      pacman)  sudo pacman -Rs --noconfirm "$pkg" ;;
+      apt)     sudo apt-get remove -y "$pkg" ;;
+      dnf)     sudo dnf remove -y "$pkg" ;;
+      brew)    brew uninstall "$pkg" ;;
+      winget)  winget uninstall --id "$pkg" ;;
+      *) echo -e "${RED}❌ Remove not supported for: $PM${RESET}"; exit 1 ;;
+    esac
+    echo -e "${GREEN}✅ ${PKG} removed${RESET}"
+    ;;
+
+  # ── Python (uv tool install — global) ─────────────────────────────────────
+  python|uv)
+    PKG="${1:-}"
+    [ -z "$PKG" ] && { echo -e "${RED}❌ Specify package: ai-os ${cmd} <pkg>${RESET}"; exit 1; }
+    _uv_install "$PKG"
+    ;;
+
+  # ── Python (pip install in current context) ────────────────────────────────
+  pip)
+    PKG="${1:-}"
+    [ -z "$PKG" ] && { echo -e "${RED}❌ Specify package: ai-os pip <pkg>${RESET}"; exit 1; }
+    _pip_install "$PKG"
+    ;;
+
+  # ── Node.js ───────────────────────────────────────────────────────────────
+  node|npm)
+    PKG="${1:-}"
+    [ -z "$PKG" ] && { echo -e "${RED}❌ Specify package: ai-os node <pkg>${RESET}"; exit 1; }
+    _node_install "$PKG"
+    ;;
+
+  # ── Rust / Cargo ──────────────────────────────────────────────────────────
+  cargo|rust)
+    PKG="${1:-}"
+    [ -z "$PKG" ] && { echo -e "${RED}❌ Specify package: ai-os cargo <pkg>${RESET}"; exit 1; }
+    _cargo_install "$PKG"
+    ;;
+
+  # ── Go ────────────────────────────────────────────────────────────────────
+  go)
+    PKG="${1:-}"
+    [ -z "$PKG" ] && { echo -e "${RED}❌ Specify package: ai-os go <pkg>${RESET}"; exit 1; }
+    _go_install "$PKG"
+    ;;
+
+  # ── GitHub CLI full setup ─────────────────────────────────────────────────
+  gh-setup)
+    echo -e "${CYAN}🔧 Full GitHub CLI Setup${RESET}"
+    echo ""
+    if command -v gh &>/dev/null; then
+      echo -e "${GREEN}✅ gh already installed: $(gh --version | head -1)${RESET}"
+    else
+      _sys_install "gh"
+    fi
+    echo ""
+    echo -e "${CYAN}🔐 Checking authentication...${RESET}"
+    if gh auth status &>/dev/null 2>&1; then
+      echo -e "${GREEN}✅ Already authenticated:${RESET}"
+      gh auth status 2>&1 | head -5
+    else
+      echo -e "${YELLOW}⚠️  Not authenticated. Starting login...${RESET}"
+      echo ""
+      gh auth login
+    fi
+    ;;
+
+  --help|-h|help)
+    usage ;;
+
+  *)
+    echo -e "${RED}❌ Unknown command: $cmd${RESET}"
+    echo ""
+    usage
+    exit 1
+    ;;
+esac
