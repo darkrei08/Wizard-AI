@@ -1,0 +1,9 @@
+.git
+local
+docs
+skills
+bin/windows
+node_modules
+.gemini
+__pycache__
+*.pyc
