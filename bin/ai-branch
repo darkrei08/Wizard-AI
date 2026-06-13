@@ -21,7 +21,7 @@ usage() {
   echo "  hotfix \"description\"    Create a hotfix branch (hotfix/<slug>)"
   echo "  exp \"description\"       Create an experiment branch (exp/<slug>)"
   echo "  list                    List all branches with status"
-  echo "  merge                   Merge current branch to main (with checks)"
+  echo "  merge                   Merge current branch to staging (with checks)"
   echo "  cleanup                 Delete merged branches"
   echo ""
   echo -e "${BOLD}Examples:${RESET}"
@@ -74,9 +74,9 @@ case "$cmd" in
 
     echo -e "${CYAN}🌿 Creating branch: ${BOLD}${BRANCH_NAME}${RESET}"
 
-    # Start from latest main
-    git checkout main
-    git pull origin main
+    # Start from latest staging
+    git checkout staging
+    git pull origin staging
 
     git checkout -b "$BRANCH_NAME"
     git push -u origin "$BRANCH_NAME"
@@ -93,26 +93,26 @@ case "$cmd" in
     echo -e "${BOLD}All branches (recent first):${RESET}"
     git branch -a --sort=-committerdate | head -20
     echo ""
-    echo -e "${BOLD}Branches merged into main (safe to delete):${RESET}"
-    git branch --merged main | grep -v "^\*\|main\|1.0-stable" || echo "  none"
+    echo -e "${BOLD}Branches merged into staging (safe to delete):${RESET}"
+    git branch --merged staging | grep -v "^\*\|staging\|main\|1.0-stable" || echo "  none"
     echo ""
-    echo -e "${BOLD}Commits ahead of main (per branch):${RESET}"
+    echo -e "${BOLD}Commits ahead of staging (per branch):${RESET}"
     git for-each-ref --format='%(refname:short)' refs/heads/ | \
-      grep -v "^main$\|^1.0-stable$" | \
+      grep -v "^staging$\|^main$\|^1.0-stable$" | \
       while read -r branch; do
-        count=$(git rev-list --count "main..${branch}" 2>/dev/null || echo "?")
+        count=$(git rev-list --count "staging..${branch}" 2>/dev/null || echo "?")
         echo "  $branch: $count commits ahead"
       done
     ;;
 
   merge)
     CURRENT=$(git branch --show-current)
-    if [ "$CURRENT" = "main" ] || [ "$CURRENT" = "1.0-stable" ]; then
+    if [ "$CURRENT" = "staging" ] || [ "$CURRENT" = "main" ] || [ "$CURRENT" = "1.0-stable" ]; then
       echo -e "${RED}❌ Already on protected branch '$CURRENT'. Switch to a feature branch first.${RESET}"
       exit 1
     fi
 
-    echo -e "${CYAN}🔀 Merging '${CURRENT}' → main${RESET}"
+    echo -e "${CYAN}🔀 Merging '${CURRENT}' → staging${RESET}"
     echo ""
 
     # Pre-merge quality checks
@@ -134,21 +134,21 @@ case "$cmd" in
     echo ""
 
     # Show diff summary
-    echo -e "${BOLD}Changes to merge:${RESET}"
-    git diff main..."$CURRENT" --stat
+    echo -e "${BOLD}Changes to merge into staging:${RESET}"
+    git diff staging..."$CURRENT" --stat
     echo ""
 
-    read -r -p "$(echo -e "${BOLD}Merge '$CURRENT' into main? [y/N]:${RESET} ")" CONFIRM
+    read -r -p "$(echo -e "${BOLD}Merge '$CURRENT' into staging? [y/N]:${RESET} ")" CONFIRM
     if [[ ! "$CONFIRM" =~ ^[Yy]$ ]]; then
       echo "Aborted."
       exit 0
     fi
 
     # Merge
-    git checkout main
-    git pull origin main
-    git merge --no-ff "$CURRENT" -m "feat: merge $CURRENT into main"
-    git push origin main
+    git checkout staging
+    git pull origin staging
+    git merge --no-ff "$CURRENT" -m "feat: merge $CURRENT into staging"
+    git push origin staging
 
     # Clean up
     read -r -p "$(echo -e "${BOLD}Delete branch '$CURRENT' (remote + local)? [y/N]:${RESET} ")" DEL_CONFIRM
@@ -190,7 +190,7 @@ case "$cmd" in
 
   cleanup)
     echo -e "${CYAN}🧹 Cleaning up merged branches...${RESET}"
-    MERGED=$(git branch --merged main | grep -v "^\*\|main\|1.0-stable" || true)
+    MERGED=$(git branch --merged staging | grep -v "^\*\|staging\|main\|1.0-stable" || true)
     if [ -z "$MERGED" ]; then
       echo -e "${GREEN}✅ Nothing to clean up.${RESET}"
       exit 0
