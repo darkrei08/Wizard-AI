@@ -8,12 +8,6 @@
 
 set -euo pipefail
 
-# Telemetry hook
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-WIZARD_AI_DIR="$(dirname "$DIR")"
-python3 "$WIZARD_AI_DIR/hub/api/log_event.py" "ai-sync-skills" "execute" 100 0.15 &
-
-
 SKILLS_SRC="$HOME/.gemini/config/skills"
 TARGETS=(
   "$HOME/.claude/skills"

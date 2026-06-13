@@ -4,12 +4,6 @@
 
 set -euo pipefail
 
-# Telemetry hook
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-WIZARD_AI_DIR="$(dirname "$DIR")"
-python3 "$WIZARD_AI_DIR/hub/api/log_event.py" "ai-compress" "execute" 500 0.15 &
-
-
 VENV="$HOME/.ai-skills/venv"
 
 if [[ ! -f "$VENV/bin/python" ]]; then

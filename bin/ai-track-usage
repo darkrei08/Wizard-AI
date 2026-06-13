@@ -3,12 +3,6 @@
 # Usage: ai-track-usage <skill_id>
 set -euo pipefail
 
-# Telemetry hook
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-WIZARD_AI_DIR="$(dirname "$DIR")"
-python3 "$WIZARD_AI_DIR/hub/api/log_event.py" "ai-track-usage" "execute" 100 0.15 &
-
-
 if [ -z "${1:-}" ]; then
   echo "Usage: ai-track-usage <skill_id>"
   exit 1
