@@ -1,0 +1,34 @@
+name: Publish to npm
+
+# Publishes the `wizard-ai-cli` launcher package to npm whenever a GitHub
+# Release is published. The version that gets published is whatever is in
+# package.json — bump it before creating the release (see docs/RELEASING.md).
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch: {} # allow manual runs from the Actions tab
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # required for npm provenance
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
+      - name: Sanity check launcher
+        run: node --check cli.js
+
+      - name: Publish
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
