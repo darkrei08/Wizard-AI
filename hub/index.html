@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wizard-AI Hub</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="css/design-system.css">
     <link rel="stylesheet" href="css/components.css">
@@ -22,6 +26,7 @@
             
             <ul class="nav-links">
                 <li><a href="#" data-route="home" class="active"><span class="icon">🏠</span> Home</a></li>
+                <li><a href="#" data-route="dashboard"><span class="icon">📊</span> Dashboard</a></li>
                 <li><a href="#" data-route="installer"><span class="icon">📦</span> Installazione</a></li>
                 <li><a href="#" data-route="chat"><span class="icon">💬</span> Chat AI</a></li>
                 <li><a href="#" data-route="marketplace"><span class="icon">🏪</span> Marketplace</a></li>
@@ -39,6 +44,11 @@
         <main class="main-content" id="app-content">
             <!-- Dynamic content injected here by app.js -->
         </main>
+
+        <!-- Mobile Toggle -->
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle">
+            <span class="icon">☰</span>
+        </button>
     </div>
 
     <!-- Scripts -->

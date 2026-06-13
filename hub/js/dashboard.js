@@ -41,30 +41,31 @@ window.dashboard = {
             const statusColor = isWarning ? 'var(--warning)' : 'var(--success)';
             
             let html = `
-                <div class="card w-full mb-4 animate-fade-in" style="background: rgba(99, 102, 241, 0.05); border-color: rgba(99, 102, 241, 0.2);">
-                    <div class="flex justify-between items-center mb-4">
+                <div class="card w-full mb-4 animate-fade-in" style="background: rgba(10, 12, 16, 0.4); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);">
+                    <div class="flex justify-between items-center mb-6" style="flex-wrap: wrap; gap: var(--spacing-4);">
                         <div>
-                            <div class="text-muted" style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Provider Attivo</div>
-                            <div style="font-size: 1.5rem; font-weight: 700; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${p.name}</div>
+                            <div class="text-muted mb-1" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600;">Provider Attivo</div>
+                            <div style="font-size: 1.75rem; font-weight: 800; background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${p.name}</div>
                         </div>
-                        <div class="badge ${isWarning ? 'badge-warning' : 'badge-success'}">
+                        <div class="badge ${isWarning ? 'badge-warning' : 'badge-success'}" style="padding: 6px 12px; font-size: 0.85rem; letter-spacing: 1px;">
                             ${p.status.toUpperCase()}
                         </div>
                     </div>
                     
-                    <div class="provider-info flex gap-4 text-secondary" style="font-size: 0.9rem;">
-                        <div><span class="icon">⚡</span> Modello: ${p.type}</div>
-                        <div><span class="icon">💳</span> Piano: ${q.subscription}</div>
+                    <div class="provider-info flex gap-4 text-secondary mb-6" style="font-size: 0.95rem; flex-wrap: wrap; background: rgba(0,0,0,0.2); padding: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.02);">
+                        <div style="flex: 1; min-width: 200px;"><span class="icon">⚡</span> <strong>Modello:</strong> ${p.type}</div>
+                        ${data.active_account ? `<div style="flex: 1; min-width: 200px;"><span class="icon">👤</span> <strong>Account:</strong> <span style="color: var(--text-primary);">${data.active_account}</span></div>` : ''}
+                        ${data.accounts_count ? `<div style="flex: 1; min-width: 200px;"><span class="icon">👥</span> <strong>Collegati:</strong> ${data.accounts_count} Accounts</div>` : ''}
                     </div>
 
-                    <div class="quota-stats mt-4">
-                        <span class="text-muted">Consumi: ${q.used_tokens.toLocaleString()} / ${q.total_limit.toLocaleString()}</span>
-                        <span style="font-weight: bold; color: ${statusColor};">${q.percentage_used}%</span>
+                    <div class="quota-stats mt-4 flex justify-between items-center mb-2" style="flex-wrap: wrap; gap: var(--spacing-2);">
+                        <span class="text-muted" style="font-size: 0.9rem; font-weight: 500;">Consumi: <span style="color: var(--text-primary);">${q.used_tokens.toLocaleString()}</span> / ${q.total_limit.toLocaleString()}</span>
+                        <span style="font-size: 1.1rem; font-weight: 800; color: ${statusColor};">${q.percentage_used}%</span>
                     </div>
-                    <div class="progress" style="margin-bottom: 8px;">
-                        <div class="progress-bar ${progressColorClass}" style="width: ${q.percentage_used}%;"></div>
+                    <div class="progress" style="margin-bottom: 12px; height: 10px; border-radius: 5px; background: rgba(255,255,255,0.05); overflow: hidden;">
+                        <div class="progress-bar ${progressColorClass}" style="width: ${q.percentage_used}%; height: 100%; border-radius: 5px; background: ${isWarning ? 'var(--warning)' : 'linear-gradient(90deg, #6366f1, #a855f7)'}; box-shadow: 0 0 10px ${isWarning ? 'rgba(245, 158, 11, 0.5)' : 'rgba(99, 102, 241, 0.5)'};"></div>
                     </div>
-                    <div class="text-muted text-right" style="font-size: 0.8rem;">Reset: ${q.reset_date}</div>
+                    <div class="text-muted text-right" style="font-size: 0.8rem; letter-spacing: 0.5px;">Reset stimato: ${q.reset_date || 'N/A'}</div>
                 </div>
             `;
             container.innerHTML = html;
