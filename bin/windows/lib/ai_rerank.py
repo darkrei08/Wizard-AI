@@ -9,10 +9,11 @@ import tempfile
 
 def main():
     import argparse
+
     parser = argparse.ArgumentParser(
-        prog='ai-rerank',
-        description='Re-rank passages/documents for RAG using FlashRank (fast, CPU-only)',
-        epilog='''Examples:
+        prog="ai-rerank",
+        description="Re-rank passages/documents for RAG using FlashRank (fast, CPU-only)",
+        epilog="""Examples:
   # Re-rank passages from a JSON file
   ai-rerank --query "How does auth work?" --passages passages.json
 
@@ -24,26 +25,37 @@ def main():
 
   # Full JSON with scores
   ai-rerank --query "X" --passages docs.json --json
-        '''
+        """,
     )
-    parser.add_argument('--query', '-q', required=True,
-        help='Query/question to rank passages against')
-    parser.add_argument('--passages', '-p',
-        help='JSON file with passages: [{"id":N,"text":"..."}]')
-    parser.add_argument('--top-k', '-k', type=int, default=5,
-        help='Return top K results (default: 5)')
-    parser.add_argument('--model', default='ms-marco-MiniLM-L-12-v2',
-        help='FlashRank model (default: ms-marco-MiniLM-L-12-v2)')
-    parser.add_argument('--compact', '-c', action='store_true',
-        help='Output just ranked text (no scores/JSON)')
-    parser.add_argument('--json', '-j', action='store_true',
-        help='Output full JSON result')
+    parser.add_argument(
+        "--query", "-q", required=True, help="Query/question to rank passages against"
+    )
+    parser.add_argument(
+        "--passages", "-p", help='JSON file with passages: [{"id":N,"text":"..."}]'
+    )
+    parser.add_argument(
+        "--top-k", "-k", type=int, default=5, help="Return top K results (default: 5)"
+    )
+    parser.add_argument(
+        "--model",
+        default="ms-marco-MiniLM-L-12-v2",
+        help="FlashRank model (default: ms-marco-MiniLM-L-12-v2)",
+    )
+    parser.add_argument(
+        "--compact",
+        "-c",
+        action="store_true",
+        help="Output just ranked text (no scores/JSON)",
+    )
+    parser.add_argument(
+        "--json", "-j", action="store_true", help="Output full JSON result"
+    )
     args = parser.parse_args()
 
     from flashrank import Ranker, RerankRequest
 
     if args.passages:
-        with open(args.passages, encoding='utf-8') as fh:
+        with open(args.passages, encoding="utf-8") as fh:
             passages = json.load(fh)
     elif not sys.stdin.isatty():
         passages = json.load(sys.stdin)
@@ -53,25 +65,25 @@ def main():
 
     # Normalize: plain strings -> [{id, text}]
     if passages and isinstance(passages[0], str):
-        passages = [{'id': i, 'text': t} for i, t in enumerate(passages)]
+        passages = [{"id": i, "text": t} for i, t in enumerate(passages)]
 
-    cache_dir = os.path.join(tempfile.gettempdir(), 'flashrank_cache')
+    cache_dir = os.path.join(tempfile.gettempdir(), "flashrank_cache")
     ranker = Ranker(model_name=args.model, cache_dir=cache_dir)
     request = RerankRequest(query=args.query, passages=passages)
     results = ranker.rerank(request)
-    top = results[:args.top_k]
+    top = results[: args.top_k]
 
     if args.json:
         print(json.dumps(top, indent=2, default=str))
     elif args.compact:
         for r in top:
-            print(r.get('text', r))
+            print(r.get("text", r))
     else:
         for i, r in enumerate(top, 1):
-            score = r.get('score', 0)
-            text = r.get('text', str(r))
-            preview = text[:120] + ('...' if len(text) > 120 else '')
-            print(f'[{i}] score={score:.4f} | {preview}')
+            score = r.get("score", 0)
+            text = r.get("text", str(r))
+            preview = text[:120] + ("..." if len(text) > 120 else "")
+            print(f"[{i}] score={score:.4f} | {preview}")
 
 
 main()

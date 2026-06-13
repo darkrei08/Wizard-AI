@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# ai-rtk — RTK AI tool
+# Source: https://github.com/rtk-ai/rtk
+set -euo pipefail
+
+# ── Locate ai-os (mandatory pre-install hook) ──────────────────────────
+AI_OS_CMD=""
+if   command -v ai-os              &>/dev/null; then AI_OS_CMD="ai-os"
+elif [ -x "$HOME/.local/bin/ai-os" ];           then AI_OS_CMD="$HOME/.local/bin/ai-os"
+elif [ -x "$HOME/.wizard-ai/bin/ai-os" ];       then AI_OS_CMD="$HOME/.wizard-ai/bin/ai-os"
+fi
+
+cd "$HOME/.ai-skills/rtk"
+exec ./rtk "$@"
