@@ -48,17 +48,7 @@ Determine what type of tool it is:
 - **GitHub Repository**: Clone it to `~/.ai-skills/<repo-name>`. If it requires dependencies, create a dedicated `uv venv` or install them using `uv pip`.
 - **Node.js**: Use `npm install -g <package>`.
 
-### Step 2: Clone for Backup/Reference
-
-If the new skill is a GitHub repository, clone a reference copy into the project's resource folder:
-
-```bash
-git clone <repo-url> "$WIZARD_AI_DIR/resources/Repositories-Skills/<repo-name>"
-```
-
-> **Note**: This folder is excluded from git via `.gitignore` (it holds local reference clones only).
-
-### Step 3: Create the Wrapper Script
+### Step 2: Create the Wrapper Script
 
 Create a bash wrapper script named `ai-<tool-name>` (or similar logical name).
 
@@ -82,7 +72,7 @@ Create a bash wrapper script named `ai-<tool-name>` (or similar logical name).
    cp "$WIZARD_AI_DIR/bin/ai-<tool-name>" "$HOME/.local/bin/"
    ```
 
-### Step 4: Write the SKILL.md Documentation
+### Step 3: Write the SKILL.md Documentation
 
 Create a structured `SKILL.md` that explains to other AI agents how to use this tool.
 
@@ -105,7 +95,7 @@ cp "$HOME/.gemini/config/skills/<skill-name>/SKILL.md" \
    "$WIZARD_AI_DIR/skills/<skill-name>/SKILL.md"
 ```
 
-### Step 5: Update the Global `setup.sh`
+### Step 4: Update the Global `setup.sh`
 
 You MUST modify the main setup script so this tool installs automatically on new machines.
 
@@ -114,7 +104,7 @@ Edit `"$WIZARD_AI_DIR/setup.sh"`:
 - **Python CLI tool**: Add `install_uv_tool "<tool-name>"` to the "Install UV Global Tools" section.
 - **GitHub repository**: Add a `clone_if_missing "<name>" "<url>"` call to the "external git skill repositories" section.
 
-### Step 6: Update the Help Dashboard
+### Step 5: Update the Help Dashboard
 
 Edit `"$WIZARD_AI_DIR/bin/ai-help"` and add a new entry in the appropriate category:
 ```bash
@@ -127,7 +117,7 @@ Then sync the updated binary:
 cp "$WIZARD_AI_DIR/bin/ai-help" "$HOME/.local/bin/ai-help"
 ```
 
-### Step 7: Update the Resources Wiki
+### Step 6: Update the Resources Wiki
 
 Append the new skill to the unified wiki document:
 
@@ -137,7 +127,7 @@ echo "- **<tool-name>**: Description of what it does." \
 # If applicable, also append to WIKI.it.md
 ```
 
-### Step 8: Sync Skills to All Agents
+### Step 7: Sync Skills to All Agents
 
 Execute the sync script to broadcast the new skill to Claude, Amp, Antigravity, etc.:
 
@@ -147,7 +137,7 @@ ai-sync-skills
 
 ## 3. Communication
 
-Once all 8 steps are completed, present a concise summary to the user:
+Once all 7 steps are completed, present a concise summary to the user:
 - Name of the tool installed
 - Wrapper created (`ai-<tool>`)
 - Confirmation that `setup.sh` and `ai-help` have been permanently updated

@@ -78,7 +78,7 @@ clone_if_missing() {
   local dest="$HOME/.ai-skills/$name"
   if [ ! -d "$dest" ]; then
     echo -e "${YELLOW}Cloning $name...${NC}"
-    git clone --quiet "$url" "$dest"
+    git clone --depth 1 --quiet "$url" "$dest"
     echo -e "${GREEN}  ✓ $name cloned.${NC}"
   else
     echo -e "${GREEN}✓ $name already present.${NC}"
