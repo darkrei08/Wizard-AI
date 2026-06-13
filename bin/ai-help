@@ -63,6 +63,9 @@ echo -e "  ✅ ${BOLD}auto-graphify${RESET}    Behavioral hook to auto-update co
 echo ""
 
 echo -e "${BOLD}${YELLOW}🗜️  TOKEN OPTIMIZATION${RESET}"
+echo -e "  $(check_cmd ai-optimize) ${BOLD}ai-optimize${RESET}      Token optimization loop and skill evaluator (auto-optimize)"
+echo -e "     ${BLUE}ai-optimize loop \"my task\"${RESET}"
+echo -e "     ${BLUE}ai-optimize evaluate \"https://github.com/author/repo\"${RESET}"
 echo -e "  $(check_cmd ai-compress) ${BOLD}ai-compress${RESET}      Compress prompts/context up to 20x (LLMLingua)"
 echo -e "     ${BLUE}ai-compress --file doc.txt --ratio 0.5${RESET}"
 echo -e "  $(check_cmd ai-caveman) ${BOLD}ai-caveman${RESET}       Cut agent output tokens by ~75% while keeping accuracy"

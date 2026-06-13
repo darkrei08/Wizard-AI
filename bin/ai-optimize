@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# ai-optimize — AI Token & Context Orchestrator and Evaluator
+# Source: Wizard-AI skill (auto-optimize)
+
+set -euo pipefail
+
+BOLD='\033[1m'
+GREEN='\033[0;32m'
+CYAN='\033[0;36m'
+YELLOW='\033[1;33m'
+RESET='\033[0m'
+
+usage() {
+  echo -e "${BOLD}Usage:${RESET} ai-optimize <command> [args]"
+  echo ""
+  echo -e "${BOLD}Commands:${RESET}"
+  echo "  loop <task>            Run a task through the token-saving pipeline (markitdown -> flashrank -> llmlingua/sqz)"
+  echo "  evaluate <repo-url>    Evaluate a new external tool against the Wiki and integrate if it's superior"
+  echo ""
+  echo -e "${BOLD}Examples:${RESET}"
+  echo "  ai-optimize loop \"Analyze the docs and write a summary\""
+  echo "  ai-optimize evaluate \"https://github.com/author/new-tool\""
+  exit 0
+}
+
+if [ $# -eq 0 ]; then
+  usage
+fi
+
+cmd="${1:-}"
+
+case "$cmd" in
+  loop)
+    TASK="${2:-}"
+    if [ -z "$TASK" ]; then
+      echo "Please provide a task to optimize."
+      exit 1
+    fi
+    echo -e "${CYAN}🔄 Initializing Token Optimization Loop...${RESET}"
+    echo -e "   ${YELLOW}Agent Instructions:${RESET} Please execute the token optimization loop for the following task:"
+    echo -e "   ${BOLD}$TASK${RESET}"
+    echo -e "   (Refer to the auto-optimize SKILL.md for the pipeline steps)"
+    ;;
+  evaluate)
+    REPO="${2:-}"
+    if [ -z "$REPO" ]; then
+      echo "Please provide a repository URL to evaluate."
+      exit 1
+    fi
+    echo -e "${CYAN}⚖️  Evaluating External Repository: ${BOLD}$REPO${RESET}"
+    echo -e "   ${YELLOW}Agent Instructions:${RESET} Please evaluate $REPO against existing tools in docs/WIKI.md."
+    echo -e "   If it performs better, use wizard-ai-installer to integrate it."
+    ;;
+  *)
+    usage
+    ;;
+esac
