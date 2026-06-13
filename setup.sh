@@ -95,6 +95,7 @@ clone_if_missing "awesome-design-md" "https://github.com/VoltAgent/awesome-desig
 clone_if_missing "taste-skill"       "https://github.com/leonxlnx/taste-skill.git"
 clone_if_missing "spec-kit"          "https://github.com/github/spec-kit.git"
 clone_if_missing "lean-ctx"          "https://github.com/yvgude/lean-ctx.git"
+clone_if_missing "rtk"               "https://github.com/rtk-ai/rtk.git"
 clone_if_missing "nuxt"              "https://github.com/nuxt/nuxt.git"
 clone_if_missing "express-typescript-starter" "https://github.com/ToniR7/express-typescript-starter.git"
 

@@ -56,6 +56,7 @@ echo -e "${BOLD}${YELLOW}📊 KNOWLEDGE GRAPH${RESET}"
 echo -e "  $(check_cmd graphify) ${BOLD}graphify${RESET}         Build knowledge graphs from any codebase/docs"
 echo -e "     ${BLUE}ai-graph .${RESET}                  → Run Graphify on current directory"
 echo -e "     ${BLUE}graphify query \"how does X work?\"${RESET}"
+echo -e "  ✅ ${BOLD}auto-graphify${RESET}    Behavioral hook to auto-update codebase graph"
 echo ""
 
 echo -e "${BOLD}${YELLOW}🗜️  TOKEN OPTIMIZATION${RESET}"
@@ -93,6 +94,8 @@ echo -e "  $(check_cmd ai-lean) ${BOLD}ai-lean${RESET}           Lean Context In
 echo -e "     ${BLUE}ai-lean read src/main.py map${RESET}"
 echo -e "  $(check_cmd ai-scaffold) ${BOLD}ai-scaffold${RESET}       Scaffold Express/Nuxt projects from templates"
 echo -e "     ${BLUE}ai-scaffold nuxt my-app${RESET}"
+echo -e "  $(check_cmd ai-rtk) ${BOLD}ai-rtk${RESET}            RTK AI toolkit"
+echo -e "     ${BLUE}ai-rtk --help${RESET}"
 echo ""
 
 echo -e "${BOLD}${YELLOW}🧠 MEMORY & CONTEXT${RESET}"
