@@ -140,11 +140,20 @@ else
   # Pre-flight check for node/npm
   if command -v npm &>/dev/null; then
     echo -e "${BLUE}  NPM detected, installing lean-ctx-bin...${NC}"
-    npm install -g lean-ctx-bin 2>/dev/null && echo -e "${GREEN}  ✓ lean-ctx installed via npm.${NC}" || \
-      echo -e "${RED}  ✗ lean-ctx installation via npm failed.${NC}"
+    if npm install -g lean-ctx-bin 2>/dev/null; then
+      echo -e "${GREEN}  ✓ lean-ctx installed via npm.${NC}"
+    elif npm install -g lean-ctx-bin --prefix ~/.local 2>/dev/null; then
+      echo -e "${GREEN}  ✓ lean-ctx installed via npm locally (~/.local/bin).${NC}"
+    elif command -v cargo &>/dev/null; then
+      echo -e "${YELLOW}  ⚠ npm installation failed. Falling back to Cargo...${NC}"
+      cargo install lean-ctx && echo -e "${GREEN}  ✓ lean-ctx installed via cargo.${NC}" || echo -e "${RED}  ✗ lean-ctx installation failed.${NC}"
+    else
+      echo -e "${RED}  ✗ lean-ctx installation via npm failed and Cargo is not available.${NC}"
+      echo -e "${YELLOW}  Suggestion: run 'sudo npm install -g lean-ctx-bin' manually.${NC}"
+    fi
   elif command -v cargo &>/dev/null; then
-    echo -e "${BLUE}  NPM not found, but Cargo detected. You can install lean-ctx via Cargo:${NC}"
-    echo -e "  ${CYAN}cargo install lean-ctx${NC}"
+    echo -e "${BLUE}  NPM not found, but Cargo detected. Installing via Cargo...${NC}"
+    cargo install lean-ctx && echo -e "${GREEN}  ✓ lean-ctx installed via cargo.${NC}" || echo -e "${RED}  ✗ lean-ctx installation failed.${NC}"
   else
     echo -e "${YELLOW}  ⚠ lean-ctx requires Node.js (npm) or Rust (cargo). Neither found.${NC}"
     echo -e "  Please install Node.js (https://nodejs.org) to enable context intelligence."
