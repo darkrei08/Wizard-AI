@@ -26,7 +26,6 @@ QUIET_OPT="--quiet"
 if [[ "${1:-}" == "--verbose" || "${1:-}" == "-v" ]]; then
   VERBOSE=1
   QUIET_OPT=""
-  set -x
 fi
 
 # 0. Enforce sudo and fix user environment
@@ -141,7 +140,11 @@ install_uv_tool() {
   local tool="$1"
   local pkg="${2:-$1}"   # optional package name if different from tool name
   echo -e "${YELLOW}Installing/Updating $tool...${NC}"
-  uv tool install --force "$pkg" &>/dev/null || true
+  if [ "$VERBOSE" -eq 1 ]; then
+    uv tool install --force "$pkg" || true
+  else
+    uv tool install --force "$pkg" &>/dev/null || true
+  fi
   echo -e "${GREEN}  ✓ $tool installed.${NC}"
 }
 
@@ -153,7 +156,11 @@ install_uv_tool "sqz"
 # Install serena (semantic code intelligence — available via uvx)
 echo -e "${YELLOW}Checking serena (semantic code search)...${NC}"
 if ! command -v serena &>/dev/null; then
-  uv tool install --force serena &>/dev/null || true
+  if [ "$VERBOSE" -eq 1 ]; then
+    uv tool install --force serena || true
+  else
+    uv tool install --force serena &>/dev/null || true
+  fi
   echo -e "${GREEN}  ✓ serena installed.${NC}"
 else
   echo -e "${GREEN}✓ serena already installed.${NC}"

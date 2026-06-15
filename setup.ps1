@@ -21,7 +21,6 @@ if ($VerboseMode) {
     $QuietOpt = ''
     $VerbosePreference = 'Continue'
     $DebugPreference = 'Continue'
-    Set-PSDebug -Trace 1
 }
 
 Write-Host '============================================================' -ForegroundColor Cyan
