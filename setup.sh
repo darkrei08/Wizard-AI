@@ -20,6 +20,15 @@ echo -e "${CYAN}============================================================"
 echo -e "         🧙‍♂️  Wizard-AI Environment Setup Wizard"
 echo -e "============================================================${NC}"
 
+# 0. Parse arguments
+VERBOSE=0
+QUIET_OPT="--quiet"
+if [[ "${1:-}" == "--verbose" || "${1:-}" == "-v" ]]; then
+  VERBOSE=1
+  QUIET_OPT=""
+  set -x
+fi
+
 # 0. Enforce sudo and fix user environment
 if [ "$EUID" -ne 0 ]; then
   echo -e "\n${RED}[ERROR] This script requires elevated privileges to install global dependencies (npm/cargo)."
@@ -81,10 +90,10 @@ mkdir -p "$HOME/.ai-skills"
 
 # 2. Recreate Python Virtual Environment for wrappers
 echo -e "\n${BLUE}[2/8] Preparing Python Virtual Environment for LLMLingua & FlashRank...${NC}"
-uv venv "$HOME/.ai-skills/venv" --seed --quiet
+uv venv "$HOME/.ai-skills/venv" --seed $QUIET_OPT
 VENV_PYTHON="$HOME/.ai-skills/venv/bin/python"
 echo -e "${YELLOW}Installing llmlingua and flashrank inside the venv...${NC}"
-uv pip install --quiet --python "$VENV_PYTHON" llmlingua flashrank
+uv pip install $QUIET_OPT --python "$VENV_PYTHON" llmlingua flashrank
 echo -e "${GREEN}✓ Virtual environment ready at ~/.ai-skills/venv/${NC}"
 
 # 3. Clone and install required skill repositories if not present
@@ -96,7 +105,7 @@ clone_if_missing() {
   local dest="$HOME/.ai-skills/$name"
   if [ ! -d "$dest" ]; then
     echo -e "${YELLOW}Cloning $name...${NC}"
-    git clone --depth 1 --quiet "$url" "$dest"
+    git clone --depth 1 $QUIET_OPT "$url" "$dest"
     echo -e "${GREEN}  ✓ $name cloned.${NC}"
   else
     echo -e "${GREEN}✓ $name already present.${NC}"
@@ -121,7 +130,7 @@ clone_if_missing "caveman"           "https://github.com/JuliusBrussee/caveman.g
 # Install claude-mem Python package if setup.py/pyproject.toml is present
 if [ -f "$HOME/.ai-skills/claude-mem/pyproject.toml" ] || \
    [ -f "$HOME/.ai-skills/claude-mem/setup.py" ]; then
-  uv pip install --quiet --python "$VENV_PYTHON" \
+  uv pip install $QUIET_OPT --python "$VENV_PYTHON" \
     -e "$HOME/.ai-skills/claude-mem" || true
 fi
 

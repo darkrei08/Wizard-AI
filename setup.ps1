@@ -1,4 +1,4 @@
-﻿# setup.ps1 — Automated installation and setup script for the Wizard-AI environment.
+# setup.ps1 — Automated installation and setup script for the Wizard-AI environment.
 # Supported Platform: Windows 10/11 (x86_64) — native PowerShell port of setup.sh
 #
 # Usage:  powershell -ExecutionPolicy Bypass -File setup.ps1
@@ -11,6 +11,18 @@
 
 # PowerShell 5.1 needs TLS 1.2 enabled explicitly for downloads
 [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+
+param (
+    [switch]$VerboseMode
+)
+
+$QuietOpt = '--quiet'
+if ($VerboseMode) {
+    $QuietOpt = ''
+    $VerbosePreference = 'Continue'
+    $DebugPreference = 'Continue'
+    Set-PSDebug -Trace 1
+}
 
 Write-Host '============================================================' -ForegroundColor Cyan
 Write-Host '          Wizard-AI Environment Setup Wizard (Windows)' -ForegroundColor Cyan
@@ -75,10 +87,10 @@ $null = New-Item -ItemType Directory -Force -Path $AiSkills
 Write-Host ''
 Write-Host '[2/8] Preparing Python Virtual Environment for LLMLingua & FlashRank...' -ForegroundColor Blue
 $VenvDir = Join-Path $AiSkills 'venv'
-uv venv $VenvDir --seed --quiet
+if ($QuietOpt) { uv venv $VenvDir --seed --quiet } else { uv venv $VenvDir --seed }
 $VenvPython = Join-Path $VenvDir 'Scripts\python.exe'
 Write-Host 'Installing llmlingua and flashrank inside the venv (this can take a while)...' -ForegroundColor Yellow
-uv pip install --quiet --python $VenvPython llmlingua flashrank
+if ($QuietOpt) { uv pip install --quiet --python $VenvPython llmlingua flashrank } else { uv pip install --python $VenvPython llmlingua flashrank }
 Write-Host "[ok] Virtual environment ready at $VenvDir" -ForegroundColor Green
 
 # 3. Clone and install required skill repositories if not present
@@ -89,7 +101,7 @@ function Clone-IfMissing($Name, $Url) {
     $Dest = Join-Path $AiSkills $Name
     if (-not (Test-Path $Dest)) {
         Write-Host "Cloning $Name..." -ForegroundColor Yellow
-        git clone --quiet $Url $Dest
+        if ($QuietOpt) { git clone --quiet $Url $Dest } else { git clone $Url $Dest }
         Write-Host "  [ok] $Name cloned." -ForegroundColor Green
     } else {
         Write-Host "[ok] $Name already present." -ForegroundColor Green
@@ -105,7 +117,7 @@ Clone-IfMissing 'wiki-brain-skill' 'https://github.com/tenfoldmarc/wiki-brain-sk
 # Install claude-mem Python package if setup.py/pyproject.toml is present
 $ClaudeMemDir = Join-Path $AiSkills 'claude-mem'
 if ((Test-Path (Join-Path $ClaudeMemDir 'pyproject.toml')) -or (Test-Path (Join-Path $ClaudeMemDir 'setup.py'))) {
-    uv pip install --quiet --python $VenvPython -e $ClaudeMemDir
+    if ($QuietOpt) { uv pip install --quiet --python $VenvPython -e $ClaudeMemDir } else { uv pip install --python $VenvPython -e $ClaudeMemDir }
     if ($LASTEXITCODE -ne 0) { Write-Host '  (claude-mem package install skipped)' -ForegroundColor Yellow }
 }
 

@@ -35,6 +35,7 @@ Se hai [Node.js](https://nodejs.org) (≥ 14) e `git` installati, funziona allo 
 
 ```bash
 npx @darkrei08/wizard-ai-cli
+# o 'npx @darkrei08/wizard-ai-cli --verbose' per visualizzare log dettagliati
 ```
 
 Il launcher clona il repository in `~/.wizard-ai` ed esegue automaticamente l'installatore della tua piattaforma (`setup.sh` o `setup.ps1`). Rieseguendo il comando, un'installazione esistente viene aggiornata. Puoi anche installarlo come comando globale:
@@ -61,12 +62,14 @@ Esegui lo script principale di setup. È progettato per essere interamente non-i
 **Linux / macOS:**
 ```bash
 chmod +x setup.sh
-./setup.sh
+sudo ./setup.sh
+# o 'sudo ./setup.sh --verbose' per visualizzare log dettagliati
 ```
 
 **Windows (PowerShell):**
 ```powershell
 powershell -ExecutionPolicy Bypass -File setup.ps1
+# o aggiungi -VerboseMode per visualizzare log dettagliati
 ```
 
 #### 3️⃣ Verifica l'Installazione

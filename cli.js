@@ -64,19 +64,26 @@ if (fs.existsSync(path.join(installDir, ".git"))) {
 }
 
 // 3. Run the platform setup script from the stable clone.
+const args = process.argv.slice(2);
+const isVerbose = args.includes("--verbose") || args.includes("-v");
+
 console.log("\n🚀 Running platform installer...");
 let status;
 if (isWin) {
-  status = run("powershell", [
+  const psArgs = [
     "-NoProfile",
     "-ExecutionPolicy",
     "Bypass",
     "-File",
     path.join(installDir, "setup.ps1"),
-  ]);
+  ];
+  if (isVerbose) psArgs.push("-VerboseMode");
+  status = run("powershell", psArgs);
 } else {
+  const shArgs = ["bash", path.join(installDir, "setup.sh")];
+  if (isVerbose) shArgs.push("--verbose");
   // We now enforce sudo for setup.sh to globally install npm/cargo tools
-  status = run("sudo", ["bash", path.join(installDir, "setup.sh")]);
+  status = run("sudo", shArgs);
 }
 
 process.exit(status === null ? 1 : status);
