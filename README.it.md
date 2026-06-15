@@ -145,6 +145,7 @@ Dopo l'installazione, questi comandi saranno disponibili nel tuo terminale:
 | `ai-update` | Updater | Aggiorna manualmente Wizard-AI e le skill clonate |
 | `ai-graph [percorso]` | Graphify | Costruisce un knowledge graph da codice o documentazione |
 | `ai-compress --file f.txt`| LLMLingua | Comprime prompt o contesto fino a 20x |
+| `ai-compare "prompt"` | aisuite | Esegui un A/B test di un prompt su più modelli LLM |
 | `ai-rerank --query "X"` | FlashRank | Riordina componenti o paragrafi (RAG) per pertinenza |
 | `ai-squeeze` | Sqz | Comprime l'output del terminale / JSON / log |
 | `ai-convert file.pdf` | MarkItDown | Converte qualsiasi file in un pulito Markdown |

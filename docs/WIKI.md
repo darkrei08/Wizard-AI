@@ -190,3 +190,55 @@ Reference list of tools, repositories, and frameworks relevant to AI and develop
 - [AWS Lambda](https://aws.amazon.com/lambda/)
 - **caveman**: A skill/plugin that makes an AI agent output fewer tokens (~75% reduction) while keeping full technical accuracy.
 - **auto-npm-publish**: A skill to help users configure NPM tokens, GitHub Secrets, sync package.json versions, and proactively check for GitHub action deprecations.
+
+## 🔗 4. Wizard-AI Ecosystem: Skill Chaining
+
+To understand the immense scale of the integrated projects, repositories, and frameworks inside Wizard-AI, it's critical to know **what each piece does** and **how to combine (chain) them** into powerful automated workflows.
+
+AI agents operate at their best when applying "Skill Chaining", i.e., the consecutive use of multiple tools to achieve a complex goal with zero extra token cost or time.
+
+### Overview of Included Projects & Frameworks
+
+1. **Bootstrap & Starter Frameworks (Prod-Ready Templates)**
+   - **`express-typescript-starter`**: Provides a robust Node.js backend with TypeScript, Zod, JWT, Helmet. Used by the `ai-scaffold express` skill.
+   - **`nuxt` (v4)**: Full-stack Vue.js framework. Used by the `ai-scaffold nuxt` skill.
+   *➡ What are they for? They prevent wasting tokens asking the AI to write boilerplate project structure, security, or core infrastructure from scratch.*
+
+2. **Context Efficiency Tools (Token Reduction)**
+   - **`LLMLingua` (`ai-compress`)**: Reduces initial prompt or context by up to 20x.
+   - **`Sqz` (`ai-squeeze`)**: Compresses terminal logs, JSON payloads, and large files.
+   - **`FlashRank` (`ai-rerank`)**: Removes useless paragraphs from large documentations (RAG).
+   - **`caveman` (`ai-caveman`)**: Intercepts AI output and compresses verbosity by 75%.
+   *➡ What are they for? They massively reduce API costs and make the AI faster and more efficient.*
+
+3. **Semantic Intelligence & Analysis**
+   - **`Graphify` (`ai-graph`)**: Creates a knowledge graph to explore the codebase.
+   - **`Serena`**: Explores and semantically analyzes source code (LSP search).
+   - **`claude-mem` (`ai-mem`)**: Persists long-term memories across different AI conversations.
+   *➡ What are they for? They prevent "hallucinations" because the AI uses conceptual maps instead of raw files.*
+
+4. **Advanced Operations, Testing & Publishing**
+   - **`aisuite` (`ai-compare`)**: Unified Python library (included in venv). Used for Prompt Testing and A/B Benchmarking of multiple models simultaneously.
+   - **`auto-workflow` / `auto-release`**: Enforce formal Git Flow rules (isolation, testing, merging, tagging).
+
+---
+
+### Practical Examples of "Skill Chaining"
+
+**Scenario 1: Robust and Tested New Backend**
+1. **`scaffold`**: You start an API ("initialize project"). Wizard-AI clones the `express-typescript-starter`.
+2. **`taste-skill`**: You give UI structuring instructions if you add a frontend.
+3. **`auto-debug`**: You ask it to write logic. The AI iterates until the code passes checks.
+4. **`auto-release`**: When done, you say "publish version 1.0" and a semantic Git tag is generated.
+
+**Scenario 2: Refactoring a Monolith**
+1. **`graphify`**: Ask to "analyze architecture" (`ai-graph`). The AI understands the full hierarchy.
+2. **`serena`**: Ask to find "all usages of this old API".
+3. **`auto-workflow`**: Isolate the refactor in a branch, while **`caveman`** manages concise output without chatter.
+
+**Scenario 3: Prompt A/B Testing (New)**
+1. You develop a complex prompt aided by **`auto-prompt`**.
+2. You use **`ai-compare`** (powered by `aisuite`) to run it on GPT-4, Claude 3.5, and Gemini simultaneously, seeing side-by-side who performs best.
+3. You save the best prompt in semantic memory with **`ai-mem`** for future use.
+
+> With Wizard-AI, you (or your AI agent) can master all engineering phases in a chained manner. This enables extreme scaling of "vibe coding" development.

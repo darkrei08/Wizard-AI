@@ -190,3 +190,55 @@ Lista di riferimento di tool, repository e framework rilevanti per l'AI e lo svi
 - [AWS Lambda](https://aws.amazon.com/lambda/)
 - **caveman**: Una skill/plugin che fa sì che un agente AI produca meno token (riduzione di circa il 75%) mantenendo la piena accuratezza tecnica.
 - **auto-npm-publish**: Una skill per aiutare a configurare token NPM, GitHub Secrets, mantenere sincronizzato il package.json e controllare eventuali deprecazioni o warning delle GitHub Actions.
+
+## 🔗 4. Ecosistema Wizard-AI: Concatenazione delle Skill (Skill Chaining)
+
+Per far comprendere l'enorme vastità dei progetti, repository e framework integrati all'interno di Wizard-AI, è fondamentale capire **a cosa serve ciascun pezzo** e **come combinarli (concatenarli)** in workflow automatizzati potenti.
+
+Gli agenti AI operano al meglio quando applicano il concetto di "Skill Chaining", ovvero l'uso consecutivo di più strumenti per raggiungere un obiettivo complesso a costo zero di token o tempo.
+
+### Panoramica dei Progetti e Framework Inclusi
+
+1. **Framework di Bootstrap e Avvio (Template Prod-Ready)**
+   - **`express-typescript-starter`**: Fornisce un backend Node.js robusto con TypeScript, Zod, JWT, Helmet. Usato dalla skill `ai-scaffold express`.
+   - **`nuxt` (v4)**: Framework Vue.js full-stack. Usato dalla skill `ai-scaffold nuxt`.
+   *➡ A cosa servono? Evitano di sprecare token per chiedere all'AI di farsi scrivere la struttura del progetto, la sicurezza o l'infrastruttura di base da zero.*
+
+2. **Strumenti di Efficienza del Contesto (Token Reduction)**
+   - **`LLMLingua` (`ai-compress`)**: Riduce il prompt o contesto iniziale fino a 20x.
+   - **`Sqz` (`ai-squeeze`)**: Comprime log del terminale, payload JSON, e grossi file.
+   - **`FlashRank` (`ai-rerank`)**: Rimuove i paragrafi inutili da grandi documentazioni (RAG).
+   - **`caveman` (`ai-caveman`)**: Intercetta l'output dell'AI e ne comprime la prolissità del 75%.
+   *➡ A cosa servono? Riducono massivamente i costi delle API e rendono l'AI più rapida ed efficiente.*
+
+3. **Intelligenza Semantica e Analisi**
+   - **`Graphify` (`ai-graph`)**: Crea un grafo della conoscenza per esplorare la codebase.
+   - **`Serena`**: Esplora e analizza semanticamente il codice sorgente (ricerca LSP).
+   - **`claude-mem` (`ai-mem`)**: Persiste le memorie a lungo termine tra le varie conversazioni AI.
+   *➡ A cosa servono? Evitano le "allucinazioni" perché l'AI usa mappe concettuali invece di file grezzi.*
+
+4. **Operatività Avanzata, Testing e Pubblicazione**
+   - **`aisuite` (`ai-compare`)**: Libreria Python unificata (inclusa nel venv). Usata per il Prompt Testing e A/B Benchmark di modelli multipli contemporaneamente.
+   - **`auto-workflow` / `auto-release`**: Applicano regole formali di Git Flow (isolamento, test, merge, tagging).
+
+---
+
+### Esempi Pratici di "Skill Chaining" (Come concatenare le skill)
+
+**Scenario 1: Nuovo Backend Robusto e Testato**
+1. **`scaffold`**: Avvii un'API ("inizializza il progetto"). Wizard-AI clona l' `express-typescript-starter`.
+2. **`taste-skill`**: Dai istruzioni su come strutturare l'estetica se aggiungi un frontend.
+3. **`auto-debug`**: Chiedi di scrivere la logica. L'AI itera finché il codice non passa i controlli.
+4. **`auto-release`**: Quando finito, dici "pubblica la prima versione" e viene generato il tag semantico su Git.
+
+**Scenario 2: Refactoring di un Monolite**
+1. **`graphify`**: Chiedi di "analizzare l'architettura" (`ai-graph`). L'AI comprende la gerarchia completa.
+2. **`serena`**: Chiedi di trovare "tutti gli usi di questa vecchia API".
+3. **`auto-workflow`**: Isoli in un branch il refactoring, mentre **`caveman`** gestisce l'output sintetico senza chiacchiere.
+
+**Scenario 3: A/B Testing dei Prompt (Novità)**
+1. Sviluppi un prompt articolato aiutato da **`auto-prompt`**.
+2. Usi **`ai-compare`** (basato su `aisuite`) per lanciarlo su GPT-4, Claude 3.5 e Gemini contemporaneamente, vedendo fianco a fianco chi performa meglio.
+3. Lo salvi nella memoria semantica con **`ai-mem`** per usarlo in futuro.
+
+> Con Wizard-AI, tu (o il tuo agente AI) siete in grado di padroneggiare tutte le fasi ingegneristiche in maniera concatenata. Questo permette lo scaling estremo dello sviluppo "vibe coding".
