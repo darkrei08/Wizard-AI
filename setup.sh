@@ -157,11 +157,16 @@ install_uv_tool "sqz"
 echo -e "${YELLOW}Checking serena (semantic code search)...${NC}"
 if ! command -v serena &>/dev/null; then
   if [ "$VERBOSE" -eq 1 ]; then
-    uv tool install --force serena || true
+    uv tool install --force serena-agent || true
   else
-    uv tool install --force serena &>/dev/null || true
+    uv tool install --force serena-agent &>/dev/null || true
   fi
-  echo -e "${GREEN}  ✓ serena installed.${NC}"
+  # Verify installation
+  if command -v serena &>/dev/null; then
+    echo -e "${GREEN}  ✓ serena installed.${NC}"
+  else
+    echo -e "${RED}  ❌ failed to install serena.${NC}"
+  fi
 else
   echo -e "${GREEN}✓ serena already installed.${NC}"
 fi
@@ -270,8 +275,28 @@ if [[ "$ENABLE_UPDATE" =~ ^[Yy]$ ]]; then
     CRON_CMD="@reboot $HOME/.local/bin/ai-update --quiet"
     (crontab -u "$USER" -l 2>/dev/null | grep -v "ai-update" ; echo "$CRON_CMD") | crontab -u "$USER" -
     echo -e "${GREEN}  ✓ Cronjob installed for user $USER.${NC}"
+  elif command -v systemctl &>/dev/null; then
+    echo -e "${BLUE}  i  cron not found. Setting up systemd user service instead...${NC}"
+    mkdir -p "$HOME/.config/systemd/user"
+    cat > "$HOME/.config/systemd/user/ai-update.service" <<EOF
+[Unit]
+Description=Wizard-AI Auto Update
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=$HOME/.local/bin/ai-update --quiet
+
+[Install]
+WantedBy=default.target
+EOF
+    chown -R "$USER:$USER" "$HOME/.config/systemd"
+    REAL_UID=$(id -u "$USER")
+    sudo -u "$USER" XDG_RUNTIME_DIR="/run/user/$REAL_UID" systemctl --user daemon-reload || true
+    sudo -u "$USER" XDG_RUNTIME_DIR="/run/user/$REAL_UID" systemctl --user enable ai-update.service || true
+    echo -e "${GREEN}  ✓ systemd service installed for user $USER.${NC}"
   else
-    echo -e "${RED}⚠ cron not found. Auto-updates cannot be configured.${NC}"
+    echo -e "${RED}⚠ cron and systemctl not found. Auto-updates cannot be configured.${NC}"
   fi
 else
   echo -e "${YELLOW}  Auto-updates disabled. Update manually using 'ai-update'.${NC}"
