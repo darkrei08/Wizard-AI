@@ -200,26 +200,26 @@ Gli agenti AI operano al meglio quando applicano il concetto di "Skill Chaining"
 ### Panoramica dei Progetti e Framework Inclusi
 
 1. **Framework di Bootstrap e Avvio (Template Prod-Ready)**
-   - **`express-typescript-starter`**: Fornisce un backend Node.js robusto con TypeScript, Zod, JWT, Helmet. Usato dalla skill `ai-scaffold express`.
-   - **`nuxt` (v4)**: Framework Vue.js full-stack. Usato dalla skill `ai-scaffold nuxt`.
+   - **[`express-typescript-starter`](https://github.com/ToniR7/express-typescript-starter)**: Fornisce un backend Node.js robusto con TypeScript, Zod, JWT, Helmet. Usato dalla skill `ai-scaffold express`.
+   - **[`nuxt` (v4)](https://github.com/nuxt/nuxt)**: Framework Vue.js full-stack. Usato dalla skill `ai-scaffold nuxt`.
    *➡ A cosa servono? Evitano di sprecare token per chiedere all'AI di farsi scrivere la struttura del progetto, la sicurezza o l'infrastruttura di base da zero.*
 
 2. **Strumenti di Efficienza del Contesto (Token Reduction)**
-   - **`LLMLingua` (`ai-compress`)**: Riduce il prompt o contesto iniziale fino a 20x.
-   - **`Sqz` (`ai-squeeze`)**: Comprime log del terminale, payload JSON, e grossi file.
-   - **`FlashRank` (`ai-rerank`)**: Rimuove i paragrafi inutili da grandi documentazioni (RAG).
-   - **`caveman` (`ai-caveman`)**: Intercetta l'output dell'AI e ne comprime la prolissità del 75%.
+   - **[`LLMLingua`](https://github.com/microsoft/LLMLingua) (`ai-compress`)**: Riduce il prompt o contesto iniziale fino a 20x.
+   - **[`Sqz`](https://github.com/yasker/sqz) (`ai-squeeze`)**: Comprime log del terminale, payload JSON, e grossi file.
+   - **[`FlashRank`](https://github.com/PrithivirajDamodaran/FlashRank) (`ai-rerank`)**: Rimuove i paragrafi inutili da grandi documentazioni (RAG).
+   - **[`caveman`](../skills/caveman/SKILL.md) (`ai-caveman`)**: Intercetta l'output dell'AI e ne comprime la prolissità del 75%.
    *➡ A cosa servono? Riducono massivamente i costi delle API e rendono l'AI più rapida ed efficiente.*
 
 3. **Intelligenza Semantica e Analisi**
-   - **`Graphify` (`ai-graph`)**: Crea un grafo della conoscenza per esplorare la codebase.
-   - **`Serena`**: Esplora e analizza semanticamente il codice sorgente (ricerca LSP).
-   - **`claude-mem` (`ai-mem`)**: Persiste le memorie a lungo termine tra le varie conversazioni AI.
+   - **[`Graphify`](https://github.com/AykutSarac/graphify) (`ai-graph`)**: Crea un grafo della conoscenza per esplorare la codebase.
+   - **[`Serena`](https://github.com/nathanrooy/serena) (`ai-serena`)**: Esplora e analizza semanticamente il codice sorgente (ricerca LSP).
+   - **[`claude-mem`](https://github.com/piero-io/claude-mem) (`ai-mem`)**: Persiste le memorie a lungo termine tra le varie conversazioni AI.
    *➡ A cosa servono? Evitano le "allucinazioni" perché l'AI usa mappe concettuali invece di file grezzi.*
 
 4. **Operatività Avanzata, Testing e Pubblicazione**
-   - **`aisuite` (`ai-compare`)**: Libreria Python unificata (inclusa nel venv). Usata per il Prompt Testing e A/B Benchmark di modelli multipli contemporaneamente.
-   - **`auto-workflow` / `auto-release`**: Applicano regole formali di Git Flow (isolamento, test, merge, tagging).
+   - **[`aisuite`](https://github.com/andrewyng/aisuite) (`ai-compare`)**: Libreria Python unificata (inclusa nel venv). Usata per il Prompt Testing e A/B Benchmark di modelli multipli contemporaneamente.
+   - **[`auto-workflow`](../skills/auto-workflow/SKILL.md) / [`auto-release`](../skills/auto-release/SKILL.md)**: Applicano regole formali di Git Flow (isolamento, test, merge, tagging).
 
 ---
 
