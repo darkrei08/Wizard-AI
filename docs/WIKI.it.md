@@ -156,6 +156,8 @@ Di seguito la categorizzazione rigorosa dell'arsenale a tua disposizione:
 
 ## 📚 3. Risorse Esterne e Tecnologie
 
+> **🚀 UPDATE v0.19.0**: Tutte le tecnologie, linguaggi, automazioni e framework elencati in questa sezione sono stati formalmente implementati come **Skill AI native**! Puoi trovare le loro direttive per gli agenti sotto la directory `skills/` (es. `skills/react`, `skills/kafka`, `skills/pocketbase`).
+
 Lista di riferimento di tool, repository e framework rilevanti per l'AI e lo sviluppo.
 
 ### Agenti, Memoria e Profilo Personale (Digital Identity)

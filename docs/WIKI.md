@@ -156,6 +156,8 @@ Below is the rigorous categorization of the arsenal at your disposal:
 
 ## 📚 3. External Resources & Technologies
 
+> **🚀 UPDATE v0.19.0**: All technologies, languages, automations, and frameworks listed in this section have been formally implemented as **Native AI Skills**! You can find their agent directives under the `skills/` directory (e.g. `skills/react`, `skills/kafka`, `skills/pocketbase`).
+
 Reference list of tools, repositories, and frameworks relevant to AI and development.
 
 ### Agents, Memory & Personal Profile (Digital Identity)
