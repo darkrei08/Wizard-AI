@@ -20,6 +20,24 @@ echo -e "${CYAN}============================================================"
 echo -e "         🧙‍♂️  Wizard-AI Environment Setup Wizard"
 echo -e "============================================================${NC}"
 
+# 0. Enforce sudo and fix user environment
+if [ "$EUID" -ne 0 ]; then
+  echo -e "\n${RED}[ERROR] This script requires elevated privileges to install global dependencies (npm/cargo)."
+  echo -e "Please run the installer with sudo:"
+  echo -e "  sudo ./setup.sh${NC}\n"
+  exit 1
+fi
+
+if [ -n "${SUDO_USER:-}" ]; then
+  REAL_USER="$SUDO_USER"
+  REAL_HOME=$(getent passwd "$REAL_USER" | cut -d: -f6)
+  export HOME="$REAL_HOME"
+  export USER="$REAL_USER"
+  # Also override some env vars to prevent uv/cargo from defaulting to /root
+  export CARGO_HOME="$REAL_HOME/.cargo"
+  export UV_TOOL_DIR="$REAL_HOME/.local/share/uv/tools"
+fi
+
 # Resolve the absolute path of this script (= repo root, works even if symlinked)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -220,7 +238,13 @@ echo -e "${GREEN}✓ $(ls "$SCRIPT_DIR/skills/" | wc -l) skills installed to ~/.
 echo -e "${YELLOW}Syncing skills to Claude Code, Amp, and other agents...${NC}"
 "$HOME/.local/bin/ai-sync-skills"
 
-# 8. Final summary
+# 8. Fix ownership if run via sudo
+if [ -n "${SUDO_USER:-}" ]; then
+  echo -e "\n${BLUE}[8/8] Fixing file ownership for user $USER...${NC}"
+  chown -R "$USER:$USER" "$HOME/.config/wizard-ai" "$HOME/.local/bin" "$HOME/.local/share/uv" "$HOME/.ai-skills" "$HOME/.gemini" "$HOME/.cargo" 2>/dev/null || true
+fi
+
+# 9. Final summary
 echo -e "\n${GREEN}============================================================"
 echo -e "     🎉  Wizard-AI Environment Installed Successfully! 🎉"
 echo -e "============================================================${NC}"

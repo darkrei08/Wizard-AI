@@ -61,7 +61,7 @@ Run the main setup script. It is designed to be completely non-interactive and h
 **Linux / macOS:**
 ```bash
 chmod +x setup.sh
-./setup.sh
+sudo ./setup.sh
 ```
 
 **Windows (PowerShell):**

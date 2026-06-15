@@ -64,6 +64,7 @@ if (fs.existsSync(path.join(installDir, ".git"))) {
 }
 
 // 3. Run the platform setup script from the stable clone.
+console.log("\n🚀 Running platform installer...");
 let status;
 if (isWin) {
   status = run("powershell", [
@@ -74,7 +75,8 @@ if (isWin) {
     path.join(installDir, "setup.ps1"),
   ]);
 } else {
-  status = run("bash", [path.join(installDir, "setup.sh")]);
+  // We now enforce sudo for setup.sh to globally install npm/cargo tools
+  status = run("sudo", ["bash", path.join(installDir, "setup.sh")]);
 }
 
 process.exit(status === null ? 1 : status);
