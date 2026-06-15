@@ -27,9 +27,63 @@ Questi sono i wrapper principali da riga di comando installati globalmente sul t
 
 ## 🔌 2. Skill degli Agenti Installate
 
-Di seguito è riportato l'elenco completo delle skill attualmente installate e disponibili a livello globale per gli agenti AI (Antigravity, Claude Code, Amp) organizzate per plugin/dominio:
+L'ecosistema vanta **33 skill e framework custom** esclusivi di Wizard-AI, oltre ai plugin di base forniti dagli agenti (es. Antigravity, Claude Code).
+Di seguito la categorizzazione rigorosa dell'arsenale a tua disposizione:
 
-### 🌐 Sviluppo Web e Browser (Chrome DevTools Plugin & Modern Web Guidance)
+### 🔮 Le 33 Skill Custom (Wizard-AI Core)
+
+#### 1. System Core & Routing (Fondamenta)
+- **`wizard-ai-hub`**: Scoperta e dashboard delle skill.
+- **`auto-router`**: Mappatura intelligente degli intenti colloquiali dell'utente verso le skill tecniche.
+- **`wizard-ai-installer`**: Installer autonomo per nuove skill esterne.
+- **`show-active-skill`**: Costringe l'AI a dichiarare quali tool e wrapper sta usando.
+- **`os-detect`**: Rilevatore di sistema operativo (Linux, macOS, Windows) pre-installazione.
+
+#### 2. Context & Token Optimization (Risparmio Risorse)
+- **`caveman`**: Plugin/skill che comprime l'output dell'AI del 75% mantenendo l'accuratezza.
+- **`llmlingua` / `ai-compress`**: Compressione ultra-spinta dei contesti massivi.
+- **`sqz` / `ai-squeeze`**: Compressione output del terminale, payload e JSON.
+- **`flashrank` / `ai-rerank`**: Riordinamento chirurgico dei contesti documentali (RAG).
+- **`lean-ctx`**: Controllo e isolamento intelligente del contesto AI.
+- **`auto-optimize`**: Orchestratore che applica automaticamente i compressori in base alla necessità.
+
+#### 3. Intelligenza Semantica e Memoria (Knowledge)
+- **`graphify` / `ai-graph`**: Costruttore dinamico di knowledge graph.
+- **`auto-graphify`**: Trigger automatico per aggiornare la mappa.
+- **`claude-mem` / `ai-mem`**: Memoria persistente e semantica cross-sessione.
+- **`wiki-brain-skill`**: Integrazione della base di conoscenza in stile Obsidian.
+- **`serena`**: Ricerca semantica profonda e LSP all'interno del codice.
+
+#### 4. Data & Document Processing (Ingestion)
+- **`markitdown` / `ai-convert`**: Estrazione markdown pulita da file Office, PDF, immagini.
+- **`book-to-skill`**: Converte interi manuali o libri PDF in framework assimilabili dagli agenti.
+
+#### 5. Ingegneria del Software & CI/CD (Workflow)
+- **`auto-workflow`**: Applicazione rigorosa del Git Flow (isolamento, test, merge).
+- **`auto-branch`**: Gestione autonoma e convenzioni ferree sui branch.
+- **`auto-release` / `ai-release`**: Rilascio di versioni semantiche (semver) e changelog.
+- **`auto-trigger-release`**: Trigger automatico di pubblicazione a fine task.
+- **`auto-npm-publish`**: Gestione, configurazione e sync automatizzato su NPM.
+- **`auto-debug`**: Analizzatore di codice ed auto-correzione prima di procedere al merge.
+- **`spec-kit`**: Toolkit per lo sviluppo orientato alle specifiche (TDD/SDD).
+
+#### 6. Frontend, UI/UX e Design (Design System)
+- **`taste-skill`**: Framework "anti-slop" per forzare layout e spaziature di altissima gamma.
+- **`awesome-design`**: Iniezione di stili e linguaggi brand-specifici (Vercel, Cursor, Claude).
+
+#### 7. Scaffolding & Templates (Avvio Progetti)
+- **`scaffold` / `ai-scaffold`**: Generatore istantaneo di progetti Prod-Ready (es. Express+TS, Nuxt v4).
+
+#### 8. LLM Orchestration & Prompting (Controllo AI)
+- **`litellm`**: Proxy API Gateway locale per testare e ruotare oltre 100+ modelli.
+- **`auto-prompt`**: Middleware che intercetta i prompt disordinati e li struttura in XML perfetti.
+- **`gemini-usage`**: Monitor e tracciatore live dei costi e budget API.
+- **`ecc`**: (Enhanced Claude Code) Framework per orchestrare sub-agenti specializzati.
+- **`rtk`**: Toolkit AI nativo per estensioni.
+
+---
+
+### 🌐 Plugin degli Agenti di Base (Built-in)
 - **a11y-debugging**: Debugging dell'accessibilità web (ARAI, focus, contrasto) tramite Chrome DevTools.
 - **chrome-devtools**: Automazione del browser e debugging, ispezione della rete e performance.
 - **chrome-extensions**: Creazione e debugging di estensioni per Google Chrome (Manifest V3).

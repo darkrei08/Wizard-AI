@@ -27,9 +27,63 @@ These are the primary command-line wrappers installed globally on your system by
 
 ## 🔌 2. Installed Agent Skills
 
-Below is the complete list of skills currently installed and globally available to the AI agents (Antigravity, Claude Code, Amp) organized by plugin/domain:
+The ecosystem features **33 custom skills and frameworks** exclusive to Wizard-AI, in addition to the base plugins provided by agents (e.g. Antigravity, Claude Code).
+Below is the rigorous categorization of the arsenal at your disposal:
 
-### 🌐 Web Development and Browser (Chrome DevTools Plugin & Modern Web Guidance)
+### 🔮 The 33 Custom Skills (Wizard-AI Core)
+
+#### 1. System Core & Routing (Foundations)
+- **`wizard-ai-hub`**: Skill discovery and dashboard.
+- **`auto-router`**: Intelligent mapping of user colloquial intents to technical skills.
+- **`wizard-ai-installer`**: Autonomous installer for new external skills.
+- **`show-active-skill`**: Forces the AI to declare which tools and wrappers it is using.
+- **`os-detect`**: Operating system detector (Linux, macOS, Windows) pre-installation.
+
+#### 2. Context & Token Optimization (Resource Saving)
+- **`caveman`**: Plugin/skill that compresses AI output by 75% maintaining accuracy.
+- **`llmlingua` / `ai-compress`**: Ultra-high compression of massive contexts.
+- **`sqz` / `ai-squeeze`**: Compression of terminal output, payloads, and JSON.
+- **`flashrank` / `ai-rerank`**: Surgical re-ranking of document contexts (RAG).
+- **`lean-ctx`**: Intelligent AI context isolation and control.
+- **`auto-optimize`**: Orchestrator that automatically applies compressors based on need.
+
+#### 3. Semantic Intelligence & Memory (Knowledge)
+- **`graphify` / `ai-graph`**: Dynamic knowledge graph builder.
+- **`auto-graphify`**: Automatic trigger to update the map.
+- **`claude-mem` / `ai-mem`**: Persistent and semantic cross-session memory.
+- **`wiki-brain-skill`**: Obsidian-style knowledge base integration.
+- **`serena`**: Deep semantic search and LSP inside the code.
+
+#### 4. Data & Document Processing (Ingestion)
+- **`markitdown` / `ai-convert`**: Clean markdown extraction from Office files, PDF, images.
+- **`book-to-skill`**: Converts entire PDF manuals or books into agent-assimilable frameworks.
+
+#### 5. Software Engineering & CI/CD (Workflow)
+- **`auto-workflow`**: Rigorous application of Git Flow (isolation, testing, merging).
+- **`auto-branch`**: Autonomous management and strict branch conventions.
+- **`auto-release` / `ai-release`**: Semantic versioning release (semver) and changelog.
+- **`auto-trigger-release`**: Automatic publishing trigger at the end of a task.
+- **`auto-npm-publish`**: NPM automated configuration, sync and management.
+- **`auto-debug`**: Code analyzer and auto-correction before proceeding to merge.
+- **`spec-kit`**: Toolkit for specification-driven development (TDD/SDD).
+
+#### 6. Frontend, UI/UX & Design (Design System)
+- **`taste-skill`**: "Anti-slop" framework to force ultra-premium layouts and spacing.
+- **`awesome-design`**: Injection of brand-specific styles and languages (Vercel, Cursor, Claude).
+
+#### 7. Scaffolding & Templates (Project Start)
+- **`scaffold` / `ai-scaffold`**: Instant generator of Prod-Ready projects (e.g. Express+TS, Nuxt v4).
+
+#### 8. LLM Orchestration & Prompting (AI Control)
+- **`litellm`**: Local Proxy API Gateway to test and rotate over 100+ models.
+- **`auto-prompt`**: Middleware intercepting messy prompts and structuring them in perfect XML.
+- **`gemini-usage`**: Live monitor and tracker of API costs and budgets.
+- **`ecc`**: (Enhanced Claude Code) Framework to orchestrate specialized sub-agents.
+- **`rtk`**: Native AI toolkit for extensions.
+
+---
+
+### 🌐 Base Agent Plugins (Built-in)
 - **a11y-debugging**: Web accessibility debugging (ARAI, focus, contrast) via Chrome DevTools.
 - **chrome-devtools**: Browser automation, debugging, network inspection, and performance analysis.
 - **chrome-extensions**: Building and debugging extensions for Google Chrome (Manifest V3).
