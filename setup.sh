@@ -247,9 +247,35 @@ echo -e "${GREEN}✓ $(ls "$SCRIPT_DIR/skills/" | wc -l) skills installed to ~/.
 echo -e "${YELLOW}Syncing skills to Claude Code, Amp, and other agents...${NC}"
 "$HOME/.local/bin/ai-sync-skills"
 
-# 8. Fix ownership if run via sudo
+# 8. Auto-Update Configuration
+echo -e "\n${BLUE}[8/9] Auto-Update Configuration...${NC}"
+echo -e "${YELLOW}Do you want to enable automatic background updates at system boot? [Y/n] (Auto-yes in 10s)${NC}"
+
+ENABLE_UPDATE="Y"
+read -t 10 -p "> " USER_INPUT || true
+if [ -n "$USER_INPUT" ]; then
+  ENABLE_UPDATE="$USER_INPUT"
+fi
+
+if [[ "$ENABLE_UPDATE" =~ ^[Yy]$ ]]; then
+  echo -e "${GREEN}✓ Enabling automatic background updates at boot...${NC}"
+  if command -v crontab &>/dev/null; then
+    CRON_CMD="@reboot $HOME/.local/bin/ai-update --quiet"
+    (crontab -u "$USER" -l 2>/dev/null | grep -v "ai-update" ; echo "$CRON_CMD") | crontab -u "$USER" -
+    echo -e "${GREEN}  ✓ Cronjob installed for user $USER.${NC}"
+  else
+    echo -e "${RED}⚠ cron not found. Auto-updates cannot be configured.${NC}"
+  fi
+else
+  echo -e "${YELLOW}  Auto-updates disabled. Update manually using 'ai-update'.${NC}"
+  if command -v crontab &>/dev/null; then
+    crontab -u "$USER" -l 2>/dev/null | grep -v "ai-update" | crontab -u "$USER" - || true
+  fi
+fi
+
+# 9. Fix ownership if run via sudo
 if [ -n "${SUDO_USER:-}" ]; then
-  echo -e "\n${BLUE}[8/8] Fixing file ownership for user $USER...${NC}"
+  echo -e "\n${BLUE}[9/9] Fixing file ownership for user $USER...${NC}"
   chown -R "$USER:$USER" "$HOME/.config/wizard-ai" "$HOME/.local/bin" "$HOME/.local/share/uv" "$HOME/.ai-skills" "$HOME/.gemini" "$HOME/.cargo" 2>/dev/null || true
 fi
 

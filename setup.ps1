@@ -231,7 +231,52 @@ Write-Host "[ok] $SkillCount skills installed to $SkillsDst" -ForegroundColor Gr
 Write-Host 'Syncing skills to Claude Code, Amp, and other agents...' -ForegroundColor Yellow
 & (Join-Path $LocalBin 'ai-sync-skills.ps1')
 
-# 8. Final summary
+# 8. Auto-Update Configuration
+Write-Host ''
+Write-Host '[8/8] Auto-Update Configuration...' -ForegroundColor Blue
+Write-Host 'Do you want to enable automatic background updates at system logon? [Y/n] (Auto-yes in 10s) ' -ForegroundColor Yellow -NoNewline
+
+$EnableUpdate = 'Y'
+$TimeoutSeconds = 10
+$Watch = [System.Diagnostics.Stopwatch]::StartNew()
+$Host.UI.RawUI.FlushInputBuffer()
+while ($Watch.Elapsed.TotalSeconds -lt $TimeoutSeconds) {
+    if ($Host.UI.RawUI.KeyAvailable) {
+        $KeyInfo = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+        if ($KeyInfo.Character -ne 0) {
+            $Key = $KeyInfo.Character
+            Write-Host $Key
+            if ($Key -eq 'n' -or $Key -eq 'N') { $EnableUpdate = 'N' }
+            break
+        }
+    }
+    Start-Sleep -Milliseconds 100
+}
+if (-not $Host.UI.RawUI.KeyAvailable) { Write-Host '' }
+
+$StartupFolder = [Environment]::GetFolderPath('Startup')
+$StartupShortcut = Join-Path $StartupFolder "WizardAI-AutoUpdate.lnk"
+
+if ($EnableUpdate -eq 'Y') {
+    Write-Host "  [ok] Enabling automatic background updates at logon..." -ForegroundColor Green
+    try {
+        $WshShell = New-Object -ComObject WScript.Shell
+        $Shortcut = $WshShell.CreateShortcut($StartupShortcut)
+        $Shortcut.TargetPath = "powershell.exe"
+        $Shortcut.Arguments = "-WindowStyle Hidden -NoProfile -ExecutionPolicy Bypass -File `"$LocalBin\ai-update.ps1`" -Quiet"
+        $Shortcut.Save()
+        Write-Host "  [ok] Startup shortcut installed for user." -ForegroundColor Green
+    } catch {
+        Write-Host "  [!] Could not create startup shortcut: $($_.Exception.Message)" -ForegroundColor Yellow
+    }
+} else {
+    Write-Host "  Auto-updates disabled. Update manually using 'ai-update'." -ForegroundColor Yellow
+    if (Test-Path $StartupShortcut) {
+        Remove-Item $StartupShortcut -Force
+    }
+}
+
+# 9. Final summary
 Write-Host ''
 Write-Host '============================================================' -ForegroundColor Green
 Write-Host '      Wizard-AI Environment Installed Successfully!' -ForegroundColor Green

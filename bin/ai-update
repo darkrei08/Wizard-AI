@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# ai-update — Automates the update process for Wizard-AI and external skills.
+
+set -euo pipefail
+
+QUIET=0
+if [[ "${1:-}" == "--quiet" ]]; then
+  QUIET=1
+fi
+
+log() {
+  if [ "$QUIET" -eq 0 ]; then
+    echo -e "$1"
+  fi
+}
+
+# Source env if WIZARD_AI_DIR is not set
+if [ -z "${WIZARD_AI_DIR:-}" ] && [ -f "$HOME/.config/wizard-ai/env" ]; then
+  source "$HOME/.config/wizard-ai/env"
+fi
+
+log "\n🧙‍♂️ Wizard-AI Update Process"
+log "================================="
+
+# 1. Update Wizard-AI repository
+WIZARD_DIR="${WIZARD_AI_DIR:-$HOME/.wizard-ai}"
+if [ -d "$WIZARD_DIR/.git" ]; then
+  log "\n📦 Updating Wizard-AI repository..."
+  git -C "$WIZARD_DIR" pull --ff-only ${QUIET:+--quiet} || true
+fi
+
+# 2. Update all skill repositories in ~/.ai-skills/
+if [ -d "$HOME/.ai-skills" ]; then
+  log "\n📚 Updating external skill repositories..."
+  for dir in "$HOME/.ai-skills"/*; do
+    if [ -d "$dir/.git" ]; then
+      log "  -> Updating $(basename "$dir")..."
+      git -C "$dir" pull --ff-only ${QUIET:+--quiet} || true
+    fi
+  done
+fi
+
+# 3. Update uv tools
+if command -v uv >/dev/null 2>&1; then
+  log "\n🛠️ Upgrading global CLI tools via uv..."
+  if [ "$QUIET" -eq 1 ]; then
+    uv tool upgrade --all --quiet >/dev/null 2>&1 || true
+  else
+    uv tool upgrade --all || true
+  fi
+fi
+
+# 4. Sync skills
+if command -v ai-sync-skills >/dev/null 2>&1; then
+  log "\n🔄 Syncing agent skills..."
+  ai-sync-skills >/dev/null 2>&1 || true
+fi
+
+log "\n✅ Update complete!"

@@ -123,6 +123,7 @@ After installation, these commands are available in your terminal:
 |---|---|---|
 | `ai-hub` | Local GUI | Open the dashboard and marketplace in your browser |
 | `ai-help` | Hub | Show all available tools with usage examples |
+| `ai-update` | Updater | Manually pull latest updates for Wizard-AI and skills |
 | `ai-graph [path]` | Graphify | Build knowledge graphs from code/docs |
 | `ai-compress --file f.txt` | LLMLingua | Compress prompts/context up to 20x |
 | `ai-rerank --query "X"` | FlashRank | Re-rank passages by relevance |

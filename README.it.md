@@ -122,17 +122,18 @@ Dopo l'installazione, questi comandi saranno disponibili nel tuo terminale:
 | Comando | Strumento | Descrizione |
 |---|---|---|
 | `ai-hub` | GUI Locale | Apre la dashboard e il marketplace nel browser |
-| `ai-help` | Hub | Mostra tutti gli strumenti con esempi d'uso |
-| `ai-graph [path]` | Graphify | Costruisce un grafo di conoscenza del codice |
-| `ai-compress --file f.txt` | LLMLingua | Comprime prompt/contesti fino a 20x |
-| `ai-rerank --query "X"` | FlashRank | Riordina i passaggi RAG per pertinenza |
-| `ai-squeeze` | Sqz | Comprime output terminale / JSON / log |
-| `ai-convert doc.pdf` | MarkItDown | Converte qualsiasi file in Markdown pulito |
-| `ai-mem store "testo"` | claude-mem | Salva una memoria semantica persistente |
-| `ai-usage` | GeminiUsage | Traccia l'uso e i costi dei token |
-| `ai-sync-skills` | Sync | Propaga le skill a tutti gli agenti |
-| `book-to-skill doc.pdf` | book-to-skill| Converte interi libri in skill pronte |
-| `litellm --port 4000` | LiteLLM | Avvia il gateway API per 100+ LLM |
+| `ai-help` | Hub | Mostra la lista degli strumenti con esempi di utilizzo |
+| `ai-update` | Updater | Aggiorna manualmente Wizard-AI e le skill clonate |
+| `ai-graph [percorso]` | Graphify | Costruisce un knowledge graph da codice o documentazione |
+| `ai-compress --file f.txt`| LLMLingua | Comprime prompt o contesto fino a 20x |
+| `ai-rerank --query "X"` | FlashRank | Riordina componenti o paragrafi (RAG) per pertinenza |
+| `ai-squeeze` | Sqz | Comprime l'output del terminale / JSON / log |
+| `ai-convert file.pdf` | MarkItDown | Converte qualsiasi file in un pulito Markdown |
+| `ai-mem store "testo"` | claude-mem | Memorizza un'informazione in modo semantico persistente |
+| `ai-usage` | GeminiUsage | Traccia i consumi dei token e il budget Gemini |
+| `ai-sync-skills` | Sync | Propaga le skill aggiornate a tutti gli agenti |
+| `book-to-skill doc.pdf` | book-to-skill| Trasforma libri o manuali in skill per agenti AI |
+| `litellm --port 4000` | LiteLLM | Gateway API unificato per oltre 100+ LLM |
 
 ---
 
