@@ -116,11 +116,12 @@ ${RAW_TEXT}"
 # ── Execute via llm CLI ──────────────────────────────────────────────────────
 execute_llm() {
   local target_model="$1"
-  # Attempt to generate XML
-  OUTPUT=$(llm -m "$target_model" "$META_PROMPT" 2>/dev/null)
+  local prompt_text="$2"
   
-  # Simple local XML validation (check if starts with < and ends with > roughly)
-  if [[ "$OUTPUT" == *"<system_instructions>"* && "$OUTPUT" == *"</task>"* ]]; then
+  OUTPUT=$(llm -m "$target_model" "$prompt_text" 2>/dev/null)
+  
+  # Simple local XML validation
+  if [[ "$OUTPUT" == *"<task>"* || "$OUTPUT" == *"<system_instructions>"* ]]; then
     echo "$OUTPUT"
     return 0
   else
@@ -128,16 +129,84 @@ execute_llm() {
   fi
 }
 
-if ! execute_llm "$MODEL"; then
-  echo -e "${YELLOW}⚠️  Model $MODEL failed. Attempting fallback to $FALLBACK...${RESET}" >&2
-  if ! execute_llm "$FALLBACK"; then
-    echo -e "${YELLOW}⚠️  Fallback $FALLBACK failed. Attempting secondary fallback to $FALLBACK2...${RESET}" >&2
-    if ! execute_llm "$FALLBACK2"; then
-      echo -e "${RED}❌ All models failed. Outputting raw result from $FALLBACK2:${RESET}" >&2
-      llm -m "$FALLBACK2" "$META_PROMPT"
-      exit 1
-    fi
-  fi
+echo -e "${CYAN}🤖 [Fase 1] Strutturazione base del prompt XML...${RESET}" >&2
+
+XML_DRAFT=""
+if XML_DRAFT=$(execute_llm "$MODEL" "$META_PROMPT"); then
+  true
+elif XML_DRAFT=$(execute_llm "$FALLBACK" "$META_PROMPT"); then
+  echo -e "${YELLOW}⚠️  Model $MODEL failed. Used $FALLBACK.${RESET}" >&2
+elif XML_DRAFT=$(execute_llm "$FALLBACK2" "$META_PROMPT"); then
+  echo -e "${YELLOW}⚠️  Used $FALLBACK2.${RESET}" >&2
+else
+  echo -e "${RED}❌ All models failed for Phase 1.${RESET}" >&2
+  exit 1
 fi
 
-echo -e "${GREEN}✅ Prompt successfully structured.${RESET}" >&2
+# ── Extract Intents for Memory ────────────────────────────────────────────────
+EXTRACTED=$(python3 -c "
+import re, sys
+xml = sys.stdin.read()
+task = re.search(r'<task>(.*?)</task>', xml, re.DOTALL)
+rules = re.search(r'<rules>(.*?)</rules>', xml, re.DOTALL)
+t_str = task.group(1).strip().replace('\n', ' ') if task else ''
+r_str = rules.group(1).strip().replace('\n', ' ') if rules else ''
+print(f\"{t_str}___SEP____{r_str}\")
+" <<< "$XML_DRAFT")
+
+TASK_TEXT="${EXTRACTED%%___SEP____*}"
+RULES_TEXT="${EXTRACTED##*___SEP____}"
+
+# ── Phase 2: Semantic Memory Augmentation ─────────────────────────────────────
+MEMORY_CONTEXT=""
+echo -e "${CYAN}🧠 [Fase 2] Ricerca nella memoria semantica (ai-mem/Turbovec)...${RESET}" >&2
+
+if command -v ai-mem &>/dev/null && [ -n "$TASK_TEXT" ]; then
+  # Extract matches and remove terminal noise
+  MEMORY_CONTEXT=$(ai-mem search "$TASK_TEXT" | grep -v "Semantic Search via" | grep -v "Naive Text Search" | grep -v "Total:" || true)
+fi
+
+FINAL_XML="$XML_DRAFT"
+
+if [[ -n "$MEMORY_CONTEXT" && "$MEMORY_CONTEXT" != *"No matching memories found."* && "$MEMORY_CONTEXT" != *"Il database è vuoto"* ]]; then
+  echo -e "${CYAN}✨ [Fase 3] Integrazione dei ricordi e rielaborazione XML...${RESET}" >&2
+  
+  PHASE3_PROMPT="Sei un Prompt Engineer Senior.
+Hai appena redatto questa bozza di prompt XML:
+
+$XML_DRAFT
+
+Ora abbiamo recuperato queste INFORMAZIONI DAL PASSATO (memoria semantica) dell'utente per task simili:
+<semantic_memory>
+$MEMORY_CONTEXT
+</semantic_memory>
+
+ISTRUZIONI:
+Migliora e aggiorna la bozza XML fondendo i dettagli utili della memoria semantica all'interno del nodo <rules> o <context>. 
+Restituisci SOLO l'XML finale migliorato, mantenendo intatti tutti gli altri nodi strutturali."
+
+  if REFINED_XML=$(execute_llm "$MODEL" "$PHASE3_PROMPT"); then
+    FINAL_XML="$REFINED_XML"
+  elif REFINED_XML=$(execute_llm "$FALLBACK" "$PHASE3_PROMPT"); then
+    FINAL_XML="$REFINED_XML"
+  else
+    echo -e "${YELLOW}⚠️  Fase 3 fallita, utilizzo la bozza della Fase 1.${RESET}" >&2
+  fi
+else
+  echo -e "${DIM}   Nessuna memoria rilevante passata trovata. Salto la Fase 3.${RESET}" >&2
+fi
+
+# Print Final Output
+echo "$FINAL_XML"
+
+# ── Phase 4: Persistence (Background) ─────────────────────────────────────────
+if command -v ai-mem &>/dev/null && [ -n "$TASK_TEXT" ]; then
+  MEM_PAYLOAD="Task Recente: $TASK_TEXT"
+  if [ -n "$RULES_TEXT" ]; then
+    MEM_PAYLOAD="$MEM_PAYLOAD | Nuove regole/preferenze: $RULES_TEXT"
+  fi
+  # Run silently in background so we don't block the user
+  ( ai-mem store "$MEM_PAYLOAD" &>/dev/null ) &
+fi
+
+echo -e "${GREEN}✅ Prompt successfully structured & memorized.${RESET}" >&2
