@@ -1,0 +1,84 @@
+name: CI Quality Gates
+
+# Runs quality checks on every PR targeting staging or main,
+# and on every push to staging or main.
+
+on:
+  pull_request:
+    branches: [staging, main, develop, dev]
+  push:
+    branches: [staging, main]
+
+jobs:
+  quality-gates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # ── JavaScript checks ──────────────────────────────────────────────────
+      - name: Syntax check CLI launcher
+        run: node --check cli.js
+
+      # ── Bash checks ────────────────────────────────────────────────────────
+      - name: Syntax check all bash wrappers
+        run: |
+          echo "🔍 Checking bash syntax for all wrappers in bin/..."
+          ERRORS=0
+          for script in bin/ai-*; do
+            if [ -f "$script" ]; then
+              if bash -n "$script" 2>&1; then
+                echo "  ✅ $script"
+              else
+                echo "  ❌ $script"
+                ERRORS=$((ERRORS + 1))
+              fi
+            fi
+          done
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "❌ $ERRORS script(s) failed syntax check"
+            exit 1
+          fi
+          echo "✅ All bash wrappers passed syntax check"
+
+      - name: Syntax check setup.sh
+        run: bash -n setup.sh
+
+      # ── Hardcoded path check ───────────────────────────────────────────────
+      - name: Check for hardcoded absolute paths
+        run: |
+          echo "🔍 Checking for hardcoded /home/ paths in skills and bin..."
+          FOUND=$(grep -rn "/home/" skills/ bin/ --include="*.md" --include="*.sh" 2>/dev/null | \
+                  grep -v "\.git\|example\|CONTRIBUTING\|README\|# " || true)
+          if [ -n "$FOUND" ]; then
+            echo "❌ Found hardcoded paths:"
+            echo "$FOUND"
+            exit 1
+          fi
+          echo "✅ No hardcoded absolute paths found"
+
+      # ── Skill YAML frontmatter check ───────────────────────────────────────
+      - name: Validate SKILL.md frontmatter
+        run: |
+          echo "🔍 Checking SKILL.md files have valid frontmatter..."
+          ERRORS=0
+          for skill in skills/*/SKILL.md; do
+            if [ -f "$skill" ]; then
+              if head -1 "$skill" | grep -q "^---"; then
+                echo "  ✅ $skill"
+              else
+                echo "  ❌ $skill — missing YAML frontmatter"
+                ERRORS=$((ERRORS + 1))
+              fi
+            fi
+          done
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "❌ $ERRORS skill(s) missing frontmatter"
+            exit 1
+          fi
+          echo "✅ All skills have valid frontmatter"

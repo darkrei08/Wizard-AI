@@ -114,17 +114,25 @@ Open a GitHub Issue including:
 
 ## 🚀 Pull Requests & Branching Strategy
 
-This project uses the `auto-branch` global skill to manage a robust staging-based development logic. All new features and fixes must go through the `staging` branch before being merged into `main`.
+This project uses a dual-mode workflow depending on your role.
 
-1. Fork the repository
-2. Switch to the staging branch: `git checkout staging`
-3. Create a feature branch: `ai-branch feature "skill-name"` (or `git checkout -b feature/skill-name`)
-4. Make your changes
-5. Test with `bash -n setup.sh` (syntax check)
-6. Verify: `grep -r "/home/" skills/ bin/` must return no results
-7. Open a PR targeting the `staging` branch (NOT `main`)
+### 🟢 Repo Owners & Collaborators
+If you have push access to the repository:
+1. Run `ai-branch scan` to detect your role.
+2. Create a branch: `ai-branch feature "my feature"`
+3. Make your changes and commit.
+4. Run `ai-branch pr --auto-merge`. This runs quality checks, creates a PR, and auto-merges it into `staging` once CI passes.
+5. Run `ai-release promote --auto` to promote `staging` to `main`.
+6. Run `ai-release minor` to publish the official release.
 
-Once a feature is tested and validated in `staging`, the maintainers will release it into `main`.
+### 🟡 External Contributors
+If you are contributing from a fork:
+1. Fork the repository and clone your fork locally.
+2. Run `ai-branch scan`. It will detect that you are `EXTERNAL` and your target dev branch is `staging`.
+3. Create a branch: `ai-branch feature "my feature"`
+4. Make your changes, test with `bash -n setup.sh` and `grep -r "/home/" skills/ bin/`.
+5. Run `ai-branch pr --target staging`.
+6. **Wait for review**. The maintainer will review your code, run the CI checks, and if everything is correct, they will merge your PR into `staging` and handle the release.
 
 ---
 

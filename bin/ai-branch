@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# ai-branch — Automated Git branch lifecycle management
+# ai-branch — Automated Git branch lifecycle management (dual-mode: owner/external)
 # Source: Wizard-AI skill (auto-branch)
-# Usage: ai-branch [feature|fix|hotfix|exp] "<description>" | [list|merge|cleanup]
+# Usage: ai-branch [feature|fix|hotfix|exp] "<description>" | [scan|list|pr|merge|cleanup]
 set -euo pipefail
 
 BOLD='\033[1m'
@@ -10,23 +10,35 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 CYAN='\033[0;36m'
 BLUE='\033[0;34m'
+MAGENTA='\033[0;35m'
+DIM='\033[2m'
 RESET='\033[0m'
 
 usage() {
   echo -e "${BOLD}Usage:${RESET} ai-branch <command> [args]"
   echo ""
   echo -e "${BOLD}Commands:${RESET}"
-  echo "  feature \"description\"   Create a feature branch (feature/<slug>)"
-  echo "  fix \"description\"       Create a fix branch (fix/<slug>)"
-  echo "  hotfix \"description\"    Create a hotfix branch (hotfix/<slug>)"
-  echo "  exp \"description\"       Create an experiment branch (exp/<slug>)"
+  echo "  scan                    Scan repo: detect branches, role, and dev branch"
+  echo "  feature \"description\"   Create a feature branch from dev branch"
+  echo "  fix \"description\"       Create a fix branch from dev branch"
+  echo "  hotfix \"description\"    Create a hotfix branch from dev branch"
+  echo "  exp \"description\"       Create an experiment branch from dev branch"
   echo "  list                    List all branches with status"
-  echo "  merge                   Merge current branch to staging (with checks)"
+  echo "  pr [OPTIONS]            Create a Pull Request for the current branch"
+  echo "  merge                   Merge current branch via PR (role-aware)"
   echo "  cleanup                 Delete merged branches"
   echo ""
+  echo -e "${BOLD}PR Options:${RESET}"
+  echo "  --target <branch>       Target branch for PR (default: auto-detected dev branch)"
+  echo "  --auto-merge            Enable auto-merge after CI passes (owner/collaborator only)"
+  echo "  --draft                 Create as draft PR"
+  echo ""
   echo -e "${BOLD}Examples:${RESET}"
+  echo "  ai-branch scan"
   echo "  ai-branch feature \"file manager and wifi passwords\""
   echo "  ai-branch fix \"tcl9 deprecation in trace variable\""
+  echo "  ai-branch pr --auto-merge"
+  echo "  ai-branch pr --target staging --draft"
   echo "  ai-branch merge"
   echo "  ai-branch list"
   exit 0
@@ -38,6 +50,94 @@ slugify() {
     tr ' ' '-' | \
     sed 's/--*/-/g' | \
     cut -c1-50
+}
+
+# ── Role Detection ─────────────────────────────────────────────────────────────
+# Returns: OWNER | COLLABORATOR | EXTERNAL | UNKNOWN
+detect_role() {
+  # Require gh CLI
+  if ! command -v gh &>/dev/null; then
+    echo "UNKNOWN"
+    return
+  fi
+
+  # Check gh authentication
+  if ! gh auth status &>/dev/null 2>&1; then
+    echo "UNKNOWN"
+    return
+  fi
+
+  # Get repo info
+  local repo perms
+  repo=$(gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null || true)
+  if [ -z "$repo" ]; then
+    echo "UNKNOWN"
+    return
+  fi
+
+  # Get current user's permissions on this repo
+  perms=$(gh api "repos/$repo" --jq '.permissions // empty' 2>/dev/null || true)
+  if [ -z "$perms" ]; then
+    echo "EXTERNAL"
+    return
+  fi
+
+  local is_admin is_push
+  is_admin=$(echo "$perms" | grep -o '"admin":true' || true)
+  is_push=$(echo "$perms" | grep -o '"push":true' || true)
+
+  if [ -n "$is_admin" ]; then
+    echo "OWNER"
+  elif [ -n "$is_push" ]; then
+    echo "COLLABORATOR"
+  else
+    echo "EXTERNAL"
+  fi
+}
+
+# ── Development Branch Detection ──────────────────────────────────────────────
+# Scans for common dev/staging branches in priority order
+# Returns the first found: staging > develop > dev > main (fallback)
+detect_dev_branch() {
+  local candidates=("staging" "develop" "dev")
+
+  for candidate in "${candidates[@]}"; do
+    # Check local branches
+    if git show-ref --verify --quiet "refs/heads/$candidate" 2>/dev/null; then
+      echo "$candidate"
+      return
+    fi
+    # Check remote branches
+    if git show-ref --verify --quiet "refs/remotes/origin/$candidate" 2>/dev/null; then
+      echo "$candidate"
+      return
+    fi
+  done
+
+  # Fallback to main
+  echo "main"
+}
+
+# ── Get repo name (with fallback) ─────────────────────────────────────────────
+get_repo_name() {
+  if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
+    gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null || \
+      basename "$(git remote get-url origin 2>/dev/null)" .git 2>/dev/null || \
+      echo "(unknown)"
+  else
+    basename "$(git remote get-url origin 2>/dev/null)" .git 2>/dev/null || echo "(unknown)"
+  fi
+}
+
+# ── Print role with color ─────────────────────────────────────────────────────
+print_role() {
+  local role="$1"
+  case "$role" in
+    OWNER)        echo -e "${GREEN}${BOLD}OWNER${RESET} ${DIM}(admin + push access)${RESET}" ;;
+    COLLABORATOR) echo -e "${CYAN}${BOLD}COLLABORATOR${RESET} ${DIM}(push access)${RESET}" ;;
+    EXTERNAL)     echo -e "${YELLOW}${BOLD}EXTERNAL${RESET} ${DIM}(read-only / fork)${RESET}" ;;
+    UNKNOWN)      echo -e "${DIM}UNKNOWN${RESET} ${DIM}(gh CLI not available or not authenticated)${RESET}" ;;
+  esac
 }
 
 cmd="${1:-}"
@@ -63,6 +163,83 @@ fi
 
 case "$cmd" in
 
+  # ── SCAN ─────────────────────────────────────────────────────────────────────
+  scan)
+    REPO_NAME=$(get_repo_name)
+    ROLE=$(detect_role)
+    DEV_BRANCH=$(detect_dev_branch)
+    CURRENT=$(git branch --show-current)
+
+    echo ""
+    echo -e "${BOLD}${CYAN}📋 Repository Scan${RESET}"
+    echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    echo -e "  ${BOLD}Repository:${RESET}   $REPO_NAME"
+    echo -e "  ${BOLD}Role:${RESET}         $(print_role "$ROLE")"
+    echo -e "  ${BOLD}Dev branch:${RESET}   ${MAGENTA}${DEV_BRANCH}${RESET}"
+    echo -e "  ${BOLD}Current:${RESET}      $CURRENT"
+    echo ""
+
+    # Show dev branch status relative to main
+    if [ "$DEV_BRANCH" != "main" ]; then
+      git fetch origin --quiet 2>/dev/null || true
+      AHEAD=$(git rev-list --count "origin/main..origin/$DEV_BRANCH" 2>/dev/null || echo "?")
+      BEHIND=$(git rev-list --count "origin/$DEV_BRANCH..origin/main" 2>/dev/null || echo "?")
+      echo -e "  ${BOLD}${DEV_BRANCH} vs main:${RESET}  ${GREEN}↑${AHEAD}${RESET} ahead, ${RED}↓${BEHIND}${RESET} behind"
+      echo ""
+    fi
+
+    # List active feature/fix branches
+    echo -e "  ${BOLD}Active branches:${RESET}"
+    BRANCHES=$(git for-each-ref --format='%(refname:short)' refs/heads/ | \
+      grep -v "^staging$\|^develop$\|^dev$\|^main$\|^1.0-stable$" || true)
+    if [ -z "$BRANCHES" ]; then
+      echo -e "    ${DIM}(none)${RESET}"
+    else
+      echo "$BRANCHES" | while read -r branch; do
+        count=$(git rev-list --count "${DEV_BRANCH}..${branch}" 2>/dev/null || echo "?")
+        echo -e "    ${BLUE}$branch${RESET} (${count} commits ahead of ${DEV_BRANCH})"
+      done
+    fi
+
+    # Open PRs (if gh available)
+    echo ""
+    if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
+      echo -e "  ${BOLD}Open Pull Requests:${RESET}"
+      PR_LIST=$(gh pr list --state open --json number,title,headRefName,author --jq '.[] | "    #\(.number) \(.title) ← \(.headRefName) by @\(.author.login)"' 2>/dev/null || true)
+      if [ -z "$PR_LIST" ]; then
+        echo -e "    ${DIM}(none)${RESET}"
+      else
+        echo "$PR_LIST"
+      fi
+    fi
+
+    echo ""
+    echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+    # Recommend next action based on role
+    echo ""
+    echo -e "  ${BOLD}Recommended next steps:${RESET}"
+    case "$ROLE" in
+      OWNER|COLLABORATOR)
+        echo -e "    ${GREEN}→${RESET} ai-branch feature \"your feature description\""
+        echo -e "    ${GREEN}→${RESET} ai-branch pr --auto-merge     ${DIM}(after development)${RESET}"
+        echo -e "    ${GREEN}→${RESET} ai-release promote --auto     ${DIM}(to merge ${DEV_BRANCH} → main)${RESET}"
+        ;;
+      EXTERNAL)
+        echo -e "    ${YELLOW}→${RESET} Fork the repo first if you haven't"
+        echo -e "    ${YELLOW}→${RESET} ai-branch feature \"your feature description\""
+        echo -e "    ${YELLOW}→${RESET} ai-branch pr --target ${DEV_BRANCH}    ${DIM}(PR will await maintainer review)${RESET}"
+        ;;
+      UNKNOWN)
+        echo -e "    ${DIM}→ Run 'gh auth login' to enable role detection${RESET}"
+        echo -e "    ${DIM}→ ai-branch feature \"your feature description\"${RESET}"
+        ;;
+    esac
+    echo ""
+    ;;
+
+  # ── CREATE BRANCH ────────────────────────────────────────────────────────────
   feature|fix|hotfix|exp)
     DESCRIPTION="${2:-}"
     if [ -z "$DESCRIPTION" ]; then
@@ -71,48 +248,236 @@ case "$cmd" in
     fi
     SLUG=$(slugify "$DESCRIPTION")
     BRANCH_NAME="${cmd}/${SLUG}"
+    DEV_BRANCH=$(detect_dev_branch)
 
-    echo -e "${CYAN}🌿 Creating branch: ${BOLD}${BRANCH_NAME}${RESET}"
+    echo -e "${CYAN}🔍 Detected development branch: ${BOLD}${DEV_BRANCH}${RESET}"
+    echo -e "${CYAN}🌿 Creating branch: ${BOLD}${BRANCH_NAME}${RESET} from ${MAGENTA}${DEV_BRANCH}${RESET}"
 
-    # Start from latest staging
-    git checkout staging
-    git pull origin staging
+    # Start from latest dev branch
+    git checkout "$DEV_BRANCH"
+    git pull origin "$DEV_BRANCH"
 
     git checkout -b "$BRANCH_NAME"
     git push -u origin "$BRANCH_NAME"
 
-    echo -e "${GREEN}✅ Branch '${BRANCH_NAME}' created and pushed${RESET}"
-    echo -e "   ${BLUE}Now develop, commit, then run: ai-branch merge${RESET}"
+    echo -e "${GREEN}✅ Branch '${BRANCH_NAME}' created from '${DEV_BRANCH}' and pushed${RESET}"
+    echo -e "   ${BLUE}Now develop, commit, then run: ${BOLD}ai-branch pr${RESET}"
+    echo -e "   ${DIM}Or for auto-merge (owner): ai-branch pr --auto-merge${RESET}"
     ;;
 
+  # ── LIST ─────────────────────────────────────────────────────────────────────
   list)
+    DEV_BRANCH=$(detect_dev_branch)
     echo -e "${BOLD}${CYAN}📋 Branch Status${RESET}"
     echo ""
     echo -e "${BOLD}Current branch:${RESET} $(git branch --show-current)"
+    echo -e "${BOLD}Dev branch:${RESET} ${MAGENTA}${DEV_BRANCH}${RESET}"
     echo ""
     echo -e "${BOLD}All branches (recent first):${RESET}"
     git branch -a --sort=-committerdate | head -20
     echo ""
-    echo -e "${BOLD}Branches merged into staging (safe to delete):${RESET}"
-    git branch --merged staging | grep -v "^\*\|staging\|main\|1.0-stable" || echo "  none"
+    echo -e "${BOLD}Branches merged into ${DEV_BRANCH} (safe to delete):${RESET}"
+    git branch --merged "$DEV_BRANCH" | grep -v "^\*\|staging\|develop\|dev\|main\|1.0-stable" || echo "  none"
     echo ""
-    echo -e "${BOLD}Commits ahead of staging (per branch):${RESET}"
+    echo -e "${BOLD}Commits ahead of ${DEV_BRANCH} (per branch):${RESET}"
     git for-each-ref --format='%(refname:short)' refs/heads/ | \
-      grep -v "^staging$\|^main$\|^1.0-stable$" | \
+      grep -v "^staging$\|^develop$\|^dev$\|^main$\|^1.0-stable$" | \
       while read -r branch; do
-        count=$(git rev-list --count "staging..${branch}" 2>/dev/null || echo "?")
+        count=$(git rev-list --count "${DEV_BRANCH}..${branch}" 2>/dev/null || echo "?")
         echo "  $branch: $count commits ahead"
       done
     ;;
 
+  # ── PULL REQUEST ─────────────────────────────────────────────────────────────
+  pr)
+    shift  # remove 'pr' from args
+    TARGET=""
+    AUTO_MERGE=false
+    PR_DRAFT=false
+
+    while [ $# -gt 0 ]; do
+      case "$1" in
+        --target) TARGET="${2:-}"; shift 2 ;;
+        --auto-merge) AUTO_MERGE=true; shift ;;
+        --draft) PR_DRAFT=true; shift ;;
+        *) echo -e "${RED}❌ Unknown option: $1${RESET}"; exit 1 ;;
+      esac
+    done
+
+    CURRENT=$(git branch --show-current)
+    DEV_BRANCH=$(detect_dev_branch)
+    ROLE=$(detect_role)
+
+    # Validate not on protected branch
+    if [ "$CURRENT" = "staging" ] || [ "$CURRENT" = "develop" ] || \
+       [ "$CURRENT" = "dev" ] || [ "$CURRENT" = "main" ] || \
+       [ "$CURRENT" = "1.0-stable" ]; then
+      echo -e "${RED}❌ Cannot create PR from protected branch '$CURRENT'. Switch to a feature/fix branch.${RESET}"
+      exit 1
+    fi
+
+    # Default target is the dev branch
+    if [ -z "$TARGET" ]; then
+      TARGET="$DEV_BRANCH"
+    fi
+
+    # Check gh is available
+    if ! command -v gh &>/dev/null; then
+      echo -e "${RED}❌ gh CLI required for PR creation. Install with: ai-os install gh${RESET}"
+      exit 1
+    fi
+    if ! gh auth status &>/dev/null 2>&1; then
+      echo -e "${RED}❌ gh not authenticated. Run: gh auth login${RESET}"
+      exit 1
+    fi
+
+    echo -e "${CYAN}🔀 Creating Pull Request${RESET}"
+    echo -e "  ${BOLD}Branch:${RESET}  ${BLUE}${CURRENT}${RESET}"
+    echo -e "  ${BOLD}Target:${RESET}  ${MAGENTA}${TARGET}${RESET}"
+    echo -e "  ${BOLD}Role:${RESET}    $(print_role "$ROLE")"
+    echo ""
+
+    # External contributors cannot auto-merge
+    if $AUTO_MERGE && [ "$ROLE" = "EXTERNAL" ]; then
+      echo -e "${YELLOW}⚠️  External contributors cannot use --auto-merge. PR will require maintainer review.${RESET}"
+      AUTO_MERGE=false
+    fi
+
+    # Pre-PR quality checks
+    echo -e "${BOLD}Running pre-PR quality checks...${RESET}"
+    if command -v ai-debug &>/dev/null; then
+      ai-debug check || {
+        echo -e "${RED}❌ Quality checks failed. Fix issues before creating PR.${RESET}"
+        exit 1
+      }
+    else
+      echo -e "${YELLOW}⚠️  ai-debug not found, running basic checks${RESET}"
+      # Try ruff if available (Python projects)
+      if command -v python &>/dev/null && python -m ruff --version &>/dev/null 2>&1; then
+        python -m ruff check . || {
+          echo -e "${RED}❌ Linting failed. Run 'python -m ruff check . --fix' to auto-fix.${RESET}"
+          exit 1
+        }
+      fi
+      # Bash syntax check for shell scripts
+      for script in bin/ai-*; do
+        if [ -f "$script" ]; then
+          bash -n "$script" 2>/dev/null || {
+            echo -e "${RED}❌ Bash syntax error in $script${RESET}"
+            exit 1
+          }
+        fi
+      done
+    fi
+    echo -e "${GREEN}✅ Quality checks passed${RESET}"
+    echo ""
+
+    # Push latest commits
+    echo -e "${CYAN}📤 Pushing latest commits...${RESET}"
+    git push origin "$CURRENT"
+
+    # Show diff summary
+    echo ""
+    echo -e "${BOLD}Changes to include in PR:${RESET}"
+    git diff "${TARGET}...${CURRENT}" --stat
+    echo ""
+
+    # Determine PR title from branch name
+    PR_TYPE=$(echo "$CURRENT" | cut -d/ -f1)
+    PR_DESC=$(echo "$CURRENT" | cut -d/ -f2- | tr '-' ' ')
+    case "$PR_TYPE" in
+      feature) PR_TITLE="feat: $PR_DESC" ;;
+      fix)     PR_TITLE="fix: $PR_DESC" ;;
+      hotfix)  PR_TITLE="hotfix: $PR_DESC" ;;
+      exp)     PR_TITLE="exp: $PR_DESC" ;;
+      *)       PR_TITLE="$PR_DESC" ;;
+    esac
+
+    # Build gh pr create args
+    GH_PR_ARGS=("pr" "create" "--base" "$TARGET" "--title" "$PR_TITLE" "--fill")
+
+    if $PR_DRAFT; then
+      GH_PR_ARGS+=("--draft")
+    fi
+
+    # Add labels based on role
+    case "$ROLE" in
+      EXTERNAL)
+        GH_PR_ARGS+=("--label" "external-contribution")
+        ;;
+    esac
+
+    # Create the PR
+    echo -e "${CYAN}📝 Creating Pull Request...${RESET}"
+    PR_URL=$(gh "${GH_PR_ARGS[@]}" 2>&1) || {
+      # Check if PR already exists
+      if echo "$PR_URL" | grep -q "already exists"; then
+        echo -e "${YELLOW}⚠️  A PR for this branch already exists.${RESET}"
+        PR_URL=$(gh pr view "$CURRENT" --json url -q .url 2>/dev/null || echo "")
+        if [ -n "$PR_URL" ]; then
+          echo -e "  ${BLUE}$PR_URL${RESET}"
+        fi
+      else
+        echo -e "${RED}❌ Failed to create PR: $PR_URL${RESET}"
+        exit 1
+      fi
+    }
+
+    echo -e "${GREEN}✅ Pull Request created${RESET}"
+    if [ -n "$PR_URL" ]; then
+      echo -e "  ${BLUE}$PR_URL${RESET}"
+    fi
+
+    # Auto-merge if requested and user has permissions
+    if $AUTO_MERGE; then
+      if [ "$ROLE" = "OWNER" ] || [ "$ROLE" = "COLLABORATOR" ]; then
+        echo ""
+        echo -e "${CYAN}🤖 Enabling auto-merge...${RESET}"
+        PR_NUMBER=$(gh pr view "$CURRENT" --json number -q .number 2>/dev/null || true)
+        if [ -n "$PR_NUMBER" ]; then
+          gh pr merge --auto --squash "$PR_NUMBER" 2>/dev/null && \
+            echo -e "${GREEN}✅ Auto-merge enabled — will merge when CI passes${RESET}" || \
+            echo -e "${YELLOW}⚠️  Could not enable auto-merge. Repo may need branch protection rules enabled.${RESET}"
+        fi
+      fi
+    fi
+
+    echo ""
+    # Next step guidance based on role
+    case "$ROLE" in
+      OWNER|COLLABORATOR)
+        echo -e "${BOLD}Next steps:${RESET}"
+        if ! $AUTO_MERGE; then
+          echo -e "  ${GREEN}→${RESET} Review and merge the PR on GitHub"
+        fi
+        echo -e "  ${GREEN}→${RESET} After merge: ${CYAN}ai-release promote${RESET} ${DIM}(to merge ${TARGET} → main)${RESET}"
+        echo -e "  ${GREEN}→${RESET} Then: ${CYAN}ai-release minor${RESET} ${DIM}(to tag and publish)${RESET}"
+        ;;
+      EXTERNAL)
+        echo -e "${BOLD}Next steps:${RESET}"
+        echo -e "  ${YELLOW}→${RESET} Your PR is awaiting maintainer review"
+        echo -e "  ${YELLOW}→${RESET} The maintainer will test, approve, and merge"
+        echo -e "  ${DIM}   You will be notified when the PR is reviewed${RESET}"
+        ;;
+    esac
+    echo ""
+    ;;
+
+  # ── MERGE (role-aware) ──────────────────────────────────────────────────────
   merge)
     CURRENT=$(git branch --show-current)
-    if [ "$CURRENT" = "staging" ] || [ "$CURRENT" = "main" ] || [ "$CURRENT" = "1.0-stable" ]; then
+    DEV_BRANCH=$(detect_dev_branch)
+    ROLE=$(detect_role)
+
+    if [ "$CURRENT" = "staging" ] || [ "$CURRENT" = "develop" ] || \
+       [ "$CURRENT" = "dev" ] || [ "$CURRENT" = "main" ] || \
+       [ "$CURRENT" = "1.0-stable" ]; then
       echo -e "${RED}❌ Already on protected branch '$CURRENT'. Switch to a feature branch first.${RESET}"
       exit 1
     fi
 
-    echo -e "${CYAN}🔀 Merging '${CURRENT}' → staging${RESET}"
+    echo -e "${CYAN}🔀 Merging '${CURRENT}' → ${DEV_BRANCH}${RESET}"
+    echo -e "  ${BOLD}Role:${RESET} $(print_role "$ROLE")"
     echo ""
 
     # Pre-merge quality checks
@@ -124,42 +489,117 @@ case "$cmd" in
       }
     else
       echo -e "${YELLOW}⚠️  ai-debug not found, running ruff manually${RESET}"
-      python -m ruff check . || {
-        echo -e "${RED}❌ Linting failed. Run 'python -m ruff check . --fix' to auto-fix.${RESET}"
-        exit 1
-      }
+      if command -v python &>/dev/null && python -m ruff --version &>/dev/null 2>&1; then
+        python -m ruff check . || {
+          echo -e "${RED}❌ Linting failed. Run 'python -m ruff check . --fix' to auto-fix.${RESET}"
+          exit 1
+        }
+      fi
     fi
 
     echo -e "${GREEN}✅ Quality checks passed${RESET}"
     echo ""
 
     # Show diff summary
-    echo -e "${BOLD}Changes to merge into staging:${RESET}"
-    git diff staging..."$CURRENT" --stat
+    echo -e "${BOLD}Changes to merge into ${DEV_BRANCH}:${RESET}"
+    git diff "${DEV_BRANCH}...${CURRENT}" --stat
     echo ""
 
-    read -r -p "$(echo -e "${BOLD}Merge '$CURRENT' into staging? [y/N]:${RESET} ")" CONFIRM
-    if [[ ! "$CONFIRM" =~ ^[Yy]$ ]]; then
-      echo "Aborted."
-      exit 0
+    # ── PR-based flow (if gh available) ────────────────────────────────────────
+    if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
+      echo -e "${CYAN}📝 Using PR-based merge flow...${RESET}"
+
+      # Push latest
+      git push origin "$CURRENT"
+
+      # Check if PR already exists
+      EXISTING_PR=$(gh pr view "$CURRENT" --json number -q .number 2>/dev/null || true)
+
+      if [ -n "$EXISTING_PR" ]; then
+        echo -e "${YELLOW}ℹ️  PR #${EXISTING_PR} already exists for this branch${RESET}"
+      else
+        # Create PR
+        PR_TYPE=$(echo "$CURRENT" | cut -d/ -f1)
+        PR_DESC=$(echo "$CURRENT" | cut -d/ -f2- | tr '-' ' ')
+        case "$PR_TYPE" in
+          feature) PR_TITLE="feat: $PR_DESC" ;;
+          fix)     PR_TITLE="fix: $PR_DESC" ;;
+          hotfix)  PR_TITLE="hotfix: $PR_DESC" ;;
+          *)       PR_TITLE="$PR_DESC" ;;
+        esac
+
+        gh pr create --base "$DEV_BRANCH" --title "$PR_TITLE" --fill
+        EXISTING_PR=$(gh pr view "$CURRENT" --json number -q .number 2>/dev/null || true)
+      fi
+
+      # Owner/Collaborator: auto-merge
+      if [ "$ROLE" = "OWNER" ] || [ "$ROLE" = "COLLABORATOR" ]; then
+        read -r -p "$(echo -e "${BOLD}Auto-merge PR #${EXISTING_PR} after CI? [Y/n]:${RESET} ")" CONFIRM
+        CONFIRM="${CONFIRM:-y}"
+        if [[ "$CONFIRM" =~ ^[Yy]$ ]]; then
+          gh pr merge --auto --squash "$EXISTING_PR" 2>/dev/null && \
+            echo -e "${GREEN}✅ Auto-merge enabled — PR will merge when CI passes${RESET}" || {
+            # Fallback: merge directly if auto-merge not available
+            echo -e "${YELLOW}⚠️  Auto-merge not available (branch protection required). Merging directly...${RESET}"
+            gh pr merge --squash "$EXISTING_PR" || {
+              echo -e "${YELLOW}⚠️  PR merge failed, falling back to direct merge...${RESET}"
+              git checkout "$DEV_BRANCH"
+              git pull origin "$DEV_BRANCH"
+              git merge --no-ff "$CURRENT" -m "feat: merge $CURRENT into $DEV_BRANCH"
+              git push origin "$DEV_BRANCH"
+            }
+          }
+        fi
+      else
+        echo -e "${YELLOW}📨 PR created. Awaiting maintainer review and approval.${RESET}"
+      fi
+
+    else
+      # ── Direct merge fallback (no gh) ──────────────────────────────────────
+      echo -e "${YELLOW}⚠️  gh CLI not available — using direct merge${RESET}"
+      echo ""
+
+      read -r -p "$(echo -e "${BOLD}Merge '$CURRENT' into ${DEV_BRANCH}? [y/N]:${RESET} ")" CONFIRM
+      if [[ ! "$CONFIRM" =~ ^[Yy]$ ]]; then
+        echo "Aborted."
+        exit 0
+      fi
+
+      # Merge
+      git checkout "$DEV_BRANCH"
+      git pull origin "$DEV_BRANCH"
+      git merge --no-ff "$CURRENT" -m "feat: merge $CURRENT into $DEV_BRANCH"
+      git push origin "$DEV_BRANCH"
     fi
 
-    # Merge
-    git checkout staging
-    git pull origin staging
-    git merge --no-ff "$CURRENT" -m "feat: merge $CURRENT into staging"
-    git push origin staging
+    echo ""
 
-    # Clean up
+    # Clean up branch
     read -r -p "$(echo -e "${BOLD}Delete branch '$CURRENT' (remote + local)? [y/N]:${RESET} ")" DEL_CONFIRM
     if [[ "$DEL_CONFIRM" =~ ^[Yy]$ ]]; then
       git push origin --delete "$CURRENT" 2>/dev/null || true
-      git branch -d "$CURRENT"
+      # Ensure we are not on the branch we want to delete
+      CURR_NOW=$(git branch --show-current)
+      if [ "$CURR_NOW" = "$CURRENT" ]; then
+        git checkout "$DEV_BRANCH"
+      fi
+      git branch -d "$CURRENT" 2>/dev/null || git branch -D "$CURRENT" 2>/dev/null || true
       echo -e "${GREEN}✅ Branch '${CURRENT}' deleted${RESET}"
     fi
 
     echo -e "${GREEN}${BOLD}✅ Merge complete!${RESET}"
-    echo -e "   ${BLUE}Next: run 'ai-release minor' or 'ai-release patch' to tag and publish${RESET}"
+    echo ""
+
+    # Next steps
+    case "$ROLE" in
+      OWNER|COLLABORATOR)
+        echo -e "   ${BLUE}Next: run '${CYAN}ai-release promote${BLUE}' to merge ${DEV_BRANCH} → main${RESET}"
+        echo -e "   ${BLUE}Then: run '${CYAN}ai-release minor${BLUE}' to tag and publish${RESET}"
+        ;;
+      EXTERNAL|UNKNOWN)
+        echo -e "   ${BLUE}Your changes are now in ${DEV_BRANCH}. The maintainer will handle the release.${RESET}"
+        ;;
+    esac
     echo ""
 
     # ── Optionally set up gh for the release step ──────────────────────
@@ -184,13 +624,15 @@ case "$cmd" in
       echo -e "${YELLOW}⚡ gh is installed but not authenticated.${RESET}"
       echo -e "   Run: ${CYAN}gh auth login${RESET}"
     else
-      echo -e "${GREEN}✅ gh CLI ready — run ${CYAN}ai-release minor${GREEN} to publish the release${RESET}"
+      echo -e "${GREEN}✅ gh CLI ready — run ${CYAN}ai-release promote${GREEN} to promote to main${RESET}"
     fi
     ;;
 
+  # ── CLEANUP ──────────────────────────────────────────────────────────────────
   cleanup)
+    DEV_BRANCH=$(detect_dev_branch)
     echo -e "${CYAN}🧹 Cleaning up merged branches...${RESET}"
-    MERGED=$(git branch --merged staging | grep -v "^\*\|staging\|main\|1.0-stable" || true)
+    MERGED=$(git branch --merged "$DEV_BRANCH" | grep -v "^\*\|staging\|develop\|dev\|main\|1.0-stable" || true)
     if [ -z "$MERGED" ]; then
       echo -e "${GREEN}✅ Nothing to clean up.${RESET}"
       exit 0

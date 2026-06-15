@@ -1,0 +1,70 @@
+name: Auto-merge Owner PRs
+
+# When a PR is opened by the repository owner or a collaborator (MEMBER),
+# and all CI checks pass, this workflow enables auto-merge.
+# External contributor PRs always require manual review.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  auto-merge:
+    # Only run for OWNER or MEMBER (collaborator with push access)
+    if: >-
+      github.event.pull_request.author_association == 'OWNER' ||
+      github.event.pull_request.author_association == 'MEMBER'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Wait for CI to register
+        run: sleep 10
+
+      - name: Enable auto-merge
+        run: |
+          echo "🤖 Enabling auto-merge for PR #${{ github.event.pull_request.number }}"
+          echo "   Author: ${{ github.event.pull_request.user.login }}"
+          echo "   Association: ${{ github.event.pull_request.author_association }}"
+          echo "   Base: ${{ github.event.pull_request.base.ref }}"
+          echo "   Head: ${{ github.event.pull_request.head.ref }}"
+          echo ""
+
+          # Use squash for feature branches, merge for promotions
+          if echo "${{ github.event.pull_request.head.ref }}" | grep -qE "^(staging|develop|dev)$"; then
+            MERGE_METHOD="merge"
+            echo "   Strategy: merge (promotion branch)"
+          else
+            MERGE_METHOD="squash"
+            echo "   Strategy: squash (feature/fix branch)"
+          fi
+
+          gh pr merge --auto --"$MERGE_METHOD" "${{ github.event.pull_request.number }}" && \
+            echo "✅ Auto-merge enabled" || \
+            echo "⚠️  Auto-merge could not be enabled (branch protection rules may be needed)"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  label-external:
+    # Label external PRs for review
+    if: >-
+      github.event.pull_request.author_association != 'OWNER' &&
+      github.event.pull_request.author_association != 'MEMBER' &&
+      github.event.pull_request.author_association != 'COLLABORATOR'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Label for review
+        run: |
+          echo "📋 External contribution from @${{ github.event.pull_request.user.login }}"
+          echo "   Association: ${{ github.event.pull_request.author_association }}"
+          gh pr edit "${{ github.event.pull_request.number }}" \
+            --add-label "external-contribution,needs-review" 2>/dev/null || \
+          echo "⚠️  Could not add labels (labels may not exist yet)"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

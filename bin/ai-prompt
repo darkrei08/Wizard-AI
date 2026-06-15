@@ -1,0 +1,143 @@
+#!/usr/bin/env bash
+# ai-prompt — Convert raw natural language to structured XML prompts
+# Source: Wizard-AI skill (auto-prompt)
+# Uses Simon Willison's `llm` CLI for routing and structuring.
+
+set -euo pipefail
+
+BOLD='\033[1m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+CYAN='\033[0;36m'
+DIM='\033[2m'
+RESET='\033[0m'
+
+usage() {
+  echo -e "${BOLD}Usage:${RESET} ai-prompt <\"raw text\"> | -f <file.txt> [--critical]"
+  echo -e "Converts messy natural language into a highly structured XML prompt."
+  exit 1
+}
+
+if ! command -v llm &>/dev/null; then
+  echo -e "${RED}❌ 'llm' CLI not found.${RESET}"
+  echo -e "   Install it with: pipx install llm (or via ai-os)"
+  exit 1
+fi
+
+CRITICAL=false
+RAW_TEXT=""
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -f|--file)
+      if [[ -n "${2:-}" && -f "$2" ]]; then
+        RAW_TEXT=$(cat "$2")
+        shift 2
+      else
+        echo -e "${RED}❌ Error: File not found or not provided.${RESET}"
+        exit 1
+      fi
+      ;;
+    --critical)
+      CRITICAL=true
+      shift
+      ;;
+    -h|--help)
+      usage
+      ;;
+    *)
+      if [[ -z "$RAW_TEXT" ]]; then
+        RAW_TEXT="$1"
+      else
+        RAW_TEXT="$RAW_TEXT $1"
+      fi
+      shift
+      ;;
+  esac
+done
+
+if [[ -z "$RAW_TEXT" ]]; then
+  usage
+fi
+
+# ── Dynamic Model Routing (based on policy.yml) ──────────────────────────────
+# We use a word count heuristic (words * 1.3 ≈ tokens) to determine threshold.
+WORDS=$(echo "$RAW_TEXT" | wc -w)
+APPROX_TOKENS=$((WORDS * 13 / 10))
+
+LARGE_CTX_THRESHOLD=8000
+
+if $CRITICAL; then
+  MODEL="claude-opus-latest"
+  FALLBACK="gpt-5-omni-latest"
+  FALLBACK2="o4-mini"
+  STRATEGY="critical"
+elif [[ "$APPROX_TOKENS" -gt "$LARGE_CTX_THRESHOLD" ]]; then
+  MODEL="gemini-pro-latest"
+  FALLBACK="claude-sonnet-latest"
+  FALLBACK2="qwen-max-latest"
+  STRATEGY="large_context"
+else
+  MODEL="gemini-flash-latest"
+  FALLBACK="claude-haiku-latest"
+  FALLBACK2="gpt-5o-mini-latest"
+  STRATEGY="primary (fast)"
+fi
+
+echo -e "${CYAN}🤖 Analyzing prompt (${APPROX_TOKENS} tokens)...${RESET}" >&2
+echo -e "${DIM}   Routing strategy: ${STRATEGY} | Model: ${MODEL}${RESET}" >&2
+
+# ── Construct the Meta-Prompt ────────────────────────────────────────────────
+# Path to the base XML template
+WIZARD_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+BASE_TEMPLATE_PATH="$WIZARD_DIR/skills/auto-prompt/templates/base.xml"
+
+if [[ -f "$BASE_TEMPLATE_PATH" ]]; then
+  TEMPLATE_GUIDE="Usa questa struttura XML esatta come base:\n$(cat "$BASE_TEMPLATE_PATH")"
+else
+  TEMPLATE_GUIDE="Devi strutturare l'output usando tag XML: <system_instructions>, <context>, <rules>, <skills>, <task>."
+fi
+
+META_PROMPT="Sei un Prompt Engineer Senior. Il tuo obiettivo è prendere un input testuale grezzo fornito da un utente umano (che potrebbe essere impreciso o disordinato) e riscriverlo in un prompt perfetto, strutturato e modulare in formato XML.
+
+${TEMPLATE_GUIDE}
+
+Istruzioni per la riscrittura:
+1. Estrapola l'intento principale e mettilo in <task>.
+2. Se l'utente menziona codice o percorsi, mettili in <context>.
+3. Deduci le regole implicite (es. non rompere funzionalità esistenti) in <rules>.
+4. Compila dinamicamente <dynamic_skills> con le skill pertinenti (es. auto-debug se è un bug, auto-optimize se richiede ottimizzazione).
+5. Restituisci SOLO l'XML finale. Nessun preambolo, nessuna spiegazione.
+
+INPUT GREZZO DELL'UTENTE:
+${RAW_TEXT}"
+
+# ── Execute via llm CLI ──────────────────────────────────────────────────────
+execute_llm() {
+  local target_model="$1"
+  # Attempt to generate XML
+  OUTPUT=$(llm -m "$target_model" "$META_PROMPT" 2>/dev/null)
+  
+  # Simple local XML validation (check if starts with < and ends with > roughly)
+  if [[ "$OUTPUT" == *"<system_instructions>"* && "$OUTPUT" == *"</task>"* ]]; then
+    echo "$OUTPUT"
+    return 0
+  else
+    return 1
+  fi
+}
+
+if ! execute_llm "$MODEL"; then
+  echo -e "${YELLOW}⚠️  Model $MODEL failed. Attempting fallback to $FALLBACK...${RESET}" >&2
+  if ! execute_llm "$FALLBACK"; then
+    echo -e "${YELLOW}⚠️  Fallback $FALLBACK failed. Attempting secondary fallback to $FALLBACK2...${RESET}" >&2
+    if ! execute_llm "$FALLBACK2"; then
+      echo -e "${RED}❌ All models failed. Outputting raw result from $FALLBACK2:${RESET}" >&2
+      llm -m "$FALLBACK2" "$META_PROMPT"
+      exit 1
+    fi
+  fi
+fi
+
+echo -e "${GREEN}✅ Prompt successfully structured.${RESET}" >&2
