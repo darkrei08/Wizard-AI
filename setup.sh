@@ -91,6 +91,26 @@ mkdir -p "$HOME/.ai-skills"
 echo -e "\n${BLUE}[2/8] Preparing Python Virtual Environment for LLMLingua & FlashRank...${NC}"
 uv venv "$HOME/.ai-skills/venv" --seed $QUIET_OPT
 VENV_PYTHON="$HOME/.ai-skills/venv/bin/python"
+
+# Auto-install system dependencies for turbovec if possible
+echo -e "${YELLOW}Checking system dependencies (Rust/Cargo & OpenBLAS) for turbovec...${NC}"
+if command -v apt-get &>/dev/null; then
+  if ! dpkg -s libopenblas-dev &>/dev/null || ! command -v cargo &>/dev/null; then
+    echo -e "${YELLOW}Installing libopenblas-dev and cargo via apt-get...${NC}"
+    apt-get update -yqq && apt-get install -yqq cargo libopenblas-dev
+  fi
+elif command -v pacman &>/dev/null; then
+  if ! pacman -Qs openblas &>/dev/null || ! command -v cargo &>/dev/null; then
+    echo -e "${YELLOW}Installing openblas and rust via pacman...${NC}"
+    pacman -Sy --noconfirm rust openblas
+  fi
+elif command -v dnf &>/dev/null; then
+  if ! rpm -q openblas-devel &>/dev/null || ! command -v cargo &>/dev/null; then
+    echo -e "${YELLOW}Installing openblas-devel and cargo via dnf...${NC}"
+    dnf install -y cargo openblas-devel
+  fi
+fi
+
 echo -e "${YELLOW}Installing llmlingua, flashrank, and turbovec inside the venv...${NC}"
 uv pip install $QUIET_OPT --python "$VENV_PYTHON" \
   llmlingua flashrank transformers torch accelerate \
