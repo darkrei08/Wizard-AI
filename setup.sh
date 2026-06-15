@@ -91,8 +91,17 @@ mkdir -p "$HOME/.ai-skills"
 echo -e "\n${BLUE}[2/8] Preparing Python Virtual Environment for LLMLingua & FlashRank...${NC}"
 uv venv "$HOME/.ai-skills/venv" --seed $QUIET_OPT
 VENV_PYTHON="$HOME/.ai-skills/venv/bin/python"
-echo -e "${YELLOW}Installing llmlingua and flashrank inside the venv...${NC}"
-uv pip install $QUIET_OPT --python "$VENV_PYTHON" llmlingua flashrank
+echo -e "${YELLOW}Installing llmlingua, flashrank, and turbovec inside the venv...${NC}"
+uv pip install $QUIET_OPT --python "$VENV_PYTHON" \
+  llmlingua flashrank transformers torch accelerate \
+  "git+https://github.com/RyanCodrai/turbovec.git#subdirectory=turbovec-python" \
+  || {
+       echo -e "${RED}❌ Failed to install Python dependencies. Se turbovec fallisce, potresti non avere i compilatori C++/Rust o OpenBLAS installati.${NC}"
+       echo -e "${RED}Per favore installa: rust (cargo) e openblas prima di eseguire lo script, es:${NC}"
+       echo -e "${RED}Arch: sudo pacman -S rust openblas${NC}"
+       echo -e "${RED}Ubuntu: sudo apt install cargo libopenblas-dev${NC}"
+       exit 1
+     }
 echo -e "${GREEN}✓ Virtual environment ready at ~/.ai-skills/venv/${NC}"
 
 # 3. Clone and install required skill repositories if not present
