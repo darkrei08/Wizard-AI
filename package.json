@@ -30,5 +30,8 @@
     "llm",
     "token-optimization"
   ],
-  "license": "AGPL-3.0-only"
+  "license": "AGPL-3.0-only",
+  "dependencies": {
+    "@darkrei08/wizard-ai-cli": "^0.19.1"
+  }
 }
