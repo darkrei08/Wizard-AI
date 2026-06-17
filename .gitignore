@@ -50,3 +50,4 @@ desktop.ini
 *.swo
 .cursor/
 resources/Repositories-Skills/
+node_modules/
