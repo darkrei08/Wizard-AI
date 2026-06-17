@@ -1,4 +1,4 @@
-﻿# ai-graph — Graphify wrapper with convenient shortcuts
+# ai-graph — Graphify wrapper with convenient shortcuts
 # Windows port of bin/ai-graph
 # Source: https://github.com/safishamsi/graphify
 
@@ -46,6 +46,28 @@ if ($Cmd) {
 if (-not $Graphify) {
     Write-Host '[X] graphify not found. Install: uv tool install graphifyy' -ForegroundColor Red
     exit 1
+}
+
+# Auto-detect Cockpit Tools CLIProxyAPI on port 19528
+$tcpConnection = $null
+try {
+    $tcpConnection = New-Object System.Net.Sockets.TcpClient("127.0.0.1", 19528)
+    if ($tcpConnection.Connected) {
+        Write-Host "🚀 Cockpit Tools Proxy detected! Routing LLM requests through local subscription..." -ForegroundColor Cyan
+        $env:OPENAI_API_BASE = "http://127.0.0.1:19528/v1"
+        $env:OPENAI_API_KEY = "dummy"
+        $env:GEMINI_API_KEY = "dummy"
+        $env:ANTHROPIC_API_KEY = "dummy"
+        
+        # Ensure graphify uses openai backend to hit the proxy
+        if ($args -notcontains "--backend") {
+            $args = $args + "--backend" + "openai"
+        }
+    }
+} catch {
+    # Port not open, ignore
+} finally {
+    if ($tcpConnection) { $tcpConnection.Close() }
 }
 
 $First = $args[0]

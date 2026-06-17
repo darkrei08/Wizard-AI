@@ -6,6 +6,20 @@ set -euo pipefail
 
 GRAPHIFY_BIN="${HOME}/.local/bin/graphify"
 
+# Auto-detect Cockpit Tools CLIProxyAPI on port 19528 (Cross-platform: Linux, macOS, WSL)
+if (echo > /dev/tcp/127.0.0.1/19528) >/dev/null 2>&1 || nc -z 127.0.0.1 19528 >/dev/null 2>&1; then
+  echo "🚀 Cockpit Tools Proxy detected! Routing LLM requests through local subscription..."
+  export OPENAI_API_BASE="http://127.0.0.1:19528/v1"
+  export OPENAI_API_KEY="dummy"
+  export GEMINI_API_KEY="dummy"
+  export ANTHROPIC_API_KEY="dummy"
+  
+  # Ensure graphify uses openai backend to hit the proxy (unless overridden)
+  if [[ ! " $* " =~ " --backend " ]]; then
+    set -- "$@" --backend openai
+  fi
+fi
+
 show_help() {
   echo "ai-graph — Graphify knowledge graph builder"
   echo ""
