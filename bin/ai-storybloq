@@ -3,10 +3,31 @@
 # Wrapper per l'esecuzione del gestore di sessioni/memoria @storybloq/storybloq
 STORYBLOQ_DIR="$HOME/.ai-skills/storybloq"
 
+CMD="$1"
+ARGS=()
+SKIP_NEXT=false
+
+# Intercettiamo ed eliminiamo flag allucinati come '-m' o '--message' 
+# che Storybloq snapshot non accetta nativamente.
+for arg in "$@"; do
+    if [ "$SKIP_NEXT" = true ]; then
+        SKIP_NEXT=false
+        continue
+    fi
+    
+    if [ "$CMD" = "snapshot" ]; then
+        if [ "$arg" = "-m" ] || [ "$arg" = "--message" ]; then
+            SKIP_NEXT=true
+            continue
+        fi
+    fi
+    ARGS+=("$arg")
+done
+
 # Se non è installato in locale, fallo partire via npx.
 if [ -x "$STORYBLOQ_DIR/node_modules/.bin/storybloq" ]; then
-    exec "$STORYBLOQ_DIR/node_modules/.bin/storybloq" "$@"
+    exec "$STORYBLOQ_DIR/node_modules/.bin/storybloq" "${ARGS[@]}"
 else
     # Fallback to npx
-    exec npx -y @storybloq/storybloq "$@"
+    exec npx -y @storybloq/storybloq "${ARGS[@]}"
 fi
