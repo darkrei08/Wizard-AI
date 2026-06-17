@@ -59,3 +59,19 @@ if (Test-Path $SyncScript) {
 }
 
 Log "`n✅ Update complete!" "Green"
+
+# Show desktop notification
+try {
+    Add-Type -AssemblyName System.Windows.Forms
+    $notify = New-Object System.Windows.Forms.NotifyIcon
+    $notify.Icon = [System.Drawing.SystemIcons]::Information
+    $notify.BalloonTipIcon = "Info"
+    $notify.BalloonTipTitle = "Wizard-AI"
+    $notify.BalloonTipText = "Aggiornamento ambiente e skill (wiki incluse) completato con successo!"
+    $notify.Visible = $true
+    $notify.ShowBalloonTip(5000)
+    Start-Sleep -Seconds 5
+    $notify.Dispose()
+} catch {
+    # Fallback in case of errors with UI
+}
