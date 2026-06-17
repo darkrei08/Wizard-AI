@@ -9,12 +9,12 @@
 # Requirements: git on PATH. Everything else (uv, Python venv, tools) is
 # installed automatically.
 
-# PowerShell 5.1 needs TLS 1.2 enabled explicitly for downloads
-[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
-
 param (
     [switch]$VerboseMode
 )
+
+# PowerShell 5.1 needs TLS 1.2 enabled explicitly for downloads
+[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
 
 $QuietOpt = '--quiet'
 if ($VerboseMode) {
@@ -86,7 +86,7 @@ $null = New-Item -ItemType Directory -Force -Path $AiSkills
 Write-Host ''
 Write-Host '[2/8] Preparing Python Virtual Environment for LLMLingua & FlashRank...' -ForegroundColor Blue
 $VenvDir = Join-Path $AiSkills 'venv'
-if ($QuietOpt) { uv venv $VenvDir --seed --quiet } else { uv venv $VenvDir --seed }
+if ($QuietOpt) { uv venv $VenvDir --python 3.12 --seed --quiet } else { uv venv $VenvDir --python 3.12 --seed }
 $VenvPython = Join-Path $VenvDir 'Scripts\python.exe'
 Write-Host 'Installing llmlingua and flashrank inside the venv (this can take a while)...' -ForegroundColor Yellow
 if ($QuietOpt) { uv pip install --quiet --python $VenvPython llmlingua flashrank "aisuite[all]" } else { uv pip install --python $VenvPython llmlingua flashrank "aisuite[all]" }
