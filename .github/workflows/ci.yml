@@ -12,8 +12,6 @@ on:
 jobs:
   quality-gates:
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,11 +34,20 @@ jobs:
             if [ -f "$script" ]; then
               SHEBANG=$(head -1 "$script")
               if echo "$SHEBANG" | grep -q "bash"; then
-                if bash -n "$script" 2>&1; then
-                  echo "  ✅ $script (bash)"
+                if sed -n '2p' "$script" | grep -q "python"; then
+                  if python3 -m py_compile "$script" 2>&1; then
+                    echo "  ✅ $script (python exec)"
+                  else
+                    echo "  ❌ $script (python exec)"
+                    ERRORS=$((ERRORS + 1))
+                  fi
                 else
-                  echo "  ❌ $script (bash)"
-                  ERRORS=$((ERRORS + 1))
+                  if bash -n "$script" 2>&1; then
+                    echo "  ✅ $script (bash)"
+                  else
+                    echo "  ❌ $script (bash)"
+                    ERRORS=$((ERRORS + 1))
+                  fi
                 fi
               elif echo "$SHEBANG" | grep -q "python"; then
                 if python3 -m py_compile "$script" 2>&1; then
