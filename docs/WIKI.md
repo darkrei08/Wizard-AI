@@ -51,6 +51,8 @@ Below is the rigorous categorization of the arsenal at your disposal:
 - **`graphify` / `ai-graph`**: Dynamic knowledge graph builder.
 - **`auto-graphify`**: Automatic trigger to update the map.
 - **`claude-mem` / `ai-mem`**: Persistent and semantic cross-session memory.
+- **`storybloq` / `ai-storybloq`**: CLI session manager (snapshots, tickets, state memory).
+- **`handoff` / `ai-handoff`**: Conversation log compactor for agent-to-agent handoffs.
 - **`wiki-brain-skill`**: Obsidian-style knowledge base integration.
 - **`serena`**: Deep semantic search and LSP inside the code.
 

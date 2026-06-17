@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Wrapper per l'esecuzione del gestore di sessioni/memoria @storybloq/storybloq
+STORYBLOQ_DIR="$HOME/.ai-skills/storybloq"
+
+# Se non è installato in locale, fallo partire via npx.
+if [ -x "$STORYBLOQ_DIR/node_modules/.bin/storybloq" ]; then
+    exec "$STORYBLOQ_DIR/node_modules/.bin/storybloq" "$@"
+else
+    # Fallback to npx
+    exec npx -y @storybloq/storybloq "$@"
+fi

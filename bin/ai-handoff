@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# ai-handoff - Wrapper per la skill di Handoff (Memoria Sessione)
+# Wizard-AI Ecosystem
+
+show_help() {
+    echo "🤝 Wizard-AI Handoff Trigger"
+    echo "================================="
+    echo "Innesca la skill 'handoff' per compattare la conversazione corrente"
+    echo "e creare un documento di passaggio consegne per il prossimo agente."
+    echo ""
+    echo "Uso:"
+    echo "  ai-handoff [motivo del prossimo handoff]"
+    echo ""
+    echo "Esempio:"
+    echo "  ai-handoff 'Il prossimo agente dovrà implementare i test unitari'"
+}
+
+if [ "$1" == "--help" ] || [ "$1" == "-h" ]; then
+    show_help
+    exit 0
+fi
+
+echo "📝 Inizializzazione della skill 'handoff'..."
+if [ -n "$*" ]; then
+    echo "Istruzione per il prossimo agente: $*"
+fi
+echo "L'agente sta generando il documento di handover (Handoff) nel file di sistema temporaneo."
+
+# Placeholder logic for when invoked in terminal manually.
+# In Agentic mode, the AI reads this echo and triggers the handoff skill.
+exit 0

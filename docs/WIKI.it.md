@@ -51,6 +51,8 @@ Di seguito la categorizzazione rigorosa dell'arsenale a tua disposizione:
 - **`graphify` / `ai-graph`**: Costruttore dinamico di knowledge graph.
 - **`auto-graphify`**: Trigger automatico per aggiornare la mappa.
 - **`claude-mem` / `ai-mem`**: Memoria persistente e semantica cross-sessione.
+- **`storybloq` / `ai-storybloq`**: Gestore sessioni CLI (snapshot, ticket, memoria di stato).
+- **`handoff` / `ai-handoff`**: Compattatore di log conversazione per passaggio di consegne (handoff) tra agenti.
 - **`wiki-brain-skill`**: Integrazione della base di conoscenza in stile Obsidian.
 - **`serena`**: Ricerca semantica profonda e LSP all'interno del codice.
 

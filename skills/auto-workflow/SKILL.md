@@ -50,6 +50,7 @@ Since everything is now on `main`, you must trigger the official release toolcha
 - Verify tests and clean up the worktree.
 - Run: `ai-release minor` (or `ai-release patch` for minor bug fixes).
 - This will tag the repository, create a GitHub release, and trigger the GitHub Action that deploys the new version.
+- **Memory Persistence**: prima di scollegarti o terminare la sessione, salva sempre lo stato: esegui `ai-storybloq snapshot` per salvare i log delle modifiche e, se necessario, innesca `ai-handoff` per compattare la conversazione per il prossimo agente.
 - Ask the user if they want to verify the published release.
 
 ## Rules for the AI Agent
