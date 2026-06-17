@@ -57,3 +57,19 @@ if command -v ai-sync-skills >/dev/null 2>&1; then
 fi
 
 log "\n✅ Update complete!"
+
+# Show cross-platform desktop notification
+show_notification() {
+  local title="Wizard-AI"
+  local msg="Aggiornamento ambiente e skill (wiki incluse) completato con successo!"
+  
+  if command -v notify-send >/dev/null 2>&1; then
+    # Linux (GNOME, KDE, XFCE, etc.)
+    notify-send "$title" "$msg" || true
+  elif command -v osascript >/dev/null 2>&1; then
+    # macOS
+    osascript -e "display notification \"$msg\" with title \"$title\"" || true
+  fi
+}
+
+show_notification
