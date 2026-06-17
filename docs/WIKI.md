@@ -227,6 +227,8 @@ Reference list of tools, repositories, and frameworks relevant to AI and develop
 - [PocketBase](https://github.com/pocketbase/pocketbase) - Single file backend with realtime DB, auth, and storage.
 - [TrailBase](https://github.com/trailbaseio/trailbase) - Rust-based realtime server and DB using SQLite.
 - [Pi.dev](https://pi.dev) - Serverless integration and development platform.
+- [Zvec](https://github.com/alibaba/zvec) - The "SQLite" alternative for vector databases. In-process DB optimized for local RAG.
+- [TurboVec](https://github.com/RyanCodrai/turbovec) - Implementation of Google TurboQuant. High performance vector quantization and indexing (up to 16x compression).
 
 ### APIs & Messaging (WhatsApp Integration)
 - [go-whatsapp-web-multidevice](https://github.com/aldinokemal/go-whatsapp-web-multidevice) - Multi-device WhatsApp bridge.

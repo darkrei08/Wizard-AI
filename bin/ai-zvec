@@ -1,0 +1,260 @@
+#!/usr/bin/env bash
+"exec" "$HOME/.ai-skills/venv/bin/python" "$0" "$@"
+
+import sys
+import json
+import argparse
+import os
+
+try:
+    import numpy as np
+    import turbovec
+    import zvec
+    import litellm
+except ImportError as e:
+    print(f"❌ Errore di importazione: {e}", file=sys.stderr)
+    print("Assicurati di aver installato zvec e turbovec nel venv.", file=sys.stderr)
+    sys.exit(1)
+
+litellm.suppress_debug_info = True
+DEFAULT_MODEL = os.environ.get("AI_VECTOR_MODEL", "text-embedding-3-small")
+
+def get_embedding(text):
+    try:
+        response = litellm.embedding(model=DEFAULT_MODEL, input=text)
+        emb = response.data[0]['embedding']
+        return np.array(emb, dtype=np.float32)
+    except litellm.exceptions.AuthenticationError as e:
+        print("\n" + "="*60, file=sys.stderr)
+        print("❌ ERRORE: Chiave API Mancante per generare gli Embeddings", file=sys.stderr)
+        print("="*60, file=sys.stderr)
+        print("\nPer usare TurboVec e Zvec per la ricerca semantica, hai bisogno di una chiave API valida (es. OpenAI).", file=sys.stderr)
+        print("\n🔑 PASSO 1: Configura la chiave API", file=sys.stderr)
+        print("Esegui nel tuo terminale:", file=sys.stderr)
+        print("    export OPENAI_API_KEY='sk-la-tua-chiave-qui'", file=sys.stderr)
+        print("\n📂 PASSO 2: Organizzazione dei file e utilizzo", file=sys.stderr)
+        print("TurboVec usa i vettori per la ricerca veloce, mentre Zvec salva i metadati.", file=sys.stderr)
+        print("1. Inizializza un database per il tuo progetto:", file=sys.stderr)
+        print("    ai-zvec init ./my-vector-db --dim 1536", file=sys.stderr)
+        print("2. Aggiungi documenti singoli:", file=sys.stderr)
+        print("    ai-zvec add ./my-vector-db \"Testo del documento\"", file=sys.stderr)
+        print("3. Importa interi grafi o memorie in pipeline:", file=sys.stderr)
+        print("    ai-zvec import-graph ./my-vector-db graphify-out/graph.json", file=sys.stderr)
+        print("    ai-mem export | ai-zvec import-mem ./my-vector-db", file=sys.stderr)
+        print("\nPer favore, configura la variabile d'ambiente OPENAI_API_KEY e riprova.", file=sys.stderr)
+        print("="*60 + "\n", file=sys.stderr)
+        sys.exit(1)
+    except Exception as e:
+        print(f"❌ Errore imprevisto durante la generazione dell'embedding: {e}", file=sys.stderr)
+        sys.exit(1)
+
+def get_db_paths(base_dir):
+    os.makedirs(base_dir, exist_ok=True)
+    return {
+        "zvec": os.path.join(base_dir, "zvec_data"),
+        "tvec": os.path.join(base_dir, "turbovec.tvim")
+    }
+
+def init_db(base_dir, dim, bit_width=4):
+    paths = get_db_paths(base_dir)
+    
+    # Init Turbovec
+    if not os.path.exists(paths["tvec"]):
+        t_idx = turbovec.IdMapIndex(dim=dim, bit_width=bit_width)
+        t_idx.write(paths["tvec"])
+        print(f"✅ Inizializzato Turbovec index (dim={dim}, bit_width={bit_width})", file=sys.stderr)
+    
+    # Init Zvec
+    if not os.path.exists(paths["zvec"]):
+        id_field = zvec.FieldSchema("id", zvec.DataType.STRING)
+        text_field = zvec.FieldSchema("text", zvec.DataType.STRING)
+        meta_field = zvec.FieldSchema("meta", zvec.DataType.STRING)
+        schema = zvec.CollectionSchema(name="docs", fields=[id_field, text_field, meta_field])
+        zvec.create_and_open(paths["zvec"], schema)
+        print(f"✅ Inizializzato Zvec database", file=sys.stderr)
+    
+    print(f"✅ Hybrid DB pronto in {base_dir}", file=sys.stderr)
+
+def add_single(base_dir, text, meta):
+    paths = get_db_paths(base_dir)
+    if not os.path.exists(paths["zvec"]) or not os.path.exists(paths["tvec"]):
+        print(f"❌ Database non inizializzato in {base_dir}. Usa 'init' prima.", file=sys.stderr)
+        sys.exit(1)
+        
+    t_idx = turbovec.IdMapIndex.load(paths["tvec"])
+    z_coll = zvec.open(paths["zvec"])
+    
+    doc_id_int = len(t_idx) + 1
+    doc_id_str = str(doc_id_int)
+    
+    print(f"Generazione embedding...", file=sys.stderr)
+    vec = get_embedding(text).reshape(1, -1)
+    
+    # Add to turbovec
+    ids = np.array([doc_id_int], dtype=np.uint64)
+    t_idx.add_with_ids(vec, ids)
+    t_idx.write(paths["tvec"])
+    
+    # Add to zvec
+    doc = zvec.Doc(id=doc_id_str, fields={"id": doc_id_str, "text": text, "meta": meta})
+    z_coll.insert(doc)
+    
+    print(f"✅ Documento salvato (ID: {doc_id_str})", file=sys.stderr)
+
+def search_db(base_dir, query, top_k):
+    paths = get_db_paths(base_dir)
+    if not os.path.exists(paths["zvec"]) or not os.path.exists(paths["tvec"]):
+        print(f"❌ Database non inizializzato.", file=sys.stderr)
+        sys.exit(1)
+        
+    t_idx = turbovec.IdMapIndex.load(paths["tvec"])
+    z_coll = zvec.open(paths["zvec"])
+    
+    if len(t_idx) == 0:
+        print("Il database è vuoto.")
+        return
+        
+    vec = get_embedding(query).reshape(1, -1)
+    k = min(top_k, len(t_idx))
+    
+    distances, ids = t_idx.search(vec, k)
+    
+    # Fetch da Zvec
+    doc_ids_str = [str(i) for i in ids[0]]
+    fetched = z_coll.fetch(doc_ids_str)
+    
+    print("\n✅ Risultati Ricerca Hibrida (Zvec + Turbovec):")
+    for dist, doc_id_str in zip(distances[0], doc_ids_str):
+        if doc_id_str in fetched:
+            doc = fetched[doc_id_str]
+            text = doc.fields.get("text", "")
+            meta = doc.fields.get("meta", "")
+            print(f"[{dist:.4f}] {text} | Meta: {meta}")
+        else:
+            print(f"[{dist:.4f}] [Dati Zvec Mancanti per ID {doc_id_str}]")
+
+def import_mem(base_dir):
+    # Reads JSON array of memories from stdin
+    data = sys.stdin.read()
+    try:
+        payload = json.loads(data)
+        memories = payload.get("memories", [])
+    except Exception as e:
+        print(f"❌ Errore parsing JSON da stdin: {e}", file=sys.stderr)
+        sys.exit(1)
+        
+    if not memories:
+        print("Nessuna memoria trovata.", file=sys.stderr)
+        sys.exit(0)
+        
+    paths = get_db_paths(base_dir)
+    if not os.path.exists(paths["zvec"]):
+        print(f"❌ DB non inizializzato. Genero con default dim=1536.", file=sys.stderr)
+        init_db(base_dir, 1536)
+        
+    t_idx = turbovec.IdMapIndex.load(paths["tvec"])
+    z_coll = zvec.open(paths["zvec"])
+    
+    print(f"Inizio importazione di {len(memories)} memorie...", file=sys.stderr)
+    
+    for m in memories:
+        text = m.get("text", "")
+        meta = json.dumps({"ts": m.get("ts"), "id": m.get("id")})
+        doc_id_int = len(t_idx) + 1
+        
+        vec = get_embedding(text).reshape(1, -1)
+        ids = np.array([doc_id_int], dtype=np.uint64)
+        t_idx.add_with_ids(vec, ids)
+        
+        doc_id_str = str(doc_id_int)
+        doc = zvec.Doc(id=doc_id_str, fields={"id": doc_id_str, "text": text, "meta": meta})
+        z_coll.insert(doc)
+        print(f"Importato: {m.get('id')} -> Zvec ID {doc_id_int}", file=sys.stderr)
+        
+    t_idx.write(paths["tvec"])
+    z_coll.flush()
+    print("✅ Importazione completata.", file=sys.stderr)
+
+def import_graph(base_dir, graph_path):
+    if not os.path.exists(graph_path):
+        print(f"❌ Errore: {graph_path} non trovato.", file=sys.stderr)
+        sys.exit(1)
+        
+    try:
+        with open(graph_path, 'r') as f:
+            data = json.load(f)
+        nodes = data.get("nodes", [])
+    except Exception as e:
+        print(f"❌ Errore parsing grafo: {e}", file=sys.stderr)
+        sys.exit(1)
+        
+    paths = get_db_paths(base_dir)
+    if not os.path.exists(paths["zvec"]):
+        init_db(base_dir, 1536)
+        
+    t_idx = turbovec.IdMapIndex.load(paths["tvec"])
+    z_coll = zvec.open(paths["zvec"])
+    
+    print(f"Inizio importazione di {len(nodes)} nodi in Zvec...", file=sys.stderr)
+    count = 0
+    
+    for n in nodes:
+        node_id = n.get("id", "")
+        # Graphify nodes
+        text = n.get("content") or n.get("description") or n.get("label") or str(node_id)
+        if not text:
+            continue
+            
+        doc_id_int = len(t_idx) + 1
+        meta = json.dumps({"graph_id": node_id, "type": n.get("type", "node")})
+        
+        vec = get_embedding(text).reshape(1, -1)
+        ids = np.array([doc_id_int], dtype=np.uint64)
+        t_idx.add_with_ids(vec, ids)
+        
+        doc_id_str = str(doc_id_int)
+        doc = zvec.Doc(id=doc_id_str, fields={"id": doc_id_str, "text": text, "meta": meta})
+        z_coll.insert(doc)
+        count += 1
+        
+    t_idx.write(paths["tvec"])
+    z_coll.flush()
+    print(f"✅ Importati {count} nodi in Zvec/Turbovec.", file=sys.stderr)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Zvec + Turbovec RAG Pipeline")
+    subparsers = parser.add_subparsers(dest="action", required=True)
+    
+    p_init = subparsers.add_parser("init")
+    p_init.add_argument("db_path")
+    p_init.add_argument("--dim", type=int, default=1536)
+    
+    p_add = subparsers.add_parser("add")
+    p_add.add_argument("db_path")
+    p_add.add_argument("text")
+    p_add.add_argument("--meta", default="")
+    
+    p_search = subparsers.add_parser("search")
+    p_search.add_argument("db_path")
+    p_search.add_argument("query")
+    p_search.add_argument("-k", type=int, default=3)
+    
+    p_import_mem = subparsers.add_parser("import-mem", help="Pipe from ai-mem export")
+    p_import_mem.add_argument("db_path")
+    
+    p_import_graph = subparsers.add_parser("import-graph", help="Import from graphify graph.json")
+    p_import_graph.add_argument("db_path")
+    p_import_graph.add_argument("graph_file", help="Path to graph.json")
+    
+    args = parser.parse_args()
+    
+    if args.action == "init":
+        init_db(args.db_path, args.dim)
+    elif args.action == "add":
+        add_single(args.db_path, args.text, args.meta)
+    elif args.action == "search":
+        search_db(args.db_path, args.query, args.k)
+    elif args.action == "import-mem":
+        import_mem(args.db_path)
+    elif args.action == "import-graph":
+        import_graph(args.db_path, args.graph_file)

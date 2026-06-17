@@ -227,6 +227,9 @@ Lista di riferimento di tool, repository e framework rilevanti per l'AI e lo svi
 - [PocketBase](https://github.com/pocketbase/pocketbase) - Backend leggero in singolo eseguibile con database realtime, auth e storage.
 - [TrailBase](https://github.com/trailbaseio/trailbase) - Server backend e database realtime scritto in Rust con SQLite.
 - [Pi.dev](https://pi.dev) - Piattaforma di sviluppo e integrazione serverless.
+- [Zvec](https://github.com/alibaba/zvec) - L'alternativa "SQLite" ai database vettoriali. Database vettoriale in-process ottimizzato per RAG locali.
+- [TurboVec](https://github.com/RyanCodrai/turbovec) - Implementazione di Google TurboQuant. Compressione dei vettori ad altissime performance (fino a 16x di compressione) mantenendo l'accuratezza semantica.
+
 
 ### API e Integrazioni Messaging (WhatsApp)
 - [go-whatsapp-web-multidevice](https://github.com/aldinokemal/go-whatsapp-web-multidevice) - Bridge WhatsApp multi-device.
