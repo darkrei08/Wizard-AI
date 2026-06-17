@@ -59,7 +59,8 @@ Below is the rigorous categorization of the arsenal at your disposal:
 - **`book-to-skill`**: Converts entire PDF manuals or books into agent-assimilable frameworks.
 
 #### 5. Software Engineering & CI/CD (Workflow)
-- **`auto-workflow`**: Rigorous application of Git Flow (isolation, testing, merging).
+- **`auto-workflow`**: Rigorous application of Git Flow merged with the Superpowers methodology (isolation, TDD, testing, merging).
+- **`superpowers`**: Package of 11 advanced skills for Subagent-Driven Development (e.g. `brainstorming`, `writing-plans`, `subagent-driven-development`, `test-driven-development`, `systematic-debugging`). Includes the `ai-superpowers` CLI wrapper.
 - **`auto-branch`**: Autonomous management and strict branch conventions.
 - **`auto-release` / `ai-release`**: Semantic versioning release (semver) and changelog.
 - **`auto-trigger-release`**: Automatic publishing trigger at the end of a task.
@@ -177,6 +178,7 @@ Reference list of tools, repositories, and frameworks relevant to AI and develop
 - [FlashRank](https://github.com/PrithivirajDamodaran/FlashRank) - Ultra-fast, CPU-optimized reranker for RAG context optimization.
 - [sqz](https://github.com/ojuschugh1/sqz) - CLI output, JSON, and log context compressor for token-efficient agent sessions.
 - [MarkItDown](https://github.com/microsoft/markitdown) - Python utility/library to convert various formats to Markdown for LLMs and RAG.
+- [Mermaid CLI](https://github.com/mermaid-js/mermaid-cli) - Command-line tool to generate images and vector graphics from Mermaid markdown files.
 - [Claude-Mem](https://github.com/thedotmack/claude-mem) - Long-term persistent memory and semantic indexing system for LLMs.
 - [wiki-brain-skill](https://github.com/tenfoldmarc/wiki-brain-skill) - Claude Code skill implementing Karpathy's LLM Wiki pattern using Graphify.
 - [ECC](https://github.com/affaan-m/ECC) - Optimization framework for AI agents (commands, skills, hooks, and MCP).

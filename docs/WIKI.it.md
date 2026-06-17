@@ -59,7 +59,8 @@ Di seguito la categorizzazione rigorosa dell'arsenale a tua disposizione:
 - **`book-to-skill`**: Converte interi manuali o libri PDF in framework assimilabili dagli agenti.
 
 #### 5. Ingegneria del Software & CI/CD (Workflow)
-- **`auto-workflow`**: Applicazione rigorosa del Git Flow (isolamento, test, merge).
+- **`auto-workflow`**: Applicazione rigorosa del Git Flow fuso con la metodologia Superpowers (isolamento, test, merge).
+- **`superpowers`**: Pacchetto di 11 skill avanzate per Subagent-Driven Development (es. `brainstorming`, `writing-plans`, `subagent-driven-development`, `test-driven-development`, `systematic-debugging`). Include il wrapper CLI `ai-superpowers`.
 - **`auto-branch`**: Gestione autonoma e convenzioni ferree sui branch.
 - **`auto-release` / `ai-release`**: Rilascio di versioni semantiche (semver) e changelog.
 - **`auto-trigger-release`**: Trigger automatico di pubblicazione a fine task.
@@ -177,6 +178,7 @@ Lista di riferimento di tool, repository e framework rilevanti per l'AI e lo svi
 - [FlashRank](https://github.com/PrithivirajDamodaran/FlashRank) - Reranker ultra-veloce e leggero ottimizzato per CPU per limitare il contesto e i token nei sistemi RAG.
 - [sqz](https://github.com/ojuschugh1/sqz) - Tool di compressione del contesto per output CLI, JSON e log per sessioni agentiche token-efficienti.
 - [MarkItDown](https://github.com/microsoft/markitdown) - Utility e libreria Python per convertire svariati formati in Markdown per LLM e RAG.
+- [Mermaid CLI](https://github.com/mermaid-js/mermaid-cli) - Strumento da riga di comando per generare immagini e grafici vettoriali partendo da file markdown Mermaid.
 - [Claude-Mem](https://github.com/thedotmack/claude-mem) - Sistema di memoria persistente a lungo termine e indicizzazione semantica per LLM.
 - [wiki-brain-skill](https://github.com/tenfoldmarc/wiki-brain-skill) - Skill per Claude Code che implementa il pattern LLM Wiki di Karpathy, automatizzando l'ingestione, l'indicizzazione e il logging in Obsidian con Graphify.
 - [ECC](https://github.com/affaan-m/ECC) - Framework di ottimizzazione per agenti AI (comandi, skill, hook e configurazioni MCP).
