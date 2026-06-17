@@ -22,6 +22,7 @@ Wizard-AI is a **one-command setup** that gives every AI agent on your machine a
 - 🔍 **Smart re-ranking** — filter RAG passages by relevance before context injection
 - 📈 **Usage tracking** — monitor token consumption and costs
 - 🔗 **LLM gateway** — unified API for 100+ providers via LiteLLM
+- 🛩️ **Cockpit Tools Proxy** — bypass free API limits by leveraging your active IDE subscription (on Windows, Linux, and macOS)
 
 All tools are installed once and **available to every AI agent** through a shared skill system.
 
@@ -142,8 +143,8 @@ After installation, these commands are available in your terminal:
 |---|---|---|
 | `ai-hub` | Local GUI | Open the dashboard and marketplace in your browser |
 | `ai-help` | Hub | Show all available tools with usage examples |
-| `ai-update` | Updater | Manually pull latest updates for Wizard-AI and skills |
-| `ai-graph [path]` | Graphify | Build knowledge graphs from code/docs |
+| `ai-update` | Updater | Manually pull latest updates for Wizard-AI (includes cross-platform desktop notifications) |
+| `ai-graph [path]` | Graphify | Build knowledge graphs. **Automatically connects to Cockpit Tools to save API Keys!** |
 | `ai-compress --file f.txt` | LLMLingua | Compress prompts/context up to 20x |
 | `ai-compare "prompt"` | aisuite | A/B test a prompt across multiple LLM models |
 | `ai-rerank --query "X"` | FlashRank | Re-rank passages by relevance |
@@ -255,6 +256,7 @@ Wizard-AI integrates these excellent open-source projects:
 - [Serena](https://github.com/oraios/serena)
 - [ECC](https://github.com/affaan-m/ECC)
 - [book-to-skill](https://github.com/virgiliojr94/book-to-skill)
+- [Cockpit Tools](https://github.com/jlcodes99/cockpit-tools) - Local proxy to slash LLM API costs
 
 ---
 

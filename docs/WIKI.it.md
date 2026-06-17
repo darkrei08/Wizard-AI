@@ -192,6 +192,7 @@ Lista di riferimento di tool, repository e framework rilevanti per l'AI e lo svi
 - [CLI-Printing-Press](https://github.com/mvanhorn/cli-printing-press) - Sviluppo di interfacce compatte agent-native per ridurre i token.
 - [Book-to-Skill](https://github.com/virgiliojr94/book-to-skill/tree/master) - Conversione di documenti e libri in skill AI.
 - [Impeccable](https://github.com/pbakaus/impeccable) - Test UI/UX ad alta fedeltà e regressione visiva per agenti.
+- [Cockpit Tools](https://github.com/jlcodes99/cockpit-tools) - Proxy locale che aggira i limiti delle API gratuite (es. Gemini Free) incanalando le richieste massicce (come l'estrazione semantica di ai-graph) tramite l'abbonamento mensile dell'IDE. Integrazione cross-platform nativa.
 
 ### Audio, Video ed Emozioni (Multimodale)
 - [Voicebox](https://github.com/jamiepine/voicebox) - Elaborazione e sintesi vocale multi-engine (locale).

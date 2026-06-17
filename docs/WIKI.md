@@ -192,6 +192,7 @@ Reference list of tools, repositories, and frameworks relevant to AI and develop
 - [CLI-Printing-Press](https://github.com/mvanhorn/cli-printing-press) - Compact agent-native interfaces to minimize token footprint.
 - [Book-to-Skill](https://github.com/virgiliojr94/book-to-skill/tree/master) - Convert documents and books into AI skills.
 - [Impeccable](https://github.com/pbakaus/impeccable) - High-fidelity UI/UX testing and visual regression for agents.
+- [Cockpit Tools](https://github.com/jlcodes99/cockpit-tools) - Local proxy that bypasses free API limits (e.g. Gemini Free) by channeling massive requests (like ai-graph semantic extraction) through the monthly IDE subscription. Native cross-platform integration.
 
 ### Audio, Video & Emotion (Multimodal)
 - [Voicebox](https://github.com/jamiepine/voicebox) - Multi-engine offline speech processing and synthesis.
