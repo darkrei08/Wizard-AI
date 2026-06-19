@@ -28,8 +28,14 @@ When triggered, follow these steps exactly:
    - What the immediate *next steps* should be.
    - Any crucial context or design decisions made.
 
-2. **Invoke the Wrapper**: Use the local CLI tool `ai-session-save` to physically write your summary.
-   You must execute it via shell using either:
+2. **Invoke the Wrappers**: Use the local CLI tools to physically write your summary. You MUST run both of these commands (in sequence or backgrounded):
+   
+   Esegui `ai-storybloq snapshot` per salvare la storia nel formato di Storybloq:
+   ```bash
+   ai-storybloq snapshot
+   ```
+
+   ED esegui `ai-session-save` (via bash o PowerShell) per la persistenza su MEMORY.md:
    ```bash
    ai-session-save "YOUR_SUMMARY_HERE"
    ```
@@ -37,7 +43,6 @@ When triggered, follow these steps exactly:
    ```bash
    echo "YOUR_SUMMARY_HERE" | ai-session-save
    ```
-   (On Windows, the `.ps1` version works exactly the same with `ai-session-save`).
 
 3. **Confirmation**: Confirm to the user that the session has been written to `MEMORY.md` and that any AI agent will automatically ingest this context the next time the terminal is opened.
 
