@@ -7,6 +7,12 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
+## [0.27.0] - 2026-06-19
+
+### Added
+- **Session Manager & Memory Persistence**: Aggiunta la nuova skill `session-manager` e gli script CLI nativi (`ai-session-save` in Bash e PowerShell) per permettere agli agenti AI (Claude Code, Antigravity) di salvare fisicamente lo stato della sessione in `MEMORY.md`. Questo garantisce la persistenza del contesto al 100% tra un riavvio e l'altro del terminale.
+- Aggiunto `ai-session-save` all'help interattivo (`ai-help`).
+
 ## [0.26.0] - 2026-06-19
 
 ### Added

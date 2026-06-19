@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+#
+# ai-session-save - Salva lo stato della sessione per le AI
+#
+# Usage:
+#   ai-session-save "Il progetto è stato migrato a Next.js..."
+#   echo "Riassunto..." | ai-session-save
+#
+# Il contenuto verrà appeso al file MEMORY.md nella directory corrente (o in CLAUDE.md),
+# file che la maggior parte degli agenti CLI (Claude Code, Antigravity, ecc.) 
+# legge di default all'apertura del terminale. Questo garantisce il mantenimento
+# del contesto tra diverse sessioni e finestre.
+
+FILE="MEMORY.md"
+
+if [ -t 0 ]; then
+    # No pipe input
+    if [ -z "$1" ]; then
+        echo "Usage: ai-session-save \"Il tuo riassunto della sessione...\""
+        echo "       echo \"Riassunto\" | ai-session-save"
+        exit 1
+    fi
+    INPUT="$1"
+else
+    # Read from stdin
+    INPUT=$(cat)
+fi
+
+TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
+
+# Verifica che non diventi enorme
+if [ -f "$FILE" ]; then
+    SIZE=$(stat -c%s "$FILE" 2>/dev/null || stat -f%z "$FILE" 2>/dev/null || echo 0)
+    # Se il file supera 50KB, avvisiamo o gestiamo
+    if [ "$SIZE" -gt 51200 ]; then
+        echo "[!] Warning: $FILE sta diventando grande ($SIZE bytes). Valuta di compattarlo."
+    fi
+fi
+
+# Appende il contenuto
+echo "" >> "$FILE"
+echo "## [Session State Snapshot] - $TIMESTAMP" >> "$FILE"
+echo "$INPUT" >> "$FILE"
+echo "" >> "$FILE"
+
+echo "[ok] Stato della sessione salvato in $FILE."
+echo "     L'agente AI lo leggerà automaticamente al prossimo riavvio del terminale."

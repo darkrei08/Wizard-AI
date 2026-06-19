@@ -109,6 +109,8 @@ echo -e "     ${BLUE}ai-rtk --help${RESET}"
 echo ""
 
 echo -e "${BOLD}${YELLOW}🧠 MEMORY & CONTEXT${RESET}"
+echo -e "  $(check_cmd ai-session-save) ${BOLD}ai-session-save${RESET}  Save current session context to MEMORY.md"
+echo -e "     ${BLUE}ai-session-save \"completed feature X\"${RESET}"
 if [ -d "$HOME/.ai-skills/claude-mem" ]; then
   echo -e "  ✅ ${BOLD}claude-mem${RESET}       Persistent semantic memory across sessions"
 else

@@ -62,6 +62,8 @@ Example 'ai-usage'
 Write-Host ''
 
 Section 'MEMORY & CONTEXT'
+Tool (Check-Cmd ai-session-save) 'ai-session-save' 'Save current session context to MEMORY.md'
+Example 'ai-session-save "completed feature X"'
 if (Test-Path (Join-Path $HOME '.ai-skills\claude-mem')) {
     Tool '[OK]' 'claude-mem' 'Persistent semantic memory across sessions'
 } else {
