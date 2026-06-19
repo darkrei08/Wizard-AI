@@ -7,7 +7,7 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
-## [0.23.0] - 2026-06-19
+## [0.24.0] - 2026-06-19
 
 ### Added
 - **Master Project Bootstrap Skill**: Created the `master-project-bootstrap` meta-skill to initialize and architect new projects using SDD/TDD, Clean Architecture, dynamic framework selection, and skill chaining.
