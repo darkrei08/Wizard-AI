@@ -1,0 +1,1 @@
+{"nodes": [{"id": "slack_gif_creator_skill", "label": "Slack GIF Creator", "file_type": "code", "source_file": "skills/slack-gif-creator/SKILL.md"}], "edges": [{"source": "slack_gif_creator_skill", "target": "skill_creator_license", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "skills/slack-gif-creator/SKILL.md"}], "hyperedges": []}

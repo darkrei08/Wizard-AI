@@ -151,7 +151,7 @@ repos=(
   "airflow                             https://github.com/apache/airflow.git"
   "kafka                               https://github.com/apache/kafka.git"
   "wuzapi                              https://github.com/asternic/wuzapi.git"
-  "graphify                            https://github.com/AykutSarac/graphify.git"
+  "graphify                            https://github.com/safishamsi/graphify.git"
   "litellm                             https://github.com/BerriAI/litellm.git"
   "easy-vibe                           https://github.com/datawhalechina/easy-vibe.git"
   "OmniVoice-Studio                    https://github.com/debpalash/OmniVoice-Studio.git"

@@ -74,7 +74,8 @@ if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
         Write-Host '[X] uv installation failed. Install manually: https://docs.astral.sh/uv/' -ForegroundColor Red
         exit 1
     }
-} else {
+}
+else {
     Write-Host "[ok] uv is already installed: $(uv --version)" -ForegroundColor Green
 }
 
@@ -87,7 +88,8 @@ Write-Host 'Checking for Microsoft.Coreutils...' -ForegroundColor Yellow
 if (-not (Get-Command ls -ErrorAction SilentlyContinue | Where-Object { $_.Source -match "coreutils" })) {
     Write-Host 'Installing Microsoft.Coreutils via winget...' -ForegroundColor Yellow
     winget install Microsoft.Coreutils --accept-package-agreements --accept-source-agreements | Out-Null
-} else {
+}
+else {
     Write-Host '[ok] Microsoft.Coreutils is already installed.' -ForegroundColor Green
 }
 
@@ -111,7 +113,8 @@ function Clone-IfMissing($Name, $Url) {
         Write-Host "Cloning $Name..." -ForegroundColor Yellow
         if ($QuietOpt) { git clone --quiet $Url $Dest } else { git clone $Url $Dest }
         Write-Host "  [ok] $Name cloned." -ForegroundColor Green
-    } else {
+    }
+    else {
         Write-Host "[ok] $Name already present." -ForegroundColor Green
     }
 }
@@ -127,7 +130,6 @@ $Repos = @(
     @{ Name = "airflow"; Url = "https://github.com/apache/airflow.git" }
     @{ Name = "kafka"; Url = "https://github.com/apache/kafka.git" }
     @{ Name = "wuzapi"; Url = "https://github.com/asternic/wuzapi.git" }
-    @{ Name = "graphify"; Url = "https://github.com/AykutSarac/graphify.git" }
     @{ Name = "litellm"; Url = "https://github.com/BerriAI/litellm.git" }
     @{ Name = "easy-vibe"; Url = "https://github.com/datawhalechina/easy-vibe.git" }
     @{ Name = "OmniVoice-Studio"; Url = "https://github.com/debpalash/OmniVoice-Studio.git" }
@@ -224,7 +226,8 @@ Write-Host 'Checking serena (semantic code search)...' -ForegroundColor Yellow
 if (-not (Get-Command serena -ErrorAction SilentlyContinue)) {
     uv tool install --force serena-agent | Out-Null
     Write-Host '  [ok] serena installed.' -ForegroundColor Green
-} else {
+}
+else {
     Write-Host '[ok] serena already installed.' -ForegroundColor Green
 }
 
@@ -265,15 +268,19 @@ if ($Arch -eq 'AMD64') {
                 Copy-Item -Path $SqzExe.FullName -Destination (Join-Path $LocalBin 'sqz.exe') -Force
                 Write-Host "[!] sqz binary placed in $LocalBin\sqz.exe (fallback)." -ForegroundColor Yellow
             }
-        } else {
+        }
+        else {
             Write-Host '[!] sqz.exe not found inside the release archive — skipping.' -ForegroundColor Yellow
         }
-    } catch {
+    }
+    catch {
         Write-Host "[!] Could not download/extract sqz binary: $($_.Exception.Message)" -ForegroundColor Yellow
-    } finally {
+    }
+    finally {
         Remove-Item -Path $TmpDir -Recurse -Force -ErrorAction SilentlyContinue
     }
-} else {
+}
+else {
     Write-Host "[X] No pre-compiled sqz Windows binary for architecture '$Arch'. Compile sqz manually." -ForegroundColor Red
 }
 
@@ -348,10 +355,12 @@ if ($EnableUpdate -eq 'Y') {
         $Shortcut.Arguments = "-WindowStyle Hidden -NoProfile -ExecutionPolicy Bypass -File `"$LocalBin\ai-update.ps1`" -Quiet"
         $Shortcut.Save()
         Write-Host "  [ok] Startup shortcut installed for user." -ForegroundColor Green
-    } catch {
+    }
+    catch {
         Write-Host "  [!] Could not create startup shortcut: $($_.Exception.Message)" -ForegroundColor Yellow
     }
-} else {
+}
+else {
     Write-Host "  Auto-updates disabled. Update manually using 'ai-update'." -ForegroundColor Yellow
     if (Test-Path $StartupShortcut) {
         Remove-Item $StartupShortcut -Force

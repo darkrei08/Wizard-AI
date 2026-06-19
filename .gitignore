@@ -34,7 +34,6 @@ env/
 .env
 
 # ----- Output generati da tool -----
-graphify-out/
 *.log
 
 # ----- Sistema operativo -----
