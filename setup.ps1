@@ -117,11 +117,79 @@ function Clone-IfMissing($Name, $Url) {
 }
 
 $Repos = @(
-    @{Name='claude-mem'; Url='https://github.com/thedotmack/claude-mem'},
-    @{Name='geminiusage'; Url='https://github.com/rmedranollamas/geminiusage.git'},
-    @{Name='book-to-skill'; Url='https://github.com/virgiliojr94/book-to-skill.git'},
-    @{Name='ECC'; Url='https://github.com/affaan-m/ECC.git'},
-    @{Name='wiki-brain-skill'; Url='https://github.com/tenfoldmarc/wiki-brain-skill'}
+    @{ Name = "phantom-ui"; Url = "https://github.com/Aejkatappaja/phantom-ui.git" }
+    @{ Name = "ECC"; Url = "https://github.com/affaan-m/ECC.git" }
+    @{ Name = "QwenPaw"; Url = "https://github.com/agentscope-ai/QwenPaw.git" }
+    @{ Name = "go-whatsapp-web-multidevice"; Url = "https://github.com/aldinokemal/go-whatsapp-web-multidevice.git" }
+    @{ Name = "zvec"; Url = "https://github.com/alibaba/zvec.git" }
+    @{ Name = "aisuite"; Url = "https://github.com/andrewyng/aisuite.git" }
+    @{ Name = "angular"; Url = "https://github.com/angular/angular.git" }
+    @{ Name = "airflow"; Url = "https://github.com/apache/airflow.git" }
+    @{ Name = "kafka"; Url = "https://github.com/apache/kafka.git" }
+    @{ Name = "wuzapi"; Url = "https://github.com/asternic/wuzapi.git" }
+    @{ Name = "graphify"; Url = "https://github.com/AykutSarac/graphify.git" }
+    @{ Name = "litellm"; Url = "https://github.com/BerriAI/litellm.git" }
+    @{ Name = "easy-vibe"; Url = "https://github.com/datawhalechina/easy-vibe.git" }
+    @{ Name = "OmniVoice-Studio"; Url = "https://github.com/debpalash/OmniVoice-Studio.git" }
+    @{ Name = "deno"; Url = "https://github.com/denoland/deno.git" }
+    @{ Name = "react"; Url = "https://github.com/facebook/react.git" }
+    @{ Name = "react-native"; Url = "https://github.com/facebook/react-native.git" }
+    @{ Name = "flutter"; Url = "https://github.com/flutter/flutter.git" }
+    @{ Name = "gatsby"; Url = "https://github.com/gatsbyjs/gatsby.git" }
+    @{ Name = "spec-kit"; Url = "https://github.com/github/spec-kit.git" }
+    @{ Name = "hyperframes"; Url = "https://github.com/heygen-com/hyperframes.git" }
+    @{ Name = "CLI-Anything"; Url = "https://github.com/HKUDS/CLI-Anything.git" }
+    @{ Name = "AionUi"; Url = "https://github.com/iOfficeAI/AionUi.git" }
+    @{ Name = "ionic-framework"; Url = "https://github.com/ionic-team/ionic-framework.git" }
+    @{ Name = "voicebox"; Url = "https://github.com/jamiepine/voicebox.git" }
+    @{ Name = "cockpit-tools"; Url = "https://github.com/jlcodes99/cockpit-tools.git" }
+    @{ Name = "caveman"; Url = "https://github.com/JuliusBrussee/caveman.git" }
+    @{ Name = "laravel"; Url = "https://github.com/laravel/laravel.git" }
+    @{ Name = "taste-skill"; Url = "https://github.com/leonxlnx/taste-skill.git" }
+    @{ Name = "mem0"; Url = "https://github.com/mem0ai/mem0.git" }
+    @{ Name = "mermaid-cli"; Url = "https://github.com/mermaid-js/mermaid-cli.git" }
+    @{ Name = "portfolio"; Url = "https://github.com/micio86dev/portfolio.git" }
+    @{ Name = "LLMLingua"; Url = "https://github.com/microsoft/LLMLingua.git" }
+    @{ Name = "markitdown"; Url = "https://github.com/microsoft/markitdown.git" }
+    @{ Name = "mongo"; Url = "https://github.com/mongodb/mongo.git" }
+    @{ Name = "cli-printing-press"; Url = "https://github.com/mvanhorn/cli-printing-press.git" }
+    @{ Name = "mysql-server"; Url = "https://github.com/mysql/mysql-server.git" }
+    @{ Name = "n8n"; Url = "https://github.com/n8n-io/n8n.git" }
+    @{ Name = "serena"; Url = "https://github.com/nathanrooy/serena.git" }
+    @{ Name = "nuxt"; Url = "https://github.com/nuxt/nuxt.git" }
+    @{ Name = "sqz"; Url = "https://github.com/ojuschugh1/sqz.git" }
+    @{ Name = "serena"; Url = "https://github.com/oraios/serena.git" }
+    @{ Name = "bun"; Url = "https://github.com/oven-sh/bun.git" }
+    @{ Name = "impeccable"; Url = "https://github.com/pbakaus/impeccable.git" }
+    @{ Name = "claude-mem"; Url = "https://github.com/piero-io/claude-mem.git" }
+    @{ Name = "pocketbase"; Url = "https://github.com/pocketbase/pocketbase.git" }
+    @{ Name = "FlashRank"; Url = "https://github.com/PrithivirajDamodaran/FlashRank.git" }
+    @{ Name = "cpython"; Url = "https://github.com/python/cpython.git" }
+    @{ Name = "quickjs"; Url = "https://github.com/quickjs-ng/quickjs.git" }
+    @{ Name = "geminiusage"; Url = "https://github.com/rmedranollamas/geminiusage.git" }
+    @{ Name = "rtk"; Url = "https://github.com/rtk-ai/rtk.git" }
+    @{ Name = "turbovec"; Url = "https://github.com/RyanCodrai/turbovec.git" }
+    @{ Name = "graphify"; Url = "https://github.com/safishamsi/graphify.git" }
+    @{ Name = "syke"; Url = "https://github.com/saxenauts/syke.git" }
+    @{ Name = "antigravity-awesome-skills"; Url = "https://github.com/sickn33/antigravity-awesome-skills.git" }
+    @{ Name = "supertonic"; Url = "https://github.com/supertone-inc/supertonic.git" }
+    @{ Name = "kit"; Url = "https://github.com/sveltejs/kit.git" }
+    @{ Name = "svelte"; Url = "https://github.com/sveltejs/svelte.git" }
+    @{ Name = "personal-graph"; Url = "https://github.com/Technoculture/personal-graph.git" }
+    @{ Name = "wiki-brain-skill"; Url = "https://github.com/tenfoldmarc/wiki-brain-skill.git" }
+    @{ Name = "claude-mem"; Url = "https://github.com/thedotmack/claude-mem.git" }
+    @{ Name = "openhuman"; Url = "https://github.com/tinyhumansai/openhuman.git" }
+    @{ Name = "express-typescript-starter"; Url = "https://github.com/ToniR7/express-typescript-starter.git" }
+    @{ Name = "trailbase"; Url = "https://github.com/trailbaseio/trailbase.git" }
+    @{ Name = "next.js"; Url = "https://github.com/vercel/next.js.git" }
+    @{ Name = "book-to-skill"; Url = "https://github.com/virgiliojr94/book-to-skill.git" }
+    @{ Name = "awesome-agent-skills"; Url = "https://github.com/VoltAgent/awesome-agent-skills.git" }
+    @{ Name = "awesome-design-md"; Url = "https://github.com/VoltAgent/awesome-design-md.git" }
+    @{ Name = "core"; Url = "https://github.com/vuejs/core.git" }
+    @{ Name = "vuetify"; Url = "https://github.com/vuetifyjs/vuetify.git" }
+    @{ Name = "WordPress"; Url = "https://github.com/WordPress/WordPress.git" }
+    @{ Name = "sqz"; Url = "https://github.com/yasker/sqz.git" }
+    @{ Name = "lean-ctx"; Url = "https://github.com/yvgude/lean-ctx.git" }
 )
 
 foreach ($Repo in $Repos) {

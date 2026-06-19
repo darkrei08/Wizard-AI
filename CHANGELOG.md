@@ -7,6 +7,11 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
+## [0.26.0] - 2026-06-19
+
+### Added
+- **Global Repo Indexing**: Aggiunte tutte le repository, framework, database (Next, Vue, Mongo, ecc.) menzionate nella `WIKI.md` direttamente in `setup.sh` e `setup.ps1` in modo che l'installazione sia completa e autonoma. Tutti i moduli vengono ora scaricati nella directory `.ai-skills`.
+
 ## [0.25.0] - 2026-06-19
 
 ### Added
