@@ -158,6 +158,20 @@ After installation, these commands are available in your terminal:
 
 ---
 
+## 🏗️ Master Project Bootstrap
+
+Wizard-AI now includes the **`master-project-bootstrap`** skill, the ultimate meta-skill for initializing and architecting production-ready projects.
+
+By simply invoking this skill when starting a new project, your AI agent will automatically enforce:
+- **Clean Architecture** & **SDD/TDD** (via `spec-kit` and `test-driven-development`).
+- **Dynamic Framework Selection** (routing to `express`, `nuxt`, `next.js`, `pocketbase`, or `zvec` based on your project's complexity).
+- **Mandatory Living Documents** (`MEMORY.md`, `CHANGELOG.md`, `PROMPT.md`, `AGENT.md`) to maintain perfect state and context across sessions.
+- **Skill Chaining** (automating `auto-workflow`, `scaffold`, `taste-skill`, `graphify`, `serena`, `auto-debug`, and `auto-release` seamlessly).
+
+You just need to provide your idea, and Wizard-AI will orchestrate the perfect setup.
+
+---
+
 ## 🧠 How Skills Work
 
 Skills are `SKILL.md` files that teach AI agents **when and how** to use a tool. Each agent reads its own skills directory:
