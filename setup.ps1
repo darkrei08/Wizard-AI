@@ -82,6 +82,15 @@ if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
 $null = New-Item -ItemType Directory -Force -Path $LocalBin
 $null = New-Item -ItemType Directory -Force -Path $AiSkills
 
+# Optional: Install native Unix tools for Windows (ls, cp, grep, etc.)
+Write-Host 'Checking for Microsoft.Coreutils...' -ForegroundColor Yellow
+if (-not (Get-Command ls -ErrorAction SilentlyContinue | Where-Object { $_.Source -match "coreutils" })) {
+    Write-Host 'Installing Microsoft.Coreutils via winget...' -ForegroundColor Yellow
+    winget install Microsoft.Coreutils --accept-package-agreements --accept-source-agreements | Out-Null
+} else {
+    Write-Host '[ok] Microsoft.Coreutils is already installed.' -ForegroundColor Green
+}
+
 # 2. Recreate Python Virtual Environment for wrappers
 Write-Host ''
 Write-Host '[2/8] Preparing Python Virtual Environment for LLMLingua & FlashRank...' -ForegroundColor Blue
@@ -107,11 +116,17 @@ function Clone-IfMissing($Name, $Url) {
     }
 }
 
-Clone-IfMissing 'claude-mem'       'https://github.com/thedotmack/claude-mem'
-Clone-IfMissing 'geminiusage'      'https://github.com/rmedranollamas/geminiusage.git'
-Clone-IfMissing 'book-to-skill'    'https://github.com/virgiliojr94/book-to-skill.git'
-Clone-IfMissing 'ECC'              'https://github.com/affaan-m/ECC.git'
-Clone-IfMissing 'wiki-brain-skill' 'https://github.com/tenfoldmarc/wiki-brain-skill'
+$Repos = @(
+    @{Name='claude-mem'; Url='https://github.com/thedotmack/claude-mem'},
+    @{Name='geminiusage'; Url='https://github.com/rmedranollamas/geminiusage.git'},
+    @{Name='book-to-skill'; Url='https://github.com/virgiliojr94/book-to-skill.git'},
+    @{Name='ECC'; Url='https://github.com/affaan-m/ECC.git'},
+    @{Name='wiki-brain-skill'; Url='https://github.com/tenfoldmarc/wiki-brain-skill'}
+)
+
+foreach ($Repo in $Repos) {
+    Clone-IfMissing $Repo.Name $Repo.Url
+}
 
 # Install claude-mem Python package if setup.py/pyproject.toml is present
 $ClaudeMemDir = Join-Path $AiSkills 'claude-mem'
@@ -139,7 +154,7 @@ Install-UvTool 'sqz'
 # Install serena (semantic code intelligence — available via uvx)
 Write-Host 'Checking serena (semantic code search)...' -ForegroundColor Yellow
 if (-not (Get-Command serena -ErrorAction SilentlyContinue)) {
-    uv tool install --force serena | Out-Null
+    uv tool install --force serena-agent | Out-Null
     Write-Host '  [ok] serena installed.' -ForegroundColor Green
 } else {
     Write-Host '[ok] serena already installed.' -ForegroundColor Green

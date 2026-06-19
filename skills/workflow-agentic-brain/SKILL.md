@@ -9,8 +9,9 @@ This meta-skill orchestrates how the AI agent manages its own brain, memory, con
 
 ## Core Workflow Chain
 
-1. **Context & Token Optimization (`auto-optimize`, `lean-ctx`, `llmlingua`, `sqz`, `flashrank`)**
-   Before executing massive tasks, ensure the context window is lean. Compress verbose outputs with `sqz` and re-rank documents with `flashrank`.
+1. **Context & Token Optimization (`auto-optimize`, `lean-ctx`, `llmlingua`, `sqz`, `flashrank`, `ponytail`, `caveman`)**
+   Before executing massive tasks, ensure the context window is lean. Compress verbose outputs with `sqz` and re-rank documents with `flashrank`. 
+   Use `ponytail` to strictly evaluate requirements against the 'lazy senior dev' ladder (YAGNI, Stdlib, Native) before writing *any* code, naturally preventing over-engineered token bloat. Use `caveman` to reduce the raw agent output verbosity.
 
 2. **Prompt Engineering & Routing (`auto-prompt`, `auto-router`)**
    If the user's request is vague, use `auto-prompt` to rewrite it into a structured XML instruction. Use `auto-router` to find the best underlying skill automatically.
@@ -24,4 +25,5 @@ This meta-skill orchestrates how the AI agent manages its own brain, memory, con
 ## Execution Rules
 
 - Proactively reduce token usage using optimization skills when context gets large.
+- Before writing any code, apply the `ponytail` ladder: does this need to exist? Can the standard library do it? Can a native platform feature handle it?
 - When creating new skills, always follow the standard `SKILL.md` frontmatter formatting required by Wizard-AI.

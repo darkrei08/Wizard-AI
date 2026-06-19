@@ -7,17 +7,23 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
+## [0.25.0] - 2026-06-19
+
+### Added
+- **Ponytail Skill (`ai-ponytail`)**: Integrata la skill "lazy senior dev" per forzare la valutazione YAGNI e prevenire l'over-engineering prima di scrivere codice. Aggiunto il wrapper `ai-ponytail` e integrata la logica nei workflow principali (e.g. `workflow-agentic-brain`).
+- **Microsoft Coreutils (Windows)**: Aggiunta l'installazione opzionale via Winget di `Microsoft.Coreutils` in `setup.ps1` per fornire tool Unix nativi (ls, cp, grep) agli utenti Windows.
+
+### Changed
+- **Setup Scripts Refactoring**: Ottimizzati `setup.sh` e `setup.ps1` sostituendo chiamate ripetitive con array nativi iterabili (in pieno stile Ponytail/DRY).
+
+### Fixed
+- **Serena Installation (Windows/Linux)**: Corretto il package name per l'installazione di serena tramite uv (`uv tool install serena-agent` invece di `serena`), risolvendo l'errore di entrypoint mancanti.
+
 ## [0.24.0] - 2026-06-19
 
 ### Added
 - **Master Project Bootstrap Skill**: Created the `master-project-bootstrap` meta-skill to initialize and architect new projects using SDD/TDD, Clean Architecture, dynamic framework selection, and skill chaining.
 - **Documentation Updates**: Added the Master Project Bootstrap section to `README.md` and `README.it.md`.
-### Added
-
-### Changed
-
-### Fixed
-
 ## [v0.5.0] - 2026-06-13
 
 ### Added

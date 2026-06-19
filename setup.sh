@@ -140,20 +140,27 @@ clone_if_missing() {
   fi
 }
 
-clone_if_missing "claude-mem"       "https://github.com/thedotmack/claude-mem"
-clone_if_missing "geminiusage"      "https://github.com/rmedranollamas/geminiusage.git"
-clone_if_missing "book-to-skill"    "https://github.com/virgiliojr94/book-to-skill.git"
-clone_if_missing "ECC"              "https://github.com/affaan-m/ECC.git"
-clone_if_missing "wiki-brain-skill" "https://github.com/tenfoldmarc/wiki-brain-skill"
-clone_if_missing "cockpit-tools"    "https://github.com/jlcodes99/cockpit-tools.git"
-clone_if_missing "awesome-design-md" "https://github.com/VoltAgent/awesome-design-md.git"
-clone_if_missing "taste-skill"       "https://github.com/leonxlnx/taste-skill.git"
-clone_if_missing "spec-kit"          "https://github.com/github/spec-kit.git"
-clone_if_missing "lean-ctx"          "https://github.com/yvgude/lean-ctx.git"
-clone_if_missing "rtk"               "https://github.com/rtk-ai/rtk.git"
-clone_if_missing "nuxt"              "https://github.com/nuxt/nuxt.git"
-clone_if_missing "express-typescript-starter" "https://github.com/ToniR7/express-typescript-starter.git"
-clone_if_missing "caveman"           "https://github.com/JuliusBrussee/caveman.git"
+repos=(
+  "claude-mem         https://github.com/thedotmack/claude-mem"
+  "geminiusage        https://github.com/rmedranollamas/geminiusage.git"
+  "book-to-skill      https://github.com/virgiliojr94/book-to-skill.git"
+  "ECC                https://github.com/affaan-m/ECC.git"
+  "wiki-brain-skill   https://github.com/tenfoldmarc/wiki-brain-skill"
+  "cockpit-tools      https://github.com/jlcodes99/cockpit-tools.git"
+  "awesome-design-md  https://github.com/VoltAgent/awesome-design-md.git"
+  "taste-skill        https://github.com/leonxlnx/taste-skill.git"
+  "spec-kit           https://github.com/github/spec-kit.git"
+  "lean-ctx           https://github.com/yvgude/lean-ctx.git"
+  "rtk                https://github.com/rtk-ai/rtk.git"
+  "nuxt               https://github.com/nuxt/nuxt.git"
+  "express-typescript-starter https://github.com/ToniR7/express-typescript-starter.git"
+  "caveman            https://github.com/JuliusBrussee/caveman.git"
+)
+
+for repo_info in "${repos[@]}"; do
+  read -r name url <<< "$repo_info"
+  clone_if_missing "$name" "$url"
+done
 
 # Install claude-mem Python package if setup.py/pyproject.toml is present
 if [ -f "$HOME/.ai-skills/claude-mem/pyproject.toml" ] || \

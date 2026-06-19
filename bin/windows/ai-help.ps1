@@ -1,4 +1,4 @@
-﻿# ai-help — Central hub for all AI tools and skills
+# ai-help — Central hub for all AI tools and skills
 # Windows port of bin/ai-help
 # Shows all available AI CLI tools with descriptions and usage hints
 
@@ -39,6 +39,10 @@ Write-Host ''
 Section 'TOKEN OPTIMIZATION'
 Tool (Check-Cmd ai-compress) 'ai-compress' 'Compress prompts/context up to 20x (LLMLingua)'
 Example 'ai-compress --file doc.txt --ratio 0.5'
+Tool (Check-Cmd ai-caveman) 'ai-caveman' 'Cut agent output tokens by ~75% while keeping accuracy'
+Example 'ai-caveman --with-init'
+Tool (Check-Cmd ai-ponytail) 'ai-ponytail' 'Acts as a lazy senior dev to prevent over-engineering (YAGNI)'
+Example 'ai-ponytail "write a datepicker"'
 Tool (Check-Cmd ai-rerank) 'ai-rerank' 'Re-rank passages by relevance (FlashRank RAG)'
 Example 'ai-rerank --query "X" --passages docs.json'
 Tool (Check-Cmd sqz) 'sqz' 'Compress CLI output / JSON / logs'
@@ -71,7 +75,7 @@ Section 'CODE INTELLIGENCE'
 if (Get-Command serena -ErrorAction SilentlyContinue) {
     Tool '[OK]' 'serena' 'Semantic code search & LSP navigation (MCP + CLI)'
 } else {
-    Tool '[--]' 'serena' 'Semantic code search (install: uv tool install serena)'
+    Tool '[--]' 'serena' 'Semantic code search (install: uv tool install serena-agent)'
 }
 Example 'serena find-usages MyClass'
 Write-Host ''
