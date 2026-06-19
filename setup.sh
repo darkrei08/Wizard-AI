@@ -124,109 +124,11 @@ uv pip install $QUIET_OPT --python "$VENV_PYTHON" \
      }
 echo -e "${GREEN}✓ Virtual environment ready at ~/.ai-skills/venv/${NC}"
 
-# 3. Clone and install required skill repositories if not present
-echo -e "\n${BLUE}[3/8] Setting up external git skill repositories in ~/.ai-skills/...${NC}"
-
-clone_if_missing() {
-  local name="$1"
-  local url="$2"
-  local dest="$HOME/.ai-skills/$name"
-  if [ ! -d "$dest" ]; then
-    echo -e "${YELLOW}Cloning $name...${NC}"
-    git clone --depth 1 $QUIET_OPT "$url" "$dest"
-    echo -e "${GREEN}  ✓ $name cloned.${NC}"
-  else
-    echo -e "${GREEN}✓ $name already present.${NC}"
-  fi
-}
-
-repos=(
-  "phantom-ui                          https://github.com/Aejkatappaja/phantom-ui.git"
-  "ECC                                 https://github.com/affaan-m/ECC.git"
-  "QwenPaw                             https://github.com/agentscope-ai/QwenPaw.git"
-  "go-whatsapp-web-multidevice         https://github.com/aldinokemal/go-whatsapp-web-multidevice.git"
-  "zvec                                https://github.com/alibaba/zvec.git"
-  "aisuite                             https://github.com/andrewyng/aisuite.git"
-  "angular                             https://github.com/angular/angular.git"
-  "airflow                             https://github.com/apache/airflow.git"
-  "kafka                               https://github.com/apache/kafka.git"
-  "wuzapi                              https://github.com/asternic/wuzapi.git"
-  "graphify                            https://github.com/safishamsi/graphify.git"
-  "litellm                             https://github.com/BerriAI/litellm.git"
-  "easy-vibe                           https://github.com/datawhalechina/easy-vibe.git"
-  "OmniVoice-Studio                    https://github.com/debpalash/OmniVoice-Studio.git"
-  "deno                                https://github.com/denoland/deno.git"
-  "react                               https://github.com/facebook/react.git"
-  "react-native                        https://github.com/facebook/react-native.git"
-  "flutter                             https://github.com/flutter/flutter.git"
-  "gatsby                              https://github.com/gatsbyjs/gatsby.git"
-  "spec-kit                            https://github.com/github/spec-kit.git"
-  "hyperframes                         https://github.com/heygen-com/hyperframes.git"
-  "CLI-Anything                        https://github.com/HKUDS/CLI-Anything.git"
-  "AionUi                              https://github.com/iOfficeAI/AionUi.git"
-  "ionic-framework                     https://github.com/ionic-team/ionic-framework.git"
-  "voicebox                            https://github.com/jamiepine/voicebox.git"
-  "cockpit-tools                       https://github.com/jlcodes99/cockpit-tools.git"
-  "caveman                             https://github.com/JuliusBrussee/caveman.git"
-  "laravel                             https://github.com/laravel/laravel.git"
-  "taste-skill                         https://github.com/leonxlnx/taste-skill.git"
-  "mem0                                https://github.com/mem0ai/mem0.git"
-  "mermaid-cli                         https://github.com/mermaid-js/mermaid-cli.git"
-  "portfolio                           https://github.com/micio86dev/portfolio.git"
-  "LLMLingua                           https://github.com/microsoft/LLMLingua.git"
-  "markitdown                          https://github.com/microsoft/markitdown.git"
-  "mongo                               https://github.com/mongodb/mongo.git"
-  "cli-printing-press                  https://github.com/mvanhorn/cli-printing-press.git"
-  "mysql-server                        https://github.com/mysql/mysql-server.git"
-  "n8n                                 https://github.com/n8n-io/n8n.git"
-  "serena                              https://github.com/nathanrooy/serena.git"
-  "nuxt                                https://github.com/nuxt/nuxt.git"
-  "sqz                                 https://github.com/ojuschugh1/sqz.git"
-  "serena                              https://github.com/oraios/serena.git"
-  "bun                                 https://github.com/oven-sh/bun.git"
-  "impeccable                          https://github.com/pbakaus/impeccable.git"
-  "claude-mem                          https://github.com/piero-io/claude-mem.git"
-  "pocketbase                          https://github.com/pocketbase/pocketbase.git"
-  "FlashRank                           https://github.com/PrithivirajDamodaran/FlashRank.git"
-  "cpython                             https://github.com/python/cpython.git"
-  "quickjs                             https://github.com/quickjs-ng/quickjs.git"
-  "geminiusage                         https://github.com/rmedranollamas/geminiusage.git"
-  "rtk                                 https://github.com/rtk-ai/rtk.git"
-  "turbovec                            https://github.com/RyanCodrai/turbovec.git"
-  "graphify                            https://github.com/safishamsi/graphify.git"
-  "syke                                https://github.com/saxenauts/syke.git"
-  "antigravity-awesome-skills          https://github.com/sickn33/antigravity-awesome-skills.git"
-  "supertonic                          https://github.com/supertone-inc/supertonic.git"
-  "kit                                 https://github.com/sveltejs/kit.git"
-  "svelte                              https://github.com/sveltejs/svelte.git"
-  "personal-graph                      https://github.com/Technoculture/personal-graph.git"
-  "wiki-brain-skill                    https://github.com/tenfoldmarc/wiki-brain-skill.git"
-  "claude-mem                          https://github.com/thedotmack/claude-mem.git"
-  "openhuman                           https://github.com/tinyhumansai/openhuman.git"
-  "express-typescript-starter          https://github.com/ToniR7/express-typescript-starter.git"
-  "trailbase                           https://github.com/trailbaseio/trailbase.git"
-  "next.js                             https://github.com/vercel/next.js.git"
-  "book-to-skill                       https://github.com/virgiliojr94/book-to-skill.git"
-  "awesome-agent-skills                https://github.com/VoltAgent/awesome-agent-skills.git"
-  "awesome-design-md                   https://github.com/VoltAgent/awesome-design-md.git"
-  "core                                https://github.com/vuejs/core.git"
-  "vuetify                             https://github.com/vuetifyjs/vuetify.git"
-  "WordPress                           https://github.com/WordPress/WordPress.git"
-  "sqz                                 https://github.com/yasker/sqz.git"
-  "lean-ctx                            https://github.com/yvgude/lean-ctx.git"
-)
-
-for repo_info in "${repos[@]}"; do
-  read -r name url <<< "$repo_info"
-  clone_if_missing "$name" "$url"
-done
-
-# Install claude-mem Python package if setup.py/pyproject.toml is present
-if [ -f "$HOME/.ai-skills/claude-mem/pyproject.toml" ] || \
-   [ -f "$HOME/.ai-skills/claude-mem/setup.py" ]; then
-  uv pip install $QUIET_OPT --python "$VENV_PYTHON" \
-    -e "$HOME/.ai-skills/claude-mem" || true
-fi
+# 3. Installing global Python packages
+echo -e "\n${BLUE}[3/8] Installing global Python packages...${NC}"
+echo -e "${YELLOW}Installing claude-mem from GitHub...${NC}"
+uv pip install $QUIET_OPT --python "$VENV_PYTHON" git+https://github.com/thedotmack/claude-mem.git || true
+echo -e "${GREEN}  ✓ claude-mem installed.${NC}"
 
 # 4. Install UV Global Tools
 echo -e "\n${BLUE}[4/8] Installing global CLI Tools via uv tool...${NC}"
