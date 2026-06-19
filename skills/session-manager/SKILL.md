@@ -11,20 +11,21 @@ In Wizard-AI, this file is typically `MEMORY.md` (or `CLAUDE.md`).
 
 ## Triggers
 
-Trigger this skill immediately when:
-- The user asks you to "salva la sessione" (save the session).
-- The user asks "memorizza quello che abbiamo fatto" (memorize what we did).
-- You are completing a long workday or completing a large task and the user mentions shutting down.
-- The user explicitly asks you to use `ai-session-save` or `session-manager`.
+This is a **core automatic behavior**. You MUST trigger this skill:
+- **AUTOMATICALLY** at the end of *every prompt response* or *task completion*.
+- When the user explicitly asks to "salva la sessione" or "memorizza".
+- Before you finish your turn after completing a significant block of work.
+
+Do NOT wait for the user to ask. It is your responsibility to keep the memory up to date.
 
 ## Workflow
 
 When triggered, follow these steps exactly:
 
-1. **Summarize the State**: Review the entire current conversation and project state. Generate a clear and concise summary that includes:
-   - What was accomplished during this session.
+1. **Compress & Summarize the State**: Review the current conversation and recent actions. Generate a highly compressed, concise summary (to save tokens) that includes:
+   - What was just accomplished.
    - Any unresolved bugs or open questions.
-   - What the immediate *next steps* should be when work resumes.
+   - What the immediate *next steps* should be.
    - Any crucial context or design decisions made.
 
 2. **Invoke the Wrapper**: Use the local CLI tool `ai-session-save` to physically write your summary.

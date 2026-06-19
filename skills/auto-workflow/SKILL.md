@@ -50,7 +50,7 @@ Since everything is now on `main`, you must trigger the official release toolcha
 - Verify tests and clean up the worktree.
 - Run: `ai-release minor` (or `ai-release patch` for minor bug fixes).
 - This will tag the repository, create a GitHub release, and trigger the GitHub Action that deploys the new version.
-- **Memory Persistence**: prima di scollegarti o terminare la sessione, salva sempre lo stato: esegui `ai-storybloq snapshot` per salvare i log delle modifiche e, se necessario, innesca `ai-handoff` per compattare la conversazione per il prossimo agente.
+- **Memory Persistence & Compression**: prima di scollegarti, terminare la sessione, o alla fine di un task importante, salva sempre lo stato compresso: esegui `ai-session-save "..."` per storicizzare le modifiche e permettere il ripristino istantaneo al prossimo avvio.
 - Ask the user if they want to verify the published release.
 
 ## Rules for the AI Agent
@@ -58,4 +58,5 @@ Since everything is now on `main`, you must trigger the official release toolcha
 - **Never commit directly to `main` or `staging`.** You must go through an isolated branch using TDD.
 - **Never merge to `main` without passing through `staging`.**
 - **Always ask or automatically run `ai-release`** when the cycle reaches `main`.
+- **Mandatory Session Save**: Al termine di *ogni singolo prompt* o completamento di una task, l'AI DEVE eseguire automaticamente e silenziosamente un salvataggio compresso della sessione usando `ai-session-save "Breve riassunto compresso"`. Non aspettare che l'utente lo richieda.
 - Consider your task INCOMPLETE until Step 7 is successfully finished.
