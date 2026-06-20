@@ -107,10 +107,23 @@ Write-Host "[ok] Virtual environment ready at $VenvDir" -ForegroundColor Green
 Write-Host ''
 Write-Host "[3/8] Setting up external git skill repositories in $AiSkills..." -ForegroundColor Blue
 
-# Install claude-mem directly from GitHub
-Write-Host 'Installing claude-mem...' -ForegroundColor Yellow
-if ($QuietOpt) { uv pip install --quiet --python $VenvPython git+https://github.com/thedotmack/claude-mem.git } else { uv pip install --python $VenvPython git+https://github.com/thedotmack/claude-mem.git }
-if ($LASTEXITCODE -ne 0) { Write-Host '  [!] claude-mem package install failed' -ForegroundColor Red } else { Write-Host '  [ok] claude-mem installed.' -ForegroundColor Green }
+# Clone claude-mem directly from GitHub if not present
+$MemDir = Join-Path $HOME '.ai-skills\claude-mem'
+if (-not (Test-Path $MemDir)) {
+    Write-Host 'Cloning claude-mem from GitHub...' -ForegroundColor Yellow
+    if ($QuietOpt) {
+        git clone --depth 1 --quiet https://github.com/thedotmack/claude-mem.git $MemDir
+    } else {
+        git clone --depth 1 https://github.com/thedotmack/claude-mem.git $MemDir
+    }
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host '  [!] claude-mem clone failed' -ForegroundColor Red
+    } else {
+        Write-Host '  [ok] claude-mem cloned.' -ForegroundColor Green
+    }
+} else {
+    Write-Host '  [ok] claude-mem is already present.' -ForegroundColor Green
+}
 
 # 4. Install UV Global Tools
 Write-Host ''

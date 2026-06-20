@@ -124,11 +124,16 @@ uv pip install $QUIET_OPT --python "$VENV_PYTHON" \
      }
 echo -e "${GREEN}✓ Virtual environment ready at ~/.ai-skills/venv/${NC}"
 
-# 3. Installing global Python packages
-echo -e "\n${BLUE}[3/8] Installing global Python packages...${NC}"
-echo -e "${YELLOW}Installing claude-mem from GitHub...${NC}"
-uv pip install $QUIET_OPT --python "$VENV_PYTHON" git+https://github.com/thedotmack/claude-mem.git || true
-echo -e "${GREEN}  ✓ claude-mem installed.${NC}"
+# 3. Setting up external git skill repositories
+echo -e "\n${BLUE}[3/8] Setting up external git skill repositories...${NC}"
+MEM_DIR="$HOME/.ai-skills/claude-mem"
+if [ ! -d "$MEM_DIR" ]; then
+  echo -e "${YELLOW}Cloning claude-mem from GitHub...${NC}"
+  git clone --depth 1 $QUIET_OPT https://github.com/thedotmack/claude-mem.git "$MEM_DIR" || true
+  echo -e "${GREEN}  ✓ claude-mem cloned.${NC}"
+else
+  echo -e "${GREEN}✓ claude-mem is already present.${NC}"
+fi
 
 # 4. Install UV Global Tools
 echo -e "\n${BLUE}[4/8] Installing global CLI Tools via uv tool...${NC}"
