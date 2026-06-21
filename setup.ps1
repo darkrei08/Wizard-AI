@@ -149,6 +149,7 @@ Clone-SkillRepo 'https://github.com/thedotmack/claude-mem.git' 'claude-mem'
 Clone-SkillRepo 'https://github.com/chopratejas/headroom.git' 'headroom'
 Clone-SkillRepo 'https://github.com/antvis/Infographic.git' 'Infographic'
 Clone-SkillRepo 'https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git' 'cybersecurity-skills'
+Clone-SkillRepo 'https://github.com/yvgude/lean-ctx.git' 'lean-ctx'
 
 # 4. Install UV Global Tools
 Write-Host ''
@@ -353,6 +354,8 @@ Write-Host '  ai-graph     ' -ForegroundColor Cyan -NoNewline; Write-Host '- Run
 Write-Host '  ai-compress  ' -ForegroundColor Cyan -NoNewline; Write-Host '- Compress prompt context via LLMLingua (up to 20x)'
 Write-Host '  ai-rerank    ' -ForegroundColor Cyan -NoNewline; Write-Host '- Re-rank list components for RAG via FlashRank'
 Write-Host '  ai-squeeze   ' -ForegroundColor Cyan -NoNewline; Write-Host '- Compress CLI outputs / files via Sqz'
+Write-Host '  ai-headroom  ' -ForegroundColor Cyan -NoNewline; Write-Host '- Headroom proxy and context compression'
+Write-Host '  ai-lean      ' -ForegroundColor Cyan -NoNewline; Write-Host '- Lean Context Intelligence wrapper'
 Write-Host '  ai-convert   ' -ForegroundColor Cyan -NoNewline; Write-Host '- Extract clean Markdown from PDF, DOCX, images, etc.'
 Write-Host '  ai-mem       ' -ForegroundColor Cyan -NoNewline; Write-Host '- Access persistent semantic memory (claude-mem)'
 Write-Host '  ai-sync-skills ' -ForegroundColor Cyan -NoNewline; Write-Host '- Sync skills across all AI agents'
