@@ -77,6 +77,8 @@ echo -e "${GREEN}✓ WIZARD_AI_DIR=\"$WIZARD_AI_DIR\"${NC}"
 echo -e "\n${BLUE}[1/8] Checking for modern Python & Package Manager (uv)...${NC}"
 if ! command -v uv &>/dev/null; then
   echo -e "${YELLOW}uv not found. Installing uv via official script...${NC}"
+  # SECURITY: Executing scripts directly from the internet via pipe is a security risk.
+  # Ideally, verify the hash before execution in a production environment.
   curl -LsSf https://astral.sh/uv/install.sh | sh
   export PATH="$HOME/.local/bin:$PATH"
 else
@@ -285,7 +287,7 @@ echo -e "${YELLOW}Syncing skills to Claude Code, Amp, and other agents...${NC}"
 "$HOME/.local/bin/ai-sync-skills"
 
 # 8. Auto-Update Configuration
-echo -e "\n${BLUE}[8/9] Auto-Update Configuration...${NC}"
+echo -e "\n${BLUE}[8/8] Auto-Update Configuration...${NC}"
 echo -e "${YELLOW}Do you want to enable automatic background updates at system boot? [Y/n] (Auto-yes in 10s)${NC}"
 
 ENABLE_UPDATE="Y"

@@ -1,9 +1,16 @@
 import os
 
-bin_dir = "bin"
+bin_dir = os.path.abspath("bin")
+if not os.path.isdir(bin_dir):
+    print(f"Error: {bin_dir} is not a valid directory.")
+    exit(1)
+
 for filename in os.listdir(bin_dir):
-    if filename.startswith("ai-") and filename != "ai-hub" and filename != "ai-help":
-        filepath = os.path.join(bin_dir, filename)
+    if filename.startswith("ai-") and filename not in ("ai-hub", "ai-help"):
+        filepath = os.path.abspath(os.path.join(bin_dir, filename))
+        # Ensure the resolved path is actually inside bin_dir to prevent path traversal
+        if not filepath.startswith(bin_dir):
+            continue
         if os.path.isfile(filepath):
             with open(filepath, "r") as f:
                 content = f.read()

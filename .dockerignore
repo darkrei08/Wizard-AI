@@ -7,3 +7,8 @@ node_modules
 .gemini
 __pycache__
 *.pyc
+*.md
+docker-compose.yml
+Dockerfile
+setup.sh
+setup.ps1

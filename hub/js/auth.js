@@ -44,12 +44,26 @@ window.auth = {
         if(!container) return;
         
         if (AppState.user) {
+            const safeName = window.escapeHtml(AppState.user.name);
+            const safeHandle = window.escapeHtml(AppState.user.handle);
+            
+            // Validate avatar URL to prevent javascript: or unexpected origins
+            let safeAvatar = 'https://github.com/ghost.png'; // Fallback
+            try {
+                const avatarUrl = new URL(AppState.user.avatar);
+                if (avatarUrl.protocol === 'https:' && (avatarUrl.hostname === 'github.com' || avatarUrl.hostname.endsWith('.github.com'))) {
+                    safeAvatar = window.escapeHtml(avatarUrl.toString());
+                }
+            } catch(e) {
+                // Invalid URL format
+            }
+
             container.innerHTML = `
                 <div class="flex items-center gap-4 mb-4">
-                    <img src="${AppState.user.avatar}" alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%;">
+                    <img src="${safeAvatar}" alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%;">
                     <div>
-                        <div style="font-weight: 600;">${AppState.user.name}</div>
-                        <div class="text-muted" style="font-size: 0.8rem;">${AppState.user.handle}</div>
+                        <div style="font-weight: 600;">${safeName}</div>
+                        <div class="text-muted" style="font-size: 0.8rem;">${safeHandle}</div>
                     </div>
                 </div>
                 <button class="btn btn-outline w-full" id="btn-login"><span class="icon">🚪</span> Esci</button>

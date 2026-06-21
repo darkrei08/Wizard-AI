@@ -33,8 +33,14 @@ window.telemetry = {
     
     getInstanceId() {
         let id = localStorage.getItem('wizard_instance_id');
-        if(!id) {
-            id = 'anon_' + Math.random().toString(36).substr(2, 9);
+        // Validate ID format to prevent tampering
+        const idRegex = /^anon_[a-f0-9]{12}$/;
+        if(!id || !idRegex.test(id)) {
+            // Generate cryptographically secure random ID
+            const array = new Uint8Array(6);
+            window.crypto.getRandomValues(array);
+            const randomHex = Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+            id = 'anon_' + randomHex;
             localStorage.setItem('wizard_instance_id', id);
         }
         return id;

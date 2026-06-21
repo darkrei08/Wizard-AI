@@ -6,9 +6,14 @@ services:
       - "9742:9742"
     volumes:
       # Mount the configuration folder so SQLite DB is persisted and shared with the host
-      - ~/.config/wizard-ai:/root/.config/wizard-ai
+      - ~/.config/wizard-ai:/home/wizardai/.config/wizard-ai
       # Mount the Mock Cockpit Tools directory
-      - ~/.local/share/cockpit-tools:/root/.local/share/cockpit-tools:ro
+      - ~/.local/share/cockpit-tools:/home/wizardai/.local/share/cockpit-tools:ro
       # Mount the Real Cockpit Tools AUR package directory
-      - ~/.antigravity_cockpit:/root/.antigravity_cockpit:ro
+      - ~/.antigravity_cockpit:/home/wizardai/.antigravity_cockpit:ro
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
     restart: unless-stopped

@@ -5,6 +5,7 @@ import json
 import uuid
 import urllib.request
 import urllib.error
+import ssl
 from datetime import datetime, timezone
 
 WIZARD_DIR = os.path.expanduser("~/.wizard-ai")
@@ -38,8 +39,11 @@ def get_config():
 
 
 def save_config(config):
+    # Ensure config file is not readable by other users
+    # Open with restricted permissions initially if possible, or chmod after
     with open(CONFIG_FILE, "w") as f:
         json.dump(config, f, indent=2)
+    os.chmod(CONFIG_FILE, 0o600)
 
 
 def track_event(skill_id, event_type="invocation"):
@@ -63,7 +67,8 @@ def track_event(skill_id, event_type="invocation"):
             data=json.dumps(payload).encode("utf-8"),
             headers={"Content-Type": "application/json"},
         )
-        with urllib.request.urlopen(req, timeout=1.0) as response:
+        ctx = ssl.create_default_context()
+        with urllib.request.urlopen(req, timeout=1.0, context=ctx) as response:
             if response.status == 200:
                 flush_buffer()
                 return True
@@ -74,8 +79,13 @@ def track_event(skill_id, event_type="invocation"):
 
 
 def buffer_event(payload):
+    # Prevent DoS from unbounded file growth (limit to 1MB)
+    if os.path.exists(BUFFER_FILE) and os.path.getsize(BUFFER_FILE) > 1024 * 1024:
+        return
+
     with open(BUFFER_FILE, "a") as f:
         f.write(json.dumps(payload) + "\n")
+    os.chmod(BUFFER_FILE, 0o600)
 
 
 def flush_buffer():
@@ -98,7 +108,8 @@ def flush_buffer():
             data=json.dumps({"events": events}).encode("utf-8"),
             headers={"Content-Type": "application/json"},
         )
-        with urllib.request.urlopen(req, timeout=2.0) as response:
+        ctx = ssl.create_default_context()
+        with urllib.request.urlopen(req, timeout=2.0, context=ctx) as response:
             if response.status == 200:
                 os.remove(BUFFER_FILE)
     except Exception:

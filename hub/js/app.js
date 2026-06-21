@@ -1,3 +1,14 @@
+// Utility globale per prevenire XSS
+window.escapeHtml = function(unsafe) {
+    if (!unsafe) return '';
+    return String(unsafe)
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+};
+
 const AppState = {
     user: null, // { name: 'Ema', handle: '@darkrei08' }
     telemetryEnabled: false
@@ -175,7 +186,8 @@ const app = {
     },
     
     navigate(route) {
-        if (!Routes[route]) return;
+        // Prevent XSS/Route injection by checking against whitelist
+        if (!Routes.hasOwnProperty(route)) return;
         
         // Check auth for dashboard
         if (route === 'dashboard' && !AppState.user) {

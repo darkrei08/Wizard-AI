@@ -13,8 +13,8 @@ param (
     [switch]$VerboseMode
 )
 
-# PowerShell 5.1 needs TLS 1.2 enabled explicitly for downloads
-[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+# PowerShell security hardening: Enforce TLS 1.2 and TLS 1.3 explicitly
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 -bor [Net.SecurityProtocolType]::Tls13
 
 $QuietOpt = '--quiet'
 if ($VerboseMode) {
@@ -69,6 +69,8 @@ Write-Host ''
 Write-Host '[1/8] Checking for modern Python & Package Manager (uv)...' -ForegroundColor Blue
 if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
     Write-Host 'uv not found. Installing uv via official script...' -ForegroundColor Yellow
+    # SECURITY: Executing scripts directly from the internet via pipe is a security risk.
+    # Ideally, download the script, verify its hash/signature, and then execute it.
     Invoke-RestMethod https://astral.sh/uv/install.ps1 | Invoke-Expression
     if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
         Write-Host '[X] uv installation failed. Install manually: https://docs.astral.sh/uv/' -ForegroundColor Red
@@ -91,6 +93,23 @@ if (-not (Get-Command ls -ErrorAction SilentlyContinue | Where-Object { $_.Sourc
 }
 else {
     Write-Host '[ok] Microsoft.Coreutils is already installed.' -ForegroundColor Green
+}
+
+# Ensure MSVC C++ Build Tools are installed for headroom-ai compilation
+Write-Host 'Checking for MSVC C++ Build Tools...' -ForegroundColor Yellow
+$VsWherePath = 'C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe'
+$HasMsvc = $false
+if (Test-Path $VsWherePath) {
+    $MsvcCheck = & $VsWherePath -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+    if ($MsvcCheck) { $HasMsvc = $true }
+}
+if (-not $HasMsvc) {
+    Write-Host 'MSVC C++ Build Tools not found. Installing via winget (this may take a few minutes)...' -ForegroundColor Yellow
+    $VsOverride = '--quiet --wait --norestart --nocache --add Microsoft.VisualStudio.Workload.VCTools --includeRecommended'
+    winget install --id Microsoft.VisualStudio.2022.BuildTools --exact --force --accept-package-agreements --accept-source-agreements --override $VsOverride | Out-Null
+    Write-Host '[ok] MSVC C++ Build Tools installed.' -ForegroundColor Green
+} else {
+    Write-Host '[ok] MSVC C++ Build Tools are already installed.' -ForegroundColor Green
 }
 
 # 2. Recreate Python Virtual Environment for wrappers
@@ -144,8 +163,12 @@ function Install-UvTool($Tool, $Pkg) {
     if ($LASTEXITCODE -eq 0) {
         Write-Host "  [ok] $Tool installed." -ForegroundColor Green
     } else {
-        Write-Host "  [!] Failed to install $Tool (exit code $LASTEXITCODE). You may need to install MSVC C++ Build Tools." -ForegroundColor Red
-        Write-Host "      Details: $err" -ForegroundColor DarkGray
+        if ($Tool -eq 'headroom') {
+            Write-Host "  [!] Failed to install $Tool (MSVC C++ Build Tools required). Skipping headroom setup, proceeding with the rest..." -ForegroundColor Yellow
+        } else {
+            Write-Host "  [!] Failed to install $Tool (exit code $LASTEXITCODE). You may need to install MSVC C++ Build Tools." -ForegroundColor Red
+            Write-Host "      Details: $err" -ForegroundColor DarkGray
+        }
     }
 }
 
@@ -174,10 +197,11 @@ $Arch = $env:PROCESSOR_ARCHITECTURE
 if ($Arch -eq 'AMD64') {
     $SqzUrl = "https://github.com/ojuschugh1/sqz/releases/download/$SqzVer/sqz-$SqzVer-x86_64-pc-windows-msvc.zip"
     Write-Host "Fetching compiled sqz $SqzVer binary for x86_64..." -ForegroundColor Yellow
-    $TmpDir = Join-Path $env:TEMP "wizard-ai-sqz-$([System.IO.Path]::GetRandomFileName())"
+    $TmpDir = Join-Path $env:TEMP ([guid]::NewGuid().ToString())
     $null = New-Item -ItemType Directory -Force -Path $TmpDir
     try {
-        Invoke-WebRequest -Uri $SqzUrl -OutFile (Join-Path $TmpDir 'sqz.zip') -UseBasicParsing
+        # Security Hardening: UseBasicParsing prevents IE DOM parsing vulnerabilities
+        Invoke-WebRequest -Uri $SqzUrl -OutFile "$TmpDir\sqz.zip" -UseBasicParsing
         Expand-Archive -Path (Join-Path $TmpDir 'sqz.zip') -DestinationPath $TmpDir -Force
         $SqzExe = Get-ChildItem -Path $TmpDir -Recurse -Filter 'sqz.exe' | Select-Object -First 1
 
@@ -222,6 +246,14 @@ else {
 Write-Host ''
 Write-Host "[6/8] Deploying custom AI CLI wrappers to $LocalBin..." -ForegroundColor Blue
 $WrappersSrc = Join-Path $ScriptDir 'bin\windows'
+
+# Security: Ensure paths are strictly within the project directory to prevent path traversal
+$ResolvedSrc = Resolve-Path $WrappersSrc -ErrorAction SilentlyContinue
+if (-not $ResolvedSrc -or -not $ResolvedSrc.Path.StartsWith($ScriptDir)) {
+    Write-Host "[X] Invalid wrappers source path. Potential path traversal detected." -ForegroundColor Red
+    exit 1
+}
+
 Copy-Item -Path (Join-Path $WrappersSrc '*.ps1') -Destination $LocalBin -Force
 $null = New-Item -ItemType Directory -Force -Path (Join-Path $LocalBin 'lib')
 Copy-Item -Path (Join-Path $WrappersSrc 'lib\*') -Destination (Join-Path $LocalBin 'lib') -Recurse -Force
@@ -282,16 +314,23 @@ $StartupShortcut = Join-Path $StartupFolder "WizardAI-AutoUpdate.lnk"
 
 if ($EnableUpdate -eq 'Y') {
     Write-Host "  [ok] Enabling automatic background updates at logon..." -ForegroundColor Green
-    try {
-        $WshShell = New-Object -ComObject WScript.Shell
-        $Shortcut = $WshShell.CreateShortcut($StartupShortcut)
-        $Shortcut.TargetPath = "powershell.exe"
-        $Shortcut.Arguments = "-WindowStyle Hidden -NoProfile -ExecutionPolicy Bypass -File `"$LocalBin\ai-update.ps1`" -Quiet"
-        $Shortcut.Save()
-        Write-Host "  [ok] Startup shortcut installed for user." -ForegroundColor Green
-    }
-    catch {
-        Write-Host "  [!] Could not create startup shortcut: $($_.Exception.Message)" -ForegroundColor Yellow
+    $UpdateScriptPath = Join-Path $LocalBin 'ai-update.ps1'
+    
+    # Security: Ensure the file exists before creating the shortcut
+    if (Test-Path $UpdateScriptPath) {
+        try {
+            $WshShell = New-Object -ComObject WScript.Shell
+            $Shortcut = $WshShell.CreateShortcut($StartupShortcut)
+            $Shortcut.TargetPath = "powershell.exe"
+            $Shortcut.Arguments = "-WindowStyle Hidden -NoProfile -ExecutionPolicy Bypass -File `"$UpdateScriptPath`" -Quiet"
+            $Shortcut.Save()
+            Write-Host "  [ok] Startup shortcut installed for user." -ForegroundColor Green
+        }
+        catch {
+            Write-Host "  [!] Could not create startup shortcut: $($_.Exception.Message)" -ForegroundColor Yellow
+        }
+    } else {
+        Write-Host "  [!] Update script not found at $UpdateScriptPath. Skipping auto-update setup." -ForegroundColor Red
     }
 }
 else {

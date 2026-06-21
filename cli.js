@@ -23,7 +23,8 @@ function fail(msg) {
 }
 
 function run(cmd, args, opts) {
-  const res = spawnSync(cmd, args, Object.assign({ stdio: "inherit" }, opts));
+  const defaultOpts = { stdio: "inherit", shell: false };
+  const res = spawnSync(cmd, args, Object.assign(defaultOpts, opts));
   if (res.error) fail(`Failed to run ${cmd}: ${res.error.message}`);
   return res.status;
 }
@@ -41,8 +42,12 @@ if (gitCheck.error || gitCheck.status !== 0) {
 
 // 2. Resolve the install directory: an existing WIZARD_AI_DIR wins,
 //    otherwise default to ~/.wizard-ai.
-const installDir =
-  process.env.WIZARD_AI_DIR || path.join(os.homedir(), ".wizard-ai");
+const envDir = process.env.WIZARD_AI_DIR ? process.env.WIZARD_AI_DIR.trim() : "";
+// Basic path validation to prevent path traversal
+if (envDir && (envDir.includes("..") || envDir.includes("|") || envDir.includes("&"))) {
+  fail("Invalid WIZARD_AI_DIR environment variable.");
+}
+const installDir = envDir || path.join(os.homedir(), ".wizard-ai");
 
 if (fs.existsSync(path.join(installDir, ".git"))) {
   console.log(`[wizard-ai] Existing install found at ${installDir} — updating...`);
@@ -82,8 +87,14 @@ if (isWin) {
 } else {
   const shArgs = ["bash", path.join(installDir, "setup.sh")];
   if (isVerbose) shArgs.push("--verbose");
+  
   // We now enforce sudo for setup.sh to globally install npm/cargo tools
-  status = run("sudo", shArgs);
+  // Security: only use sudo if we aren't already running as root
+  if (process.getuid && process.getuid() === 0) {
+    status = run(shArgs[0], shArgs.slice(1));
+  } else {
+    status = run("sudo", shArgs);
+  }
 }
 
 process.exit(status === null ? 1 : status);
