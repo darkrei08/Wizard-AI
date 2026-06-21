@@ -16,6 +16,7 @@ Before writing a single line of code, refine rough ideas through questions and e
 - Present the design in sections for user validation.
 - Once the design is approved, break the work into bite-sized tasks (2-5 minutes each) creating a detailed implementation plan.
 - Every task must have exact file paths, complete code expectations, and verification steps.
+- **Token Optimization**: Use `headroom compress` or `ai-compress` to shrink massive user prompts/context before processing.
 
 ### 2. Isolate (`using-git-worktrees` / `auto-branch`)
 Always start by creating an isolated feature workspace/branch.
@@ -23,10 +24,11 @@ Always start by creating an isolated feature workspace/branch.
 - Run: `ai-branch feature "your-feature-name"` (or use git worktrees).
 - Perform all your code changes, commits, and local testing on this isolated branch.
 
-### 3. Execution & TDD (`subagent-driven-development`, `test-driven-development`)
+### 3. Execution & TDD (`subagent-driven-development`, `test-driven-development`, `cybersecurity`)
 Execute the implementation plan meticulously.
 - Enforce RED-GREEN-REFACTOR: write a failing test, watch it fail, write minimal code, watch it pass, and commit.
 - Dispatch fresh subagents per task with a two-stage review (spec compliance, then code quality) or execute in batches with human checkpoints.
+- **Secure by Design**: Consult the `cybersecurity` skill library (e.g. OWASP, NIST) to prevent injection, XSS, SSRF, and other vulnerabilities during execution.
 
 ### 4. Review & Validate (`requesting-code-review`, `systematic-debugging`)
 Between tasks and before completion, systematically review and debug.

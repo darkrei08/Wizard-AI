@@ -68,6 +68,8 @@ echo -e "     ${BLUE}ai-optimize loop \"my task\"${RESET}"
 echo -e "     ${BLUE}ai-optimize evaluate \"https://github.com/author/repo\"${RESET}"
 echo -e "  $(check_cmd ai-compress) ${BOLD}ai-compress${RESET}      Compress prompts/context up to 20x (LLMLingua)"
 echo -e "     ${BLUE}ai-compress --file doc.txt --ratio 0.5${RESET}"
+echo -e "  $(check_cmd headroom) ${BOLD}headroom${RESET}         Context compression and API proxy (60-95% fewer tokens)"
+echo -e "     ${BLUE}echo \"large context\" | headroom compress${RESET}"
 echo -e "  $(check_cmd ai-caveman) ${BOLD}ai-caveman${RESET}       Cut agent output tokens by ~75% while keeping accuracy"
 echo -e "     ${BLUE}ai-caveman --with-init${RESET}"
 echo -e "  $(check_cmd ai-ponytail) ${BOLD}ai-ponytail${RESET}      Acts as a lazy senior dev to prevent over-engineering (YAGNI)"
@@ -142,6 +144,21 @@ else
   echo -e "  ❌ ${BOLD}ECC${RESET}              Agent skills framework (not installed)"
 fi
 echo -e "     ${BLUE}ls ~/.ai-skills/ECC/skills/${RESET}"
+
+if [ -d "$HOME/.ai-skills/cybersecurity-skills" ]; then
+  CYBER_SKILLS=$(ls ~/.ai-skills/cybersecurity-skills/skills/ 2>/dev/null | wc -l)
+  echo -e "  ✅ ${BOLD}Cybersecurity${RESET}    $CYBER_SKILLS+ cybersecurity framework skills"
+else
+  echo -e "  ❌ ${BOLD}Cybersecurity${RESET}    Anthropic Cybersecurity Skills (not installed)"
+fi
+echo ""
+
+echo -e "${BOLD}${YELLOW}📊 VISUALIZATION${RESET}"
+if [ -d "$HOME/.ai-skills/Infographic" ]; then
+  echo -e "  ✅ ${BOLD}Infographic${RESET}      AntV AI-powered declarative infographic generator"
+else
+  echo -e "  ❌ ${BOLD}Infographic${RESET}      AntV Infographic engine (not installed)"
+fi
 echo ""
 
 echo -e "${BOLD}${MAGENTA}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"

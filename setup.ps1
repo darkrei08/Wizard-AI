@@ -107,23 +107,29 @@ Write-Host "[ok] Virtual environment ready at $VenvDir" -ForegroundColor Green
 Write-Host ''
 Write-Host "[3/8] Setting up external git skill repositories in $AiSkills..." -ForegroundColor Blue
 
-# Clone claude-mem directly from GitHub if not present
-$MemDir = Join-Path $HOME '.ai-skills\claude-mem'
-if (-not (Test-Path $MemDir)) {
-    Write-Host 'Cloning claude-mem from GitHub...' -ForegroundColor Yellow
-    if ($QuietOpt) {
-        git clone --depth 1 --quiet https://github.com/thedotmack/claude-mem.git $MemDir
+function Clone-SkillRepo($Url, $DestName) {
+    $DestDir = Join-Path $AiSkills $DestName
+    if (-not (Test-Path $DestDir)) {
+        Write-Host "Cloning $DestName from GitHub..." -ForegroundColor Yellow
+        if ($QuietOpt) {
+            git clone --depth 1 --quiet $Url $DestDir
+        } else {
+            git clone --depth 1 $Url $DestDir
+        }
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "  [!] $DestName clone failed" -ForegroundColor Red
+        } else {
+            Write-Host "  [ok] $DestName cloned." -ForegroundColor Green
+        }
     } else {
-        git clone --depth 1 https://github.com/thedotmack/claude-mem.git $MemDir
+        Write-Host "  [ok] $DestName is already present." -ForegroundColor Green
     }
-    if ($LASTEXITCODE -ne 0) {
-        Write-Host '  [!] claude-mem clone failed' -ForegroundColor Red
-    } else {
-        Write-Host '  [ok] claude-mem cloned.' -ForegroundColor Green
-    }
-} else {
-    Write-Host '  [ok] claude-mem is already present.' -ForegroundColor Green
 }
+
+Clone-SkillRepo 'https://github.com/thedotmack/claude-mem.git' 'claude-mem'
+Clone-SkillRepo 'https://github.com/chopratejas/headroom.git' 'headroom'
+Clone-SkillRepo 'https://github.com/antvis/Infographic.git' 'Infographic'
+Clone-SkillRepo 'https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git' 'cybersecurity-skills'
 
 # 4. Install UV Global Tools
 Write-Host ''
@@ -132,14 +138,22 @@ Write-Host '[4/8] Installing global CLI Tools via uv tool...' -ForegroundColor B
 function Install-UvTool($Tool, $Pkg) {
     if (-not $Pkg) { $Pkg = $Tool }
     Write-Host "Installing/Updating $Tool..." -ForegroundColor Yellow
-    uv tool install --force $Pkg | Out-Null
-    Write-Host "  [ok] $Tool installed." -ForegroundColor Green
+    
+    # Run uv tool install and capture stderr
+    $err = $(uv tool install --force $Pkg 2>&1)
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "  [ok] $Tool installed." -ForegroundColor Green
+    } else {
+        Write-Host "  [!] Failed to install $Tool (exit code $LASTEXITCODE). You may need to install MSVC C++ Build Tools." -ForegroundColor Red
+        Write-Host "      Details: $err" -ForegroundColor DarkGray
+    }
 }
 
 Install-UvTool 'graphify' 'graphifyy'
 Install-UvTool 'litellm'
 Install-UvTool 'markitdown'
 Install-UvTool 'sqz'
+Install-UvTool 'headroom' 'headroom-ai'
 
 # Install serena (semantic code intelligence — available via uvx)
 Write-Host 'Checking serena (semantic code search)...' -ForegroundColor Yellow

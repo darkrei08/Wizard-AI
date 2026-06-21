@@ -126,14 +126,24 @@ echo -e "${GREEN}✓ Virtual environment ready at ~/.ai-skills/venv/${NC}"
 
 # 3. Setting up external git skill repositories
 echo -e "\n${BLUE}[3/8] Setting up external git skill repositories...${NC}"
-MEM_DIR="$HOME/.ai-skills/claude-mem"
-if [ ! -d "$MEM_DIR" ]; then
-  echo -e "${YELLOW}Cloning claude-mem from GitHub...${NC}"
-  git clone --depth 1 $QUIET_OPT https://github.com/thedotmack/claude-mem.git "$MEM_DIR" || true
-  echo -e "${GREEN}  ✓ claude-mem cloned.${NC}"
-else
-  echo -e "${GREEN}✓ claude-mem is already present.${NC}"
-fi
+
+clone_skill_repo() {
+  local url="$1"
+  local dest_name="$2"
+  local dest_dir="$HOME/.ai-skills/$dest_name"
+  
+  if [ ! -d "$dest_dir" ]; then
+    echo -e "${YELLOW}Cloning $dest_name from GitHub...${NC}"
+    git clone --depth 1 $QUIET_OPT "$url" "$dest_dir" || true
+    echo -e "${GREEN}  ✓ $dest_name cloned.${NC}"
+  else
+    echo -e "${GREEN}✓ $dest_name is already present.${NC}"
+  fi
+}
+clone_skill_repo "https://github.com/thedotmack/claude-mem.git" "claude-mem"
+clone_skill_repo "https://github.com/chopratejas/headroom.git" "headroom"
+clone_skill_repo "https://github.com/antvis/Infographic.git" "Infographic"
+clone_skill_repo "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git" "cybersecurity-skills"
 
 # 4. Install UV Global Tools
 echo -e "\n${BLUE}[4/8] Installing global CLI Tools via uv tool...${NC}"
@@ -154,6 +164,7 @@ install_uv_tool "graphify"    "graphifyy"
 install_uv_tool "litellm"
 install_uv_tool "markitdown"
 install_uv_tool "sqz"
+install_uv_tool "headroom"    "headroom-ai"
 
 # Install serena (semantic code intelligence — available via uvx)
 echo -e "${YELLOW}Checking serena (semantic code search)...${NC}"

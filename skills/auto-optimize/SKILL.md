@@ -23,12 +23,13 @@ If the context is extremely large or scattered across many documents:
 
 ### Phase 3: Token Compression
 Once the text is isolated:
-- If it's a large prompt or general text: Use `ai-compress --file ...` (LLMLingua) to shrink the tokens by up to 20x.
+- If it's a large prompt or general text: Use `headroom compress` or `ai-compress` (LLMLingua) to shrink the tokens by up to 20x.
 - If it's CLI output, JSON, or logs: Use `ai-squeeze` (Sqz) to strip unnecessary syntax and whitespace.
 
 ### Phase 4: Context Guarding & Memory
 - If the task requires context retention over multiple steps: Use `ai-lean-ctx` or `ai-mem store` to persist the important bits without polluting the active context window.
 - Apply the `caveman` skill to output fewer tokens in your final response.
+- **Proxy Mode**: For heavy, repeated LLM tasks, start `headroom proxy --port 8000` to automatically cache and compress token traffic.
 
 ## 2. Skill Evaluator (`ai-optimize evaluate <repo-url>`)
 

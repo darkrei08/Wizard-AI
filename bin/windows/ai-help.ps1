@@ -1,4 +1,4 @@
-# ai-help — Central hub for all AI tools and skills
+﻿# ai-help - Central hub for all AI tools and skills
 # Windows port of bin/ai-help
 # Shows all available AI CLI tools with descriptions and usage hints
 
@@ -26,7 +26,7 @@ function Example($Text) {
 
 Write-Host ''
 Write-Host '=============================================================' -ForegroundColor Cyan
-Write-Host "          AI Tools & Skills Hub — $env:COMPUTERNAME" -ForegroundColor Cyan
+Write-Host "          AI Tools & Skills Hub - $env:COMPUTERNAME" -ForegroundColor Cyan
 Write-Host '=============================================================' -ForegroundColor Cyan
 Write-Host ''
 
@@ -39,6 +39,8 @@ Write-Host ''
 Section 'TOKEN OPTIMIZATION'
 Tool (Check-Cmd ai-compress) 'ai-compress' 'Compress prompts/context up to 20x (LLMLingua)'
 Example 'ai-compress --file doc.txt --ratio 0.5'
+Tool (Check-Cmd headroom) 'headroom' 'Context compression and API proxy (60-95% fewer tokens)'
+Example 'echo "large context" | headroom compress'
 Tool (Check-Cmd ai-caveman) 'ai-caveman' 'Cut agent output tokens by ~75% while keeping accuracy'
 Example 'ai-caveman --with-init'
 Tool (Check-Cmd ai-ponytail) 'ai-ponytail' 'Acts as a lazy senior dev to prevent over-engineering (YAGNI)'
@@ -90,18 +92,35 @@ Write-Host ''
 Section 'FRAMEWORK'
 $EccDir = Join-Path $HOME '.ai-skills\ECC'
 if (Test-Path $EccDir) {
-    $EccSkills = (Get-ChildItem -Path (Join-Path $EccDir 'skills') -ErrorAction SilentlyContinue | Measure-Object).Count
-    Tool '[OK]' 'ECC' "$EccSkills+ production-ready agent skills & hooks"
+    Tool '[OK]' 'ECC' ('{0}+ production-ready agent skills and hooks' -f $EccSkills)
 } else {
     Tool '[--]' 'ECC' 'Agent skills framework (not installed)'
 }
-Example "dir $HOME\.ai-skills\ECC\skills\"
+Example ('dir {0}\.ai-skills\ECC\skills' -f $HOME)
+
+$CyberDir = Join-Path $HOME '.ai-skills\cybersecurity-skills'
+if (Test-Path $CyberDir) {
+    $CyberSkills = (Get-ChildItem -Path (Join-Path $CyberDir 'skills') -ErrorAction SilentlyContinue | Measure-Object).Count
+    Tool '[OK]' 'Cybersecurity' ('{0}+ cybersecurity framework skills' -f $CyberSkills)
+} else {
+    Tool '[--]' 'Cybersecurity' 'Anthropic Cybersecurity Skills (not installed)'
+}
+Write-Host ''
+
+Section 'VISUALIZATION'
+$InfoDir = Join-Path $HOME '.ai-skills\Infographic'
+if (Test-Path $InfoDir) {
+    Tool '[OK]' 'Infographic' 'AntV AI-powered declarative infographic generator'
+} else {
+    Tool '[--]' 'Infographic' 'AntV Infographic engine (not installed)'
+}
 Write-Host ''
 
 Write-Host '-------------------------------------------------------------' -ForegroundColor Magenta
-Write-Host "Skills directory: $HOME\.gemini\config\skills\"
-Write-Host "Tools directory:  $HOME\.ai-skills\"
-Write-Host "CLIs:             $HOME\.local\bin\"
+Write-Host ('Skills directory: {0}\.gemini\config\skills' -f $HOME)
+Write-Host ('Tools directory:  {0}\.ai-skills' -f $HOME)
+Write-Host ('CLIs:             {0}\.local\bin' -f $HOME)
 Write-Host ''
 Write-Host 'Tip: all tools work as pipes -> cmd | ai-compress | ai-rerank' -ForegroundColor Cyan
 Write-Host ''
+
