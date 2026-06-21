@@ -88,8 +88,10 @@ $null = New-Item -ItemType Directory -Force -Path $AiSkills
 # Optional: Install native Unix tools for Windows (ls, cp, grep, etc.)
 Write-Host 'Checking for Microsoft.Coreutils...' -ForegroundColor Yellow
 if (-not (Get-Command ls -ErrorAction SilentlyContinue | Where-Object { $_.Source -match "coreutils" })) {
-    Write-Host 'Installing Microsoft.Coreutils via winget...' -ForegroundColor Yellow
-    winget install Microsoft.Coreutils --accept-package-agreements --accept-source-agreements | Out-Null
+    Write-Host '  > Command: winget install Microsoft.Coreutils --accept-package-agreements --accept-source-agreements --verbose-logs' -ForegroundColor DarkGray
+    Write-Host '  > Note: If this hangs, check for hidden UAC prompts in your taskbar, or press Enter.' -ForegroundColor DarkGray
+    winget install Microsoft.Coreutils --accept-package-agreements --accept-source-agreements --verbose-logs
+    Write-Host '  > winget command finished.' -ForegroundColor DarkGray
 }
 else {
     Write-Host '[ok] Microsoft.Coreutils is already installed.' -ForegroundColor Green
@@ -105,8 +107,11 @@ if (Test-Path $VsWherePath) {
 }
 if (-not $HasMsvc) {
     Write-Host 'MSVC C++ Build Tools not found. Installing via winget (this may take a few minutes)...' -ForegroundColor Yellow
+    Write-Host '  > Note: A UAC prompt may appear in the background for Visual Studio Installer. Please accept it.' -ForegroundColor Yellow
     $VsOverride = '--quiet --wait --norestart --nocache --add Microsoft.VisualStudio.Workload.VCTools --includeRecommended'
-    winget install --id Microsoft.VisualStudio.2022.BuildTools --exact --force --accept-package-agreements --accept-source-agreements --override $VsOverride | Out-Null
+    Write-Host "  > Command: winget install --id Microsoft.VisualStudio.2022.BuildTools --exact --force --accept-package-agreements --accept-source-agreements --override `"$VsOverride`" --verbose-logs" -ForegroundColor DarkGray
+    winget install --id Microsoft.VisualStudio.2022.BuildTools --exact --force --accept-package-agreements --accept-source-agreements --override $VsOverride --verbose-logs
+    Write-Host '  > winget command finished.' -ForegroundColor DarkGray
     Write-Host '[ok] MSVC C++ Build Tools installed.' -ForegroundColor Green
 } else {
     Write-Host '[ok] MSVC C++ Build Tools are already installed.' -ForegroundColor Green
