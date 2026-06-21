@@ -109,6 +109,11 @@ elif command -v dnf &>/dev/null; then
     echo -e "${YELLOW}Installing openblas-devel and cargo via dnf...${NC}"
     dnf install -y cargo openblas-devel
   fi
+elif command -v brew &>/dev/null; then
+  if ! sudo -u "$REAL_USER" brew list openblas &>/dev/null || ! command -v cargo &>/dev/null; then
+    echo -e "${YELLOW}Installing openblas and rust via brew...${NC}"
+    sudo -u "$REAL_USER" brew install rust openblas
+  fi
 fi
 
 echo -e "${YELLOW}Installing llmlingua, flashrank, and turbovec inside the venv...${NC}"
@@ -152,12 +157,19 @@ install_uv_tool() {
   local tool="$1"
   local pkg="${2:-$1}"   # optional package name if different from tool name
   echo -e "${YELLOW}Installing/Updating $tool...${NC}"
+  
+  local exit_code=0
   if [ "$VERBOSE" -eq 1 ]; then
-    uv tool install --force "$pkg" || true
+    uv tool install --force "$pkg" || exit_code=$?
   else
-    uv tool install --force "$pkg" &>/dev/null || true
+    uv tool install --force "$pkg" &>/dev/null || exit_code=$?
   fi
-  echo -e "${GREEN}  ✓ $tool installed.${NC}"
+  
+  if [ $exit_code -eq 0 ]; then
+    echo -e "${GREEN}  ✓ $tool installed.${NC}"
+  else
+    echo -e "${RED}  ⚠ Failed to install $tool (exit code $exit_code). You may need to install C++/Rust Build Tools.${NC}"
+  fi
 }
 
 install_uv_tool "graphify"    "graphifyy"

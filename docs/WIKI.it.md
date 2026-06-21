@@ -42,6 +42,7 @@ Di seguito la categorizzazione rigorosa dell'arsenale a tua disposizione:
 #### 2. Context & Token Optimization (Risparmio Risorse)
 - **`caveman`**: Plugin/skill che comprime l'output dell'AI del 75% mantenendo l'accuratezza.
 - **`llmlingua` / `ai-compress`**: Compressione ultra-spinta dei contesti massivi.
+- **`headroom`**: Livello di compressione avanzata e API proxy (fino al 95% di riduzione).
 - **`sqz` / `ai-squeeze`**: Compressione output del terminale, payload e JSON.
 - **`flashrank` / `ai-rerank`**: Riordinamento chirurgico dei contesti documentali (RAG).
 - **`lean-ctx`**: Controllo e isolamento intelligente del contesto AI.
@@ -68,11 +69,13 @@ Di seguito la categorizzazione rigorosa dell'arsenale a tua disposizione:
 - **`auto-trigger-release`**: Trigger automatico di pubblicazione a fine task.
 - **`auto-npm-publish`**: Gestione, configurazione e sync automatizzato su NPM.
 - **`auto-debug`**: Analizzatore di codice ed auto-correzione prima di procedere al merge.
+- **`cybersecurity`**: Applicazione delle linee guida di sicurezza (secure-by-design) tramite le 762+ skill di Anthropic.
 - **`spec-kit`**: Toolkit per lo sviluppo orientato alle specifiche (TDD/SDD).
 
 #### 6. Frontend, UI/UX e Design (Design System)
 - **`taste-skill`**: Framework "anti-slop" per forzare layout e spaziature di altissima gamma.
 - **`awesome-design`**: Iniezione di stili e linguaggi brand-specifici (Vercel, Cursor, Claude).
+- **`infographic`**: Generatore dichiarativo di infografiche e grafici basato su AI.
 
 #### 7. Scaffolding & Templates (Avvio Progetti)
 - **`scaffold` / `ai-scaffold`**: Generatore istantaneo di progetti Prod-Ready (es. Express+TS, Nuxt v4).

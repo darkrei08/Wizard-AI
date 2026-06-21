@@ -42,6 +42,7 @@ Below is the rigorous categorization of the arsenal at your disposal:
 #### 2. Context & Token Optimization (Resource Saving)
 - **`caveman`**: Plugin/skill that compresses AI output by 75% maintaining accuracy.
 - **`llmlingua` / `ai-compress`**: Ultra-high compression of massive contexts.
+- **`headroom`**: Advanced context compression and API proxy layer (up to 95% reduction).
 - **`sqz` / `ai-squeeze`**: Compression of terminal output, payloads, and JSON.
 - **`flashrank` / `ai-rerank`**: Surgical re-ranking of document contexts (RAG).
 - **`lean-ctx`**: Intelligent AI context isolation and control.
@@ -68,11 +69,13 @@ Below is the rigorous categorization of the arsenal at your disposal:
 - **`auto-trigger-release`**: Automatic publishing trigger at the end of a task.
 - **`auto-npm-publish`**: NPM automated configuration, sync and management.
 - **`auto-debug`**: Code analyzer and auto-correction before proceeding to merge.
+- **`cybersecurity`**: Enforcement of secure-by-design guidelines using Anthropic's 762+ security skills.
 - **`spec-kit`**: Toolkit for specification-driven development (TDD/SDD).
 
 #### 6. Frontend, UI/UX & Design (Design System)
 - **`taste-skill`**: "Anti-slop" framework to force ultra-premium layouts and spacing.
 - **`awesome-design`**: Injection of brand-specific styles and languages (Vercel, Cursor, Claude).
+- **`infographic`**: AI-powered declarative infographic and chart generator.
 
 #### 7. Scaffolding & Templates (Project Start)
 - **`scaffold` / `ai-scaffold`**: Instant generator of Prod-Ready projects (e.g. Express+TS, Nuxt v4).
