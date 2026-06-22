@@ -146,17 +146,21 @@ After installation, these commands are available in your terminal:
 | `ai-update` | Updater | Manually pull latest updates for Wizard-AI (includes cross-platform desktop notifications) |
 | `ai-graph [path]` | Graphify | Build knowledge graphs. **Automatically connects to Cockpit Tools to save API Keys!** |
 | `ai-compress --file f.txt` | LLMLingua | Compress prompts/context up to 20x |
+| `headroom` | Headroom | Context compression and API proxy (60-95% fewer tokens) |
+| `ai-caveman` | Caveman | Cut agent output tokens by ~75% while keeping accuracy |
+| `ai-ponytail "prompt"` | Ponytail | Acts as a lazy senior dev to prevent over-engineering |
 | `ai-compare "prompt"` | aisuite | A/B test a prompt across multiple LLM models |
 | `ai-rerank --query "X"` | FlashRank | Re-rank passages by relevance |
 | `ai-squeeze` | Sqz | Compress CLI output / JSON / logs |
 | `ai-convert document.pdf` | MarkItDown | Convert any file to clean Markdown |
+| `ai-session-save "msg"` | Session Save | Save current session context to MEMORY.md |
 | `ai-mem store "text"` | claude-mem | Store a persistent semantic memory |
 | `ai-usage` | GeminiUsage | Track token consumption and budget |
+| `serena find-usages` | Serena | Semantic code search & LSP navigation |
 | `ai-sync-skills` | Sync | Propagate skills to all AI agents |
 | `book-to-skill doc.pdf` | book-to-skill| Convert books/docs into AI skills |
 | `litellm --port 4000` | LiteLLM | Unified LLM API gateway |
 | `wizard-antigravity` | pi-antigravity-rotator | Multi-account rotation proxy for Cockpit Tools |
-
 | `ai-proxy` | Cockpit Proxy | Manage the Cockpit Tools proxy daemon |
 
 ---

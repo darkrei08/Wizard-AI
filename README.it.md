@@ -146,15 +146,58 @@ Dopo l'installazione, questi comandi saranno disponibili nel tuo terminale:
 | `ai-update` | Updater | Aggiorna manualmente Wizard-AI (include notifiche desktop cross-platform) |
 | `ai-graph [percorso]` | Graphify | Costruisce knowledge graph. **Si aggancia in automatico a Cockpit Tools per non consumare API Keys!** |
 | `ai-compress --file f.txt`| LLMLingua | Comprime prompt o contesto fino a 20x |
+| `headroom` | Headroom | Compressione del contesto e API proxy (60-95% token in meno) |
+| `ai-caveman` | Caveman | Riduce i token di output dell'agente del 75% mantenendo la precisione |
+| `ai-ponytail "prompt"` | Ponytail | Agisce da dev senior pigro per prevenire l'over-engineering |
 | `ai-compare "prompt"` | aisuite | Esegui un A/B test di un prompt su più modelli LLM |
 | `ai-rerank --query "X"` | FlashRank | Riordina componenti o paragrafi (RAG) per pertinenza |
 | `ai-squeeze` | Sqz | Comprime l'output del terminale / JSON / log |
 | `ai-convert file.pdf` | MarkItDown | Converte qualsiasi file in un pulito Markdown |
+| `ai-session-save "msg"` | Session Save | Salva il contesto della sessione corrente in MEMORY.md |
 | `ai-mem store "testo"` | claude-mem | Memorizza un'informazione in modo semantico persistente |
 | `ai-usage` | GeminiUsage | Traccia i consumi dei token e il budget Gemini |
+| `serena find-usages` | Serena | Ricerca semantica del codice e navigazione LSP |
 | `ai-sync-skills` | Sync | Propaga le skill aggiornate a tutti gli agenti |
 | `book-to-skill doc.pdf` | book-to-skill| Trasforma libri o manuali in skill per agenti AI |
 | `litellm --port 4000` | LiteLLM | Gateway API unificato per oltre 100+ LLM |
+| `wizard-antigravity` | pi-antigravity-rotator | Proxy di rotazione multi-account per Cockpit Tools |
+| `ai-proxy` | Cockpit Proxy | Gestisce il demone proxy di Cockpit Tools |
+
+---
+
+## 🛩️ AI Proxy (Cockpit Tools)
+
+Wizard-AI si integra perfettamente con **Cockpit Tools** tramite `ai-proxy` per aggirare i limiti rate (rate limits) del piano gratuito di Gemini su account multipli.
+
+1. **Installa le Dipendenze del Proxy**
+   ```bash
+   ai-proxy install
+   ```
+
+2. **Importa gli Account di Cockpit Tools (Automatico)**
+   Esegui il seguente comando per estrarre in modo sicuro i tuoi `refreshTokens` dal database locale di Cockpit Tools e iniettarli nel file `accounts.json` del proxy:
+   ```bash
+   ai-proxy provision
+   ```
+   *(Nota: Questo utilizza la skill locale `cockpit-bridge` e non richiede di ripetere il login ai tuoi account Google).*
+
+3. **Avvia il Demone Proxy**
+   Per avviare il proxy come demone in background (che si avvia automaticamente all'avvio del PC):
+   ```bash
+   ai-proxy enable
+   ```
+   *Nota: Su Windows, questo crea un VBScript nella cartella di Esecuzione Automatica (Startup). Su Linux, usa systemd. Su Mac, usa launchd.*
+
+   Per visualizzare i log in background in tempo reale:
+   ```bash
+   ai-proxy logs
+   ```
+
+   Per fermare il demone in seguito:
+   ```bash
+   ai-proxy disable
+   ```
+*Nota: Questo configura automaticamente il tuo agente Pi per utilizzare il provider `google-antigravity`.*
 
 ---
 
