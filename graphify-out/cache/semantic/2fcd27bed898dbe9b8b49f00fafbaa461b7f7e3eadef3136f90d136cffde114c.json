@@ -1,1 +1,0 @@
-{"nodes": [{"id": "anthropic_cli", "label": "Anthropic CLI (ant)", "file_type": "document", "source_file": "skills/claude-api/shared/anthropic-cli.md"}], "edges": [{"source": "anthropic_cli", "target": "managed_agents_core", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "skills/claude-api/shared/anthropic-cli.md"}], "hyperedges": []}
