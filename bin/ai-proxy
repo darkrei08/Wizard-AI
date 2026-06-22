@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# ai-proxy - Manage the Cockpit Tools proxy daemon
+# Wraps scripts/ai-proxy.js
+
+if [ -z "$WIZARD_AI_DIR" ]; then
+    echo "ERROR: WIZARD_AI_DIR is not set. Please run setup.sh first."
+    exit 1
+fi
+
+node "$WIZARD_AI_DIR/scripts/ai-proxy.js" "$@"
