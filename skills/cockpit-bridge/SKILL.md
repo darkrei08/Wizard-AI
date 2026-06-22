@@ -56,14 +56,22 @@ node "<SKILL_DIR>/scripts/cockpit-reader.mjs" switch <email>
 ```
 This will:
 1. Update Cockpit Tools' `current_account_id` and `current_account.json`
-2. Sync the OAuth token to pi's `~/.pi/agent/auth.json`
-3. Display the new account status
+2. Sync the OAuth token to pi's `~/.pi/agent/auth.json` (for pi-native auth)
+3. Set the active account in `pi-account-switcher`'s state
+4. Display the new account status
 
 ### `cockpit-sync`
 Sync the current Cockpit Tools account to pi's auth.json (useful after Cockpit Tools desktop switch).
 ```bash
 node "<SKILL_DIR>/scripts/cockpit-reader.mjs" sync
 ```
+
+### `cockpit-provision`
+Provisions all valid Cockpit Tools accounts into the `pi-account-switcher` extension.
+```bash
+node "<SKILL_DIR>/scripts/cockpit-reader.mjs" provision
+```
+*Note: Ensure `pi-account-switcher` is installed via `pi install npm:pi-account-switcher` or `pi-multi-account` before using this, or it will create the config file from scratch.*
 
 ## Security Model
 

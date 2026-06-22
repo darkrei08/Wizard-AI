@@ -1,20 +1,31 @@
 #!/usr/bin/env node
 // cockpit-reader.mjs — Cockpit Tools Bridge for AI Agents
 // Reads account/quota data from Cockpit Tools, syncs OAuth tokens to pi agent.
+// Integrates with pi-account-switcher for multi-account management.
 // SECURITY: Tokens are NEVER printed to stdout. Only email, tier, quotas.
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, dirname } from 'node:path';
 import { homedir } from 'node:os';
 
 // ── Path Resolution (dynamic, no hardcoded paths) ──────────────────────────
 
+const HOME = homedir();
+
 function getCockpitDataDir() {
-  return join(homedir(), '.antigravity_cockpit');
+  return join(HOME, '.antigravity_cockpit');
 }
 
 function getPiAuthFile() {
-  return join(homedir(), '.pi', 'agent', 'auth.json');
+  return join(HOME, '.pi', 'agent', 'auth.json');
+}
+
+function getPiAccountSwitcherDir() {
+  return join(HOME, '.pi', 'account-switcher');
+}
+
+function getPiAccountSwitcherConfig() {
+  return join(getPiAccountSwitcherDir(), 'accounts.json');
 }
 
 // ── Safe JSON helpers ──────────────────────────────────────────────────────
@@ -29,7 +40,7 @@ function readJson(filePath) {
 }
 
 function writeJson(filePath, data) {
-  const dir = join(filePath, '..');
+  const dir = dirname(filePath);
   if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
   writeFileSync(filePath, JSON.stringify(data, null, 2) + '\n', 'utf8');
 }
@@ -102,6 +113,12 @@ function cmdStatus() {
   const fallback = loadCurrentAccountFallback();
   const sanitized = sanitizeAccount(detail);
 
+  // Check pi-account-switcher provisioned state
+  const switcherConfig = readJson(getPiAccountSwitcherConfig());
+  const provisionedCount = switcherConfig?.accounts?.filter(
+    a => a.id?.startsWith('cockpit-')
+  ).length || 0;
+
   console.log(JSON.stringify({
     ok: true,
     current_account: {
@@ -114,6 +131,10 @@ function cmdStatus() {
     models: sanitized?.models || [],
     quota_last_updated: sanitized?.quota_last_updated || null,
     total_accounts: accounts.length,
+    pi_account_switcher: {
+      provisioned_accounts: provisionedCount,
+      config_path: getPiAccountSwitcherConfig(),
+    },
   }, null, 2));
 }
 
@@ -185,10 +206,13 @@ function cmdSwitch(targetEmail) {
     updated_at: Math.floor(Date.now() / 1000),
   });
 
-  // 3. Sync to pi auth.json
-  const syncResult = syncToPi(target.id);
+  // 3. Sync to pi auth.json (write-through)
+  const syncResult = syncToPiAuth(target.id);
 
-  // 4. Read updated status
+  // 4. Update pi-account-switcher active selection
+  const switcherResult = activateInSwitcher(target.id, target.email);
+
+  // 5. Read updated status
   const detail = loadAccountDetail(target.id);
   const sanitized = sanitizeAccount(detail);
 
@@ -201,11 +225,14 @@ function cmdSwitch(targetEmail) {
       subscription_tier: sanitized?.subscription_tier || 'unknown',
     },
     models: sanitized?.models || [],
-    pi_sync: syncResult,
+    pi_auth_sync: syncResult,
+    pi_switcher_sync: switcherResult,
   }, null, 2));
 }
 
-function syncToPi(accountId) {
+// ── Sync to pi auth.json (write-through) ───────────────────────────────────
+
+function syncToPiAuth(accountId) {
   const detail = loadAccountDetail(accountId || loadAccounts().currentId);
   if (!detail || !detail.token) {
     return { ok: false, error: 'no_token', message: 'No OAuth token found for this account.' };
@@ -214,28 +241,137 @@ function syncToPi(accountId) {
   const piAuthFile = getPiAuthFile();
   const token = detail.token;
 
-  // Write OAuth token to pi's auth.json
-  // Format: store the refresh_token and access_token keyed by email
+  // Write in pi-native format: keyed by provider name
+  // Cockpit Tools uses Google OAuth → provider is "google"
   const authData = readJson(piAuthFile) || {};
-  authData.cockpit_bridge = {
+  authData.google = {
+    type: 'oauth',
+    refresh: token.refresh_token,
+    access: token.access_token,
+    expires: token.expiry_timestamp * 1000, // pi expects ms
     email: detail.email || token.email,
-    access_token: token.access_token,
-    refresh_token: token.refresh_token,
-    expires_in: token.expires_in,
-    expiry_timestamp: token.expiry_timestamp,
-    token_type: token.token_type || 'Bearer',
-    oauth_client_key: token.oauth_client_key,
+    source: 'cockpit-bridge',
     synced_at: new Date().toISOString(),
-    source: 'cockpit-tools',
   };
 
   try {
     writeJson(piAuthFile, authData);
-    return { ok: true, email: detail.email || token.email, pi_auth_file: piAuthFile };
+    return { ok: true, email: detail.email || token.email };
   } catch (err) {
     return { ok: false, error: 'write_failed', message: err.message };
   }
 }
+
+// ── Provision all Cockpit accounts into pi-account-switcher ────────────────
+
+function cmdProvision() {
+  const { accounts, currentId } = loadAccounts();
+  if (accounts.length === 0) {
+    console.log(JSON.stringify({
+      ok: false,
+      error: 'cockpit_not_found',
+      message: 'Cockpit Tools not detected or no accounts configured.',
+    }, null, 2));
+    process.exit(0);
+  }
+
+  const configPath = getPiAccountSwitcherConfig();
+  const existing = readJson(configPath) || { accounts: [], switchMode: 'env' };
+
+  // Remove previously provisioned cockpit accounts
+  const nonCockpit = existing.accounts.filter(a => !a.id?.startsWith('cockpit-'));
+
+  const provisioned = [];
+  const skipped = [];
+
+  for (const account of accounts) {
+    const detail = loadAccountDetail(account.id);
+    if (!detail || !detail.token) {
+      skipped.push({ email: account.email, reason: 'no_token' });
+      continue;
+    }
+
+    const email = detail.email || detail.token?.email || account.email;
+    const tier = detail.quota?.subscription_tier || 'unknown';
+    const disabled = detail.disabled || false;
+
+    if (disabled) {
+      skipped.push({ email, reason: 'disabled' });
+      continue;
+    }
+
+    const token = detail.token;
+    const cockpitAccountId = `cockpit-${account.id.slice(0, 8)}`;
+
+    // Create pi-account-switcher compatible account entry
+    const piAccount = {
+      id: cockpitAccountId,
+      label: `${email} (${tier}) — Cockpit`,
+      provider: 'google',
+      model: 'gemini-3.1-pro',
+      piAuth: {
+        provider: 'google',
+        entry: {
+          type: 'oauth',
+          refresh: token.refresh_token,
+          access: token.access_token,
+          expires: token.expiry_timestamp * 1000,
+        },
+      },
+    };
+
+    provisioned.push(piAccount);
+  }
+
+  // Merge: existing non-cockpit accounts + new cockpit accounts
+  const finalConfig = {
+    switchMode: 'env',
+    accounts: [...nonCockpit, ...provisioned],
+  };
+
+  writeJson(configPath, finalConfig);
+
+  // Also sync the current account to pi auth.json
+  const currentSync = currentId ? syncToPiAuth(currentId) : null;
+
+  console.log(JSON.stringify({
+    ok: true,
+    action: 'provisioned',
+    provisioned: provisioned.map(a => ({ id: a.id, label: a.label })),
+    skipped,
+    total_provisioned: provisioned.length,
+    total_skipped: skipped.length,
+    config_path: configPath,
+    current_account_synced: currentSync,
+    hint: 'Run /account:list in pi to see all provisioned accounts. Use /account:switch to switch.',
+  }, null, 2));
+}
+
+// ── Activate a specific cockpit account in pi-account-switcher ─────────────
+
+function activateInSwitcher(cockpitAccountId, email) {
+  const configPath = getPiAccountSwitcherConfig();
+  const config = readJson(configPath);
+  if (!config || !Array.isArray(config.accounts)) {
+    return { ok: false, message: 'pi-account-switcher not provisioned. Run: node cockpit-reader.mjs provision' };
+  }
+
+  const shortId = `cockpit-${cockpitAccountId.slice(0, 8)}`;
+  const found = config.accounts.find(a => a.id === shortId);
+  if (!found) {
+    return { ok: false, message: `Account cockpit-${cockpitAccountId.slice(0, 8)} not found in pi-account-switcher. Run provision first.` };
+  }
+
+  // Update pi-account-switcher state
+  const statePath = join(getPiAccountSwitcherDir(), 'state.json');
+  const state = readJson(statePath) || { selected: {} };
+  state.selected.google = shortId;
+  writeJson(statePath, state);
+
+  return { ok: true, activated: shortId, email };
+}
+
+// ── Sync current account ───────────────────────────────────────────────────
 
 function cmdSync() {
   const { currentId } = loadAccounts();
@@ -248,7 +384,8 @@ function cmdSync() {
     process.exit(1);
   }
 
-  const result = syncToPi(currentId);
+  const authResult = syncToPiAuth(currentId);
+  const switcherResult = activateInSwitcher(currentId, null);
   const detail = loadAccountDetail(currentId);
   const sanitized = sanitizeAccount(detail);
 
@@ -259,7 +396,8 @@ function cmdSync() {
       email: sanitized?.email || 'unknown',
       subscription_tier: sanitized?.subscription_tier || 'unknown',
     },
-    pi_sync: result,
+    pi_auth_sync: authResult,
+    pi_switcher_sync: switcherResult,
   }, null, 2));
 }
 
@@ -280,16 +418,20 @@ switch (command) {
   case 'sync':
     cmdSync();
     break;
+  case 'provision':
+    cmdProvision();
+    break;
   default:
     console.log(JSON.stringify({
       ok: false,
       error: 'unknown_command',
-      message: 'Usage: cockpit-reader.mjs <status|accounts|switch|sync> [args]',
+      message: 'Usage: cockpit-reader.mjs <status|accounts|switch|sync|provision> [args]',
       commands: {
         status: 'Show current account, tier, and model quotas',
         accounts: 'List all available Cockpit Tools accounts',
         'switch <email>': 'Switch to a different account and sync to pi',
         sync: 'Sync current Cockpit Tools account to pi auth.json',
+        provision: 'Provision ALL Cockpit Tools accounts into pi-account-switcher',
       },
     }, null, 2));
     break;
