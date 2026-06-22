@@ -35,23 +35,23 @@ function writeLitellmConfig() {
   const config = `model_list:
   - model_name: gpt-4o
     litellm_params:
-      model: gemini/gemini-3.1-pro
-      api_base: http://127.0.0.1:51200/v1beta
+      model: openai/gemini-3.1-pro
+      api_base: http://127.0.0.1:51200/v1
       api_key: dummy
   - model_name: gpt-4o-mini
     litellm_params:
-      model: gemini/gemini-3.5-flash
-      api_base: http://127.0.0.1:51200/v1beta
+      model: openai/gemini-3.5-flash
+      api_base: http://127.0.0.1:51200/v1
       api_key: dummy
   - model_name: gpt-3.5-turbo
     litellm_params:
-      model: gemini/gemini-3.5-flash
-      api_base: http://127.0.0.1:51200/v1beta
+      model: openai/gemini-3.5-flash
+      api_base: http://127.0.0.1:51200/v1
       api_key: dummy
   - model_name: claude-3-5-sonnet
     litellm_params:
-      model: gemini/gemini-3.1-pro
-      api_base: http://127.0.0.1:51200/v1beta
+      model: openai/gemini-3.1-pro
+      api_base: http://127.0.0.1:51200/v1
       api_key: dummy
 `;
   fs.mkdirSync(path.dirname(LITELLM_CONFIG_FILE), { recursive: true });
@@ -219,7 +219,7 @@ function enableWindows() {
 
   const vbsContent = `Set WshShell = CreateObject("WScript.Shell")
 WshShell.Run "cmd.exe /c pi-antigravity-rotator start > ""${LOG_FILE}"" 2>&1", 0, False
-WshShell.Run "cmd.exe /c litellm --config ""${LITELLM_CONFIG_FILE}"" --port 4000 > ""${LITELLM_LOG_FILE}"" 2>&1", 0, False
+WshShell.Run "cmd.exe /c set PYTHONIOENCODING=utf-8 && litellm --config ""${LITELLM_CONFIG_FILE}"" --port 4000 > ""${LITELLM_LOG_FILE}"" 2>&1", 0, False
 `;
   
   fs.mkdirSync(startupDir, { recursive: true });
@@ -227,7 +227,7 @@ WshShell.Run "cmd.exe /c litellm --config ""${LITELLM_CONFIG_FILE}"" --port 4000
   console.log(`Created Startup VBScript at ${scriptPath}`);
   
   const psCommand1 = `powershell.exe -WindowStyle Hidden -Command "Start-Process cmd.exe -ArgumentList '/c pi-antigravity-rotator start > \\"${LOG_FILE}\\" 2>&1' -WindowStyle Hidden"`;
-  const psCommand2 = `powershell.exe -WindowStyle Hidden -Command "Start-Process cmd.exe -ArgumentList '/c litellm --config \\"${LITELLM_CONFIG_FILE}\\" --port 4000 > \\"${LITELLM_LOG_FILE}\\" 2>&1' -WindowStyle Hidden"`;
+  const psCommand2 = `powershell.exe -WindowStyle Hidden -Command "Start-Process cmd.exe -ArgumentList '/c set PYTHONIOENCODING=utf-8 && litellm --config \\"${LITELLM_CONFIG_FILE}\\" --port 4000 > \\"${LITELLM_LOG_FILE}\\" 2>&1' -WindowStyle Hidden"`;
   runCommand(psCommand1, true);
   runCommand(psCommand2, true);
   console.log("✅ Proxy and LiteLLM enabled in Startup folder and started in background (Ports: 51200, 4000).");
