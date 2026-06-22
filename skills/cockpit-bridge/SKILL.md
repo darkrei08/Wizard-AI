@@ -1,0 +1,81 @@
+---
+name: cockpit-bridge
+description: "Bridge between Cockpit Tools and AI agents (pi.dev, Antigravity). Lists accounts, shows quota/model info, and syncs OAuth tokens for account switching without API keys. Use at session start or when switching accounts."
+---
+
+# Cockpit Bridge — Account & Quota Manager
+
+Integrates [Cockpit Tools](https://github.com/jlcodes99/cockpit-tools) account management with AI coding agents.
+Reads subscription accounts, quota data, and model availability from Cockpit Tools data files. Supports write-through sync of OAuth tokens to the Pi agent's `auth.json`.
+
+## Startup Behavior (MANDATORY)
+
+**At the start of every new session**, you MUST run:
+
+```bash
+node "<SKILL_DIR>/scripts/cockpit-reader.mjs" status
+```
+
+Where `<SKILL_DIR>` is resolved from the skill's install location. Then display to the user:
+
+```
+🚀 Cockpit Bridge
+   Account: <email>
+   Tier:    <subscription_tier>
+   Models:  <top 3 models by quota, e.g. "Claude Opus 4.6: 91% | Gemini 3.1 Pro: 93%">
+```
+
+If Cockpit Tools is not installed or no accounts are found, display:
+```
+⚠️ Cockpit Tools not detected. Use /login for manual authentication.
+```
+
+## Available Commands
+
+### `cockpit-status`
+Show current account details and all model quotas.
+```bash
+node "<SKILL_DIR>/scripts/cockpit-reader.mjs" status
+```
+Format the output as a rich table with colored quota indicators:
+- 🟢 ≥ 50% — Healthy
+- 🟡 10-49% — Warning
+- 🔴 < 10% — Critical
+
+### `cockpit-accounts`
+List all available accounts from Cockpit Tools.
+```bash
+node "<SKILL_DIR>/scripts/cockpit-reader.mjs" accounts
+```
+Display each account with its email and whether it's the current active one (✅).
+
+### `cockpit-switch <email>`
+Switch to a different Cockpit Tools account and sync to pi agent.
+```bash
+node "<SKILL_DIR>/scripts/cockpit-reader.mjs" switch <email>
+```
+This will:
+1. Update Cockpit Tools' `current_account_id` and `current_account.json`
+2. Sync the OAuth token to pi's `~/.pi/agent/auth.json`
+3. Display the new account status
+
+### `cockpit-sync`
+Sync the current Cockpit Tools account to pi's auth.json (useful after Cockpit Tools desktop switch).
+```bash
+node "<SKILL_DIR>/scripts/cockpit-reader.mjs" sync
+```
+
+## Security Model
+
+- **Tokens are NEVER displayed** in stdout or logs — only email, tier, and quota percentages
+- **All paths resolved dynamically** via `%USERPROFILE%`, `$HOME`, `%LOCALAPPDATA%` — no hardcoded paths
+- **Read-only for quota** — only writes to `pi auth.json` and cockpit account switching files
+- **Graceful degradation** — works without Cockpit Tools installed (shows warning)
+
+## Path Resolution
+
+| OS      | Cockpit Data Dir                              | Cockpit Accounts Dir            | Pi Auth File              |
+|---------|-----------------------------------------------|---------------------------------|---------------------------|
+| Windows | `%USERPROFILE%\.antigravity_cockpit`          | same + `/accounts/`             | `%USERPROFILE%\.pi\agent\auth.json` |
+| macOS   | `~/.antigravity_cockpit`                      | same + `/accounts/`             | `~/.pi/agent/auth.json`   |
+| Linux   | `~/.antigravity_cockpit`                      | same + `/accounts/`             | `~/.pi/agent/auth.json`   |
