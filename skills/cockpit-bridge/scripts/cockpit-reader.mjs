@@ -401,6 +401,53 @@ function cmdSync() {
   }, null, 2));
 }
 
+// ── Provision into pi-antigravity-rotator ──────────────────────────────────
+
+function cmdProvisionRotator() {
+  const { accounts } = loadAccounts();
+  if (accounts.length === 0) {
+    console.log(JSON.stringify({ ok: false, error: 'cockpit_not_found' }, null, 2));
+    process.exit(0);
+  }
+
+  const configDir = join(homedir(), '.pi-antigravity-rotator');
+  const configPath = join(configDir, 'accounts.json');
+  
+  const existingConfig = readJson(configPath) || { proxyPort: 51200, accounts: [] };
+  const existingAccounts = Array.isArray(existingConfig.accounts) ? existingConfig.accounts : [];
+
+  // Remove existing cockpit synced accounts
+  const keptAccounts = existingAccounts.filter(a => !a.syncedFromCockpit);
+  const provisioned = [];
+
+  for (const account of accounts) {
+    const detail = loadAccountDetail(account.id);
+    if (!detail || !detail.token || detail.disabled) continue;
+
+    const email = detail.email || detail.token?.email || account.email;
+    const tier = detail.quota?.subscription_tier || 'unknown';
+
+    provisioned.push({
+      email,
+      tier,
+      refreshToken: detail.token.refresh_token,
+      label: `Cockpit: ${email}`,
+      syncedFromCockpit: true
+    });
+  }
+
+  existingConfig.accounts = [...keptAccounts, ...provisioned];
+  writeJson(configPath, existingConfig);
+
+  console.log(JSON.stringify({
+    ok: true,
+    action: 'provisioned_rotator',
+    provisioned_count: provisioned.length,
+    config_path: configPath,
+    hint: 'Now run: pi-antigravity-rotator start'
+  }, null, 2));
+}
+
 // ── CLI Entry Point ────────────────────────────────────────────────────────
 
 const [,, command, ...args] = process.argv;
@@ -421,17 +468,21 @@ switch (command) {
   case 'provision':
     cmdProvision();
     break;
+  case 'provision-rotator':
+    cmdProvisionRotator();
+    break;
   default:
     console.log(JSON.stringify({
       ok: false,
       error: 'unknown_command',
-      message: 'Usage: cockpit-reader.mjs <status|accounts|switch|sync|provision> [args]',
+      message: 'Usage: cockpit-reader.mjs <status|accounts|switch|sync|provision|provision-rotator> [args]',
       commands: {
         status: 'Show current account, tier, and model quotas',
         accounts: 'List all available Cockpit Tools accounts',
         'switch <email>': 'Switch to a different account and sync to pi',
         sync: 'Sync current Cockpit Tools account to pi auth.json',
         provision: 'Provision ALL Cockpit Tools accounts into pi-account-switcher',
+        'provision-rotator': 'Provision ALL Cockpit Tools accounts into pi-antigravity-rotator',
       },
     }, null, 2));
     break;
