@@ -425,11 +425,19 @@ function cmdProvisionRotator() {
     if (!detail || !detail.token || detail.disabled) continue;
 
     const email = detail.email || detail.token?.email || account.email;
-    const tier = detail.quota?.subscription_tier || 'unknown';
+    let tier = detail.quota?.subscription_tier || 'unknown';
+    
+    // pi-antigravity-rotator expects strictly: "ultra", "pro", "plus", "free", or "unknown"
+    if (tier.includes('pro')) tier = 'pro';
+    else if (tier.includes('free')) tier = 'free';
+    else if (tier.includes('plus')) tier = 'plus';
+    else if (tier.includes('ultra')) tier = 'ultra';
+    else tier = 'unknown';
 
     provisioned.push({
       email,
       tier,
+      projectId: 'cockpit-proxy',
       refreshToken: detail.token.refresh_token,
       label: `Cockpit: ${email}`,
       syncedFromCockpit: true

@@ -155,8 +155,28 @@ After installation, these commands are available in your terminal:
 | `ai-sync-skills` | Sync | Propagate skills to all AI agents |
 | `book-to-skill doc.pdf` | book-to-skill| Convert books/docs into AI skills |
 | `litellm --port 4000` | LiteLLM | Unified LLM API gateway |
+| `wizard-antigravity` | pi-antigravity-rotator | Multi-account rotation proxy for Cockpit Tools |
 
 ---
+
+## 🛩️ Antigravity Proxy Rotator (Cockpit Tools)
+
+Wizard-AI seamlessly integrates with **Cockpit Tools** via the `pi-antigravity-rotator` proxy to bypass Gemini free-tier rate limits across multiple accounts.
+
+This allows agents like **Pi** to run smoothly with zero configuration by automatically rotating your Cockpit Tools active sessions.
+
+To get started, simply run the dedicated CLI wrapper:
+```bash
+# 1. Install the rotator package globally
+wizard-antigravity install
+
+# 2. Automatically import all your Cockpit Tools accounts (no manual login required!)
+wizard-antigravity provision
+
+# 3. Start the proxy in the background
+wizard-antigravity start
+```
+*Note: This automatically configures your Pi agent to use the `google-antigravity` provider.*
 
 ## 🏗️ Master Project Bootstrap
 

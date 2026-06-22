@@ -42,6 +42,32 @@ Format the output as a rich table with colored quota indicators:
 - 🟡 10-49% — Warning
 - 🔴 < 10% — Critical
 
+## CLI Wrappers and Integration
+
+To make this seamless, Wizard-AI provides a dedicated CLI wrapper that automatically provisions Cockpit Tools accounts into the Pi Antigravity Proxy Rotator (`pi-antigravity-rotator`).
+
+When a user wants to configure Pi to bypass the Gemini API free-tier limits using their Cockpit accounts, instruct them to run:
+```bash
+# 1. Install the rotator proxy
+wizard-antigravity install
+
+# 2. Provision all local Cockpit Tools accounts automatically
+wizard-antigravity provision
+
+# 3. Start the proxy server
+wizard-antigravity start
+```
+
+This automates the entire process: reading from Cockpit Tools, normalizing the schema (tier and project ID validation), and configuring Pi's `models.json` and `auth.json` to use the `google-antigravity` provider.
+
+### Manual Commands (Legacy)
+If the user prefers the `pi-account-switcher` fallback or manual syncing:
+- `/cockpit-accounts` - Lists available accounts from Cockpit Tools
+- `/cockpit-status` - Shows the active account and token quota
+- `/cockpit-switch <email>` - Switches the active account
+- `/cockpit-sync` - Syncs the current account to pi's auth file
+- `/cockpit-provision` - Exports all accounts to `pi-account-switcher`
+
 ### `cockpit-accounts`
 List all available accounts from Cockpit Tools.
 ```bash
