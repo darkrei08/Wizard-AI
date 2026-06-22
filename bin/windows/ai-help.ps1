@@ -1,4 +1,4 @@
-﻿# ai-help - Central hub for all AI tools and skills
+# ai-help - Central hub for all AI tools and skills
 # Windows port of bin/ai-help
 # Shows all available AI CLI tools with descriptions and usage hints
 
@@ -91,8 +91,8 @@ Write-Host ''
 
 Section 'FRAMEWORK'
 $EccDir = Join-Path $HOME '.ai-skills\ECC'
-if (Test-Path $EccDir) {
-    Tool '[OK]' 'ECC' ('{0}+ production-ready agent skills and hooks' -f $EccSkills)
+if ((Test-Path $EccDir) -or (Get-Command ecc -ErrorAction SilentlyContinue)) {
+    Tool '[OK]' 'ECC' 'Production-ready agent skills and hooks'
 } else {
     Tool '[--]' 'ECC' 'Agent skills framework (not installed)'
 }

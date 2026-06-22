@@ -152,6 +152,16 @@ clone_skill_repo "https://github.com/chopratejas/headroom.git" "headroom"
 clone_skill_repo "https://github.com/antvis/Infographic.git" "Infographic"
 clone_skill_repo "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git" "cybersecurity-skills"
 
+echo -e "\n${BLUE}Installing ECC and caveman via NPM globally...${NC}"
+if command -v npm &>/dev/null; then
+  npm install -g ecc-universal
+  npm install -g https://github.com/JuliusBrussee/caveman.git
+else
+  echo -e "${YELLOW}NPM not found. Falling back to git clone for ECC and caveman...${NC}"
+  clone_skill_repo "https://github.com/affaan-m/ECC.git" "ECC"
+  clone_skill_repo "https://github.com/JuliusBrussee/caveman.git" "caveman"
+fi
+
 # 4. Install UV Global Tools
 echo -e "\n${BLUE}[4/8] Installing global CLI Tools via uv tool...${NC}"
 

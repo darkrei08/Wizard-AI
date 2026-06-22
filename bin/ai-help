@@ -137,8 +137,8 @@ echo -e "     ${BLUE}book-to-skill document.pdf${RESET}"
 echo ""
 
 echo -e "${BOLD}${YELLOW}⚙️  FRAMEWORK${RESET}"
-if [ -d "$HOME/.ai-skills/ECC" ]; then
-  ECC_SKILLS=$(ls ~/.ai-skills/ECC/skills/ 2>/dev/null | wc -l)
+if [ -d "$HOME/.ai-skills/ECC" ] || command -v ecc &>/dev/null; then
+  ECC_SKILLS=$(ls ~/.ai-skills/ECC/skills/ 2>/dev/null | wc -l || echo "Many")
   echo -e "  ✅ ${BOLD}ECC${RESET}              $ECC_SKILLS+ production-ready agent skills & hooks"
 else
   echo -e "  ❌ ${BOLD}ECC${RESET}              Agent skills framework (not installed)"

@@ -154,6 +154,16 @@ Clone-SkillRepo 'https://github.com/thedotmack/claude-mem.git' 'claude-mem'
 Clone-SkillRepo 'https://github.com/chopratejas/headroom.git' 'headroom'
 Clone-SkillRepo 'https://github.com/antvis/Infographic.git' 'Infographic'
 Clone-SkillRepo 'https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git' 'cybersecurity-skills'
+
+Write-Host "Installing ECC and caveman via NPM globally..." -ForegroundColor Yellow
+if (Get-Command npm -ErrorAction SilentlyContinue) {
+    npm install -g ecc-universal
+    npm install -g https://github.com/JuliusBrussee/caveman.git
+} else {
+    Write-Host "NPM not found. Falling back to git clone for ECC and caveman..." -ForegroundColor Yellow
+    Clone-SkillRepo 'https://github.com/affaan-m/ECC.git' 'ECC'
+    Clone-SkillRepo 'https://github.com/JuliusBrussee/caveman.git' 'caveman'
+}
 Clone-SkillRepo 'https://github.com/yvgude/lean-ctx.git' 'lean-ctx'
 
 # 4. Install UV Global Tools
