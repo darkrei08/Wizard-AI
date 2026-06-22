@@ -32,14 +32,37 @@ if (Test-Path (Join-Path $WizardDir '.git')) {
 $AiSkills = Join-Path $HOME '.ai-skills'
 if (Test-Path $AiSkills) {
     Log "`n📚 Updating external skill repositories..." "Blue"
-    $Dirs = Get-ChildItem -Path $AiSkills -Directory
-    foreach ($Dir in $Dirs) {
-        if (Test-Path (Join-Path $Dir.FullName '.git')) {
-            Log "  -> Updating $($Dir.Name)..." "Yellow"
-            Push-Location $Dir.FullName
-            if ($Quiet) { git pull --ff-only --quiet } else { git pull --ff-only }
-            Pop-Location
+    
+    $CoreRepos = @{
+        'claude-mem' = 'https://github.com/thedotmack/claude-mem.git'
+        'headroom' = 'https://github.com/chopratejas/headroom.git'
+        'Infographic' = 'https://github.com/antvis/Infographic.git'
+        'cybersecurity-skills' = 'https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git'
+        'lean-ctx' = 'https://github.com/yvgude/lean-ctx.git'
+    }
+
+    foreach ($Repo in $CoreRepos.GetEnumerator()) {
+        $RepoDir = Join-Path $AiSkills $Repo.Key
+        if (-not (Test-Path $RepoDir)) {
+            Log "  -> Cloning missing repository $($Repo.Key)..." "Yellow"
+            if ($Quiet) { git clone --depth 1 --quiet $Repo.Value $RepoDir } else { git clone --depth 1 $Repo.Value $RepoDir }
+        } else {
+            if (Test-Path (Join-Path $RepoDir '.git')) {
+                Log "  -> Updating $($Repo.Key)..." "Yellow"
+                Push-Location $RepoDir
+                if ($Quiet) { git pull --ff-only --quiet } else { git pull --ff-only }
+                Pop-Location
+            }
         }
+    }
+}
+
+if (Get-Command npm -ErrorAction SilentlyContinue) {
+    Log "`n📦 Upgrading global NPM packages (Wizard-AI CLI, AI-OS, etc)..." "Blue"
+    if ($Quiet) {
+        npm update -g --quiet | Out-Null
+    } else {
+        npm update -g
     }
 }
 
@@ -49,6 +72,12 @@ if (Get-Command uv -ErrorAction SilentlyContinue) {
         uv tool upgrade --all --quiet | Out-Null
     } else {
         uv tool upgrade --all
+    }
+    
+    # Auto-inject updated CLI skills into the master skills folder
+    if (Get-Command graphify -ErrorAction SilentlyContinue) {
+        Log "  -> Auto-injecting graphify skill updates..." "Yellow"
+        graphify antigravity install 2>$null | Out-Null
     }
 }
 

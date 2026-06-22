@@ -30,23 +30,51 @@ if [ -d "$WIZARD_DIR/.git" ]; then
 fi
 
 # 2. Update all skill repositories in ~/.ai-skills/
-if [ -d "$HOME/.ai-skills" ]; then
+AI_SKILLS="$HOME/.ai-skills"
+if [ -d "$AI_SKILLS" ]; then
   log "\n📚 Updating external skill repositories..."
-  for dir in "$HOME/.ai-skills"/*; do
-    if [ -d "$dir/.git" ]; then
-      log "  -> Updating $(basename "$dir")..."
-      git -C "$dir" pull --ff-only ${QUIET:+--quiet} || true
+  
+  # List of core repositories
+  declare -A CORE_REPOS=(
+    ["claude-mem"]="https://github.com/thedotmack/claude-mem.git"
+    ["headroom"]="https://github.com/chopratejas/headroom.git"
+    ["Infographic"]="https://github.com/antvis/Infographic.git"
+    ["cybersecurity-skills"]="https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git"
+    ["lean-ctx"]="https://github.com/yvgude/lean-ctx.git"
+  )
+
+  for name in "${!CORE_REPOS[@]}"; do
+    repo_url="${CORE_REPOS[$name]}"
+    repo_dir="$AI_SKILLS/$name"
+    
+    if [ ! -d "$repo_dir" ]; then
+      log "  -> Cloning missing repository $name..."
+      git clone --depth 1 "$repo_url" "$repo_dir" ${QUIET:+--quiet} || true
+    else
+      log "  -> Updating $name..."
+      git -C "$repo_dir" pull --ff-only ${QUIET:+--quiet} || true
     fi
   done
 fi
 
 # 3. Update uv tools
+if command -v npm &>/dev/null; then
+  log "\n📦 Upgrading global NPM packages (Wizard-AI CLI, AI-OS, etc)..."
+  npm update -g ${QUIET:+--quiet}
+fi
+
 if command -v uv >/dev/null 2>&1; then
   log "\n🛠️ Upgrading global CLI tools via uv..."
   if [ "$QUIET" -eq 1 ]; then
     uv tool upgrade --all --quiet >/dev/null 2>&1 || true
   else
     uv tool upgrade --all || true
+  fi
+
+  # Auto-inject updated CLI skills into the master skills folder
+  if command -v graphify >/dev/null 2>&1; then
+    log "  -> Auto-injecting graphify skill updates..."
+    graphify antigravity install >/dev/null 2>&1 || true
   fi
 fi
 

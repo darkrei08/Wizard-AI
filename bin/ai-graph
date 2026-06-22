@@ -13,11 +13,7 @@ if (echo > /dev/tcp/127.0.0.1/19528) >/dev/null 2>&1 || nc -z 127.0.0.1 19528 >/
   export OPENAI_API_KEY="dummy"
   export GEMINI_API_KEY="dummy"
   export ANTHROPIC_API_KEY="dummy"
-  
-  # Ensure graphify uses openai backend to hit the proxy (unless overridden)
-  if [[ ! " $* " =~ " --backend " ]]; then
-    set -- "$@" --backend openai
-  fi
+  export ANTHROPIC_API_KEY="dummy"
 fi
 
 show_help() {

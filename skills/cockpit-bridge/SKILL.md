@@ -47,16 +47,26 @@ Format the output as a rich table with colored quota indicators:
 To make this seamless, Wizard-AI provides a dedicated CLI wrapper that automatically provisions Cockpit Tools accounts into the Pi Antigravity Proxy Rotator (`pi-antigravity-rotator`).
 
 When a user wants to configure Pi to bypass the Gemini API free-tier limits using their Cockpit accounts, instruct them to run:
-```bash
-# 1. Install the rotator proxy
-wizard-antigravity install
 
-# 2. Provision all local Cockpit Tools accounts automatically
-wizard-antigravity provision
+1. Install the rotator proxy:
+   ```bash
+   ai-proxy install
+   ```
 
-# 3. Start the proxy server
-wizard-antigravity start
-```
+2. Iniziate l'account provisioning (estrae silenziosamente i tokens da Cockpit Tools):
+   ```bash
+   ai-proxy provision
+   ```
+
+3. Attivate il demone proxy in background (si avvierà in automatico all'accensione del PC):
+   ```bash
+   ai-proxy enable
+   ```
+
+4. Controllate i log del proxy in background:
+   ```bash
+   ai-proxy logs
+   ```
 
 This automates the entire process: reading from Cockpit Tools, normalizing the schema (tier and project ID validation), and configuring Pi's `models.json` and `auth.json` to use the `google-antigravity` provider.
 

@@ -6,7 +6,7 @@
     "wizard-ai": "cli.js",
     "wizard-update": "cli.js",
     "pi-agent-setup": "cli.js",
-    "wizard-antigravity": "scripts/wizard-antigravity.js"
+    "ai-proxy": "scripts/ai-proxy.js"
   },
   "files": [
     "cli.js",

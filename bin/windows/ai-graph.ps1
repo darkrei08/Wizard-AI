@@ -58,11 +58,6 @@ try {
         $env:OPENAI_API_KEY = "dummy"
         $env:GEMINI_API_KEY = "dummy"
         $env:ANTHROPIC_API_KEY = "dummy"
-        
-        # Ensure graphify uses openai backend to hit the proxy
-        if ($args -notcontains "--backend") {
-            $args = $args + "--backend" + "openai"
-        }
     }
 } catch {
     # Port not open, ignore

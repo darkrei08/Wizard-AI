@@ -157,25 +157,42 @@ After installation, these commands are available in your terminal:
 | `litellm --port 4000` | LiteLLM | Unified LLM API gateway |
 | `wizard-antigravity` | pi-antigravity-rotator | Multi-account rotation proxy for Cockpit Tools |
 
+| `ai-proxy` | Cockpit Proxy | Manage the Cockpit Tools proxy daemon |
+
 ---
 
-## 🛩️ Antigravity Proxy Rotator (Cockpit Tools)
+## 🛩️ AI Proxy (Cockpit Tools)
 
-Wizard-AI seamlessly integrates with **Cockpit Tools** via the `pi-antigravity-rotator` proxy to bypass Gemini free-tier rate limits across multiple accounts.
+Wizard-AI seamlessly integrates with **Cockpit Tools** via the `ai-proxy` to bypass Gemini free-tier rate limits across multiple accounts.
 
-This allows agents like **Pi** to run smoothly with zero configuration by automatically rotating your Cockpit Tools active sessions.
+1. **Install Proxy Dependencies**
+   ```bash
+   ai-proxy install
+   ```
 
-To get started, simply run the dedicated CLI wrapper:
-```bash
-# 1. Install the rotator package globally
-wizard-antigravity install
+2. **Import Cockpit Tools Accounts (Automated)**
+   Run the following command to securely extract your `refreshTokens` from the local Cockpit Tools database and inject them into the proxy's `accounts.json`:
+   ```bash
+   ai-proxy provision
+   ```
+   *(Note: This uses the local `cockpit-bridge` skill and does not require you to re-login to your Google accounts).*
 
-# 2. Automatically import all your Cockpit Tools accounts (no manual login required!)
-wizard-antigravity provision
+3. **Start the Proxy Daemon**
+   To start the proxy as a background daemon (auto-starts on PC boot):
+   ```bash
+   ai-proxy enable
+   ```
+   *Note: On Windows, this creates a VBScript in your Startup folder. On Linux, it uses systemd. On Mac, it uses launchd.*
 
-# 3. Start the proxy in the background
-wizard-antigravity start
-```
+   To view live background logs:
+   ```bash
+   ai-proxy logs
+   ```
+
+   To stop the daemon later:
+   ```bash
+   ai-proxy disable
+   ```
 *Note: This automatically configures your Pi agent to use the `google-antigravity` provider.*
 
 ## 🏗️ Master Project Bootstrap
