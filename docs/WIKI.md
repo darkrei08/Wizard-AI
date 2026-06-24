@@ -308,3 +308,6 @@ AI agents operate at their best when applying "Skill Chaining", i.e., the consec
 3. You save the best prompt in semantic memory with **`ai-mem`** for future use.
 
 > With Wizard-AI, you (or your AI agent) can master all engineering phases in a chained manner. This enables extreme scaling of "vibe coding" development.
+- **claude-blog**: AI Blog Writing & SEO Optimization Skill for Claude Code.
+- **claude-seo**: SEO Analysis plugin for Claude Code.
+- **workflow-seo-research**: Meta-skill per analisi SEO e Inbound Marketing.

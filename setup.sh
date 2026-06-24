@@ -151,6 +151,8 @@ clone_skill_repo "https://github.com/thedotmack/claude-mem.git" "claude-mem"
 clone_skill_repo "https://github.com/chopratejas/headroom.git" "headroom"
 clone_skill_repo "https://github.com/antvis/Infographic.git" "Infographic"
 clone_skill_repo "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git" "cybersecurity-skills"
+clone_skill_repo "https://github.com/AgriciDaniel/claude-blog.git" "claude-blog"
+clone_skill_repo "https://github.com/AgriciDaniel/claude-seo.git" "claude-seo"
 
 echo -e "\n${BLUE}Installing ECC and caveman via NPM globally...${NC}"
 if command -v npm &>/dev/null; then
