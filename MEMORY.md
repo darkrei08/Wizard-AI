@@ -17,3 +17,6 @@ v0.27.6: Correzione di sicurezza sulla privacy. Anonimizzati i percorsi locali n
 ## [Session State Snapshot] - 2026-06-26 17:05:27
 Integrated 14 stitch-* skills and design-md-spec skill. Created ai-designmd CLI wrapper using npx -y @google/design.md. Updated setup.sh with clones, NPM installs, and contributor credentials prompting. Updated ai-update, ai-help, and Wikis. Released version v0.32.0 on GitHub and published package to NPM.
 
+## [Session State Snapshot] - 2026-06-26 15:24:00
+v0.33.0: Ristrutturazione completa delle 154 skill in categorie gerarchiche (`core`, `frontend`, `backend`, `devops`, `data-science`, `memory-knowledge`, `workflows`). Creato `skills.json` per abilitare la discovery. Introdotta meta-skill `workflow-production-cycle` e `workflow-agent-management` per definire il ciclo E2E completo e la gestione gerarchica dei subagent. Aggiornati `PROJECT_STATUS.md` e `docs/WIKI.md`. Merge completato su `main` e bumpato a `v0.33.0`.
+
