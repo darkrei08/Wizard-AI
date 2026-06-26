@@ -13,3 +13,7 @@ v0.27.5: Disinstallazione completa dell'ambiente locale di Wizard-AI. Rimossa fi
 
 ## [Session State Snapshot] - 2026-06-19 18:17:00
 v0.27.6: Correzione di sicurezza sulla privacy. Anonimizzati i percorsi locali nel file MEMORY.md per evitare leak di username. Aggiornata la skill `auto-workflow` imponendo l'anonimizzazione rigorosa (es. `~/.ai-skills`) come regola obbligatoria durante ogni Session Save.
+
+## [Session State Snapshot] - 2026-06-26 17:05:27
+Integrated 14 stitch-* skills and design-md-spec skill. Created ai-designmd CLI wrapper using npx -y @google/design.md. Updated setup.sh with clones, NPM installs, and contributor credentials prompting. Updated ai-update, ai-help, and Wikis. Released version v0.32.0 on GitHub and published package to NPM.
+
