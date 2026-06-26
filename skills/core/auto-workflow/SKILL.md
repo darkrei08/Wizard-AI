@@ -9,9 +9,11 @@ This is a **mandatory behavioral skill**. As an AI agent working on this project
 
 ## The 7-Step Workflow
 
+Before and during these steps, you MUST apply the mindset and rigor of the `enterprise-development-protocol` skill, treating the task as a Senior Staff Engineer to eliminate technical debt and ensure a Production Ready state.
+
 When tasked with implementing a feature or solving a problem, proceed strictly in this order:
 
-### 1. Brainstorming & Planning (`brainstorming`, `writing-plans`)
+### 1. Brainstorming & Planning (`brainstorming`, `writing-plans`, `enterprise-development-protocol`)
 Before writing a single line of code, refine rough ideas through questions and explore alternatives.
 - Present the design in sections for user validation.
 - Once the design is approved, break the work into bite-sized tasks (2-5 minutes each) creating a detailed implementation plan.
