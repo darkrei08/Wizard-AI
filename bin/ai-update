@@ -41,6 +41,8 @@ if [ -d "$AI_SKILLS" ]; then
     ["Infographic"]="https://github.com/antvis/Infographic.git"
     ["cybersecurity-skills"]="https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git"
     ["lean-ctx"]="https://github.com/yvgude/lean-ctx.git"
+    ["stitch-skills"]="https://github.com/google-labs-code/stitch-skills.git"
+    ["design.md"]="https://github.com/google-labs-code/design.md.git"
   )
 
   for name in "${!CORE_REPOS[@]}"; do

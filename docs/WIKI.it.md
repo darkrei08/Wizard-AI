@@ -27,10 +27,10 @@ Questi sono i wrapper principali da riga di comando installati globalmente sul t
 
 ## 🔌 2. Skill degli Agenti Installate
 
-L'ecosistema vanta **33 skill e framework custom** esclusivi di Wizard-AI, oltre ai plugin di base forniti dagli agenti (es. Antigravity, Claude Code).
+L'ecosistema vanta **48 skill e framework custom** esclusivi di Wizard-AI, oltre ai plugin di base forniti dagli agenti (es. Antigravity, Claude Code).
 Di seguito la categorizzazione rigorosa dell'arsenale a tua disposizione:
 
-### 🔮 Le 33 Skill Custom (Wizard-AI Core)
+### 🔮 Le 48 Skill Custom (Wizard-AI Core)
 
 #### 1. System Core & Routing (Fondamenta)
 - **`wizard-ai-hub`**: Scoperta e dashboard delle skill.
@@ -76,6 +76,21 @@ Di seguito la categorizzazione rigorosa dell'arsenale a tua disposizione:
 - **`taste-skill`**: Framework "anti-slop" per forzare layout e spaziature di altissima gamma.
 - **`awesome-design`**: Iniezione di stili e linguaggi brand-specifici (Vercel, Cursor, Claude).
 - **`infographic`**: Generatore dichiarativo di infografiche e grafici basato su AI.
+- **`design-md-spec`**: Specifiche del formato e validatore per lo standard `DESIGN.md`.
+- **`stitch-code-to-design`**: Migrazione concatenata di codebase frontend in progetti Stitch.
+- **`stitch-extract-design-md`**: Estrae il design system `DESIGN.md` direttamente dai sorgenti frontend.
+- **`stitch-extract-static-html`**: Scatta snapshot HTML statici di applicazioni web locali in esecuzione.
+- **`stitch-generate-design`**: Genera nuovi screen o variazioni di design da testo/immagini su Stitch.
+- **`stitch-manage-design-system`**: Carica design system `DESIGN.md` e temi su progetti Stitch.
+- **`stitch-upload-to-stitch`**: Carica asset HTML, immagini e mockup su Stitch.
+- **`stitch-react-components`**: Converte i design di Stitch in componenti React/TypeScript modulari e validati.
+- **`stitch-react-native`**: Compila mockup HTML/CSS di Stitch in componenti React Native formattati.
+- **`stitch-remotion`**: Genera video dimostrativi animati di screen Stitch tramite Remotion.
+- **`stitch-shadcn-ui`**: Guida esperta per l'integrazione e scaffolding di componenti shadcn/ui.
+- **`stitch-design-md`**: Analizza progetti Stitch e genera specifiche `DESIGN.md` semantiche.
+- **`stitch-enhance-prompt`**: Ottimizza prompt generici trasformandoli in istruzioni strutturate per Stitch.
+- **`stitch-loop`**: Cicli iterativi di generazione design-to-code per siti web multi-pagina.
+- **`stitch-taste-design`**: Genera design system applicando regole di colore e spaziature di qualità Premium.
 
 #### 7. Scaffolding & Templates (Avvio Progetti)
 - **`scaffold` / `ai-scaffold`**: Generatore istantaneo di progetti Prod-Ready (es. Express+TS, Nuxt v4).
