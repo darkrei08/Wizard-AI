@@ -27,10 +27,10 @@ These are the primary command-line wrappers installed globally on your system by
 
 ## 🔌 2. Installed Agent Skills
 
-The ecosystem features **48 custom skills and frameworks** exclusive to Wizard-AI, in addition to the base plugins provided by agents (e.g. Antigravity, Claude Code).
-Below is the rigorous categorization of the arsenal at your disposal:
+The ecosystem features **over 150 custom skills and frameworks** exclusive to Wizard-AI, in addition to the base plugins provided by agents (e.g. Antigravity, Claude Code).
+Below is the rigorous categorization of the arsenal at your disposal, which has been physically restructured into distinct directories (`core`, `frontend`, `backend`, `devops`, `workflows`, etc.) for maximum efficiency:
 
-### 🔮 The 48 Custom Skills (Wizard-AI Core)
+### 🔮 The 150+ Custom Skills (Wizard-AI Core)
 
 #### 1. System Core & Routing (Foundations)
 - **`wizard-ai-hub`**: Skill discovery and dashboard.
