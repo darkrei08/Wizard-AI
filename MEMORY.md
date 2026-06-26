@@ -20,3 +20,6 @@ Integrated 14 stitch-* skills and design-md-spec skill. Created ai-designmd CLI 
 ## [Session State Snapshot] - 2026-06-26 15:24:00
 v0.33.0: Ristrutturazione completa delle 154 skill in categorie gerarchiche (`core`, `frontend`, `backend`, `devops`, `data-science`, `memory-knowledge`, `workflows`). Creato `skills.json` per abilitare la discovery. Introdotta meta-skill `workflow-production-cycle` e `workflow-agent-management` per definire il ciclo E2E completo e la gestione gerarchica dei subagent. Aggiornati `PROJECT_STATUS.md` e `docs/WIKI.md`. Merge completato su `main` e bumpato a `v0.33.0`.
 
+## [Session State Snapshot] - 2026-06-26 15:30:00
+v0.34.0: Eseguita pulizia di `docs/external-repos` e `docs/security-prompts`. Per favorire l'indicizzazione semantica tramite LLMWiki (skill book/wiki-brain) e Graphify, i 58 archivi documentali dei repository clonati sono stati fisicamente iniettati sotto le rispettive skill (in `references/original-repo/`). Allo stesso modo, i prompt OWASP/CWE sono stati inglobati nella skill `cybersecurity`. Eseguito merge su `main` e release locale.
+
