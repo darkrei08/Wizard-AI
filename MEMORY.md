@@ -15,9 +15,9 @@ Wizard-AI is a local ecosystem for managing AI agent workflows/skills. The repos
 
 ---
 
-## [Session State Snapshot] - 2026-06-27 10:10:00
-- **v0.35.0**: Installed the `goodcode` repository (https://github.com/SpinaBuilds/goodcode) as a portable Agent Skill under `skills/goodcode/` and globally in `~/.gemini/config/skills/goodcode/`.
-- Created the CLI wrapper script `bin/ai-goodcode` to offer help about the new multi-agent orchestration workflow.
-- Updated `setup.sh` to automate the clone/setup of `goodcode` on new machines.
-- Updated `bin/ai-help`, `docs/WIKI.md`, and `docs/WIKI.it.md` with descriptions and usage context.
-- Run `ai-sync-skills` to update all agent configurations, and ran `ai-storybloq snapshot` to capture story status.
+## [Session State Snapshot] - 2026-06-27 10:15:00
+- **v0.35.0 – v0.36.0**: Installed the `goodcode` repository (https://github.com/SpinaBuilds/goodcode) as a portable Agent Skill under `skills/goodcode/` and globally in `~/.gemini/config/skills/goodcode/`.
+- Integrated `goodcode` multi-agent orchestration into `auto-workflow` (Step 3: Execution and Step 4: Review).
+- Created CLI wrapper script `bin/ai-goodcode`, updated `setup.sh`, `bin/ai-help`, `docs/WIKI.md`, and `docs/WIKI.it.md` with help/descriptions.
+- Fixed a Python linter/formatting error (E722 bare except) in `validators.py` and auto-formatted Python scripts with `ruff format`.
+- Synced all skills via `ai-sync-skills`, captured story state via `ai-storybloq`, and successfully merged and published version `v0.36.0` of `wizard-ai` on GitHub.
