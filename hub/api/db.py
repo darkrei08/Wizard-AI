@@ -11,19 +11,19 @@ DB_PATH = os.path.join(DB_DIR, "telemetry.db")
 def get_connection():
     if not os.path.exists(DB_DIR):
         os.makedirs(DB_DIR, mode=0o700, exist_ok=True)
-    
+
     # Ensure secure permissions on the database file if it exists
     if os.path.exists(DB_PATH):
         os.chmod(DB_PATH, 0o600)
 
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
-    
+
     # Enable WAL mode for better concurrency and reliability
     conn.execute("PRAGMA journal_mode=WAL")
     # Enable foreign keys
     conn.execute("PRAGMA foreign_keys = ON")
-    
+
     return conn
 
 
@@ -57,7 +57,7 @@ def _insert_mock_data(cursor):
 
     # Generate data for the last 6 months
     skills = ["ai-compress", "ai-graph", "ai-mem", "ai-taste"]
-    
+
     # Use a fixed seed for reproducible mock data
     r = random.Random(42)
 
@@ -89,7 +89,9 @@ def get_stats():
         c = conn.cursor()
 
         now = datetime.now()
-        first_day_of_month = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        first_day_of_month = now.replace(
+            day=1, hour=0, minute=0, second=0, microsecond=0
+        )
         first_day_timestamp = int(first_day_of_month.timestamp())
 
         # 1. Total Revenue & Tokens Saved
