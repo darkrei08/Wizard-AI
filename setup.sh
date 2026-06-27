@@ -155,6 +155,7 @@ clone_skill_repo "https://github.com/AgriciDaniel/claude-blog.git" "claude-blog"
 clone_skill_repo "https://github.com/AgriciDaniel/claude-seo.git" "claude-seo"
 clone_skill_repo "https://github.com/google-labs-code/stitch-skills.git" "stitch-skills"
 clone_skill_repo "https://github.com/google-labs-code/design.md.git" "design.md"
+clone_skill_repo "https://github.com/SpinaBuilds/goodcode.git" "goodcode"
 
 echo -e "\n${BLUE}Installing ECC, caveman, and design.md via NPM globally...${NC}"
 if command -v npm &>/dev/null; then

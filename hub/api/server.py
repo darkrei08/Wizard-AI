@@ -10,6 +10,7 @@ Security measures:
 - Security headers on all responses
 - subprocess path validation
 """
+
 import http.server
 import socketserver
 import argparse
@@ -30,7 +31,7 @@ init_db()
 # ---------------------------------------------------------------------------
 _RATE_LIMIT_STORE: dict[str, list[float]] = {}
 _RATE_LIMIT_MAX_REQUESTS = 30  # max requests per window
-_RATE_LIMIT_WINDOW_SEC = 60    # window size in seconds
+_RATE_LIMIT_WINDOW_SEC = 60  # window size in seconds
 
 
 def _rate_limit_check(endpoint: str) -> bool:
@@ -51,11 +52,13 @@ def _rate_limit_check(endpoint: str) -> bool:
 # ---------------------------------------------------------------------------
 # Allowed API paths (whitelist)
 # ---------------------------------------------------------------------------
-_ALLOWED_API_PATHS = frozenset({
-    "/api/quota",
-    "/api/skills-trending",
-    "/api/stats",
-})
+_ALLOWED_API_PATHS = frozenset(
+    {
+        "/api/quota",
+        "/api/skills-trending",
+        "/api/stats",
+    }
+)
 
 # ---------------------------------------------------------------------------
 # Trending skills cache
@@ -152,9 +155,13 @@ def fetch_trending_skills() -> list[dict]:
                 for i in range(min(5, len(names))):
                     skills.append(
                         {
-                            "id": re.sub(r"[^a-z0-9-]", "", names[i].lower().replace(" ", "-")),
+                            "id": re.sub(
+                                r"[^a-z0-9-]", "", names[i].lower().replace(" ", "-")
+                            ),
                             "name": names[i][:100],  # Limit length
-                            "author": (authors[i] if i < len(authors) else "Unknown")[:50],
+                            "author": (authors[i] if i < len(authors) else "Unknown")[
+                                :50
+                            ],
                             "uses": (uses[i] if i < len(uses) else "N/A")[:20],
                             "icon": "\U0001f4e6",
                             "desc": (
@@ -178,7 +185,9 @@ def fetch_trending_skills() -> list[dict]:
 def _get_ai_quota_path() -> str:
     """Resolve and validate the ai-quota binary path."""
     bin_path = os.path.normpath(
-        os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "bin", "ai-quota")
+        os.path.join(
+            os.path.dirname(os.path.abspath(__file__)), "..", "..", "bin", "ai-quota"
+        )
     )
     # Security: ensure the resolved path is still inside our project
     project_root = os.path.normpath(
@@ -197,9 +206,7 @@ class HubAPIHandler(http.server.SimpleHTTPRequestHandler):
     # Suppress default access logs to prevent log injection
     def log_message(self, format, *args):
         # Only log safe characters
-        safe_args = tuple(
-            re.sub(r"[^\x20-\x7E]", "?", str(a)) for a in args
-        )
+        safe_args = tuple(re.sub(r"[^\x20-\x7E]", "?", str(a)) for a in args)
         super().log_message(format, *safe_args)
 
     def _send_security_headers(self):
@@ -216,7 +223,7 @@ class HubAPIHandler(http.server.SimpleHTTPRequestHandler):
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
             "font-src 'self' https://fonts.gstatic.com; "
             "img-src 'self' https://github.com data:; "
-            "connect-src 'self'"
+            "connect-src 'self'",
         )
 
     def _send_json_response(self, data: dict, status: int = 200):
@@ -316,6 +323,7 @@ def run_server(port: int, bind_addr: str = "127.0.0.1"):
 
     # Use functools.partial to set the directory without os.chdir()
     import functools
+
     Handler = functools.partial(HubAPIHandler, directory=web_dir)
 
     Handler.extensions_map.update(

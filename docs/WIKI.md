@@ -101,6 +101,7 @@ Below is the rigorous categorization of the arsenal at your disposal, which has 
 - **`gemini-usage`**: Live monitor and tracker of API costs and budgets.
 - **`ecc`**: (Enhanced Claude Code) Framework to orchestrate specialized sub-agents.
 - **`rtk`**: Native AI toolkit for extensions.
+- **`goodcode`**: Host-agnostic exhaustive multi-agent orchestration for audits, reviews, research, and deep code production.
 
 ---
 

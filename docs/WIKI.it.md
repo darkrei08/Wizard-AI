@@ -101,6 +101,7 @@ Di seguito la categorizzazione rigorosa dell'arsenale a tua disposizione:
 - **`gemini-usage`**: Monitor e tracciatore live dei costi e budget API.
 - **`ecc`**: (Enhanced Claude Code) Framework per orchestrare sub-agenti specializzati.
 - **`rtk`**: Toolkit AI nativo per estensioni.
+- **`goodcode`**: Orchestrazione multi-agente esaustiva indipendente dall'host per audit, revisioni, ricerca e produzione di codice approfondita.
 
 ---
 

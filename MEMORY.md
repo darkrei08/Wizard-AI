@@ -1,25 +1,23 @@
+# Wizard-AI — Persistent Memory & Session History
 
-## [Session State Snapshot] - 2026-06-19 17:45:33
-v0.27.2: Integrato ai-storybloq per Windows e imposta esecuzione obbligatoria a fine prompt per session manager
+## [Project Context & State Summary]
+Wizard-AI is a local ecosystem for managing AI agent workflows/skills. The repository operates under a structured Git flow and uses `MEMORY.md` to maintain persistent context across session restarts.
+- **Active Skills**: 155 custom skills categorized hierarchically (core, frontend, backend, devops, data-science, memory-knowledge, workflows) governed by metadata/discovery (`skills.json`).
+- **Key CLI Tools**: `ai-quota`, `ai-help`, `ai-design`, `ai-taste`, `ai-lean`, `ai-scaffold`, `ai-goodcode`, `ai-storybloq`, `ai-session-save`.
 
-## [Session State Snapshot] - 2026-06-19 18:08:00
-v0.27.3: Mappato l'intero repository con graphify (generato graph.json e 131 community) e fixati i link rotti per il clone di graphify in setup.ps1 e setup.sh. Aggiunta cartella graphify-out/ in Git.
+## [Consolidated Session History (Compressed)]
 
-## [Session State Snapshot] - 2026-06-19 18:13:00
-v0.27.4: Ottimizzazione drastica dei file setup.ps1 e setup.sh. Rimossi i cicli di clonazione massiva dei repository (React, Angular, Kafka, ecc.) che risultavano controproducenti per l'agente. Lo script ora si limita a installare i tool software necessari in base alla piattaforma (uv tools, claude-mem da github, ecc.), alleggerendo enormemente il processo di setup iniziale.
+### Phase 1: Foundations & Cleanup (2026-06-19)
+- **v0.27.2 – v0.27.6**: Integrated `ai-storybloq` for Windows/Linux. Mapped the entire repository using `graphify` (131 communities, `graph.json`). Performed a drastic optimization of `setup.sh` and `setup.ps1` by removing massive, redundant repository clones to lighten the setup. Done a clean rebuild of the local environment (`~/.ai-skills` and global `uv` tools). Enhanced security and privacy by enforcing strict username anonymization (e.g., using `~/.ai-skills` / relative home paths).
 
-## [Session State Snapshot] - 2026-06-19 18:15:00
-v0.27.5: Disinstallazione completa dell'ambiente locale di Wizard-AI. Rimossa fisicamente la directory `~/.ai-skills` e disinstallati tutti i tool globali installati via `uv tool` (graphify, litellm, markitdown, serena, sqz). Il sistema è ora pulito e pronto per una reinstallazione da zero con i nuovi script ottimizzati.
+### Phase 2: Stitch Integration & Hierarchical Refactoring (2026-06-26)
+- **v0.32.0 – v0.34.0**: Integrated 14 `stitch-*` skills and the `design-md-spec` skill. Created `ai-designmd` CLI wrapper. Restructured all 154 skills into 7 functional categories (core, frontend, backend, etc.) and generated `skills.json` for auto-discovery. Added meta-skills `workflow-production-cycle` and `workflow-agent-management`. Cleaned up external documentation and injected original repository assets/prompts directly into their respective skill folders to facilitate semantic parsing.
 
-## [Session State Snapshot] - 2026-06-19 18:17:00
-v0.27.6: Correzione di sicurezza sulla privacy. Anonimizzati i percorsi locali nel file MEMORY.md per evitare leak di username. Aggiornata la skill `auto-workflow` imponendo l'anonimizzazione rigorosa (es. `~/.ai-skills`) come regola obbligatoria durante ogni Session Save.
+---
 
-## [Session State Snapshot] - 2026-06-26 17:05:27
-Integrated 14 stitch-* skills and design-md-spec skill. Created ai-designmd CLI wrapper using npx -y @google/design.md. Updated setup.sh with clones, NPM installs, and contributor credentials prompting. Updated ai-update, ai-help, and Wikis. Released version v0.32.0 on GitHub and published package to NPM.
-
-## [Session State Snapshot] - 2026-06-26 15:24:00
-v0.33.0: Ristrutturazione completa delle 154 skill in categorie gerarchiche (`core`, `frontend`, `backend`, `devops`, `data-science`, `memory-knowledge`, `workflows`). Creato `skills.json` per abilitare la discovery. Introdotta meta-skill `workflow-production-cycle` e `workflow-agent-management` per definire il ciclo E2E completo e la gestione gerarchica dei subagent. Aggiornati `PROJECT_STATUS.md` e `docs/WIKI.md`. Merge completato su `main` e bumpato a `v0.33.0`.
-
-## [Session State Snapshot] - 2026-06-26 15:30:00
-v0.34.0: Eseguita pulizia di `docs/external-repos` e `docs/security-prompts`. Per favorire l'indicizzazione semantica tramite LLMWiki (skill book/wiki-brain) e Graphify, i 58 archivi documentali dei repository clonati sono stati fisicamente iniettati sotto le rispettive skill (in `references/original-repo/`). Allo stesso modo, i prompt OWASP/CWE sono stati inglobati nella skill `cybersecurity`. Eseguito merge su `main` e release locale.
-
+## [Session State Snapshot] - 2026-06-27 10:10:00
+- **v0.35.0**: Installed the `goodcode` repository (https://github.com/SpinaBuilds/goodcode) as a portable Agent Skill under `skills/goodcode/` and globally in `~/.gemini/config/skills/goodcode/`.
+- Created the CLI wrapper script `bin/ai-goodcode` to offer help about the new multi-agent orchestration workflow.
+- Updated `setup.sh` to automate the clone/setup of `goodcode` on new machines.
+- Updated `bin/ai-help`, `docs/WIKI.md`, and `docs/WIKI.it.md` with descriptions and usage context.
+- Run `ai-sync-skills` to update all agent configurations, and ran `ai-storybloq snapshot` to capture story status.

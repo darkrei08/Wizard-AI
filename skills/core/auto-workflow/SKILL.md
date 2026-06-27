@@ -26,15 +26,17 @@ Always start by creating an isolated feature workspace/branch.
 - Run: `ai-branch feature "your-feature-name"` (or use git worktrees).
 - Perform all your code changes, commits, and local testing on this isolated branch.
 
-### 3. Execution & TDD (`subagent-driven-development`, `test-driven-development`, `cybersecurity`)
+### 3. Execution & TDD (`subagent-driven-development`, `test-driven-development`, `cybersecurity`, `goodcode`)
 Execute the implementation plan meticulously.
 - Enforce RED-GREEN-REFACTOR: write a failing test, watch it fail, write minimal code, watch it pass, and commit.
 - Dispatch fresh subagents per task with a two-stage review (spec compliance, then code quality) or execute in batches with human checkpoints.
 - **Secure by Design**: Consult the `cybersecurity` skill library (e.g. OWASP, NIST) to prevent injection, XSS, SSRF, and other vulnerabilities during execution.
+- **Exhaustive Orchestration (`goodcode`)**: For substantial implementation tasks, complex refactoring, or design exploration, run `/goodcode` (`ai-goodcode`) to orchestrate a pool of specialized, a-priori briefed subagents with adversarial verification.
 
-### 4. Review & Validate (`requesting-code-review`, `systematic-debugging`)
+### 4. Review & Validate (`requesting-code-review`, `systematic-debugging`, `goodcode`)
 Between tasks and before completion, systematically review and debug.
 - Review against the plan and report issues by severity. Critical issues must block progress.
+- **Verification Skeptics (`goodcode`)**: Use the adversarial verification pipeline of `goodcode` to evaluate and verify code changes against bugs, performance regressions, or security issues before staging.
 - Once the feature is fully implemented and reviewed, you must merge it into `staging` while enforcing quality gates.
 - Run: `printf "y\ny\n" | ai-branch merge`
 - **Important**: The `ai-branch merge` command automatically triggers `ai-debug` (the automated check pipeline). If `ai-debug` throws any errors, you MUST fix them using `systematic-debugging` before proceeding.
