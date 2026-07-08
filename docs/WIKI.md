@@ -71,6 +71,7 @@ Below is the rigorous categorization of the arsenal at your disposal, which has 
 - **`auto-debug`**: Code analyzer and auto-correction before proceeding to merge.
 - **`cybersecurity`**: Enforcement of secure-by-design guidelines using Anthropic's 762+ security skills.
 - **`spec-kit`**: Toolkit for specification-driven development (TDD/SDD).
+- **`strix`**: Autonomous AI hackers that find and fix your app's vulnerabilities.
 
 #### 6. Frontend, UI/UX & Design (Design System)
 - **`taste-skill`**: "Anti-slop" framework to force ultra-premium layouts and spacing.

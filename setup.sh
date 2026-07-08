@@ -195,6 +195,7 @@ install_uv_tool "litellm"
 install_uv_tool "markitdown"
 install_uv_tool "sqz"
 install_uv_tool "headroom"    "headroom-ai"
+install_uv_tool "strix"       "strix-agent"
 
 # Install serena (semantic code intelligence — available via uvx)
 echo -e "${YELLOW}Checking serena (semantic code search)...${NC}"

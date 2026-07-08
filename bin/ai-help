@@ -129,13 +129,15 @@ echo -e "     ${BLUE}ai-mem store \"user prefers Python\"${RESET}"
 echo -e "     ${BLUE}ai-mem search \"tech preferences\"${RESET}"
 echo ""
 
-echo -e "${BOLD}${YELLOW}🔍 CODE INTELLIGENCE${RESET}"
+echo -e "${BOLD}${YELLOW}🔍 CODE INTELLIGENCE & SECURITY${RESET}"
 if command -v serena &>/dev/null; then
   echo -e "  ✅ ${BOLD}serena${RESET}           Semantic code search & LSP navigation (MCP + CLI)"
 else
   echo -e "  ❌ ${BOLD}serena${RESET}           Semantic code search (install: uv tool install serena)"
 fi
 echo -e "     ${BLUE}serena find-usages MyClass${RESET}"
+echo -e "  $(check_cmd ai-strix) ${BOLD}ai-strix${RESET}         Autonomous AI hackers that find and fix vulnerabilities"
+echo -e "     ${BLUE}ai-strix --target ./app-directory${RESET}"
 echo ""
 
 echo -e "${BOLD}${YELLOW}📚 KNOWLEDGE BUILDING${RESET}"
