@@ -71,6 +71,7 @@ Di seguito la categorizzazione rigorosa dell'arsenale a tua disposizione:
 - **`auto-debug`**: Analizzatore di codice ed auto-correzione prima di procedere al merge.
 - **`cybersecurity`**: Applicazione delle linee guida di sicurezza (secure-by-design) tramite le 762+ skill di Anthropic.
 - **`spec-kit`**: Toolkit per lo sviluppo orientato alle specifiche (TDD/SDD).
+- **`strix`**: Hacker IA autonomi che trovano e correggono le vulnerabilità della tua app.
 
 #### 6. Frontend, UI/UX e Design (Design System)
 - **`taste-skill`**: Framework "anti-slop" per forzare layout e spaziature di altissima gamma.
