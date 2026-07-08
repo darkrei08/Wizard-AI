@@ -7,6 +7,18 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
+## [0.41.0] - 2026-07-08
+
+### Added
+- **Automated Skill Setups**: Aggiunti script di setup autonomi in `scripts/setup.sh` per le skill di base:
+  - `deno`: auto-installazione globale del runtime.
+  - `mermaid-cli`: installazione globale senza requisiti sudo.
+  - `personal-graph`: deploy isolato tramite `uv tool`.
+  - `litellm`: pre-configurazione del proxy locale `litellm-config.yaml` su porta `19528` (Cockpit Tools).
+  - `geminiusage`: clonazione automatica del repository e default `pricing.json`.
+  - `headroom`: installazione tramite `uv tool`.
+Ora al termine del `setup.sh` l'utente potrà installare queste dipendenze premendo `Y` al prompt interattivo.
+
 ## [0.40.1] - 2026-07-08
 
 ### Fixed
