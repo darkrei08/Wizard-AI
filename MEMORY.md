@@ -21,3 +21,9 @@ Wizard-AI is a local ecosystem for managing AI agent workflows/skills. The repos
 - Created CLI wrapper script `bin/ai-goodcode`, updated `setup.sh`, `bin/ai-help`, `docs/WIKI.md`, and `docs/WIKI.it.md` with help/descriptions.
 - Fixed a Python linter/formatting error (E722 bare except) in `validators.py` and auto-formatted Python scripts with `ruff format`.
 - Synced all skills via `ai-sync-skills`, captured story state via `ai-storybloq`, and successfully merged and published version `v0.36.0` of `wizard-ai` on GitHub.
+
+## [Session State Snapshot] - 2026-07-08 15:39:00
+- **v0.36.0 – v0.37.0**: Installed the `last30days-skill` repository (https://github.com/mvanhorn/last30days-skill/releases/tag/v3.9.4) as a portable Agent Skill globally and in the repo.
+- Created CLI wrapper script `bin/ai-last30days`.
+- Updated `setup.sh`, `bin/ai-help`, `docs/WIKI.md`, and `docs/WIKI.it.md` with help/descriptions.
+- Synced all skills via `ai-sync-skills`, merged to main via PR, and successfully published version `v0.37.0` of `wizard-ai` on GitHub.
