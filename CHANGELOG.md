@@ -7,6 +7,11 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
+## [0.40.1] - 2026-07-08
+
+### Fixed
+- Risolto errore in `setup.sh` e `ai-install` causato da variabili ANSI non dichiarate (`$BOLD` e `$PURPLE`) che causavano il fallimento dello script con `set -u` abilitato.
+
 ## [0.40.0] - 2026-07-08
 
 ### Added
