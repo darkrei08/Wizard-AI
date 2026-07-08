@@ -5,9 +5,22 @@
 This is the central wiki tracking all core Wizard-AI tools, installed AI agent skills, and external reference technologies. 
 **Before requesting a new skill integration**, check this list to verify if a similar tool is already installed or tracked.
 
+> 🤖 **LLM Models Reference:** For information about which frontier or local LLM models (e.g., GPT-5.6, Claude 5, Gemini 3.5, Llama 4) to use or how Cockpit Tools is configured, always refer to [MODELS_REFERENCE.md](MODELS_REFERENCE.md).
+
 ---
 
-## 🧙‍♂️ 1. Wizard-AI Core CLI Tools
+## 🔁 1. The Loop Engineering Architecture
+
+Wizard-AI operates on a deterministic **Loop Engineering Pipeline** (`prompt-loop-engine`), acting as the Master Orchestrator for every interaction.
+This MoE (Mixture of Experts) based pipeline executes 11 steps for every prompt, dynamically weighting the complexity (LIGHT/MEDIUM/HEAVY) to save tokens on simple queries and enforce extreme rigor on complex tasks.
+
+1. **PRE-PROMPT (Step 1-6)**: `session-manager` (restore), `auto-prompt` (structure), `auto-router` (MoE routing), `auto-optimize` (compress context), `using-superpowers` (discover), `show-active-skill` (announce).
+2. **EXECUTION (Core Task)**: Routed to specific workflows (e.g. `workflow-production-cycle`, `workflow-agentic-brain`).
+3. **POST-PROMPT (Step 7-11)**: `verification-before-completion`, `auto-graphify` (update graph), `auto-trigger-release` (deploy), `session-manager` (save memory), `show-active-skill` (recap).
+
+---
+
+## 🧙‍♂️ 2. Wizard-AI Core CLI Tools
 
 These are the primary command-line wrappers installed globally on your system by Wizard-AI.
 
@@ -33,20 +46,20 @@ Below is the rigorous categorization of the arsenal at your disposal, which has 
 ### 🔮 The 150+ Custom Skills (Wizard-AI Core)
 
 #### 1. System Core & Routing (Foundations)
+- **`prompt-loop-engine`**: Master Orchestrator of the 11-step PRE/POST pipeline.
 - **`wizard-ai-hub`**: Skill discovery and dashboard.
-- **`auto-router`**: Intelligent mapping of user colloquial intents to technical skills.
+- **`auto-router`**: Master Router & MoE Classifier for intent mapping.
 - **`wizard-ai-installer`**: Autonomous installer for new external skills.
-- **`show-active-skill`**: Forces the AI to declare which tools and wrappers it is using.
+- **`show-active-skill`**: Forces the AI to declare skills in PRE/POST headers.
 - **`os-detect`**: Operating system detector (Linux, macOS, Windows) pre-installation.
 
 #### 2. Context & Token Optimization (Resource Saving)
+- **`workflow-agentic-brain`**: Master Optimizer fusing auto-optimize, lean-ctx, and token management.
 - **`caveman`**: Plugin/skill that compresses AI output by 75% maintaining accuracy.
 - **`llmlingua` / `ai-compress`**: Ultra-high compression of massive contexts.
 - **`headroom`**: Advanced context compression and API proxy layer (up to 95% reduction).
 - **`sqz` / `ai-squeeze`**: Compression of terminal output, payloads, and JSON.
 - **`flashrank` / `ai-rerank`**: Surgical re-ranking of document contexts (RAG).
-- **`lean-ctx`**: Intelligent AI context isolation and control.
-- **`auto-optimize`**: Orchestrator that automatically applies compressors based on need.
 
 #### 3. Semantic Intelligence & Memory (Knowledge)
 - **`graphify` / `ai-graph`**: Dynamic knowledge graph builder.
@@ -62,7 +75,7 @@ Below is the rigorous categorization of the arsenal at your disposal, which has 
 - **`book-to-skill`**: Converts entire PDF manuals or books into agent-assimilable frameworks.
 
 #### 5. Software Engineering & CI/CD (Workflow)
-- **`auto-workflow`**: Rigorous application of Git Flow merged with the Superpowers methodology (isolation, TDD, testing, merging).
+- **`workflow-production-cycle`**: Master Production Workflow fusing Git Flow, TDD, Subagents, and Enterprise standards.
 - **`superpowers`**: Package of 11 advanced skills for Subagent-Driven Development (e.g. `brainstorming`, `writing-plans`, `subagent-driven-development`, `test-driven-development`, `systematic-debugging`). Includes the `ai-superpowers` CLI wrapper.
 - **`auto-branch`**: Autonomous management and strict branch conventions.
 - **`auto-release` / `ai-release`**: Semantic versioning release (semver) and changelog.

@@ -316,6 +316,67 @@ echo -e "${GREEN}✓ $SKILL_COUNT skills installed to ~/.gemini/config/skills/${
 echo -e "${YELLOW}Syncing skills to Claude Code, Amp, and other agents...${NC}"
 "$HOME/.local/bin/ai-sync-skills"
 
+# 7.5. Interactive Skill Setup & Configuration
+echo -e "\n${BLUE}[7.5/10] Interactive Skill Setup & Configuration...${NC}"
+for skill_dir in "$HOME/.gemini/config/skills"/*; do
+  if [ -d "$skill_dir" ]; then
+    skill_name=$(basename "$skill_dir")
+    setup_script="$skill_dir/scripts/setup.sh"
+    install_script="$skill_dir/scripts/install.sh"
+    skill_md="$skill_dir/SKILL.md"
+    
+    needs_setup=0
+    setup_info=""
+    
+    if [ -f "$skill_md" ]; then
+      # Extract Setup/Configuration section if present using awk
+      setup_info=$(awk '
+        /^#+ *(Setup|Configuration|Installation|Config)/ { flag=1; print; next }
+        /^#+/ { if(flag) flag=0 }
+        flag { print }
+      ' "$skill_md" | sed '/^$/d')
+      
+      if [ -n "$setup_info" ]; then
+        needs_setup=1
+      fi
+    fi
+    
+    if [ -f "$setup_script" ] || [ -f "$install_script" ]; then
+      needs_setup=1
+    fi
+    
+    if [ $needs_setup -eq 1 ]; then
+      echo -e "\n${YELLOW}======================================================${NC}"
+      echo -e "${PURPLE}🛠  Configuration available for skill: ${BOLD}${skill_name}${NC}"
+      echo -e "${YELLOW}======================================================${NC}"
+      
+      if [ -n "$setup_info" ]; then
+        echo -e "${CYAN}--- Instructions from SKILL.md ---${NC}"
+        echo -e "$setup_info"
+        echo -e "${CYAN}----------------------------------${NC}"
+      fi
+      
+      script_to_run=""
+      if [ -f "$setup_script" ]; then script_to_run="$setup_script"; fi
+      if [ -f "$install_script" ]; then script_to_run="$install_script"; fi
+      
+      if [ -n "$script_to_run" ]; then
+        echo -e "${CYAN}Found automated setup script: $(basename "$script_to_run")${NC}"
+        read -p "Do you want to run the automated setup for ${skill_name} now? [Y/n] " run_setup
+        if [[ ! "$run_setup" =~ ^[Nn]$ ]]; then
+          echo -e "${BLUE}Running $script_to_run...${NC}"
+          bash "$script_to_run"
+          echo -e "${GREEN}✓ Setup completed for ${skill_name}.${NC}"
+        else
+          echo -e "${YELLOW}Skipped automated setup.${NC}"
+        fi
+      else
+        read -p "Press Enter after you have completed any manual configuration above..." dummy
+      fi
+    fi
+  fi
+done
+
 # 8. Git & NPM Credentials Setup (Optional for Contributors)
 echo -e "\n${BLUE}[8/10] Git & NPM Credentials Setup (Optional for Contributors)...${NC}"
 echo -e "${YELLOW}Do you want to configure your GitHub & NPM credentials now? (e.g. for publishing or contributing) [y/N]${NC}"

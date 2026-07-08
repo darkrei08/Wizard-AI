@@ -13,7 +13,8 @@ if (echo > /dev/tcp/127.0.0.1/19528) >/dev/null 2>&1 || nc -z 127.0.0.1 19528 >/
   export OPENAI_API_KEY="dummy"
   export GEMINI_API_KEY="dummy"
   export ANTHROPIC_API_KEY="dummy"
-  export ANTHROPIC_API_KEY="dummy"
+  export GRAPHIFY_LLM_PROVIDER="openai"
+  export GRAPHIFY_LLM_MODEL="gemini-3.5-pro"
 fi
 
 show_help() {
