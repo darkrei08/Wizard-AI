@@ -23,11 +23,14 @@ echo -e "============================================================${NC}"
 
 # 0. Parse arguments
 VERBOSE=0
+YES_MODE=0
 QUIET_OPT="--quiet"
-if [[ "${1:-}" == "--verbose" || "${1:-}" == "-v" ]]; then
-  VERBOSE=1
-  QUIET_OPT=""
-fi
+for arg in "$@"; do
+  case "$arg" in
+    --verbose|-v) VERBOSE=1; QUIET_OPT="" ;;
+    --yes|-y) YES_MODE=1 ;;
+  esac
+done
 
 # 0. Enforce sudo and fix user environment
 if [ "$EUID" -ne 0 ]; then
@@ -92,6 +95,7 @@ mkdir -p "$HOME/.ai-skills"
 
 # 2. Recreate Python Virtual Environment for wrappers
 echo -e "\n${BLUE}[2/10] Preparing Python Virtual Environment for LLMLingua & FlashRank...${NC}"
+rm -rf "$HOME/.ai-skills/venv" 2>/dev/null || true
 uv venv "$HOME/.ai-skills/venv" --seed $QUIET_OPT
 VENV_PYTHON="$HOME/.ai-skills/venv/bin/python"
 
@@ -121,7 +125,7 @@ fi
 
 echo -e "${YELLOW}Installing llmlingua, flashrank, and turbovec inside the venv...${NC}"
 uv pip install $QUIET_OPT --python "$VENV_PYTHON" \
-  llmlingua flashrank transformers torch accelerate "aisuite[all]" \
+  llmlingua flashrank transformers torch accelerate aisuite \
   "git+https://github.com/RyanCodrai/turbovec.git#subdirectory=turbovec-python" \
   || {
        echo -e "${RED}❌ Failed to install Python dependencies. Se turbovec fallisce, potresti non avere i compilatori C++/Rust o OpenBLAS installati.${NC}"
@@ -161,9 +165,9 @@ clone_skill_repo "https://github.com/mvanhorn/last30days-skill.git" "last30days-
 
 echo -e "\n${BLUE}Installing ECC, caveman, and design.md via NPM globally...${NC}"
 if command -v npm &>/dev/null; then
-  npm install -g ecc-universal
+  npm install -g --allow-scripts=ecc-universal ecc-universal
   npm install -g https://github.com/JuliusBrussee/caveman.git
-  npm install -g @google/design.md
+  npm install -g --allow-scripts=puppeteer @google/design.md
 else
   echo -e "${YELLOW}NPM not found. Falling back to git clone for ECC, caveman and design.md...${NC}"
   clone_skill_repo "https://github.com/affaan-m/ECC.git" "ECC"
@@ -363,7 +367,11 @@ for skill_dir in "$HOME/.gemini/config/skills"/*; do
       
       if [ -n "$script_to_run" ]; then
         echo -e "${CYAN}Found automated setup script: $(basename "$script_to_run")${NC}"
-        read -p "Do you want to run the automated setup for ${skill_name} now? [Y/n] " run_setup
+        if [ "$YES_MODE" -eq 1 ]; then
+          run_setup="y"
+        else
+          read -p "Do you want to run the automated setup for ${skill_name} now? [Y/n] " run_setup
+        fi
         if [[ ! "$run_setup" =~ ^[Nn]$ ]]; then
           echo -e "${BLUE}Running $script_to_run...${NC}"
           bash "$script_to_run"
@@ -372,7 +380,11 @@ for skill_dir in "$HOME/.gemini/config/skills"/*; do
           echo -e "${YELLOW}Skipped automated setup.${NC}"
         fi
       else
-        read -p "Press Enter after you have completed any manual configuration above..." dummy
+        if [ "$YES_MODE" -eq 0 ]; then
+          read -p "Press Enter after you have completed any manual configuration above..." dummy
+        else
+          echo -e "${YELLOW}  (auto-skipped manual config in --yes mode)${NC}"
+        fi
       fi
     fi
   fi
@@ -381,7 +393,12 @@ done
 # 8. Git & NPM Credentials Setup (Optional for Contributors)
 echo -e "\n${BLUE}[8/10] Git & NPM Credentials Setup (Optional for Contributors)...${NC}"
 echo -e "${YELLOW}Do you want to configure your GitHub & NPM credentials now? (e.g. for publishing or contributing) [y/N]${NC}"
-read -p "> " CONFIRM_CREDS
+if [ "$YES_MODE" -eq 1 ]; then
+  CONFIRM_CREDS="n"
+  echo -e "${YELLOW}  (auto-skipped in --yes mode)${NC}"
+else
+  read -p "> " CONFIRM_CREDS
+fi
 if [[ "$CONFIRM_CREDS" =~ ^[Yy]$ ]]; then
   # NPM Token
   echo -e "${CYAN}Please enter your NPM Publishing Token (or press enter to skip):${NC}"
@@ -421,9 +438,11 @@ echo -e "\n${BLUE}[9/10] Auto-Update Configuration...${NC}"
 echo -e "${YELLOW}Do you want to enable automatic background updates at system boot? [Y/n] (Auto-yes in 10s)${NC}"
 
 ENABLE_UPDATE="Y"
-read -t 10 -p "> " USER_INPUT || true
-if [ -n "$USER_INPUT" ]; then
-  ENABLE_UPDATE="$USER_INPUT"
+if [ "$YES_MODE" -eq 0 ]; then
+  read -t 10 -p "> " USER_INPUT || true
+  if [ -n "$USER_INPUT" ]; then
+    ENABLE_UPDATE="$USER_INPUT"
+  fi
 fi
 
 if [[ "$ENABLE_UPDATE" =~ ^[Yy]$ ]]; then

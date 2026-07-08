@@ -8,6 +8,8 @@
 [![Platform: Linux | macOS | Windows](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-blue.svg)]()
 [![Shell: Bash | PowerShell](https://img.shields.io/badge/Shell-Bash%20%7C%20PowerShell-green.svg)]()
 [![Requires: uv](https://img.shields.io/badge/Requires-uv-orange.svg)](https://docs.astral.sh/uv/)
+[![Skills: 161+](https://img.shields.io/badge/Skills-161%2B-blueviolet.svg)]()
+[![CLI Wrappers: 47](https://img.shields.io/badge/CLI%20Wrappers-47-teal.svg)]()
 
 ---
 
@@ -58,13 +60,20 @@ cd ~/wizard-ai
 ```
 
 #### 2️⃣ Esegui l'Installatore
-Esegui lo script principale di setup. È progettato per essere interamente non-interattivo e configura tutto automaticamente:
+Esegui lo script principale di setup. Usa `--yes` (`-y`) per un'installazione **completamente automatica e non-interattiva** (ideale per CI/CD), oppure eseguilo senza per un'esperienza interattiva con prompt di configurazione.
 
 **Linux / macOS:**
 ```bash
 chmod +x setup.sh
+
+# Completamente automatico (nessun prompt — consigliato per CI/CD)
+sudo ./setup.sh --yes
+
+# Modalità interattiva (prompt per le configurazioni opzionali)
 sudo ./setup.sh
-# o 'sudo ./setup.sh --verbose' per visualizzare log dettagliati
+
+# Con output dettagliato
+sudo ./setup.sh -v -y
 ```
 
 **Windows (PowerShell):**
@@ -72,6 +81,8 @@ sudo ./setup.sh
 powershell -ExecutionPolicy Bypass -File setup.ps1
 # o aggiungi -VerboseMode per visualizzare log dettagliati
 ```
+
+> **Flag:** `-v` / `--verbose` mostra log dettagliati. `-y` / `--yes` accetta automaticamente tutti i prompt (setup skill, auto-update, credenziali).
 
 #### 3️⃣ Verifica l'Installazione
 Ricarica la tua shell per caricare le nuove variabili d'ambiente, quindi avvia il menu di aiuto:

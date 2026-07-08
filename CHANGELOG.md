@@ -7,6 +7,22 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
+## [0.42.0] - 2026-07-08
+
+### Added
+- **Non-Interactive Mode (`--yes` / `-y`)**: `setup.sh` now supports a `--yes` flag that auto-accepts all interactive prompts (skill setups, auto-updates, credentials). Ideal for CI/CD pipelines and unattended installs.
+- **README badges**: Added Skills (161+) and CLI Wrappers (47) count badges to both English and Italian READMEs.
+
+### Fixed
+- **Virtual environment prompt**: Removed the interactive "Do you want to replace it?" prompt from `uv venv` by deleting the old venv before recreation.
+- **`aisuite[all]` warning**: Changed to plain `aisuite` — the `[all]` extra triggered a spurious warning on `google-cloud-aiplatform`.
+- **`personal-graph` build failure**: Worked around the broken `libsql-experimental==0.0.28` upstream dependency by pinning `<0.0.28` with a fallback to `--resolution lowest-direct`.
+- **npm `allow-scripts` warnings**: Added `--allow-scripts=ecc-universal` and `--allow-scripts=puppeteer` to `npm install -g` commands in `setup.sh` and `mermaid-cli/scripts/setup.sh`.
+
+### Changed
+- Refactored argument parsing in `setup.sh` to support multiple flags (`-v`, `-y`) simultaneously via a `for` loop.
+- Updated both `README.md` and `README.it.md` to document the new `--yes`/`-y` flag with CI/CD usage examples.
+
 ## [0.41.0] - 2026-07-08
 
 ### Added

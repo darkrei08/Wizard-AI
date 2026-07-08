@@ -8,6 +8,8 @@
 [![Platform: Linux | macOS | Windows](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-blue.svg)]()
 [![Shell: Bash | PowerShell](https://img.shields.io/badge/Shell-Bash%20%7C%20PowerShell-green.svg)]()
 [![Requires: uv](https://img.shields.io/badge/Requires-uv-orange.svg)](https://docs.astral.sh/uv/)
+[![Skills: 161+](https://img.shields.io/badge/Skills-161%2B-blueviolet.svg)]()
+[![CLI Wrappers: 47](https://img.shields.io/badge/CLI%20Wrappers-47-teal.svg)]()
 
 ---
 
@@ -58,13 +60,20 @@ cd ~/wizard-ai
 ```
 
 #### 2️⃣ Run the Installer
-Run the main setup script. It is designed to be completely non-interactive and handles all configurations automatically:
+Run the main setup script. Use `--yes` (`-y`) for a **fully automated, non-interactive** install (ideal for CI/CD), or run without it for an interactive experience with setup prompts.
 
 **Linux / macOS:**
 ```bash
 chmod +x setup.sh
+
+# Fully automated (no prompts — recommended for CI/CD)
+sudo ./setup.sh --yes
+
+# Interactive mode (prompts for optional skill configs)
 sudo ./setup.sh
-# or 'sudo ./setup.sh --verbose' for detailed logs
+
+# With verbose output
+sudo ./setup.sh -v -y
 ```
 
 **Windows (PowerShell):**
@@ -72,6 +81,8 @@ sudo ./setup.sh
 powershell -ExecutionPolicy Bypass -File setup.ps1
 # or add -VerboseMode for detailed logs
 ```
+
+> **Flags:** `-v` / `--verbose` shows detailed logs. `-y` / `--yes` auto-accepts all prompts (skill setups, auto-updates, credentials skip).
 
 #### 3️⃣ Verify Installation
 Reload your shell to load the new environment variables, then launch the help menu:
