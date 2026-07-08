@@ -1,33 +1,53 @@
 ---
 name: auto-router
-description: "Core systemic skill. Use this to automatically map vague user requests to the correct Wizard-AI skill or workflow. ALWAYS trigger this implicitly before starting any complex task."
+description: "MASTER ROUTER — Core systemic skill (MoE). Map vague user requests to the correct Wizard-AI skill or workflow with Task Weight Classification (LIGHT/MEDIUM/HEAVY). ALWAYS trigger this implicitly before starting any complex task. Replaces legacy routing from using-superpowers."
 ---
 
-# Auto-Router (Intent Mapping)
+# Auto-Router & MoE Classification (Master Router)
 
-Human users don't always remember the exact name of a skill, workflow, or CLI wrapper. As an AI Agent operating within the Wizard-AI ecosystem, it is **YOUR responsibility** to automatically infer the correct skill based on the user's intent.
+Human users don't always remember the exact name of a skill, workflow, or CLI wrapper. As an AI Agent operating within the Wizard-AI ecosystem, it is **YOUR responsibility** to automatically infer the correct skill, classify the complexity of the task, and route it to the proper execution pipeline.
 
-## Core Directives
-1. **Never ask the user which skill to use.** Infer it silently.
-2. **Consult the Capability Matrix** below whenever you receive a vague task.
-3. **Execute the workflow automatically.** You have full access to terminal wrappers (`ai-*`) and skill workflows.
-4. If multiple skills apply, chain them. (e.g. `ai-scaffold` to create the project, then apply `auto-workflow` to manage Git Flow).
+<MANDATORY>
+This skill acts as Step 3 in the `prompt-loop-engine` PRE-PROMPT Pipeline.
+NEVER ask the user which skill to use. Infer it silently and calculate the task weight.
+</MANDATORY>
 
-## Capability Matrix
+## 1. Task Weight Classification (MoE Gating)
 
-Match the user's implicit intent with the correct tool and take immediate action.
+Before executing a task, calculate its weight based on intent, context size, and keywords:
 
-| User Intent / Vague Request | Correct Skill / Tool | Action You Must Take |
-|---|---|---|
-| "Start a new project", "Initialize backend", "Create a web app", "Nuxt", "Express" | `scaffold` / `ai-scaffold` | Run `ai-scaffold list` or generate the specific project with `ai-scaffold <type> <name>` |
-| "Publish", "Release", "Bump version", "Create tag" | `auto-release` / `ai-release` | Run `ai-release patch` (or minor/major) |
-| "Save this", "Remember for later", "Store context" | `claude-mem` / `ai-mem` | Run `ai-mem store "information"` to persist knowledge |
-| "Too long", "Reduce tokens", "Compress this text/file" | `ai-compress` / `sqz` / `ai-caveman` | Use `ai-compress` or `ai-squeeze` to compress context before reading |
-| "Extract text", "Read PDF/Word/Image" | `markitdown` / `ai-convert` | Run `ai-convert <file>` to extract clean Markdown |
-| "Analyze codebase", "Map architecture", "What is this project?" | `graphify` / `ai-graph` | Run `ai-graph .` to generate a knowledge graph |
-| "UI looks bad", "Improve design", "Make it look premium" | `taste-skill` / `awesome-design` | Read the design language and apply UI/UX rules |
-| "Check for security issues", "Audit this" | `docs/security-prompts/` | Load the security prompt framework and audit the code |
-| "Commit this", "Push branch", "Save changes" | `auto-branch` / `auto-workflow` | Follow the Git Flow described in the skills |
+- **LIGHT Weight (Score ≤ 0.3)**
+  - *Keywords:* `spiega, cos'è, mostra, dimmi, fix, typo, commento, allinea, formatta`
+  - *Action:* Execute directly. Skip heavy pre/post processing (no optimize, no graphify).
+- **MEDIUM Weight (Score 0.3 - 0.7)**
+  - *Keywords:* `UI, design, layout, SEO, blog, documento, converti, test, implementa`
+  - *Action:* Route to specific domain workflow (e.g., frontend, doc-processing).
+- **HEAVY Weight (Score > 0.7)**
+  - *Keywords:* `architettura, refactoring, migrazione, progetto, release, deploy, security audit`
+  - *Action:* Route to Master Production Workflow or Meta/Brain Workflow. Execute FULL 11-step loop.
 
-## Fallback Logic
-If the user's request doesn't perfectly match the matrix, but you know it falls under the Wizard-AI umbrella, run `ai-help` to list all available tools and capabilities.
+## 2. Extended Capability & Routing Matrix
+
+Match the user's implicit intent with the correct workflow and assign the default weight.
+
+| User Intent / Vague Request | Correct Workflow / Skill | Default Weight | Action You Must Take |
+|---|---|---|---|
+| "Start a new project", "Initialize backend", "Create a web app", "Build feature", "Fix this bug" | `workflow-production-cycle` | HEAVY (Project) / MEDIUM (Bug) | Route to Master Production Workflow. Use `ai-scaffold` if new project. |
+| "UI looks bad", "Improve design", "Make it look premium", "Tailwind styling" | `workflow-frontend-design` | MEDIUM | Route to Frontend Design. Apply `taste-skill` and `theme-factory`. |
+| "Extract text", "Read PDF/Word/Image", "Analyze this document" | `workflow-doc-processing` | LIGHT → MEDIUM | Use `ai-convert` or specific doc skills. |
+| "SEO audit", "Write blog post", "Analyze niche" | `workflow-seo-research` | MEDIUM | Route to SEO Research. Use `claude-seo` & `claude-blog`. |
+| "Publish", "Release", "Bump version", "Create tag" | `workflow-production-cycle` (Phase 6) | HEAVY | Run `ai-release patch/minor/major`. |
+| "Too long", "Reduce tokens", "Compress this text/file" | `workflow-agentic-brain` / `auto-optimize` | MEDIUM | Use `ai-compress` or `ai-squeeze`. |
+| "Analyze codebase", "Map architecture", "What is this project?" | `graphify` / `ai-graph` | MEDIUM | Run `ai-graph .` to generate a knowledge graph. |
+| "Check for security issues", "Audit this" | `cybersecurity` / `strix` | HEAVY | Run penetration testing and secure-by-design audit. |
+| "Save this", "Remember for later", "Store context" | `session-manager` / `claude-mem` | LIGHT | Run `ai-session-save` or `ai-mem store`. |
+
+## 3. Fallback Logic & MoE Combination
+
+- If the user's request spans multiple domains (e.g., "Build a backend API and design the frontend UI"):
+  - **Combine Workflows:** Route to `workflow-dev-integrations` + `workflow-frontend-design`.
+  - **Elevate Weight:** Always elevate to **HEAVY**.
+- If the request doesn't match perfectly, run `ai-help` to list all available tools and capabilities.
+
+## Self-Improvement Constraint (Extracted Rule)
+> "L'utente ha chiesto X. So ESATTAMENTE quale skill/wrapper usare, o sto improvvisando? Ho calcolato il Task Weight correttamente?"

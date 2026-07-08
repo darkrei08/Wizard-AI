@@ -1,47 +1,66 @@
 ---
 name: show-active-skill
-description: "Core behavioral skill. Enforces the AI to explicitly declare which skills, CLI tools, or software wrappers it is using to process the user's prompt."
+description: "TRANSPARENCY ANNOUNCER — Core behavioral skill (Step 6 e Step 11). Enforces the AI to explicitly declare which skills, workflows, and CLI tools it is using via PRE and POST prompt headers/footers."
 ---
 
-# Show Active Skill
+# Show Active Skill (Transparency Announcer)
 
-This is a **mandatory behavioral directive** for all your interactions within the Wizard-AI ecosystem.
+This is a **mandatory behavioral directive** for all your interactions within the Wizard-AI ecosystem. It implements **Step 6 (PRE-PROMPT)** and **Step 11 (POST-PROMPT)** of the `prompt-loop-engine`.
 
 ## Goal
-To maintain absolute transparency with the user regarding the internal decision-making process, specifically concerning which skills, software wrappers, and CLIs the AI agent invokes.
+To maintain absolute transparency with the user regarding the internal decision-making process, the task weight classification (MoE), and the specific skills/workflows invoked.
 
 ## Instruction
-Whenever you process a prompt and decide to utilize a specific skill (e.g., `auto-release`, `auto-branch`, `auto-debug`) or invoke a software wrapper/CLI (e.g., `ai-release`, `gh`, `docker`), you MUST begin your response with a clear, Markdown-formatted alert.
 
-### Format
-Use a GitHub-style alert `> [!NOTE]` as the very first line of your response to the user.
+Whenever you process a prompt, you MUST wrap your response in two clear, Markdown-formatted alerts.
+
+### 1. PRE-PROMPT Header (Step 6)
+Use a GitHub-style alert `> [!NOTE]` as the very first line of your response to the user, immediately after processing the routing phase.
 
 ```markdown
 > [!NOTE]
-> 🪄 **Wizard-AI Activity Tracker:**
-> - **Active Skill:** `[Nome della Skill]`
-> - **CLI/Wrapper:** `[Comando o Software richiamato]`
+> 🪄 **Wizard-AI Loop Engine (PRE-EXEC):**
+> - **Pipeline Weight:** `[LIGHT|MEDIUM|HEAVY]`
+> - **Active Workflow:** `[es. workflow-production-cycle]`
+> - **Active Skills:** `[skill₁, skill₂, ...]`
+> - **CLI/Wrapper:** `[comandi previsti]`
 ```
 
-### Examples
-If you are asked to release a branch:
+*Example:*
 ```markdown
 > [!NOTE]
-> 🪄 **Wizard-AI Activity Tracker:**
-> - **Active Skill:** `auto-trigger-release`
-> - **CLI/Wrapper:** `ai-release` (Bash Script)
+> 🪄 **Wizard-AI Loop Engine (PRE-EXEC):**
+> - **Pipeline Weight:** `HEAVY`
+> - **Active Workflow:** `workflow-production-cycle`
+> - **Active Skills:** `auto-branch`, `test-driven-development`, `react`
+> - **CLI/Wrapper:** `ai-branch`, `npm run test`
 
-Ho completato il rilascio come richiesto...
+Ho analizzato il progetto e sto isolando il branch...
 ```
 
-If you are asked to debug Python code using the auto-debug skill:
+### 2. POST-PROMPT Footer (Step 11)
+Use another `> [!NOTE]` at the very end of your response, after the execution is complete and before stopping generation.
+
 ```markdown
 > [!NOTE]
-> 🪄 **Wizard-AI Activity Tracker:**
-> - **Active Skill:** `auto-debug`
-> - **CLI/Wrapper:** `pytest` & `ruff`
-
-Ho intercettato gli errori e sto eseguendo...
+> 🪄 **Wizard-AI Loop Recap (POST-EXEC):**
+> - **Skills Used:** `[skill₁ (purpose), skill₂ (purpose)]`
+> - **Verification Status:** `✅ Passed | ⚠️ Partial | ❌ Failed`
+> - **Session Saved:** `✅ (MEMORY.md) | ❌`
 ```
 
-**CRITICAL RULE:** Do NOT skip this alert if you are executing a defined skill or CLI wrapper. It provides the user with essential context about system operations.
+*Example:*
+```markdown
+Il componente è stato creato e i test passano.
+
+> [!NOTE]
+> 🪄 **Wizard-AI Loop Recap (POST-EXEC):**
+> - **Skills Used:** `react (component logic), systematic-debugging (fixing layout)`
+> - **Verification Status:** `✅ Passed (0 errors in jest)`
+> - **Session Saved:** `✅ (MEMORY.md updated)`
+```
+
+**CRITICAL RULE:** Do NOT skip these alerts. They provide the user with essential context about system operations and confirm that the Loop Engineering pipeline executed correctly.
+
+## Self-Improvement Constraint (Extracted Rule)
+> "Sto nascondendo i miei ragionamenti o i tool che uso all'utente? L'utente deve sempre poter verificare a colpo d'occhio il peso, le skill e lo stato di validazione del mio lavoro."

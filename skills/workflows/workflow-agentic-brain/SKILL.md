@@ -1,29 +1,52 @@
 ---
 name: workflow-agentic-brain
-description: "Meta-skill orchestrating Agentic AI & Meta-Skills. Chains auto-optimize, auto-prompt, skill-creator, and memory/context skills to enhance the agent's autonomy and efficiency."
+description: "MASTER OPTIMIZER — Orchestrates Agentic AI, Meta-Skills, and Context Optimization. Fuses auto-optimize, llmlingua, lean-ctx, flashrank, sqz, ponytail, and caveman. Use when context is large, costs are high, or meta-agent tasks are requested."
 ---
 
-# Agentic Brain & Meta-Skills Workflow (Meta-Skill)
+# Master Optimizer & Agentic Brain Workflow (Unified)
 
-This meta-skill orchestrates how the AI agent manages its own brain, memory, context, and capabilities. Use this workflow when the user wants to optimize token usage, create new skills, or manage long-term memory.
+> **Fonde:** `auto-optimize` + `workflow-agentic-brain`
 
-## Core Workflow Chain
+Questo workflow orchesta la gestione del cervello dell'agente: memoria, ottimizzazione token, compressione contesto, e creazione di nuove skill. È il workflow target per i task di tipo "Meta" ed è richiamato automaticamente nello **Step 4** (Context Optimization) del `prompt-loop-engine` per task HEAVY.
 
-1. **Context & Token Optimization (`auto-optimize`, `lean-ctx`, `llmlingua`, `sqz`, `flashrank`, `ponytail`, `caveman`)**
-   Before executing massive tasks, ensure the context window is lean. Compress verbose outputs with `sqz` and re-rank documents with `flashrank`. 
-   Use `ponytail` to strictly evaluate requirements against the 'lazy senior dev' ladder (YAGNI, Stdlib, Native) before writing *any* code, naturally preventing over-engineered token bloat. Use `caveman` to reduce the raw agent output verbosity.
+## ═══════════ PIPELINE DI OTTIMIZZAZIONE ═══════════
 
-2. **Prompt Engineering & Routing (`auto-prompt`, `auto-router`)**
-   If the user's request is vague, use `auto-prompt` to rewrite it into a structured XML instruction. Use `auto-router` to find the best underlying skill automatically.
+Quando il contesto supera i limiti o l'utente richiede un'ottimizzazione, applica queste 4 fasi in ordine:
 
-3. **Skill Creation & Expansion (`skill-creator`, `wizard-ai-installer`)**
-   If a needed capability is missing, use Anthropic's `skill-creator` to generate the new skill's `SKILL.md` file, and `wizard-ai-installer` to register it into the Hub.
+### Fase 1: Ingestion & Conversion (`markitdown`, `ai-convert`)
+Se il task coinvolge file binari o complessi (PDF, DOCX, XLSX, PPTX, immagini, audio):
+- Usa `ai-convert <file>` per trasformare tutto in Markdown pulito.
+- Evita di leggere file grezzi.
 
-4. **Long-Term Memory (`claude-mem`, `wiki-brain-skill`, `graphify`)**
-   Persist important architectural decisions or user preferences into `claude-mem`. Use `graphify` to build a semantic knowledge graph of the project so future sessions can query it efficiently.
+### Fase 2: RAG / Filtering (`flashrank`, `ai-rerank`)
+Se il contesto è frammentato su decine di documenti o il retrieval è ampio:
+- Usa `ai-rerank` per filtrare e classificare i passaggi per pertinenza rispetto al prompt.
+- Conserva solo i top K risultati rilevanti.
 
-## Execution Rules
+### Fase 3: Token Compression (`llmlingua`, `sqz`, `headroom`)
+Per testi voluminosi:
+- **Prompt/Codice esteso:** Usa `headroom compress` o `ai-compress` (riduce token fino a 20x).
+- **Log, JSON, CLI Output:** Usa `ai-squeeze` per rimuovere sintassi inutile e spazi vuoti.
 
-- Proactively reduce token usage using optimization skills when context gets large.
-- Before writing any code, apply the `ponytail` ladder: does this need to exist? Can the standard library do it? Can a native platform feature handle it?
-- When creating new skills, always follow the standard `SKILL.md` frontmatter formatting required by Wizard-AI.
+### Fase 4: Context Guarding & Isolation (`lean-ctx`, `caveman`)
+- **Memoria persistente:** Usa `ai-lean-ctx` per isolare il contesto che serve solo nel momento corrente.
+- **Output AI:** Assicurati che il plugin `caveman` sia attivo per ridurre la verbosità della tua stessa risposta (75% meno token in output, 100% accuratezza tecnica).
+
+## ═══════════ META-SKILL EXPANSION ═══════════
+
+Se l'utente richiede di integrare un nuovo strumento esterno o creare una nuova skill:
+
+### Evaluator & Installer (`wizard-ai-installer`)
+1. Leggi la repo target.
+2. Compara con gli strumenti attuali in `docs/WIKI.md`.
+3. Usa `wizard-ai-installer` per installare e configurare autonomamente il nuovo tool nell'ecosistema Wizard-AI.
+4. Aggiorna la WIKI.
+
+### Skill Creator (`skill-creator`)
+Se manca una competenza specifica per un task in esecuzione:
+1. Usa `skill-creator` per redigere un nuovo file `SKILL.md`.
+2. Segui gli standard Wizard-AI (YAML frontmatter con name e description).
+3. Salvalo nella categoria corretta sotto `skills/`.
+
+## Self-Improvement Constraint (Extracted Rule)
+> "Il codice/contesto che sto per iniettare è strettamente necessario? Ho applicato la 'ponytail ladder' (YAGNI, nativo, stdlib) per ridurre l'over-engineering alla fonte?"
