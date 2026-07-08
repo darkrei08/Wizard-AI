@@ -327,3 +327,4 @@ AI agents operate at their best when applying "Skill Chaining", i.e., the consec
 - **claude-blog**: AI Blog Writing & SEO Optimization Skill for Claude Code.
 - **claude-seo**: SEO Analysis plugin for Claude Code.
 - **workflow-seo-research**: Meta-skill per analisi SEO e Inbound Marketing.
+- **last30days-skill**: Research what people actually say about any topic in the last 30 days. Pulls posts and engagement from Reddit, X, YouTube, TikTok, Hacker News, Polymarket, GitHub, and the web.

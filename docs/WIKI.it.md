@@ -325,3 +325,4 @@ Gli agenti AI operano al meglio quando applicano il concetto di "Skill Chaining"
 3. Lo salvi nella memoria semantica con **`ai-mem`** per usarlo in futuro.
 
 > Con Wizard-AI, tu (o il tuo agente AI) siete in grado di padroneggiare tutte le fasi ingegneristiche in maniera concatenata. Questo permette lo scaling estremo dello sviluppo "vibe coding".
+- **last30days-skill**: Ricerca ciò che le persone dicono effettivamente su qualsiasi argomento negli ultimi 30 giorni. Estrae post e interazioni da Reddit, X, YouTube, TikTok, Hacker News, Polymarket, GitHub e dal web.
