@@ -7,7 +7,19 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
-## [0.27.0] - 2026-06-19
+## [0.40.0] - 2026-07-08
+
+### Added
+- **Interactive Configuration Guides**: Aggiunta la procedura di setup guidato durante le installazioni tramite `setup.sh` e `ai-install`. Gli script estraggono automaticamente la sezione "Configuration" o "Setup" da `SKILL.md` e la mostrano all'utente.
+- **Pass-through CLI Wrapper**: `ai-install` genera ora un wrapper che inoltra trasparentemente gli argomenti (via `"$@"`) agli script interni delle skill (es. `run.sh`, `main.py`).
+- **2026 Models Reference**: Aggiunto `docs/MODELS_REFERENCE.md` come risorsa centralizzata che mappa il panorama dei modelli (frontiera vs open-source) e l'utilizzo dei Cockpit Tools e runner locali (LM Studio, Ollama). Linkato nella WIKI.
+
+### Changed
+- Modificato il default model in `ai-graph` per forzare `gemini-3.5-pro` (attraverso il proxy Cockpit Tools `openai`), risolvendo gli errori del client nativo.
+- Risolto errore cache di `uv` che bloccava le installazioni a causa di permessi errati (fallback directory `UV_CACHE_DIR`).
+
+### Refactored
+- Riorganizzazione completa dell'architettura in 11-Step **Loop Engineering Pipeline**, fondendo skill duplicate come `auto-workflow` + `workflow-production-cycle` e centralizzando il routing tramite MoE.## [0.27.0] - 2026-06-19
 
 ### Added
 - **Session Manager & Memory Persistence**: Aggiunta la nuova skill `session-manager` e gli script CLI nativi (`ai-session-save` in Bash e PowerShell) per permettere agli agenti AI (Claude Code, Antigravity) di salvare fisicamente lo stato della sessione in `MEMORY.md`. Questo garantisce la persistenza del contesto al 100% tra un riavvio e l'altro del terminale.
