@@ -1,0 +1,390 @@
+#!/usr/bin/env bash
+# ai-install — Iterative Skill & Framework Installer for Wizard-AI
+#
+# Installs a new skill or framework into the ecosystem using a Loop Engineering
+# validation workflow: install → validate → self-repair → re-validate → sync.
+#
+# Usage:
+#   ai-install --name <skill-name> --path <local-path-or-git-url> [--category <cat>]
+#   ai-install --name my-skill --path https://github.com/author/repo.git
+#   ai-install --name my-skill --path ./path/to/skill --category frontend
+#
+# Categories: core, frontend, backend, devops, data-science, memory-knowledge,
+#             workflows, stitch, marketing-media, misc (default)
+
+set -euo pipefail
+
+# ── Colors ──────────────────────────────────────────────────────────────────────
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+BOLD='\033[1m'
+NC='\033[0m'
+
+# ── Load environment ────────────────────────────────────────────────────────────
+if [[ -z "${WIZARD_AI_DIR:-}" ]] && [[ -f "$HOME/.config/wizard-ai/env" ]]; then
+  source "$HOME/.config/wizard-ai/env"
+fi
+WIZARD_DIR="${WIZARD_AI_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+SKILLS_DIR="$WIZARD_DIR/skills"
+GLOBAL_SKILLS="$HOME/.gemini/config/skills"
+VALID_CATEGORIES=("core" "frontend" "backend" "devops" "data-science" "memory-knowledge" "workflows" "stitch" "marketing-media" "misc")
+MAX_VALIDATION_LOOPS=3
+
+# ── Helpers ─────────────────────────────────────────────────────────────────────
+info()  { echo -e "${BLUE}[ai-install]${NC} $1"; }
+ok()    { echo -e "${GREEN}[ai-install ✓]${NC} $1"; }
+warn()  { echo -e "${YELLOW}[ai-install ⚠]${NC} $1"; }
+fail()  { echo -e "${RED}[ai-install ✗]${NC} $1"; }
+
+usage() {
+  echo -e "${BOLD}Usage:${NC} ai-install --name <skill-name> --path <local-path-or-git-url> [--category <cat>]"
+  echo ""
+  echo -e "  ${CYAN}--name${NC}       Name of the skill (e.g. my-cool-skill)"
+  echo -e "  ${CYAN}--path${NC}       Local directory or Git URL to install from"
+  echo -e "  ${CYAN}--category${NC}   Category folder (default: misc)"
+  echo -e "                 Options: ${VALID_CATEGORIES[*]}"
+  echo -e "  ${CYAN}--force${NC}      Overwrite if skill already exists"
+  echo -e "  ${CYAN}--no-sync${NC}    Skip the ai-sync-skills + ai-update step"
+  echo -e "  ${CYAN}--help${NC}       Show this help message"
+  exit 0
+}
+
+is_valid_category() {
+  local cat="$1"
+  for c in "${VALID_CATEGORIES[@]}"; do
+    [[ "$c" == "$cat" ]] && return 0
+  done
+  return 1
+}
+
+# ── Parse arguments ─────────────────────────────────────────────────────────────
+SKILL_NAME=""
+SKILL_PATH=""
+CATEGORY="misc"
+CATEGORY_SET=0
+FORCE=0
+NO_SYNC=0
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --name)     SKILL_NAME="$2"; shift 2 ;;
+    --path)     SKILL_PATH="$2"; shift 2 ;;
+    --category) CATEGORY="$2"; CATEGORY_SET=1; shift 2 ;;
+    --force)    FORCE=1;         shift   ;;
+    --no-sync)  NO_SYNC=1;       shift   ;;
+    --help|-h)  usage ;;
+    *)
+      fail "Unknown argument: $1"
+      usage
+      ;;
+  esac
+done
+
+# ── Interactive prompts if arguments are missing ────────────────────────────────
+if [[ -z "$SKILL_NAME" ]]; then
+  echo -e "${CYAN}Enter skill name (e.g. my-cool-skill):${NC}"
+  read -r SKILL_NAME
+  [[ -z "$SKILL_NAME" ]] && { fail "Skill name is required."; exit 1; }
+fi
+
+if [[ -z "$SKILL_PATH" ]]; then
+  echo -e "${CYAN}Enter path to skill (local directory or Git URL):${NC}"
+  read -r SKILL_PATH
+  [[ -z "$SKILL_PATH" ]] && { fail "Skill path is required."; exit 1; }
+fi
+
+if [[ "$CATEGORY_SET" -eq 0 ]]; then
+  echo -e "${CYAN}Select a category (or press Enter for 'misc'):${NC}"
+  for i in "${!VALID_CATEGORIES[@]}"; do
+    echo -e "  ${BOLD}$((i+1))${NC}. ${VALID_CATEGORIES[$i]}"
+  done
+  read -r CAT_CHOICE
+  if [[ -n "$CAT_CHOICE" ]] && [[ "$CAT_CHOICE" =~ ^[0-9]+$ ]]; then
+    idx=$((CAT_CHOICE - 1))
+    if [[ $idx -ge 0 ]] && [[ $idx -lt ${#VALID_CATEGORIES[@]} ]]; then
+      CATEGORY="${VALID_CATEGORIES[$idx]}"
+    fi
+  fi
+fi
+
+if ! is_valid_category "$CATEGORY"; then
+  fail "Invalid category: $CATEGORY"
+  echo "Valid categories: ${VALID_CATEGORIES[*]}"
+  exit 1
+fi
+
+REPO_DEST="$SKILLS_DIR/$CATEGORY/$SKILL_NAME"
+GLOBAL_DEST="$GLOBAL_SKILLS/$SKILL_NAME"
+
+echo ""
+info "Installing skill: ${BOLD}$SKILL_NAME${NC}"
+info "Category:         ${BOLD}$CATEGORY${NC}"
+info "Source:           ${BOLD}$SKILL_PATH${NC}"
+info "Repo destination: ${BOLD}$REPO_DEST${NC}"
+echo ""
+
+# ── Check if skill already exists ───────────────────────────────────────────────
+if [[ -d "$REPO_DEST" ]] && [[ "$FORCE" -eq 0 ]]; then
+  warn "Skill '$SKILL_NAME' already exists in $CATEGORY."
+  echo -e "  Use ${CYAN}--force${NC} to overwrite."
+  exit 1
+fi
+
+# ══════════════════════════════════════════════════════════════════════════════════
+# PHASE 1: LOCAL INSTALLATION
+# ══════════════════════════════════════════════════════════════════════════════════
+info "Phase 1: Local Installation"
+
+if [[ "$SKILL_PATH" =~ ^https?:// ]] || [[ "$SKILL_PATH" =~ ^git@ ]]; then
+  # Git URL — clone to ~/.ai-skills/ then copy SKILL.md and relevant files
+  CLONE_DIR="$HOME/.ai-skills/$SKILL_NAME"
+  if [[ -d "$CLONE_DIR" ]]; then
+    info "Updating existing clone at $CLONE_DIR..."
+    git -C "$CLONE_DIR" pull --ff-only --quiet || true
+  else
+    info "Cloning $SKILL_PATH..."
+    git clone --depth 1 --quiet "$SKILL_PATH" "$CLONE_DIR"
+  fi
+
+  # Locate SKILL.md in the clone
+  SKILL_MD_SRC=$(find "$CLONE_DIR" -maxdepth 3 -name "SKILL.md" -type f | head -1)
+  if [[ -z "$SKILL_MD_SRC" ]]; then
+    warn "No SKILL.md found in the cloned repository. Creating a template..."
+    SKILL_MD_SRC="$CLONE_DIR/SKILL.md"
+    cat > "$SKILL_MD_SRC" <<TMPL
+---
+name: $SKILL_NAME
+description: "TODO: Add a description for $SKILL_NAME."
+---
+
+# $SKILL_NAME
+
+TODO: Document this skill.
+TMPL
+  fi
+
+  # Copy the skill directory (parent of SKILL.md) to the repo
+  SKILL_SRC_DIR=$(dirname "$SKILL_MD_SRC")
+  mkdir -p "$REPO_DEST"
+  cp -r "$SKILL_SRC_DIR"/. "$REPO_DEST/"
+
+elif [[ -d "$SKILL_PATH" ]]; then
+  # Local directory — copy directly
+  mkdir -p "$REPO_DEST"
+  cp -r "$SKILL_PATH"/. "$REPO_DEST/"
+else
+  fail "Path '$SKILL_PATH' is not a valid directory or Git URL."
+  exit 1
+fi
+
+ok "Skill files copied to $REPO_DEST"
+
+# ══════════════════════════════════════════════════════════════════════════════════
+# PHASE 2: LOOP ENGINEERING — ITERATIVE VALIDATION
+# ══════════════════════════════════════════════════════════════════════════════════
+info "Phase 2: Loop Engineering Validation"
+
+validate_skill() {
+  local skill_dir="$1"
+  local errors=0
+
+  # Check 1: SKILL.md exists
+  if [[ ! -f "$skill_dir/SKILL.md" ]]; then
+    fail "  [CHECK] SKILL.md not found in $skill_dir"
+    ((errors++)) || true
+  else
+    ok "  [CHECK] SKILL.md exists"
+  fi
+
+  # Check 2: Frontmatter has 'name' and 'description'
+  if [[ -f "$skill_dir/SKILL.md" ]]; then
+    if ! head -20 "$skill_dir/SKILL.md" | grep -q "^name:"; then
+      fail "  [CHECK] SKILL.md missing 'name' in frontmatter"
+      ((errors++)) || true
+    else
+      ok "  [CHECK] Frontmatter 'name' present"
+    fi
+
+    if ! head -20 "$skill_dir/SKILL.md" | grep -q "^description:"; then
+      fail "  [CHECK] SKILL.md missing 'description' in frontmatter"
+      ((errors++)) || true
+    else
+      ok "  [CHECK] Frontmatter 'description' present"
+    fi
+  fi
+
+  # Check 3: No hardcoded absolute paths (e.g. /home/username, /Users/username, C:\Users)
+  if grep -rn '/home/[a-zA-Z]' "$skill_dir" --include="*.md" --include="*.sh" --include="*.py" 2>/dev/null | grep -v '\.git' | grep -v '/home/\$' | grep -v '/home/{' | head -5; then
+    fail "  [CHECK] Hardcoded absolute paths detected in files"
+    ((errors++)) || true
+  else
+    ok "  [CHECK] No hardcoded absolute paths"
+  fi
+
+  # Check 4: No files larger than 500KB (likely binary or generated)
+  while IFS= read -r -d '' bigfile; do
+    local size
+    size=$(stat -c%s "$bigfile" 2>/dev/null || stat -f%z "$bigfile" 2>/dev/null || echo 0)
+    if [[ "$size" -gt 512000 ]]; then
+      warn "  [CHECK] Large file detected ($(( size / 1024 ))KB): $(basename "$bigfile")"
+    fi
+  done < <(find "$skill_dir" -type f -print0 2>/dev/null)
+
+  return "$errors"
+}
+
+self_repair() {
+  local skill_dir="$1"
+  local fixed=0
+
+  info "  Running self-repair..."
+
+  # Repair 1: Create SKILL.md if missing
+  if [[ ! -f "$skill_dir/SKILL.md" ]]; then
+    cat > "$skill_dir/SKILL.md" <<TMPL
+---
+name: $SKILL_NAME
+description: "TODO: Add a description for $SKILL_NAME."
+---
+
+# $SKILL_NAME
+
+TODO: Document this skill.
+TMPL
+    ok "  [REPAIR] Created template SKILL.md"
+    ((fixed++)) || true
+  fi
+
+  # Repair 2: Add missing frontmatter fields
+  if [[ -f "$skill_dir/SKILL.md" ]]; then
+    if ! head -20 "$skill_dir/SKILL.md" | grep -q "^name:"; then
+      sed -i '/^---$/a name: '"$SKILL_NAME" "$skill_dir/SKILL.md"
+      ok "  [REPAIR] Added 'name' to frontmatter"
+      ((fixed++)) || true
+    fi
+    if ! head -20 "$skill_dir/SKILL.md" | grep -q "^description:"; then
+      sed -i '/^name:/a description: "TODO: Add a description."' "$skill_dir/SKILL.md"
+      ok "  [REPAIR] Added 'description' to frontmatter"
+      ((fixed++)) || true
+    fi
+  fi
+
+  # Repair 3: Replace common hardcoded home paths
+  if grep -rl '/home/[a-zA-Z]' "$skill_dir" --include="*.md" --include="*.sh" --include="*.py" 2>/dev/null | grep -v '\.git' | head -5 | while IFS= read -r f; do
+    sed -i -E 's|/home/[a-zA-Z][a-zA-Z0-9._-]*/|\$HOME/|g' "$f"
+    ok "  [REPAIR] Replaced hardcoded paths in $(basename "$f")"
+    ((fixed++)) || true
+  done; then
+    :
+  fi
+
+  return 0
+}
+
+# Run the validation loop
+loop=0
+while [[ $loop -lt $MAX_VALIDATION_LOOPS ]]; do
+  ((loop++)) || true
+  info "Validation pass $loop/$MAX_VALIDATION_LOOPS..."
+
+  if validate_skill "$REPO_DEST"; then
+    ok "All validation checks passed!"
+    break
+  else
+    if [[ $loop -lt $MAX_VALIDATION_LOOPS ]]; then
+      warn "Validation failed. Attempting self-repair..."
+      self_repair "$REPO_DEST"
+    else
+      warn "Validation still has issues after $MAX_VALIDATION_LOOPS attempts."
+      echo -e "  ${YELLOW}Please review and fix manually: $REPO_DEST${NC}"
+      echo -e "  ${CYAN}Continuing with installation anyway...${NC}"
+    fi
+  fi
+done
+
+# ══════════════════════════════════════════════════════════════════════════════════
+# PHASE 3: TARGET SYSTEM INSTALLATION & GLOBAL SYNC
+# ══════════════════════════════════════════════════════════════════════════════════
+info "Phase 3: Target System Installation"
+
+# Copy skill flatly to ~/.gemini/config/skills/<name>
+mkdir -p "$GLOBAL_DEST"
+cp -r "$REPO_DEST"/. "$GLOBAL_DEST/"
+ok "Installed to $GLOBAL_DEST"
+
+# Create wrapper script if it doesn't exist
+WRAPPER="$WIZARD_DIR/bin/ai-$SKILL_NAME"
+if [[ ! -f "$WRAPPER" ]]; then
+  info "Creating wrapper script: bin/ai-$SKILL_NAME"
+  cat > "$WRAPPER" <<'WRAPPER_TMPL'
+#!/usr/bin/env bash
+# ai-SKILL_NAME_PLACEHOLDER — Wrapper for SKILL_NAME_PLACEHOLDER
+# Auto-generated by ai-install
+set -euo pipefail
+
+echo -e "\033[1;36m[ai-SKILL_NAME_PLACEHOLDER]\033[0m Skill is active. Use the AI agent to invoke it."
+echo "Skill directory: $HOME/.gemini/config/skills/SKILL_NAME_PLACEHOLDER/"
+WRAPPER_TMPL
+  sed -i "s/SKILL_NAME_PLACEHOLDER/$SKILL_NAME/g" "$WRAPPER"
+  chmod +x "$WRAPPER"
+  cp "$WRAPPER" "$HOME/.local/bin/" 2>/dev/null || true
+  ok "Wrapper script created: ai-$SKILL_NAME"
+fi
+
+# ══════════════════════════════════════════════════════════════════════════════════
+# PHASE 4: SYNC & UPDATE ENVIRONMENT
+# ══════════════════════════════════════════════════════════════════════════════════
+if [[ "$NO_SYNC" -eq 0 ]]; then
+  info "Phase 4: Syncing & Updating Environment"
+
+  # Sync skills to all agents
+  if command -v ai-sync-skills &>/dev/null; then
+    info "Running ai-sync-skills..."
+    ai-sync-skills
+  else
+    warn "ai-sync-skills not found on PATH. Skipping sync."
+  fi
+
+  # Run global update
+  if command -v ai-update &>/dev/null; then
+    info "Running ai-update..."
+    ai-update --quiet || true
+  fi
+else
+  info "Phase 4: Skipped (--no-sync)"
+fi
+
+# ══════════════════════════════════════════════════════════════════════════════════
+# PHASE 5: GIT COMMIT & LOG
+# ══════════════════════════════════════════════════════════════════════════════════
+info "Phase 5: Git Commit & Log"
+
+# Stage the new skill files
+git -C "$WIZARD_DIR" add "skills/$CATEGORY/$SKILL_NAME" 2>/dev/null || true
+if [[ -f "$WRAPPER" ]]; then
+  git -C "$WIZARD_DIR" add "bin/ai-$SKILL_NAME" 2>/dev/null || true
+fi
+
+# Log the installation event (optional — if the hub API is available)
+if [[ -f "$WIZARD_DIR/hub/api/log_event.py" ]]; then
+  python3 "$WIZARD_DIR/hub/api/log_event.py" "ai-install" "$SKILL_NAME" 250 2>/dev/null &
+fi
+
+echo ""
+echo -e "${GREEN}════════════════════════════════════════════════════════════${NC}"
+echo -e "${GREEN}  ✅ Skill '${BOLD}$SKILL_NAME${NC}${GREEN}' installed successfully!${NC}"
+echo -e "${GREEN}════════════════════════════════════════════════════════════${NC}"
+echo ""
+echo -e "  ${CYAN}Category:${NC}    $CATEGORY"
+echo -e "  ${CYAN}Repo path:${NC}   $REPO_DEST"
+echo -e "  ${CYAN}Global path:${NC} $GLOBAL_DEST"
+[[ -f "$WRAPPER" ]] && echo -e "  ${CYAN}Wrapper:${NC}     ai-$SKILL_NAME"
+echo ""
+echo -e "  ${YELLOW}Next steps:${NC}"
+echo -e "    1. Edit ${BOLD}$REPO_DEST/SKILL.md${NC} with proper documentation"
+echo -e "    2. Run ${CYAN}git commit -m \"feat(skills): add $SKILL_NAME\"${NC}"
+echo -e "    3. Test with ${CYAN}ai-$SKILL_NAME${NC}"
+echo ""

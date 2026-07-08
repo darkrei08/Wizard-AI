@@ -295,11 +295,23 @@ chmod +x "$HOME/.local/bin"/book-to-skill 2>/dev/null || true
 ln -sf ai-usage "$HOME/.local/bin/gemini-usage"
 echo -e "${GREEN}✓ $(ls "$SCRIPT_DIR/bin/" | wc -l) wrapper scripts installed to ~/.local/bin/ (with gemini-usage symlinked)${NC}"
 
-# 7. Install Skills for all agents
+# 7. Install Skills for all agents (hierarchical → flat)
 echo -e "\n${BLUE}[7/10] Installing AI agent skills...${NC}"
-mkdir -p "$HOME/.gemini/config/skills"
-cp -r "$SCRIPT_DIR"/skills/. "$HOME/.gemini/config/skills/"
-echo -e "${GREEN}✓ $(ls "$SCRIPT_DIR/skills/" | wc -l) skills installed to ~/.gemini/config/skills/${NC}"
+SKILLS_DEST="$HOME/.gemini/config/skills"
+mkdir -p "$SKILLS_DEST"
+SKILL_COUNT=0
+# Find every SKILL.md inside the categorized directories and copy its parent
+# folder flatly into the global skills directory (e.g. skills/core/brainstorming → ~/.gemini/config/skills/brainstorming)
+while IFS= read -r -d '' skill_md; do
+  skill_dir=$(dirname "$skill_md")
+  skill_name=$(basename "$skill_dir")
+  mkdir -p "$SKILLS_DEST/$skill_name"
+  cp -r "$skill_dir"/. "$SKILLS_DEST/$skill_name/"
+  ((SKILL_COUNT++)) || true
+done < <(find "$SCRIPT_DIR/skills" -mindepth 2 -name "SKILL.md" -type f -print0)
+# Also copy skills.json for reference
+cp -f "$SCRIPT_DIR/skills/skills.json" "$SKILLS_DEST/" 2>/dev/null || true
+echo -e "${GREEN}✓ $SKILL_COUNT skills installed to ~/.gemini/config/skills/${NC}"
 
 echo -e "${YELLOW}Syncing skills to Claude Code, Amp, and other agents...${NC}"
 "$HOME/.local/bin/ai-sync-skills"

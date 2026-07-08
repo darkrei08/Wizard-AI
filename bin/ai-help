@@ -117,6 +117,8 @@ echo -e "  $(check_cmd ai-scaffold) ${BOLD}ai-scaffold${RESET}       Scaffold Ex
 echo -e "     ${BLUE}ai-scaffold nuxt my-app${RESET}"
 echo -e "  $(check_cmd ai-rtk) ${BOLD}ai-rtk${RESET}            RTK AI toolkit"
 echo -e "     ${BLUE}ai-rtk --help${RESET}"
+echo -e "  $(check_cmd ai-install) ${BOLD}ai-install${RESET}        Install & validate skills with loop engineering"
+echo -e "     ${BLUE}ai-install --name my-skill --path ./path --category frontend${RESET}"
 echo ""
 
 echo -e "${BOLD}${YELLOW}🧠 MEMORY & CONTEXT${RESET}"

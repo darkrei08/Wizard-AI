@@ -43,7 +43,7 @@ for TARGET in "${TARGETS[@]}"; do
   ((synced++)) || true
 done
 
-# --- Direction 2: Gemini → Wizard-AI repo (backup) ---
+# --- Direction 2: Gemini → Wizard-AI repo (backup into categories) ---
 if [[ -n "${WIZARD_AI_DIR:-}" ]] && [[ -d "${WIZARD_AI_DIR}/skills" ]]; then
   echo ""
   echo "  📦 Backing up new skills to repo..."
@@ -51,20 +51,22 @@ if [[ -n "${WIZARD_AI_DIR:-}" ]] && [[ -d "${WIZARD_AI_DIR}/skills" ]]; then
   for SKILL_DIR in "$SKILLS_SRC"/*/; do
     [[ -d "$SKILL_DIR" ]] || continue
     SKILL_NAME=$(basename "$SKILL_DIR")
-    REPO_SKILL_DIR="$WIZARD_AI_DIR/skills/$SKILL_NAME"
-    # Only copy if the skill doesn't exist in repo yet (new skills)
-    if [[ ! -d "$REPO_SKILL_DIR" ]]; then
+    # Search recursively (up to 3 levels) if this skill already exists anywhere in the repo
+    EXISTING=$(find "$WIZARD_AI_DIR/skills" -maxdepth 3 -type d -name "$SKILL_NAME" 2>/dev/null | head -1)
+    if [[ -z "$EXISTING" ]]; then
+      # New skill: back up into the misc category by default
+      REPO_SKILL_DIR="$WIZARD_AI_DIR/skills/misc/$SKILL_NAME"
       mkdir -p "$REPO_SKILL_DIR"
       rsync -a --quiet "$SKILL_DIR" "$REPO_SKILL_DIR/" 2>/dev/null || \
         cp -rf "$SKILL_DIR"* "$REPO_SKILL_DIR/" 2>/dev/null || true
-      echo "    + $SKILL_NAME (new → repo)"
+      echo "    + $SKILL_NAME (new → repo/skills/misc/)"
       ((backed_up++)) || true
     fi
   done
   if [[ $backed_up -eq 0 ]]; then
     echo "    ✓ All skills already in sync with repo."
   else
-    echo "  ✅ $WIZARD_AI_DIR/skills/ ($backed_up new skills backed up)"
+    echo "  ✅ $WIZARD_AI_DIR/skills/ ($backed_up new skills backed up to misc/)"
   fi
 elif [[ -z "${WIZARD_AI_DIR:-}" ]]; then
   echo ""

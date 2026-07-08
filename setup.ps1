@@ -290,13 +290,23 @@ foreach ($W in $Wrappers) {
 New-CmdShim 'gemini-usage' 'ai-usage.ps1'
 Write-Host "[ok] $($Wrappers.Count) wrapper scripts installed to $LocalBin (with gemini-usage shim)" -ForegroundColor Green
 
-# 7. Install Skills for all agents
+# 7. Install Skills for all agents (hierarchical → flat)
 Write-Host ''
 Write-Host '[7/8] Installing AI agent skills...' -ForegroundColor Blue
 $SkillsDst = Join-Path $HOME '.gemini\config\skills'
 $null = New-Item -ItemType Directory -Force -Path $SkillsDst
-Copy-Item -Path (Join-Path $ScriptDir 'skills\*') -Destination $SkillsDst -Recurse -Force
-$SkillCount = (Get-ChildItem -Path (Join-Path $ScriptDir 'skills') -Directory | Measure-Object).Count
+$SkillCount = 0
+# Find every SKILL.md inside categorized directories and copy its parent folder flatly
+Get-ChildItem -Path (Join-Path $ScriptDir 'skills') -Filter 'SKILL.md' -Recurse -File | ForEach-Object {
+    $SkillDir = $_.DirectoryName
+    $SkillName = Split-Path $SkillDir -Leaf
+    $DestDir = Join-Path $SkillsDst $SkillName
+    $null = New-Item -ItemType Directory -Force -Path $DestDir
+    Copy-Item -Path (Join-Path $SkillDir '*') -Destination $DestDir -Recurse -Force -ErrorAction SilentlyContinue
+    $SkillCount++
+}
+# Also copy skills.json for reference
+Copy-Item -Path (Join-Path $ScriptDir 'skills\skills.json') -Destination $SkillsDst -Force -ErrorAction SilentlyContinue
 Write-Host "[ok] $SkillCount skills installed to $SkillsDst" -ForegroundColor Green
 
 Write-Host 'Syncing skills to Claude Code, Amp, and other agents...' -ForegroundColor Yellow

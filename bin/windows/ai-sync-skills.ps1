@@ -1,4 +1,4 @@
-﻿# ai-sync-skills — Sync skills from ~\.gemini\config\skills\ to all agent paths.
+# ai-sync-skills — Sync skills from ~\.gemini\config\skills\ to all agent paths.
 # Windows port of bin/ai-sync-skills
 #
 # Direction 1 (always): ~\.gemini\config\skills\ -> claude, amp, agents, etc.
@@ -41,25 +41,29 @@ foreach ($Target in $Targets) {
     Write-Host "  [ok] $Target ($Count skills)" -ForegroundColor Green
 }
 
-# --- Direction 2: Gemini -> Wizard-AI repo (backup) ---
+# --- Direction 2: Gemini -> Wizard-AI repo (backup into categories) ---
 if ($WizardDir -and (Test-Path (Join-Path $WizardDir 'skills'))) {
     Write-Host ''
     Write-Host '  Backing up new skills to repo...'
     $BackedUp = 0
     Get-ChildItem -Path $SkillsSrc -Directory | ForEach-Object {
-        $RepoSkillDir = Join-Path $WizardDir "skills\$($_.Name)"
-        # Only copy if the skill doesn't exist in repo yet (new skills)
-        if (-not (Test-Path $RepoSkillDir)) {
+        $SkillName = $_.Name
+        # Search recursively (up to 3 levels) if this skill already exists anywhere in the repo
+        $Existing = Get-ChildItem -Path (Join-Path $WizardDir 'skills') -Directory -Recurse -Depth 2 -ErrorAction SilentlyContinue |
+            Where-Object { $_.Name -eq $SkillName } | Select-Object -First 1
+        if (-not $Existing) {
+            # New skill: back up into the misc category by default
+            $RepoSkillDir = Join-Path $WizardDir "skills\misc\$SkillName"
             $null = New-Item -ItemType Directory -Force -Path $RepoSkillDir
             Copy-Item -Path (Join-Path $_.FullName '*') -Destination $RepoSkillDir -Recurse -Force -ErrorAction SilentlyContinue
-            Write-Host "    + $($_.Name) (new -> repo)"
+            Write-Host "    + $SkillName (new -> repo/skills/misc/)"
             $BackedUp++
         }
     }
     if ($BackedUp -eq 0) {
         Write-Host '    All skills already in sync with repo.'
     } else {
-        Write-Host "  [ok] $WizardDir\skills\ ($BackedUp new skills backed up)" -ForegroundColor Green
+        Write-Host "  [ok] $WizardDir\skills\ ($BackedUp new skills backed up to misc/)" -ForegroundColor Green
     }
 } elseif (-not $WizardDir) {
     Write-Host ''
