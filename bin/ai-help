@@ -63,6 +63,8 @@ echo -e "  $(check_cmd graphify) ${BOLD}graphify${RESET}         Build knowledge
 echo -e "     ${BLUE}ai-graph .${RESET}                  → Run Graphify on current directory"
 echo -e "     ${BLUE}graphify query \"how does X work?\"${RESET}"
 echo -e "  ✅ ${BOLD}auto-graphify${RESET}    Behavioral hook to auto-update codebase graph"
+echo -e "  $(check_cmd ai-last30days) ${BOLD}ai-last30days${RESET}    Research what people say in the last 30 days"
+echo -e "     ${BLUE}ai-last30days \"topic\"${RESET}"
 echo ""
 
 echo -e "${BOLD}${YELLOW}🗜️  TOKEN OPTIMIZATION${RESET}"
