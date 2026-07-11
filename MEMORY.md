@@ -40,3 +40,11 @@ Wizard-AI is a local ecosystem for managing AI agent workflows/skills. The repos
 - **Infrastructure**: Created `scripts/install-mattpocock-skills.sh` for automated skill installation.
 - **Active Skills**: 188+ (161 existing + 27 mattpocock)
 - **Active Workflows**: 12 (5 loop + 7 domain)
+
+## [Session State Snapshot] - 2026-07-11 15:53:00
+- **v0.43.0 → v0.43.2**: Completed full architectural restructuring into 5 Sequenced Numbered Loop Workflows (`01. loop-1-plan` through `05. loop-5-release`).
+- **Skill Categorization & Loop-Binding Engine (`loop-install-bind`)**: Implemented Step 3.5 inside `wizard-ai-installer` (`skills/core/wizard-ai-installer/SKILL.md`) and Rule 7 in `AGENTS.md` to automatically categorize and bind newly installed skills/tools into their exact target loop chaining tree and `skills.json`.
+- **Clean Redirects**: Converted legacy `auto-workflow` and `auto-optimize` into clean redirect wrappers pointing to `01. loop-1-plan` / `02. loop-2-develop` and `workflow-agentic-brain` / `04. loop-4-refactor`.
+- **EALLOWGIT Fix (`v0.43.2`)**: Fixed `npm error code EALLOWGIT` in `setup.sh` and `setup.ps1` during global npm install of git packages (`caveman`, `ecc`) by pre-cloning repositories under `~/.ai-skills/` and wrapping npm global installs in non-fatal fallbacks (`try/catch` and `|| true`).
+- **Sync & Releases**: Synced 193+ skills to all local agent paths (`~/.claude/skills`, `~/.config/amp/skills`, `~/.agents/skills`). Published `@darkrei08/wizard-ai-cli@0.43.2` on NPM, pushed `v0.43.2` git tag on GitHub, and created GitHub Releases (`v0.43.0`, `v0.43.1`, and `v0.43.2 Latest`).
+
