@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#
+# ai-campaign - Wizard-AI Viral Marketing & Multi-Channel Campaign Dispatcher
+# Runs the publish_viral_campaign.py script from any directory.
+#
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+PYTHON_SCRIPT="$SCRIPT_DIR/scripts/publish_viral_campaign.py"
+
+if [ ! -f "$PYTHON_SCRIPT" ]; then
+    echo "❌ Error: Cannot find $PYTHON_SCRIPT" >&2
+    exit 1
+fi
+
+python3 "$PYTHON_SCRIPT" "$@"
