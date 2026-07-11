@@ -1,28 +1,30 @@
-<div align="center">
-  <h1>🧙‍♂️ Wizard-AI</h1>
-  <p><i>No habla en vano. Intercepta los fallos. Reduce el 78% de tokens. Y funciona.</i></p>
+<h1 align="center">🧙‍♂️ Wizard-AI</h1>
 
-  [![stars](https://img.shields.io/github/stars/darkrei08/Wizard-AI?style=flat-square)](https://github.com/darkrei08/Wizard-AI/stargazers)
-  [![release](https://img.shields.io/badge/release-v0.45.0-blue?style=flat-square)](https://github.com/darkrei08/Wizard-AI/releases)
-  [![npm](https://img.shields.io/badge/npm-v0.45.0-red?style=flat-square)](https://www.npmjs.com/package/@darkrei08/wizard-ai-cli)
-  [![works with](https://img.shields.io/badge/works%20with-47%20agents%20%26%20161%2B%20skills-purple?style=flat-square)]()
-  [![license](https://img.shields.io/badge/license-AGPL%20v3-orange?style=flat-square)](LICENSE)
+<p align="center"><i>No habla en vano. Intercepta los fallos. Reduce el 78% de tokens. Y funciona.</i></p>
 
+<p align="center">
+  <a href="https://github.com/darkrei08/Wizard-AI/stargazers"><img src="https://img.shields.io/github/stars/darkrei08/Wizard-AI?style=flat-square" alt="stars"/></a>
+  <a href="https://github.com/darkrei08/Wizard-AI/releases"><img src="https://img.shields.io/badge/release-v0.45.0-blue?style=flat-square" alt="release"/></a>
+  <a href="https://www.npmjs.com/package/@darkrei08/wizard-ai-cli"><img src="https://img.shields.io/badge/npm-v0.45.0-red?style=flat-square" alt="npm"/></a>
+  <img src="https://img.shields.io/badge/works%20with-47%20agents%20%26%20161%2B%20skills-purple?style=flat-square" alt="works with"/>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL%20v3-orange?style=flat-square" alt="license"/></a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/🏅%20TRENDING-Agentic%20OS%20%26%20Token%20Optimizer-10B981?style=for-the-badge" alt="Trendshift Badge"/>
+</p>
+
+<h3 align="center"><b>~78% menos tokens (hasta un 94%) · ~80% más barato · 5x más rápido · 100% seguro con rollback automático</b></h3>
+
+<p align="center">
+  Medido en sesiones reales con agentes de codificación de IA (Claude Code, Antigravity, OpenHands) en arquitecturas complejas, depuración e instalaciones (<code>bun</code>, <code>nuxt</code>, <code>python</code>, <code>node</code>, <code>rust</code>). Wizard-AI orquesta <b>#ponytail</b> (lógica de desarrollador senior pragmático), <b>#caveman</b> (-75% tokens CLI), <b>#sqz</b> (compresión JSON 20x) y <b>ai-os v0.45.0</b> (puertas de rollback automático sin interrupciones).
   <br/>
-  [![Trendshift Badge](https://img.shields.io/badge/🏅%20TRENDING-Agentic%20OS%20%26%20Token%20Optimizer-10B981?style=for-the-badge)]()
+  <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>Ver el Notebook de Benchmarks</b></a> · <a href="README.md#reproduce-it"><b>reproducirlo</b></a>.
+</p>
 
-  ### **~78% menos tokens (hasta un 94%) · ~80% más barato · 5x más rápido · 100% seguro con rollback automático**
-
-  <p align="center">
-    Medido en sesiones reales con agentes de codificación de IA (Claude Code, Antigravity, OpenHands) en arquitecturas complejas, depuración e instalaciones (`bun`, `nuxt`, `python`, `node`, `rust`). Wizard-AI orquesta <b>#ponytail</b> (lógica de desarrollador senior pragmático), <b>#caveman</b> (-75% tokens CLI), <b>#sqz</b> (compresión JSON 20x) y <b>ai-os v0.45.0</b> (puertas de rollback automático sin interrupciones).
-    <br/>
-    <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>Ver el Notebook de Benchmarks</b></a> · <a href="README.md#reproduce-it"><b>reproducirlo</b></a>.
-  </p>
-
-  <p align="center">
-    <a href="README.md">English</a> · <a href="README.it.md">Italiano</a> · <a href="README.fr.md">Français</a> · <a href="README.zh.md">中文</a> · <a href="README.ja.md">日本語</a>
-  </p>
-</div>
+<p align="center">
+  <a href="README.md">English</a> · <a href="README.it.md">Italiano</a> · <a href="README.fr.md">Français</a> · <a href="README.zh.md">中文</a> · <a href="README.ja.md">日本語</a>
+</p>
 
 ---
 
