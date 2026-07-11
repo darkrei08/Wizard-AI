@@ -1,15 +1,28 @@
-# 🧙‍♂️ Wizard-AI
+<div align="center">
+  <h1>🧙‍♂️ Wizard-AI</h1>
+  <p><i>Non parla a vuoto. Intercetta i crash. Taglia il 78% di token. E funziona.</i></p>
 
-> Un ecosistema completo di wrapper CLI per l'AI, strumenti di ottimizzazione dei token e skill per agenti — utilizzabile a livello globale da **qualsiasi agente AI** (Antigravity, Claude Code, Gemini CLI, GitHub Copilot, Amp, ecc.) e direttamente dal tuo terminale.
+  [![stars](https://img.shields.io/github/stars/darkrei08/Wizard-AI?style=flat-square)](https://github.com/darkrei08/Wizard-AI/stargazers)
+  [![release](https://img.shields.io/badge/release-v0.45.0-blue?style=flat-square)](https://github.com/darkrei08/Wizard-AI/releases)
+  [![npm](https://img.shields.io/badge/npm-v0.45.0-red?style=flat-square)](https://www.npmjs.com/package/@darkrei08/wizard-ai-cli)
+  [![works with](https://img.shields.io/badge/works%20with-47%20agents%20%26%20161%2B%20skills-purple?style=flat-square)]()
+  [![license](https://img.shields.io/badge/license-AGPL%20v3-orange?style=flat-square)](LICENSE)
 
-> 🇬🇧 [Read this README in English](README.md)
+  <br/>
+  [![Trendshift Badge](https://img.shields.io/badge/🏅%20TRENDING-Agentic%20OS%20%26%20Token%20Optimizer-10B981?style=for-the-badge)]()
 
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](LICENSE)
-[![Platform: Linux | macOS | Windows](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-blue.svg)]()
-[![Shell: Bash | PowerShell](https://img.shields.io/badge/Shell-Bash%20%7C%20PowerShell-green.svg)]()
-[![Requires: uv](https://img.shields.io/badge/Requires-uv-orange.svg)](https://docs.astral.sh/uv/)
-[![Skills: 161+](https://img.shields.io/badge/Skills-161%2B-blueviolet.svg)]()
-[![CLI Wrappers: 47](https://img.shields.io/badge/CLI%20Wrappers-47-teal.svg)]()
+  ### **~78% di token in meno (fino al 94%) · ~80% più economico · 5x più veloce · 100% sicuro e con rollback**
+
+  <p align="center">
+    Misurato su sessioni reali con agenti coding AI (Claude Code, Antigravity, OpenHands) su architetture complesse, debug e installazioni (`bun`, `nuxt`, `python`, `node`, `rust`). Wizard-AI orchestra <b>#ponytail</b> (logica da Senior Dev pigro), <b>#caveman</b> (-75% token in output CLI), <b>#sqz</b> (compressione JSON 20x) e <b>ai-os v0.45.0</b> (rollback automatico a zero downtime). Ogni barriera di sicurezza è attiva mentre il contesto resta leggero e fulmineo.
+    <br/>
+    <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>Guarda il Notebook Benchmark</b></a> · <a href="#riproduci-i-test"><b>riproduci i test</b></a>.
+  </p>
+
+  <p align="center">
+    <a href="README.md">English</a> · <a href="README.es.md">Español</a> · <a href="README.fr.md">Français</a> · <a href="README.zh.md">中文</a> · <a href="README.ja.md">日本語</a>
+  </p>
+</div>
 
 ---
 

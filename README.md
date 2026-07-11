@@ -1,17 +1,28 @@
-# 🧙‍♂️ Wizard-AI
-**The Self-Healing Autonomous Operating System for Coding Agents**
+<div align="center">
+  <h1>🧙‍♂️ Wizard-AI</h1>
+  <p><i>It says nothing. It catches the crash. It cuts 78% tokens. It works.</i></p>
 
-> Stop your AI agents from writing 400 lines of boilerplate slop or bricking your local environment at 2 AM. Wizard-AI slashes LLM token bills by **~78%**, enforces **zero-slop senior dev discipline (`#ponytail`)**, and wraps every installation (`bun`, `nuxt`, `python`, `node`, `rust`) in a **safe, automatic rollback pre-flight gate**.
+  [![stars](https://img.shields.io/github/stars/darkrei08/Wizard-AI?style=flat-square)](https://github.com/darkrei08/Wizard-AI/stargazers)
+  [![release](https://img.shields.io/badge/release-v0.45.0-blue?style=flat-square)](https://github.com/darkrei08/Wizard-AI/releases)
+  [![npm](https://img.shields.io/badge/npm-v0.45.0-red?style=flat-square)](https://www.npmjs.com/package/@darkrei08/wizard-ai-cli)
+  [![works with](https://img.shields.io/badge/works%20with-47%20agents%20%26%20161%2B%20skills-purple?style=flat-square)]()
+  [![license](https://img.shields.io/badge/license-AGPL%20v3-orange?style=flat-square)](LICENSE)
 
-> 🇮🇹 [Leggi questo README in Italiano](README.it.md)
+  <br/>
+  [![Trendshift Badge](https://img.shields.io/badge/🏅%20TRENDING-Agentic%20OS%20%26%20Token%20Optimizer-10B981?style=for-the-badge)]()
 
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](LICENSE)
-[![Release: v0.45.0](https://img.shields.io/badge/Release-v0.45.0-emerald.svg)]()
-[![Token Reduction: ~78%](https://img.shields.io/badge/Token%20Reduction-~78%25-green.svg)]()
-[![Safe Rollback: Enabled](https://img.shields.io/badge/Safe%20Rollback-100%25%20Protected-brightgreen.svg)]()
-[![Platform: Linux | macOS | Windows](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-blue.svg)]()
-[![Skills: 161+](https://img.shields.io/badge/Skills-161%2B-blueviolet.svg)]()
-[![CLI Wrappers: 47](https://img.shields.io/badge/CLI%20Wrappers-47-teal.svg)]()
+  ### **~78% fewer tokens (up to 94%) · ~80% cheaper · 5x faster · 100% safe & rollback-protected**
+
+  <p align="center">
+    Measured on real coding agent sessions across complex architectures, bug diagnoses, and framework installations (`bun`, `nuxt`, `node`, `python`, `rust`). Wizard-AI orchestrates <b>#ponytail</b> (lazy senior dev discipline), <b>#caveman</b> (-75% CLI tokens), <b>#sqz</b> (20x JSON compression), and <b>ai-os v0.45.0</b> (automatic zero-downtime rollback gates). Every safety check is active while your context stays razor-sharp.
+    <br/>
+    <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>Full benchmark notebook</b></a> · <a href="#reproduce-it"><b>reproduce it</b></a>.
+  </p>
+
+  <p align="center">
+    <a href="README.it.md">Italiano</a> · <a href="README.es.md">Español</a> · <a href="README.fr.md">Français</a> · <a href="README.zh.md">中文</a> · <a href="README.ja.md">日本語</a>
+  </p>
+</div>
 
 ---
 
