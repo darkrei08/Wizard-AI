@@ -204,6 +204,44 @@ Wizard-AI organizes all development, debugging, refactoring, and release tasks i
 4. **`04. /loop-4-refactor`** — 🏗️ **Refactor & Optimize:** Semantic code search (`serena`), clean code/DDD (`ponytail`), and token compression (`sqz`, `caveman`).
 5. **`05. /loop-5-release`** — 🚀 **Release & Learn:** Clean merge to main, SemVer versioning (`auto-release`), npm publishing, user handoff, and `MEMORY.md` persistent learning.
 
+### 📊 Engine Loop Flow
+
+Here is how a typical user request flows through the engine and interacts with the reference library:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Developer as 👤 Developer
+    participant Router as 🧙‍♂️ auto-router
+    participant Engine as ⚙️ engine-loops
+    participant Ref as 📚 reference
+    participant OS as 💻 OS / Env
+
+    Developer->>Router: Prompts "Add Auth feature"
+    activate Router
+    Note over Router: Detects scope & routes
+    Router->>Engine: Launches Loop 01 (Plan)
+    activate Engine
+    Engine->>Ref: Reads Architecture Specs (TDD/DDD)
+    Ref-->>Engine: Returns best-practice specs
+    Engine->>Developer: Proposes spec & task list
+    deactivate Engine
+    
+    Developer->>Engine: Approves plan
+    activate Engine
+    Note over Engine: Launches Loop 02 (Develop)
+    Engine->>OS: Runs tests (red-green-refactor)
+    Note over Engine: Launches Loop 03 (Debug)
+    Engine->>OS: Diagnoses & fixes build errors
+    Note over Engine: Launches Loop 04 (Refactor)
+    Engine->>Ref: Applies code compression & cleanup
+    Note over Engine: Launches Loop 05 (Release)
+    Engine->>OS: Bumps SemVer & updates MEMORY.md
+    Engine-->>Developer: Delivers complete verified feature
+    deactivate Engine
+    deactivate Router
+```
+
 > **`loop-install-bind` Gate:** Whenever you install a new skill, tool, or framework using `wizard-ai-installer`, the agent automatically categorizes it and binds it to one of these 5 numbered loops in `skills.json` and the loop's chaining tree. This ensures any LLM knows exactly when and how to trigger your new skill in future prompts!
 
 ---
