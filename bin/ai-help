@@ -23,6 +23,17 @@ echo -e "${BOLD}${CYAN}║         🤖  AI Tools & Skills Hub — $(hostname)  
 echo -e "${BOLD}${CYAN}╚══════════════════════════════════════════════════════════╝${RESET}"
 echo ""
 
+echo -e "${BOLD}${GREEN}🔄 LOOP-ENGINEERING WORKFLOWS — Primary Entry Points${RESET}"
+echo -e "  ${BOLD}/loop-develop${RESET}     🔄 Iterative feature development (grill → spec → plan → implement → verify → review → iterate)"
+echo -e "  ${BOLD}/loop-debug${RESET}       🐛 Diagnostic bug resolution (diagnose → isolate → fix → test → verify → iterate)"
+echo -e "  ${BOLD}/loop-refactor${RESET}    🏗️  Architecture improvement (analyze → design → model → plan → execute → verify → iterate)"
+echo -e "  ${BOLD}/loop-release${RESET}     🚀 Release & delivery (verify → review → merge → release → publish → iterate)"
+echo -e "  ${BOLD}/loop-learn${RESET}       🧠 Learning & knowledge (research → teach → grill → formalize → persist → iterate)"
+echo ""
+echo -e "  ${BOLD}${YELLOW}mattpocock Skills (Direct)${RESET}: /grill-me /grill-with-docs /to-spec /tdd /code-review /diagnosing-bugs"
+echo -e "  ${BOLD}${YELLOW}                          ${RESET}  /implement /wayfinder /triage /to-tickets /prototype /handoff /teach"
+echo ""
+
 echo -e "${BOLD}${RED}⚡ PRE-INSTALL GATE — Always use ai-os before installing anything${RESET}"
 echo -e "  $(check_cmd ai-os) ${BOLD}ai-os${RESET}            Universal OS-aware installer (os-detect skill)"
 echo -e "     ${BLUE}ai-os info                     ${RESET}→ full OS/distro/PM/tool environment report"

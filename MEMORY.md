@@ -27,3 +27,16 @@ Wizard-AI is a local ecosystem for managing AI agent workflows/skills. The repos
 - Created CLI wrapper script `bin/ai-last30days`.
 - Updated `setup.sh`, `bin/ai-help`, `docs/WIKI.md`, and `docs/WIKI.it.md` with help/descriptions.
 - Synced all skills via `ai-sync-skills`, merged to main via PR, and successfully published version `v0.37.0` of `wizard-ai` on GitHub.
+
+## [Session State Snapshot] - 2026-07-11 15:10:00
+- **v0.42.0 → v0.43.0**: Major integration and restructuring release.
+- **mattpocock/skills integration**: Cloned and integrated 27 skills from `mattpocock/skills` as read-only wiki references with `mp-` prefix across `core/`, `devops/`, `data-science/`, `misc/` categories.
+- **5 Loop-Engineering Workflows**: Created `loop-develop`, `loop-debug`, `loop-refactor`, `loop-release`, `loop-learn` — deterministic iterative workflows that chain existing skills.
+- **auto-router restructured**: Complete rewrite with Loop-First routing. 5 loops are now primary targets, domain workflows are secondary, mattpocock skills are direct-trigger.
+- **prompt-loop-engine restructured**: Updated routing matrix (v2), execution pipeline now references loop iteration cycles, added mp-* skill triggers.
+- **Agent files**: Created `AGENTS.md` (universal rules), `CLAUDE.md` (Claude config), `GEMINI.md` (Gemini/Antigravity config).
+- **Templates**: Created `docs/templates/CONTEXT.md` (shared language template based on DDD/mattpocock approach).
+- **CLI**: Updated `bin/ai-help` with loop-engineering section as primary entry points.
+- **Infrastructure**: Created `scripts/install-mattpocock-skills.sh` for automated skill installation.
+- **Active Skills**: 188+ (161 existing + 27 mattpocock)
+- **Active Workflows**: 12 (5 loop + 7 domain)

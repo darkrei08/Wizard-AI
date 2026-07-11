@@ -101,27 +101,46 @@ dove:
 **Skill:** `auto-router` (versione MoE estesa)
 
 - Calcola `relevance_score` per ogni workflow usando la gating function
-- Determina `task_weight` (LIGHT/MEDIUM/HEAVY) usando la formula sigmoid
-- Seleziona il workflow target (Route A-H)
-- Se multipli workflow hanno score simile (Δ < 0.1), combina le catene
+- Determina `task_weight` **Matrice di Routing Estesa (v2 — Loop-First):**
 
-**Matrice di Routing Estesa:**
+#### Routing Primario: 5 Loop-Engineering Workflows
+
+| Intent / Keyword Triggers | Loop Target | Weight Default |
+|--------------------------|-------------|----------------|
+| sviluppa, implementa, crea, build, feature, costruisci | `loop-develop` | HEAVY |
+| debug, bug, errore, crash, non funziona, fix, broken | `loop-debug` | MEDIUM→HEAVY |
+| refactor, migliora, architettura, pulisci, ottimizza, tech debt | `loop-refactor` | HEAVY |
+| release, rilascia, pubblica, deploy, versione, tag, bump | `loop-release` | HEAVY |
+| impara, spiega, insegna, documenta, wiki, studia, cos'è | `loop-learn` | LIGHT→MEDIUM |
+
+#### Routing Secondario: Workflow di Dominio
 
 | Intent / Keyword Triggers | Workflow Target | Weight Default |
 |--------------------------|-----------------|----------------|
-| codice, feature, fix, debug, test, implementa | `workflow-production-cycle` | MEDIUM→HEAVY |
 | UI, design, layout, CSS, componente, pagina | `workflow-frontend-design` | MEDIUM |
 | PDF, Word, Excel, documento, estrai, converti | `workflow-doc-processing` | LIGHT→MEDIUM |
 | SEO, blog, articolo, keyword, ranking | `workflow-seo-research` | MEDIUM |
 | API, integrazione, MCP, deploy, CI/CD | `workflow-dev-integrations` | MEDIUM→HEAVY |
 | subagent, delega, parallelo, orchestra | `workflow-agent-management` | HEAVY |
-| ottimizza, token, comprimi, memoria, skill | `workflow-agentic-brain` | MEDIUM |
-| spiega, dimmi, cos'è, mostra, analizza | Direct Execution (nessun workflow) | LIGHT |
+| ottimizza token, comprimi, memoria, skill | `workflow-agentic-brain` | MEDIUM |
+
+#### Trigger Diretti mattpocock Skills
+
+| Trigger | Skill |
+|---------|-------|
+| `/grill-me`, intervistami | `mp-grill-me` |
+| `/grill-with-docs`, linguaggio condiviso | `mp-grill-with-docs` |
+| `/triage`, prioritizza | `mp-triage` |
+| `/to-spec`, specifica | `mp-to-spec` |
+| `/prototype`, prototipa | `mp-prototype` |
+| `/wayfinder`, dove metto | `mp-wayfinder` |
+| `/teach`, insegna | `mp-teach` |
+| `/handoff`, passaggio | `mp-handoff` |
 
 **Self-Check Questions:**
 > ☐ Ho classificato correttamente il peso del task?
-> ☐ Il workflow selezionato è il più appropriato?
-> ☐ Ci sono workflow secondari da concatenare?
+> ☐ Ho routato verso un LOOP (prioritario) o un workflow di dominio?
+> ☐ Ci sono loop/workflow secondari da concatenare?
 
 ---
 
@@ -146,11 +165,12 @@ Pipeline di ottimizzazione in 4 fasi:
 
 - Per ogni task classificato, cerca skill pertinenti con soglia ≥1%
 - Ordina: Process skills PRIMA (brainstorming, debugging), Implementation skills DOPO
-- Carica le skill nel contesto dell'agente
+- Carica le skill nel contesto dell'agente (incluse mp-* se pertinenti)
 - Se la skill ha una checklist, crea un todo per ogni item
 
 **Self-Check Questions:**
 > ☐ Ho controllato se esistono skill rilevanti anche solo all'1%?
+> ☐ Ho incluso skill mp-* (mattpocock) pertinenti?
 > ☐ Ho caricato le process skill prima delle implementation skill?
 > ☐ Ho creato todo items per le checklist delle skill?
 
@@ -164,7 +184,7 @@ Apri la risposta con:
 > [!NOTE]
 > 🪄 **Wizard-AI Loop Engine:**
 > - **Pipeline Weight:** `[LIGHT|MEDIUM|HEAVY]`
-> - **Active Workflow:** `[nome-workflow]`
+> - **Active Loop:** `[loop-develop|loop-debug|loop-refactor|loop-release|loop-learn|direct]`
 > - **Active Skills:** `[skill₁, skill₂, ...]`
 > - **CLI/Wrapper:** `[comandi previsti]`
 ```
@@ -173,11 +193,19 @@ Apri la risposta con:
 
 ### ═══════════════ EXECUTION PIPELINE ═══════════════
 
-L'esecuzione è delegata al workflow selezionato nello Step 3. Ogni workflow ha la propria catena interna di skill.
+L'esecuzione è delegata al **loop o workflow** selezionato nello Step 3. Ogni loop ha la propria catena iterativa interna.
+
+**Loop-Engineering Execution:**
+Se un loop è stato selezionato, l'esecuzione segue il ciclo iterativo definito nella SKILL.md del loop:
+- `loop-develop`: ALIGN → SPECIFY → PLAN → EXECUTE → VERIFY → REVIEW → ITERATE
+- `loop-debug`: DIAGNOSE → ISOLATE → FIX → TEST → VERIFY → ITERATE
+- `loop-refactor`: ANALYZE → DESIGN → MODEL → PLAN → EXECUTE → VERIFY → REVIEW → ITERATE
+- `loop-release`: VERIFY → REVIEW → MERGE → RELEASE → PUBLISH → INDEX → RECOVER
+- `loop-learn`: RESEARCH → TEACH → VERIFY → FORMALIZE → PERSIST → SAVE → ITERATE
 
 **Regola d'oro dell'esecuzione:**
 Prima di scrivere codice, SEMPRE:
-1. Verifica se `brainstorming` è applicabile (design prima di implementazione)
+1. Verifica se `brainstorming` / `mp-grill-with-docs` è applicabile (design prima di implementazione)
 2. Verifica se `ponytail` / YAGNI riduce lo scope
 3. Verifica se esiste codice simile nel progetto (non duplicare)
 
@@ -201,15 +229,13 @@ Prima di scrivere codice, SEMPRE:
   - Code → `run tests` + `linter`
   - Build → `build command` + exit code
   - Bug fix → test del sintomo originale
-- Se la verifica fallisce → loop back all'EXECUTION
+- Se la verifica fallisce → loop back all'EXECUTION (il loop itera automaticamente)
 
 **Self-Check Questions:**
 > ☐ Ho eseguito TUTTI i comandi di verifica rilevanti?
 > ☐ Ho letto l'output COMPLETO e verificato exit code?
 > ☐ L'evidenza CONFERMA la mia dichiarazione?
 > ☐ Sto usando parole come "dovrebbe", "probabilmente"? → STOP, verifica!
-
----
 
 #### Step 8: Knowledge Update 🧠 (HEAVY only, o se struttura cambiata)
 **Skill:** `auto-graphify`
@@ -227,10 +253,10 @@ Prima di scrivere codice, SEMPRE:
 ---
 
 #### Step 9: Release Check 🚀 (HEAVY only, se branch su main)
-**Skill:** `auto-trigger-release`
+**Skill:** `auto-trigger-release` → `loop-release`
 
 - **IF** task == complete AND branch == main AND tests_pass:
-  - Proponi release automatico con `ai-release`
+  - Proponi `loop-release` automatico
   - Determina bump type: patch (fix), minor (feature), major (breaking)
 - **ELSE**: Skip silenziosamente
 
@@ -269,7 +295,7 @@ Chiudi la risposta con:
 > 🪄 **Wizard-AI Loop Recap:**
 > - **Skills Used:** `[skill₁ (purpose), skill₂ (purpose), ...]`
 > - **Pipeline Weight:** `LIGHT|MEDIUM|HEAVY`
-> - **Workflow Executed:** `[nome]`
+> - **Loop Executed:** `[loop-develop|loop-debug|loop-refactor|loop-release|loop-learn|none]`
 > - **Verification Status:** `✅ Passed | ⚠️ Partial | ❌ Failed`
 > - **Session Saved:** `✅ | ❌`
 ```
@@ -283,16 +309,16 @@ Queste sono **domande vincolanti** che l'agente DEVE porsi durante ogni interazi
 ### Dal `verification-before-completion`:
 > "Sto per dichiarare successo. Ho EVIDENZA FRESCA che lo conferma, o sto solo essendo ottimista?"
 
-### Dal `brainstorming`:
+### Dal `brainstorming` / `mp-grill-with-docs`:
 > "Sto per scrivere codice. Ho PRIMA esplorato il contesto, proposto alternative, e ottenuto approvazione?"
 
 ### Dal `ponytail` / YAGNI:
 > "Questo codice DEVE esistere? La standard library può farlo? Una feature nativa può gestirlo?"
 
-### Dal `systematic-debugging`:
+### Dal `systematic-debugging` / `mp-diagnosing-bugs`:
 > "Sto per proporre un fix. Ho PRIMA riprodotto il bug, identificato la root cause, e verificato che il fix non introduce regressioni?"
 
-### Dal `test-driven-development`:
+### Dal `test-driven-development` / `mp-tdd`:
 > "Sto scrivendo codice. Ho PRIMA scritto un test che fallisce? (RED → GREEN → REFACTOR)"
 
 ### Dal `enterprise-development-protocol`:
@@ -302,7 +328,7 @@ Queste sono **domande vincolanti** che l'agente DEVE porsi durante ogni interazi
 > "C'è anche solo l'1% di probabilità che una skill si applichi a questo task? Se sì, DEVO invocarla."
 
 ### Dall' `auto-router`:
-> "L'utente ha chiesto X. So ESATTAMENTE quale skill/wrapper usare, o sto improvvisando?"
+> "L'utente ha chiesto X. So ESATTAMENTE quale loop/skill/wrapper usare, o sto improvvisando?"
 
 ### Dal `cybersecurity`:
 > "Il codice che sto scrivendo è sicuro? Ho considerato injection, XSS, SSRF, auth bypass?"
@@ -314,13 +340,21 @@ Queste sono **domande vincolanti** che l'agente DEVE porsi durante ogni interazi
 
 ## 🔑 Keyword Trigger Map
 
-Keyword specifiche nel prompt dell'utente che triggerano automaticamente workflow o skill:
+Keyword specifiche nel prompt dell'utente che triggerano automaticamente loop, workflow o skill:
 
-### Trigger di Workflow Completi
+### 🔄 Trigger dei Loop-Engineering (PRIORITÀ MASSIMA)
+| Keyword/Frase | Loop Triggerato |
+|---------------|----------------|
+| "sviluppa", "implementa", "crea feature", "build", "costruisci", "/loop-develop" | `loop-develop` (HEAVY) |
+| "debug", "bug", "errore", "crash", "non funziona", "fix", "/loop-debug" | `loop-debug` (MEDIUM→HEAVY) |
+| "refactor", "migliora", "architettura", "ottimizza codice", "pulisci", "/loop-refactor" | `loop-refactor` (HEAVY) |
+| "release", "rilascia", "pubblica", "deploy", "versione", "/loop-release" | `loop-release` (HEAVY) |
+| "impara", "spiega", "insegna", "documenta", "wiki", "cos'è", "/loop-learn" | `loop-learn` (LIGHT→MEDIUM) |
+
+### Trigger di Workflow di Dominio (Secondari)
 | Keyword/Frase | Workflow Triggerato |
 |---------------|---------------------|
-| "crea progetto", "inizializza", "bootstrap", "scaffold" | `workflow-production-cycle` (HEAVY) |
-| "rilascia", "release", "pubblica", "deploy" | `workflow-production-cycle` → Step 7 (release) |
+| "crea progetto", "inizializza", "bootstrap", "scaffold" | `loop-develop` + `master-project-bootstrap` (HEAVY) |
 | "design", "UI premium", "landing page", "dashboard" | `workflow-frontend-design` (MEDIUM) |
 | "analizza PDF", "converti documento", "estrai testo" | `workflow-doc-processing` (LIGHT→MEDIUM) |
 | "SEO", "posizionamento", "blog strategy" | `workflow-seo-research` (MEDIUM) |
@@ -328,19 +362,30 @@ Keyword specifiche nel prompt dell'utente che triggerano automaticamente workflo
 | "orchestra subagent", "delega", "parallelo" | `workflow-agent-management` (HEAVY) |
 | "ottimizza token", "comprimi contesto", "crea skill" | `workflow-agentic-brain` (MEDIUM) |
 
-### Trigger di Skill Specifiche
+### Trigger mattpocock Skills (Diretto — bypass loop)
 | Keyword/Frase | Skill Triggerata |
 |---------------|------------------|
-| "debug", "errore", "bug", "non funziona" | `systematic-debugging` |
-| "test", "TDD", "unit test", "coverage" | `test-driven-development` |
+| "/grill-me", "intervistami", "allineamento" | `mp-grill-me` |
+| "/grill-with-docs", "linguaggio condiviso" | `mp-grill-with-docs` |
+| "/triage", "prioritizza issue" | `mp-triage` |
+| "/to-spec", "specifica tecnica" | `mp-to-spec` |
+| "/to-tickets", "crea ticket" | `mp-to-tickets` |
+| "/prototype", "prototipa" | `mp-prototype` |
+| "/wayfinder", "dove metto" | `mp-wayfinder` |
+| "/teach", "insegna concetto" | `mp-teach` |
+| "/handoff", "passaggio consegne" | `mp-handoff` |
+| "/code-review", "review codice" | `mp-code-review` |
+| "/diagnosing-bugs", "diagnosi" | `mp-diagnosing-bugs` |
+
+### Trigger di Skill di Dominio
+| Keyword/Frase | Skill Triggerata |
+|---------------|------------------|
 | "sicurezza", "OWASP", "audit security" | `cybersecurity` + `strix` |
-| "refactora", "pulisci codice", "tech debt" | `enterprise-development-protocol` |
-| "grafo", "architettura", "mappa codebase" | `graphify` |
+| "grafo", "mappa codebase" | `graphify` |
 | "ricorda", "salva", "memorizza contesto" | `claude-mem` + `session-manager` |
-| "comprimi", "troppi token", "contesto grande" | `auto-optimize` chain |
+| "comprimi", "troppi token" | `auto-optimize` chain |
 | "React", "Vue", "Angular", "Svelte", "Nuxt" | Skill frontend corrispondente |
 | "Python", "Node", "Laravel", "Firebase" | Skill backend corrispondente |
-| "Stitch", "design system", "DESIGN.md" | Catena `stitch-*` corrispondente |
 
 ---
 

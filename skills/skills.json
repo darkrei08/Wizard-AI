@@ -30,5 +30,7 @@
     {
       "path": "misc"
     }
-  ]
+  ],
+  "inherits": [],
+  "exclude": []
 }

@@ -7,6 +7,26 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
+## [0.43.0] - 2026-07-11
+
+### Added
+- **mattpocock/skills Integration**: Integrated 27 skills from [mattpocock/skills](https://github.com/mattpocock/skills) as read-only wiki references with `mp-` prefix. Skills include `grill-me`, `grill-with-docs`, `to-spec`, `tdd`, `code-review`, `diagnosing-bugs`, `implement`, `wayfinder`, `triage`, `to-tickets`, `domain-modeling`, `prototype`, `research`, `handoff`, `teach`, and more.
+- **5 Loop-Engineering Workflows**: Created 5 deterministic iterative loop workflows callable by the user:
+  - `loop-develop` → Feature development cycle (ALIGN → SPECIFY → PLAN → EXECUTE → VERIFY → REVIEW → ITERATE)
+  - `loop-debug` → Diagnostic bug resolution (DIAGNOSE → ISOLATE → FIX → TEST → VERIFY → ITERATE)
+  - `loop-refactor` → Architecture improvement (ANALYZE → DESIGN → MODEL → PLAN → EXECUTE → VERIFY → REVIEW → ITERATE)
+  - `loop-release` → Release & delivery (VERIFY → REVIEW → MERGE → RELEASE → PUBLISH → INDEX → RECOVER)
+  - `loop-learn` → Knowledge acquisition & persistence (RESEARCH → TEACH → VERIFY → FORMALIZE → PERSIST → SAVE → ITERATE)
+- **Agent Configuration Files**: Added `AGENTS.md` (universal rules), `CLAUDE.md` (Claude Code config), `GEMINI.md` (Gemini/Antigravity config) to project root.
+- **CONTEXT.md Template**: Added `docs/templates/CONTEXT.md` — a shared language template based on Matt Pocock's Domain-Driven Design approach.
+- **Installation Script**: Added `scripts/install-mattpocock-skills.sh` for automated skill cloning and integration.
+
+### Changed
+- **auto-router**: Completely restructured to use Loop-First routing. The 5 loop-engineering workflows are now the primary routing targets, with domain workflows as secondary.
+- **prompt-loop-engine**: Updated routing matrix (v2) to prioritize loop-engineering workflows. Added mattpocock skill triggers as direct-invocation options. Updated execution pipeline to reference loop iteration cycles.
+- **skills.json**: Updated with `inherits` and `exclude` fields for future extensibility.
+
+
 ## [0.42.0] - 2026-07-08
 
 ### Added
