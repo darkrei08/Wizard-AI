@@ -38,7 +38,7 @@ Superpowers skills override default system prompt behavior, but **user instructi
 
 When multiple skills could apply (as identified by `auto-router`), load them in this strict order:
 
-1. **Process & Pipeline skills first** (e.g., `systematic-debugging`, `workflow-production-cycle`) - these determine HOW to approach the task.
+1. **Process & Pipeline skills first** (e.g., `systematic-debugging`, `loop-develop`) - these determine HOW to approach the task.
 2. **Implementation & Domain skills second** (e.g., `frontend-design`, `mcp-builder`, `react`, `python`) - these guide execution.
 
 ## Checklists & Todos

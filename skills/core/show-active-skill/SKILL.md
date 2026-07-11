@@ -21,7 +21,7 @@ Use a GitHub-style alert `> [!NOTE]` as the very first line of your response to 
 > [!NOTE]
 > 🪄 **Wizard-AI Loop Engine (PRE-EXEC):**
 > - **Pipeline Weight:** `[LIGHT|MEDIUM|HEAVY]`
-> - **Active Workflow:** `[es. workflow-production-cycle]`
+> - **Active Workflow:** `[es. loop-develop]`
 > - **Active Skills:** `[skill₁, skill₂, ...]`
 > - **CLI/Wrapper:** `[comandi previsti]`
 ```
@@ -31,7 +31,7 @@ Use a GitHub-style alert `> [!NOTE]` as the very first line of your response to 
 > [!NOTE]
 > 🪄 **Wizard-AI Loop Engine (PRE-EXEC):**
 > - **Pipeline Weight:** `HEAVY`
-> - **Active Workflow:** `workflow-production-cycle`
+> - **Active Workflow:** `loop-develop`
 > - **Active Skills:** `auto-branch`, `test-driven-development`, `react`
 > - **CLI/Wrapper:** `ai-branch`, `npm run test`
 

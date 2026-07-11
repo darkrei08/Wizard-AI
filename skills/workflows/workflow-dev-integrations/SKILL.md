@@ -1,6 +1,6 @@
 ---
 name: workflow-dev-integrations
-description: "Meta-skill orchestrating DevOps, APIs, and External Integrations. Chains mcp-builder, claude-api, internal-comms, webapp-testing, auto-workflow, and auto-release."
+description: "Meta-skill orchestrating DevOps, APIs, and External Integrations. Chains mcp-builder, claude-api, internal-comms, webapp-testing, loop-develop, and loop-release."
 ---
 
 # Dev Integrations & DevOps Workflow (Meta-Skill)
@@ -18,12 +18,12 @@ This meta-skill orchestrates building APIs, integrating with external systems, t
 3. **External Comms (`internal-comms` & `slack-gif-creator`)**
    Use these skills to generate automated update messages, changelogs for Slack, or fun GIFs for team channels upon successful builds.
 
-4. **Ship It (`auto-workflow`, `auto-release`, `auto-npm-publish`)**
-   Enforce the Wizard-AI Git flow: 
-   - Isolate in a branch.
-   - Run tests.
-   - Merge to main.
-   - Use `auto-release` to tag semver and `auto-npm-publish` to deploy the package automatically.
+4. **Ship It (`loop-develop`, `loop-release`, `auto-npm-publish`)**
+   Enforce the Wizard-AI Git flow (`loop-develop`): 
+   - Isolate in a branch (`ai-branch`).
+   - Run tests (`mp-tdd`).
+   - Merge to main (`loop-release`).
+   - Use `loop-release` (`ai-release`) to tag semver and `auto-npm-publish` to deploy the package automatically.
 
 ## Execution Rules
 

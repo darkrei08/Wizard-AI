@@ -26,17 +26,17 @@ Before executing a task, calculate its weight based on intent, context size, and
   - *Keywords:* `architettura, refactoring, migrazione, progetto, release, deploy, security audit, feature complessa`
   - *Action:* Route to loop-engineering workflow. Execute FULL iterative loop.
 
-## 2. Primary Routing: 5 Loop-Engineering Workflows
+## 2. Primary Routing: 5 Sequenced Loop-Engineering Workflows (01 → 05)
 
-These are the **primary entry points** for any development task. Route here FIRST.
+These are the **primary numbered entry points** for any development task. Route here FIRST following the exact lifecycle progression from 01 to 05.
 
-| User Intent / Vague Request | Loop Workflow | Default Weight | Trigger Keywords |
-|---|---|---|---|
-| **Sviluppare qualcosa** — feature, funzionalità, componente, build | `loop-develop` | HEAVY | `sviluppa, implementa, crea, costruisci, build, aggiungi, feature` |
-| **Risolvere un bug** — errori, crash, comportamento inatteso | `loop-debug` | MEDIUM→HEAVY | `debug, bug, errore, crash, non funziona, broken, fix, issue` |
-| **Migliorare codice** — refactoring, architettura, qualità, tech debt | `loop-refactor` | HEAVY | `refactor, migliora, architettura, ottimizza, clean up, riorganizza, tech debt` |
-| **Rilasciare una versione** — release, publish, deploy | `loop-release` | HEAVY | `release, pubblica, rilascia, deploy, versione, tag, bump` |
-| **Imparare/documentare** — capire, studiare, wiki, knowledge | `loop-learn` | LIGHT→MEDIUM | `impara, spiega, insegna, documenta, wiki, studia, ricerca, cos'è, come funziona` |
+| Progress / User Intent | Numbered Loop Workflow | Aliases | Default Weight | Trigger Keywords |
+|---|---|---|---|---|
+| **01. Pianificazione & Specifiche** — allineare, sgarbugliare, specifiche, architettura | `loop-1-plan` | `/loop-1`, `/loop-plan`, `/align` | MEDIUM→HEAVY | `pianifica, analizza requisiti, allinea, specifica, design, architettura, prima di iniziare` |
+| **02. Sviluppo & TDD** — feature, funzionalità, componente, implementazione, branch isolato | `loop-2-develop` | `/loop-2`, `/loop-develop`, `/tdd` | HEAVY | `sviluppa, implementa, crea, costruisci, build, aggiungi, feature, tdd` |
+| **03. Debug & Verifica** — risoluzione bug, regressioni, code review, quality gates | `loop-3-debug` | `/loop-3`, `/loop-debug`, `/verify` | MEDIUM→HEAVY | `debug, bug, errore, crash, non funziona, broken, fix, issue, review, verifica` |
+| **04. Refactoring & Ottimizzazione** — pulizia architettura, tech debt, compressione token | `loop-4-refactor` | `/loop-4`, `/loop-refactor`, `/optimize` | HEAVY | `refactor, migliora, architettura, ottimizza, clean up, riorganizza, tech debt, token` |
+| **05. Rilascio & Apprendimento** — merge su main, semver release, npm publish, handoff, memoria | `loop-5-release` | `/loop-5`, `/loop-release`, `/learn` | HEAVY | `release, pubblica, rilascia, deploy, versione, tag, bump, impara, documenta, wiki, mem` |
 
 ## 3. Secondary Routing: Domain Workflows
 
@@ -51,7 +51,7 @@ If the request doesn't fit a loop-engineering workflow, route to a domain-specif
 | "Map codebase", "Architecture diagram" | `graphify` / `ai-graph` | MEDIUM | Run `ai-graph .` |
 | "Security audit", "Check vulnerabilities" | `cybersecurity` / `strix` | HEAVY | Penetration testing |
 | "Save this", "Remember for later" | `session-manager` / `claude-mem` | LIGHT | `ai-session-save` or `ai-mem store` |
-| "Start a new project", "Initialize", "Bootstrap" | `loop-develop` + `master-project-bootstrap` | HEAVY | `ai-scaffold` first, then `loop-develop` |
+| "Start a new project", "Initialize", "Bootstrap" | `loop-1-plan` + `master-project-bootstrap` | HEAVY | `ai-scaffold` first, then `loop-1-plan` → `loop-2-develop` |
 
 ## 4. mattpocock Skills — Direct Routing
 
@@ -74,10 +74,10 @@ These skills from `mattpocock/skills` are available with `mp-` prefix and can be
 ## 5. Fallback Logic & MoE Combination
 
 - If the user's request spans multiple domains (e.g., "Build a backend API and design the frontend UI"):
-  - **Combine Loops:** Route to `loop-develop` + `workflow-frontend-design`.
+  - **Combine Loops:** Route to `loop-2-develop` + `workflow-frontend-design`.
   - **Elevate Weight:** Always elevate to **HEAVY**.
 - If the request doesn't match perfectly, run `ai-help` to list all available tools and capabilities.
-- If the user explicitly names a loop (e.g., `/loop-debug`), bypass routing and execute directly.
+- If the user explicitly names a loop (e.g., `/loop-3-debug` or `/loop-3`), bypass routing and execute directly.
 
 ## Self-Improvement Constraint (Extracted Rule)
 > "L'utente ha chiesto X. So ESATTAMENTE quale loop/skill/wrapper usare, o sto improvvisando? Ho calcolato il Task Weight correttamente? Ho routato verso un LOOP o verso una skill diretta?"

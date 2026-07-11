@@ -6,12 +6,12 @@ description: "REDIRECT → workflow-agentic-brain. Questo skill è stato fuso ne
 # auto-optimize → REDIRECT
 
 > [!IMPORTANT]
-> Questa skill è stata **fusa** nel **Master Optimizer Workflow** (`workflow-agentic-brain`).
-> Il loop di ottimizzazione token (markitdown, flashrank, llmlingua, lean-ctx) è stato integrato in un'unica pipeline coerente con la gestione agentica generale.
+> Questa skill è stata **fusa** nel **Master Optimizer Workflow** (`workflow-agentic-brain`) e integrata nel **`04. loop-4-refactor`**.
+> Il loop di ottimizzazione token (markitdown, flashrank, llmlingua, lean-ctx, caveman, sqz) è ora parte integrante del ciclo architetturale e di risparmio risorse.
 
-## Istruzioni
+## Istruzioni di Reindirizzamento
 
-**Carica e segui:** `workflow-agentic-brain`
+**Carica e segui:** `workflow-agentic-brain` oppure **`04. loop-4-refactor`**
 
 Tutti i tool wrapper originali continuano a funzionare normalmente e sono documentati nel nuovo workflow:
 - `ai-optimize loop`

@@ -7,16 +7,16 @@
 
 ## 🔑 Core Rules
 
-### Rule 1: Loop-First Development
-**ALWAYS route development tasks to a loop-engineering workflow.** Never start coding without first determining which loop applies:
+### Rule 1: Sequenced Loop-First Development (01 → 05)
+**ALWAYS route development tasks to the numbered sequenced loop-engineering workflow.** Never start coding without first determining which lifecycle loop applies:
 
-| Task Type | Loop |
-|---|---|
-| New feature / implementation | `/loop-develop` |
-| Bug / error / crash | `/loop-debug` |
-| Refactoring / architecture | `/loop-refactor` |
-| Release / publish / deploy | `/loop-release` |
-| Learning / documentation | `/loop-learn` |
+| Progress / Task Type | Numbered Master Loop | Aliases | Purpose & Categorized Skills |
+|---|---|---|---|
+| **01. Pianificazione & Specifiche** | `/loop-1-plan` | `/loop-1`, `/align` | Requisiti, Grilling, Specifiche `.spec.md`, Architettura, Ticketing |
+| **02. Sviluppo & TDD** | `/loop-2-develop` | `/loop-2`, `/tdd` | Git Branch isolato, TDD Red-Green-Refactor, Subagents, Security |
+| **03. Debug & Verifica** | `/loop-3-debug` | `/loop-3`, `/verify` | Diagnosi Bug in 4 fasi, Quality Gates (`ai-debug`), Code Review |
+| **04. Refactoring & Ottimizzazione** | `/loop-4-refactor` | `/loop-4`, `/optimize` | Refactoring architettura (`serena`), Clean Code, Token Opt (`sqz`, `caveman`) |
+| **05. Rilascio & Apprendimento** | `/loop-5-release` | `/loop-5`, `/learn` | Merge su Main, SemVer Release, Pubblicazione npm, Handoff, `MEMORY.md` |
 
 ### Rule 2: Persistent Memory
 **ALWAYS read `MEMORY.md` at the start of a session.** This file contains the compressed state of all previous sessions.
@@ -44,6 +44,11 @@ Before writing code, ask the YAGNI ladder:
 2. Can the **standard library** handle it?
 3. Is there a **native/builtin** solution?
 4. Only then: write custom code.
+
+### Rule 7: Skill Categorization & Loop-Binding on Install
+When installing a new skill, tool, framework, or project (via `wizard-ai-installer` or CLI), **ALWAYS execute the `loop-install-bind` assessment**:
+1. Determine which of the 5 Master Sequenced Loops (`01. loop-1-plan`, `02. loop-2-develop`, `03. loop-3-debug`, `04. loop-4-refactor`, `05. loop-5-release`) and which category purpose the new resource belongs to.
+2. Register the skill inside the target loop's `SKILL.md` (`Loop Chaining Tree`), update `skills.json` (`"loop": "..."`), and add trigger keywords to `auto-router/SKILL.md`.
 
 ---
 

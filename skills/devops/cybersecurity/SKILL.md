@@ -31,6 +31,7 @@ During code refactoring and the debugging quality gate, act as an automated secu
 - Whenever a user asks for threat hunting, malware analysis, or penetration testing guidance.
 
 ## Related Tools
-- `auto-workflow`
+- `loop-develop`
+- `loop-debug`
 - `auto-debug`
 - `receiving-code-review`

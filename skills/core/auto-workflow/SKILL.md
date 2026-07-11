@@ -1,43 +1,41 @@
 ---
 name: auto-workflow
-description: "REDIRECT → workflow-production-cycle. Questo skill è stato fuso nel Master Production Workflow. Carica workflow-production-cycle per il workflow unificato di Git Flow, Superpowers, TDD, e Release lifecycle."
+description: "REDIRECT WRAPPER — Il vecchio comando /auto-workflow reindirizza ora al nuovo sistema sequenziale di Loop-Engineering (01. loop-1-plan → 02. loop-2-develop → 03. loop-3-debug → 04. loop-4-refactor → 05. loop-5-release)."
 ---
 
-# auto-workflow → REDIRECT
+# 🔄 auto-workflow → Redirect al Sistema dei 5 Loop Sequenziali
 
-> [!IMPORTANT]
-> Questa skill è stata **fusa** nel **Master Production Workflow** (`workflow-production-cycle`).
-> Tutti i contenuti, le regole, e i 7 step originali sono stati integrati e migliorati nel workflow unificato.
+> **Nota di Compatibilità (v0.43.1+):** Il workflow monolitico `auto-workflow` è stato sostituito e suddiviso nei **5 Sequenced Loop-Engineering Workflows** (`01 → 05`).
+> Questo file funge da **redirect pulito** per garantire che comandi storici o abitudini degli utenti continuino a funzionare perfettamente senza interrompere l'esperienza d'uso.
 
-## Cosa è cambiato
+---
 
-Il vecchio `auto-workflow` (7 step rigidi) e il vecchio `workflow-production-cycle` (5 fasi con catena skill) sono stati unificati in un **singolo workflow supremo** che contiene il meglio di entrambi:
+## 🗺️ Mappatura Automatica di Reindirizzamento
 
-- ✅ Git Flow rigido (da `auto-workflow`)
-- ✅ Superpowers Subagent Methodology (da `auto-workflow`)
-- ✅ Catena completa di skill chaining (da `workflow-production-cycle`)
-- ✅ Regole Enterprise production-ready (da `enterprise-development-protocol`)
-- ✅ Self-Check Questions per ogni fase
-- ✅ Vincoli YAGNI e secure-by-design
+Quando un utente o un agente invoca `/auto-workflow` o `ai-workflow`, l'agente esegue il seguente smistamento verso i nuovi loop numerati:
 
-## Istruzioni
+1. **Se il task deve ancora essere analizzato o pianificato:**
+   👉 Reindirizzamento automatico a **`01. loop-1-plan`** (Allineamento, Grilling, Specifiche e Architettura).
 
-**Carica e segui:** `workflow-production-cycle`
+2. **Se esiste già un piano (`task.md`) e si deve scrivere codice:**
+   👉 Reindirizzamento automatico a **`02. loop-2-develop`** (Branch isolato, TDD, Implementazione e Subagent).
 
-Tutte le regole di `auto-workflow` sono preservate e migliorate nel workflow unificato:
-- I 7 step originali → mappati alle 6 Fasi del Master Production Workflow
-- Le regole per l'agente → unificate con i vincoli enterprise
-- Il salvataggio sessione → integrato nella Fase 6 (Release & Cleanup)
-- Il MEMORY.md → gestito dal `prompt-loop-engine` post-pipeline
+3. **Se il task riguarda la correzione di un bug o la verifica di test falliti:**
+   👉 Reindirizzamento automatico a **`03. loop-3-debug`** (Diagnosi in 4 fasi, Quality Gates e Code Review).
 
-## Mapping degli Step Originali
+4. **Se il task riguarda il refactoring architetturale o la pulizia del debito tecnico:**
+   👉 Reindirizzamento automatico a **`04. loop-4-refactor`** (Serena, Clean Code e Risparmio Token).
 
-| auto-workflow (vecchio) | Master Production Workflow (nuovo) |
-|------------------------|-----------------------------------|
-| Step 1: Brainstorming & Planning | Fase 1: Brainstorm & Planning |
-| Step 2: Isolate | Fase 2: Isolamento |
-| Step 3: Execution & TDD | Fase 3: Esecuzione & TDD |
-| Step 4: Review & Validate | Fase 4: Review & Quality Gates |
-| Step 5: Switch to Main | Fase 5: Merge to Main |
-| Step 6: Merge Staging to Main | Fase 5: Merge to Main |
-| Step 7: Official Release & Cleanup | Fase 6: Release & Cleanup |
+5. **Se il task è in fase di chiusura, merge o rilascio di versione:**
+   👉 Reindirizzamento automatico a **`05. loop-5-release`** (Merge su main, SemVer Release, Handoff e Memoria `MEMORY.md`).
+
+---
+
+## ⚡ Esecuzione Istantanea (Fallback)
+
+Se l'utente invoca `/auto-workflow` senza argomenti o con una richiesta di sviluppo generica, l'agente deve rispondere avviando immediatamente lo Step 01:
+```bash
+# Avvio automatico della sequenza
+ai-loop 1   # oppure: /loop-1-plan
+```
+E seguire il ciclo in ordine numerato da 01 a 05 fino al completamento.

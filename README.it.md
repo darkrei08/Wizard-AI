@@ -142,7 +142,21 @@ Dietro le quinte, `setup.sh` gestisce tutto per te:
 3. **Clona le dipendenze**: Scarica i repository necessari sotto `~/.ai-skills/`.
 4. **Installa Tool CLI Globali**: Configura gli eseguibili nativi (`graphify`, `litellm`, `markitdown`, `sqz`, `serena`) globalmente via `uv tool`.
 5. **Crea Wrapper Personalizzati**: Copia gli script da `bin/` a `~/.local/bin/`.
-6. **Configura le Skill**: Copia le skill in `~/.gemini/config/skills/` e le propaga agli altri agenti.
+6. **Configures Agent Skills**: Deploys all agent skills to `~/.gemini/config/skills/` and runs `ai-sync-skills` to copy them to other agent folders.
+
+---
+
+## 🔄 I 5 Workflow Sequenziali di Loop Engineering (`01 → 05`)
+
+Wizard-AI organizza tutte le fasi di pianificazione, sviluppo, debug, refactoring e rilascio in **5 Loop Sequenziali Numerati (`01 → 05`)**:
+
+1. **`01. /loop-1-plan`** — 🎯 **Pianificazione & Specifiche:** Analisi requisiti, grilling interattivo, `.spec.md`, modellazione dominio e `task.md`.
+2. **`02. /loop-2-develop`** — ⚡ **Sviluppo & TDD:** Branch git isolato, ciclo TDD Red-Green-Refactor, subagent paralleli e sicurezza OWASP.
+3. **`03. /loop-3-debug`** — 🔍 **Debug & Verifica:** Diagnosi bug in 4 fasi, quality gates `ai-debug check` e code review rigorosa.
+4. **`04. /loop-4-refactor`** — 🏗️ **Refactoring & Ottimizzazione:** Ricerca semantica (`serena`), clean code/DDD (`ponytail`) e risparmio token (`sqz`, `caveman`).
+5. **`05. /loop-5-release`** — 🚀 **Rilascio & Apprendimento:** Merge pulito su main, Semantic Versioning (`auto-release`), pubblicazione npm, handoff e salvataggio in `MEMORY.md`.
+
+> **`loop-install-bind` Gate:** Ogni volta che installi una nuova skill o framework tramite `wizard-ai-installer`, l'agente esegue automaticamente la categorizzazione e l'aggancio in `skills.json` e nel `Loop Chaining Tree` del loop numerato di competenza. Così l'LLM sa esattamente dove si trova e quando innescarla in futuro!
 
 ---
 

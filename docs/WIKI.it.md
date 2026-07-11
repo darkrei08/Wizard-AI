@@ -7,7 +7,22 @@ Questa è la wiki centrale che traccia tutti i tool core di Wizard-AI, le skill 
 
 ---
 
-## 🧙‍♂️ 1. Strumenti CLI Core di Wizard-AI
+## 🔁 1. I 5 Workflow Sequenziali di Loop Engineering (`01 → 05`)
+
+Wizard-AI opera su una pipeline deterministica di **Loop Engineering** (`prompt-loop-engine`).
+Quando si affrontano compiti di sviluppo o refactoring, le richieste vengono instradate attraverso **5 Loop Sequenziali Numerati (`01 → 05`)**:
+
+1. **`01. loop-1-plan`**: 🎯 Pianificazione & Spec (`brainstorming` → `grill` → `.spec.md` → `mp-domain-modeling` → `task.md`)
+2. **`02. loop-2-develop`**: ⚡ Sviluppo & TDD (`auto-branch` → `TDD Red-Green-Refactor` → Subagent → `cybersecurity`)
+3. **`03. loop-3-debug`**: 🔍 Debug & Verifica (`diagnosing-bugs` 4 fasi → `ai-debug check` → `code-review`)
+4. **`04. loop-4-refactor`**: 🏗️ Refactoring & Ottimizzazione (`serena` → Clean Code `ponytail` → Token Opt `sqz`/`caveman`)
+5. **`05. loop-5-release`**: 🚀 Rilascio & Apprendimento (`finishing-a-development-branch` → SemVer `auto-release` → `npm publish` → `mp-teach`/`mp-handoff` → `MEMORY.md`)
+
+> **Regola di Installazione (`loop-install-bind`):** Ogni nuova skill, tool o framework installato tramite `wizard-ai-installer` viene categorizzato e agganciato automaticamente al Loop Target appropriato all'interno dell'albero delle skill (`skills.json`).
+
+---
+
+## 🧙‍♂️ 2. Strumenti CLI Core di Wizard-AI
 
 Questi sono i wrapper principali da riga di comando installati globalmente sul tuo sistema tramite Wizard-AI.
 

@@ -95,6 +95,29 @@ cp "$HOME/.gemini/config/skills/<skill-name>/SKILL.md" \
    "$WIZARD_AI_DIR/skills/<skill-name>/SKILL.md"
 ```
 
+### Step 3.5: Skill Categorization & Loop-Binding (`loop-install-bind`)
+
+<MANDATORY>
+Ogni nuova skill, framework o progetto installato DEVE essere classificato categorialmente e agganciato in modo persistente a uno dei **5 Loop Sequenziali Master (`01 → 05`)** di Wizard-AI, in modo che l'LLM sappia sempre in futuro dove trovarla e in quale fase del ciclo farla richiamare.
+</MANDATORY>
+
+1. **Analisi Categoriale e Assegnazione al Loop Target:**
+   L'LLM deve chiedersi (o chiedere all'utente se lo scopo è ambiguo): *"Qual è lo scopo operativo principale di questa nuova skill/framework/progetto e a quale dei 5 Loop Master appartiene?"*
+   - `01. loop-1-plan` → Requisiti, Allineamento, Grilling, Specifiche, Ticketing e Scaffolding Architetturale.
+   - `02. loop-2-develop` → Git Branching isolato, TDD (Red-Green-Refactor), Implementazione, Subagents, Sicurezza (OWASP/NIST) o Framework UI/Domain.
+   - `03. loop-3-debug` → Diagnosi Bug in 4 fasi, Risoluzione sistematica, Verification Gates e Code Review.
+   - `04. loop-4-refactor` → Refactoring Architetturale, Clean Code (`ponytail`), DDD e Ottimizzazione Risorse/Token (`caveman`, `sqz`, ecc.).
+   - `05. loop-5-release` → Merge su Main, Semantic Release, Pubblicazione NPM/Git, Handoff e Apprendimento Persistente (`MEMORY.md`).
+
+2. **Aggancio nel File SKILL.md del Loop Target (`Loop Chaining Tree`):**
+   - Apri e modifica il file del loop corrispondente (`$WIZARD_AI_DIR/skills/workflows/loop-X-.../SKILL.md`).
+   - Aggiungi la nuova skill sotto la sezione di categorizzazione corretta indicando: **Nome**, **Quando usarla** e **Come si concatena** con le altre skill del loop.
+   - Se necessario, aggiorna il diagramma di flusso Mermaid all'interno di quel loop per includere il nuovo nodo di esecuzione.
+
+3. **Registrazione nel Routing e Metadati (`auto-router` & `skills.json`):**
+   - Se la skill ha un trigger esplicito (es. `/nuova-skill` o keyword univoche), registralo nella tabella di routing del file `$WIZARD_AI_DIR/skills/core/auto-router/SKILL.md`.
+   - Verifica che `skills.json` indicizzi correttamente la cartella della nuova skill.
+
 ### Step 4: Update the Global `setup.sh`
 
 You MUST modify the main setup script so this tool installs automatically on new machines.

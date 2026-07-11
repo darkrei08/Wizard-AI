@@ -9,14 +9,18 @@ This is the central wiki tracking all core Wizard-AI tools, installed AI agent s
 
 ---
 
-## 🔁 1. The Loop Engineering Architecture
+## 🔁 1. The 5 Sequenced Loop-Engineering Workflows (`01 → 05`)
 
 Wizard-AI operates on a deterministic **Loop Engineering Pipeline** (`prompt-loop-engine`), acting as the Master Orchestrator for every interaction.
-This MoE (Mixture of Experts) based pipeline executes 11 steps for every prompt, dynamically weighting the complexity (LIGHT/MEDIUM/HEAVY) to save tokens on simple queries and enforce extreme rigor on complex tasks.
+When executing complex tasks, the system routes the request through **5 Sequenced Numbered Loops (`01 → 05`)**:
 
-1. **PRE-PROMPT (Step 1-6)**: `session-manager` (restore), `auto-prompt` (structure), `auto-router` (MoE routing), `auto-optimize` (compress context), `using-superpowers` (discover), `show-active-skill` (announce).
-2. **EXECUTION (Core Task)**: Routed to specific workflows (e.g. `workflow-production-cycle`, `workflow-agentic-brain`).
-3. **POST-PROMPT (Step 7-11)**: `verification-before-completion`, `auto-graphify` (update graph), `auto-trigger-release` (deploy), `session-manager` (save memory), `show-active-skill` (recap).
+1. **`01. loop-1-plan`**: 🎯 Plan & Spec (`brainstorming` → `grill` → `.spec.md` → `mp-domain-modeling` → `task.md`)
+2. **`02. loop-2-develop`**: ⚡ Develop & TDD (`auto-branch` → `TDD Red-Green-Refactor` → Subagents → `cybersecurity`)
+3. **`03. loop-3-debug`**: 🔍 Debug & Verify (`diagnosing-bugs` 4 phases → `ai-debug check` → `code-review`)
+4. **`04. loop-4-refactor`**: 🏗️ Refactor & Optimize (`serena` → Clean Code `ponytail` → Token Opt `sqz`/`caveman`)
+5. **`05. loop-5-release`**: 🚀 Release & Learn (`finishing-a-development-branch` → SemVer `auto-release` → `npm publish` → `mp-teach`/`mp-handoff` → `MEMORY.md`)
+
+> **Note on Installations:** Every new skill or framework installed via `wizard-ai-installer` executes the **`loop-install-bind` gate** to automatically classify and register the new tool inside the target loop's chaining tree (`skills.json`).
 
 ---
 
