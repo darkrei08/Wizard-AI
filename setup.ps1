@@ -155,14 +155,16 @@ Clone-SkillRepo 'https://github.com/chopratejas/headroom.git' 'headroom'
 Clone-SkillRepo 'https://github.com/antvis/Infographic.git' 'Infographic'
 Clone-SkillRepo 'https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git' 'cybersecurity-skills'
 
-Write-Host "Installing ECC and caveman via NPM globally..." -ForegroundColor Yellow
+Write-Host "Cloning/Verifying ECC and caveman repositories inside ~/.ai-skills/..." -ForegroundColor Cyan
+Clone-SkillRepo 'https://github.com/affaan-m/ECC.git' 'ECC'
+Clone-SkillRepo 'https://github.com/JuliusBrussee/caveman.git' 'caveman'
+
 if (Get-Command npm -ErrorAction SilentlyContinue) {
-    npm install -g ecc-universal
-    npm install -g https://github.com/JuliusBrussee/caveman.git
+    Write-Host "Attempting optional NPM global installations (ECC, caveman)..." -ForegroundColor Yellow
+    try { npm install -g ecc-universal 2>$null } catch { Write-Host "Note: ecc-universal npm install skipped." -ForegroundColor DarkGray }
+    try { npm install -g https://github.com/JuliusBrussee/caveman.git 2>$null } catch { Write-Host "Note: caveman npm git install skipped (using cloned repo in ~/.ai-skills/caveman)." -ForegroundColor DarkGray }
 } else {
-    Write-Host "NPM not found. Falling back to git clone for ECC and caveman..." -ForegroundColor Yellow
-    Clone-SkillRepo 'https://github.com/affaan-m/ECC.git' 'ECC'
-    Clone-SkillRepo 'https://github.com/JuliusBrussee/caveman.git' 'caveman'
+    Write-Host "NPM not found. Using cloned git repos for ECC and caveman." -ForegroundColor Yellow
 }
 Clone-SkillRepo 'https://github.com/yvgude/lean-ctx.git' 'lean-ctx'
 

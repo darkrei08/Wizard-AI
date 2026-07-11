@@ -7,6 +7,11 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
+## [0.43.2] - 2026-07-11
+
+### Fixed
+- **Setup Script EALLOWGIT Fix**: Fixed `npm error code EALLOWGIT` during `setup.sh` and `setup.ps1` when npm disables or restricts direct git package fetches (`git+https://...`). Both scripts now pre-clone `caveman` and `ECC` under `~/.ai-skills/` directly via git, and wrap global `npm install -g` checks with non-fatal fallbacks.
+
 ## [0.43.1] - 2026-07-11
 
 ### Changed
