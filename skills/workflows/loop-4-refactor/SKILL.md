@@ -1,6 +1,6 @@
 ---
 name: loop-4-refactor
-description: "04. LOOP 4: REFACTOR & OPTIMIZE — Ciclo sequenziale e numerato (04/05) per il refactoring architetturale, Domain-Driven Design, pulizia del debito tecnico e compressione ottimizzata del contesto/token LLM."
+description: "04. LOOP 4: REFACTOR & OPTIMIZE — Ciclo (04/05) per refactoring, pulizia e ottimizzazione token. TRIGGER AUTOMATICO su testo naturale che chieda: rifattorizza, pulisci codice, ottimizza, riduci token, debito tecnico, ddd, o architettura."
 ---
 
 # 🏗️ 04. Loop 4: Refactor & Optimize (Architecture, Clean & Token Savings)
@@ -107,8 +107,8 @@ graph TD
   - Se la review mostra che il refactoring ha complicato la leggibilità o introdotto dipendenze occulte, la pull request viene bloccata e il loop torna allo Step 4.2.
   - Se il diff mostra una riduzione netta delle righe di codice, coesione elevata e test verdi al 100%, il refactoring è approvato.
 
-### Step 4.5: Ottimizzazione Contesto e Passaggio di Consegne
-- Se la sessione ha accumulato molti log durante i test, usa `sqz` per pulire la memoria e `lean-ctx` per potare i buffer vecchi.
-- Aggiorna `MEMORY.md` registrando il refactoring architetturale effettuato.
-- Passa al loop conclusivo di rilascio:
-  > **Azione:** Refactoring completato e verificato senza regressioni. Transizione immediata al **`05. loop-5-release`**.
+### Step 4.5: Never-Stop Autonomous Handoff verso Loop 5 (`ZERO-STOP MANDATE`)
+Una volta completato il refactoring e la pulizia dei token (`sqz` / `lean-ctx`), **NON FERMARTI E NON CHIEDERE ALL'UTENTE UN PROMPT DI CONFERMA**.
+Applica la regola del dialogo interno:
+`🧠 [SELF-QUESTION] "Architettura ottimizzata e test 100% verdi. Quali verifiche finali e salvataggio memoria (`session-manager` + `mp-handoff`) devo eseguire nel Loop 5 prima di concludere?"`
+> **Azione Immediata e Unconditional:** Stampa il banner `🔄 [AUTONOMOUS BATON-PASSING] 04. loop-4-refactor completato -> Auto-Triggering 05. loop-5-release` ed entra immediatamente nel rilascio e salvataggio memoria!

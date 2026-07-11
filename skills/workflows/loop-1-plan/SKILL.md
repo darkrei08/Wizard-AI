@@ -1,6 +1,6 @@
 ---
 name: loop-1-plan
-description: "01. LOOP 1: PLAN & SPEC — Ciclo sequenziale e numerato (01/05) per la pianificazione, allineamento requisiti, specifiche e modellazione architetturale. Raggruppa e concatena tutte le skill di Allineamento, Ticketing e Architettura."
+description: "01. LOOP 1: PLAN & SPEC — Ciclo (01/05) per pianificazione, requisiti, specifiche e modellazione. TRIGGER AUTOMATICO su testo naturale che chieda: crea, progetta, requisito, piano, specifica, nuova feature, architettura, o allineamento."
 ---
 
 # 🎯 01. Loop 1: Plan & Spec (Brainstorm, Align & Specification)
@@ -83,9 +83,13 @@ graph TD
 ### Step 1.1: Pre-Check Ambientale (`os-detect`)
 Esegui `ai-os info` o verifica il contesto di sistema per assicurarti di conoscere il sistema operativo, i runtime disponibili (Node, Python, Deno, Bun) e le dipendenze prima di formulare ipotesi di design.
 
-### Step 1.2: Allineamento e Sgarbugliamento (`brainstorming` / `mp-grill-me`)
-- Valuta la chiarezza dei requisiti. Se ci sono punti oscuri o scelte architetturali aperte, avvia `brainstorming` (o `mp-grill-me`).
-- Fai domande chiare, presenta opzioni (A vs B vs C) con pro e contro. Non dare per scontate scelte non espresse dall'utente.
+### Step 1.2: Allineamento, Self-Grill Socratico e Online Skill Hunt (`brainstorming` / `mp-grill-me`)
+- **Flusso di Ricerca Mentale Q&A (`Self-Grill-Me`)**: Prima di formalizzare l'architettura, poniti autonomamente domande socratiche ed esplicita le risposte in output:
+  - *Q: Quali edge-case di sicurezza o performance potrebbero emergere?* -> *A: [Verifica contro strix e CONTEXT.md]*
+  - *Q: Sto introducendo over-engineering?* -> *A: [Applica il filtro YAGNI di ponytail]*
+- **Ricerca ed Installazione Skill Certificate Online (`search_web` + `wizard-ai-installer`)**:
+  - Se il task richiede competenze di dominio non coperte dall'elenco locale (`skills.json`), esegui una ricerca online (`search_web` / GitHub / `last30days`) per individuare skill o package open-source di alta reputazione e certificati.
+  - Verifica stelle, manutenzione recente e sicurezza; se idonee, installale subito con `wizard-ai-installer` per arricchire l'arsenale prima di passare allo sviluppo (`02. loop-2-develop`).
 
 ### Step 1.3: Redazione Specifica e Modello di Dominio (`mp-to-spec` + `mp-domain-modeling`)
 - Se il task introduce nuovi concetti o domini, aggiorna o crea il file `CONTEXT.md` (o il file `.spec.md`) specificando i termini del linguaggio condiviso (Ubiquitous Language).
@@ -99,6 +103,8 @@ Esegui `ai-os info` o verifica il contesto di sistema per assicurarti di conosce
   3. Lista dei test da creare (per il TDD nel Loop 2).
   4. Checklist progressiva `[ ]` scomposta in task da 2-5 minuti.
 
-### Step 1.5: Handoff Sequenziale verso Loop 2
-Una volta che l'utente ha approvato il piano (o una volta completata la verifica interna), esegui il passaggio di consegne al loop di sviluppo:
-> **Azione:** Inizia l'esecuzione sequenziale passando al **`02. loop-2-develop`**.
+### Step 1.5: Never-Stop Autonomous Handoff verso Loop 2 (`ZERO-STOP MANDATE`)
+Una volta generato il piano (`task.md` / `.spec.md`), **NON FERMARTI E NON CHIEDERE ALL'UTENTE UN NUOVO PROMPT**.
+Applica la regola del dialogo interno:
+`🧠 [SELF-QUESTION] "Il piano è completato. Quale strada di sviluppo isolato (`auto-branch` + `tdd`) devo prendere ora nel Loop 2?"`
+> **Azione Immediata e Unconditional:** Stampa il banner `🔄 [AUTONOMOUS BATON-PASSING] 01. loop-1-plan completato -> Auto-Triggering 02. loop-2-develop` ed entra immediatamente nel flusso di codice e test!

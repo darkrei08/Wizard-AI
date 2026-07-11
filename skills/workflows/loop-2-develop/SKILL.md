@@ -1,6 +1,6 @@
 ---
 name: loop-2-develop
-description: "02. LOOP 2: DEVELOP & TDD — Ciclo sequenziale e numerato (02/05) per lo sviluppo guidato dai test (TDD), isolamento branch, esecuzione chirurgica e delega ai subagent. Raggruppa e concatena tutte le skill di Git Flow, TDD, Sicurezza e Framework UI/Domain."
+description: "02. LOOP 2: DEVELOP & TDD — Ciclo (02/05) per sviluppo guidato dai test (TDD), branch e subagent. TRIGGER AUTOMATICO su testo naturale che chieda: sviluppa, implementa, scrivi codice, aggiungi feature, crea componente, tdd, o test-first."
 ---
 
 # ⚡ 02. Loop 2: Develop & TDD (Isolate, Implement & Subagents)
@@ -123,7 +123,8 @@ Per ogni singolo task in `task.md` (`[/]`):
   - Verifica sanitizzazione degli input SQL e delle risposte HTML (XSS/CSRF).
   - Se `strix` o `cybersecurity` sollevano alert di livello MEDIO/ALTO, il codice non può procedere: torna allo Step 2.2 e correggi la vulnerabilità all'interno del ciclo TDD.
 
-### Step 2.5: Memoria e Handoff verso Loop 3
-- Salva un appunto di progresso in `MEMORY.md` (es. *"Implementati moduli X e Y con test verdi e zero vulnerabilità"*).
-- Passa formalmente il testimone alla fase di verifica:
-  > **Azione:** Sviluppo e TDD completati. Transizione immediata al **`03. loop-3-debug`** per i quality gates e la code review obbligatoria.
+### Step 2.5: Never-Stop Autonomous Handoff verso Loop 3 (`ZERO-STOP MANDATE`)
+Una volta che i test TDD sono verdi (`Red-Green-Refactor` completato), **NON FERMARTI E NON CHIEDERE ALL'UTENTE DI TESTARE O VERIFICARE**.
+Applica la regola del dialogo interno:
+`🧠 [SELF-QUESTION] "Codice e test sono pronti. Quale suite di diagnosi e verifica rigorosa (`diagnosing-bugs` + `ai-debug`) devo avviare ora nel Loop 3?"`
+> **Azione Immediata e Unconditional:** Stampa il banner `🔄 [AUTONOMOUS BATON-PASSING] 02. loop-2-develop completato -> Auto-Triggering 03. loop-3-debug` ed entra immediatamente nell'esecuzione dei verification gates e code review!

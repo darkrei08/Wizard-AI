@@ -1,6 +1,6 @@
 ---
 name: prompt-loop-engine
-description: "MASTER ORCHESTRATOR — Pipeline Loop Engineering deterministico che si attiva PRIMA e DOPO ogni prompt utente. Implementa routing MoE (Mixture of Experts), weight gates statistici, e vincoli di auto-miglioramento estratti da tutte le skill comportamentali. Questo è il SINGOLO PUNTO DI INGRESSO per ogni interazione AI."
+description: "MASTER ORCHESTRATOR — Pipeline Loop Engineering deterministico che si attiva PRIMA e DOPO OGNI prompt utente, INCLUSO QUALSIASI TESTO IN LINGUAGGIO NATURALE. Triggera automaticamente i 5 Loop numerati (01-05) e attiva i tool semantici (serena, graphify, turbovec, claude-mem). Non richiede slash commands."
 ---
 
 # Prompt Loop Engine — The Master Pipeline
@@ -10,6 +10,16 @@ Questa è la **skill suprema** dell'ecosistema Wizard-AI. Ogni singola interazio
 <MANDATORY>
 Questa skill è il PRIMO file che l'agente deve processare. Ogni altra skill è subordinata a questa pipeline.
 Se sei un subagent, salta la pipeline PRE/POST ma rispetta le skill di dominio.
+
+### 🚨 REGOLE DI AUTOFORZATURA KERNEL (ZERO-STOP & SELF-QUESTIONING)
+1. **IL LOOP NON DEVE MAI FINIRE SE NON COMPLETI TUTTO (NEVER-STOP MANDATE)**:
+   L'agente LLM HA IL DIVIETO ASSOLUTO di terminare il proprio turno di risposta o di chiedere all'utente "Vuoi procedere?" prima che l'intero ciclo `01 → 02 → 03 → 04 → 05` sia giunto a risoluzione completa e verificata. Una volta che un loop (es. `01. loop-1-plan`) completa il suo output (`.spec.md`), l'agente DEVE INNESCARE AUTOMATICAMENTE E IMMEDIATAMENTE IL LOOP SUCCESSIVO (`02. loop-2-develop` → `03. loop-3-debug` → `05. loop-5-release`) all'interno dello stesso flusso di lavoro o turno, passando il testimone senza interruzioni.
+2. **AUTOFORZATURA AL DIALOGO INTERNO E SCELTA STRADA (SELF-QUESTIONING PROTOCOL)**:
+   Prima di ogni azione o scrittura codice, l'agente DEVE obbligatoriamente porsi la seguente domanda e stamparla in output per garantire il massimo rigore architettonico:
+   ```
+   🔄 [AUTONOMOUS LOOP ENGINE] Loop Attivo: 0X. loop-X-...
+   🧠 [SELF-QUESTION] "Quale strada di sviluppo o tool semantico (serena, graphify, turbovec, claude-mem) devo adottare ora per risolvere questo step e qual è la condizione esatta di completamento per passare al loop successivo?"
+   ```
 </MANDATORY>
 
 ---
@@ -69,17 +79,18 @@ dove:
 
 ### ═══════════════ PRE-PROMPT PIPELINE ═══════════════
 
-#### Step 1: Context Restore 🔄 (ALWAYS — tutte le weight)
-**Skill:** `session-manager` (modalità RESTORE)
+#### Step 1: Context Restore & Task Recovery Hub 🔄 (ALWAYS — tutte le weight)
+**Skill:** `session-manager` (modalità RESTORE + `Task Recovery Hub`)
 
-- Leggi `MEMORY.md` e inietta il contesto della sessione precedente
-- Se esiste `graphify-out/`, carica il knowledge graph per navigazione semantica
-- Se la finestra di contesto è già ampia (>60%), attiva automaticamente Step 4
+- Leggi `MEMORY.md` (`Diario di Bordo Personale`) e inietta il contesto della sessione precedente.
+- **Task Recovery Hub & Summarizer**: Leggi attentamente la sezione **Summarizer / Task Perse o Sospese (`[⏳ TASK SOSPESA DA RIPRENDERE]`)**. Se ci sono task interrotte da sessioni precedenti o da step falliti, re-inizializzale immediatamente come priorità del loop corrente senza perdere contesto.
+- Se esiste `graphify-out/`, carica il knowledge graph per navigazione semantica.
+- Se la finestra di contesto è già ampia (>60%), attiva automaticamente Step 4.
 
 **Self-Check Questions:**
-> ☐ Ho letto MEMORY.md?
-> ☐ Ho contesto sufficiente per capire cosa l'utente stava facendo?
-> ☐ Ci sono task incompleti dalla sessione precedente?
+> ☐ Ho letto MEMORY.md e la sezione Summarizer del Diario?
+> ☐ Ho recuperato e messo in coda le task perse/sospese (`Task Recovery Hub`)?
+> ☐ Ho contesto sufficiente per capire le decisioni e le strade scartate in passato?
 
 ---
 
@@ -144,19 +155,20 @@ dove:
 
 ---
 
-#### Step 4: Context Optimization 🗜️ (HEAVY only)
-**Skill:** `auto-optimize` (Master Optimizer — fuso con chain di `workflow-agentic-brain`)
+#### Step 4: Universal Context Pruning & Token Optimization 🗜️ (ALWAYS per Pruning AST / HEAVY per re-ranking profondo)
+**Skill:** `workflow-agentic-brain` (`auto-optimize` + `pi-dev` Rust/Cline Wrapper features)
 
-Pipeline di ottimizzazione in 4 fasi:
-1. **Ingestion**: Se ci sono file non-text → `markitdown`
-2. **Filtering**: Se contesto > 50K token → `flashrank` per re-ranking
-3. **Compression**: Se contesto > 100K token → `llmlingua` / `headroom`
-4. **Context Guard**: Persisti chunk importanti con `lean-ctx` / `claude-mem`
+Pipeline universale di ottimizzazione contesto per TUTTI I COMANDI e TUTTI I LOOP (codice, SEO, design, immagini, diagrammi):
+1. **Tree-sitter AST Pruning (`pi.dev / Rust-Cline Wrapper`)**: Prima di iniettare file sorgente o schemi complessi nel contesto, estrai **solo le firme (signatures, interfacce, tipi, header SEO o metadata design)**. Rimuovi i body delle funzioni non oggetto di modifica immediata (`Lean Context Intelligence`).
+2. **Sharded Subagent Execution (`pi-subagents`)**: Per refactoring multi-modulo o audit esaustivi, dividi il lavoro in subagent isolati in parallelo (`dispatching-parallel-agents` / `goodcode`). Ogni subagent lavora in una finestra di contesto potata separata (`Sub-process Context Isolation`).
+3. **Ingestion & Conversion**: Se ci sono file binari o documenti articolati → `markitdown` / `ai-convert`.
+4. **Filtering & Squeezing**: Se l'output CLI o il contesto supera la soglia ottima → `sqz` / `flashrank` per re-ranking e rimozione rumore.
+5. **Compression & Guarding**: Se il contesto residuo resta pesante → `llmlingua` / `headroom` e preserva le decisioni chiave in `ai-lean-ctx` / `MEMORY.md`.
 
 **Self-Check Questions:**
-> ☐ La finestra di contesto è sotto il 70%?
-> ☐ Ho rimosso il contesto irrilevante?
-> ☐ I documenti importanti sono stati preservati in memoria?
+> ☐ Ho applicato il Pruning AST (`pi.dev` wrapper) per caricare solo le firme/header necessari anziché l'intero file?
+> ☐ Ho delegato task parallele a subagent shardati (`Sub-process Context Isolation`) per evitare saturazione token?
+> ☐ La finestra di contesto attiva è snella (<60%) e priva di rumore verboso?
 
 ---
 
@@ -182,9 +194,10 @@ Pipeline di ottimizzazione in 4 fasi:
 Apri la risposta con:
 ```markdown
 > [!NOTE]
-> 🪄 **Wizard-AI Loop Engine:**
+> 🪄 **Wizard-AI Loop Engine & Diario di Bordo:**
 > - **Pipeline Weight:** `[LIGHT|MEDIUM|HEAVY]`
-> - **Active Loop:** `[loop-develop|loop-debug|loop-refactor|loop-release|loop-learn|direct]`
+> - **Active Loop & Tags:** `[0X. loop-X-...] [🏷️ TAG-CATEGORIA]`
+> - **Progress Bar:** `[▓▓▓▓░░░░░░] X% Completato (Loop X/5)`
 > - **Active Skills:** `[skill₁, skill₂, ...]`
 > - **CLI/Wrapper:** `[comandi previsti]`
 ```
@@ -292,12 +305,14 @@ Prima di scrivere codice, SEMPRE:
 Chiudi la risposta con:
 ```markdown
 > [!NOTE]
-> 🪄 **Wizard-AI Loop Recap:**
+> 🪄 **Wizard-AI Loop Recap & Diario Avanzamento:**
 > - **Skills Used:** `[skill₁ (purpose), skill₂ (purpose), ...]`
 > - **Pipeline Weight:** `LIGHT|MEDIUM|HEAVY`
-> - **Loop Executed:** `[loop-develop|loop-debug|loop-refactor|loop-release|loop-learn|none]`
+> - **Loop Executed & Tag:** `[0X. loop-X-...] [🏷️ TAG]`
+> - **Progress Bar Final:** `[▓▓▓▓▓▓▓▓▓▓] 100% Completato` (o `X%` se in transizione verso il loop successivo)
+> - **Diario Umanizzato:** `[Breve racconto di cosa è stato risolto ed eventuali strade scartate / Lavori persi: ❌ ...]`
 > - **Verification Status:** `✅ Passed | ⚠️ Partial | ❌ Failed`
-> - **Session Saved:** `✅ | ❌`
+> - **Session Saved (`MEMORY.md`):** `✅ | ❌`
 ```
 
 ---

@@ -32,15 +32,20 @@ Per testi voluminosi:
 - **Memoria persistente:** Usa `ai-lean-ctx` per isolare il contesto che serve solo nel momento corrente.
 - **Output AI:** Assicurati che il plugin `caveman` sia attivo per ridurre la verbosità della tua stessa risposta (75% meno token in output, 100% accuratezza tecnica).
 
-## ═══════════ META-SKILL EXPANSION ═══════════
+### Fase 5: AST Pruning & Sharded Subagent Context (`pi.dev / Rust-Cline Wrappers`)
+- **Tree-sitter AST Pruning (`pi.dev` / Rust Wrappers)**: Invece di iniettare interi file (>500 righe) nel contesto, estrai solo le **firme di metodi, classi, interfacce e tipi (AST signatures)** quando esplori o pianifichi (`Lean Context Intelligence`).
+- **Sharded Subagent Execution (`pi-subagents`)**: Per task multi-file ad alto peso (`HEAVY`), delegare a subagent in parallelo (`subagent` / `dispatching-parallel-agents`). Ogni subagent opera in un processo isolato con una finestra di contesto potata, azzerando il rischio di context window overflow nel loop principale.
+- **Minimalist Native Execution**: Sfrutta la velocità del wrapper rust/cli `pi.dev` per azzerare il bloat di runtime e velocizzare le risposte.
 
-Se l'utente richiede di integrare un nuovo strumento esterno o creare una nuova skill:
+## ═══════════ META-SKILL EXPANSION & ONLINE HUNT (`skills.sh`) ═══════════
 
-### Evaluator & Installer (`wizard-ai-installer`)
-1. Leggi la repo target.
-2. Compara con gli strumenti attuali in `docs/WIKI.md`.
-3. Usa `wizard-ai-installer` per installare e configurare autonomamente il nuovo tool nell'ecosistema Wizard-AI.
-4. Aggiorna la WIKI.
+Se l'utente o il loop richiedono una nuova competenza o strumento semantico non presente in locale:
+
+### Autonomous Online Skill Hunt (`skills.sh` + `wizard-ai-installer`)
+1. **Consulta `https://www.skills.sh/` (The Open Agent Skills Ecosystem)** o effettua un `search_web` per trovare skill certificate (es. `find-skills`, `frontend-design`, `impeccable`, `grill-me`, `superpowers`).
+2. **Verifica reputazione e sicurezza:** Controlla installazioni stagionali, manutenzione recente e trust comunitario.
+3. **Installazione Autonoma:** Usa `wizard-ai-installer` (`ai-skill-install <repo/url>`) oppure il comando di installazione standard per legarla al loop corrente (`loop-install-bind`).
+4. **Aggiorna la WIKI:** Documenta la nuova skill in `docs/WIKI.md`.
 
 ### Skill Creator (`skill-creator`)
 Se manca una competenza specifica per un task in esecuzione:

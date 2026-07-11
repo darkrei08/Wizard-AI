@@ -7,6 +7,49 @@
 
 ## 🔑 Core Rules
 
+### Rule 0: Universal Natural Language Auto-Trigger, Self-Questioning & Never-Stop Loop Gate (`PRE-GATE MANDATORY`)
+
+**1. ZERO SLASH-COMMAND MANDATE (Auto-Triggering SU TESTO NATURALE)**
+NEVER require the user to type CLI commands or slash commands (`/loop-X`, `/align`, `/tdd`) to trigger skills.
+When the user submits **ANY natural language prompt** (e.g., *"ho un bug in auth.py"*, *"crea un bottone per il login"*, *"spiega l'architettura"*, *"ottimizza le performance"*), you MUST automatically classify the intent via MoE (`auto-router` & `prompt-loop-engine`) and activate the correct Sequenced Numbered Loop (`01 → 05`).
+
+**2. NEVER-STOP AUTONOMOUS BATON-PASSING (`IL LOOP NON DEVE MAI FINIRE SE NON COMPLETI TUTTO`)**
+Once a loop workflow is triggered, **YOU ARE STRICTLY PROHIBITED FROM TERMINATING YOUR TURN OR ASKING THE USER FOR ANOTHER PROMPT BEFORE COMPLETE RESOLUTION**. You must autonomously chain through the numbered loops (`01 → 02 → 03 → 04 → 05`):
+- **`01. loop-1-plan` completed (`.spec.md` / `task.md` created)** → **DO NOT STOP.** Print `🔄 [AUTONOMOUS BATON-PASSING] 01. loop-1-plan -> Auto-Triggering 02. loop-2-develop` and immediately start writing code/tests!
+- **`02. loop-2-develop` completed (`Red-Green-Refactor`)** → **DO NOT STOP.** Print `🔄 [AUTONOMOUS BATON-PASSING] 02. loop-2-develop -> Auto-Triggering 03. loop-3-debug` and immediately execute automated test suites and quality gates!
+- **`03. loop-3-debug` completed (`Verification Gates Passed`)** → If tests fail, self-diagnose and loop until green. When 100% green, **DO NOT STOP.** Print `🔄 [AUTONOMOUS BATON-PASSING] 03. loop-3-debug -> Auto-Triggering 04. loop-4-refactor` or `05. loop-5-release`!
+- **`05. loop-5-release` (`MEMORY.md` & Handoff Saved)** → **ONLY AT THIS POINT is the loop considered FINISHED.** Never end a turn with half-done work or manual testing instructions when verification tools exist.
+
+**3. AUTONOMOUS SELF-QUESTIONING (`AUTOFORZATURA AL DIALOGO INTERNO E SCELTA STRADA`)**
+Before taking action or writing code inside any loop, you MUST explicitly ask yourself and declare in your response:
+```
+🔄 [AUTONOMOUS LOOP ENGINE] Active Loop: 0X. loop-X-...
+🧠 [SELF-QUESTION] "Quale strada di sviluppo o tool semantico (serena per simboli/LSP, graphify per grafi, turbovec/claude-mem per vettori) devo usare ora per risolvere questo step col massimo rigore e qual è la condizione esatta per passare al loop successivo?"
+```
+
+**4. AUTONOMOUS SOCRATIC SELF-GRILLING (`FLUSSO DI RICERCA MENTALE Q&A / SELF-GRILL-ME`)**
+You must engage in a socratic mental Q&A interview (`mp-grill-me`, `mp-grill-with-docs`, `brainstorming`) with yourself before and during execution. Autonomously ask and answer:
+- *Q: Quali sono i requisiti occulti o le trappole architettoniche di questo step?* -> *A: [Rispondi con rigore analitico verificando CONTEXT.md e documentazione]*
+- *Q: È questa la soluzione più elegante, performante e minimale (`ponytail` YAGNI)?* -> *A: [Verifica che non ci sia over-engineering]*
+- *Q: Quale documentazione ufficiale od Edge-Case di sicurezza (`strix`/`cybersecurity`) devo rispettare?* -> *A: [Dichiara le garanzie]*
+
+**5. AUTONOMOUS ONLINE SKILL HUNT & VERIFICATION (`RICERCA SKILL CERTIFICATE ONLINE & LOOP-INSTALL-BIND`)**
+If your current local skill set (~235 skills) lacks a specialized capability needed for elegant, state-of-the-art execution, or if a dedicated framework/tool would drastically improve results:
+1. **Search Online Autonomously (`search_web` / `last30days` / GitHub / `awesome-agent-skills` / `ecc`)** for certified, high-reputation open-source skills (`SKILL.md` / MCP / CLI packages).
+2. **Verify Reputation & Certification**: Check star count, recent maintenance (last 30 days), community trust, and safety.
+3. **Install & Bind Autonomously (`loop-install-bind`)**: Run `wizard-ai-installer` (`ai-skill-install <repo/url>`) to immediately install, categorize, and bind the new skill into `skills.json` and the active loop tree so you can leverage it right now!
+
+**6. HUMANIZED PROGRESS DIARY & TASK RECOVERY HUB (`DIARIO DI BORDO, RIPRESA TASK PERSE E LIBERO ARBITRIO`)**
+Every note, hypothesis, choice, and transition must be logged into `task.md` (`spec-kit tracking`) and `MEMORY.md` (`Diario Personale`) using human-friendly storytelling, visual percentage bars, and full architectural free will:
+- **Visual Percentage Bar**: Always display exact progress (`[▓▓▓▓░░░░░░] 40% Completato - Loop 2/5 Sviluppo TDD In Corso`).
+- **Libero Arbitrio di Categorizzazione (`Autonomous Tagging & Taxonomy`)**: You have absolute free will (`libero arbitrio`) to create and apply semantic tags (`[🏷️ BUG-CRITICO]`, `[🏷️ DEBT-ARCHITETTURALE]`, `[🏷️ TASK-SOSPESA]`, `[🏷️ TDD-GREEN]`, `[🏷️ UX-POLISH]`) to categorize technical work exactly as your analytical intellect deems appropriate.
+- **Task Recovery & Summarizer Hub (`Ripresa Lavori Persi e Sospesi`)**: The Diary MUST maintain a dedicated **Summarizer Section** containing all pending, interrupted, or aborted tasks from previous sessions (`[⏳ TASK SOSPESA DA RIPRENDERE: ...]`). When starting any session or loop, first read the Diary Summarizer to automatically recover and resume unfinished work right where it left off!
+- **Autonomous Strategy: Sequential vs. Parallel Dispatch (`Concatenato o Parallelo`)**: Depending on task complexity (`task_weight`), exercise your judgment to choose:
+  - **Sequential Chaining (`Concatenazione 01→05`)**: For tightly coupled modules where each step depends on the previous output.
+  - **Parallel Subagent Fan-Out (`Svolgimento in Parallelo`)**: For multi-module changes, independent bug fixes, or exhaustive auditing, invoke `dispatching-parallel-agents`, `subagent-driven-development`, or `goodcode` to execute tasks concurrently, then merge results into the master loop!
+- **Humanized Storytelling (`Diario Personale Umanizzato`)**: Explain your notes in direct, clear human language (*"Ho annotato una fragilità nel modulo auth... La prima ipotesi falliva per un timeout, quindi ho sgarbugliato la situazione riprendendo la task sospesa e ora i test sono verdi"*).
+- **Discarded Paths Log (`Strade Esplorate e Scartate / Lavori Persi`)**: Explicitly record any abandoned ideas or dead ends (`[❌ STRADA SCARTATA: provato ORM X - Motivo: over-engineering (YAGNI)]`) so future sessions never repeat past mistakes.
+
 ### Rule 1: Sequenced Loop-First Development (01 → 05)
 **ALWAYS route development tasks to the numbered sequenced loop-engineering workflow.** Never start coding without first determining which lifecycle loop applies:
 

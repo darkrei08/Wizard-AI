@@ -1,6 +1,6 @@
 ---
 name: loop-5-release
-description: "05. LOOP 5: RELEASE & LEARN — Ciclo sequenziale e numerato finale (05/05) per il merge su main, rilascio Semantic Versioning, pubblicazione npm/git, handoff, insegnamento e salvataggio persistente in memoria (Learning Loop)."
+description: "05. LOOP 5: RELEASE & LEARN — Ciclo finale (05/05) per rilascio, merge e memoria. TRIGGER AUTOMATICO su testo naturale che chieda: pubblica, mergia, rilascia, deploy, bump versione, handoff, insegna, o salva sessione."
 ---
 
 # 🚀 05. Loop 5: Release & Learn (Deliver, Teach & Persistent Memory)
@@ -116,9 +116,9 @@ graph TD
 - Trasforma il lavoro fatto in conoscenza: se hai scoperto una peculiarità del framework o una best practice, usa `mp-teach` per documentarla in `CONTEXT.md` o nella cartella `docs/WIKI.md`.
 - Presenta all'utente il documento di walkthrough finale e di handoff (`mp-handoff`).
 
-### Step 5.4: Salvataggio della Memoria Persistente (`session-manager` + `auto-graphify`)
+### Step 5.4: Chiusura del Never-Stop Loop & Salvataggio Memoria (`COMPLETE OR DO NOT STOP`)
 <MANDATORY>
-Il Loop 5 e l'intera interazione NON POSSONO terminare senza aggiornare la memoria persistente dell'agente.
+Il Loop 5 e l'intera catena `01 → 05` NON POSSONO terminare senza aver verificato tutti i deliverable e aggiornato la memoria persistente. Questa è l'UNICA CONDIZIONE ammissibile per concludere il turno (`IL LOOP NON DEVE MAI FINIRE SE NON COMPLETI TUTTO`).
 </MANDATORY>
 
 1. Esegui il salvataggio dello stato in `MEMORY.md`:
@@ -126,8 +126,10 @@ Il Loop 5 e l'intera interazione NON POSSONO terminare senza aggiornare la memor
    ai-session-save "Rilasciata versione vX.Y.Z: implementato [descrizione task]"
    ```
 2. Accertati che **mai nessuna chiave API o percorso locale privato** venga memorizzato in `MEMORY.md` (privacy check).
-3. Se sono state create nuove cartelle, file di specifica o moduli, avvia in background l'aggiornamento del knowledge graph semantico:
+3. Se sono state create nuove cartelle o moduli, avvia in background l'aggiornamento del knowledge graph semantico:
    ```bash
    ai-graph .
    ```
-4. Dichiara all'utente il completamento con successo del ciclo e la disponibilità della memoria consolidata per i futuri comandi del `01. loop-1-plan`.
+4. Applica il check finale di autodiagnosi:
+   `🧠 [SELF-QUESTION] "Ho completato il ciclo 01->05? I test sono verdi, il refactoring è fatto, la release/commit è creata e la memoria (MEMORY.md) è aggiornata al 100%?"`
+5. Dichiara all'utente il completamento totale del ciclo (`🎉 [LOOP ENGINE COMPLETED] Catena 01 → 05 interamente conclusa con successo`). Solo in questo momento puoi chiudere il turno!

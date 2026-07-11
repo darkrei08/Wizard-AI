@@ -22,6 +22,15 @@ When executing complex tasks, the system routes the request through **5 Sequence
 
 > **Note on Installations:** Every new skill or framework installed via `wizard-ai-installer` executes the **`loop-install-bind` gate** to automatically classify and register the new tool inside the target loop's chaining tree (`skills.json`).
 
+### 🚨 Kernel-Level Autoforzatura: Never-Stop & Self-Questioning (`Rule 0`)
+To achieve true autonomous engineering without requiring repeated user prompts:
+1. **Never-Stop Unconditional Completion (`Il loop non deve mai finire se non completi tutto`)**: Once ANY natural language prompt triggers a loop (`01. loop-1-plan` or `02. loop-2-develop`), the AI is **STRICTLY PROHIBITED** from terminating its turn mid-way or asking the user to manually test/verify. The AI must autonomously baton-pass through `01 → 02 → 03 → 04 → 05` until all code is verified (`100% green tests`) and persisted in `MEMORY.md`.
+2. **Self-Questioning Protocol (`Autoforzatura al Dialogo Interno`)**: Before executing any step or writing code, the AI explicitly asks itself and prints:
+   ```
+   🔄 [AUTONOMOUS LOOP ENGINE] Active Loop: 0X. loop-X-...
+   🧠 [SELF-QUESTION] "Quale strada di sviluppo o tool semantico (serena, graphify, turbovec, claude-mem) devo usare ora e qual è la condizione esatta di completamento per passare al loop successivo?"
+   ```
+
 ---
 
 ## 🧙‍♂️ 2. Wizard-AI Core CLI Tools

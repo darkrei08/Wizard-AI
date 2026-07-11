@@ -1,6 +1,6 @@
 ---
 name: loop-3-debug
-description: "03. LOOP 3: DEBUG & VERIFY — Ciclo sequenziale e numerato (03/05) per la diagnosi scientifica di bug, risoluzione sistematica, code review e quality gates (verification gates). Raggruppa e concatena tutte le skill di Diagnosing Bugs, Systematic Debugging e Code Review."
+description: "03. LOOP 3: DEBUG & VERIFY — Ciclo (03/05) per diagnosi bug, verifica e code review. TRIGGER AUTOMATICO su testo naturale che chieda: bug, errore, fallisce, rottura, controlla codice, review, verifica, o diagnosi."
 ---
 
 # 🔍 03. Loop 3: Debug & Verify (Diagnose, Review & Quality Gates)
@@ -107,8 +107,10 @@ ai-debug check
 Prima di dichiarare che il bug è risolto o il codice è pronto per la review, DEVI copiare e mostrare l'esatto output del terminale che attesta il successo (`All tests passed`, `0 failures`). Non è ammesso dire "ho verificato ed è a posto" senza prove.
 </MANDATORY>
 
-### Step 3.5: Code Review Rigorosa (`mp-code-review` / `receiving-code-review`)
-- Analizza il diff con `mp-code-review`:
-  - Se il feedback richiede aggiustamenti, applica `receiving-code-review` accertandoti che i nuovi suggerimenti non introducano regressioni.
-  - Se la review evidenzia che il codice funziona ma ha creato un accoppiamento eccessivo, classi monstre (> 400 righe) o duplicazioni pesanti, devia al loop architetturale: **`04. loop-4-refactor`**.
-  - Se il diff è eccellente, i test sono verdi e la sicurezza è intatta, aggiorna `MEMORY.md` con l'analisi della root cause risolta e transita a **`05. loop-5-release`**.
+### Step 3.5: Never-Stop Autonomous Handoff (`ZERO-STOP MANDATE`)
+Una volta completata la diagnosi ed i test sono verdi, **NON FERMARTI E NON CHIEDERE ALL'UTENTE UN PROMPT DI CONFERMA**.
+Applica la regola del dialogo interno:
+`🧠 [SELF-QUESTION] "I test sono 100% verdi. Il codice necessita di un refactoring architetturale (`serena` + `codebase-design` in Loop 4) oppure è pulito ed è pronto per il rilascio in Loop 5?"`
+> **Azione Immediata e Unconditional:**
+> - Se il codice ha debito tecnico o classi pesanti: stampa `🔄 [AUTONOMOUS BATON-PASSING] 03. loop-3-debug completato -> Auto-Triggering 04. loop-4-refactor` ed entra nel refactoring!
+> - Se il codice è pulito ed eccellente: stampa `🔄 [AUTONOMOUS BATON-PASSING] 03. loop-3-debug completato -> Auto-Triggering 05. loop-5-release` ed esegui la chiusura, handoff e salvataggio memoria!

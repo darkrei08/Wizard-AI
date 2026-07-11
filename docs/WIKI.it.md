@@ -20,6 +20,15 @@ Quando si affrontano compiti di sviluppo o refactoring, le richieste vengono ins
 
 > **Regola di Installazione (`loop-install-bind`):** Ogni nuova skill, tool o framework installato tramite `wizard-ai-installer` viene categorizzato e agganciato automaticamente al Loop Target appropriato all'interno dell'albero delle skill (`skills.json`).
 
+### 🚨 Autoforzatura Kernel: Never-Stop & Self-Questioning (`Regola 0`)
+Per garantire la totale autonomia dell'agente AI senza richiedere infiniti prompt all'utente:
+1. **Never-Stop Unconditional Completion (`Il loop non deve mai finire se non completi tutto`)**: Una volta che un prompt naturale innesca un loop (`01. loop-1-plan` o `02. loop-2-develop`), l'agente HA IL DIVIETO ASSOLUTO di fermarsi a metà o di chiedere all'utente di testare/verificare a mano. Deve proseguire a catena (`01 → 02 → 03 → 04 → 05`) finché l'intero codice non è al 100% verde nei test e salvato in `MEMORY.md`.
+2. **Protocollo di Autoforzatura al Dialogo Interno**: Prima di ogni azione o scrittura codice, l'agente dichiara obbligatoriamente a se stesso e in output:
+   ```
+   🔄 [AUTONOMOUS LOOP ENGINE] Loop Attivo: 0X. loop-X-...
+   🧠 [SELF-QUESTION] "Quale strada di sviluppo o tool semantico (serena, graphify, turbovec, claude-mem) devo usare ora per risolvere questo step col massimo rigore e qual è la condizione esatta per passare al loop successivo?"
+   ```
+
 ---
 
 ## 🧙‍♂️ 2. Strumenti CLI Core di Wizard-AI
