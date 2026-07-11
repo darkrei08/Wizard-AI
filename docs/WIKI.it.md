@@ -127,6 +127,8 @@ Di seguito la categorizzazione rigorosa dell'arsenale a tua disposizione:
 - **`ecc`**: (Enhanced Claude Code) Framework per orchestrare sub-agenti specializzati.
 - **`rtk`**: Toolkit AI nativo per estensioni.
 - **`goodcode`**: Orchestrazione multi-agente esaustiva indipendente dall'host per audit, revisioni, ricerca e produzione di codice approfondita.
+- **`ai-loop-sentinel`**: Sentinella di sistema per il calcolo MoE Task Weight e l'intercettazione automatica dei 5 Loop senza slash command.
+- **`ai-skill-doctor`**: Demone diagnostico di auto-riparazione skill e di esplorazione autonoma dell'ecosistema `skills.sh`.
 
 ---
 

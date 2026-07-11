@@ -50,6 +50,11 @@ Every note, hypothesis, choice, and transition must be logged into `task.md` (`s
 - **Humanized Storytelling (`Diario Personale Umanizzato`)**: Explain your notes in direct, clear human language (*"Ho annotato una fragilità nel modulo auth... La prima ipotesi falliva per un timeout, quindi ho sgarbugliato la situazione riprendendo la task sospesa e ora i test sono verdi"*).
 - **Discarded Paths Log (`Strade Esplorate e Scartate / Lavori Persi`)**: Explicitly record any abandoned ideas or dead ends (`[❌ STRADA SCARTATA: provato ORM X - Motivo: over-engineering (YAGNI)]`) so future sessions never repeat past mistakes.
 
+**7. UNIVERSAL HOST-AGNOSTIC & STANDALONE EXECUTION (`FUNZIONALITÀ LOOP IN OGNI PROGETTO E SU RICHIESTE SLEGATE`)**
+The 5-Loop workflows (`01→05`), MoE auto-routing (`auto-router`), AST pruning (`pi.dev wrapper`), sentinels (`ai-loop-sentinel`), and self-healing diagnostics (`ai-skill-doctor`) are **universal and host-agnostic**. They MUST function impeccably not only when working inside Wizard-AI itself, but:
+1. **Across ANY External Repository**: When opening any third-party project (`React app`, `Rust service`, `Python ETL`) anywhere on the system (`/var/www/`, `~/projects/`), the loops and AST pruning trigger and initialize development with the exact same rigor.
+2. **On General Standalone User Requests (`Richieste Scorporate da un Progetto`)**: When a user asks a general question or creative task entirely outside of any git repository (`"Spiegami Raft"`, `"Crea una tabella di LLM"`, `"Schizzami un'idea per un blog"`), the MoE router dynamically classifies the weight (`LIGHT/MEDIUM`) and activates the exact domain skills (`claude-seo`, `canvas-design`, `mermaid-cli`, `last30days`) without ever failing or depending on project-specific configuration files!
+
 ### Rule 1: Sequenced Loop-First Development (01 → 05)
 **ALWAYS route development tasks to the numbered sequenced loop-engineering workflow.** Never start coding without first determining which lifecycle loop applies:
 

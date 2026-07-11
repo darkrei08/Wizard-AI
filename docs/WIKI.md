@@ -129,6 +129,8 @@ Below is the rigorous categorization of the arsenal at your disposal, which has 
 - **`ecc`**: (Enhanced Claude Code) Framework to orchestrate specialized sub-agents.
 - **`rtk`**: Native AI toolkit for extensions.
 - **`goodcode`**: Host-agnostic exhaustive multi-agent orchestration for audits, reviews, research, and deep code production.
+- **`ai-loop-sentinel`**: Systemic Loop Interceptor and MoE Task Weight Classification CLI hook.
+- **`ai-skill-doctor`**: Self-Healing Skill Diagnostic daemon and autonomous `skills.sh` ecosystem hunter.
 
 ---
 

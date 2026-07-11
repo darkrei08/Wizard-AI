@@ -30,6 +30,8 @@ echo -e "  ${BOLD}03. /loop-3-debug${RESET}     🔍 Debug & Verify (Diagnosi in
 echo -e "  ${BOLD}04. /loop-4-refactor${RESET}  🏗️  Refactor & Optimize (Serena → DDD → Clean Code ponytail → Token Opt sqz/caveman)"
 echo -e "  ${BOLD}05. /loop-5-release${RESET}   🚀 Release & Learn (Merge su main → SemVer Release → Publish → Handoff → MEMORY.md)"
 echo -e "  ${DIM}    (/auto-workflow reindirizza in sequenza automatica ai 5 Loop Numerati)${RESET}"
+echo -e "  $(check_cmd ai-loop-sentinel) ${BOLD}ai-loop-sentinel${RESET} Systemic Loop Interceptor & MoE Task Weight Classification"
+echo -e "  $(check_cmd ai-skill-doctor)  ${BOLD}ai-skill-doctor${RESET}  Self-Healing Diagnostic & skills.sh Hunt Daemon"
 echo ""
 echo -e "  ${BOLD}${YELLOW}mattpocock Skills (Direct)${RESET}: /grill-me /grill-with-docs /to-spec /tdd /code-review /diagnosing-bugs"
 echo -e "  ${BOLD}${YELLOW}                          ${RESET}  /implement /wayfinder /triage /to-tickets /prototype /handoff /teach"
