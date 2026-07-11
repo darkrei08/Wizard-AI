@@ -4,8 +4,8 @@
 
 <p align="center">
   <a href="https://github.com/darkrei08/Wizard-AI/stargazers"><img src="https://img.shields.io/github/stars/darkrei08/Wizard-AI?style=flat-square" alt="stars"/></a>
-  <a href="https://github.com/darkrei08/Wizard-AI/releases"><img src="https://img.shields.io/badge/release-v0.45.0-blue?style=flat-square" alt="release"/></a>
-  <a href="https://www.npmjs.com/package/@darkrei08/wizard-ai-cli"><img src="https://img.shields.io/badge/npm-v0.45.0-red?style=flat-square" alt="npm"/></a>
+  <a href="https://github.com/darkrei08/Wizard-AI/releases"><img src="https://img.shields.io/badge/release-v0.46.0-blue?style=flat-square" alt="release"/></a>
+  <a href="https://www.npmjs.com/package/@darkrei08/wizard-ai-cli"><img src="https://img.shields.io/badge/npm-v0.46.0-red?style=flat-square" alt="npm"/></a>
   <img src="https://img.shields.io/badge/works%20with-47%20agents%20%26%20161%2B%20skills-purple?style=flat-square" alt="works with"/>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL%20v3-orange?style=flat-square" alt="license"/></a>
 </p>
@@ -17,7 +17,7 @@
 <h3 align="center"><b>~78%削減のトークン効率（最大94%省力化）· ~80%のコスト削減 · 5x 高速化 · 100% 安全な自動ロールバック保護</b></h3>
 
 <p align="center">
-  実際のコーディングエージェント（Claude Code、Antigravity、OpenHands）を用いた複雑なアーキテクチャ設計、バグ修正、およびパッケージ導入（<code>bun</code>、<code>nuxt</code>、<code>python</code>、<code>node</code>、<code>rust</code>）で実証済み。Wizard-AIは、<b>#ponytail</b>（実用主義のシニアエンジニア思考）、<b>#caveman</b>（CLI出力の75%削減）、<b>#sqz</b>（JSONの20倍圧縮）、および <b>ai-os v0.45.0</b>（ゼロダウンタイム自動安全ロールバック）を統合します。
+  実際のコーディングエージェント（Claude Code、Antigravity、OpenHands）を用いた複雑なアーキテクチャ設計、バグ修正、およびパッケージ導入（<code>bun</code>、<code>nuxt</code>、<code>python</code>、<code>node</code>、<code>rust</code>）で実証済み。Wizard-AIは、<b>#ponytail</b>（実用主義のシニアエンジニア思考）、<b>#caveman</b>（CLI出力の75%削減）、<b>#sqz</b>（JSONの20倍圧縮）、および <b>ai-os v0.46.0</b>（ゼロダウンタイム自動安全ロールバック）を統合します。
   <br/>
   <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>完全なベンチマーク・ノートブックを見る</b></a> · <a href="README.md#reproduce-it"><b>データを再現する</b></a>.
 </p>
@@ -35,13 +35,13 @@
 1. **コンテキストウィンドウの雪崩とAPIコストの爆発：** エージェントは80,000トークン以上のディレクトリ構造やテストログを平気でコンテキストに投入します。結果として幻覚が増加し、1つの機能追加に平均 **~$18.50** のコストがかかります。
 2. **システム環境の破壊（「午前2時の環境崩壊」）：** エージェントが自律的に `npm install -g` や `uv tool install` を実行した際、パッケージの破損やビルド競合によって、システム全体の環境が破壊される危険性があります。
 
-### 💡 Wizard-AI による究極の解決策 (`v0.45.0`)
+### 💡 Wizard-AI による究極の解決策 (`v0.46.0`)
 
 Wizard-AIは、AIエージェントとOS間の**自己修復型抽象レイヤー (`ai-os`) および 5つのエンジニアリングループ**として機能します：
 
 ```mermaid
 graph TD
-    A[🧙‍♂️ WIZARD-AI MASTER ECOSYSTEM<br/><b>v0.45.0</b>] --> B[💰 極限のトークン効率化<br/>LLMコストを78%削減]
+    A[🧙‍♂️ WIZARD-AI MASTER ECOSYSTEM<br/><b>v0.46.0</b>] --> B[💰 極限のトークン効率化<br/>LLMコストを78%削減]
     A --> C[🛡️ 自己修復と自動ロールバック<br/>環境のクラッシュをゼロに]
     A --> D[🔄 5-Loop Engineering<br/>確定的 MoE ルーティング]
 ```
