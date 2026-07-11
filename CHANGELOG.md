@@ -16,7 +16,7 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ### Changed
 - **Complete Workflow Harmonization**: Substituted and modularized all legacy references to `auto-workflow` and `workflow-production-cycle` across the entire skill tree.
-- **auto-workflow redirect**: Updated `skills/core/auto-workflow/SKILL.md` to redirect directly to `loop-develop` and the 5 loop-engineering workflows.
+- **auto-workflow redirect**: Updated `skills/reference/core/auto-workflow/SKILL.md` to redirect directly to `loop-develop` and the 5 loop-engineering workflows.
 - **workflow-production-cycle modularization**: Refactored `workflow-production-cycle/SKILL.md` to act as an umbrella delegator mapping directly to `loop-develop` (alignment, spec, implementation), `loop-debug` (verification gates, diagnostic bug resolution), and `loop-release` (merge and release), eliminating overlap or ambiguity.
 - **Related skills cleanup**: Updated `using-superpowers`, `show-active-skill`, `workflow-dev-integrations`, `master-project-bootstrap`, and `cybersecurity` to explicitly reference `loop-develop`, `loop-debug`, and `loop-release`.
 

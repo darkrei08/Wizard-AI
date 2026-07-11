@@ -356,7 +356,7 @@ SKILLS_DEST="$HOME/.gemini/config/skills"
 mkdir -p "$SKILLS_DEST"
 SKILL_COUNT=0
 # Find every SKILL.md inside the categorized directories and copy its parent
-# folder flatly into the global skills directory (e.g. skills/core/brainstorming → ~/.gemini/config/skills/brainstorming)
+# folder flatly into the global skills directory (e.g. skills/reference/core/brainstorming → ~/.gemini/config/skills/brainstorming)
 while IFS= read -r -d '' skill_md; do
   skill_dir=$(dirname "$skill_md")
   skill_name=$(basename "$skill_dir")

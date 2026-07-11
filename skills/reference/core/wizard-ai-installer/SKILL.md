@@ -90,7 +90,7 @@ Create a structured `SKILL.md` that explains to other AI agents how to use this 
 - ❌ NEVER hardcode usernames or machine-specific paths
 - ✅ ALWAYS use `$WIZARD_AI_DIR`, `$HOME`, or `~` for paths
 - ✅ Mention BOTH the base command and the `ai-*` wrapper as interchangeable
-- 🏛️ **TAXONOMY GOLD RULE:** The root `skills/` directory MUST remain clean (only `core`, `workflows`, and `reference`). All domain skills, frameworks, and external tools MUST be categorized inside `skills/reference/<category>/<author_or_repo>/` (e.g. `skills/reference/backend/official/`, `skills/reference/devops/mattpocock/`). Never install a new domain skill directly in `skills/`.
+- 🏛️ **TAXONOMY GOLD RULE:** The root `skills/` directory MUST remain clean (only `workflows` and `reference`). All domain skills, frameworks, and external tools MUST be categorized inside `skills/reference/<category>/<author_or_repo>/` (e.g. `skills/reference/backend/official/`, `skills/reference/devops/mattpocock/`). Never install a new domain skill directly in `skills/`.
 
 Save to the primary skills directory (respecting the category and author):
 ```bash
@@ -127,7 +127,7 @@ Ogni nuova skill, framework o progetto installato DEVE essere classificato categ
    - Se necessario, aggiorna il diagramma di flusso Mermaid all'interno di quel loop per includere il nuovo nodo di esecuzione.
 
 3. **Registrazione nel Routing e Metadati (`auto-router` & `skills.json`):**
-   - Se la skill ha un trigger esplicito (es. `/nuova-skill` o keyword univoche), registralo nella tabella di routing del file `$WIZARD_AI_DIR/skills/core/auto-router/SKILL.md`.
+   - Se la skill ha un trigger esplicito (es. `/nuova-skill` o keyword univoche), registralo nella tabella di routing del file `$WIZARD_AI_DIR/skills/reference/core/auto-router/SKILL.md`.
    - Verifica che `skills.json` indicizzi correttamente la cartella della nuova skill.
 
 ### Step 4: Update the Global `setup.sh`

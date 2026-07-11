@@ -1,9 +1,6 @@
 {
   "entries": [
     {
-      "path": "core"
-    },
-    {
       "path": "workflows"
     },
     {

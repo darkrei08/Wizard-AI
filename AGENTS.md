@@ -148,14 +148,12 @@ Run `ai-help` to see the full list of 47+ CLI wrappers. Key ones:
 
 | Category | Path | Content |
 |---|---|---|
-| Reference (mattpocock) | `skills/reference/` | Read-only imported skills (mp-* skills) |
-| Core (system + domains) | `skills/core/` | Loop engine, router, brainstorming, domain workflows |
-| Frontend | `skills/frontend/` | React, Vue, Angular, design skills |
-| Backend | `skills/backend/` | Node, Python, Firebase, databases |
-| DevOps | `skills/devops/` | CI/CD, security, release automation |
-| Data Science | `skills/data-science/` | Document processing, conversion |
-| Memory & Knowledge | `skills/memory-knowledge/` | Graphify, memory, wiki |
-| Workflows | `skills/workflows/` | 5 loop-engineering workflows only |
-| Stitch | `skills/stitch/` | Design system tools |
-| Marketing & Media | `skills/marketing-media/` | SEO, blog, video, audio |
+| Workflows | `skills/workflows/` | The 5 Master Loops (`loop-1-plan` to `loop-5-release`) |
+| Reference | `skills/reference/` | All domain skills, imported skills, and core system skills |
+| - Core | `skills/reference/core/` | Router, loop engine, installer, and agentic patterns |
+| - Frontend | `skills/reference/frontend/` | React, Vue, Angular, design skills |
+| - Backend | `skills/reference/backend/` | Node, Python, Firebase, databases |
+| - DevOps | `skills/reference/devops/` | CI/CD, security, release automation |
+| - Data/Memory | `skills/reference/memory-knowledge/` | Graphify, AI tools |
+| - Miscellaneous | `skills/reference/misc/` | External agent skills, community tools; SEO, blog, video, audio |
 | Misc | `skills/misc/` | Utilities, skill creation |

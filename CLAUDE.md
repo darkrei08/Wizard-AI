@@ -54,17 +54,17 @@ Wizard-AI/
 ├── MEMORY.md          # Persistent state
 ├── bin/               # 47+ CLI wrappers (ai-*)
 ├── skills/
-│   ├── reference/       # Read-only imported skills (mp-* from mattpocock)
-│   ├── core/          # System skills + domain workflows
-│   ├── workflows/     # 5 loop-engineering workflows only
-│   ├── frontend/      # UI/UX skills
-│   ├── backend/       # Server-side skills
-│   ├── devops/        # CI/CD, security
-│   ├── data-science/  # Document processing
-│   ├── memory-knowledge/ # Graphify, memory
-│   ├── stitch/        # Design system
-│   ├── marketing-media/ # SEO, content
-│   └── misc/          # Utilities
+│   ├── workflows/     # The 5 Master loop-engineering workflows (01-05)
+│   └── reference/     # All domain skills, imported skills, and core system skills
+│       ├── core/      # Router, loop engine, installer, and agentic patterns
+│       ├── frontend/  # React, Vue, Angular, design skills
+│       ├── backend/   # Node, Python, Firebase, databases
+│       ├── devops/    # CI/CD, security, auto-release
+│       ├── data-science/ # Document processing, visualization
+│       ├── memory-knowledge/ # Graphify, memory
+│       ├── stitch/    # Design system
+│       ├── marketing-media/ # SEO, content
+│       └── misc/      # Utilities
 ├── scripts/           # Automation scripts
 ├── hub/               # Local dashboard
 └── docs/              # Documentation + templates
