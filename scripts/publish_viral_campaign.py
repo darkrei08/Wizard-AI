@@ -51,14 +51,14 @@ CAMPAIGN_PAYLOADS = {
     }
 }
 
-def publish_to_discord(webhook_url, dry_run=True):
+def publish_to_discord(webhook_url, dry_run=False):
     print(f"\n[Discord Webhook Publisher] Target URL: {webhook_url[:30]}...")
     payload = json.dumps(CAMPAIGN_PAYLOADS["discord_webhook"]).encode("utf-8")
     if dry_run:
         print("🟡 [DRY-RUN] Would send Discord announcement:\n", CAMPAIGN_PAYLOADS["discord_webhook"]["content"])
         return True
     try:
-        req = urllib.request.Request(webhook_url, data=payload, headers={"Content-Type": "application/json"})
+        req = urllib.request.Request(webhook_url, data=payload, headers={"Content-Type": "application/json", "User-Agent": "Wizard-AI-Publisher/0.45"})
         with urllib.request.urlopen(req) as resp:
             print("✅ Discord announcement posted successfully! HTTP", resp.status)
             return True
@@ -79,11 +79,14 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Wizard-AI Viral Publisher")
     parser.add_argument("--platform", choices=["hn", "reddit", "discord", "all"], default="all")
     parser.add_argument("--webhook", help="Discord/Slack Webhook URL")
-    parser.add_argument("--dry-run", action="store_true", default=True, help="Simulate publication without pushing to APIs")
+    parser.add_argument("--dry-run", action="store_true", default=False, help="Simulate publication without pushing to APIs")
+    parser.add_argument("--live", action="store_true", default=False, help="Force live API publication")
     args = parser.parse_args()
+
+    is_dry_run = args.dry_run and not args.live
 
     print_summary()
     if args.platform in ["discord", "all"] and args.webhook:
-        publish_to_discord(args.webhook, dry_run=args.dry_run)
+        publish_to_discord(args.webhook, dry_run=is_dry_run)
     else:
         print("\n📢 [READY] All post payloads formatted and verified. To dispatch directly via API, provide API keys/webhooks or copy the generated payloads above into Show HN / Reddit!")
