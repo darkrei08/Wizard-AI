@@ -4,11 +4,22 @@
 # Runs the publish_viral_campaign.py script from any directory.
 #
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Resolve symlink to get actual script location
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do
+    DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+    SOURCE="$(readlink "$SOURCE")"
+    [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+SCRIPT_DIR="$(cd -P "$(dirname "$SOURCE")/.." && pwd)"
+
 PYTHON_SCRIPT="$SCRIPT_DIR/scripts/publish_viral_campaign.py"
+if [ ! -f "$PYTHON_SCRIPT" ]; then
+    PYTHON_SCRIPT="/home/ema/Scrivania/altri repooo/Wizard-AI/scripts/publish_viral_campaign.py"
+fi
 
 if [ ! -f "$PYTHON_SCRIPT" ]; then
-    echo "❌ Error: Cannot find $PYTHON_SCRIPT" >&2
+    echo "❌ Error: Cannot find publish_viral_campaign.py in $SCRIPT_DIR or absolute path." >&2
     exit 1
 fi
 
