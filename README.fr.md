@@ -4,8 +4,8 @@
 
 <p align="center">
   <a href="https://github.com/darkrei08/Wizard-AI/stargazers"><img src="https://img.shields.io/github/stars/darkrei08/Wizard-AI?style=flat-square" alt="stars"/></a>
-  <a href="https://github.com/darkrei08/Wizard-AI/releases"><img src="https://img.shields.io/badge/release-v0.46.0-blue?style=flat-square" alt="release"/></a>
-  <a href="https://www.npmjs.com/package/@darkrei08/wizard-ai-cli"><img src="https://img.shields.io/badge/npm-v0.46.0-red?style=flat-square" alt="npm"/></a>
+  <a href="https://github.com/darkrei08/Wizard-AI/releases"><img src="https://img.shields.io/github/v/release/darkrei08/Wizard-AI?style=flat-square" alt="release"/></a>
+  <a href="https://www.npmjs.com/package/@darkrei08/wizard-ai-cli"><img src="https://img.shields.io/npm/v/@darkrei08/wizard-ai-cli?style=flat-square" alt="npm"/></a>
   <img src="https://img.shields.io/badge/works%20with-47%20agents%20%26%20161%2B%20skills-purple?style=flat-square" alt="works with"/>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL%20v3-orange?style=flat-square" alt="license"/></a>
 </p>
@@ -17,9 +17,9 @@
 <h3 align="center"><b>~78% de tokens en moins (jusqu'à 94%) · ~80% moins cher · 5x plus rapide · 100% sécurisé et protégé par rollback</b></h3>
 
 <p align="center">
-  Mesuré sur des sessions réelles avec des agents de codage IA (Claude Code, Antigravity, OpenHands) sur des architectures complexes, du débogage et des installations (<code>bun</code>, <code>nuxt</code>, <code>python</code>, <code>node</code>, <code>rust</code>). Wizard-AI orchestre <b>#ponytail</b> (discipline de Senior Dev pragmatique), <b>#caveman</b> (-75% tokens CLI), <b>#sqz</b> (compression JSON 20x) et <b>ai-os v0.46.0</b> (barrières de rollback automatique sans interruption).
+  Mesuré sur des sessions réelles avec des agents de codage IA (Claude Code, Antigravity, OpenHands) sur des architectures complexes, du débogage et des installations (<code>bun</code>, <code>nuxt</code>, <code>python</code>, <code>node</code>, <code>rust</code>). Wizard-AI orchestre <b>#ponytail</b> (discipline de Senior Dev pragmatique), <b>#caveman</b> (-75% tokens CLI), <b>#sqz</b> (compression JSON 20x) et <b>ai-os</b> (barrières de rollback automatique sans interruption).
   <br/>
-  <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>Voir le Notebook de Benchmark</b></a> · <a href="README.md#reproduce-it"><b>reproduire les tests</b></a>.
+  <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>Voir le Notebook de Benchmarks</b></a> · <a href="README.md#reproduce-it"><b>le reproduire</b></a>.
 </p>
 
 <p align="center">
@@ -28,22 +28,54 @@
 
 ---
 
-## 🔥 Le Problème Technique : La Taxe des 50$ par Hallucination et Casse d'Environnement
+## 🔥 Le Problème Technique : Le Coût des Hallucinations et de la Rupture d'Environnement
 
-Lorsque vous laissez un agent IA autonome (comme Claude Code, OpenHands ou Cursor) travailler sur un véritable dépôt, vous êtes confronté à deux goulots d'étranglement majeurs :
+Quand vous laissez un agent d'IA autonome (comme Claude Code, OpenHands ou Cursor) travailler sur un dépôt réel, vous faites face à deux goulots d'étranglement critiques :
 
-1. **L'avalanche de la fenêtre de contexte :** Les agents déversent plus de 80 000 tokens d'arborescences de fichiers et de logs de tests. Ils épuisent rapidement les limites d'API, souffrent d'hallucinations et coûtent **~$18.50 par fonctionnalité**.
-2. **La corruption silencieuse de l'environnement :** Quand un agent lance `npm install -g`, `uv tool install` ou `bun add`, un paquet instable ou une erreur de syntaxe peut corrompre votre système global.
+1. **L'Avalanche de la Fenêtre de Contexte :** Les agents déversent plus de 80 000 tokens d'arborescences de fichiers et de logs de tests. Ils épuisent rapidement les limites d'API, souffrent d'hallucinations et coûtent **~$18.50 par fonctionnalité**.
+2. **La Corruption Silencieuse de l'Environnement ("The 2 AM Brick") :** Quand un agent lance `npm install -g`, `uv tool install` ou `bun add`, un paquet instable ou une erreur de syntaxe peut corrompre votre système global.
 
-### 💡 Comment Wizard-AI Résout Ce Problème Définitivement (`v0.46.0`)
+### 💡 Comment Wizard-AI Résout Ce Problème Définitivement
 
-Wizard-AI agit comme une **Couche d'Abstraction Auto-Réparatrice (`ai-os`) et un Orchestrateur en 5 Boucles** :
+Wizard-AI agit comme une **Couche d'Abstraction Auto-Réparatrice (`ai-os`) et un Orchestrateur en 5 Boucles** entre l'agent d'IA et votre système d'exploitation :
 
 ```mermaid
-graph TD
-    A[🧙‍♂️ WIZARD-AI MASTER ECOSYSTEM<br/><b>v0.46.0</b>] --> B[💰 Efficacité Extrême des Tokens<br/>Économisez 78% sur vos factures LLM]
-    A --> C[🛡️ Auto-Réparation & Rollback<br/>Zéro Corruption d'Environnement]
-    A --> D[🔄 5-Loop Engineering<br/>Routage MoE Déterministe]
+flowchart TB
+    %% Nodes
+    User([👤 Requête Utilisateur]) --> Router{🧙‍♂️ auto-router}
+    
+    %% Engine Loops
+    subgraph Engine [⚙️ ENGINE-LOOPS: Exécution Séquentielle]
+        Router --> L1[01. loop-1-plan]
+        L1 --> L2[02. loop-2-develop]
+        L2 --> L3[03. loop-3-debug]
+        L3 --> L4[04. loop-4-refactor]
+        L4 --> L5[05. loop-5-release]
+    end
+    
+    %% Reference Library
+    subgraph Lib [📚 REFERENCE LIBRARY: Contexte sur demande]
+        Ref[skills/reference/]
+        Ref --> RefCore[core]
+        Ref --> RefFE[frontend]
+        Ref --> RefBE[backend]
+        Ref --> RefDO[devops]
+        Ref --> RefMisc[misc / stitch / data-science]
+    end
+    
+    %% Connections
+    L1 -.->|Fournit des spécifications| Ref
+    L2 -.->|TDD & Développement| Environment[💻 Environnement Utilisateur]
+    L3 -.->|Auto-Debug| Environment
+    L5 -.->|Auto-Release| GitHub[🐙 Repo GitHub / NPM]
+    
+    %% Styling
+    classDef engineColor fill:#6366f1,stroke:#4f46e5,stroke-width:2px,color:#fff;
+    classDef libColor fill:#10b981,stroke:#059669,stroke-width:2px,color:#fff;
+    classDef mainColor fill:#8b5cf6,stroke:#7c3aed,stroke-width:2px,color:#fff;
+    class L1,L2,L3,L4,L5 engineColor;
+    class Ref,RefCore,RefFE,RefBE,RefDO,RefMisc libColor;
+    class Router mainColor;
 ```
 
 ## 🚀 Démarrage Rapide (`One-Command Setup`)

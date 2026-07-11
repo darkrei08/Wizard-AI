@@ -148,7 +148,7 @@ Run `ai-help` to see the full list of 47+ CLI wrappers. Key ones:
 
 | Category | Path | Content |
 |---|---|---|
-| Workflows | `skills/workflows/` | The 5 Master Loops (`loop-1-plan` to `loop-5-release`) |
+| **Engine Loops** | `skills/engine-loops/` | **THE ENGINE**: The 5 Master Loops (`loop-1-plan` to `loop-5-release`). The absolute entry point of the AI. |
 | Reference | `skills/reference/` | All domain skills, imported skills, and core system skills |
 | - Core | `skills/reference/core/` | Router, loop engine, installer, and agentic patterns |
 | - Frontend | `skills/reference/frontend/` | React, Vue, Angular, design skills |

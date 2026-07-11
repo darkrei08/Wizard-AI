@@ -8,7 +8,7 @@ description: "TRANSPARENCY ANNOUNCER — Core behavioral skill (Step 6 e Step 11
 This is a **mandatory behavioral directive** for all your interactions within the Wizard-AI ecosystem. It implements **Step 6 (PRE-PROMPT)** and **Step 11 (POST-PROMPT)** of the `prompt-loop-engine`.
 
 ## Goal
-To maintain absolute transparency with the user regarding the internal decision-making process, the task weight classification (MoE), and the specific skills/workflows invoked.
+To maintain absolute transparency with the user regarding the internal decision-making process, the task weight classification (MoE), and the specific skills/engine-loops invoked.
 
 ## Instruction
 

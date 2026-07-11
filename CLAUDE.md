@@ -13,11 +13,11 @@ Read these files at the start of every session:
 
 Skills are in `skills/` organized by category. Use `skills.json` for discovery.
 The 5 sequenced loop-engineering workflows (01 → 05) are the primary entry points and MUST be auto-triggered on ANY natural language prompt:
-- `skills/workflows/loop-1-plan/SKILL.md` → `01. loop-1-plan` (`/loop-1`, `/align`)
-- `skills/workflows/loop-2-develop/SKILL.md` → `02. loop-2-develop` (`/loop-2`, `/tdd`)
-- `skills/workflows/loop-3-debug/SKILL.md` → `03. loop-3-debug` (`/loop-3`, `/verify`)
-- `skills/workflows/loop-4-refactor/SKILL.md` → `04. loop-4-refactor` (`/loop-4`, `/optimize`)
-- `skills/workflows/loop-5-release/SKILL.md` → `05. loop-5-release` (`/loop-5`, `/learn`)
+- `skills/engine-loops/loop-1-plan/SKILL.md` → `01. loop-1-plan` (`/loop-1`, `/align`)
+- `skills/engine-loops/loop-2-develop/SKILL.md` → `02. loop-2-develop` (`/loop-2`, `/tdd`)
+- `skills/engine-loops/loop-3-debug/SKILL.md` → `03. loop-3-debug` (`/loop-3`, `/verify`)
+- `skills/engine-loops/loop-4-refactor/SKILL.md` → `04. loop-4-refactor` (`/loop-4`, `/optimize`)
+- `skills/engine-loops/loop-5-release/SKILL.md` → `05. loop-5-release` (`/loop-5`, `/learn`)
 
 ## Custom Instructions
 
@@ -54,8 +54,8 @@ Wizard-AI/
 ├── MEMORY.md          # Persistent state
 ├── bin/               # 47+ CLI wrappers (ai-*)
 ├── skills/
-│   ├── workflows/     # The 5 Master loop-engineering workflows (01-05)
-│   └── reference/     # All domain skills, imported skills, and core system skills
+│   ├── engine-loops/  # THE ENGINE: The 5 Master loop-engineering workflows (01-05). Always starts here.
+│   └── reference/     # THE LIBRARY: All domain skills, imported skills, and core system skills
 │       ├── core/      # Router, loop engine, installer, and agentic patterns
 │       ├── frontend/  # React, Vue, Angular, design skills
 │       ├── backend/   # Node, Python, Firebase, databases

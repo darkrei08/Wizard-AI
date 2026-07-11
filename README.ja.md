@@ -4,8 +4,8 @@
 
 <p align="center">
   <a href="https://github.com/darkrei08/Wizard-AI/stargazers"><img src="https://img.shields.io/github/stars/darkrei08/Wizard-AI?style=flat-square" alt="stars"/></a>
-  <a href="https://github.com/darkrei08/Wizard-AI/releases"><img src="https://img.shields.io/badge/release-v0.46.0-blue?style=flat-square" alt="release"/></a>
-  <a href="https://www.npmjs.com/package/@darkrei08/wizard-ai-cli"><img src="https://img.shields.io/badge/npm-v0.46.0-red?style=flat-square" alt="npm"/></a>
+  <a href="https://github.com/darkrei08/Wizard-AI/releases"><img src="https://img.shields.io/github/v/release/darkrei08/Wizard-AI?style=flat-square" alt="release"/></a>
+  <a href="https://www.npmjs.com/package/@darkrei08/wizard-ai-cli"><img src="https://img.shields.io/npm/v/@darkrei08/wizard-ai-cli?style=flat-square" alt="npm"/></a>
   <img src="https://img.shields.io/badge/works%20with-47%20agents%20%26%20161%2B%20skills-purple?style=flat-square" alt="works with"/>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL%20v3-orange?style=flat-square" alt="license"/></a>
 </p>
@@ -17,9 +17,9 @@
 <h3 align="center"><b>~78%削減のトークン効率（最大94%省力化）· ~80%のコスト削減 · 5x 高速化 · 100% 安全な自動ロールバック保護</b></h3>
 
 <p align="center">
-  実際のコーディングエージェント（Claude Code、Antigravity、OpenHands）を用いた複雑なアーキテクチャ設計、バグ修正、およびパッケージ導入（<code>bun</code>、<code>nuxt</code>、<code>python</code>、<code>node</code>、<code>rust</code>）で実証済み。Wizard-AIは、<b>#ponytail</b>（実用主義のシニアエンジニア思考）、<b>#caveman</b>（CLI出力の75%削減）、<b>#sqz</b>（JSONの20倍圧縮）、および <b>ai-os v0.46.0</b>（ゼロダウンタイム自動安全ロールバック）を統合します。
+  実際のコーディングエージェント（Claude Code、Antigravity、OpenHands）を用いた複雑なアーキテクチャ設計、バグ修正、およびパッケージ導入（<code>bun</code>、<code>nuxt</code>、<code>python</code>、<code>node</code>、<code>rust</code>）で実証済み。Wizard-AIは、<b>#ponytail</b>（実用主義のシニアエンジニア思考）、<b>#caveman</b>（CLI出力の75%削減）、<b>#sqz</b>（JSONの20倍圧縮）、および <b>ai-os</b>（ゼロダウンタイム自動安全ロールバック）を統合します。
   <br/>
-  <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>完全なベンチマーク・ノートブックを見る</b></a> · <a href="README.md#reproduce-it"><b>データを再現する</b></a>.
+  <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>ベンチマークノートブックを見る</b></a> · <a href="README.md#reproduce-it"><b>再現テストの実行</b></a>。
 </p>
 
 <p align="center">
@@ -28,22 +28,54 @@
 
 ---
 
-## 🔥 深刻な技術的課題：AIエージェントが引き起こす「$50の幻覚・環境クラッシュコスト」
+## 🔥 技術的課題：機能追加あたり50ドルの「幻覚と環境破壊」コスト
 
-自律型AIコーディングエージェントを実際のプロダクト環境で使用すると、2つの致命的な課題に直面します：
+自律型AIエージェント（Claude Code、OpenHands、Cursorなど）を実際のコードベースで実行すると、以下の2つの大きなボトルネックに直面します。
 
-1. **コンテキストウィンドウの雪崩とAPIコストの爆発：** エージェントは80,000トークン以上のディレクトリ構造やテストログを平気でコンテキストに投入します。結果として幻覚が増加し、1つの機能追加に平均 **~$18.50** のコストがかかります。
-2. **システム環境の破壊（「午前2時の環境崩壊」）：** エージェントが自律的に `npm install -g` や `uv tool install` を実行した際、パッケージの破損やビルド競合によって、システム全体の環境が破壊される危険性があります。
+1. **コンテキストウィンドウの雪崩とコストの爆発：** エージェントは大量のファイルツリーや冗長なログをそのまま投入するため、コンテキスト上限に達しやすく、幻覚が発生しやすくなります。結果、機能追加ごとに平均 **~$18.50** のコストがかかります。
+2. **システム環境の破壊（「午前2時の環境崩壊」）：** エージェントが自律的に `npm install` や `pip install` などを実行した際、パッケージ競合によってローカルシステム環境が破損するリスクがあります。
 
-### 💡 Wizard-AI による究極の解決策 (`v0.46.0`)
+### 💡 Wizard-AI による究極の解決策
 
 Wizard-AIは、AIエージェントとOS間の**自己修復型抽象レイヤー (`ai-os`) および 5つのエンジニアリングループ**として機能します：
 
 ```mermaid
-graph TD
-    A[🧙‍♂️ WIZARD-AI MASTER ECOSYSTEM<br/><b>v0.46.0</b>] --> B[💰 極限のトークン効率化<br/>LLMコストを78%削減]
-    A --> C[🛡️ 自己修復と自動ロールバック<br/>環境のクラッシュをゼロに]
-    A --> D[🔄 5-Loop Engineering<br/>確定的 MoE ルーティング]
+flowchart TB
+    %% Nodes
+    User([👤 ユーザーリクエスト]) --> Router{🧙‍♂️ auto-router}
+    
+    %% Engine Loops
+    subgraph Engine [⚙️ ENGINE-LOOPS: 順次実行]
+        Router --> L1[01. loop-1-plan]
+        L1 --> L2[02. loop-2-develop]
+        L2 --> L3[03. loop-3-debug]
+        L3 --> L4[04. loop-4-refactor]
+        L4 --> L5[05. loop-5-release]
+    end
+    
+    %% Reference Library
+    subgraph Lib [📚 REFERENCE LIBRARY: オンデマンドコンテキスト]
+        Ref[skills/reference/]
+        Ref --> RefCore[core]
+        Ref --> RefFE[frontend]
+        Ref --> RefBE[backend]
+        Ref --> RefDO[devops]
+        Ref --> RefMisc[misc / stitch / data-science]
+    end
+    
+    %% Connections
+    L1 -.->|仕様の提供| Ref
+    L2 -.->|TDDと開発| Environment[💻 ユーザー環境]
+    L3 -.->|自動デバッグ| Environment
+    L5 -.->|自動リリース| GitHub[🐙 GitHubリポジトリ / NPM]
+    
+    %% Styling
+    classDef engineColor fill:#6366f1,stroke:#4f46e5,stroke-width:2px,color:#fff;
+    classDef libColor fill:#10b981,stroke:#059669,stroke-width:2px,color:#fff;
+    classDef mainColor fill:#8b5cf6,stroke:#7c3aed,stroke-width:2px,color:#fff;
+    class L1,L2,L3,L4,L5 engineColor;
+    class Ref,RefCore,RefFE,RefBE,RefDO,RefMisc libColor;
+    class Router mainColor;
 ```
 
 ## 🚀 クイック・スタート (`1コマンドで導入`)

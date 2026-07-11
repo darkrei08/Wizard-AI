@@ -63,6 +63,6 @@ Wizard-AI is a local ecosystem for managing AI agent workflows/skills. The repos
 ## [Session State Snapshot] - 2026-07-11 17:00:00 (`v0.45.0 Safe Rollback Protocol`)
 - **Universal Dynamic Version Checking & Safe Rollback Protocol**: Added dynamic version checks querying the GitHub Releases API when downloading binaries (e.g. `sqz`) and established `ai-os` pre-install checks. Installs now capture the `PREV_VER` and carry out smoke tests (`--version`, `bash -n`), triggering a automatic rollback to `.bak` backups on non-zero exit codes. Tagged as `v0.45.0`.
 
-## [Session State Snapshot] - 2026-07-11 17:30:00 (`v0.46.0 Viral Marketing & Launcher CLI`)
+## [Session State Snapshot] - 2026-07-11 17:30:00 (`v0.47.1 Viral Marketing & Launcher CLI`)
 - **Viral Marketing & CLI Wrappers**: Added `ai-campaign` global command wrapper, `ai-jupyter` launcher, and a multi-channel automated campaign publisher script with bilingual social posting copy files under `.secret_viral_posts`.
-- **Release and Sync**: Updated and synced version references across all 6 localized READMEs and the Jupyter benchmark notebook. Synced the project's package.json to the git tag state and published `v0.46.0` on GitHub and NPM.
+- **Release and Sync**: Updated and synced version references across all 6 localized READMEs and the Jupyter benchmark notebook. Synced the project's package.json to the git tag state and published `v0.47.1` on GitHub and NPM.

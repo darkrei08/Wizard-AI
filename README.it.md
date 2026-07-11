@@ -4,8 +4,8 @@
 
 <p align="center">
   <a href="https://github.com/darkrei08/Wizard-AI/stargazers"><img src="https://img.shields.io/github/stars/darkrei08/Wizard-AI?style=flat-square" alt="stars"/></a>
-  <a href="https://github.com/darkrei08/Wizard-AI/releases"><img src="https://img.shields.io/badge/release-v0.46.0-blue?style=flat-square" alt="release"/></a>
-  <a href="https://www.npmjs.com/package/@darkrei08/wizard-ai-cli"><img src="https://img.shields.io/badge/npm-v0.46.0-red?style=flat-square" alt="npm"/></a>
+  <a href="https://github.com/darkrei08/Wizard-AI/releases"><img src="https://img.shields.io/github/v/release/darkrei08/Wizard-AI?style=flat-square" alt="release"/></a>
+  <a href="https://www.npmjs.com/package/@darkrei08/wizard-ai-cli"><img src="https://img.shields.io/npm/v/@darkrei08/wizard-ai-cli?style=flat-square" alt="npm"/></a>
   <img src="https://img.shields.io/badge/works%20with-47%20agents%20%26%20161%2B%20skills-purple?style=flat-square" alt="works with"/>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL%20v3-orange?style=flat-square" alt="license"/></a>
 </p>
@@ -17,7 +17,7 @@
 <h3 align="center"><b>~78% di token in meno (fino al 94%) · ~80% più economico · 5x più veloce · 100% sicuro e con rollback</b></h3>
 
 <p align="center">
-  Misurato su sessioni reali con agenti coding AI (Claude Code, Antigravity, OpenHands) su architetture complesse, debug e installazioni (<code>bun</code>, <code>nuxt</code>, <code>python</code>, <code>node</code>, <code>rust</code>). Wizard-AI orchestra <b>#ponytail</b> (logica da Senior Dev pigro), <b>#caveman</b> (-75% token in output CLI), <b>#sqz</b> (compressione JSON 20x) e <b>ai-os v0.46.0</b> (rollback automatico a zero downtime). Ogni barriera di sicurezza è attiva mentre il contesto resta leggero e fulmineo.
+  Misurato su sessioni reali con agenti coding AI (Claude Code, Antigravity, OpenHands) su architetture complesse, debug e installazioni (<code>bun</code>, <code>nuxt</code>, <code>python</code>, <code>node</code>, <code>rust</code>). Wizard-AI orchestra <b>#ponytail</b> (logica da Senior Dev pigro), <b>#caveman</b> (-75% token in output CLI), <b>#sqz</b> (compressione JSON 20x) e <b>ai-os</b> (rollback automatico a zero downtime). Ogni barriera di sicurezza è attiva mentre il contesto resta leggero e fulmineo.
   <br/>
   <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>Guarda il Notebook Benchmark</b></a> · <a href="#riproduci-i-test"><b>riproduci i test</b></a>.
 </p>
@@ -39,9 +39,52 @@ Wizard-AI è un setup **con un solo comando** che fornisce a tutti gli agenti AI
 - 🔍 **Reranking intelligente** — filtra i passaggi RAG in base alla pertinenza
 - 📈 **Monitoraggio dei consumi** — traccia l'uso dei token e i costi
 - 🔗 **LLM Gateway** — un'unica API per oltre 100 provider tramite LiteLLM
-- 🛩️ **Cockpit Tools Proxy** — aggira i limiti delle API gratuite sfruttando l'abbonamento del tuo IDE (su Windows, Linux e macOS)
+- 🛩️ **Cockpit Tools Proxy** — aggira i limiti dei piani gratuiti sfruttando l'abbonamento del tuo IDE (su Windows, Linux e macOS)
 
 Tutti gli strumenti vengono installati una sola volta e resi **disponibili a ogni agente AI** attraverso un sistema di skill condiviso.
+
+### 💡 Come funziona
+
+Wizard-AI funge da **Strato di Astrazione Auto-Rigenerante (`ai-os`) e da Orchestratore Deterministico a 5 Loop** tra l'agente AI e il tuo sistema operativo:
+
+```mermaid
+flowchart TB
+    %% Nodes
+    User([👤 Richiesta Utente]) --> Router{🧙‍♂️ auto-router}
+    
+    %% Engine Loops
+    subgraph Engine [⚙️ ENGINE-LOOPS: Esecuzione Sequenziale]
+        Router --> L1[01. loop-1-plan]
+        L1 --> L2[02. loop-2-develop]
+        L2 --> L3[03. loop-3-debug]
+        L3 --> L4[04. loop-4-refactor]
+        L4 --> L5[05. loop-5-release]
+    end
+    
+    %% Reference Library
+    subgraph Lib [📚 REFERENCE LIBRARY: Contesto On-Demand]
+        Ref[skills/reference/]
+        Ref --> RefCore[core]
+        Ref --> RefFE[frontend]
+        Ref --> RefBE[backend]
+        Ref --> RefDO[devops]
+        Ref --> RefMisc[misc / stitch / data-science]
+    end
+    
+    %% Connections
+    L1 -.->|Fornisce Specifiche| Ref
+    L2 -.->|TDD & Sviluppo| Environment[💻 Ambiente Utente]
+    L3 -.->|Auto-Debug| Environment
+    L5 -.->|Auto-Release| GitHub[🐙 Repo GitHub / NPM]
+    
+    %% Styling
+    classDef engineColor fill:#6366f1,stroke:#4f46e5,stroke-width:2px,color:#fff;
+    classDef libColor fill:#10b981,stroke:#059669,stroke-width:2px,color:#fff;
+    classDef mainColor fill:#8b5cf6,stroke:#7c3aed,stroke-width:2px,color:#fff;
+    class L1,L2,L3,L4,L5 engineColor;
+    class Ref,RefCore,RefFE,RefBE,RefDO,RefMisc libColor;
+    class Router mainColor;
+```
 
 ---
 
@@ -157,7 +200,7 @@ Dietro le quinte, `setup.sh` gestisce tutto per te:
 3. **Clona le dipendenze**: Scarica i repository necessari sotto `~/.ai-skills/`.
 4. **Installa Tool CLI Globali**: Configura gli eseguibili nativi (`graphify`, `litellm`, `markitdown`, `sqz`, `serena`) globalmente via `uv tool`.
 5. **Crea Wrapper Personalizzati**: Copia gli script da `bin/` a `~/.local/bin/`.
-6. **Configures Agent Skills**: Deploys all agent skills to `~/.gemini/config/skills/` and runs `ai-sync-skills` to copy them to other agent folders.
+6. **Configura le Skill**: Copia le skill in `~/.gemini/config/skills/` e le propaga a tutti gli altri agenti.
 
 ---
 
@@ -171,7 +214,7 @@ Wizard-AI organizza tutte le fasi di pianificazione, sviluppo, debug, refactorin
 4. **`04. /loop-4-refactor`** — 🏗️ **Refactoring & Ottimizzazione:** Ricerca semantica (`serena`), clean code/DDD (`ponytail`) e risparmio token (`sqz`, `caveman`).
 5. **`05. /loop-5-release`** — 🚀 **Rilascio & Apprendimento:** Merge pulito su main, Semantic Versioning (`auto-release`), pubblicazione npm, handoff e salvataggio in `MEMORY.md`.
 
-> **`loop-install-bind` Gate:** Ogni volta che installi una nuova skill o framework tramite `wizard-ai-installer`, l'agente esegue automaticamente la categorizzazione e l'aggancio in `skills.json` e nel `Loop Chaining Tree` del loop numerato di competenza. Così l'LLM sa esattamente dove si trova e quando innescarla in futuro!
+> **`loop-install-bind` Gate:** Ogni volta che installi una nuova skill o framework tramite `wizard-ai-installer`, l'agente esegue automaticamente la configurazione dell'aggancio in `skills.json` e nel Loop Chaining Tree.
 
 ---
 
@@ -283,7 +326,18 @@ Questo script eseguirà il backup nel tuo repository locale sotto `skills/` e pr
 wizard-ai/
 ├── bin/                    # Script wrapper CLI → copiati in ~/.local/bin/
 │   └── windows/            # Port PowerShell dei wrapper (Windows)
-├── skills/                 # File SKILL.md per gli agenti AI
+├── skills/                 # Copiati negli agenti
+│   ├── engine-loops/       # IL MOTORE: I 5 Loop Master (01-05). Punti di ingresso.
+│   └── reference/          # LA LIBRERIA: Skill di riferimento per domini specifici
+│       ├── core/           # Router, loop engine, installer, pattern agentici
+│       ├── frontend/       # React, Vue, Angular, skill di design
+│       ├── backend/        # Node, Python, Firebase, database
+│       ├── devops/         # CI/CD, sicurezza, auto-release
+│       ├── data-science/   # Elaborazione documenti, visualizzazione
+│       ├── memory-knowledge/ # Graphify, memoria
+│       ├── stitch/         # Strumenti design system
+│       ├── marketing-media/ # SEO, contenuti
+│       └── misc/           # Utility, agenti esterni
 ├── docs/                   # Guide e documentazione
 │   ├── WIKI.it.md          # 📚 Wiki centrale di tutte le skill e risorse
 │   └── security-prompts/   # Prompt di audit sicurezza per codice AI

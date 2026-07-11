@@ -122,7 +122,7 @@ Ogni nuova skill, framework o progetto installato DEVE essere classificato categ
    - `05. loop-5-release` → Merge su Main, Semantic Release, Pubblicazione NPM/Git, Handoff e Apprendimento Persistente (`MEMORY.md`).
 
 2. **Aggancio nel File SKILL.md del Loop Target (`Loop Chaining Tree`):**
-   - Apri e modifica il file del loop corrispondente (`$WIZARD_AI_DIR/skills/workflows/loop-X-.../SKILL.md`).
+   - Apri e modifica il file del loop corrispondente (`$WIZARD_AI_DIR/skills/engine-loops/loop-X-.../SKILL.md`).
    - Aggiungi la nuova skill sotto la sezione di categorizzazione corretta indicando: **Nome**, **Quando usarla** e **Come si concatena** con le altre skill del loop.
    - Se necessario, aggiorna il diagramma di flusso Mermaid all'interno di quel loop per includere il nuovo nodo di esecuzione.
 

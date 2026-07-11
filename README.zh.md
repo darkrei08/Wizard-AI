@@ -4,8 +4,8 @@
 
 <p align="center">
   <a href="https://github.com/darkrei08/Wizard-AI/stargazers"><img src="https://img.shields.io/github/stars/darkrei08/Wizard-AI?style=flat-square" alt="stars"/></a>
-  <a href="https://github.com/darkrei08/Wizard-AI/releases"><img src="https://img.shields.io/badge/release-v0.46.0-blue?style=flat-square" alt="release"/></a>
-  <a href="https://www.npmjs.com/package/@darkrei08/wizard-ai-cli"><img src="https://img.shields.io/badge/npm-v0.46.0-red?style=flat-square" alt="npm"/></a>
+  <a href="https://github.com/darkrei08/Wizard-AI/releases"><img src="https://img.shields.io/github/v/release/darkrei08/Wizard-AI?style=flat-square" alt="release"/></a>
+  <a href="https://www.npmjs.com/package/@darkrei08/wizard-ai-cli"><img src="https://img.shields.io/npm/v/@darkrei08/wizard-ai-cli?style=flat-square" alt="npm"/></a>
   <img src="https://img.shields.io/badge/works%20with-47%20agents%20%26%20161%2B%20skills-purple?style=flat-square" alt="works with"/>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL%20v3-orange?style=flat-square" alt="license"/></a>
 </p>
@@ -17,9 +17,9 @@
 <h3 align="center"><b>~78% 更少 Token（最高省 94%）· ~80% 降低成本 · 5x 极速响应 · 100% 自动回滚保护</b></h3>
 
 <p align="center">
-  在真实编码智能体会话中测试验证（覆盖 Claude Code, Antigravity, OpenHands 等对于复杂架构设计、Bug 诊断与包安装）。Wizard-AI 深度整合了 <b>#ponytail</b>（高级工程师极简开发理念）、<b>#caveman</b>（减少 75% CLI 输出 Token）、<b>#sqz</b>（20x JSON 结构化压缩）以及 <b>ai-os v0.46.0</b>（支持零停机自动安全回滚）。
+  在真实编码智能体会话中测试验证（覆盖 Claude Code, Antigravity, OpenHands 等对于复杂架构设计、Bug 诊断与包安装）。Wizard-AI 深度整合了 <b>#ponytail</b>（高级工程师极简开发理念）、<b>#caveman</b>（减少 75% CLI 输出 Token）、<b>#sqz</b>（20x JSON 结构化压缩）以及 <b>ai-os</b>（支持零停机自动安全回滚）。
   <br/>
-  <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>查看完整 Benchmark Notebook</b></a> · <a href="README.md#reproduce-it"><b>复现数据</b></a>.
+  <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>完全版评测 Jupyter Notebook</b></a> · <a href="README.md#reproduce-it"><b>复现测试数据</b></a>。
 </p>
 
 <p align="center">
@@ -28,22 +28,54 @@
 
 ---
 
-## 🔥 尖锐技术痛点：AI 编码智能体的“$50 幻觉与环境崩溃税”
+## 🔥 技术难题：单特性 50 美元的「幻觉税」与系统环境损坏
 
-当您使用现代自主 AI 编码智能体在生产环境中自主迭代时，通常会遇到两大致命工程瓶颈：
+当您允许一个自律型 AI 智能体（例如 Claude Code、OpenHands、Aider 或 Cursor）在真实项目仓库中运行时，您会立刻遭遇两大系统级瓶颈：
 
-1. **上下文雪崩与高昂 API 成本：** 原始智能体将 80,000+ Token 的完整文件树与冗长测试日志强行塞入上下文，迅速耗尽窗口并引发幻觉，平均单次复杂功能开发花费 **~$18.50**。
-2. **静默的系统环境破坏（“凌晨2点的系统变砖”）：** 当智能体自主执行 `npm install -g`、`uv tool install` 或 `bun add` 时，一旦安装损坏的依赖或存在 C++ 编译冲突，全局开发环境便可能彻底瘫痪。
+1. **上下文窗口暴增与 API 账单飙升：** 智能体在每轮对话中都会将 80,000+ Token 的完整文件树、测试日志和 `npm install` 输出全部塞满上下文。这会迅速耗尽 API 限制，导致严重的上下文失效（幻觉），且平均每开发一个特性要花费 **~$18.50**。
+2. **静默式环境损坏（“凌晨两点的崩溃”）：** 智能体在循环中自动执行安装依赖时，一旦遇到受损包或语法错误，可能彻底损坏您的系统级运行时环境。
 
-### 💡 Wizard-AI 的终极解决方案 (`v0.46.0`)
+### 💡 Wizard-AI 的终极解决方案
 
 Wizard-AI 充当 AI 智能体与您的操作系统之间的**自愈式抽象层 (`ai-os`) 与确定性 5-Loop 工程调度引擎**：
 
 ```mermaid
-graph TD
-    A[🧙‍♂️ WIZARD-AI MASTER ECOSYSTEM<br/><b>v0.46.0</b>] --> B[💰 极简 Token 效率<br/>节省 78% LLM 账单]
-    A --> C[🛡️ 自愈与自动安全回滚<br/>彻底终结环境崩溃]
-    A --> D[🔄 5-Loop 工程体系<br/>确定性 MoE 智能路由]
+flowchart TB
+    %% Nodes
+    User([👤 用户请求]) --> Router{🧙‍♂️ 自动路由}
+    
+    %% Engine Loops
+    subgraph Engine [⚙️ ENGINE-LOOPS: 顺序执行]
+        Router --> L1[01. loop-1-plan]
+        L1 --> L2[02. loop-2-develop]
+        L2 --> L3[03. loop-3-debug]
+        L3 --> L4[04. loop-4-refactor]
+        L4 --> L5[05. loop-5-release]
+    end
+    
+    %% Reference Library
+    subgraph Lib [📚 REFERENCE LIBRARY: 按需上下文]
+        Ref[skills/reference/]
+        Ref --> RefCore[core]
+        Ref --> RefFE[frontend]
+        Ref --> RefBE[backend]
+        Ref --> RefDO[devops]
+        Ref --> RefMisc[misc / stitch / data-science]
+    end
+    
+    %% Connections
+    L1 -.->|提供规范| Ref
+    L2 -.->|TDD与开发| Environment[💻 用户环境]
+    L3 -.->|自动调试| Environment
+    L5 -.->|自动发布| GitHub[🐙 GitHub 仓库 / NPM]
+    
+    %% Styling
+    classDef engineColor fill:#6366f1,stroke:#4f46e5,stroke-width:2px,color:#fff;
+    classDef libColor fill:#10b981,stroke:#059669,stroke-width:2px,color:#fff;
+    classDef mainColor fill:#8b5cf6,stroke:#7c3aed,stroke-width:2px,color:#fff;
+    class L1,L2,L3,L4,L5 engineColor;
+    class Ref,RefCore,RefFE,RefBE,RefDO,RefMisc libColor;
+    class Router mainColor;
 ```
 
 ## 🚀 快速安装 (`一键初始化`)

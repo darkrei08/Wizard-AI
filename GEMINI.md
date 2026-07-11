@@ -26,11 +26,11 @@ Run `ai-sync-skills` to copy all Wizard-AI skills to the global Gemini config.
 
 | Numbered Loop | Workflow | Natural Language Triggers | Semantic Tools Activated |
 |---|---|---|---|
-| `01. loop-1-plan` | `skills/workflows/loop-1-plan` | *"crea", "progetta", "requisiti", "piano", "specifica"* | `mp-domain-modeling`, `.spec.md`, `task.md` |
-| `02. loop-2-develop` | `skills/workflows/loop-2-develop` | *"sviluppa", "implementa", "scrivi codice", "test", "tdd"* | `auto-branch`, `tdd`, `superpowers`, `strix` |
-| `03. loop-3-debug` | `skills/workflows/loop-3-debug` | *"errore", "bug", "fallisce", "rotto", "controlla", "review"* | `serena` (symbol/LSP), `diagnosing-bugs`, `ai-debug` |
-| `04. loop-4-refactor` | `skills/workflows/loop-4-refactor` | *"rifattorizza", "pulisci", "ottimizza", "riduci token"* | `serena`, `codebase-design`, `sqz`, `caveman` |
-| `05. loop-5-release` | `skills/workflows/loop-5-release` | *"pubblica", "mergia", "rilascia", "versione", "salva"* | `finishing-a-development-branch`, `session-manager` |
+| `01. loop-1-plan` | `skills/engine-loops/loop-1-plan` | *"crea", "progetta", "requisiti", "piano", "specifica"* | `mp-domain-modeling`, `.spec.md`, `task.md` |
+| `02. loop-2-develop` | `skills/engine-loops/loop-2-develop` | *"sviluppa", "implementa", "scrivi codice", "test", "tdd"* | `auto-branch`, `tdd`, `superpowers`, `strix` |
+| `03. loop-3-debug` | `skills/engine-loops/loop-3-debug` | *"errore", "bug", "fallisce", "rotto", "controlla", "review"* | `serena` (symbol/LSP), `diagnosing-bugs`, `ai-debug` |
+| `04. loop-4-refactor` | `skills/engine-loops/loop-4-refactor` | *"rifattorizza", "pulisci", "ottimizza", "riduci token"* | `serena`, `codebase-design`, `sqz`, `caveman` |
+| `05. loop-5-release` | `skills/engine-loops/loop-5-release` | *"pubblica", "mergia", "rilascia", "versione", "salva"* | `finishing-a-development-branch`, `session-manager` |
 
 ### mattpocock Skills (Direct Use)
 

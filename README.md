@@ -4,8 +4,8 @@
 
 <p align="center">
   <a href="https://github.com/darkrei08/Wizard-AI/stargazers"><img src="https://img.shields.io/github/stars/darkrei08/Wizard-AI?style=flat-square" alt="stars"/></a>
-  <a href="https://github.com/darkrei08/Wizard-AI/releases"><img src="https://img.shields.io/badge/release-v0.46.0-blue?style=flat-square" alt="release"/></a>
-  <a href="https://www.npmjs.com/package/@darkrei08/wizard-ai-cli"><img src="https://img.shields.io/badge/npm-v0.46.0-red?style=flat-square" alt="npm"/></a>
+  <a href="https://github.com/darkrei08/Wizard-AI/releases"><img src="https://img.shields.io/github/v/release/darkrei08/Wizard-AI?style=flat-square" alt="release"/></a>
+  <a href="https://www.npmjs.com/package/@darkrei08/wizard-ai-cli"><img src="https://img.shields.io/npm/v/@darkrei08/wizard-ai-cli?style=flat-square" alt="npm"/></a>
   <img src="https://img.shields.io/badge/works%20with-47%20agents%20%26%20161%2B%20skills-purple?style=flat-square" alt="works with"/>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL%20v3-orange?style=flat-square" alt="license"/></a>
 </p>
@@ -17,7 +17,7 @@
 <h3 align="center"><b>~78% fewer tokens (up to 94%) · ~80% cheaper · 5x faster · 100% safe & rollback-protected</b></h3>
 
 <p align="center">
-  Measured on real coding agent sessions across complex architectures, bug diagnoses, and framework installations (<code>bun</code>, <code>nuxt</code>, <code>node</code>, <code>python</code>, <code>rust</code>). Wizard-AI orchestrates <b>#ponytail</b> (lazy senior dev discipline), <b>#caveman</b> (-75% CLI tokens), <b>#sqz</b> (20x JSON compression), and <b>ai-os v0.46.0</b> (automatic zero-downtime rollback gates). Every safety check is active while your context stays razor-sharp.
+  Measured on real coding agent sessions across complex architectures, bug diagnoses, and framework installations (<code>bun</code>, <code>nuxt</code>, <code>node</code>, <code>python</code>, <code>rust</code>). Wizard-AI orchestrates <b>#ponytail</b> (lazy senior dev discipline), <b>#caveman</b> (-75% CLI tokens), <b>#sqz</b> (20x JSON compression), and <b>ai-os</b> (automatic zero-downtime rollback gates). Every safety check is active while your context stays razor-sharp.
   <br/>
   <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>Full benchmark notebook</b></a> · <a href="#reproduce-it"><b>reproduce it</b></a>.
 </p>
@@ -37,19 +37,47 @@ When you let a modern AI coding agent (like raw Claude Code, OpenHands, Aider, o
 2. **The Silent Environment Corruption (The "2 AM Brick"):**
    When an agent runs `npm install -g`, `uv tool install`, or `bun add` during an autonomous loop, a broken package, incompatible C++ build dependency, or syntax error can completely **corrupt your global system runtime**. Standard agents don't know how to clean up their mess, leaving you with broken virtual environments and half-created directories.
 
-### 💡 How Wizard-AI Solves It Permanently (`v0.46.0` Engine)
+### 💡 How Wizard-AI Solves It Permanently
 
 Wizard-AI acts as a **Self-Healing Abstraction Layer (`ai-os`) & Deterministic 5-Loop Orchestrator** between your AI agent and your OS:
 
 ```mermaid
-graph TD
-    A[🧙‍♂️ WIZARD-AI MASTER ECOSYSTEM<br/><b>v0.46.0</b>] --> B[💰 Extreme Token Efficiency<br/>Save 78% on LLM Bills]
-    A --> C[🛡️ Self-Healing & Safe Rollback<br/>Zero Environment Corruptions]
-    A --> D[🔄 5-Loop Engineering<br/>Deterministic MoE Routing]
-
-    B --> B1["<b>Integrated Engines:</b><br/>• ponytail (Lazy Senior Dev discipline)<br/>• caveman (-75% terminal output tokens)<br/>• sqz (20x JSON/CLI compression)<br/>• lean-ctx & flashrank (Intelligent RAG pruning)"]
-    C --> C1["<b>v0.46.0 Universal Safeguard:</b><br/>• Auto-snapshots PREV_VER before any pull/install<br/>• Smoke-tests downloaded binaries (--version / bash -n)<br/>• Instant rollback to working .bak on failure<br/>• Native protection for bun, nuxt, python, rust, go"]
-    D --> D1["<b>The 5 Master Loops:</b><br/>01. Plan → 02. Develop → 03. Debug<br/>→ 04. Refactor → 05. Release<br/>Driven by Semantic Auto-Router"]
+flowchart TB
+    %% Nodes
+    User([👤 User Request]) --> Router{🧙‍♂️ auto-router}
+    
+    %% Engine Loops
+    subgraph Engine [⚙️ ENGINE-LOOPS: Sequential Execution]
+        Router --> L1[01. loop-1-plan]
+        L1 --> L2[02. loop-2-develop]
+        L2 --> L3[03. loop-3-debug]
+        L3 --> L4[04. loop-4-refactor]
+        L4 --> L5[05. loop-5-release]
+    end
+    
+    %% Reference Library
+    subgraph Lib [📚 REFERENCE LIBRARY: On-Demand Context]
+        Ref[skills/reference/]
+        Ref --> RefCore[core]
+        Ref --> RefFE[frontend]
+        Ref --> RefBE[backend]
+        Ref --> RefDO[devops]
+        Ref --> RefMisc[misc / stitch / data-science]
+    end
+    
+    %% Connections
+    L1 -.->|Consents Specs| Ref
+    L2 -.->|TDD & Dev| Environment[💻 User Environment]
+    L3 -.->|Auto-Debug| Environment
+    L5 -.->|Auto-Release| GitHub[🐙 GitHub Repo / NPM]
+    
+    %% Styling
+    classDef engineColor fill:#6366f1,stroke:#4f46e5,stroke-width:2px,color:#fff;
+    classDef libColor fill:#10b981,stroke:#059669,stroke-width:2px,color:#fff;
+    classDef mainColor fill:#8b5cf6,stroke:#7c3aed,stroke-width:2px,color:#fff;
+    class L1,L2,L3,L4,L5 engineColor;
+    class Ref,RefCore,RefFE,RefBE,RefDO,RefMisc libColor;
+    class Router mainColor;
 ```
 
 ---
@@ -63,7 +91,7 @@ Inspired by quantified token-saving breakthroughs like [ponytail](https://github
 | **Codebase Ingestion & RAG** | **85,000 tokens** dumped raw into context (`~$0.25`/turn) | **9,500 tokens** via `sqz` + `flashrank` + `graphify` (`~$0.02`/turn) | 🚀 **88% Token Reduction**<br/>⚡ **5x Faster Time-To-First-Token** |
 | **Feature Architecture & Code** | AI generates 400 lines of boilerplate & over-engineered slop | **`ponytail` mode active:** AI writes 35 lines of surgical, high-leverage code | 🎯 **91% Less Code Bloat**<br/>🐴 *"Laziest Senior Dev Mindset"* |
 | **Terminal / CLI Output Parsing** | Verbose `npm install` / `git log` floods context (15,000 tokens) | **`caveman` + `sqz` wrapper:** Returns 800 tokens of compressed signal | 📉 **94% Context Cost Cut** |
-| **Package & Binary Upgrades** | Agent hallucinates package or breaks runtime → **2 hours manual debug** | **`ai-os` v0.46.0 Safe Rollback:** Auto-detects failure, restores `.bak` in 2s | 🛡️ **100% Crash Prevention**<br/>⏱️ **0 min Downtime** |
+| **Package & Binary Upgrades** | Agent hallucinates package or breaks runtime → **2 hours manual debug** | **`ai-os` Safe Rollback:** Auto-detects failure, restores `.bak` in 2s | 🛡️ **100% Crash Prevention**<br/>⏱️ **0 min Downtime** |
 | **Average Complex Feature Cost** | **~$18.50 per feature** (High token burn, context resets, bloat) | **~$3.90 per feature** (Deterministic Loop-Chaining & Compression) | 💸 **78.9% Total Financial Savings** |
 
 ---
@@ -96,7 +124,7 @@ git clone https://github.com/darkrei08/Wizard-AI.git ~/wizard-ai
 cd ~/wizard-ai
 ```
 
-#### 2️⃣ Run the Safe Installer (`v0.46.0` Engine)
+#### 2️⃣ Run the Safe Installer
 Run the main setup script. Use `--yes` (`-y`) for a **fully automated, non-interactive** install (ideal for CI/CD or agent pre-setup), or run without it for an interactive setup:
 
 **Linux / macOS:**
@@ -286,7 +314,18 @@ This script synchronizes your modifications back to your cloned repository under
 wizard-ai/
 ├── bin/                    # CLI wrapper scripts → deployed to ~/.local/bin/
 │   └── windows/            # PowerShell ports of the wrappers (Windows)
-├── skills/                 # SKILL.md definitions → deployed to agents
+├── skills/                 # Deployed to agents
+│   ├── engine-loops/       # THE ENGINE: The 5 Master loops (01-05). Entry points.
+│   └── reference/          # THE LIBRARY: Domain-specific & core reference skills
+│       ├── core/           # Router, loop engine, installer, agentic patterns
+│       ├── frontend/       # React, Vue, Angular, design skills
+│       ├── backend/        # Node, Python, Firebase, databases
+│       ├── devops/         # CI/CD, security, auto-release
+│       ├── data-science/   # Document processing, visualization
+│       ├── memory-knowledge/ # Graphify, memory
+│       ├── stitch/         # Design system tools
+│       ├── marketing-media/ # SEO, content
+│       └── misc/           # Utilities, external agents
 ├── docs/                   # Reference guides and documentation
 │   ├── WIKI.md             # 📚 Central Wiki of all skills & resources
 │   └── security-prompts/   # AI-specific security audit prompts
