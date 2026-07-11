@@ -66,14 +66,59 @@ def publish_to_discord(webhook_url, dry_run=False):
         print("❌ Error posting to Discord:", e)
         return False
 
-def print_summary():
+def print_payloads_guide(platform="all"):
     print("======================================================================")
-    print("✨ WIZARD-AI MULTI-CHANNEL CAMPAIGN READY FOR DISPATCH")
+    print("✨ WIZARD-AI MULTI-CHANNEL CAMPAIGN DISPATCHER & VIRAL COPY MANUAL")
     print("======================================================================")
     print("Repository: https://github.com/darkrei08/Wizard-AI (v0.45.0 Live)")
     print("Jupyter Notebook: benchmarks/wizard_ai_token_benchmark.ipynb")
     print("Languages Active: English, Italiano, Español, Français, 中文, 日本語")
     print("======================================================================")
+
+    if platform in ["hn", "all"]:
+        hn = CAMPAIGN_PAYLOADS["hacker_news"]
+        print("\n" + "─"*70)
+        print("🧡 HACKER NEWS (Show HN) — Peak Hours: 15:00 - 18:00 CET")
+        print("─"*70)
+        print(f"📌 TITLE:\n{hn['title']}\n")
+        print(f"🔗 URL:\n{hn['url']}\n")
+        print(f"💬 FIRST COMMENT TO POST IMMEDIATELY AFTER CREATING THREAD:\n{hn['text']}")
+
+    if platform in ["reddit", "all"]:
+        rd = CAMPAIGN_PAYLOADS["reddit"]
+        print("\n" + "─"*70)
+        print(f"🔴 REDDIT — Subreddits: {', '.join(rd['subreddits'])}")
+        print("─"*70)
+        print(f"📌 TITLE:\n{rd['title']}\n")
+        print(f"📄 BODY MARKDOWN:\n{rd['body']}")
+
+    if platform in ["discord", "all"]:
+        ds = CAMPAIGN_PAYLOADS["discord_webhook"]
+        print("\n" + "─"*70)
+        print("⚡ DISCORD / SLACK COMMUNITY CHATS")
+        print("─"*70)
+        print(f"📄 MESSAGE TEXT TO COPY/PASTE OR SEND VIA WEBHOOK:\n{ds['content']}\n")
+        print("🤖 TO SEND THIS AUTOMATICALLY VIA TERMINAL:")
+        print('   ai-campaign --platform discord --webhook "https://discord.com/api/webhooks/YOUR_URL_HERE"')
+
+    print("\n" + "─"*70)
+    print("📘 FACEBOOK & LINKEDIN (Bonus Tip for Max Algorithm Reach)")
+    print("─"*70)
+    print("💡 Rule: Attach an image (e.g., media__1783781445647.png or Repo Screenshot) BEFORE posting so Facebook doesn't penalize external links!")
+    print("\n📝 COPY/PASTE TEXT FOR FACEBOOK / LINKEDIN:")
+    print("""🚀 How we reduced AI Agent token bills by ~78% & stopped them from bricking local dev environments (v0.45.0 Open Source)
+
+When autonomous coding agents run `npm install -g` or `uv tool install` on their own, they risk breaking local dependencies. And piping 80k+ tokens of verbose build logs into every prompt costs ~$18.50 per feature!
+
+Today we released Wizard-AI v0.45.0: an Agentic OS abstraction layer with:
+✅ #ponytail & #caveman mode: Cuts terminal verbosity by 75% & enforces surgical senior-dev code diffs.
+✅ #sqz & Semantic RAG: 20x JSON compression, dropping context from 85k to ~9.5k tokens.
+✅ 100% Zero-Downtime Rollback (ai-os): If an agent installs a broken binary, our pre-flight gates catch the syntax/exit error and restore the clean `.bak` snapshot in 1.2 seconds.
+
+Explore our 6-language docs and reproducible Jupyter Token Benchmark Notebook:
+🔗 https://github.com/darkrei08/Wizard-AI""")
+    print("─"*70)
+    print("\n📢 [READY] All post copy is ready above! Copy/paste into the respective platforms or pass `--webhook` to auto-dispatch Discord announcements.")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Wizard-AI Viral Publisher")
@@ -85,8 +130,7 @@ if __name__ == "__main__":
 
     is_dry_run = args.dry_run and not args.live
 
-    print_summary()
     if args.platform in ["discord", "all"] and args.webhook:
         publish_to_discord(args.webhook, dry_run=is_dry_run)
     else:
-        print("\n📢 [READY] All post payloads formatted and verified. To dispatch directly via API, provide API keys/webhooks or copy the generated payloads above into Show HN / Reddit!")
+        print_payloads_guide(args.platform)
