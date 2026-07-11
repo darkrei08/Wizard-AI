@@ -4,31 +4,10 @@
       "path": "core"
     },
     {
-      "path": "frontend"
-    },
-    {
-      "path": "backend"
-    },
-    {
-      "path": "devops"
-    },
-    {
-      "path": "data-science"
-    },
-    {
-      "path": "memory-knowledge"
-    },
-    {
       "path": "workflows"
     },
     {
-      "path": "stitch"
-    },
-    {
-      "path": "marketing-media"
-    },
-    {
-      "path": "misc"
+      "path": "reference"
     }
   ],
   "inherits": [],

@@ -148,13 +148,14 @@ Run `ai-help` to see the full list of 47+ CLI wrappers. Key ones:
 
 | Category | Path | Content |
 |---|---|---|
-| Core (system + mattpocock) | `skills/core/` | Loop engine, router, brainstorming, mp-* skills |
+| Reference (mattpocock) | `skills/reference/` | Read-only imported skills (mp-* skills) |
+| Core (system + domains) | `skills/core/` | Loop engine, router, brainstorming, domain workflows |
 | Frontend | `skills/frontend/` | React, Vue, Angular, design skills |
 | Backend | `skills/backend/` | Node, Python, Firebase, databases |
 | DevOps | `skills/devops/` | CI/CD, security, release automation |
 | Data Science | `skills/data-science/` | Document processing, conversion |
 | Memory & Knowledge | `skills/memory-knowledge/` | Graphify, memory, wiki |
-| Workflows | `skills/workflows/` | 5 loop workflows + 7 domain workflows |
+| Workflows | `skills/workflows/` | 5 loop-engineering workflows only |
 | Stitch | `skills/stitch/` | Design system tools |
 | Marketing & Media | `skills/marketing-media/` | SEO, blog, video, audio |
 | Misc | `skills/misc/` | Utilities, skill creation |

@@ -252,7 +252,7 @@ By simply invoking this skill when starting a new project, your AI agent will au
 - **Clean Architecture** & **SDD/TDD** (via `spec-kit` and `test-driven-development`).
 - **Dynamic Framework Selection** (routing to `express`, `nuxt`, `next.js`, `pocketbase`, or `zvec` based on your project's complexity).
 - **Mandatory Living Documents** (`MEMORY.md`, `CHANGELOG.md`, `PROMPT.md`, `AGENT.md`) to maintain perfect state and context across sessions.
-- **Skill Chaining** (automating `auto-workflow`, `scaffold`, `taste-skill`, `graphify`, `serena`, `auto-debug`, and `auto-release` seamlessly).
+- **Skill Chaining** (automating `prompt-loop-engine`, `scaffold`, `taste-skill`, `graphify`, `serena`, `auto-debug`, and `auto-release` seamlessly).
 
 You just need to provide your idea, and Wizard-AI will orchestrate the perfect setup.
 

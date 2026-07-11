@@ -54,8 +54,9 @@ Wizard-AI/
 ├── MEMORY.md          # Persistent state
 ├── bin/               # 47+ CLI wrappers (ai-*)
 ├── skills/
-│   ├── core/          # System skills + mp-* (mattpocock)
-│   ├── workflows/     # 5 loop + 7 domain workflows
+│   ├── reference/       # Read-only imported skills (mp-* from mattpocock)
+│   ├── core/          # System skills + domain workflows
+│   ├── workflows/     # 5 loop-engineering workflows only
 │   ├── frontend/      # UI/UX skills
 │   ├── backend/       # Server-side skills
 │   ├── devops/        # CI/CD, security

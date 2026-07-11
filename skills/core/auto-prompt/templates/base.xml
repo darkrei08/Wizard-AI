@@ -21,8 +21,8 @@
     <!-- Configurazione dinamica delle skill (ispirata a chatXML/tag-prompt) -->
     <fixed_skills>
       <!-- Skill OBBLIGATORIE che devono essere sempre eseguite -->
-      <skill name="auto-workflow" description="Segui i 6 step obbligatori (Scan, Isolate, PR, ecc.)" />
-      <skill name="auto-optimize" description="Usa ai-squeeze o ai-compress al caricamento di grandi log" />
+      <skill name="prompt-loop-engine" description="Attiva i loop sequenziali e i check obbligatori" />
+      <skill name="workflow-agentic-brain" description="Ottimizza contesto e memorie dell'agente" />
     </fixed_skills>
     <dynamic_skills>
       <!-- Skill CONSIGLIATE da usare dinamicamente all'occorrenza -->

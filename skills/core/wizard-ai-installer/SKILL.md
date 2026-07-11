@@ -90,18 +90,21 @@ Create a structured `SKILL.md` that explains to other AI agents how to use this 
 - ❌ NEVER hardcode usernames or machine-specific paths
 - ✅ ALWAYS use `$WIZARD_AI_DIR`, `$HOME`, or `~` for paths
 - ✅ Mention BOTH the base command and the `ai-*` wrapper as interchangeable
+- 🏛️ **TAXONOMY GOLD RULE:** The root `skills/` directory MUST remain clean (only `core`, `workflows`, and `reference`). All domain skills, frameworks, and external tools MUST be categorized inside `skills/reference/<category>/<author_or_repo>/` (e.g. `skills/reference/backend/official/`, `skills/reference/devops/mattpocock/`). Never install a new domain skill directly in `skills/`.
 
-Save to the primary skills directory:
+Save to the primary skills directory (respecting the category and author):
 ```bash
-mkdir -p "$HOME/.gemini/config/skills/<skill-name>"
+# E.g. category = "frontend", "devops", "backend"
+# E.g. author_or_repo = "official", "mattpocock", "community", or the github repo name
+mkdir -p "$HOME/.gemini/config/skills/reference/<category>/<author_or_repo>/<skill-name>"
 # Write SKILL.md there
 ```
 
-Then copy to the repo for permanent storage:
+Then copy to the repo for permanent storage (respecting the new taxonomy):
 ```bash
-mkdir -p "$WIZARD_AI_DIR/skills/<skill-name>"
-cp "$HOME/.gemini/config/skills/<skill-name>/SKILL.md" \
-   "$WIZARD_AI_DIR/skills/<skill-name>/SKILL.md"
+mkdir -p "$WIZARD_AI_DIR/skills/reference/<category>/<author_or_repo>/<skill-name>"
+cp "$HOME/.gemini/config/skills/reference/<category>/<author_or_repo>/<skill-name>/SKILL.md" \
+   "$WIZARD_AI_DIR/skills/reference/<category>/<author_or_repo>/<skill-name>/SKILL.md"
 ```
 
 ### Step 3.5: Skill Categorization & Loop-Binding (`loop-install-bind`)
