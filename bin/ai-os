@@ -228,10 +228,20 @@ _sys_install() {
 _python_install() {
   # Global Python tool via uv tool install (preferred over pip)
   local pkg="$1"
-  echo -e "${CYAN}🐍 [python/uv] Installing ${BOLD}${pkg}${RESET}${CYAN} globally...${RESET}"
+  local cmd_name=$(echo "$pkg" | sed -E 's/\[.*\]//; s/==.*|@.*//; s/.*\///')
+  echo -e "${CYAN}🐍 [python/uv] Installing/Updating ${BOLD}${pkg}${RESET}${CYAN} globally...${RESET}"
   if command -v uv &>/dev/null; then
-    uv tool install "$pkg"
-    echo -e "${GREEN}✅ [python/uv] ${pkg} installed${RESET}"
+    local prev_ver=$(uv tool list 2>/dev/null | grep -E "^$cmd_name v" | awk '{print $2}' | tr -d 'v' || echo "")
+    if uv tool install --force "$pkg"; then
+      echo -e "${GREEN}✅ [python/uv] ${pkg} installed safely${RESET}"
+    else
+      echo -e "${RED}❌ [python/uv] Failed to install/upgrade ${pkg}.${RESET}"
+      if [ -n "$prev_ver" ]; then
+        echo -e "${YELLOW}⚠️  Rolling back ${cmd_name} to previous working version (${prev_ver})...${RESET}"
+        uv tool install --force "$cmd_name@$prev_ver" &>/dev/null || true
+      fi
+      return 1
+    fi
   elif command -v pip &>/dev/null; then
     echo -e "${YELLOW}⚠️  uv not found, falling back to pip install --user${RESET}"
     pip install --user "$pkg"
@@ -253,25 +263,35 @@ _pip_install() {
   if command -v uv &>/dev/null; then
     # Prefer uv pip if inside a venv
     if [ -n "${VIRTUAL_ENV:-}" ]; then
-      uv pip install "$pkg"
+      uv pip install "$pkg" || return 1
     else
-      pip install --user "$pkg" 2>/dev/null || uv pip install --system "$pkg"
+      pip install --user "$pkg" 2>/dev/null || uv pip install --system "$pkg" || return 1
     fi
   elif command -v pip &>/dev/null; then
-    pip install "$pkg"
+    pip install "$pkg" || return 1
   else
     echo -e "${RED}❌ pip not found${RESET}"; return 1
   fi
-  echo -e "${GREEN}✅ [pip] ${pkg} installed${RESET}"
+  echo -e "${GREEN}✅ [pip] ${pkg} installed safely${RESET}"
 }
 
 _uv_install() {
   # uv tool install (explicit uv global tool)
   local pkg="$1"
+  local cmd_name=$(echo "$pkg" | sed -E 's/\[.*\]//; s/==.*|@.*//; s/.*\///')
   echo -e "${CYAN}🐍 [uv] Installing ${BOLD}${pkg}${RESET}${CYAN} as global uv tool...${RESET}"
   if command -v uv &>/dev/null; then
-    uv tool install "$pkg"
-    echo -e "${GREEN}✅ [uv] ${pkg} installed${RESET}"
+    local prev_ver=$(uv tool list 2>/dev/null | grep -E "^$cmd_name v" | awk '{print $2}' | tr -d 'v' || echo "")
+    if uv tool install --force "$pkg"; then
+      echo -e "${GREEN}✅ [uv] ${pkg} installed safely${RESET}"
+    else
+      echo -e "${RED}❌ [uv] Failed to install/upgrade ${pkg}.${RESET}"
+      if [ -n "$prev_ver" ]; then
+        echo -e "${YELLOW}⚠️  Rolling back ${cmd_name} to previous working version (${prev_ver})...${RESET}"
+        uv tool install --force "$cmd_name@$prev_ver" &>/dev/null || true
+      fi
+      return 1
+    fi
   else
     echo -e "${RED}❌ uv not found.${RESET}"
     echo -e "   ${BLUE}Install uv: curl -LsSf https://astral.sh/uv/install.sh | sh${RESET}"
@@ -281,16 +301,34 @@ _uv_install() {
 
 _node_install() {
   local pkg="$1"
-  echo -e "${CYAN}🟨 [node] Installing ${BOLD}${pkg}${RESET}${CYAN} globally...${RESET}"
+  local cmd_name=$(echo "$pkg" | sed -E 's/@[^@]+$//; s/.*\///')
+  echo -e "${CYAN}🟨 [node] Installing/Updating ${BOLD}${pkg}${RESET}${CYAN} globally...${RESET}"
+  local prev_ver=""
+  if command -v npm &>/dev/null; then
+    prev_ver=$(npm list -g "$cmd_name" --depth=0 --json 2>/dev/null | grep -oP '"version": "\K[^"]+' || echo "")
+  fi
+
   if command -v pnpm &>/dev/null; then
-    pnpm install -g "$pkg"
-    echo -e "${GREEN}✅ [pnpm] ${pkg} installed${RESET}"
+    if pnpm install -g "$pkg"; then
+      echo -e "${GREEN}✅ [pnpm] ${pkg} installed safely${RESET}"
+    else
+      [ -n "$prev_ver" ] && { echo -e "${YELLOW}⚠️  Rolling back ${cmd_name} to ${prev_ver}...${RESET}"; pnpm install -g "$cmd_name@$prev_ver" &>/dev/null || true; }
+      return 1
+    fi
   elif command -v yarn &>/dev/null; then
-    yarn global add "$pkg"
-    echo -e "${GREEN}✅ [yarn] ${pkg} installed${RESET}"
+    if yarn global add "$pkg"; then
+      echo -e "${GREEN}✅ [yarn] ${pkg} installed safely${RESET}"
+    else
+      [ -n "$prev_ver" ] && { echo -e "${YELLOW}⚠️  Rolling back ${cmd_name} to ${prev_ver}...${RESET}"; yarn global add "$cmd_name@$prev_ver" &>/dev/null || true; }
+      return 1
+    fi
   elif command -v npm &>/dev/null; then
-    npm install -g "$pkg"
-    echo -e "${GREEN}✅ [npm] ${pkg} installed${RESET}"
+    if npm install -g "$pkg"; then
+      echo -e "${GREEN}✅ [npm] ${pkg} installed safely${RESET}"
+    else
+      [ -n "$prev_ver" ] && { echo -e "${YELLOW}⚠️  Rolling back ${cmd_name} to ${prev_ver}...${RESET}"; npm install -g "$cmd_name@$prev_ver" &>/dev/null || true; }
+      return 1
+    fi
   else
     echo -e "${RED}❌ No Node package manager found (npm, pnpm, yarn).${RESET}"
     echo -e "   ${BLUE}Install Node.js first: ai-os install node${RESET}"
@@ -300,10 +338,14 @@ _node_install() {
 
 _cargo_install() {
   local pkg="$1"
-  echo -e "${CYAN}🦀 [cargo] Installing ${BOLD}${pkg}${RESET}${CYAN}...${RESET}"
+  echo -e "${CYAN}🦀 [cargo] Installing/Updating ${BOLD}${pkg}${RESET}${CYAN}...${RESET}"
   if command -v cargo &>/dev/null; then
-    cargo install "$pkg"
-    echo -e "${GREEN}✅ [cargo] ${pkg} installed${RESET}"
+    if cargo install --force "$pkg"; then
+      echo -e "${GREEN}✅ [cargo] ${pkg} installed safely${RESET}"
+    else
+      echo -e "${RED}❌ [cargo] Failed to install/upgrade ${pkg}.${RESET}"
+      return 1
+    fi
   else
     echo -e "${RED}❌ cargo (Rust) not found.${RESET}"
     echo -e "   ${BLUE}Install Rust: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh${RESET}"
@@ -313,12 +355,16 @@ _cargo_install() {
 
 _go_install() {
   local pkg="$1"
-  echo -e "${CYAN}🐹 [go] Installing ${BOLD}${pkg}${RESET}${CYAN}...${RESET}"
+  echo -e "${CYAN}🐹 [go] Installing/Updating ${BOLD}${pkg}${RESET}${CYAN}...${RESET}"
   if command -v go &>/dev/null; then
     # Append @latest if no version specified
     [[ "$pkg" == *"@"* ]] || pkg="${pkg}@latest"
-    go install "$pkg"
-    echo -e "${GREEN}✅ [go] ${pkg} installed${RESET}"
+    if go install "$pkg"; then
+      echo -e "${GREEN}✅ [go] ${pkg} installed safely${RESET}"
+    else
+      echo -e "${RED}❌ [go] Failed to install/upgrade ${pkg}.${RESET}"
+      return 1
+    fi
   else
     echo -e "${RED}❌ Go not found.${RESET}"
     echo -e "   ${BLUE}Install: ai-os install go${RESET}"

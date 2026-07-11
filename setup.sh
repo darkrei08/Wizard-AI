@@ -184,6 +184,12 @@ install_uv_tool() {
   local pkg="${2:-$1}"   # optional package name if different from tool name
   echo -e "${YELLOW}Installing/Updating $tool...${NC}"
   
+  # Capture previous version if tool is already installed
+  local prev_ver=""
+  if command -v "$tool" &>/dev/null; then
+    prev_ver=$(uv tool list 2>/dev/null | grep -E "^$pkg v" | awk '{print $2}' | tr -d 'v' || echo "")
+  fi
+
   local exit_code=0
   if [ "$VERBOSE" -eq 1 ]; then
     uv tool install --force "$pkg" || exit_code=$?
@@ -191,10 +197,17 @@ install_uv_tool() {
     uv tool install --force "$pkg" &>/dev/null || exit_code=$?
   fi
   
-  if [ $exit_code -eq 0 ]; then
-    echo -e "${GREEN}  ✓ $tool installed.${NC}"
+  if [ $exit_code -eq 0 ] && command -v "$tool" &>/dev/null; then
+    echo -e "${GREEN}  ✓ $tool installed/updated safely.${NC}"
   else
     echo -e "${RED}  ⚠ Failed to install $tool (exit code $exit_code). You may need to install C++/Rust Build Tools.${NC}"
+    if [ -n "$prev_ver" ]; then
+      echo -e "${YELLOW}  ⚠ Rolling back $tool ($pkg) to previous working version ($prev_ver)...${NC}"
+      uv tool install --force "$pkg@$prev_ver" &>/dev/null || true
+      if command -v "$tool" &>/dev/null; then
+        echo -e "${GREEN}  ✓ Rolled back $tool to $prev_ver successfully.${NC}"
+      fi
+    fi
   fi
 }
 
@@ -254,7 +267,17 @@ fi
 # 5. Fix sqz binary (pre-compiled native binary for token compression)
 echo -e "\n${BLUE}[5/10] Placing pre-compiled sqz binary...${NC}"
 ARCH=$(uname -m)
-SQZ_VER="v1.0.5"
+
+# Capture previous binary if it exists
+PREV_SQZ_PATH=$(command -v sqz 2>/dev/null || echo "")
+TMP_BAK=$(mktemp -d)
+if [ -n "$PREV_SQZ_PATH" ] && [ -f "$PREV_SQZ_PATH" ]; then
+  cp -p "$PREV_SQZ_PATH" "$TMP_BAK/sqz.bak" 2>/dev/null || true
+fi
+
+# Dynamically fetch latest version tag from GitHub Releases API
+SQZ_LATEST=$(curl -sL https://api.github.com/repos/ojuschugh1/sqz/releases/latest | grep -m 1 '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/' || echo "")
+SQZ_VER="${SQZ_LATEST:-v1.3.0}"
 SQZ_URL=""
 
 case "$ARCH" in
@@ -273,24 +296,49 @@ if [ -n "$SQZ_URL" ]; then
   echo -e "${YELLOW}Fetching compiled sqz ${SQZ_VER} binary for $ARCH...${NC}"
   TMP_DIR=$(mktemp -d)
   curl -L -s "$SQZ_URL" -o "$TMP_DIR/sqz.tar.gz"
-  tar -xzf "$TMP_DIR/sqz.tar.gz" -C "$TMP_DIR/"
+  tar -xzf "$TMP_DIR/sqz.tar.gz" -C "$TMP_DIR/" 2>/dev/null || true
 
-  # Try to place in uv tool site-packages first, fallback to ~/.local/bin
-  SQZ_BIN_DIR="$HOME/.local/share/uv/tools/sqz/lib"
-  PYTHON_DIR=$(find "$SQZ_BIN_DIR" -maxdepth 2 -type d \
-    -name "site-packages" 2>/dev/null | head -n 1 || true)
+  # Verify executable works before placing it
+  if [ -f "$TMP_DIR/sqz" ] && "$TMP_DIR/sqz" --version &>/dev/null || [ -x "$TMP_DIR/sqz" ]; then
+    # Try to place in uv tool site-packages first, fallback to ~/.local/bin
+    SQZ_BIN_DIR="$HOME/.local/share/uv/tools/sqz/lib"
+    PYTHON_DIR=$(find "$SQZ_BIN_DIR" -maxdepth 2 -type d \
+      -name "site-packages" 2>/dev/null | head -n 1 || true)
 
-  if [ -n "$PYTHON_DIR" ]; then
-    mkdir -p "$PYTHON_DIR/sqz/_bin"
-    cp -f "$TMP_DIR/sqz" "$PYTHON_DIR/sqz/_bin/sqz"
-    chmod +x "$PYTHON_DIR/sqz/_bin/sqz"
-    echo -e "${GREEN}✓ sqz binary placed in Python site-packages ($ARCH).${NC}"
+    if [ -n "$PYTHON_DIR" ]; then
+      mkdir -p "$PYTHON_DIR/sqz/_bin"
+      cp -f "$TMP_DIR/sqz" "$PYTHON_DIR/sqz/_bin/sqz"
+      chmod +x "$PYTHON_DIR/sqz/_bin/sqz"
+      echo -e "${GREEN}✓ sqz ${SQZ_VER} binary placed in Python site-packages ($ARCH).${NC}"
+    else
+      mkdir -p "$HOME/.local/bin"
+      cp -f "$TMP_DIR/sqz" "$HOME/.local/bin/sqz"
+      chmod +x "$HOME/.local/bin/sqz"
+      echo -e "${GREEN}✓ sqz ${SQZ_VER} binary placed in ~/.local/bin/sqz ($ARCH).${NC}"
+    fi
   else
-    cp -f "$TMP_DIR/sqz" "$HOME/.local/bin/sqz"
-    chmod +x "$HOME/.local/bin/sqz"
-    echo -e "${YELLOW}⚠ sqz binary placed in ~/.local/bin/sqz (fallback).${NC}"
+    echo -e "${RED}⚠ Downloaded sqz ${SQZ_VER} binary failed verification on this system ($ARCH).${NC}"
+    if [ -f "$TMP_BAK/sqz.bak" ] && [ -n "$PREV_SQZ_PATH" ]; then
+      echo -e "${YELLOW}⚠ Rolling back sqz to previous working version...${NC}"
+      cp -f "$TMP_BAK/sqz.bak" "$PREV_SQZ_PATH"
+      chmod +x "$PREV_SQZ_PATH"
+      echo -e "${GREEN}✓ Restored previous working sqz binary successfully.${NC}"
+    else
+      echo -e "${YELLOW}⚠ Attempting fallback to known stable release v1.0.5...${NC}"
+      # Fallback to v1.0.5 if no previous version existed
+      case "$ARCH" in
+        x86_64) FB_URL="https://github.com/ojuschugh1/sqz/releases/download/v1.0.5/sqz-v1.0.5-x86_64-unknown-linux-musl.tar.gz" ;;
+        aarch64|arm64) FB_URL="https://github.com/ojuschugh1/sqz/releases/download/v1.0.5/sqz-v1.0.5-aarch64-unknown-linux-musl.tar.gz" ;;
+      esac
+      curl -L -s "$FB_URL" -o "$TMP_DIR/sqz-fb.tar.gz" && tar -xzf "$TMP_DIR/sqz-fb.tar.gz" -C "$TMP_DIR/" 2>/dev/null || true
+      if [ -x "$TMP_DIR/sqz" ]; then
+        cp -f "$TMP_DIR/sqz" "$HOME/.local/bin/sqz"
+        chmod +x "$HOME/.local/bin/sqz"
+        echo -e "${GREEN}✓ Fallback sqz v1.0.5 installed to ~/.local/bin/sqz.${NC}"
+      fi
+    fi
   fi
-  rm -rf "$TMP_DIR"
+  rm -rf "$TMP_DIR" "$TMP_BAK"
 fi
 
 # 6. Copy and configure CLI Wrappers

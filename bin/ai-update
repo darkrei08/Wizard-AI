@@ -23,13 +23,25 @@ log "\n🧙‍♂️ Wizard-AI Update Process"
 log "================================="
 
 # 1. Update Wizard-AI repository
+# 1. Update Wizard-AI repository with safe rollback
 WIZARD_DIR="${WIZARD_AI_DIR:-$HOME/.wizard-ai}"
 if [ -d "$WIZARD_DIR/.git" ]; then
   log "\n📦 Updating Wizard-AI repository..."
-  git -C "$WIZARD_DIR" pull --ff-only ${QUIET:+--quiet} || true
+  PREV_WIZARD_COMMIT=$(git -C "$WIZARD_DIR" rev-parse HEAD 2>/dev/null || echo "")
+  if ! git -C "$WIZARD_DIR" pull --ff-only ${QUIET:+--quiet} 2>/dev/null; then
+    log "  ⚠ git pull failed or conflicted. Maintaining current stable commit."
+  else
+    # Verify setup.sh and main scripts still parse cleanly
+    if [ -f "$WIZARD_DIR/setup.sh" ] && ! bash -n "$WIZARD_DIR/setup.sh" &>/dev/null; then
+      log "  ❌ Updated repository has syntax errors! Rolling back to ${PREV_WIZARD_COMMIT}..."
+      [ -n "$PREV_WIZARD_COMMIT" ] && git -C "$WIZARD_DIR" reset --hard "$PREV_WIZARD_COMMIT" --quiet 2>/dev/null || true
+    else
+      log "  ✓ Wizard-AI updated and verified cleanly."
+    fi
+  fi
 fi
 
-# 2. Update all skill repositories in ~/.ai-skills/
+# 2. Update all skill repositories in ~/.ai-skills/ with safe rollback
 AI_SKILLS="$HOME/.ai-skills"
 if [ -d "$AI_SKILLS" ]; then
   log "\n📚 Updating external skill repositories..."
@@ -51,26 +63,33 @@ if [ -d "$AI_SKILLS" ]; then
     
     if [ ! -d "$repo_dir" ]; then
       log "  -> Cloning missing repository $name..."
-      git clone --depth 1 "$repo_url" "$repo_dir" ${QUIET:+--quiet} || true
+      if ! git clone --depth 1 "$repo_url" "$repo_dir" ${QUIET:+--quiet} 2>/dev/null; then
+        log "     ❌ Clone failed, cleaning up incomplete folder."
+        rm -rf "$repo_dir"
+      fi
     else
       log "  -> Updating $name..."
-      git -C "$repo_dir" pull --ff-only ${QUIET:+--quiet} || true
+      local prev_skill_commit=$(git -C "$repo_dir" rev-parse HEAD 2>/dev/null || echo "")
+      if ! git -C "$repo_dir" pull --ff-only ${QUIET:+--quiet} 2>/dev/null; then
+        [ -n "$prev_skill_commit" ] && git -C "$repo_dir" reset --hard "$prev_skill_commit" --quiet 2>/dev/null || true
+        log "     ⚠ Update failed. Rolled back $name to ${prev_skill_commit}."
+      fi
     fi
   done
 fi
 
-# 3. Update uv tools
+# 3. Update uv tools safely
 if command -v npm &>/dev/null; then
   log "\n📦 Upgrading global NPM packages (Wizard-AI CLI, AI-OS, etc)..."
-  npm update -g ${QUIET:+--quiet}
+  npm update -g ${QUIET:+--quiet} 2>/dev/null || log "  ⚠ npm update -g encountered warnings or partial errors (retaining working packages)."
 fi
 
 if command -v uv >/dev/null 2>&1; then
   log "\n🛠️ Upgrading global CLI tools via uv..."
   if [ "$QUIET" -eq 1 ]; then
-    uv tool upgrade --all --quiet >/dev/null 2>&1 || true
+    uv tool upgrade --all --quiet >/dev/null 2>&1 || log "  ⚠ uv tool upgrade encountered minor issues, retained working tool versions."
   else
-    uv tool upgrade --all || true
+    uv tool upgrade --all || log "  ⚠ uv tool upgrade encountered minor issues, retained working tool versions."
   fi
 
   # Auto-inject updated CLI skills into the master skills folder

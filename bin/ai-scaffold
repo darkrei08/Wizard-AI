@@ -53,11 +53,26 @@ cmd_express() {
     fi
     if [ ! -d "$EXPRESS_DIR" ]; then
         echo -e "${YELLOW}Template not found. Cloning express-typescript-starter...${RESET}"
-        git clone --quiet "https://github.com/ToniR7/express-typescript-starter.git" "$EXPRESS_DIR"
+        if ! git clone --quiet "https://github.com/ToniR7/express-typescript-starter.git" "$EXPRESS_DIR"; then
+            echo -e "${RED}✗ Failed to clone template repository.${RESET}"
+            rm -rf "$EXPRESS_DIR"
+            exit 1
+        fi
+    else
+        echo -e "${YELLOW}Updating express-typescript-starter template...${RESET}"
+        local prev_commit=$(git -C "$EXPRESS_DIR" rev-parse HEAD 2>/dev/null || echo "")
+        if ! git -C "$EXPRESS_DIR" pull --ff-only --quiet 2>/dev/null || [ ! -f "$EXPRESS_DIR/package.json" ]; then
+            [ -n "$prev_commit" ] && git -C "$EXPRESS_DIR" reset --hard "$prev_commit" --quiet 2>/dev/null || true
+            echo -e "${YELLOW}⚠ Template update failed or invalid. Rolled back to previous working commit (${prev_commit}).${RESET}"
+        fi
     fi
 
     echo -e "${CYAN}Scaffolding Express + TypeScript project: $name${RESET}"
-    cp -r "$EXPRESS_DIR" "$name"
+    if ! cp -r "$EXPRESS_DIR" "$name"; then
+        echo -e "${RED}✗ Failed to copy template files. Rolling back directory creation.${RESET}"
+        rm -rf "$name"
+        exit 1
+    fi
     rm -rf "$name/.git"
     cd "$name"
     
@@ -101,18 +116,52 @@ cmd_nuxt() {
 
     echo -e "${CYAN}Scaffolding Nuxt v4 project: $name${RESET}"
     
-    # Use the official nuxi CLI for best results
+    # Use the official nuxi CLI for best results with safe cleanup/rollback on failure
     if command -v npx &>/dev/null; then
-        npx -y nuxi@latest init "$name"
-        echo ""
-        echo -e "${GREEN}✓ Nuxt project '$name' created!${RESET}"
-        echo ""
-        echo -e "${BOLD}Next steps:${RESET}"
-        echo -e "  ${CYAN}cd $name${RESET}"
-        echo -e "  ${CYAN}npm install${RESET}"
-        echo -e "  ${CYAN}npm run dev${RESET}"
+        if npx -y nuxi@latest init "$name"; then
+            echo ""
+            echo -e "${GREEN}✓ Nuxt project '$name' created!${RESET}"
+            echo ""
+            echo -e "${BOLD}Next steps:${RESET}"
+            echo -e "  ${CYAN}cd $name${RESET}"
+            echo -e "  ${CYAN}npm install${RESET}"
+            echo -e "  ${CYAN}npm run dev${RESET}"
+        else
+            echo -e "${RED}✗ nuxi init failed. Cleaning up incomplete directory '$name' (rollback)...${RESET}"
+            rm -rf "$name"
+            exit 1
+        fi
     else
         echo -e "${RED}✗ npx not found. Install Node.js first.${RESET}"
+        exit 1
+    fi
+}
+
+cmd_bun() {
+    local name="${1:-}"
+    if [ -z "$name" ]; then
+        echo -e "${RED}✗ Please provide a project name.${RESET}"
+        echo -e "  ${CYAN}ai-scaffold bun my-app${RESET}"
+        exit 1
+    fi
+    if [ -d "$name" ]; then
+        echo -e "${RED}✗ Directory '$name' already exists.${RESET}"
+        exit 1
+    fi
+
+    echo -e "${CYAN}Scaffolding Bun project: $name${RESET}"
+    if command -v bun &>/dev/null; then
+        mkdir -p "$name" && cd "$name"
+        if bun init -y; then
+            echo ""
+            echo -e "${GREEN}✓ Bun project '$name' created successfully!${RESET}"
+        else
+            echo -e "${RED}✗ bun init failed. Cleaning up incomplete directory '$name' (rollback)...${RESET}"
+            cd .. && rm -rf "$name"
+            exit 1
+        fi
+    else
+        echo -e "${RED}✗ bun not found. Install Bun first: ai-os install bun${RESET}"
         exit 1
     fi
 }
@@ -129,6 +178,11 @@ cmd_list() {
     local nuxt_status="✅"  # Always available via npx
     echo -e "  $nuxt_status ${BOLD}nuxt${RESET}     Nuxt v4 full-stack Vue framework"
     echo -e "              Created via: npx nuxi@latest init"
+
+    local bun_status="❌"
+    if command -v bun &>/dev/null; then bun_status="✅"; fi
+    echo -e "  $bun_status ${BOLD}bun${RESET}      Bun modern JavaScript/TypeScript project"
+    echo -e "              Created via: bun init -y"
     
     echo ""
     echo -e "Use: ${CYAN}ai-scaffold <template> <project-name>${RESET}"
@@ -137,6 +191,7 @@ cmd_list() {
 case "${1:-help}" in
     express) cmd_express "${2:-}" ;;
     nuxt)    cmd_nuxt "${2:-}" ;;
+    bun)     cmd_bun "${2:-}" ;;
     list)    cmd_list ;;
     -h|--help|help) show_help ;;
     *) echo -e "${RED}Unknown template: $1${RESET}"; show_help; exit 1 ;;

@@ -311,7 +311,13 @@ done
 # ══════════════════════════════════════════════════════════════════════════════════
 info "Phase 3: Target System Installation"
 
-# Copy skill flatly to ~/.gemini/config/skills/<name>
+# Copy skill flatly to ~/.gemini/config/skills/<name> with safe rollback backup
+if [ -d "$GLOBAL_DEST" ]; then
+  info "Creating backup of previous version: $GLOBAL_DEST.bak"
+  rm -rf "$GLOBAL_DEST.bak"
+  cp -p -r "$GLOBAL_DEST" "$GLOBAL_DEST.bak"
+fi
+
 mkdir -p "$GLOBAL_DEST"
 cp -r "$REPO_DEST"/. "$GLOBAL_DEST/"
 ok "Installed to $GLOBAL_DEST"
@@ -360,8 +366,21 @@ if [ $needs_setup -eq 1 ]; then
     read -p "Do you want to run the automated setup for ${SKILL_NAME} now? [Y/n] " run_setup </dev/tty
     if [[ ! "$run_setup" =~ ^[Nn]$ ]]; then
       echo -e "${BLUE}Running $script_to_run...${NC}"
-      bash "$script_to_run" </dev/tty
+      if ! bash "$script_to_run" </dev/tty; then
+        fail "Automated setup script failed for ${SKILL_NAME}!"
+        if [ -d "$GLOBAL_DEST.bak" ]; then
+          warn "Rolling back to previous working version from $GLOBAL_DEST.bak..."
+          rm -rf "$GLOBAL_DEST"
+          mv "$GLOBAL_DEST.bak" "$GLOBAL_DEST"
+          ok "Rolled back ${SKILL_NAME} to previous version successfully."
+        else
+          warn "Cleaning up newly created directory due to setup failure..."
+          rm -rf "$GLOBAL_DEST"
+        fi
+        exit 1
+      fi
       ok "Setup completed for ${SKILL_NAME}."
+      rm -rf "$GLOBAL_DEST.bak" 2>/dev/null || true
     else
       warn "Skipped automated setup."
     fi

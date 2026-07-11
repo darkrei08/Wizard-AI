@@ -209,7 +209,8 @@ else {
 # 5. Fix sqz binary (pre-compiled native binary for token compression)
 Write-Host ''
 Write-Host '[5/8] Placing pre-compiled sqz binary...' -ForegroundColor Blue
-$SqzVer = 'v1.0.5'
+$SqzVer = ((Invoke-RestMethod -Uri 'https://api.github.com/repos/ojuschugh1/sqz/releases/latest' -UseBasicParsing -ErrorAction SilentlyContinue).tag_name)
+if (-not $SqzVer) { $SqzVer = 'v1.3.0' }
 $Arch = $env:PROCESSOR_ARCHITECTURE
 
 if ($Arch -eq 'AMD64') {
@@ -224,33 +225,45 @@ if ($Arch -eq 'AMD64') {
         $SqzExe = Get-ChildItem -Path $TmpDir -Recurse -Filter 'sqz.exe' | Select-Object -First 1
 
         if ($SqzExe) {
-            # Try to place in uv tool site-packages first, fallback to ~\.local\bin
-            $PlacedInSitePackages = $false
-            $UvToolDir = (uv tool dir).Trim()
-            $SqzToolDir = Join-Path $UvToolDir 'sqz'
-            if (Test-Path $SqzToolDir) {
-                $SitePackages = Get-ChildItem -Path $SqzToolDir -Recurse -Directory -Filter 'site-packages' -ErrorAction SilentlyContinue | Select-Object -First 1
-                if ($SitePackages) {
-                    $BinDir = Join-Path $SitePackages.FullName 'sqz\_bin'
-                    $null = New-Item -ItemType Directory -Force -Path $BinDir
-                    Copy-Item -Path $SqzExe.FullName -Destination (Join-Path $BinDir 'sqz.exe') -Force
-                    # Also without extension, in case the package wrapper looks for "sqz"
-                    Copy-Item -Path $SqzExe.FullName -Destination (Join-Path $BinDir 'sqz') -Force
-                    Write-Host '[ok] sqz binary placed in Python site-packages (x86_64).' -ForegroundColor Green
-                    $PlacedInSitePackages = $true
+            # Verify executable runs before overwriting working installation
+            $IsWorking = $false
+            try {
+                & $SqzExe.FullName --help 2>&1 | Out-Null
+                $IsWorking = $true
+            } catch { $IsWorking = $false }
+
+            if (-not $IsWorking) {
+                Write-Host "[!] Downloaded sqz $SqzVer binary failed execution check. Keeping previous working installation." -ForegroundColor Yellow
+            } else {
+                # Try to place in uv tool site-packages first, fallback to ~\.local\bin
+                $PlacedInSitePackages = $false
+                $UvToolDir = (uv tool dir 2>$null).Trim()
+                if ($UvToolDir -and (Test-Path $UvToolDir)) {
+                    $SqzToolDir = Join-Path $UvToolDir 'sqz'
+                    if (Test-Path $SqzToolDir) {
+                        $SitePackages = Get-ChildItem -Path $SqzToolDir -Recurse -Directory -Filter 'site-packages' -ErrorAction SilentlyContinue | Select-Object -First 1
+                        if ($SitePackages) {
+                            $BinDir = Join-Path $SitePackages.FullName 'sqz\_bin'
+                            $null = New-Item -ItemType Directory -Force -Path $BinDir
+                            Copy-Item -Path $SqzExe.FullName -Destination (Join-Path $BinDir 'sqz.exe') -Force
+                            Copy-Item -Path $SqzExe.FullName -Destination (Join-Path $BinDir 'sqz') -Force
+                            Write-Host "[ok] sqz $SqzVer binary placed safely in Python site-packages (x86_64)." -ForegroundColor Green
+                            $PlacedInSitePackages = $true
+                        }
+                    }
                 }
-            }
-            if (-not $PlacedInSitePackages) {
-                Copy-Item -Path $SqzExe.FullName -Destination (Join-Path $LocalBin 'sqz.exe') -Force
-                Write-Host "[!] sqz binary placed in $LocalBin\sqz.exe (fallback)." -ForegroundColor Yellow
+                if (-not $PlacedInSitePackages) {
+                    Copy-Item -Path $SqzExe.FullName -Destination (Join-Path $LocalBin 'sqz.exe') -Force
+                    Write-Host "[!] sqz $SqzVer binary placed safely in $LocalBin\sqz.exe (fallback)." -ForegroundColor Yellow
+                }
             }
         }
         else {
-            Write-Host '[!] sqz.exe not found inside the release archive — skipping.' -ForegroundColor Yellow
+            Write-Host '[!] sqz.exe not found inside the release archive — keeping previous working version.' -ForegroundColor Yellow
         }
     }
     catch {
-        Write-Host "[!] Could not download/extract sqz binary: $($_.Exception.Message)" -ForegroundColor Yellow
+        Write-Host "[!] Could not download/extract sqz $SqzVer binary: $($_.Exception.Message). Keeping previous working version." -ForegroundColor Yellow
     }
     finally {
         Remove-Item -Path $TmpDir -Recurse -Force -ErrorAction SilentlyContinue

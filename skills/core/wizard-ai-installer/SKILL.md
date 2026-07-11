@@ -48,6 +48,15 @@ Determine what type of tool it is:
 - **GitHub Repository**: Clone it to `~/.ai-skills/<repo-name>`. If it requires dependencies, create a dedicated `uv venv` or install them using `uv pip`.
 - **Node.js**: Use `npm install -g <package>`.
 
+### Step 1.5: Dynamic Version Checking & Safe Rollback
+
+> [!CAUTION]
+> **MANDATORY SAFEGUARD FOR ALL INSTALLATIONS AND UPGRADES (`bun`, `nuxt`, `node`, `python`, `rust`, etc.):**
+> 1. **Capture Previous Version (`PREV_VER`):** Before executing any install or upgrade (`uv tool install --force`, `npm install -g`, `git pull`), ALWAYS capture any previously installed version or commit (`prev_ver = $(command -v ...)`).
+> 2. **Dynamic Version Lookups:** Never hardcode binary versions (like `v1.0.5`). Dynamically query the GitHub Releases API (`api.github.com/repos/.../releases/latest`) when downloading binaries.
+> 3. **Smoke Testing (`Verification Check`):** Always verify execution (`--help`, `--version`, `bash -n`) after downloading or cloning.
+> 4. **Rollback on Failure:** If verification or build fails, immediately restore the previous working version (`$pkg@$prev_ver`, `git reset --hard $prev_commit`, or `.bak` restore). If no previous version existed (`fresh install`), clean up any incomplete directories (`rm -rf $name`) to prevent broken environment states.
+
 ### Step 2: Create the Wrapper Script
 
 Create a bash wrapper script named `ai-<tool-name>` (or similar logical name).

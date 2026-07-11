@@ -157,3 +157,20 @@ After installing, `ai-os` automatically runs post-install hints:
 - `gh` → reminds to run `gh auth login`
 - `brew` → reminds to add brew to PATH
 - `node/npm` → checks if pnpm/yarn is preferred
+
+## Universal Dynamic Version Checking & Safe Rollback Protocol
+
+> [!CAUTION]
+> **MANDATORY RULE FOR ALL TOOL & FRAMEWORK UPDATES/INSTALLATIONS (`bun`, `nuxt`, `node`, `python`, `rust`, `go`, etc.)**
+> Every installation or upgrade across any language ecosystem or project framework MUST follow these strict principles:
+
+1. **Check for Existing Version Before Overwriting (`PREV_VER` Capture):**
+   Before running `uv tool install --force`, `npm install -g`, `bun upgrade`, or `git pull`, ALWAYS snapshot the currently running version or git commit (`prev_ver` / `prev_commit` / `prev_bin`).
+2. **Never Hardcode Outdated Binary/Release Versions:**
+   When downloading standalone binaries (`sqz`, `lean-ctx`, etc.), dynamically query the GitHub Releases API (`api.github.com/repos/.../releases/latest`) instead of hardcoding static tags (like `v1.0.5`). Only use stable static tags as a last-resort fallback when offline or when API limits are reached.
+3. **Execute Smoke Tests (`Execution & Validation Check`):**
+   Never assume a downloaded binary, cloned template, or upgraded global package works simply because the download succeeded. Check execution with `--help`, `--version`, or syntax checks (`bash -n`, `validate_skill`, `git status`).
+4. **Automatic & Graceful Rollback Upon Failure:**
+   If the smoke test, build check, or execution validation fails:
+   - **Immediately restore the previous working version** (`uv tool install --force $pkg@$prev_ver`, `npm install -g $pkg@$prev_ver`, `git reset --hard $prev_commit`, or restore `.bak` backup).
+   - If no previous working version existed (`fresh install`), clean up any incomplete directories or broken binaries (`rm -rf $name`) so the user's environment is left clean and functional.
