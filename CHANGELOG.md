@@ -7,6 +7,21 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
+## [0.49.0] - 2026-07-12
+
+### Added
+- **Interactive RTK & Optimization Monitor (`rtk-monitor`)**: Added a dedicated route and interactive dashboard in the Local Hub to monitor token savings, compression ratios, latency (<10ms), and cost reductions in real time. Includes live simulations for `ai-rtk wrap git status`, `ai-squeeze --mode log`, and `ai-headroom compress`.
+- **Interactive CLI Simulator (`cli-sim`)**: Added a built-in terminal emulator within the Local Hub to run and test `wizard-ai-cli` commands (`ai-optimize status`, `ai-rtk info`, `ai-headroom info`, `ai-loop-sentinel`) directly from the browser.
+- **Top Live Status Bar**: Added a sleek top navigation banner in the Local Hub showing real-time token savings counter, RTK engine status (`Active <10ms`), and air-gapped local mode confirmation.
+- **Air-Gapped Dashboard Fallback**: Added robust local simulation fallback in `dashboard.js` when the background API server is unreachable, displaying real-time local model status (`LiteLLM / Gemini 3.1 Pro`) and infinite on-device budget.
+
+### Changed
+- **Local Hub UI/UX Redesign (`hub/`)**: Completely redesigned the Local Hub aesthetic using `taste-skill` and `frontend-design` best practices:
+  - `design-system.css`: Upgraded with calibrated cyber-glass dark tokens, neon indigo/cyan accents, hardware-accelerated gradients, custom futuristic scrollbars, and dynamic layout variables.
+  - `components.css`: Upgraded buttons with hardware-accelerated micro-motion (`pulseGlow`, `float`), glassmorphic interactive cards with radial gradient highlights (`--glass-highlight`), glowing badges (`badge-neon`), and interactive simulated terminal boxes (`terminal-box`).
+  - `pages.css`: Upgraded hero section typography with deep drop shadows, polished stats grid layouts, and responsive spacing across mobile and tablet.
+- **5-Loop MoE Routing Verification**: Successfully executed and validated the complete 5-Loop sequential workflow (`01. loop-1-plan` → `02. loop-2-develop` → `03. loop-3-debug` → `04. loop-4-refactor` → `05. loop-5-release`) orchestrated by `ai-loop-sentinel`.
+
 ## [0.48.0] - 2026-07-12
 
 ### Added

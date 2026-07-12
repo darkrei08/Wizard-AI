@@ -1,29 +1,32 @@
 /* --- Home Page --- */
 .hero-section {
     text-align: center;
-    padding: var(--spacing-8) 0;
-    max-width: 800px;
+    padding: var(--spacing-10) 0 var(--spacing-8) 0;
+    max-width: 860px;
     margin: 0 auto;
 }
 
 .hero-section h1 {
-    font-size: 3rem;
+    font-size: 3.2rem;
     margin-bottom: var(--spacing-4);
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 4px 10px rgba(99, 102, 241, 0.2));
+    filter: drop-shadow(0 4px 15px rgba(99, 102, 241, 0.25));
+    font-weight: 800;
+    letter-spacing: -0.03em;
 }
 
 .hero-section p {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: var(--text-secondary);
     margin-bottom: var(--spacing-8);
+    line-height: 1.7;
 }
 
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
     gap: var(--spacing-6);
     margin-bottom: var(--spacing-8);
 }
@@ -35,33 +38,48 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(99, 102, 241, 0.35);
+    box-shadow: var(--glass-highlight), var(--shadow-md), 0 0 25px rgba(99, 102, 241, 0.15);
 }
 
 .stat-card .icon {
-    font-size: 2.5rem;
+    font-size: 2.6rem;
     margin-bottom: var(--spacing-3);
     display: block;
-    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+    animation: float 4s ease-in-out infinite;
 }
 
 .stat-card .value {
-    font-size: 1.8rem;
-    font-weight: 700;
+    font-size: 2rem;
+    font-weight: 800;
     color: var(--text-primary);
     margin-bottom: var(--spacing-1);
+    font-family: var(--font-sans);
 }
 
 .stat-card .label {
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    font-weight: 600;
 }
 
 /* --- Marketplace --- */
 .marketplace-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
     gap: var(--spacing-6);
 }
 
@@ -78,22 +96,22 @@
 }
 
 .skill-card-title {
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-size: 1.15rem;
+    font-weight: 700;
     display: flex;
     align-items: center;
     gap: var(--spacing-2);
 }
 
 .skill-card-title .icon {
-    font-size: 1.3rem;
+    font-size: 1.35rem;
 }
 
 .skill-card-author {
-    font-size: 0.8rem;
-    color: var(--accent-primary);
+    font-size: 0.825rem;
+    color: var(--accent-secondary);
     margin-bottom: var(--spacing-4);
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .skill-card-desc {
@@ -122,19 +140,19 @@
 }
 
 .trending-item:hover {
-    background-color: rgba(255, 255, 255, 0.02);
+    background-color: rgba(255, 255, 255, 0.04);
 }
 
 .trending-rank {
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: 1.25rem;
+    font-weight: 800;
     color: var(--text-muted);
-    width: 30px;
+    width: 32px;
     text-align: center;
     margin-right: var(--spacing-4);
 }
 
-.trending-rank.top-1 { color: #fbbf24; }
+.trending-rank.top-1 { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.4); }
 .trending-rank.top-2 { color: #94a3b8; }
 .trending-rank.top-3 { color: #b45309; }
 
@@ -146,7 +164,6 @@
     margin-bottom: var(--spacing-8);
 }
 
-/* Make Dashboard responsive */
 @media (max-width: 1024px) {
     .dashboard-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -156,6 +173,9 @@
 @media (max-width: 768px) {
     .dashboard-grid {
         grid-template-columns: 1fr;
+    }
+    .hero-section h1 {
+        font-size: 2.2rem;
     }
 }
 
@@ -190,30 +210,31 @@
 }
 
 .chart-container {
-    background-color: var(--glass-bg);
+    background: var(--glass-bg);
     backdrop-filter: var(--glass-blur);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-xl);
     padding: var(--spacing-6);
     margin-bottom: var(--spacing-8);
-    height: 300px;
+    height: 320px;
+    box-shadow: var(--glass-highlight);
 }
 
 /* --- Chat Page --- */
 .chat-container {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 12rem);
-    min-height: 400px;
+    height: calc(100vh - 14rem);
+    min-height: 420px;
     max-width: 900px;
     width: 100%;
     margin: 0 auto;
-    background-color: var(--glass-bg);
+    background: var(--glass-bg);
     backdrop-filter: var(--glass-blur);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-xl);
     overflow: hidden;
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-lg), var(--glass-highlight);
 }
 
 .chat-messages {
@@ -229,22 +250,24 @@
     max-width: 80%;
     padding: var(--spacing-4);
     border-radius: var(--radius-lg);
-    line-height: 1.5;
+    line-height: 1.6;
     box-shadow: var(--shadow-sm);
+    font-size: 0.95rem;
 }
 
 .message.ai {
     align-self: flex-start;
-    background-color: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.04);
     border: 1px solid var(--glass-border);
-    border-bottom-left-radius: 0;
+    border-bottom-left-radius: var(--spacing-1);
 }
 
 .message.user {
     align-self: flex-end;
     background: var(--gradient-primary);
     color: white;
-    border-bottom-right-radius: 0;
+    border-bottom-right-radius: var(--spacing-1);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
 }
 
 .chat-input-area {
@@ -252,22 +275,24 @@
     border-top: 1px solid var(--glass-border);
     display: flex;
     gap: var(--spacing-3);
-    background-color: rgba(0, 0, 0, 0.2);
+    background: rgba(7, 9, 14, 0.6);
 }
 
 .chat-input-area input {
     flex-grow: 1;
-    padding: var(--spacing-3) var(--spacing-4);
+    padding: 0.75rem 1.25rem;
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-full);
-    background-color: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.05);
     color: var(--text-primary);
     transition: all 0.2s;
+    font-size: 0.95rem;
 }
 
 .chat-input-area input:focus {
     outline: none;
     border-color: var(--accent-primary);
-    background-color: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 0 0 2px var(--accent-glow);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px var(--accent-glow);
 }
+
