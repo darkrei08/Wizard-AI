@@ -1,14 +1,171 @@
 #!/usr/bin/env bash
-# ai-rtk — RTK AI tool
+# ai-rtk — RTK (Rust Token Killer) — CLI output compression for AI agents (60-90%)
 # Source: https://github.com/rtk-ai/rtk
 set -euo pipefail
 
-# ── Locate ai-os (mandatory pre-install hook) ──────────────────────────
-AI_OS_CMD=""
-if   command -v ai-os              &>/dev/null; then AI_OS_CMD="ai-os"
-elif [ -x "$HOME/.local/bin/ai-os" ];           then AI_OS_CMD="$HOME/.local/bin/ai-os"
-elif [ -x "$HOME/.wizard-ai/bin/ai-os" ];       then AI_OS_CMD="$HOME/.wizard-ai/bin/ai-os"
-fi
+# Telemetry hook
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+WIZARD_AI_DIR="$(dirname "$DIR")"
+python3 "$WIZARD_AI_DIR/hub/api/log_event.py" "ai-rtk" "execute" 500 0.15 &
 
-cd "$HOME/.ai-skills/rtk"
-exec ./rtk "$@"
+BOLD='\033[1m'
+CYAN='\033[0;36m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+RESET='\033[0m'
+
+RTK_DIR="${HOME}/.ai-skills/rtk"
+
+show_help() {
+    echo ""
+    echo -e "${BOLD}${CYAN}ai-rtk${RESET} — Rust Token Killer: CLI Output Compression (60-90% token savings)"
+    echo ""
+    echo -e "  Intercepts shell command outputs (git, npm, ls, grep, etc.) and"
+    echo -e "  compresses them before they enter the LLM's context window."
+    echo -e "  Built in Rust — single binary, zero deps, <10ms latency."
+    echo ""
+    echo -e "${BOLD}Usage:${RESET}"
+    echo -e "  ai-rtk init [--global]       Install RTK hooks (rewrite commands to rtk equivalents)"
+    echo -e "  ai-rtk wrap <command>        Run a command through RTK compression"
+    echo -e "  ai-rtk status               Show RTK installation and hook status"
+    echo -e "  ai-rtk info                  Show detailed info"
+    echo -e "  ai-rtk install              Install/update RTK binary"
+    echo -e "  ai-rtk <any rtk args>       Pass-through to rtk binary"
+    echo ""
+    echo -e "${BOLD}Examples:${RESET}"
+    echo -e "  ${CYAN}ai-rtk init --global${RESET}          # Install hooks globally"
+    echo -e "  ${CYAN}ai-rtk wrap git status${RESET}        # Compressed git status"
+    echo -e "  ${CYAN}ai-rtk wrap npm test${RESET}          # Compressed test output"
+    echo -e "  ${CYAN}ai-rtk wrap ls -la src/${RESET}       # Compressed directory listing"
+    echo ""
+    echo -e "${BOLD}Pipeline with other tools:${RESET}"
+    echo -e "  ${CYAN}ai-rtk wrap git log -100 | ai-squeeze${RESET}       # RTK + sqz double compression"
+    echo -e "  ${CYAN}ai-rtk wrap npm test | ai-compress --ratio 0.3${RESET}  # RTK + llmlingua"
+    echo ""
+}
+
+check_binary() {
+    if command -v rtk &>/dev/null; then
+        return 0
+    fi
+    if [ -x "$RTK_DIR/rtk" ]; then
+        export PATH="$RTK_DIR:$PATH"
+        return 0
+    fi
+    if [ -x "$HOME/.local/bin/rtk" ]; then
+        export PATH="$HOME/.local/bin:$PATH"
+        return 0
+    fi
+    return 1
+}
+
+cmd_install() {
+    echo -e "${CYAN}Installing RTK (Rust Token Killer)...${RESET}"
+    if command -v cargo &>/dev/null; then
+        echo -e "${CYAN}Installing via cargo...${RESET}"
+        cargo install rtk-ai 2>/dev/null || cargo install --git https://github.com/rtk-ai/rtk.git 2>/dev/null || {
+            echo -e "${YELLOW}Cargo install failed. Trying binary download...${RESET}"
+        }
+    fi
+    if ! check_binary; then
+        # Try curl install
+        if command -v curl &>/dev/null; then
+            echo -e "${CYAN}Downloading pre-built binary...${RESET}"
+            curl -fsSL https://rtk-ai.app/install.sh | bash 2>/dev/null || {
+                echo -e "${RED}✗ Automatic install failed.${RESET}"
+                echo -e "  Manual: ${CYAN}cargo install rtk-ai${RESET}"
+                echo -e "  Or:     ${CYAN}curl -fsSL https://rtk-ai.app/install.sh | bash${RESET}"
+                exit 1
+            }
+        fi
+    fi
+    if check_binary; then
+        echo -e "${GREEN}✓ RTK installed successfully${RESET}"
+        rtk --version 2>/dev/null || true
+    fi
+}
+
+cmd_init() {
+    if check_binary; then
+        rtk init "$@"
+    else
+        echo -e "${RED}✗ rtk not installed. Run 'ai-rtk install' first.${RESET}" >&2
+        exit 1
+    fi
+}
+
+cmd_wrap() {
+    if [ $# -eq 0 ]; then
+        echo -e "${RED}✗ Specify a command to wrap.${RESET}" >&2
+        echo -e "  Example: ${CYAN}ai-rtk wrap git status${RESET}" >&2
+        exit 1
+    fi
+    if check_binary; then
+        rtk wrap "$@"
+    else
+        echo -e "${YELLOW}⚠ rtk not installed. Running command without compression:${RESET}" >&2
+        "$@"
+    fi
+}
+
+cmd_status() {
+    echo -e "${BOLD}${CYAN}RTK — Rust Token Killer${RESET}"
+    if check_binary; then
+        echo -e "Binary:  ${GREEN}✓ installed${RESET} ($(which rtk 2>/dev/null || echo 'local'))"
+        rtk --version 2>/dev/null || true
+        # Check if hooks are active
+        if rtk status 2>/dev/null | grep -qi "active\|enabled" 2>/dev/null; then
+            echo -e "Hooks:   ${GREEN}✓ active${RESET}"
+        else
+            echo -e "Hooks:   ${YELLOW}○ not initialized (run: ai-rtk init --global)${RESET}"
+        fi
+    else
+        echo -e "Binary:  ${RED}✗ not installed${RESET}"
+        echo -e "  Install: ${CYAN}ai-rtk install${RESET}"
+    fi
+    if [ -d "$RTK_DIR" ]; then
+        echo -e "Repo:    ${GREEN}✓ cloned${RESET} at $RTK_DIR"
+    fi
+}
+
+cmd_info() {
+    echo -e "${BOLD}${CYAN}RTK — Rust Token Killer (CLI Output Compression)${RESET}"
+    echo -e "Source:   https://github.com/rtk-ai/rtk"
+    echo -e "Local:    $RTK_DIR"
+    echo -e "Savings:  60-90% on common dev commands (git, npm, ls, grep, etc.)"
+    echo -e "Latency:  <10ms overhead (Rust single binary)"
+    echo -e "Commands: 100+ supported shell commands"
+    echo ""
+    echo -e "${BOLD}How it works:${RESET}"
+    echo -e "  RTK intercepts CLI output using smart filtering, grouping,"
+    echo -e "  truncation, and deduplication. It strips boilerplate, aggregates"
+    echo -e "  similar items, and collapses repeated log lines."
+    echo ""
+    echo -e "${BOLD}Comparison with other tools:${RESET}"
+    echo -e "  • ${BOLD}sqz (ai-squeeze)${RESET}:    Compresses arbitrary text/JSON (Python)"
+    echo -e "  • ${BOLD}rtk (ai-rtk)${RESET}:        Compresses CLI command output (Rust, faster)"
+    echo -e "  • ${BOLD}headroom${RESET}:             API proxy + deep context compression"
+    echo -e "  • ${BOLD}llmlingua${RESET}:            Prompt-level compression with ML model"
+    echo ""
+    cmd_status
+}
+
+case "${1:-help}" in
+    init)      shift; cmd_init "$@" ;;
+    wrap)      shift; cmd_wrap "$@" ;;
+    install)   cmd_install ;;
+    status)    cmd_status ;;
+    info)      cmd_info ;;
+    -h|--help|help) show_help ;;
+    *)
+        # Pass-through to rtk binary for any other commands
+        if check_binary; then
+            rtk "$@"
+        else
+            echo -e "${RED}✗ rtk not installed. Run 'ai-rtk install' first.${RESET}" >&2
+            echo -e "  Or run: ${CYAN}ai-rtk --help${RESET} for usage" >&2
+            exit 1
+        fi
+        ;;
+esac

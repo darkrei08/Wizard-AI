@@ -7,7 +7,23 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
-## [0.43.2] - 2026-07-11
+## [0.48.0] - 2026-07-12
+
+### Added
+- **`ai-headroom` CLI Wrapper**: Created the missing CLI wrapper for `headroom` context compression & API proxy (60-95% token reduction). Provides `compress`, `proxy`, `status`, `info` subcommands with installation fallback and telemetry hook.
+- **RTK Integration in Loop 4 & Brain**: Integrated `rtk` (`ai-rtk`) — Rust Token Killer — as Phase 5 (CLI Output Interception) in `loop-4-refactor/SKILL.md` and `workflow-agentic-brain/SKILL.md`. RTK compresses shell command outputs (git, npm, ls, grep, kubectl) by 60-90%.
+- **Explicit CLI Commands in Loop 4**: Added Step 4.2b with exact `ai-*` CLI commands for all 5 phases of the token optimization pipeline, including cascade/pipe examples (`ai-rtk wrap npm test | ai-squeeze | ai-headroom compress`).
+- **Quick Reference Table**: Added a CLI command reference table to `workflow-agentic-brain/SKILL.md` mapping each phase to its exact wrapper invocation.
+
+### Changed
+- **`ai-caveman` Rewrite**: Transformed from a bare installer (7 lines calling `install.js`) into a proper runtime wrapper with `show-prompt`, `install`, `info`, and `help` subcommands. Correctly identifies caveman as a behavioral system prompt, not a binary.
+- **`ai-lean-ctx` Unification**: Rewrote from a fragile direct binary exec (`cd ~/.ai-skills/lean-ctx && ./lean-ctx`) to a proper alias that delegates to `ai-lean`, eliminating incoherent duplication and ensuring all robust logic (build fallback, help, subcommands) is always used.
+- **`ai-optimize` Real Orchestrator**: Completely rewrote from a 58-line placeholder into a 190-line real orchestrator with: `status` (shows all 5 phases with ✓/✗), `pipeline` (walks through compression phases for a file), `loop` (enhanced with concrete CLI commands), and `evaluate` (kept).
+- **`ai-rtk` Full Wrapper**: Completely rewrote from a 15-line bare exec into a 170-line wrapper with: `help`, `install`, `init` (hooks), `wrap` (compress a command), `status`, `info` (with comparison to sqz/headroom/llmlingua), and pass-through.
+- **RTK SKILL.md Documentation**: Rewrote from a 9-line placeholder to comprehensive 90-line documentation with how-it-works, installation, usage examples, loop integration matrix, and comparison with sqz.
+- **`ai-help` Updates**: Added `ai-headroom` to TOKEN OPTIMIZATION section, moved `ai-rtk` from CONTEXT & SCAFFOLDING to TOKEN OPTIMIZATION with full description, added pipeline and cascade examples.
+- **WIKI Updates**: Updated RTK description in both `WIKI.md` and `WIKI.it.md` from generic "Native AI toolkit" to accurate CLI compression proxy description with usage examples.
+- **Loop 4 Mermaid Diagram**: Updated to include RTK and headroom nodes in the optimization flow (`Brain → RTK → Squeeze → Headroom → Lean → Caveman`).
 
 ### Fixed
 - **Setup Script EALLOWGIT Fix**: Fixed `npm error code EALLOWGIT` during `setup.sh` and `setup.ps1` when npm disables or restricts direct git package fetches (`git+https://...`). Both scripts now pre-clone `caveman` and `ECC` under `~/.ai-skills/` directly via git, and wrap global `npm install -g` checks with non-fatal fallbacks.

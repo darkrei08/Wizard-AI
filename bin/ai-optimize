@@ -1,57 +1,213 @@
 #!/usr/bin/env bash
-# ai-optimize — AI Token & Context Orchestrator and Evaluator
-# Source: Wizard-AI skill (auto-optimize)
+# ai-optimize — AI Token & Context Master Orchestrator
+# Source: Wizard-AI workflow-agentic-brain
+#
+# Orchestrates the full context optimization pipeline:
+#   markitdown → flashrank → llmlingua/sqz → lean-ctx → caveman
+#
+# This is the CLI entry point for workflow-agentic-brain (Loop 4).
 
 set -euo pipefail
+
+# Telemetry hook
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+WIZARD_AI_DIR="$(dirname "$DIR")"
+python3 "$WIZARD_AI_DIR/hub/api/log_event.py" "ai-optimize" "execute" 500 0.15 &
 
 BOLD='\033[1m'
 GREEN='\033[0;32m'
 CYAN='\033[0;36m'
 YELLOW='\033[1;33m'
+RED='\033[0;31m'
 RESET='\033[0m'
 
+check_tool() {
+  local name="$1"
+  if command -v "$name" &>/dev/null; then
+    echo -e "${GREEN}✓${RESET}"
+  elif [ -x "$HOME/.local/bin/$name" ]; then
+    echo -e "${GREEN}✓${RESET}"
+  else
+    echo -e "${RED}✗${RESET}"
+  fi
+}
+
 usage() {
-  echo -e "${BOLD}Usage:${RESET} ai-optimize <command> [args]"
   echo ""
-  echo -e "${BOLD}Commands:${RESET}"
-  echo "  loop <task>            Run a task through the token-saving pipeline (markitdown -> flashrank -> llmlingua/sqz)"
-  echo "  evaluate <repo-url>    Evaluate a new external tool against the Wiki and integrate if it's superior"
+  echo -e "${BOLD}${CYAN}ai-optimize${RESET} — Token & Context Master Orchestrator (workflow-agentic-brain)"
+  echo ""
+  echo -e "${BOLD}Usage:${RESET}"
+  echo -e "  ai-optimize status                Show status of all context optimization tools"
+  echo -e "  ai-optimize pipeline <file>       Run the 5-phase optimization pipeline on a file"
+  echo -e "  ai-optimize loop <task>           Print optimization instructions for an agent task"
+  echo -e "  ai-optimize evaluate <repo-url>   Evaluate an external tool against current stack"
+  echo ""
+  echo -e "${BOLD}Pipeline Phases (workflow-agentic-brain):${RESET}"
+  echo -e "  ${CYAN}Phase 1${RESET}: Ingestion & Conversion   → ai-convert (markitdown)"
+  echo -e "  ${CYAN}Phase 2${RESET}: RAG Filtering & Re-rank  → ai-rerank (flashrank)"
+  echo -e "  ${CYAN}Phase 3${RESET}: Token Compression         → ai-compress (llmlingua) / ai-squeeze (sqz) / ai-headroom"
+  echo -e "  ${CYAN}Phase 4${RESET}: Context Guarding           → ai-lean (lean-ctx) / ai-caveman (output)"
+  echo -e "  ${CYAN}Phase 5${RESET}: CLI Output Compression    → ai-rtk (rtk — Rust Token Killer)"
   echo ""
   echo -e "${BOLD}Examples:${RESET}"
-  echo "  ai-optimize loop \"Analyze the docs and write a summary\""
-  echo "  ai-optimize evaluate \"https://github.com/author/new-tool\""
-  exit 0
+  echo -e "  ${CYAN}ai-optimize status${RESET}"
+  echo -e "  ${CYAN}ai-optimize pipeline large_document.pdf${RESET}"
+  echo -e "  ${CYAN}command | ai-optimize pipeline -${RESET}          # pipe from stdin"
+  echo -e "  ${CYAN}ai-optimize evaluate \"https://github.com/author/new-tool\"${RESET}"
+  echo ""
+}
+
+cmd_status() {
+  echo -e "${BOLD}${CYAN}═══════════════════════════════════════════════════════════${RESET}"
+  echo -e "${BOLD}${CYAN}  🗜️  Context Optimization Stack — Status Report${RESET}"
+  echo -e "${BOLD}${CYAN}═══════════════════════════════════════════════════════════${RESET}"
+  echo ""
+  echo -e "${BOLD}Phase 1: Ingestion & Conversion${RESET}"
+  echo -e "  $(check_tool markitdown) markitdown (ai-convert)    Convert any file → Markdown"
+  echo ""
+  echo -e "${BOLD}Phase 2: RAG Filtering & Re-ranking${RESET}"
+  echo -e "  $(check_tool ai-rerank) ai-rerank (flashrank)      CPU-optimized passage re-ranker"
+  echo ""
+  echo -e "${BOLD}Phase 3: Token Compression${RESET}"
+  echo -e "  $(check_tool ai-compress) ai-compress (llmlingua)    Prompt compression up to 20x"
+  echo -e "  $(check_tool ai-squeeze) ai-squeeze (sqz)           CLI output / JSON / log compressor"
+  echo -e "  $(check_tool ai-headroom) ai-headroom (headroom)     Context compression & API proxy (60-95%)"
+  echo ""
+  echo -e "${BOLD}Phase 4: Context Guarding & Output${RESET}"
+  echo -e "  $(check_tool ai-lean) ai-lean (lean-ctx)          Lean Context Intelligence (60-90%)"
+  echo -e "  $(check_tool ai-caveman) ai-caveman (caveman)        Output token reduction (~75%)"
+  echo -e "  $(check_tool ai-ponytail) ai-ponytail (ponytail)      YAGNI / over-engineering guard"
+  echo ""
+  echo -e "${BOLD}Phase 5: CLI Output Interception${RESET}"
+  echo -e "  $(check_tool rtk) rtk (ai-rtk)                Rust Token Killer — CLI output compression (60-90%)"
+  echo ""
+  echo -e "${BOLD}Orchestrators${RESET}"
+  echo -e "  $(check_tool ai-optimize) ai-optimize                 This tool (Master Orchestrator)"
+  echo -e "  $(check_tool ai-loop-sentinel) ai-loop-sentinel            MoE Task Weight Classification"
+  echo ""
+}
+
+cmd_pipeline() {
+  local input_file="${1:-}"
+
+  echo -e "${BOLD}${CYAN}🔄 Running 5-Phase Token Optimization Pipeline${RESET}"
+  echo -e "${BOLD}═══════════════════════════════════════════════${RESET}"
+  echo ""
+
+  # Phase 1: Ingestion
+  echo -e "${BOLD}Phase 1: Ingestion & Conversion${RESET}"
+  if [ "$input_file" = "-" ] || [ -z "$input_file" ]; then
+    echo -e "  ${YELLOW}→ Reading from stdin${RESET}"
+    echo -e "  ${CYAN}Command: cat - (stdin pipe)${RESET}"
+  elif [ -f "$input_file" ]; then
+    local ext="${input_file##*.}"
+    case "$ext" in
+      pdf|docx|xlsx|pptx|html|epub)
+        echo -e "  ${CYAN}Command: ai-convert \"$input_file\"${RESET}"
+        if command -v markitdown &>/dev/null || command -v ai-convert &>/dev/null; then
+          echo -e "  ${GREEN}✓ markitdown available — will convert $ext → Markdown${RESET}"
+        else
+          echo -e "  ${RED}✗ markitdown not installed. Run: uv tool install markitdown${RESET}"
+        fi
+        ;;
+      md|txt|py|js|ts|sh|json|yaml|yml)
+        echo -e "  ${GREEN}✓ Already text format — no conversion needed${RESET}"
+        ;;
+      *)
+        echo -e "  ${YELLOW}⚠ Unknown format .$ext — try: ai-convert \"$input_file\"${RESET}"
+        ;;
+    esac
+  else
+    echo -e "  ${RED}✗ File not found: $input_file${RESET}"
+    exit 1
+  fi
+  echo ""
+
+  # Phase 2: RAG Filtering
+  echo -e "${BOLD}Phase 2: RAG Filtering & Re-ranking${RESET}"
+  echo -e "  ${CYAN}Command: ai-rerank --query \"<your question>\" --passages \"$input_file\" --top-k 10${RESET}"
+  if command -v ai-rerank &>/dev/null; then
+    echo -e "  ${GREEN}✓ flashrank available${RESET}"
+  else
+    echo -e "  ${RED}✗ flashrank not installed. Run: uv pip install flashrank${RESET}"
+  fi
+  echo ""
+
+  # Phase 3: Token Compression
+  echo -e "${BOLD}Phase 3: Token Compression (choose one)${RESET}"
+  echo -e "  ${CYAN}A) ai-compress --file \"$input_file\" --ratio 0.5 --verbose${RESET}    # Deep compression (20x)"
+  echo -e "  ${CYAN}B) cat \"$input_file\" | ai-squeeze${RESET}                            # Fast CLI/JSON compression"
+  echo -e "  ${CYAN}C) cat \"$input_file\" | ai-headroom compress --ratio 0.4${RESET}      # Proxy-grade compression (60-95%)"
+  echo ""
+
+  # Phase 4: Context Guarding
+  echo -e "${BOLD}Phase 4: Context Guarding & Isolation${RESET}"
+  echo -e "  ${CYAN}Command: ai-lean read \"$input_file\" map${RESET}      # Structure-only view (~13 tokens on re-read)"
+  echo -e "  ${CYAN}Command: ai-lean read \"$input_file\" signatures${RESET} # Function/class signatures only"
+  echo -e "  ${CYAN}Command: ai-lean read \"$input_file\" diff${RESET}      # Only changed lines since last read"
+  echo ""
+
+  # Phase 5: CLI Output Interception
+  echo -e "${BOLD}Phase 5: CLI Output Interception (automatic)${RESET}"
+  echo -e "  ${CYAN}Command: rtk init --global${RESET}                    # Install RTK hooks globally"
+  echo -e "  ${CYAN}         rtk wrap \"<command>\"${RESET}                 # Wrap a single command"
+  if command -v rtk &>/dev/null; then
+    echo -e "  ${GREEN}✓ rtk available${RESET}"
+  else
+    echo -e "  ${RED}✗ rtk not installed. Run: ai-rtk install${RESET}"
+  fi
+  echo ""
+
+  echo -e "${BOLD}${GREEN}═══════════════════════════════════════════════${RESET}"
+  echo -e "${BOLD}Full pipeline example:${RESET}"
+  echo -e "  ${CYAN}ai-convert doc.pdf | ai-rerank -q 'auth flow' -k 5 --compact | ai-compress --ratio 0.3${RESET}"
+  echo ""
+}
+
+cmd_loop() {
+  local TASK="${1:-}"
+  if [ -z "$TASK" ]; then
+    echo -e "${RED}Please provide a task to optimize.${RESET}"
+    exit 1
+  fi
+  echo -e "${CYAN}🔄 Initializing Token Optimization Loop...${RESET}"
+  echo -e "   ${YELLOW}Task:${RESET} ${BOLD}$TASK${RESET}"
+  echo ""
+  echo -e "   ${BOLD}Agent Pipeline (workflow-agentic-brain):${RESET}"
+  echo -e "   1. Check context window usage (>60%? → activate compression)"
+  echo -e "   2. Convert binary inputs:   ${CYAN}ai-convert <file>${RESET}"
+  echo -e "   3. Re-rank by relevance:    ${CYAN}ai-rerank -q \"$TASK\" --passages <docs>${RESET}"
+  echo -e "   4. Compress heavy context:  ${CYAN}ai-compress --ratio 0.5${RESET} or ${CYAN}ai-headroom compress${RESET}"
+  echo -e "   5. Squeeze CLI output:      ${CYAN}command | ai-squeeze${RESET} or ${CYAN}rtk wrap command${RESET}"
+  echo -e "   6. Guard context:           ${CYAN}ai-lean read <file> map${RESET}"
+  echo -e "   7. Reduce output tokens:    ${CYAN}ai-caveman${RESET} (activate behavioral compression)"
+  echo ""
+}
+
+cmd_evaluate() {
+  local REPO="${1:-}"
+  if [ -z "$REPO" ]; then
+    echo -e "${RED}Please provide a repository URL to evaluate.${RESET}"
+    exit 1
+  fi
+  echo -e "${CYAN}⚖️  Evaluating External Repository: ${BOLD}$REPO${RESET}"
+  echo -e "   ${YELLOW}Agent Instructions:${RESET} Please evaluate $REPO against existing tools in docs/WIKI.md."
+  echo -e "   Compare: token savings, speed, CPU/GPU requirements, integration effort."
+  echo -e "   If it performs better, use wizard-ai-installer to integrate it."
 }
 
 if [ $# -eq 0 ]; then
   usage
+  exit 0
 fi
 
 cmd="${1:-}"
 
 case "$cmd" in
-  loop)
-    TASK="${2:-}"
-    if [ -z "$TASK" ]; then
-      echo "Please provide a task to optimize."
-      exit 1
-    fi
-    echo -e "${CYAN}🔄 Initializing Token Optimization Loop...${RESET}"
-    echo -e "   ${YELLOW}Agent Instructions:${RESET} Please execute the token optimization loop for the following task:"
-    echo -e "   ${BOLD}$TASK${RESET}"
-    echo -e "   (Refer to the auto-optimize SKILL.md for the pipeline steps)"
-    ;;
-  evaluate)
-    REPO="${2:-}"
-    if [ -z "$REPO" ]; then
-      echo "Please provide a repository URL to evaluate."
-      exit 1
-    fi
-    echo -e "${CYAN}⚖️  Evaluating External Repository: ${BOLD}$REPO${RESET}"
-    echo -e "   ${YELLOW}Agent Instructions:${RESET} Please evaluate $REPO against existing tools in docs/WIKI.md."
-    echo -e "   If it performs better, use wizard-ai-installer to integrate it."
-    ;;
-  *)
-    usage
-    ;;
+  status)    cmd_status ;;
+  pipeline)  shift; cmd_pipeline "$@" ;;
+  loop)      shift; cmd_loop "$@" ;;
+  evaluate)  shift; cmd_evaluate "$@" ;;
+  -h|--help|help) usage ;;
+  *)         usage; exit 1 ;;
 esac

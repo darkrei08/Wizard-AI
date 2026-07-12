@@ -125,7 +125,7 @@ Di seguito la categorizzazione rigorosa dell'arsenale a tua disposizione:
 - **`auto-prompt`**: Middleware che intercetta i prompt disordinati e li struttura in XML perfetti.
 - **`gemini-usage`**: Monitor e tracciatore live dei costi e budget API.
 - **`ecc`**: (Enhanced Claude Code) Framework per orchestrare sub-agenti specializzati.
-- **`rtk`**: Toolkit AI nativo per estensioni.
+- **`rtk`** (`ai-rtk`): Rust Token Killer — proxy di compressione output CLI (60-90% risparmio token). Intercetta gli output dei comandi shell (git, npm, ls, grep) e li comprime prima che entrino nel contesto LLM. Binario Rust singolo, <10ms latenza. Uso: `ai-rtk wrap <comando>`, `ai-rtk init --global`.
 - **`goodcode`**: Orchestrazione multi-agente esaustiva indipendente dall'host per audit, revisioni, ricerca e produzione di codice approfondita.
 - **`ai-loop-sentinel`**: Sentinella di sistema per il calcolo MoE Task Weight e l'intercettazione automatica dei 5 Loop senza slash command.
 - **`ai-skill-doctor`**: Demone diagnostico di auto-riparazione skill e di esplorazione autonoma dell'ecosistema `skills.sh`.

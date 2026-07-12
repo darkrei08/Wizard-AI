@@ -1,14 +1,29 @@
 #!/usr/bin/env bash
-# ai-lean-ctx — Lean Context tool
+# ai-lean-ctx — Alias for ai-lean (Lean Context Intelligence)
 # Source: https://github.com/yvgude/lean-ctx
+#
+# This wrapper unifies the dual ai-lean / ai-lean-ctx invocation.
+# All logic resides in ai-lean (150+ lines with build fallback, help,
+# subcommands). This file simply forwards to it.
 set -euo pipefail
 
-# ── Locate ai-os (mandatory pre-install hook) ──────────────────────────
-AI_OS_CMD=""
-if   command -v ai-os              &>/dev/null; then AI_OS_CMD="ai-os"
-elif [ -x "$HOME/.local/bin/ai-os" ];           then AI_OS_CMD="$HOME/.local/bin/ai-os"
-elif [ -x "$HOME/.wizard-ai/bin/ai-os" ];       then AI_OS_CMD="$HOME/.wizard-ai/bin/ai-os"
+# ── Locate ai-lean (the canonical wrapper) ──────────────────────────
+AI_LEAN_CMD=""
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+if [ -x "$SCRIPT_DIR/ai-lean" ]; then
+    AI_LEAN_CMD="$SCRIPT_DIR/ai-lean"
+elif command -v ai-lean &>/dev/null; then
+    AI_LEAN_CMD="ai-lean"
+elif [ -x "$HOME/.local/bin/ai-lean" ]; then
+    AI_LEAN_CMD="$HOME/.local/bin/ai-lean"
+elif [ -x "$HOME/.wizard-ai/bin/ai-lean" ]; then
+    AI_LEAN_CMD="$HOME/.wizard-ai/bin/ai-lean"
 fi
 
-cd "$HOME/.ai-skills/lean-ctx"
-exec ./lean-ctx "$@"
+if [ -z "$AI_LEAN_CMD" ]; then
+    echo "❌ ai-lean not found. Ensure Wizard-AI bin/ is in PATH." >&2
+    exit 1
+fi
+
+exec "$AI_LEAN_CMD" "$@"

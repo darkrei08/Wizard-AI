@@ -127,7 +127,7 @@ Below is the rigorous categorization of the arsenal at your disposal, which has 
 - **`auto-prompt`**: Middleware intercepting messy prompts and structuring them in perfect XML.
 - **`gemini-usage`**: Live monitor and tracker of API costs and budgets.
 - **`ecc`**: (Enhanced Claude Code) Framework to orchestrate specialized sub-agents.
-- **`rtk`**: Native AI toolkit for extensions.
+- **`rtk`** (`ai-rtk`): Rust Token Killer — CLI output compression proxy (60-90% token savings). Intercepts shell command outputs (git, npm, ls, grep) and compresses them before they enter the LLM context. Single Rust binary, <10ms latency. Usage: `ai-rtk wrap <command>`, `ai-rtk init --global`.
 - **`goodcode`**: Host-agnostic exhaustive multi-agent orchestration for audits, reviews, research, and deep code production.
 - **`ai-loop-sentinel`**: Systemic Loop Interceptor and MoE Task Weight Classification CLI hook.
 - **`ai-skill-doctor`**: Self-Healing Skill Diagnostic daemon and autonomous `skills.sh` ecosystem hunter.
