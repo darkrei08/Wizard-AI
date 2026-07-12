@@ -283,8 +283,9 @@ Lista di riferimento di tool, repository e framework rilevanti per l'AI e lo svi
 
 
 ### API e Integrazioni Messaging (WhatsApp)
-- [go-whatsapp-web-multidevice](https://github.com/aldinokemal/go-whatsapp-web-multidevice) - Bridge WhatsApp multi-device.
-- [Wuzapi](https://github.com/asternic/wuzapi) - API REST basata su whatsmeow per l'interazione con WhatsApp.
+- [go-whatsapp-web-multidevice](https://github.com/aldinokemal/go-whatsapp-web-multidevice) - Bridge WhatsApp multi-device (`GoWA`).
+- [Wuzapi](https://github.com/asternic/wuzapi) - API REST basata su whatsmeow per l'interazione con WhatsApp (`WuzAPI`).
+- [OpenWA](https://github.com/rmyndharis/OpenWA) - Engine Node.js / Baileys multi-device ad alte performance (`OpenWA`). Integrato nativamente in **WaForge v2.15.0+** insieme a `WuzAPI` e `GoWA` grazie al **Multi-Engine Hybrid Router & Load Balancer** (`lib/whatsapp-engine.ts`), con failover automatico su errore e rotazione anti-ban delle campagne in Round-Robin.
 
 ### Sviluppo Mobile
 - [Flutter](https://github.com/flutter/flutter)

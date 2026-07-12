@@ -284,8 +284,9 @@ Reference list of tools, repositories, and frameworks relevant to AI and develop
 - [TurboVec](https://github.com/RyanCodrai/turbovec) - Implementation of Google TurboQuant. High performance vector quantization and indexing (up to 16x compression).
 
 ### APIs & Messaging (WhatsApp Integration)
-- [go-whatsapp-web-multidevice](https://github.com/aldinokemal/go-whatsapp-web-multidevice) - Multi-device WhatsApp bridge.
-- [Wuzapi](https://github.com/asternic/wuzapi) - REST API based on whatsmeow for WhatsApp interaction.
+- [go-whatsapp-web-multidevice](https://github.com/aldinokemal/go-whatsapp-web-multidevice) - Multi-device WhatsApp bridge (`GoWA`).
+- [Wuzapi](https://github.com/asternic/wuzapi) - REST API based on whatsmeow for WhatsApp interaction (`WuzAPI`).
+- [OpenWA](https://github.com/rmyndharis/OpenWA) - Node.js & Baileys multi-device WebSocket/HTTP engine (`OpenWA`). Integrated natively into **WaForge v2.15.0+** alongside `WuzAPI` and `GoWA` via the **Multi-Engine Hybrid Router & Load Balancer** (`lib/whatsapp-engine.ts`) with automatic failover and Round-Robin campaign distribution.
 
 ### Mobile Development
 - [Flutter](https://github.com/flutter/flutter)
