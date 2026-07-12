@@ -286,7 +286,7 @@ Reference list of tools, repositories, and frameworks relevant to AI and develop
 ### APIs & Messaging (WhatsApp Integration)
 - [go-whatsapp-web-multidevice](https://github.com/aldinokemal/go-whatsapp-web-multidevice) - Multi-device WhatsApp bridge (`GoWA`).
 - [Wuzapi](https://github.com/asternic/wuzapi) - REST API based on whatsmeow for WhatsApp interaction (`WuzAPI`).
-- [OpenWA](https://github.com/rmyndharis/OpenWA) - Node.js & Baileys multi-device WebSocket/HTTP engine (`OpenWA`). Integrated natively into **WaForge v2.15.0+** alongside `WuzAPI` and `GoWA` via the **Multi-Engine Hybrid Router & Load Balancer** (`lib/whatsapp-engine.ts`) with automatic failover and Round-Robin campaign distribution.
+- [OpenWA](https://github.com/rmyndharis/OpenWA) - Node.js & Baileys multi-device WebSocket/HTTP engine (`OpenWA`). Integrated natively into **WaForge v2.15.0+** alongside `WuzAPI` and `GoWA` via the **Multi-Engine Hybrid Router & Load Balancer** (`lib/whatsapp-engine.ts`) with automatic failover and Round-Robin campaign distribution. Features resilient Cockpit LLM fallback and secure admin recovery (`bun run admin:reset-password --email <email> --password <pass>`).
 
 ### Mobile Development
 - [Flutter](https://github.com/flutter/flutter)
