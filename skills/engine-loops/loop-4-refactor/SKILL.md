@@ -40,15 +40,15 @@ Queste skill riorganizzano il codice per renderlo modulare, coeso e disaccoppiat
 - **`mp-domain-modeling`**: *Quando usarla:* Per disaccoppiare la logica di business dalla persistenza o dalla UI ridefinendo le entità del dominio.
 
 ### 2. Categoria: Token & Context Optimization (Risparmio Risorse LLM)
-Queste skill controllano e comprimono i payload inviati e ricevuti dal modello per evitare di intasare la context window. Ogni skill ha un **CLI wrapper esatto** da invocare:
-- **`workflow-agentic-brain` (`ai-optimize`)**: *Quando usarla:* Come Master Optimizer quando la sessione supera il 60% della context window o quando si debbono elaborare file enormi. *Cosa fa:* Orchestra dinamicamente le skill di compressione sottostanti. *CLI:* `ai-optimize status` / `ai-optimize pipeline <file>`.
-- **`caveman` (`ai-caveman`)**: *Quando usarla:* Quando l'agente deve generare lunghe analisi o log. *Cosa fa:* Riduce del ~75% i token in uscita dall'agente rimuovendo parole di riempimento pur mantenendo assoluta accuratezza sintattica e tecnica. *CLI:* `ai-caveman` (mostra le regole da iniettare come system prompt).
-- **`sqz` (`ai-squeeze`)**: *Quando usarla:* Prima di passare all'LLM l'output di comandi del terminale prolissi, build log giganti o file JSON di grandi dimensioni. *Cosa fa:* Comprime e riassume il payload mantenendo solo gli errori o i dati strutturali salienti. *CLI:* `command | ai-squeeze`.
-- **`llmlingua` (`ai-compress`)**: *Quando usarla:* Per comprimere prompt storici o documenti RAG estesi fino a 20x. *CLI:* `ai-compress --file <file> --ratio 0.5 --verbose`.
-- **`lean-ctx` (`ai-lean` / `ai-lean-ctx`)**: *Quando usarla:* Per governare l'intelligenza di visibilità del contesto, potando file già letti e non più rilevanti. *CLI:* `ai-lean read <file> map` / `ai-lean read <file> signatures` / `ai-lean status`.
-- **`headroom` (`ai-headroom`)**: *Quando usarla:* Per gestire il proxying e la compressione del contesto riducendo la latenza delle chiamate API. *CLI:* `ai-headroom compress` / `cat <file> | ai-headroom compress --ratio 0.4` / `ai-headroom proxy --port 8000`.
-- **`flashrank` (`ai-rerank`)**: *Quando usarla:* Durante la ricerca di documenti o frammenti di codice per ri-ordinare e mettere i frammenti più rilevanti nei primissimi token del prompt. *CLI:* `ai-rerank --query "<domanda>" --passages <file.json> --top-k 5`.
-- **`rtk` (`ai-rtk`)**: *Quando usarla:* Per comprimere automaticamente l'output dei comandi shell (git, npm, ls, grep, kubectl) del 60-90% prima che entrino nel contesto. Binario Rust singolo, zero dipendenze, <10ms. *CLI:* `ai-rtk wrap <command>` / `ai-rtk init --global`.
+Queste skill controllano e comprimono i payload inviati e ricevuti dal modello per evitare di intasare la context window:
+- **`workflow-agentic-brain` (`ai-optimize`)**: *Quando usarla:* Come Master Optimizer quando la sessione supera il 60% della context window o quando si debbono elaborare file enormi. *Cosa fa:* Orchestra dinamicamente le skill di compressione sottostanti (`caveman`, `ponytail`, `sqz`, `lean-ctx` / `ktx`, `headroom`, `handoff`).
+- **`caveman` (`ai-caveman`)**: *Quando usarla:* Quando l'agente deve generare lunghe analisi o log. *Cosa fa:* Riduce del ~75% i token in uscita dall'agente rimuovendo parole di riempimento pur mantenendo assoluta accuratezza sintattica e tecnica.
+- **`sqz` (`ai-squeeze`)**: *Quando usarla:* Prima di passare all'LLM l'output di comandi del terminale prolissi, build log giganti o file JSON di grandi dimensioni. *Cosa fa:* Comprime e riassume il payload mantenendo solo gli errori o i dati strutturali salienti.
+- **`llmlingua` (`ai-compress`)**: *Quando usarla:* Per comprimere prompt storici o documenti RAG estesi fino a 20x.
+- **`lean-ctx` (`ktx` / `ai-lean`)**: *Quando usarla:* Per governare l'intelligenza di visibilità del contesto (`Lean Context Intelligence`), potando file già letti o non più al centro dell'attenzione ed eliminando il rumore (risparmio 60-90% token).
+- **`headroom` (`ai-headroom`)**: *Quando usarla:* Per gestire il proxying e la compressione del contesto riducendo la latenza e i costi delle chiamate API prima dell'invio.
+- **`mp-handoff` (`handoff` / `ai-handoff`)**: *Quando usarla:* Al termine della fase di ottimizzazione, prima di passare il controllo a una nuova sessione o subagent, per serializzare lo stato ed eliminare ri-letture ridondanti.
+- **`flashrank` (`ai-rerank`)**: *Quando usarla:* Durante la ricerca di documenti o frammenti di codice per ri-ordinare e mettere i frammenti più rilevanti nei primissimi token del prompt.
 
 ---
 
@@ -60,12 +60,10 @@ Il seguente albero mostra la sequenza deterministica di esecuzione del Loop 4 e 
 graph TD
     Start([Da 03. loop-3-debug o Contesto Saturo]) --> CheckType{Tipo di Intervento?}
     
-    CheckType -- Ottimizzazione Token / Contesto --> Brain[workflow-agentic-brain / ai-optimize status]
-    Brain --> RTK[rtk / ai-rtk wrap per output CLI 60-90%]
-    RTK --> Squeeze[sqz / ai-squeeze per Log e JSON]
-    Squeeze --> Headroom[headroom / ai-headroom compress 60-95%]
-    Headroom --> Lean[lean-ctx / ai-lean read file map]
-    Lean --> Caveman[caveman / ai-caveman output -75%]
+    CheckType -- Ottimizzazione Token / Contesto --> Brain[workflow-agentic-brain / Master Optimizer]
+    Brain --> Squeeze[sqz / Comprimi Log e JSON estesi]
+    Squeeze --> Lean[lean-ctx / Pota file inattivi dal contesto]
+    Lean --> Caveman[caveman / Attiva output compresso -75%]
     Caveman --> OptDone([Contesto Ottimizzato e Leggero])
     
     CheckType -- Refactoring Architetturale --> Serena[serena / Mappa chiamate e simboli LSP]
@@ -98,46 +96,6 @@ graph TD
 - Scrivi in `task.md` il piano esplicito di refactoring:
   - Specifica quali interfacce verranno disaccoppiate e quali file monstre verranno divisi.
   - Applica `ponytail` per marcare per l'eliminazione qualsiasi classe o metodo speculativo che non è usato dall'applicazione corrente.
-
-### Step 4.2b: Pipeline CLI di Ottimizzazione Token (5 Fasi — `ai-optimize`)
-Quando il contesto è saturo o il loop richiede compressione, esegui le 5 fasi con i **comandi CLI esatti**:
-
-```bash
-# Fase 1: Verifica lo stato di tutti i tool
-ai-optimize status
-
-# Fase 2: Converti file binari in Markdown (se necessario)
-ai-convert documento.pdf
-
-# Fase 3: Re-ranking per rilevanza (se molti documenti)
-ai-rerank --query "<domanda>" --passages docs.json --top-k 5 --compact
-
-# Fase 4: Compressione Token (scegli il tool più adatto)
-ai-compress --file contesto.txt --ratio 0.5 --verbose           # LLMLingua (20x)
-cat output_lungo.json | ai-squeeze                               # sqz (JSON/log)
-cat contesto.txt | ai-headroom compress --ratio 0.4              # Headroom (60-95%)
-
-# Fase 5: Compressione output CLI automatica
-ai-rtk wrap git log --oneline -100                               # RTK (60-90%)
-ai-rtk wrap npm test 2>&1 | ai-squeeze                          # RTK + sqz cascata
-
-# Context Guarding: lettura intelligente dei file
-ai-lean read src/main.py map                                     # Solo struttura (~13 token)
-ai-lean read src/main.py signatures                              # Solo firme funzioni
-ai-lean read src/main.py diff                                    # Solo righe cambiate
-
-# Output Reduction: attiva compressione output agente
-ai-caveman                                                       # Mostra regole (-75% token output)
-```
-
-**Regola di cascata CLI:** I tool possono essere concatenati con pipe:
-```bash
-# Pipeline completa: convert → rerank → compress
-ai-convert doc.pdf | ai-rerank -q "auth flow" -k 5 --compact | ai-compress --ratio 0.3
-
-# Pipeline CLI: rtk → squeeze → headroom
-ai-rtk wrap kubectl get pods -A -o json | ai-squeeze | ai-headroom compress
-```
 
 ### Step 4.3: Esecuzione del Refactoring Protetto da Test (`mp-improve-codebase-architecture`)
 - **Regola di Ferro del Refactoring:** Assicurati che i test siano verdi *prima* di iniziare ogni singola modifica atomica.

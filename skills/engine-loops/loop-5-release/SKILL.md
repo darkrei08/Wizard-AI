@@ -47,8 +47,11 @@ Queste skill (che inglobano l'ex `loop-learn`) trasformano il lavoro svolto in c
 - **`slack-gif-creator`**: *Quando usarla:* Per creare GIF animate per celebrare il deploy su Slack o mostrare una demo della nuova UI.
 
 ### 3. Categoria: Persistent Memory & Knowledge Graph (Memoria a Lungo Termine)
-Queste skill garantiscono il **Loop-First Approach**: ogni ciclo deve arricchire la memoria per rendere il ciclo successivo più intelligente del precedente:
-- **`session-manager` (`ai-session-save`)**: *Quando usarla:* **MANDATORY POST-GATE** alla fine esatta di ogni sessione. *Cosa fa:* Scrive lo snapshot finale in `MEMORY.md`, salvando i pattern di successo, le decisioni prese e le preferenze dell'utente per le future sessioni.
+Queste skill garantiscono il **Loop-First Approach**: ogni ciclo deve arricchire la memoria e azzerare il rumore semantico per rendere il ciclo successivo più intelligente e leggero del precedente:
+- **`mp-handoff` (`handoff` / `ai-handoff`)**: *Quando usarla:* **MANDATORY PRE-GATE** prima della chiusura o transizione del subagent. *Cosa fa:* Esegue il dump strutturato del contesto, delle decisioni e del debito risolto.
+- **`session-manager` (`ai-session-save`)**: *Quando usarla:* **MANDATORY POST-GATE** alla fine esatta di ogni sessione. *Cosa fa:* Scrive lo snapshot finale in `MEMORY.md`, salvando i pattern di successo, le decisioni prese e le preferenze dell'utente.
+- **`lean-ctx` (`ktx` / `ai-lean`) & `sqz` (`ai-squeeze`)**: *Quando usarle:* Nel salvataggio dell'istantanea di memoria. *Cosa fanno:* Potano i file non attivi dal contesto residuo (`ktx`) e comprimono i log del rilascio (`sqz`) prima di registrarli nella knowledge base.
+- **`caveman` (`ai-caveman`) & `headroom` (`ai-headroom`)**: *Quando usarle:* Durante la sintesi finale in `MEMORY.md`. *Cosa fanno:* Garantiscono che i log di sessione e i prompt cross-session siano compatti e non disperdano budget o token (-75% overhead).
 - **`claude-mem`**: *Quando usarla:* Per salvare e indicizzare memorie semantiche persistenti e recuperarle cross-session.
 - **`auto-graphify` (`ai-graph .`)**: *Quando usarla:* Dopo aver modificato la struttura dei file o le classi. *Cosa fa:* Rigenera la mappa semantica e il knowledge graph all'interno di `graphify-out/`.
 - **`book-to-skill`**: *Quando usarla:* Quando la sessione ha studiato documentazione esterna, manuali PDF o specifiche tecniche, trasformandole in nuove skill salvate nella cartella `skills/`.

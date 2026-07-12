@@ -11,7 +11,7 @@ Questa è la **skill suprema** dell'ecosistema Wizard-AI. Ogni singola interazio
 Questa skill è il PRIMO file che l'agente deve processare. Ogni altra skill è subordinata a questa pipeline.
 Se sei un subagent, salta la pipeline PRE/POST ma rispetta le skill di dominio.
 
-### 🚨 REGOLE DI AUTOFORZATURA KERNEL (ZERO-STOP & SELF-QUESTIONING)
+### 🚨 REGOLE DI AUTOFORZATURA KERNEL (ZERO-STOP & SELF-QUESTIONING & COT TRANSPARENCY LOG)
 1. **IL LOOP NON DEVE MAI FINIRE SE NON COMPLETI TUTTO (NEVER-STOP MANDATE)**:
    L'agente LLM HA IL DIVIETO ASSOLUTO di terminare il proprio turno di risposta o di chiedere all'utente "Vuoi procedere?" prima che l'intero ciclo `01 → 02 → 03 → 04 → 05` sia giunto a risoluzione completa e verificata. Una volta che un loop (es. `01. loop-1-plan`) completa il suo output (`.spec.md`), l'agente DEVE INNESCARE AUTOMATICAMENTE E IMMEDIATAMENTE IL LOOP SUCCESSIVO (`02. loop-2-develop` → `03. loop-3-debug` → `05. loop-5-release`) all'interno dello stesso flusso di lavoro o turno, passando il testimone senza interruzioni.
 2. **AUTOFORZATURA AL DIALOGO INTERNO E SCELTA STRADA (SELF-QUESTIONING PROTOCOL)**:
@@ -20,6 +20,10 @@ Se sei un subagent, salta la pipeline PRE/POST ma rispetta le skill di dominio.
    🔄 [AUTONOMOUS LOOP ENGINE] Loop Attivo: 0X. loop-X-...
    🧠 [SELF-QUESTION] "Quale strada di sviluppo o tool semantico (serena, graphify, turbovec, claude-mem) devo adottare ora per risolvere questo step e qual è la condizione esatta di completamento per passare al loop successivo?"
    ```
+3. **MANDATORY COT STEP TRAVERSAL LOG & TOKEN SAVINGS GAUGE (`show-active-skill`)**:
+   Per rendere evidente all'utente l'efficacia del risparmio token e la profondità del ragionamento (come fanno *Gemini CLI*, *Antigravity CLI* o i modelli di frontiera e reasoning), l'agente HA L'OBBLIGO INVARIABILE di mostrare all'inizio e alla fine di ogni risposta l'intestazione di trasparenza (`show-active-skill`). In essa deve mostrare la catena di step in attraversamento:
+   `CoT Step Traversal: [Step 1: Plan/Route] ➔ [Step 2: Context Pruning (lean-ctx/ktx)] ➔ [Step 3: Action/Code] ➔ [Step 4: Token Squeeze (sqz/caveman)] ➔ [Step 5: Memory Handoff]`
+   e quantificare l'efficacia del risparmio token nel blocco `⚡ Token & Context Optimization Gauge` (es. `lean-ctx/ktx: -60-90% visibilità file prunata`, `caveman: -75% output token reduction`, `sqz: log compressi`).
 </MANDATORY>
 
 ---
@@ -80,16 +84,17 @@ dove:
 ### ═══════════════ PRE-PROMPT PIPELINE ═══════════════
 
 #### Step 1: Context Restore & Task Recovery Hub 🔄 (ALWAYS — tutte le weight)
-**Skill:** `session-manager` (modalità RESTORE + `Task Recovery Hub`)
+**Skill:** `session-manager` (modalità RESTORE + `Task Recovery Hub` + `Brain-to-Skill / Graph Map`)
 
 - Leggi `MEMORY.md` (`Diario di Bordo Personale`) e inietta il contesto della sessione precedente.
 - **Task Recovery Hub & Summarizer**: Leggi attentamente la sezione **Summarizer / Task Perse o Sospese (`[⏳ TASK SOSPESA DA RIPRENDERE]`)**. Se ci sono task interrotte da sessioni precedenti o da step falliti, re-inizializzale immediatamente come priorità del loop corrente senza perdere contesto.
-- Se esiste `graphify-out/`, carica il knowledge graph per navigazione semantica.
+- **Brain-to-Skill & Graph Check**: Verifica lo stato del grafo semantico (`graphify` / `ai-graph`) e delle skill (`book-to-skill`). Se necessario, carica la mappa aggiornata del progetto per garantire piena cognizione architettonica all'avvio.
 - Se la finestra di contesto è già ampia (>60%), attiva automaticamente Step 4.
 
 **Self-Check Questions:**
 > ☐ Ho letto MEMORY.md e la sezione Summarizer del Diario?
 > ☐ Ho recuperato e messo in coda le task perse/sospese (`Task Recovery Hub`)?
+> ☐ Ho verificato e allineato la mappa del grafo e le skill di progetto (`Brain-to-Skill`)?
 > ☐ Ho contesto sufficiente per capire le decisioni e le strade scartate in passato?
 
 ---
@@ -98,6 +103,27 @@ dove:
 **Skill:** `auto-prompt`
 
 - Se il prompt è vago, ambiguo o complesso → ristruttura in formato XML deterministico
+<truncated... let's keep lines identical up to step 10>
+---
+
+#### Step 10: Session Save & Brain-to-Skill / Graph Sync 💾 (ALWAYS)
+**Skill:** `session-manager` (modalità SAVE + `Graph/Skill Sync`)
+
+- Comprimi e riassumi lo stato corrente.
+- Scrivi su `MEMORY.md`:
+  - Cosa è stato fatto
+  - Bug/domande aperti
+  - Prossimi step
+  - Decisioni di design
+- **Brain-to-Skill & Graph Sync**: Prima della chiusura, esegui o verifica l'aggiornamento del grafo di progetto (`ai-graph update`) e la sincronizzazione delle skill/knowledge base (`book-to-skill` / wiki), per preservare il quadro strutturale nelle future o successive sessioni.
+- Esegui `ai-session-save` e `ai-storybloq snapshot`
+- **ANONIMIZZA** percorsi locali prima di salvare
+
+**Self-Check Questions:**
+> ☐ Il riassunto è conciso ma completo?
+> ☐ Ho aggiornato il grafo (`ai-graph`) e la memoria di progetto per la successiva sessione?
+> ☐ Ho anonimizzato i percorsi?
+> ☐ I prossimi step sono chiari per la sessione successiva?
 - Inietta `<fixed_skills>` (skill obbligatorie) e `<dynamic_skills>` (skill suggerite)
 - Usa modelli economici (Flash/Haiku) per la riscrittura
 
