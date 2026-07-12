@@ -595,7 +595,7 @@
       "docs_token_reduction_graphify_it_impostazioni_visive_consigliate",
       "docs_token_reduction_graphify_it_l_alternativa_automatizzata_wiki_brain",
       "docs_token_reduction_graphify_it_opzionale_visualizzazione_3d_in_obsidian",
-      "docs_token_reduction_graphify_it_perché_è_importante",
+      "docs_token_reduction_graphify_it_perch\u00e9_\u00e8_importante",
       "docs_token_reduction_graphify_it_riduzione_dei_token_con_graphify_guida_completa_al_setup",
       "docs_token_reduction_graphify_it_step_1_installa_graphify",
       "docs_token_reduction_graphify_it_step_2_costruisci_il_grafo_di_conoscenza",
@@ -723,7 +723,7 @@
       "readme_it_comandi_disponibili",
       "readme_it_come_funzionano_le_skill",
       "readme_it_contribuire",
-      "readme_it_cos_è_questo_progetto",
+      "readme_it_cos_\u00e8_questo_progetto",
       "readme_it_cosa_viene_installato",
       "readme_it_crediti",
       "readme_it_la_variabile_wizard_ai_dir",
@@ -1074,7 +1074,7 @@
     "52": [
       "docs_legal_privacy_policy_it",
       "docs_legal_privacy_policy_it_1_titolare_del_trattamento",
-      "docs_legal_privacy_policy_it_2_tipologie_di_dati_raccolti_e_finalità",
+      "docs_legal_privacy_policy_it_2_tipologie_di_dati_raccolti_e_finalit\u00e0",
       "docs_legal_privacy_policy_it_3_trasferimento_e_condivisione_dei_dati",
       "docs_legal_privacy_policy_it_4_tempi_di_conservazione",
       "docs_legal_privacy_policy_it_5_diritti_dell_interessato",
@@ -1100,8 +1100,8 @@
       "docs_legal_terms_of_service_it_1_accettazione_dei_termini",
       "docs_legal_terms_of_service_it_2_modelli_di_licenza_dual_licensing",
       "docs_legal_terms_of_service_it_3_account_e_sicurezza",
-      "docs_legal_terms_of_service_it_5_proprietà_intellettuale",
-      "docs_legal_terms_of_service_it_6_limitazione_di_responsabilità",
+      "docs_legal_terms_of_service_it_5_propriet\u00e0_intellettuale",
+      "docs_legal_terms_of_service_it_6_limitazione_di_responsabilit\u00e0",
       "docs_legal_terms_of_service_it_7_legge_applicabile_e_foro_competente",
       "docs_legal_terms_of_service_it_a_versione_community_gratuita",
       "docs_legal_terms_of_service_it_b_versione_enterprise_commerciale_premium",
@@ -1217,7 +1217,7 @@
       "docs_adding_skills_guide_it_2_definisci_il_file_skill_md",
       "docs_adding_skills_guide_it_3_sincronizza_la_skill_nel_tuo_ambiente_locale",
       "docs_adding_skills_guide_it_best_practices_per_la_scrittura_di_skill_md",
-      "docs_adding_skills_guide_it_che_cos_è_una_skill",
+      "docs_adding_skills_guide_it_che_cos_\u00e8_una_skill",
       "docs_adding_skills_guide_it_guida_come_aggiungere_nuove_skill_a_wizard_ai",
       "docs_adding_skills_guide_it_integrazione_di_script_e_cli_personalizzate",
       "docs_adding_skills_guide_it_procedura_per_creare_e_sincronizzare_una_skill"
@@ -1750,7 +1750,7 @@
     ],
     "135": [
       "readme_it_benchmark_delle_prestazioni",
-      "readme_it_perché_è_importante",
+      "readme_it_perch\u00e9_\u00e8_importante",
       "readme_it_risultati_dei_benchmark"
     ],
     "136": [
@@ -2824,12 +2824,12 @@
     },
     {
       "id": "readme_it_wizard_ai",
-      "label": "🧙‍♂️ Wizard-AI",
+      "label": "\ud83e\uddd9\u200d\u2642\ufe0f Wizard-AI",
       "degree": 15
     },
     {
       "id": "docs_templates_prompt_template_mega_prompt_fullstack_project_name_next_js_node_js",
-      "label": "🚀 MEGA-PROMPT: Fullstack [Project Name] — Next.js + Node.js",
+      "label": "\ud83d\ude80 MEGA-PROMPT: Fullstack [Project Name] \u2014 Next.js + Node.js",
       "degree": 13
     },
     {
@@ -2839,7 +2839,7 @@
     },
     {
       "id": "docs_templates_prompt_template_3_phase_2_backend_api_tdd",
-      "label": "3. PHASE 2 — BACKEND API (TDD)",
+      "label": "3. PHASE 2 \u2014 BACKEND API (TDD)",
       "degree": 12
     }
   ],
@@ -2900,41 +2900,8 @@
       "why": "inferred connection - not explicitly stated in source; bridges separate communities"
     }
   ],
-  "questions": [
-    {
-      "type": "bridge_node",
-      "question": "Why does `🚀 MEGA-PROMPT: Fullstack [Project Name] — Next.js + Node.js` connect `🚀 MEGA-PROMPT: Fullstack [Project Name] — Next.js + Node.js` to `4. PHASE 3 — FRONTEND (TDD + Spec-Driven)`, `3. PHASE 2 — BACKEND API (TDD)`, `1. PHASE 0 — BOOTSTRAP & INFRASTRUCTURE`, `7. PHASE 6 — SEO, AEO & PERFORMANCE`, `8. PHASE 7 — FINALIZATION`, `11. FINAL CHECKLIST — EVERY ITEM MUST BE GREEN BEFORE v1.0.0`, `6. PHASE 5 — DOCKER & CI/CD`?",
-      "why": "High betweenness centrality (0.002) - this node is a cross-community bridge."
-    },
-    {
-      "type": "bridge_node",
-      "question": "Why does `skill-creator Skill` connect `generate_review.py` to `run_loop`?",
-      "why": "High betweenness centrality (0.001) - this node is a cross-community bridge."
-    },
-    {
-      "type": "verify_inferred",
-      "question": "Are the 2 inferred relationships involving `BaseSchemaValidator` (e.g. with `DOCXSchemaValidator` and `PPTXSchemaValidator`) actually correct?",
-      "why": "`BaseSchemaValidator` has 2 INFERRED edges - model-reasoned connections that need verification."
-    },
-    {
-      "type": "verify_inferred",
-      "question": "Are the 2 inferred relationships involving `BaseSchemaValidator` (e.g. with `DOCXSchemaValidator` and `PPTXSchemaValidator`) actually correct?",
-      "why": "`BaseSchemaValidator` has 2 INFERRED edges - model-reasoned connections that need verification."
-    },
-    {
-      "type": "verify_inferred",
-      "question": "Are the 2 inferred relationships involving `BaseSchemaValidator` (e.g. with `DOCXSchemaValidator` and `PPTXSchemaValidator`) actually correct?",
-      "why": "`BaseSchemaValidator` has 2 INFERRED edges - model-reasoned connections that need verification."
-    },
-    {
-      "type": "verify_inferred",
-      "question": "Are the 3 inferred relationships involving `DOCXSchemaValidator` (e.g. with `_run_validation()` and `main()`) actually correct?",
-      "why": "`DOCXSchemaValidator` has 3 INFERRED edges - model-reasoned connections that need verification."
-    },
-    {
-      "type": "verify_inferred",
-      "question": "Are the 3 inferred relationships involving `DOCXSchemaValidator` (e.g. with `_run_validation()` and `main()`) actually correct?",
-      "why": "`DOCXSchemaValidator` has 3 INFERRED edges - model-reasoned connections that need verification."
-    }
-  ]
+  "tokens": {
+    "input": 403448,
+    "output": 14329
+  }
 }
