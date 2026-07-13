@@ -57,7 +57,12 @@ Every core semantic and compression engine MUST be triggered systematically at t
 5. **Usage Tracking**
    - **Base**: `gemini-usage` | **Wrapper**: `ai-usage` (Track token costs, budget allocation, and context window limits).
 
+6. **Universal Project Auto-Installer & MCP Bridge (`wizard-ai-init`)**
+   - **Command**: `/home/ema/.local/bin/wizard-ai-init [path]`
+   - **Purpose**: Instantly initializes any repository or project (`waforge`, `nuxt-mcp-agent-starter`, future codebases) with `.wizard-ai.json`, `.vscode/mcp.json`, `.cursor/mcp.json`, and `.gemini/mcp.json` containing active configurations for `llmwiki`, `serena`, and `sqz`. Also auto-generates mandatory `AGENTS.md`, `CLAUDE.md`, and `GEMINI.md` instruction files enforcing the exact 5-Loop sequential workflow across any AI client.
+
 ## General AI Rules for this System (Mandatory Loop Enforcement)
+- **Universal Repo Initialization**: Whenever opening a new or existing repository, run `wizard-ai-init .` to verify that `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, and IDE `mcp.json` files are up to date and linked to the global Wizard-AI skills.
 - **Always prune context**: When navigating large projects or running multiple loops, explicitly apply `lean-ctx` (`ktx`) and `sqz` to prevent context saturation.
 - **Adopt Caveman / Ponytail mode**: When summarizing logs or refactoring code in Loop 4, use `caveman` to cut redundant tokens and `ponytail` to remove dead/unneeded abstractions.
-- **Handoff & Memory safety**: At the end of every task or session (Loop 5), trigger `mp-handoff` (`handoff`) and `session-manager` (`ai-session-save`) to ensure zero knowledge loss across future interactions.
+- **Handoff & Memory safety**: At the end of every task or session (Loop 5), trigger `mp-handoff` (`handoff`), `ai-wiki ingest / compile`, and `session-manager` (`ai-session-save`) to ensure zero knowledge loss across future interactions.

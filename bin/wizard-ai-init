@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# Wizard-AI Universal Repo Plugin & MCP Bridge Bootstrapper (wizard-ai-init)
+# Initializes any repository with LLMWiki, Serena, SQZ, Graphify, and KTX support
+# and creates mandatory agent instruction files (AGENTS.md, CLAUDE.md, GEMINI.md).
+# ==============================================================================
+
+set -euo pipefail
+
+TARGET_DIR="${1:-.}"
+TARGET_DIR=$(cd "$TARGET_DIR" && pwd)
+
+echo "🪄 [Wizard-AI Plugin] Initializing AI Agent Ecosystem inside: $TARGET_DIR"
+
+# 1. Create .wizard-ai.json configuration
+cat << 'EOF' > "$TARGET_DIR/.wizard-ai.json"
+{
+  "$schema": "https://wizard-ai.org/schema/v1/project.json",
+  "version": "2.0.0",
+  "ecosystem": "Wizard-AI",
+  "mcpServers": {
+    "llmwiki": {
+      "command": "/home/ema/.local/bin/ai-wiki",
+      "args": ["mcp", "--base-dir", "."]
+    },
+    "serena": {
+      "command": "uvx",
+      "args": ["serena", "mcp"]
+    },
+    "sqz": {
+      "command": "sqz",
+      "args": ["mcp"]
+    }
+  },
+  "tools": {
+    "wiki": "/home/ema/.local/bin/ai-wiki",
+    "vector": "/home/ema/.local/bin/ai-vector",
+    "graph": "/home/ema/.local/bin/ai-graph",
+    "compress": "/home/ema/.local/bin/ai-squeeze",
+    "context": "/home/ema/.local/bin/ai-context",
+    "session": "/home/ema/.local/bin/ai-session-save"
+  }
+}
+EOF
+echo "  ✓ Created .wizard-ai.json"
+
+# 2. Setup IDE MCP server configs (.vscode/mcp.json, .cursor/mcp.json, .gemini/mcp.json)
+mkdir -p "$TARGET_DIR/.vscode" "$TARGET_DIR/.cursor" "$TARGET_DIR/.gemini"
+
+MCP_CONFIG='{
+  "mcpServers": {
+    "llmwiki": {
+      "command": "/home/ema/.local/bin/ai-wiki",
+      "args": ["mcp", "--base-dir", "."]
+    },
+    "serena": {
+      "command": "uvx",
+      "args": ["serena", "mcp"]
+    },
+    "sqz": {
+      "command": "sqz",
+      "args": ["mcp"]
+    }
+  }
+}'
+
+echo "$MCP_CONFIG" > "$TARGET_DIR/.vscode/mcp.json"
+echo "$MCP_CONFIG" > "$TARGET_DIR/.cursor/mcp.json"
+echo "$MCP_CONFIG" > "$TARGET_DIR/.gemini/mcp.json"
+echo "  ✓ Configured MCP Servers in .vscode/mcp.json, .cursor/mcp.json, .gemini/mcp.json"
+
+# 3. Create/Update mandatory agent instructions (AGENTS.md, CLAUDE.md, GEMINI.md)
+INSTRUCTION_BLOCK='# 🪄 Wizard-AI Project Ecosystem — Mandatory Agent Instructions
+
+> **MANDATORY PROTOCOL**: You are operating inside a **Wizard-AI Enabled Repository**.
+> You MUST strictly obey the following 5-Loop sequential workflow, mandatory step triggers, and token compression rules on EVERY task.
+
+---
+
+## 🔄 The 5-Loop Sequential Pipeline (`01. loop-1-plan` ➔ `05. loop-5-release`)
+
+1. **`01. loop-1-plan` (Discovery, Requirements & RAG Strategy)**
+   - **MANDATORY**: Before proposing plans or modifying files, you MUST query the semantic knowledge base (`ai-wiki query / search` or `ai-vector search`) and AST call graph (`serena`).
+   - **External Docs**: If the task involves documentation or manuals, invoke `book-to-skill`.
+   - **Context Pruning**: Pass search output through `sqz` or `ktx` (`lean-ctx`) to prune boilerplate before reading (>60% savings).
+
+2. **`02. loop-2-develop` (TDD, Subagents & Implementation)**
+   - Write tests first where applicable.
+   - For multi-file heavy tasks (`HEAVY`), dispatch parallel subagents with sharded AST context.
+
+3. **`03. loop-3-debug` (Adversarial Verification & Quality Gates)**
+   - Run linter/typechecker (`ai-llmwiki lint check` or project linter) and automated test suites (`bun test` / `npm test`).
+
+4. **`04. loop-4-refactor` (Clean Architecture & Token Squeezing)**
+   - Remove YAGNI code (`ponytail` mindset). Verify dependency graphs via `ai-graph query`.
+
+5. **`05. loop-5-release` (Handoff, Memory Sync & Graph Compilation)**
+   - **MANDATORY POST-GATE 1**: Run `ai-graph . --update` to refresh the code relationship map (`graphify-out/`).
+   - **MANDATORY POST-GATE 2**: Run `ai-wiki ingest / compile` (or `ai-llmwiki`) to crystallize session markdown files (`MEMORY.md`, `walkthrough.md`) into the multilingual knowledge graph.
+   - **MANDATORY POST-GATE 3**: Run `ai-session-save "<summary>"` to persist session state on `MEMORY.md`.
+
+---
+
+## 🗜️ Mandatory Context & Output Optimization Rules
+- **Output Compression (`sqz`)**: Never pipe raw verbose JSON, build logs, or large git outputs into your context. Always pipe through `ai-squeeze` (`sqz`).
+- **Response Efficiency (`caveman`)**: Keep your conversational explanation concise (~75% token reduction) while retaining 100% technical code accuracy.
+- **MCP Tool Priority**: When available, prefer calling `llmwiki` / `serena` MCP tools directly over spawning heavy terminal shell commands.
+'
+
+echo "$INSTRUCTION_BLOCK" > "$TARGET_DIR/AGENTS.md"
+echo "$INSTRUCTION_BLOCK" > "$TARGET_DIR/CLAUDE.md"
+echo "$INSTRUCTION_BLOCK" > "$TARGET_DIR/GEMINI.md"
+echo "  ✓ Created/Updated mandatory agent guidelines: AGENTS.md, CLAUDE.md, GEMINI.md"
+
+# 4. Initialize graphify and llmwiki indices if not present
+if [ ! -d "$TARGET_DIR/graphify-out" ]; then
+  echo "  ⏳ Initializing quick graphify skeleton..."
+  "/home/ema/.local/bin/ai-graph" "$TARGET_DIR" --cluster-only 2>/dev/null || true
+fi
+
+if [ -f "$TARGET_DIR/MEMORY.md" ]; then
+  echo "  ⏳ Ingesting MEMORY.md into llmwiki..."
+  "/home/ema/.local/bin/ai-wiki" --base-dir "$TARGET_DIR" ingest file "$TARGET_DIR/MEMORY.md" 2>/dev/null || true
+  "/home/ema/.local/bin/ai-wiki" --base-dir "$TARGET_DIR" compile index 2>/dev/null || true
+fi
+
+echo "🚀 [Wizard-AI Plugin] Bootstrap Complete for $TARGET_DIR!"
