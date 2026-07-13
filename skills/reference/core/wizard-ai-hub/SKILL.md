@@ -26,8 +26,20 @@ Both the **Base Commands** and the **Custom Wrappers (ai-*)** are globally avail
    - **Base**: `compress-prompt` | **Wrapper**: `ai-compress` (Compress verbose historical prompts or RAG contexts using LLMLingua).
    - **Base**: `rerank` | **Wrapper**: `ai-rerank` (Re-rank passages using FlashRank to place top-K relevant chunks at the very beginning of the context).
 
-2. **Knowledge Graphs & Vision**
-   - **Base**: `graphify` | **Wrapper**: `ai-graph` (Build interactive semantic knowledge graphs and community structures from codebases).
+2. **Knowledge Graphs, Vector Databases, Semantic LSP & LLM Wiki (Loop 1 / 5 Indexing)**
+   - **Base**: `serena` | **Wrapper**: `serena analyze / find-usages` (LSP-powered semantic code search and AST call-graph tracing; use BEFORE reading raw files to find precise symbol definitions).
+   - **Base**: `turbovec` | **Wrapper**: `ai-vector` (Google's TurboQuant high-speed vector search and embedding indexing for instant RAG passage retrieval).
+   - **Base**: `zvec` | **Wrapper**: `ai-zvec` (High-performance vector database management for massive project corpora).
+   - **Base**: `qwenpaw` | **Wrapper**: `ai-qwenpaw` (Agentic workflow utilities and advanced task orchestration).
+   - **Base**: `graphify` | **Wrapper**: `ai-graph` (Turn codebases and documentation into interactive HTML/JSON knowledge graphs with community detection and god nodes).
+   - **Base**: `wiki-brain` | **Wrapper**: `/wiki-brain` (Andrej Karpathy's LLM Wiki pattern: compounds every session into an interlinked `.md` Obsidian knowledge graph that the model queries instantly instead of scanning raw files).
+
+## 🔗 Chaining Protocol: Vector/Graph Semantic Search + Token Compression (`Loop 1 ➔ 5`)
+To achieve ultra-fast, zero-bloat autonomous execution, all semantic/vector engines MUST be chained with the compression stack:
+- **Loop 1 (Plan & Query)**: Query `serena` (`find-usages`), `turbovec` (`ai-vector`), or `wiki-brain` (`/wiki-brain query`) FIRST. Pipe the returned snippets through `sqz` and `lean-ctx (ktx)` so only the exact top-K relevant lines enter the context (-60% to -90% token overhead).
+- **Loop 2 & 3 (Develop & Debug)**: Navigate symbol definitions via `serena` while `lean-ctx` actively strips inactive AST blocks from visible memory.
+- **Loop 4 (Refactor)**: Verify structural integrity across the graph using `serena` and `graphify`, while keeping output verbosity at -75% via `caveman`.
+- **Loop 5 (Release & Index)**: Run `ai-graph .` and `/wiki-brain ingest` to index newly modified `.md` docs into the `turbovec` / `zvec` vector indices and the persistent `LLM Wiki` graph, then finalize via `mp-handoff` (`ai-handoff`) and `session-manager` (`ai-session-save`).
 
 3. **Document Conversion & Parsing**
    - **Base**: `markitdown` | **Wrapper**: `ai-convert` (Extract clean Markdown from PDFs, Office docs, Images, Audio, EPUBs).
