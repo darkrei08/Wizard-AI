@@ -10,13 +10,25 @@ set -euo pipefail
 TARGET_DIR="${1:-.}"
 TARGET_DIR=$(cd "$TARGET_DIR" && pwd)
 
-echo "🪄 [Wizard-AI Plugin] Initializing AI Agent Ecosystem inside: $TARGET_DIR"
+# Detect current stable version from global package or git repo
+WIZARD_STABLE_VER=$(node -p "try { require('/home/ema/Scrivania/altri repooo/Wizard-AI/package.json').version } catch { '0.49.0' }" 2>/dev/null || echo "0.49.0")
+WIZARD_CHANNEL="${WIZARD_CHANNEL:-latest}"
+
+# If channel is 'stable', lock to the exact release version. If 'latest', point to latest global release.
+if [ "$WIZARD_CHANNEL" = "stable" ]; then
+  ACTIVE_VER="$WIZARD_STABLE_VER"
+else
+  ACTIVE_VER="latest ($WIZARD_STABLE_VER)"
+fi
+
+echo "🪄 [Wizard-AI Plugin] Initializing AI Agent Ecosystem inside: $TARGET_DIR (Channel: $WIZARD_CHANNEL, Version: $ACTIVE_VER)"
 
 # 1. Create .wizard-ai.json configuration
-cat << 'EOF' > "$TARGET_DIR/.wizard-ai.json"
+cat << EOF > "$TARGET_DIR/.wizard-ai.json"
 {
-  "$schema": "https://wizard-ai.org/schema/v1/project.json",
-  "version": "2.0.0",
+  "\$schema": "https://wizard-ai.org/schema/v1/project.json",
+  "version": "$WIZARD_STABLE_VER",
+  "channel": "$WIZARD_CHANNEL",
   "ecosystem": "Wizard-AI",
   "mcpServers": {
     "llmwiki": {
@@ -42,7 +54,7 @@ cat << 'EOF' > "$TARGET_DIR/.wizard-ai.json"
   }
 }
 EOF
-echo "  ✓ Created .wizard-ai.json"
+echo "  ✓ Created .wizard-ai.json (Version: $WIZARD_STABLE_VER, Channel: $WIZARD_CHANNEL)"
 
 # 2. Setup IDE MCP server configs (.vscode/mcp.json, .cursor/mcp.json, .gemini/mcp.json)
 mkdir -p "$TARGET_DIR/.vscode" "$TARGET_DIR/.cursor" "$TARGET_DIR/.gemini"
