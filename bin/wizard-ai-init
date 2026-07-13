@@ -81,6 +81,15 @@ echo "$MCP_CONFIG" > "$TARGET_DIR/.cursor/mcp.json"
 echo "$MCP_CONFIG" > "$TARGET_DIR/.gemini/mcp.json"
 echo "  ✓ Configured MCP Servers in .vscode/mcp.json, .cursor/mcp.json, .gemini/mcp.json"
 
+# 2.b Security Audit: Ensure .gitignore protects secrets, .env, and local IDE configs
+touch "$TARGET_DIR/.gitignore"
+for IGNORE_ITEM in ".env" ".env.*" "!.env.example" "*.pem" "*.key" "credentials.json" ".cursor/" ".gemini/" ".vscode/"; do
+  if ! grep -Fq "$IGNORE_ITEM" "$TARGET_DIR/.gitignore" 2>/dev/null; then
+    echo "$IGNORE_ITEM" >> "$TARGET_DIR/.gitignore"
+  fi
+done
+echo "  ✓ Security Audit: Standardized .gitignore exclusions for credentials and local state"
+
 # 3. Create/Update mandatory agent instructions (AGENTS.md, CLAUDE.md, GEMINI.md)
 INSTRUCTION_BLOCK='# 🪄 Wizard-AI Project Ecosystem — Mandatory Agent Instructions
 
@@ -100,7 +109,8 @@ INSTRUCTION_BLOCK='# 🪄 Wizard-AI Project Ecosystem — Mandatory Agent Instru
    - Write tests first where applicable.
    - For multi-file heavy tasks (`HEAVY`), dispatch parallel subagents with sharded AST context.
 
-3. **`03. loop-3-debug` (Adversarial Verification & Quality Gates)**
+3. **`03. loop-3-debug` (Adversarial Verification, Quality & Security Gates)**
+   - **MANDATORY SECURITY AUDIT (`cybersecurity` / `strix`)**: You MUST verify that all paths and file access boundaries are standardized/sanitizied (`path.resolve()`, `os.homedir()`) and against path traversal. You MUST verify that NO API keys (`GEMINI_API_KEY`, `OPENAI_API_KEY`, `TOKEN`, `DB_PASSWORD`) or secrets are hardcoded in code or configs; they MUST be read via environment variables (`process.env` / `.env` git-ignored).
    - Run linter/typechecker (`ai-llmwiki lint check` or project linter) and automated test suites (`bun test` / `npm test`).
 
 4. **`04. loop-4-refactor` (Clean Architecture & Token Squeezing)**

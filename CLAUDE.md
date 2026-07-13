@@ -1,71 +1,37 @@
-# Wizard-AI — Claude Code Configuration
+# 🪄 Wizard-AI Project Ecosystem — Mandatory Agent Instructions
 
-> Rules and hooks for Claude Code integration with the Wizard-AI ecosystem.
+> **MANDATORY PROTOCOL**: You are operating inside a **Wizard-AI Enabled Repository**.
+> You MUST strictly obey the following 5-Loop sequential workflow, mandatory step triggers, and token compression rules on EVERY task.
 
-## Memory Files
+---
 
-Read these files at the start of every session:
-- `MEMORY.md` — Persistent session state and compressed history
-- `CONTEXT.md` — Shared project language (if exists)
-- `AGENTS.md` — Universal agent rules
+## 🔄 The 5-Loop Sequential Pipeline (`01. loop-1-plan` ➔ `05. loop-5-release`)
 
-## Skill Loading
+1. **`01. loop-1-plan` (Discovery, Requirements & RAG Strategy)**
+   - **MANDATORY**: Before proposing plans or modifying files, you MUST query the semantic knowledge base (`ai-wiki query / search` or `ai-vector search`) and AST call graph (`serena`).
+   - **External Docs**: If the task involves documentation or manuals, invoke `book-to-skill`.
+   - **Context Pruning**: Pass search output through `sqz` or `ktx` (`lean-ctx`) to prune boilerplate before reading (>60% savings).
 
-Skills are in `skills/` organized by category. Use `skills.json` for discovery.
-The 5 sequenced loop-engineering workflows (01 → 05) are the primary entry points and MUST be auto-triggered on ANY natural language prompt:
-- `skills/engine-loops/loop-1-plan/SKILL.md` → `01. loop-1-plan` (`/loop-1`, `/align`)
-- `skills/engine-loops/loop-2-develop/SKILL.md` → `02. loop-2-develop` (`/loop-2`, `/tdd`)
-- `skills/engine-loops/loop-3-debug/SKILL.md` → `03. loop-3-debug` (`/loop-3`, `/verify`)
-- `skills/engine-loops/loop-4-refactor/SKILL.md` → `04. loop-4-refactor` (`/loop-4`, `/optimize`)
-- `skills/engine-loops/loop-5-release/SKILL.md` → `05. loop-5-release` (`/loop-5`, `/learn`)
+2. **`02. loop-2-develop` (TDD, Subagents & Implementation)**
+   - Write tests first where applicable.
+   - For multi-file heavy tasks (`HEAVY`), dispatch parallel subagents with sharded AST context.
 
-## Custom Instructions
+3. **`03. loop-3-debug` (Adversarial Verification, Quality & Security Gates)**
+   - **MANDATORY SECURITY AUDIT (`cybersecurity` / `strix`)**: You MUST verify that all paths and file access boundaries are standardized/sanitizied (`path.resolve()`, `os.homedir()`) and against path traversal. You MUST verify that NO API keys (`GEMINI_API_KEY`, `OPENAI_API_KEY`, `TOKEN`, `DB_PASSWORD`) or secrets are hardcoded in code or configs; they MUST be read via environment variables (`process.env` / `.env` git-ignored).
+   - Run linter/typechecker (`ai-llmwiki lint check` or project linter) and automated test suites (`bun test` / `npm test`).
 
-1. **Rule 0 Natural Language Auto-Triggering & Never-Stop Mandate**: NEVER require slash commands. When the user submits any prompt, automatically classify and route via `auto-router` into Loops 01-05 and auto-invoke semantic tooling (`serena`, `graphify`, `turbovec`, `claude-mem`). **STRICT PROHIBITION ON STOPPING**: Do not stop your turn or ask for another prompt until all triggered loops (`01 → 02 → 03 → 04 → 05`) reach complete resolution and verification.
-2. **Autonomous Self-Questioning (`Autoforzatura al Dialogo Interno`)**: Before every step, ask yourself and declare: `🧠 [SELF-QUESTION] "Quale strada di sviluppo o tool semantico devo usare ora per risolvere questo step col massimo rigore e qual è la condizione esatta per passare al loop successivo?"`
-3. **Autonomous Socratic Q&A (`Flusso mentale Self-Grill-Me`)**: Engage in internal socratic grilling (`mp-grill-me`, `brainstorming`, `ponytail`) before any architectural choice: ask what could break, verify against official docs (`CONTEXT.md`), and answer yourself explicitly.
-4. **Autonomous Online Skill Hunt (`search_web` + `wizard-ai-installer`)**: If local skills are insufficient for a task, search online for certified, high-reputation open-source skills, verify their star/reputation/safety, and install (`loop-install-bind`) to power your work.
-5. **Humanized Progress Diary & Task Recovery Hub (`Diario, Ripresa Task Perse & Libero Arbitrio`)**: Track all notes and progress in `task.md` & `MEMORY.md` using visual percentage bars (`[▓▓▓▓░░░░░░] 40%`), autonomous free-will tagging (`[🏷️ BUG-CRITICO]`, `[🏷️ DEBT]`), and humanized storytelling. Maintain a **Summarizer Section** to immediately recover and resume lost/pending tasks (`[⏳ TASK SOSPESA]`). Choose freely between **Concatenated Chaining (01→05)** and **Parallel Subagent Fan-out (`dispatching-parallel-agents` / `goodcode`)** based on task complexity. Record all discarded paths (`[❌ STRADA SCARTATA]`).
-6. **Universal Host-Agnostic & Standalone Execution (`Funzionalità Loop in Ogni Repo e su Richieste Slegate`)**: The 5-Loop workflows (`01→05`), MoE auto-routing (`auto-router`), AST pruning (`pi.dev wrapper`), sentinels (`ai-loop-sentinel`), and self-healing diagnostics (`ai-skill-doctor`) MUST operate identically across any external third-party repository (`React`, `Rust`, `Python`) OR on general standalone user requests completely outside of any git project (`"Spiegami Raft"`, `"Crea una tabella di LLM"`, `"Schizzami un'idea per un blog"`).
-7. **Always route through `auto-router` & `prompt-loop-engine`** before starting any task.
-7. **Always use verification** (`verification-before-completion`) before declaring work complete.
-8. **Always save session state** to `MEMORY.md` at the end (`05. loop-5-release`).
-9. **Use CLI wrappers** (`ai-*` commands) for tooling — run `ai-help` for the full list.
+4. **`04. loop-4-refactor` (Clean Architecture & Token Squeezing)**
+   - Remove YAGNI code (`ponytail` mindset). Verify dependency graphs via `ai-graph query`.
 
-## Hooks
+5. **`05. loop-5-release` (Handoff, Memory Sync & Graph Compilation)**
+   - **MANDATORY POST-GATE 1**: Run `ai-graph . --update` to refresh the code relationship map (`graphify-out/`).
+   - **MANDATORY POST-GATE 2**: Run `ai-wiki ingest / compile` (or `ai-llmwiki`) to crystallize session markdown files (`MEMORY.md`, `walkthrough.md`) into the multilingual knowledge graph.
+   - **MANDATORY POST-GATE 3**: Run `ai-session-save "<summary>"` to persist session state on `MEMORY.md`.
 
-### Pre-session
-```
-Read MEMORY.md → Restore context → Load CONTEXT.md → Ready
-```
+---
 
-### Post-task
-```
-Run tests → Update MEMORY.md → Suggest next loop → Save
-```
+## 🗜️ Mandatory Context & Output Optimization Rules
+- **Output Compression (`sqz`)**: Never pipe raw verbose JSON, build logs, or large git outputs into your context. Always pipe through `ai-squeeze` (`sqz`).
+- **Response Efficiency (`caveman`)**: Keep your conversational explanation concise (~75% token reduction) while retaining 100% technical code accuracy.
+- **MCP Tool Priority**: When available, prefer calling `llmwiki` / `serena` MCP tools directly over spawning heavy terminal shell commands.
 
-## Project Structure Reference
-
-```
-Wizard-AI/
-├── AGENTS.md          # Universal agent rules
-├── CLAUDE.md          # This file
-├── GEMINI.md          # Gemini/Antigravity rules
-├── MEMORY.md          # Persistent state
-├── bin/               # 47+ CLI wrappers (ai-*)
-├── skills/
-│   ├── engine-loops/  # THE ENGINE: The 5 Master loop-engineering workflows (01-05). Always starts here.
-│   └── reference/     # THE LIBRARY: All domain skills, imported skills, and core system skills
-│       ├── core/      # Router, loop engine, installer, and agentic patterns
-│       ├── frontend/  # React, Vue, Angular, design skills
-│       ├── backend/   # Node, Python, Firebase, databases
-│       ├── devops/    # CI/CD, security, auto-release
-│       ├── data-science/ # Document processing, visualization
-│       ├── memory-knowledge/ # Graphify, memory
-│       ├── stitch/    # Design system
-│       ├── marketing-media/ # SEO, content
-│       └── misc/      # Utilities
-├── scripts/           # Automation scripts
-├── hub/               # Local dashboard
-└── docs/              # Documentation + templates
-```

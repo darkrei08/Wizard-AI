@@ -1,59 +1,37 @@
-# Wizard-AI — Gemini / Antigravity Configuration
+# 🪄 Wizard-AI Project Ecosystem — Mandatory Agent Instructions
 
-> Rules and hooks for Gemini CLI and Antigravity IDE integration.
+> **MANDATORY PROTOCOL**: You are operating inside a **Wizard-AI Enabled Repository**.
+> You MUST strictly obey the following 5-Loop sequential workflow, mandatory step triggers, and token compression rules on EVERY task.
 
-## Memory Files (Auto-load)
+---
 
-- `MEMORY.md` — Persistent session state
-- `CONTEXT.md` — Shared project language (if exists)
-- `AGENTS.md` — Universal agent rules
+## 🔄 The 5-Loop Sequential Pipeline (`01. loop-1-plan` ➔ `05. loop-5-release`)
 
-## Skill Mapping
+1. **`01. loop-1-plan` (Discovery, Requirements & RAG Strategy)**
+   - **MANDATORY**: Before proposing plans or modifying files, you MUST query the semantic knowledge base (`ai-wiki query / search` or `ai-vector search`) and AST call graph (`serena`).
+   - **External Docs**: If the task involves documentation or manuals, invoke `book-to-skill`.
+   - **Context Pruning**: Pass search output through `sqz` or `ktx` (`lean-ctx`) to prune boilerplate before reading (>60% savings).
 
-Skills follow the Gemini `~/.gemini/config/skills/` convention.
-Run `ai-sync-skills` to copy all Wizard-AI skills to the global Gemini config.
+2. **`02. loop-2-develop` (TDD, Subagents & Implementation)**
+   - Write tests first where applicable.
+   - For multi-file heavy tasks (`HEAVY`), dispatch parallel subagents with sharded AST context.
 
-### Loop-Engineering Workflows (Primary Entry Points & Auto-Trigger Targets)
+3. **`03. loop-3-debug` (Adversarial Verification, Quality & Security Gates)**
+   - **MANDATORY SECURITY AUDIT (`cybersecurity` / `strix`)**: You MUST verify that all paths and file access boundaries are standardized/sanitizied (`path.resolve()`, `os.homedir()`) and against path traversal. You MUST verify that NO API keys (`GEMINI_API_KEY`, `OPENAI_API_KEY`, `TOKEN`, `DB_PASSWORD`) or secrets are hardcoded in code or configs; they MUST be read via environment variables (`process.env` / `.env` git-ignored).
+   - Run linter/typechecker (`ai-llmwiki lint check` or project linter) and automated test suites (`bun test` / `npm test`).
 
-**Rule 0 (Natural Language Auto-Triggering, Never-Stop Mandate, Self-Questioning & Visual Diary)**: 
-1. **Auto-Trigger**: NEVER require slash commands (`/loop-X`). Classify via `auto-router` into Loops 01-05.
-2. **Never-Stop Execution (`Il loop non deve mai finire se non completi tutto`)**: Autonomously chain through `01 → 02 → 03 → 04 → 05` without terminating your turn or asking for another prompt until all verification gates (`03. loop-3-debug`) and memory preservation (`05. loop-5-release`) are 100% complete.
-3. **Self-Questioning (`Autoforzatura al Dialogo Interno`)**: At every step, explicitly ask yourself and print: `🧠 [SELF-QUESTION] "Quale strada o tool semantico devo usare ora e qual è la condizione esatta per passare al loop successivo?"`
-4. **Autonomous Socratic Q&A (`Self-Grill-Me`)**: Engage in internal socratic Q&A interview (`mp-grill-me`, `brainstorming`) to challenge architecture, verify edge-cases (`strix`), and avoid over-engineering (`ponytail`).
-5. **Autonomous Online Skill Hunt (`search_web` + `wizard-ai-installer`)**: If local skills are insufficient, search online for certified open-source skills, verify star/reputation/safety, and install (`loop-install-bind`) dynamically.
-6. **Humanized Progress Diary & Task Recovery Hub (`Diario, Ripresa Task Perse & Libero Arbitrio`)**: Track all notes and progress in `task.md` & `MEMORY.md` using visual percentage bars (`[▓▓▓▓░░░░░░] 40%`), autonomous free-will tagging (`[🏷️ BUG-CRITICO]`, `[🏷️ DEBT]`), and humanized storytelling. Maintain a **Summarizer Section** to immediately recover and resume lost/pending tasks (`[⏳ TASK SOSPESA]`). Choose freely between **Concatenated Chaining (01→05)** and **Parallel Subagent Fan-out (`dispatching-parallel-agents` / `goodcode`)** based on task complexity. Record all discarded paths (`[❌ STRADA SCARTATA]`).
-7. **Universal Host-Agnostic & Standalone Execution (`Funzionalità Loop in Ogni Repo e su Richieste Slegate`)**: The 5-Loop workflows (`01→05`), MoE auto-routing (`auto-router`), AST pruning (`pi.dev wrapper`), sentinels (`ai-loop-sentinel`), and self-healing diagnostics (`ai-skill-doctor`) MUST operate identically across any external third-party repository (`React`, `Rust`, `Python`) OR on general standalone user requests completely outside of any git project (`"Spiegami Raft"`, `"Crea una tabella di LLM"`, `"Schizzami un'idea per un blog"`).
+4. **`04. loop-4-refactor` (Clean Architecture & Token Squeezing)**
+   - Remove YAGNI code (`ponytail` mindset). Verify dependency graphs via `ai-graph query`.
 
-| Numbered Loop | Workflow | Natural Language Triggers | Semantic Tools Activated |
-|---|---|---|---|
-| `01. loop-1-plan` | `skills/engine-loops/loop-1-plan` | *"crea", "progetta", "requisiti", "piano", "specifica"* | `mp-domain-modeling`, `.spec.md`, `task.md` |
-| `02. loop-2-develop` | `skills/engine-loops/loop-2-develop` | *"sviluppa", "implementa", "scrivi codice", "test", "tdd"* | `auto-branch`, `tdd`, `superpowers`, `strix` |
-| `03. loop-3-debug` | `skills/engine-loops/loop-3-debug` | *"errore", "bug", "fallisce", "rotto", "controlla", "review"* | `serena` (symbol/LSP), `diagnosing-bugs`, `ai-debug` |
-| `04. loop-4-refactor` | `skills/engine-loops/loop-4-refactor` | *"rifattorizza", "pulisci", "ottimizza", "riduci token"* | `serena`, `codebase-design`, `sqz`, `caveman` |
-| `05. loop-5-release` | `skills/engine-loops/loop-5-release` | *"pubblica", "mergia", "rilascia", "versione", "salva"* | `finishing-a-development-branch`, `session-manager` |
+5. **`05. loop-5-release` (Handoff, Memory Sync & Graph Compilation)**
+   - **MANDATORY POST-GATE 1**: Run `ai-graph . --update` to refresh the code relationship map (`graphify-out/`).
+   - **MANDATORY POST-GATE 2**: Run `ai-wiki ingest / compile` (or `ai-llmwiki`) to crystallize session markdown files (`MEMORY.md`, `walkthrough.md`) into the multilingual knowledge graph.
+   - **MANDATORY POST-GATE 3**: Run `ai-session-save "<summary>"` to persist session state on `MEMORY.md`.
 
-### mattpocock Skills (Direct Use)
+---
 
-| Skill | Use When |
-|---|---|
-| `mp-grill-me` | Need to align on requirements |
-| `mp-grill-with-docs` | Need shared language + ADR |
-| `mp-to-spec` | Need formal specification |
-| `mp-tdd` | Need test-driven development |
-| `mp-code-review` | Need automated code review |
-| `mp-diagnosing-bugs` | Need root-cause diagnosis |
-| `mp-implement` | Need structured implementation |
-| `mp-wayfinder` | Need codebase navigation |
+## 🗜️ Mandatory Context & Output Optimization Rules
+- **Output Compression (`sqz`)**: Never pipe raw verbose JSON, build logs, or large git outputs into your context. Always pipe through `ai-squeeze` (`sqz`).
+- **Response Efficiency (`caveman`)**: Keep your conversational explanation concise (~75% token reduction) while retaining 100% technical code accuracy.
+- **MCP Tool Priority**: When available, prefer calling `llmwiki` / `serena` MCP tools directly over spawning heavy terminal shell commands.
 
-## CLI Wrappers
-
-All `ai-*` commands are available after running `setup.sh`.
-Run `ai-help` for the complete reference.
-
-## Rules
-
-1. Route all tasks through `auto-router` → appropriate loop
-2. Load skills via `using-superpowers` / skill discovery
-3. Verify before completing (`verification-before-completion`)
-4. Save session state to `MEMORY.md`
-5. Never modify `mp-*` skill directories (read-only wiki references)
