@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# ai-llmwiki / ai-wiki - Universal LLMWiki & Knowledge Base CLI / Web UI
+# Powered by LucasAstorian/llmwiki (`llmbase`)
+# Wizard-AI Ecosystem
+set -e
+
+VENV="$HOME/.ai-skills/venv"
+
+if [ ! -f "$VENV/bin/llmbase" ]; then
+  echo "❌ llmwiki (llmbase) non trovato in $VENV/bin/llmbase."
+  echo "Eseguo l'installazione automatica nel virtualenv..."
+  "$VENV/bin/pip" install --upgrade llmwiki mcp
+fi
+
+exec "$VENV/bin/llmbase" "$@"

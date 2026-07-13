@@ -53,8 +53,10 @@ Queste skill garantiscono il **Loop-First Approach**: ogni ciclo deve arricchire
 - **`lean-ctx` (`ktx` / `ai-lean`) & `sqz` (`ai-squeeze`)**: *Quando usarle:* Nel salvataggio dell'istantanea di memoria. *Cosa fanno:* Potano i file non attivi dal contesto residuo (`ktx`) e comprimono i log del rilascio (`sqz`) prima di registrarli nella knowledge base.
 - **`caveman` (`ai-caveman`) & `headroom` (`ai-headroom`)**: *Quando usarle:* Durante la sintesi finale in `MEMORY.md`. *Cosa fanno:* Garantiscono che i log di sessione e i prompt cross-session siano compatti e non disperdano budget o token (-75% overhead).
 - **`claude-mem`**: *Quando usarla:* Per salvare e indicizzare memorie semantiche persistenti e recuperarle cross-session.
-- **`auto-graphify` (`ai-graph .`)**: *Quando usarla:* Dopo aver modificato la struttura dei file o le classi. *Cosa fa:* Rigenera la mappa semantica e il knowledge graph all'interno di `graphify-out/`.
-- **`book-to-skill`**: *Quando usarla:* Quando la sessione ha studiato documentazione esterna, manuali PDF o specifiche tecniche, trasformandole in nuove skill salvate nella cartella `skills/`.
+- **`auto-graphify` (`ai-graph . --update`)**: *Quando usarla:* **MANDATORY STEP TRIGGER** alla fine di ogni task per rigenerare la mappa semantica interattiva HTML/JSON (`graphify-out/`).
+- **`llmwiki` (`ai-llmwiki` / `ai-wiki`) & `wiki-brain`**: *Quando usarle:* **MANDATORY STEP TRIGGER** alla fine di ogni sessione per trasformare `MEMORY.md`, `walkthrough.md` e la documentazione in un knowledge graph interattivo accessibile da Web UI (`ai-llmwiki web / serve`).
+- **`rag-anything` (`turbovec / zvec / llmwiki` via `ai-vector / ai-zvec / ai-llmwiki`)**: *Quando usarla:* **MANDATORY STEP TRIGGER** per indicizzare vettorialmente i nuovi snippet di codice (`ai-vector add / ai-zvec add / ai-llmwiki ingest`).
+- **`book-to-skill`**: *Quando usarla:* **MANDATORY STEP TRIGGER** quando la sessione ha studiato documentazione esterna, manuali PDF o specifiche tecniche, trasformandole in nuove skill salvate nella cartella `skills/`.
 
 ---
 

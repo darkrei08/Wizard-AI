@@ -32,14 +32,19 @@ Both the **Base Commands** and the **Custom Wrappers (ai-*)** are globally avail
    - **Base**: `zvec` | **Wrapper**: `ai-zvec` (High-performance vector database management for massive project corpora).
    - **Base**: `qwenpaw` | **Wrapper**: `ai-qwenpaw` (Agentic workflow utilities and advanced task orchestration).
    - **Base**: `graphify` | **Wrapper**: `ai-graph` (Turn codebases and documentation into interactive HTML/JSON knowledge graphs with community detection and god nodes).
+   - **Base**: `llmwiki` (`llmbase`) | **Wrapper**: `ai-llmwiki` / `ai-wiki` (Universal LLM Wiki & Knowledge Base CLI + Interactive Web UI (`ai-llmwiki web / serve`); ingests, compiles, and queries cross-session Markdown knowledge graphs based on https://github.com/lucasastorian/llmwiki).
    - **Base**: `wiki-brain` | **Wrapper**: `/wiki-brain` (Andrej Karpathy's LLM Wiki pattern: compounds every session into an interlinked `.md` Obsidian knowledge graph that the model queries instantly instead of scanning raw files).
 
-## 🔗 Chaining Protocol: Vector/Graph Semantic Search + Token Compression (`Loop 1 ➔ 5`)
-To achieve ultra-fast, zero-bloat autonomous execution, all semantic/vector engines MUST be chained with the compression stack:
-- **Loop 1 (Plan & Query)**: Query `serena` (`find-usages`), `turbovec` (`ai-vector`), or `wiki-brain` (`/wiki-brain query`) FIRST. Pipe the returned snippets through `sqz` and `lean-ctx (ktx)` so only the exact top-K relevant lines enter the context (-60% to -90% token overhead).
-- **Loop 2 & 3 (Develop & Debug)**: Navigate symbol definitions via `serena` while `lean-ctx` actively strips inactive AST blocks from visible memory.
-- **Loop 4 (Refactor)**: Verify structural integrity across the graph using `serena` and `graphify`, while keeping output verbosity at -75% via `caveman`.
-- **Loop 5 (Release & Index)**: Run `ai-graph .` and `/wiki-brain ingest` to index newly modified `.md` docs into the `turbovec` / `zvec` vector indices and the persistent `LLM Wiki` graph, then finalize via `mp-handoff` (`ai-handoff`) and `session-manager` (`ai-session-save`).
+## 🔗 Chaining Protocol & Mandatory Step Triggers across Loops (`Loop 01 ➔ 05`)
+Every core semantic and compression engine MUST be triggered systematically at the exact steps corresponding to its category:
+- **Loop 1 (`01. loop-1-plan` - Discovery & Spec Step)**: If external documentation, PDFs, or unfamiliar APIs are involved, trigger `book-to-skill` FIRST to create structured skills. Simultaneously trigger `rag-anything` (`ai-vector` / `ai-zvec` / `ai-llmwiki search`) and `serena` to retrieve precise semantic passages. Pipe results via `sqz` and `lean-ctx (ktx)` (`-60% to -90% AST reduction`).
+- **Loop 2 & 3 (`02. loop-2-develop`, `03. loop-3-debug` - Action & Trace Step)**: Navigate symbol definitions via `serena`. As files are built and tested, `lean-ctx` actively strips inactive AST blocks from visible memory (`ai-lean`), while `sqz` compresses test logs (`ai-squeeze`).
+- **Loop 4 (`04. loop-4-refactor` - Structural Audit Step)**: Verify dependencies via `ai-graph query` and `serena symbols`, enforcing `-75%` output verbosity via `caveman`.
+- **Loop 5 (`05. loop-5-release` - Indexing & Handoff Step - MANDATORY POST-GATE)**:
+  1. Trigger `graphify` (`ai-graph . --update`) to rebuild the visual project graph (`graphify-out/`).
+  2. Trigger `llmwiki` (`ai-llmwiki ingest / compile` or `ai-wiki web`) & `wiki-brain` to compile newly written `.md` docs (`MEMORY.md`, `docs/wiki/*.md`) into the interactive GUI knowledge base.
+  3. Trigger `rag-anything` (`ai-vector add` / `ai-zvec add`) to index code embeddings.
+  4. Finalize session via `mp-handoff` (`ai-handoff`) and `session-manager` (`ai-session-save`).
 
 3. **Document Conversion & Parsing**
    - **Base**: `markitdown` | **Wrapper**: `ai-convert` (Extract clean Markdown from PDFs, Office docs, Images, Audio, EPUBs).
