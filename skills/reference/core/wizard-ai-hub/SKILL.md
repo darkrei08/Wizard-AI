@@ -58,7 +58,7 @@ Every core semantic and compression engine MUST be triggered systematically at t
    - **Base**: `gemini-usage` | **Wrapper**: `ai-usage` (Track token costs, budget allocation, and context window limits).
 
 6. **Universal Project Auto-Installer & MCP Bridge (`wizard-ai-init`)**
-   - **Command**: `/home/ema/.local/bin/wizard-ai-init [path]`
+   - **Command**: `~/.local/bin/wizard-ai-init [path]`
    - **Purpose**: Instantly initializes any repository or project (`waforge`, `nuxt-mcp-agent-starter`, future codebases) with `.wizard-ai.json`, `.vscode/mcp.json`, `.cursor/mcp.json`, and `.gemini/mcp.json` containing active configurations for `llmwiki`, `serena`, and `sqz`. Also auto-generates mandatory `AGENTS.md`, `CLAUDE.md`, and `GEMINI.md` instruction files enforcing the exact 5-Loop sequential workflow across any AI client.
 
 7. **Unified IDE & CLI Testing & WNFS Capabilities (Loop 2 & Loop 3 / IDE & Terminal Testing)**
