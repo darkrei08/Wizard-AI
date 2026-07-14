@@ -45,6 +45,8 @@ Queste skill trasformano le specifiche (`.spec.md`) e i task in codice funzionan
 - **`mp-implement`**: *Quando usarla:* Per scrivere il codice produttivo effettivo guidato dal file `.spec.md` o da `task.md`.
 - **`mp-prototype`**: *Quando usarla:* Per creare prototipi rapidi di interfacce o algoritmi complessi (`UI.md`, `LOGIC.md`) per convalidarli prima della scrittura dei test esaustivi.
 - **`mp-wayfinder`**: *Quando usarla:* Per navigare codebase di grandi dimensioni e identificare esattamente in quali file esistenti inserire il nuovo codice senza duplicare logica.
+- **`vscode-jest-runner` & CLI Wrapper (`wizard-ai test` / Vitest)**: *Quando usarla:* Durante il TDD e l'esecuzione interattiva o in CLI dei test (`vitest run` / `bun test`). *Cosa fa:* Permette all'agente e allo sviluppatore di eseguire e fare il debug del singolo test (`test()` o `describe()`) da IDE o tramite wrapper `wizard-ai test`.
+- **`vscode-webnative` & WNFS Inspection (`wizard-ai webnative-inspect`)**: *Quando usarla:* Nello sviluppo di moduli distribuiti, storage decentralizzato WNFS o web capabilities per le app e la knowledge base.
 
 ### 3. Categoria: Subagent Orchestration & Security Gate
 Queste skill gestiscono la scalabilità orizzontale e la sicurezza del codice scritto:

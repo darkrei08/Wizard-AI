@@ -29,6 +29,15 @@ function run(cmd, args, opts) {
   return res.status;
 }
 
+const subcmd = process.argv[2];
+if (subcmd === "test" || subcmd === "webnative-inspect" || subcmd === "webnative") {
+  const testScript = path.join(__dirname, "scripts", "wizard-test.js");
+  if (fs.existsSync(testScript)) {
+    const status = run("node", [testScript, ...process.argv.slice(subcmd === "test" ? 3 : 2)]);
+    process.exit(status === null ? 1 : status);
+  }
+}
+
 // 1. Make sure git is available — both setup scripts require it anyway.
 const gitCheck = spawnSync("git", ["--version"], { stdio: "ignore" });
 if (gitCheck.error || gitCheck.status !== 0) {

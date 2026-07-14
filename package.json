@@ -1,6 +1,6 @@
 {
   "name": "@darkrei08/wizard-ai-cli",
-  "version": "0.49.1",
+  "version": "0.49.2",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
@@ -10,7 +10,9 @@
     "wizard-ai": "cli.js",
     "wizard-update": "cli.js",
     "pi-agent-setup": "cli.js",
-    "ai-proxy": "scripts/ai-proxy.js"
+    "ai-proxy": "scripts/ai-proxy.js",
+    "wizard-test": "scripts/wizard-test.js",
+    "ai-test": "scripts/wizard-test.js"
   },
   "files": [
     "cli.js",
@@ -18,7 +20,9 @@
   ],
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:cli": "node scripts/wizard-test.js run",
+    "webnative-inspect": "node scripts/wizard-test.js webnative-inspect"
   },
   "engines": {
     "node": ">=18"

@@ -61,6 +61,10 @@ Every core semantic and compression engine MUST be triggered systematically at t
    - **Command**: `/home/ema/.local/bin/wizard-ai-init [path]`
    - **Purpose**: Instantly initializes any repository or project (`waforge`, `nuxt-mcp-agent-starter`, future codebases) with `.wizard-ai.json`, `.vscode/mcp.json`, `.cursor/mcp.json`, and `.gemini/mcp.json` containing active configurations for `llmwiki`, `serena`, and `sqz`. Also auto-generates mandatory `AGENTS.md`, `CLAUDE.md`, and `GEMINI.md` instruction files enforcing the exact 5-Loop sequential workflow across any AI client.
 
+7. **Unified IDE & CLI Testing & WNFS Capabilities (Loop 2 & Loop 3 / IDE & Terminal Testing)**
+   - **Base**: `vscode-jest-runner` & Vitest / Bun | **Wrapper**: `wizard-ai test` (`wizard-test`) (Granular single-test and suite execution / debug across Vitest and Bun directly inside Antigravity IDE and terminal).
+   - **Base**: `vscode-webnative` (`@webnative/wnfs`) | **Wrapper**: `wizard-ai webnative-inspect` (`webnative-inspect`) (Web Native File System WNFS inspection and distributed capabilities check for web apps and AI knowledge graphs).
+
 ## General AI Rules for this System (Mandatory Loop Enforcement)
 - **Universal Repo Initialization**: Whenever opening a new or existing repository, run `wizard-ai-init .` to verify that `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, and IDE `mcp.json` files are up to date and linked to the global Wizard-AI skills.
 - **Always prune context**: When navigating large projects or running multiple loops, explicitly apply `lean-ctx` (`ktx`) and `sqz` to prevent context saturation.

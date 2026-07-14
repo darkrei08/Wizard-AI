@@ -37,6 +37,8 @@ Queste skill impediscono di tentare correzioni casuali (`guess-and-check`) impon
 - **`systematic-debugging`**: *Quando usarla:* Per risolvere errori sistemici, test intermittenti (`flaky tests`), colli di bottiglia o problemi di concorrenza.
 - **`auto-debug` (`ai-debug`)**: *Quando usarla:* Per eseguire quality gates automatizzati e auto-correzione del codice (linting con `ruff` / `eslint`, formatting, type checking, suite `pytest` / `jest`).
 - **`webapp-testing`**: *Quando usarla:* Per diagnosticare bug visivi o di interazione su interfacce web usando Playwright per catturare screenshot, log del browser e verificare il DOM.
+- **`vscode-jest-runner` & CLI Wrapper (`wizard-ai test` / Vitest debug)**: *Quando usarla:* Nel debugging granulare di un singolo test isolato che fallisce. *Cosa fa:* Permette di lanciare direttamente da IDE o da terminale con `wizard-ai test [nome-file/test]` la riproduzione mirata e il debug interattivo del guasto.
+- **`vscode-webnative` & WNFS Inspection (`wizard-ai webnative-inspect`)**: *Quando usarla:* Per il debug e l'ispezione dello stato del filesystem decentralizzato WNFS e delle capacità distributed o offline delle applicazioni.
 
 ### 2. Categoria: Verification Gates & Code Review (Controllo Qualità Pre-Merge)
 Queste skill garantiscono che nessun codice difettoso o non verificato superi il confine verso `main`:

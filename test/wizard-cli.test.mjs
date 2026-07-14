@@ -36,4 +36,18 @@ describe('Wizard-AI CLI Environment & Platform Structure', () => {
     expect(fs.existsSync(skillsDir)).toBe(true);
     expect(fs.statSync(skillsDir).isDirectory()).toBe(true);
   });
+
+  it('should have unified testing wrapper scripts/wizard-test.js registered in package.json bin and scripts', () => {
+    const testWrapperPath = path.join(rootDir, 'scripts/wizard-test.js');
+    expect(fs.existsSync(testWrapperPath)).toBe(true);
+    const content = fs.readFileSync(testWrapperPath, 'utf-8');
+    expect(content).toContain('vscode-jest-runner');
+    expect(content).toContain('vscode-webnative');
+    expect(content).toContain('checkWebNativeCapabilities');
+
+    const pkg = JSON.parse(fs.readFileSync(path.join(rootDir, 'package.json'), 'utf-8'));
+    expect(pkg.bin['wizard-test']).toBe('scripts/wizard-test.js');
+    expect(pkg.bin['ai-test']).toBe('scripts/wizard-test.js');
+    expect(pkg.scripts['webnative-inspect']).toContain('wizard-test.js');
+  });
 });
