@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# wizard-test — Unified CLI Wrapper for Antigravity IDE & Terminal Testing
+# Supports Vitest, Bun, and vscode-jest-runner path resolution across workspaces
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WIZARD_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+if [ -f "$WIZARD_ROOT/scripts/wizard-test.js" ]; then
+  exec node "$WIZARD_ROOT/scripts/wizard-test.js" "$@"
+else
+  exec npx vitest run "$@"
+fi

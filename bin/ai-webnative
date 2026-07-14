@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# ai-webnative — WebNative & WNFS Inspection CLI Wrapper for Antigravity IDE
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WIZARD_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+if [ -f "$WIZARD_ROOT/scripts/wizard-test.js" ]; then
+  exec node "$WIZARD_ROOT/scripts/wizard-test.js" webnative-inspect "$@"
+else
+  echo "WebNative capabilities ready."
+fi

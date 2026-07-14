@@ -12,7 +12,8 @@
     "pi-agent-setup": "cli.js",
     "ai-proxy": "scripts/ai-proxy.js",
     "wizard-test": "scripts/wizard-test.js",
-    "ai-test": "scripts/wizard-test.js"
+    "ai-test": "scripts/wizard-test.js",
+    "ai-webnative": "scripts/wizard-test.js"
   },
   "files": [
     "cli.js",
