@@ -116,13 +116,15 @@ Per ogni singolo task in `task.md` (`[/]`):
 4. **CHECKPOINT**: Aggiorna `task.md` segnando `[x]` solo dopo aver superato i Quality Gates.
    - **MANDATORY TDD OPTIMIZATION**: Se si supera il **50% della soglia massima di contesto**, innesca immediatamente `workflow-agentic-brain`. Usa **`sqz`** per comprimere l'output dei test, avvia il proxy **`headroom`** per scalare i limiti, attiva la potatura in background e prepara un **`mp-handoff`** se i token rischiano di degradare il ragionamento (allucinazioni). Usa **`caveman`** per limitare il verbosing.
 
-### Step 2.3: Subagent Delegation & "Kubernetes of Agents" (`subagent-driven-development`)
-A discrezione del modello, basandosi sulla complessità del ticket nel breve e lungo periodo, la delega è il motore scalabile del loop:
-- Se il ticket richiede lavoro contemporaneo su frontend e backend, tocca file disaccoppiati o richiede security auditing profondo, dividi il lavoro creando uno sciame di agenti (`subagent-driven-development`).
-- Lancia subagent isolati, ognuno con uno scopo e mansione specifici (es. Frontend Specialist, DB Architect).
-- Per task massivi, attiva un **Secondo Master Agent (Vice-Direttore)** incaricandolo di monitorare lo sciame in background.
-- Assicurati che lo sciame agentico (token consumati, context memory e log in background) sia monitorabile tramite tool di visualizzazione (es. UI di *AgentOps*, terminal *Tokscale* o log interattivi di Antigravity). 
-- Verifica sempre gli output fusi dallo sciame eseguendo la suite di test centralizzata prima del commit.
+### Step 2.3: Department Head Orchestration & Tri-Skill Swarm (`subagent-driven-development`)
+Non delegare MAI task massivi o multi-dominio direttamente agli agenti operai (worker). Applica l'architettura a **3-Tier Swarm**:
+- **Crea i Master di Reparto (Tier 2):** Avvia agenti isolati con il ruolo di "Department Head" (es. Frontend Specialist, DB Architect). Ognuno riceve il suo budget token e le specifiche isolate.
+- **Esecuzione tramite Tri-Skill Combo:** I Department Head gestiranno autonomamente i propri worker (Tier 3) usando un mix dinamico:
+  1. Base: `subagent-driven-development` per isolare e spezzettare il dominio.
+  2. Parallelo: `dispatching-parallel-agents` per eseguire task indipendenti simultaneamente (Fan-out).
+  3. Esaustivo: `goodcode` per forzare una validazione avversaria e assoluta tra gli agenti prima del commit.
+- **Sincronizzazione Multi-Team:** Ispirati alle logiche di framework consolidati come **LangGraph** (per flussi stateful), **CrewAI** (per architetture a ruoli) o **Swarms/AutoGen** per garantire un handoff impeccabile tra i reparti.
+- Verifica sempre gli output fusi dallo sciame eseguendo la suite di test centralizzata prima del commit, monitorando l'osservabilità (token/quote via Tokscale o AgentOps).
 
 ### Step 2.4: Gate di Sicurezza (`cybersecurity` + `strix`)
 - Esegui una rapida analisi statica e di sicurezza prima di chiudere lo step:

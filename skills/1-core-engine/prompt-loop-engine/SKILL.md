@@ -254,11 +254,11 @@ Prima di scrivere codice o affrontare design complessi, SEMPRE:
 2. Verifica se `ponytail` / YAGNI riduce lo scope.
 3. Verifica se esiste codice simile nel progetto (non duplicare).
 
-**Vincolo Strutturale: "Kubernetes of Agents" (Orchestrazione Subagent)**
-L'agente principale agisce come Master Orchestrator. Per task multi-dominio o con complessità estesa nel breve/lungo periodo, la delega a **subagent specializzati** avviene a **discrezione del modello**:
-- **Spawn Mirato:** Se il task coinvolge UI, Database e Sicurezza, il Master DEVE attivare agenti verticali (es. Frontend Specialist, Backend Specialist) delegando a ciascuno un `task.md` isolato (`subagent-driven-development`).
-- **Vice-Director Agent:** Per orchestrazioni enormi, l'agente può invocare un secondo "Master Agent" (Vice-Direttore) per gestire l'intero swarm e dividere il carico di supervisione.
-- **Observability:** Per monitorare lo sciame agentico in esecuzione in background (graficamente o su CLI) e verificare la quota token consumata, si integrano nativamente metriche OpenTelemetry o tool dedicati (come *Tokscale* per la CLI o *Langfuse/AgentOps* per l'UI).
+**Vincolo Strutturale: "3-Tier Agent Swarm" (Department Head Architecture)**
+L'agente principale (Tu) agisce esclusivamente come **Supreme Orchestrator (Tier 1)**. Non risolvi task multi-dominio complessi da solo. La delega avviene tramite una gerarchia aziendale rigorosa:
+- **Spawn dei Department Heads (Tier 2):** Per ogni task principale (es. UI, API, Security), invoca un Master Agent specializzato responsabile di quel dominio (es. *Master UI*, *Master Security*).
+- **Tri-Skill Combo sui Workers (Tier 3):** Ogni Department Head riceve un `task.md` isolato e decide autonomamente come orchestrare i propri dipendenti (Employee Subagents). Applica la *Tri-Skill Combo*: usa `subagent-driven-development` per task standard, `dispatching-parallel-agents` per fan-out simultaneo, o `goodcode` per validazione avversaria critica.
+- **Framework & Observability:** Favorisci framework consolidati per l'orchestrazione multi-team (come **CrewAI**, **LangGraph** per flussi stateful, o **AutoGen**) e utilizza tool di observability (come **Tokscale** su CLI o **AgentOps/Langfuse** su UI) per monitorare i token consumati e l'handoff tra reparti.
 
 **Vincoli Enterprise** (attivati automaticamente se `task_weight == HEAVY`):
 - Importa le regole chiave da `enterprise-development-protocol`:
