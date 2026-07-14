@@ -47,11 +47,12 @@ Per testi voluminosi, log di build o chiamate di rete:
 - **Tree-sitter AST Pruning (`pi.dev` / Rust Wrappers)**: Invece di iniettare interi file (>500 righe) nel contesto, estrai solo le **firme di metodi, classi, interfacce e tipi (AST signatures)** quando esplori o pianifichi (`Lean Context Intelligence`).
 - **Sharded Subagent Execution (`pi-subagents`)**: Per task multi-file ad alto peso (`HEAVY`), delegare a subagent in parallelo (`subagent` / `dispatching-parallel-agents`). Ogni subagent opera in un processo isolato con una finestra di contesto potata, azzerando il rischio di context window overflow nel loop principale.
 
-### Fase 6: Session Transition & Handoff (`mp-handoff` / `ai-handoff` + `session-manager` + `ai-llmwiki`)
-- Prima di chiudere la sessione o delegare a un nuovo turno/agente, esegui:
-  1. **`mp-handoff` (`handoff`)** per produrre il riassunto strutturato di transizione.
-  2. **`ai-llmwiki ingest / compile`** (o `ai-wiki web`) per cristallizzare il documento in un nodo del knowledge graph.
-  3. **`session-manager` (`ai-session-save`)** per salvare l'istantanea persistente su `MEMORY.md`.
+### Fase 6: Session Transition, Shadow Clone Memory Merge & The Brain
+- Prima di chiudere la sessione o eseguire il despawn di un subagent, esegui il protocollo **Shadow Clone Memory Merge**:
+  1. **`mp-handoff` (`handoff`)**: Cristallizza i workaround, bug-fix e contesti scoperti dal clone.
+  2. **Ottimizzazione Pre-Merge (`sqz` / `llmlingua`)**: Comprimi e riorganizza la memoria grezza per non sovraccaricare i token al momento dell'assorbimento. Nessun log o dump verboso deve finire nel master.
+  3. **`session-manager` (`ai-session-save`)**: Fonde la memoria compressa nel `MEMORY.md` del Master Orchestrator, garantendo che nessuna conoscenza vada persa.
+  4. **Active Learning (The Brain):** Arricchisci costantemente la wiki. Se trovi pattern nuovi o guide esterne rilevanti (es. clonando da `https://www.anthropic.com/learn`), usa `ai-llmwiki ingest / compile` per salvarle in puro Markdown. Il Master riassorbe questa conoscenza, espandendo strutturalmente la "Mente Alveare" per le sessioni future.
 
 ## ═══════════ META-SKILL EXPANSION & ONLINE HUNT (`skills.sh`) ═══════════
 

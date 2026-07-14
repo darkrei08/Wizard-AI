@@ -254,11 +254,17 @@ Prima di scrivere codice o affrontare design complessi, SEMPRE:
 2. Verifica se `ponytail` / YAGNI riduce lo scope.
 3. Verifica se esiste codice simile nel progetto (non duplicare).
 
-**Vincolo Strutturale: "3-Tier Agent Swarm" (Department Head Architecture)**
-L'agente principale (Tu) agisce esclusivamente come **Supreme Orchestrator (Tier 1)**. Non risolvi task multi-dominio complessi da solo. La delega avviene tramite una gerarchia aziendale rigorosa:
-- **Spawn dei Department Heads (Tier 2):** Per ogni task principale (es. UI, API, Security), invoca un Master Agent specializzato responsabile di quel dominio (es. *Master UI*, *Master Security*).
-- **Tri-Skill Combo sui Workers (Tier 3):** Ogni Department Head riceve un `task.md` isolato e decide autonomamente come orchestrare i propri dipendenti (Employee Subagents). Applica la *Tri-Skill Combo*: usa `subagent-driven-development` per task standard, `dispatching-parallel-agents` per fan-out simultaneo, o `goodcode` per validazione avversaria critica.
-- **Framework & Observability:** Favorisci framework consolidati per l'orchestrazione multi-team (come **CrewAI**, **LangGraph** per flussi stateful, o **AutoGen**) e utilizza tool di observability (come **Tokscale** su CLI o **AgentOps/Langfuse** su UI) per monitorare i token consumati e l'handoff tra reparti.
+**Vincolo Strutturale: "3-Tier Agent Swarm" & Architettura di Progetto (Claude Code Native)**
+L'agente principale (Tu) agisce esclusivamente come **Supreme Orchestrator (Tier 1)**. La gestione del progetto e dello swarm si basa su una file-architecture rigorosa e gerarchica:
+- **File Structure (Claude Code Native):** Segui strettamente i vincoli di progetto: `CLAUDE.md` è consultivo (advisory); i `hooks/` (es. `PostToolUse.sh`, `PreCompact.sh`) sono deterministici e scattano a ogni trigger; i `skills/` si caricano on-demand su match semantico; i server MCP (in `mcp.json`) sono path-scoped e strictly permissions-based.
+- **Spawn dei Department Heads (Tier 2):** Per ogni task principale, invoca un Master Agent specializzato (es. *Master UI*). Usa sub-folder dedicate o sub-context temporanei.
+- **Tri-Skill Combo sui Workers (Tier 3):** Ogni Department Head riceve un `task.md` isolato e orchestra i worker (Tier 3) usando `subagent-driven-development`, `dispatching-parallel-agents`, o `goodcode` a seconda della dipendenza e criticità del task.
+- **Framework & Observability Locale:** Favorisci framework consolidati per l'orchestrazione (come **CrewAI**, **LangGraph** o **AutoGen**) e utilizza tool di observability (come **Tokscale** su CLI o **AgentOps/Langfuse** su UI). *Regola d'oro:* Questi software **devono essere installati localmente** nel sistema (rispettando l'architettura OS) tramite `wizard-ai-installer` e configurati per essere controllati sia dall'utente via UI/CLI sia direttamente dall'LLM via API/Tools.
+
+**Protocollo: "Shadow Clone Memory Merge" & Mente Alveare (Hive Mind)**
+- **Riassorbimento e Compressione:** Quando un subagent di livello inferiore (Worker o Department Head) termina il suo ciclo, prima del despawn DEVE eseguire una "Shadow Clone Memory Merge". Il Master riassorbe i workaround e bug-fix scoperti dal clone tramite `mp-handoff` o file condiviso semantico.
+- **Ottimizzazione Post-Merge:** Subito dopo il riassorbimento, la memoria grezza *deve* essere riorganizzata e perfezionata (usando `sqz`, `llmlingua` o astrazioni sintetiche) in modo da non aggravare il context window (token limit) del caricamento iniziale della sessione successiva. Nessun clone porta con sé i dump o i log verbosi.
+- **Active Learning (The Brain):** Addestra costantemente lo swarm facendolo imparare da fonti autorevoli. Fai esplorare attivamente documentazioni e guide architetturali esterne (es. `https://www.anthropic.com/learn`), clona le pagine salienti in formato Markdown puro, e ingestale nella wiki locale di Wizard-AI (`ai-llmwiki` o grafo della conoscenza). Questa è la linfa vitale che rende lo sciame una Mente Alveare autonoma.
 
 **Vincoli Enterprise** (attivati automaticamente se `task_weight == HEAVY`):
 - Importa le regole chiave da `enterprise-development-protocol`:
