@@ -100,7 +100,7 @@ graph TD
 ## 📝 Istruzioni Operative Passo-Passo (Esecuzione Loop 2)
 
 ### Step 2.1: Creazione del Branch Isolato (`auto-branch`)
-- **VIETATO lavorare direttamente su `main` o `staging`.**
+- **VIETATO lavorare direttamente su `main` o `staging`. Il ramo di partenza e destinazione principale deve essere sempre e solo `main` (`master` è vietato e deve essere migrato in `main` via `spec-kit`).**
 - Esegui il comando di branching associato al ticket o al piano:
   ```bash
   ai-branch feature "nome-del-task"

@@ -55,6 +55,7 @@ Queste skill servono per impostare o evolvere la struttura del progetto, l'OS e 
   1. Richiede esplicitamente `engines.node: ">=22.0.0"` per evitare fallimenti su deprecazioni GH Actions (`node-version: 22`).
   2. Pianifica i Dockerfile come Multi-Stage con base `node:22-alpine` (più opzionale copia binario `bun` se usato nel manifest), ma eseguendo sempre la fase finale di bundling (`npx nuxt build` / `npm run build`) su Node.js per prevenire errori di concorrenza I/O o `ENOENT` del bundler.
   3. Prevede sempre lo step `docker/setup-qemu-action@v3` prima di `setup-buildx-action` nei workflow di build container per proteggere la cross-compilazione multi-arch (`amd64`/`arm64`).
+  4. Impone la standardizzazione del ramo canonico (`main` esplicito, deprecando/eliminando ogni ramo `master`) in ottemperanza alle best practice di `spec-kit` e gestione repository.
 
 ---
 

@@ -94,6 +94,7 @@ graph TD
 ## 📝 Istruzioni Operative Passo-Passo (Esecuzione Loop 5)
 
 ### Step 5.1: Chiusura Branch e Verifica Finale (`finishing-a-development-branch`)
+- **Verifica del Ramo Canonico (`spec-kit` / Git Best Practices):** Accertati che il repository utilizzi esclusivamente **`main`** come ramo canonico. Se è ancora presente il ramo `master`, rinominalo/migralo a `main` (`git checkout -B main origin/main`, imposta default branch `gh repo edit --default-branch main` ed elimina `master`) prima di procedere.
 - Esegui un check finale della suite di test e del build (`npm run build` o `pytest`).
 - Se il build finale fallisce, interrompi il merge e devia immediatamente al **`03. loop-3-debug`**.
 - Se il build passa al 100%, esegui il merge su `main` preservando la storia:

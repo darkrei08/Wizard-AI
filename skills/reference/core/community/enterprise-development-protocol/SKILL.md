@@ -378,6 +378,8 @@ A milestone is completed ONLY if:
 - DEVELOPMENT_STATUS.md updated
 - TASK_BOARD updated
 - no known regression introduced
+- CI/CD & Build Safety verified (Node >=22, multi-stage hybrid container, QEMU multi-arch setup present)
+- Repository & Git Branching standardized (`main` as exclusive canonical default branch; `master` forbidden/migrated; all feature branches merged cleanly into `main`)
 
 Only then are you allowed to start the next milestone.
 

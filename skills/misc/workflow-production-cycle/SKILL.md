@@ -205,6 +205,7 @@ git push origin main
 8. **SEMPRE salva la sessione** (MEMORY.md) prima di concludere. Non aspettare che l'utente lo chieda.
 9. **Il task è INCOMPLETO** finché la Fase 6 non è completata con successo.
 10. **VINCOLO DI PROGETTAZIONE E BUILD (CI/CD SAFE):** OGNI progetto o repository deve disporre di `engines.node: ">=22.0.0"`, container basati su `node:22-alpine` (con copia selettiva o npx nativo per evitare race condition Rollup/Bun ENOENT), e workflow di build CI/CD multi-architettura dotati di step `docker/setup-qemu-action@v3` prima del buildx per evitare fallimenti e hang sulle action di qualsiasi repo provider.
+11. **VINCOLO DI STANDARDIZZAZIONE REPOSITORY & BRANCH CANONICO (`spec-kit` / Git Best Practices):** Il ramo principale, canonico e di destinazione di ogni repository o progetto DEVE essere esclusivamente **`main`** (mai `master`). Se un repository ereditato o clonato presenta ancora il ramo `master` locale o remoto, l'agente ha l'obbligo di rinominarlo/migrarlo in `main` (`git checkout -B main origin/main`, aggiornamento del default branch su GitHub tramite `gh repo edit --default-branch main` ed eliminazione di `master`). Ogni pull request, feature branch (`auto-branch`) e ciclo di rilascio (`loop-5-release`) deve convergere e finalizzarsi unicamente in `main`.
 
 ---
 
