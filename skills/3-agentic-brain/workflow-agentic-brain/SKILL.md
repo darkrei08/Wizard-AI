@@ -11,7 +11,16 @@ Questo workflow orchestra la gestione del cervello dell'agente: memoria, ottimiz
 
 ## ═══════════ PIPELINE DI OTTIMIZZAZIONE E CONTROLLO TOKEN ═══════════
 
-Quando il contesto supera esattamente il 50% della soglia massima di contesto o l'utente richiede un'ottimizzazione, applica queste 6 fasi obbligatorie in ordine:
+**La gestione del contesto si basa sul "Semantic Sieving" e su una soglia deterministica.**
+Per prevenire il "Context Rot" (degrado cognitivo dell'LLM noto come "Lost in the middle"), si fissa il **50% della context window** come trigger deterministico. 
+
+**Dynamic Context Pruning (DyCP):** Quando l'occupazione si avvicina a tale soglia (50%), il sistema DEVE smettere di fare "append" del contesto crudo. Le informazioni passano attraverso filtri di importanza semantica:
+- Si scartano log vecchi e ridondanti.
+- Si mantengono SOLO le regole strutturali e l'AST.
+- Si utilizzano le memorie a breve e lungo termine al posto del testo flat.
+- Si comprimono i dati tramite `LLMLingua` e si attiva dinamicamente il RAG (`ai-llmwiki`, `graphify`) in base all'analisi del testo dell'utente per estrarre solo l'essenziale.
+
+Applica queste 6 fasi obbligatorie in ordine:
 
 ### Fase 1: Ingestion & Conversion (`markitdown`, `ai-convert`)
 Se il task coinvolge file binari o complessi (PDF, DOCX, XLSX, PPTX, immagini, audio):

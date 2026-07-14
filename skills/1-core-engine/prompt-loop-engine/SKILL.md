@@ -184,7 +184,13 @@ dove:
 #### Step 4: Universal Context Pruning & Token Optimization 🗜️ (ALWAYS per Pruning AST / HEAVY per re-ranking profondo)
 **Skill:** `workflow-agentic-brain` (`auto-optimize` + `pi-dev` Rust/Cline Wrapper features)
 
-Pipeline universale di ottimizzazione contesto per TUTTI I COMANDI e TUTTI I LOOP (codice, SEO, design, immagini, diagrammi). **L'ottimizzazione si innesca esattamente quando si supera il 50% della soglia massima di contesto:**
+Pipeline universale di ottimizzazione contesto per TUTTI I COMANDI e TUTTI I LOOP. **La gestione del contesto si basa su due pilastri:**
+1. **Limite Deterministico del 50%:** Per prevenire il "Lost in the middle" o "Context Rot", la soglia del 50% è il trigger deterministico assoluto per fermare l'inclusione di file crudi.
+2. **Dynamic Context Pruning (DyCP) & Semantic Sieving:** Quando la finestra di contesto si avvicina al 50%, il sistema SMETTE di fare "append" del contesto crudo. Inizia a valutare l'informazione tramite filtri di importanza semantica: scarta i log vecchi, mantiene solo le regole strutturali, usa le memorie a breve/lungo termine e comprime i dati con logiche come `LLMLingua` o `sqz`.
+
+Inoltre, i **Sistemi RAG si attivano automaticamente** tramite text analysis: parole trigger come "cerca", "memoria", "documentazione", o l'intento di recuperare vecchi file innescano istantaneamente `ai-llmwiki` o `graphify` prima ancora di saturare il contesto.
+
+Fasi operative:
 1. **Tree-sitter AST Pruning (`pi.dev / Rust-Cline Wrapper`)**: Prima di iniettare file sorgente o schemi complessi nel contesto, estrai **solo le firme (signatures, interfacce, tipi, header SEO o metadata design)**. Rimuovi i body delle funzioni non oggetto di modifica immediata (`Lean Context Intelligence`).
 2. **Sharded Subagent Execution (`pi-subagents`)**: Per refactoring multi-modulo o audit esaustivi, dividi il lavoro in subagent isolati in parallelo (`dispatching-parallel-agents` / `goodcode`). Ogni subagent lavora in una finestra di contesto potata separata (`Sub-process Context Isolation`).
 3. **Ingestion & Conversion**: Se ci sono file binari o documenti articolati → `markitdown` / `ai-convert`.
@@ -243,10 +249,16 @@ Se un loop è stato selezionato, l'esecuzione segue il ciclo iterativo definito 
 - `loop-learn`: RESEARCH → TEACH → VERIFY → FORMALIZE → PERSIST → SAVE → ITERATE
 
 **Regola d'oro dell'esecuzione:**
-Prima di scrivere codice, SEMPRE:
-1. Verifica se `brainstorming` / `mp-grill-with-docs` è applicabile (design prima di implementazione)
-2. Verifica se `ponytail` / YAGNI riduce lo scope
-3. Verifica se esiste codice simile nel progetto (non duplicare)
+Prima di scrivere codice o affrontare design complessi, SEMPRE:
+1. Verifica se `brainstorming` / `mp-grill-with-docs` è applicabile (design prima di implementazione).
+2. Verifica se `ponytail` / YAGNI riduce lo scope.
+3. Verifica se esiste codice simile nel progetto (non duplicare).
+
+**Vincolo Strutturale: "Kubernetes of Agents" (Orchestrazione Subagent)**
+L'agente principale agisce come Master Orchestrator. Per task multi-dominio o con complessità estesa nel breve/lungo periodo, la delega a **subagent specializzati** avviene a **discrezione del modello**:
+- **Spawn Mirato:** Se il task coinvolge UI, Database e Sicurezza, il Master DEVE attivare agenti verticali (es. Frontend Specialist, Backend Specialist) delegando a ciascuno un `task.md` isolato (`subagent-driven-development`).
+- **Vice-Director Agent:** Per orchestrazioni enormi, l'agente può invocare un secondo "Master Agent" (Vice-Direttore) per gestire l'intero swarm e dividere il carico di supervisione.
+- **Observability:** Per monitorare lo sciame agentico in esecuzione in background (graficamente o su CLI) e verificare la quota token consumata, si integrano nativamente metriche OpenTelemetry o tool dedicati (come *Tokscale* per la CLI o *Langfuse/AgentOps* per l'UI).
 
 **Vincoli Enterprise** (attivati automaticamente se `task_weight == HEAVY`):
 - Importa le regole chiave da `enterprise-development-protocol`:
@@ -427,6 +439,7 @@ Keyword specifiche nel prompt dell'utente che triggerano automaticamente loop, w
 | "comprimi", "troppi token" | `auto-optimize` chain |
 | "React", "Vue", "Angular", "Svelte", "Nuxt" | Skill frontend corrispondente |
 | "Python", "Node", "Laravel", "Firebase" | Skill backend corrispondente |
+| "cerca", "memoria", "documentazione", "contesto", "wiki", "ricorda come" | RAG Auto-Activation (`ai-llmwiki`, `graphify`) |
 
 ---
 
