@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "wizard-ai-core": {
+      "command": "node",
+      "args": ["bin/mcp-server.js"]
+    }
+  },
+  "globalContext": {
+    "rules": [
+      ".agents/AGENTS.md",
+      "CLAUDE.md",
+      "GEMINI.md"
+    ],
+    "memory": "MEMORY.md"
+  }
+}

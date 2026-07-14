@@ -3,6 +3,13 @@
 > **MANDATORY PROTOCOL**: You are operating inside a **Wizard-AI Enabled Repository**.
 > You MUST strictly obey the following 5-Loop sequential workflow, mandatory step triggers, and token compression rules on EVERY task.
 
+## 🧠 Provider-Agnostic Swarm Architecture
+This repository uses a strict 3-Tier Agent Swarm initialized in the `.agents/` directory.
+Whether you are Claude, Gemini, or any other LLM, you MUST:
+- Use `.agents/hooks/` to invoke deterministic scripts (like `SessionStart.sh`, `PostToolUse.sh` for Shadow Clone Memory Merge).
+- Respect the Department Head definitions in `.agents/roles/` (`master-ui.md`, `master-api.md`, `master-security.md`).
+- Utilize the `mcp.json` context.
+
 ---
 
 ## 🔄 The 5-Loop Sequential Pipeline (`01. loop-1-plan` ➔ `05. loop-5-release`)
