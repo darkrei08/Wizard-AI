@@ -204,6 +204,18 @@ git push origin main
 7. **SEMPRE esegui `ai-release`** quando il ciclo raggiunge `main`.
 8. **SEMPRE salva la sessione** (MEMORY.md) prima di concludere. Non aspettare che l'utente lo chieda.
 9. **Il task è INCOMPLETO** finché la Fase 6 non è completata con successo.
+10. **VINCOLO DI PROGETTAZIONE E BUILD (CI/CD SAFE):** OGNI progetto o repository deve disporre di `engines.node: ">=22.0.0"`, container basati su `node:22-alpine` (con copia selettiva o npx nativo per evitare race condition Rollup/Bun ENOENT), e workflow di build CI/CD multi-architettura dotati di step `docker/setup-qemu-action@v3` prima del buildx per evitare fallimenti e hang sulle action di qualsiasi repo provider.
+
+---
+
+## 🛡️ Protocollo Anti-Fallimento CI/CD & Multi-Arch Build (Mandatory Gate)
+
+Per eliminare all'origine errori di compilazione in CI/CD e incompatibilità nei container (`#35 ENOENT`, Rollup race conditions, deprecazioni di runtime), ogni loop di progettazione (`Loop 1 Plan` → `Loop 2 Develop` → `Loop 5 Release`) impone i seguenti **4 Pilastri Tecnici**:
+
+1. **Engine LTS Moderno (`>=22.0.0`)**: In `package.json`, va esplicitato `engines: { "node": ">=22.0.0" }`. Tutti i workflow di CI (`GitHub Actions`, `GitLab CI`, `Bitbucket Pipelines`) devono impostare `node-version: 22` o superiore, dismettendo le versioni Node <= 20 deprecate o obsolete.
+2. **Container Multi-Stage Ibride (`node:22-alpine` + `bun`)**: Nei `Dockerfile`, utilizzare `FROM node:22-alpine AS builder` e `AS runner`. Per garantire installazioni rapide (`bun install`), copiare il binario `bun` da `oven/bun:1-alpine` (`COPY --from=oven/bun:1-alpine /usr/local/bin/bun /usr/local/bin/bun`), ma eseguire la compilazione finale (`RUN npx nuxt build` / `npm run build`) su runtime Node per evitare errori di filesystem I/O o `ENOENT` del bundler Rollup/Vite in ambiente Bun mono-processo.
+3. **Inizializzazione QEMU per Multi-Architecture**: In tutti i workflow di pubblicazione Docker (`.github/workflows/docker-publish.yml`), prima di invocare `docker/setup-buildx-action@v3`, va OBBLIGATORIAMENTE inserito lo step `docker/setup-qemu-action@v3` per supportare la cross-compilazione sicura (`amd64`/`arm64`) senza crash del kernel runner.
+4. **Zero Magic/Local Paths per Allegati e Assets**: Tutte le API di invio o build che referenziano file locali o upload (`/api/media/...`) devono risolvere l'URL canonico o assoluto prima della trasmissione a engine o container esterni.
 
 ---
 

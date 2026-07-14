@@ -251,6 +251,7 @@ After every change, verify:
 - acceptable performance
 - basic accessibility
 - security (input validation, authz/authn)
+- CI/CD build safety (Node >= 22.0.0 engine specification, QEMU multi-arch setup, and robust multi-stage container builds via node:22-alpine without bundler I/O race conditions)
 - known regressions (regression checklist)
 
 If any of these fail, the milestone is NOT complete.

@@ -51,6 +51,10 @@ Queste skill servono per impostare o evolvere la struttura del progetto, l'OS e 
 - **`book-to-skill`**: *Quando usarla:* **MANDATORY STEP TRIGGER** se il task o la pianificazione coinvolgono manuali, libri, PDF, documentazione estesa o reference esterne. *Cosa fa:* Converte i documenti in framework strutturati, mental model e anti-pattern estratti e riutilizzabili come skill.
 - **`rag-anything` (`turbovec / zvec / llmwiki` via `ai-vector / ai-zvec / ai-llmwiki`) & `serena`**: *Quando usarla:* **MANDATORY STEP TRIGGER** prima di speculare su codice esistente o interfacce. *Cosa fa:* Interroga il database vettoriale (`ai-vector search`) o il grafo semantico (`serena analyze / find-usages`, `ai-llmwiki query`) e convoglia i passaggi trovati dentro `sqz` e `lean-ctx` (`ai-lean`) prima di includerli nel piano d'azione (`-60-90% token overhead`).
 - **`os-detect` (`ai-os`)**: *Quando usarla:* **MANDATORY PRE-GATE** prima di installare qualsiasi libreria, tool di sistema o dipendenza in pianificazione. *Cosa fa:* Rileva Arch, Ubuntu, macOS, WSL o Windows per usare il package manager nativo corretto.
+- **`ci-cd-architect & container-spec`**: **VINCOLO ARCHITETTURALE MANDATORY (CI/CD SAFE)** in ogni piano:
+  1. Richiede esplicitamente `engines.node: ">=22.0.0"` per evitare fallimenti su deprecazioni GH Actions (`node-version: 22`).
+  2. Pianifica i Dockerfile come Multi-Stage con base `node:22-alpine` (più opzionale copia binario `bun` se usato nel manifest), ma eseguendo sempre la fase finale di bundling (`npx nuxt build` / `npm run build`) su Node.js per prevenire errori di concorrenza I/O o `ENOENT` del bundler.
+  3. Prevede sempre lo step `docker/setup-qemu-action@v3` prima di `setup-buildx-action` nei workflow di build container per proteggere la cross-compilazione multi-arch (`amd64`/`arm64`).
 
 ---
 

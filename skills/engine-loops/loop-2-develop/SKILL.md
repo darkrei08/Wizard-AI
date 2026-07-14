@@ -59,8 +59,8 @@ Queste skill gestiscono la scalabilità orizzontale e la sicurezza del codice sc
 
 ### 4. Categoria: Domain Runtime & UI Aesthetics (Framework Specifici)
 Queste skill forniscono le best practice di linguaggio e di design UI:
-- **Runtime Backend/Mobile:** `python`, `nodejs`, `bun`, `deno`, `php` (`laravel`), `flutter`, `android-studio`, `go-whatsapp`.
-- **UI & Web Moderni:** `react`, `vue`, `angular`, `svelte`, `next`, `astro`, `nuxt`.
+- **Runtime Backend/Mobile:** `python`, `nodejs` (`engines.node: ">=22.0.0"` e Docker `node:22-alpine` per build container stabili e senza `ENOENT`), `bun` (solo come package installer veloce nel multi-stage build, mai come bundler nativo in contesti Rollup/Vite per CI/CD), `deno`, `php` (`laravel`), `flutter`, `android-studio`, `go-whatsapp`.
+- **UI & Web Moderni:** `react`, `vue`, `angular`, `svelte`, `next`, `astro`, `nuxt` (`npx nuxt build` / `npm run build` su runtime Node 22 + QEMU setup in CI per multi-arch).
 - **Taste & Aesthetics:** `frontend-design`, `taste-skill` (`ai-taste`), `awesome-design`, `theme-factory`: Imponi un design anti-slop, palette HSL curate, tipografia eccellente e micro-animazioni.
 
 ---
