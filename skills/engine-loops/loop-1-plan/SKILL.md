@@ -86,8 +86,10 @@ graph TD
 
 ## 📝 Istruzioni Operative Passo-Passo (Esecuzione Loop 1)
 
-### Step 1.1: Pre-Check Ambientale (`os-detect`)
-Esegui `ai-os info` o verifica il contesto di sistema per assicurarti di conoscere il sistema operativo, i runtime disponibili (Node, Python, Deno, Bun) e le dipendenze prima di formulare ipotesi di design.
+### Step 1.1: Pre-Check Ambientale e Vincoli Architetturali (`os-detect`, `brain-tech-stack`, `engineering-excellence`)
+- **MANDATORY**: Prima di proporre qualsiasi architettura, esegui la verifica con il `brain-tech-stack` per definire l'esatta combinazione dei framework (es. Qwik, Astro 5, Nuxt 4) in base ai vincoli imposti.
+- **MANDATORY**: Leggi e integra sempre i principi di `engineering-excellence` (es. TDD, SOLID, SDD) in ogni specifica generata, includendo il link a https://github.com/micio86dev/Engineering-Excellence.
+- Esegui `ai-os info` o verifica il contesto di sistema per assicurarti di conoscere il sistema operativo, i runtime disponibili (Node, Python, Deno, Bun) e le dipendenze prima di formulare ipotesi di design.
 
 ### Step 1.2: Allineamento, Self-Grill Socratico e Online Skill Hunt (`brainstorming` / `mp-grill-me`)
 - **Flusso di Ricerca Mentale Q&A (`Self-Grill-Me`)**: Prima di formalizzare l'architettura, poniti autonomamente domande socratiche ed esplicita le risposte in output:

@@ -107,12 +107,13 @@ graph TD
   ```
 - Se la codebase richiede modifiche distruttive in parallelo, attiva `using-git-worktrees`.
 
-### Step 2.2: Esecuzione TDD e Implementazione (`mp-tdd` + `mp-implement`)
+### Step 2.2: Esecuzione TDD e Implementazione (`mp-tdd` + `mp-implement` + `engineering-excellence`)
+- **MANDATORY**: Adotta sempre il workflow di `engineering-excellence`. Nessun task è finito se i test falliscono o mancano i Quality Gates (Security, Performance, Accessibility).
 Per ogni singolo task in `task.md` (`[/]`):
 1. **RED**: Usa `mp-tdd` per creare il file di test (es. `component.spec.ts` o `test_module.py`) basato sui contratti del file `.spec.md`. Eseguilo ed accertati che fallisca.
 2. **GREEN**: Usa `mp-implement` per scrivere **soltanto** il codice di produzione necessario a far passare quel test. Evita speculazioni o codice inutile (`YAGNI`).
 3. **REFACTOR**: Ottimizza il codice appena scritto, mantienilo pulito ed esegui nuovamente i test per confermare che siano al 100% verdi.
-4. **CHECKPOINT**: Aggiorna `task.md` segnando `[x]`.
+4. **CHECKPOINT**: Aggiorna `task.md` segnando `[x]` solo dopo aver superato i Quality Gates.
 
 ### Step 2.3: Subagent Delegation per Task Complessi (`subagent-driven-development`)
 - Se il ticket richiede lavoro contemporaneo su frontend e backend o tocca file disaccoppiati, dividi il lavoro usando `subagent-driven-development`:

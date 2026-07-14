@@ -66,6 +66,8 @@ Every core semantic and compression engine MUST be triggered systematically at t
    - **Base**: `vscode-webnative` (`@webnative/wnfs`) | **Wrapper**: `wizard-ai webnative-inspect` (`webnative-inspect`) (Web Native File System WNFS inspection and distributed capabilities check for web apps and AI knowledge graphs).
 
 ## General AI Rules for this System (Mandatory Loop Enforcement)
+- **Engineering Excellence Standard (MANDATORY)**: ALWAYS read and apply the Engineering Excellence principles from `https://github.com/micio86dev/Engineering-Excellence` (via `engineering-excellence` skill) when designing, structuring, or writing any code. It is an insurmountable constraint.
+- **Brain Tech Stack Decision**: ALWAYS consult the `brain-tech-stack` skill to select the correct framework combination (Qwik vs Astro 5 vs Nuxt 4) based on the specific project context, and orchestrate them via `devboards-architecture` for multi-app monorepos. Read the specific framework's official documentation before writing code.
 - **Universal Repo Initialization**: Whenever opening a new or existing repository, run `wizard-ai-init .` to verify that `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, and IDE `mcp.json` files are up to date and linked to the global Wizard-AI skills.
 - **Always prune context**: When navigating large projects or running multiple loops, explicitly apply `lean-ctx` (`ktx`) and `sqz` to prevent context saturation.
 - **Adopt Caveman / Ponytail mode**: When summarizing logs or refactoring code in Loop 4, use `caveman` to cut redundant tokens and `ponytail` to remove dead/unneeded abstractions.
