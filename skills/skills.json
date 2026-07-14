@@ -1,10 +1,22 @@
 {
   "entries": [
     {
-      "path": "engine-loops"
+      "path": "1-core-engine"
     },
     {
-      "path": "reference"
+      "path": "2-production-loops"
+    },
+    {
+      "path": "3-agentic-brain"
+    },
+    {
+      "path": "4-domain-workflows"
+    },
+    {
+      "path": "5-mattpocock"
+    },
+    {
+      "path": "6-misc"
     }
   ],
   "inherits": [],
