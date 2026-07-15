@@ -365,9 +365,9 @@ while IFS= read -r -d '' skill_md; do
   mkdir -p "$SKILLS_DEST/$skill_name"
   cp -r "$skill_dir"/. "$SKILLS_DEST/$skill_name/"
   ((SKILL_COUNT++)) || true
-done < <(find "$SCRIPT_DIR/skills" -mindepth 2 -name "SKILL.md" -type f -print0)
+done < <(find "$SCRIPT_DIR/.agents/skills" -mindepth 2 -name "SKILL.md" -type f -print0)
 # Also copy skills.json for reference
-cp -f "$SCRIPT_DIR/skills/skills.json" "$SKILLS_DEST/" 2>/dev/null || true
+cp -f "$SCRIPT_DIR/.agents/skills.json" "$SKILLS_DEST/" 2>/dev/null || true
 echo -e "${GREEN}✓ $SKILL_COUNT skills installed to ~/.gemini/config/skills/${NC}"
 
 echo -e "${YELLOW}Syncing skills to Claude Code, Amp, and other agents...${NC}"
@@ -442,6 +442,38 @@ for skill_dir in "$HOME/.gemini/config/skills"/*; do
   fi
 done
 
+# 7.6. Pi Integration & Cockpit Proxy Setup
+echo -e "\n${BLUE}[7.6/10] Pi Integration & Cockpit Proxy Setup...${NC}"
+PI_SETTINGS="$HOME/.pi/agent/settings.json"
+if command -v pi &>/dev/null || [ -f "$PI_SETTINGS" ]; then
+  echo -e "${GREEN}✓ Pi environment detected. Injecting Wizard-AI as a native package...${NC}"
+  if [ -f "$PI_SETTINGS" ]; then
+    if command -v jq &>/dev/null; then
+      jq '.packages |= (if type=="array" then . else [] end | if index("file://'"$WIZARD_AI_DIR"'") then . else . + ["file://'"$WIZARD_AI_DIR"'"] end)' "$PI_SETTINGS" > "${PI_SETTINGS}.tmp" && mv "${PI_SETTINGS}.tmp" "$PI_SETTINGS"
+      echo -e "${GREEN}  ✓ Wizard-AI repository injected into Pi settings.json${NC}"
+    else
+      echo -e "${YELLOW}  ⚠ jq not found. Please add \"file://$WIZARD_AI_DIR\" to packages in $PI_SETTINGS manually.${NC}"
+    fi
+  fi
+fi
+
+if command -v npm &>/dev/null; then
+  echo -e "${YELLOW}Do you want to configure the Cockpit Proxy and select a default model for Pi? [Y/n]${NC}"
+  if [ "$YES_MODE" -eq 1 ]; then
+    RUN_COCKPIT="n"
+    echo -e "${YELLOW}  (auto-skipped in --yes mode)${NC}"
+  else
+    read -p "> " RUN_COCKPIT
+  fi
+  if [[ ! "$RUN_COCKPIT" =~ ^[Nn]$ ]]; then
+    echo -e "${CYAN}Running pi-cockpit-proxy-setup via npx...${NC}"
+    npx --yes pi-cockpit-proxy-setup || echo -e "${RED}Failed to run pi-cockpit-proxy-setup.${NC}"
+  fi
+else
+  echo -e "${YELLOW}NPM not found. Cockpit Proxy setup skipped.${NC}"
+fi
+
+
 # 8. Git & NPM Credentials Setup (Optional for Contributors)
 echo -e "\n${BLUE}[8/10] Git & NPM Credentials Setup (Optional for Contributors)...${NC}"
 echo -e "${YELLOW}Do you want to configure your GitHub & NPM credentials now? (e.g. for publishing or contributing) [y/N]${NC}"
@@ -471,11 +503,9 @@ if [[ "$CONFIRM_CREDS" =~ ^[Yy]$ ]]; then
   read -s -p "> " USER_GH_TOKEN
   echo ""
   if [ -n "$USER_GH_TOKEN" ]; then
-    if ! grep -q "GITHUB_TOKEN" "$HOME/.config/wizard-ai/env"; then
-      echo "export GITHUB_TOKEN=\"$USER_GH_TOKEN\"" >> "$HOME/.config/wizard-ai/env"
-    else
-      sed -i "s|export GITHUB_TOKEN=.*|export GITHUB_TOKEN=\"$USER_GH_TOKEN\"|" "$HOME/.config/wizard-ai/env"
-    fi
+    # We intentionally DO NOT export GITHUB_TOKEN to ~/.config/wizard-ai/env
+    # because it overrides the secure keyring authentication used by gh cli.
+    # We only use it once to login, then let the system keyring handle it.
     if command -v gh &>/dev/null; then
       echo "$USER_GH_TOKEN" | env -u GITHUB_TOKEN gh auth login --with-token 2>/dev/null && \
         echo -e "  ${GREEN}✓ Logged in to GitHub CLI successfully.${NC}" || \
