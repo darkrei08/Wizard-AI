@@ -563,6 +563,34 @@ else
   fi
 fi
 
+# 9.5 Optional Docker Deployment for MinerU
+echo -e "\n${BLUE}[9.5/10] Optional: MinerU Docker Web UI...${NC}"
+if command -v docker &>/dev/null; then
+  # Default to NO in non-interactive mode unless specified
+  deploy_mineru="N"
+  if [ -n "${INTERACTIVE:-}" ] || [ -t 0 ]; then
+    echo -e "${YELLOW}MinerU provides a Gradio Web UI via Docker for visual PDF parsing.${NC}"
+    read -p "Do you want to deploy the MinerU Web UI now? (y/N): " response
+    if [[ "$response" =~ ^[Yy]$ ]]; then
+      deploy_mineru="Y"
+    fi
+  fi
+  
+  if [ "$deploy_mineru" = "Y" ]; then
+    echo -e "${GREEN}Starting MinerU Gradio Web UI...${NC}"
+    if [ -f "$WIZARD_AI_DIR/docker/mineru/compose.yaml" ]; then
+      docker compose -f "$WIZARD_AI_DIR/docker/mineru/compose.yaml" --profile gradio up -d || true
+      echo -e "${GREEN}✓ MinerU Web UI is starting at http://localhost:7860${NC}"
+    else
+      echo -e "${RED}⚠ compose.yaml not found in docker/mineru/${NC}"
+    fi
+  else
+    echo -e "${YELLOW}Skipping MinerU Web UI deployment. You can start it later with 'ai-mineru-gui up'.${NC}"
+  fi
+else
+  echo -e "${YELLOW}Docker not found. Skipping MinerU Web UI deployment.${NC}"
+fi
+
 # 10. Fix ownership if run via sudo
 if [ -n "${SUDO_USER:-}" ]; then
   echo -e "\n${BLUE}[10/10] Fixing file ownership for user $USER...${NC}"

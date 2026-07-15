@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# ai-mineru-gui — MinerU Docker WebUI launcher
+set -euo pipefail
+
+COMPOSE_FILE="$WIZARD_AI_DIR/docker/mineru/compose.yaml"
+
+if [ ! -f "$COMPOSE_FILE" ]; then
+    echo "Error: Docker compose file not found at $COMPOSE_FILE"
+    exit 1
+fi
+
+COMMAND=${1:-up}
+
+echo "🪄 [Wizard-AI] Managing MinerU Web UI (Docker)..."
+
+if [ "$COMMAND" = "up" ]; then
+    docker compose -f "$COMPOSE_FILE" --profile gradio up -d
+    echo "✅ MinerU Gradio Web UI is starting! Access it at http://localhost:7860"
+elif [ "$COMMAND" = "down" ]; then
+    docker compose -f "$COMPOSE_FILE" --profile gradio down
+    echo "✅ MinerU Gradio Web UI stopped."
+else
+    docker compose -f "$COMPOSE_FILE" --profile gradio "$@"
+fi
