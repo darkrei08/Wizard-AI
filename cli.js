@@ -30,6 +30,14 @@ function run(cmd, args, opts) {
 }
 
 const subcmd = process.argv[2];
+if (subcmd === "proxy") {
+  const proxyScript = path.join(__dirname, "scripts", "ai-proxy.js");
+  if (fs.existsSync(proxyScript)) {
+    const status = run("node", [proxyScript, ...process.argv.slice(3)]);
+    process.exit(status === null ? 1 : status);
+  }
+}
+
 if (subcmd === "test" || subcmd === "webnative-inspect" || subcmd === "webnative") {
   const testScript = path.join(__dirname, "scripts", "wizard-test.js");
   if (fs.existsSync(testScript)) {

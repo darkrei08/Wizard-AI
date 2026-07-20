@@ -7,13 +7,7 @@
   },
   "description": "Installer for the Wizard-AI environment: AI CLI tools and Claude Code skills (graphify, llmlingua, flashrank, markitdown and more). Clones the repo and runs the platform setup script.",
   "bin": {
-    "wizard-ai": "cli.js",
-    "wizard-update": "cli.js",
-    "pi-agent-setup": "cli.js",
-    "ai-proxy": "scripts/ai-proxy.js",
-    "wizard-test": "scripts/wizard-test.js",
-    "ai-test": "scripts/wizard-test.js",
-    "ai-webnative": "scripts/wizard-test.js"
+    "wizard-ai": "cli.js"
   },
   "files": [
     "cli.js",
