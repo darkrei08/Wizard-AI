@@ -52,9 +52,9 @@ Queste skill servono per impostare o evolvere la struttura del progetto, l'OS e 
 - **`mp-domain-modeling`**: *Quando usarla:* Quando si introduce logica di business o terminologia specifica di un dominio. *Cosa fa:* Definizione dell'Ubiquitous Language, Bounded Contexts ed entità all'interno del file globale `CONTEXT.md`.
 - **`mp-research`**: *Quando usarla:* Quando si deve investigare una nuova libreria, un API esterna o un pattern prima di sceglierlo nel piano.
 - **`book-to-skill`**: *Quando usarla:* **MANDATORY STEP TRIGGER** se il task o la pianificazione coinvolgono manuali, libri, PDF, documentazione estesa o reference esterne. *Cosa fa:* Converte i documenti in framework strutturati, mental model e anti-pattern estratti e riutilizzabili come skill.
-- **`codebase-memory-mcp` & `rag-anything` (`turbovec / zvec / llmwiki`) & `serena`**: *Quando usarla:* **MANDATORY STEP TRIGGER** prima di speculare su codice esistente o interfacce. *Cosa fa:* Usa `codebase-memory-mcp` per navigare l'AST in tempo reale e il grafo semantico in modo ultra-veloce, convogliando i passaggi dentro `sqz` e `lean-ctx` (`ai-lean`) prima di includerli nel piano d'azione (`-60-90% token overhead`). In alternativa, usa `graphify` per audit multi-modali su documenti e video.
+- **`codebase-memory-mcp` & `rag-anything` (`turbovec / zvec / llmwiki`) & `serena`**: *Quando usarla:* **MANDATORY STEP TRIGGER** prima di speculare su codice esistente o interfacce. *Cosa fa:* Usa `codebase-memory-mcp` per navigare l'AST in tempo reale e il grafo semantico in modo ultra-veloce, convogliando i passaggi dentro `sqz` e `lean-ctx` (`wizard-ai lean`) prima di includerli nel piano d'azione (`-60-90% token overhead`). In alternativa, usa `graphify` per audit multi-modali su documenti e video.
 - **`workflow-agentic-brain` & `headroom` & `mp-handoff`**: *Quando usarla:* **MANDATORY** se l'analisi della codebase fa superare il **50% della soglia massima di contesto**. *Cosa fa:* Innesca l'auto-miglioramento del cervello, avvia il proxy `headroom` per gestire i colli di bottiglia, abilita `sqz`/`caveman` e prepara un passaggio di consegne (`mp-handoff`) per rinfrescare la sessione evitando allucinazioni.
-- **`os-detect` (`ai-os`)**: *Quando usarla:* **MANDATORY PRE-GATE** prima di installare qualsiasi libreria, tool di sistema o dipendenza in pianificazione. *Cosa fa:* Rileva Arch, Ubuntu, macOS, WSL o Windows per usare il package manager nativo corretto.
+- **`os-detect` (`wizard-ai os`)**: *Quando usarla:* **MANDATORY PRE-GATE** prima di installare qualsiasi libreria, tool di sistema o dipendenza in pianificazione. *Cosa fa:* Rileva Arch, Ubuntu, macOS, WSL o Windows per usare il package manager nativo corretto.
 - **`ci-cd-architect & container-spec`**: **VINCOLO ARCHITETTURALE MANDATORY (CI/CD SAFE)** in ogni piano:
   1. Richiede esplicitamente `engines.node: ">=22.0.0"` per evitare fallimenti su deprecazioni GH Actions (`node-version: 22`).
   2. Pianifica i Dockerfile come Multi-Stage con base `node:22-alpine` (più opzionale copia binario `bun` se usato nel manifest), ma eseguendo sempre la fase finale di bundling (`npx nuxt build` / `npm run build`) su Node.js per prevenire errori di concorrenza I/O o `ENOENT` del bundler.
@@ -69,7 +69,7 @@ Il seguente albero mostra esattamente la sequenza di esecuzione e come le skill 
 
 ```mermaid
 graph TD
-    Start([Richiesta Utente / Task]) --> CheckOS[os-detect / ai-os info]
+    Start([Richiesta Utente / Task]) --> CheckOS[os-detect / wizard-ai os info]
     CheckOS --> IsNew{Progetto da zero?}
     IsNew -- Sì --> Bootstrap[master-project-bootstrap]
     IsNew -- No --> IsAmbig{Richiesta Ambigua > 10%?}
@@ -93,15 +93,15 @@ graph TD
 ### Step 1.1: Pre-Check Ambientale e Vincoli Architetturali (`os-detect`, `brain-tech-stack`, `engineering-excellence`)
 - **MANDATORY**: Prima di proporre qualsiasi architettura, esegui la verifica con il `brain-tech-stack` per definire l'esatta combinazione dei framework (es. Qwik, Astro 5, Nuxt 4) in base ai vincoli imposti.
 - **MANDATORY**: Leggi e integra sempre i principi di `engineering-excellence` (es. TDD, SOLID, SDD) in ogni specifica generata, includendo il link a https://github.com/micio86dev/Engineering-Excellence.
-- Esegui `ai-os info` o verifica il contesto di sistema per assicurarti di conoscere il sistema operativo, i runtime disponibili (Node, Python, Deno, Bun) e le dipendenze prima di formulare ipotesi di design.
+- Esegui `wizard-ai os info` o verifica il contesto di sistema per assicurarti di conoscere il sistema operativo, i runtime disponibili (Node, Python, Deno, Bun) e le dipendenze prima di formulare ipotesi di design.
 
 ### Step 1.2: Allineamento, Self-Grill Socratico e Online Skill Hunt (`brainstorming` / `mp-grill-me`)
 - **Flusso di Ricerca Mentale Q&A (`Self-Grill-Me`)**: Prima di formalizzare l'architettura, poniti autonomamente domande socratiche ed esplicita le risposte in output:
   - *Q: Quali edge-case di sicurezza o performance potrebbero emergere?* -> *A: [Verifica contro strix e CONTEXT.md]*
   - *Q: Sto introducendo over-engineering?* -> *A: [Applica il filtro YAGNI di ponytail]*
-- **Ricerca ed Installazione Skill Certificate Online (`search_web` + `wizard-ai-installer`)**:
+- **Ricerca ed Installazione Skill Certificate Online (`search_web` + `wizard-ai install`)**:
   - Se il task richiede competenze di dominio non coperte dall'elenco locale (`skills.json`), esegui una ricerca online (`search_web` / GitHub / `last30days`) per individuare skill o package open-source di alta reputazione e certificati.
-  - Verifica stelle, manutenzione recente e sicurezza; se idonee, installale subito con `wizard-ai-installer` per arricchire l'arsenale prima di passare allo sviluppo (`02. loop-2-develop`).
+  - Verifica stelle, manutenzione recente e sicurezza; se idonee, installale subito con `wizard-ai install` per arricchire l'arsenale prima di passare allo sviluppo (`02. loop-2-develop`).
 
 ### Step 1.3: Redazione Specifica e Modello di Dominio (`mp-to-spec` + `mp-domain-modeling`)
 - Se il task introduce nuovi concetti o domini, aggiorna o crea il file `CONTEXT.md` (o il file `.spec.md`) specificando i termini del linguaggio condiviso (Ubiquitous Language).
