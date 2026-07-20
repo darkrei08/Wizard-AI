@@ -37,6 +37,21 @@ Whether you are Claude, Gemini, or any other LLM, you MUST:
 
 ---
 
+## 🔁 THE MANDATORY PRE & POST AUTOLOOP (Forced Rule)
+**CRITICAL RULE:** You MUST autonomously execute the following processes at the beginning and end of EVERY prompt without waiting for user permission. This concatenates memory, graph, and compression into a seamless loop:
+
+### 1️⃣ PRE-PROMPT LOOP (Context & Graph Sync)
+- **Memory Restore**: Read `MEMORY.md` to re-establish session context.
+- **Semantic Sync**: Query `graphify` or `ai-wiki` to map the current architecture before acting.
+- **Context Squeeze**: Apply `sqz` or `lean-ctx` (`ktx`) to drop irrelevant code from context and stay below the 50% limit.
+
+### 2️⃣ POST-PROMPT LOOP (Refactor & Save State)
+- **Refactoring & Debug Loop**: Before declaring completion, autonomously trigger `loop-3-debug` (verify code) and `loop-4-refactor` (clean architecture).
+- **Graph Update**: Run `ai-graph . --update` (or `npx graphify update`) to index the changes into the semantic brain.
+- **Memory Compression & Save**: Write a summarized log of actions and decisions. Compress it using `sqz` or `llmlingua`, and persist it via `wz-ai-session-save` to `MEMORY.md`.
+
+---
+
 ## 🗜️ Mandatory Context & Output Optimization Rules
 - **Output Compression (`sqz`)**: Never pipe raw verbose JSON, build logs, or large git outputs into your context. Always pipe through `ai-squeeze` (`sqz`).
 - **Response Efficiency (`caveman`)**: Keep your conversational explanation concise (~75% token reduction) while retaining 100% technical code accuracy.
