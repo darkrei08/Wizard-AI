@@ -276,23 +276,40 @@ After installation, these commands are available in your terminal:
 
 ---
 
-## 🛩️ AI Proxy (Cockpit Tools)
+## 🛩️ AI Proxy (Cockpit Tools) & Pi Integration
 
-Wizard-AI seamlessly integrates with **Cockpit Tools** via the `ai-proxy` to bypass Gemini free-tier rate limits across multiple accounts.
+Wizard-AI seamlessly integrates with **Cockpit Tools** via the `ai-proxy` to bypass Gemini free-tier rate limits across multiple accounts and route traffic from the `pi-coding-agent`.
 
 1. **Install Proxy Dependencies**
    ```bash
    ai-proxy install
    ```
 
-2. **Import Cockpit Tools Accounts (Automated)**
-   Run the following command to securely extract your `refreshTokens` from the local Cockpit Tools database and inject them into the proxy's `accounts.json`:
+2. **Add / Import Accounts**
+   You have two ways to add accounts to the proxy rotator:
+
+   *Option A (Manual OAuth):* Add a Google account directly by signing in:
+   ```bash
+   ai-proxy login
+   ```
+   
+   *Option B (Cockpit Tools Auto-Sync):* Securely extract your `refreshTokens` from the local Cockpit Tools database (automatically decrypts AES-256-GCM tokens) and inject them into the proxy's `accounts.json`:
    ```bash
    ai-proxy provision
    ```
-   *(Note: This uses the local `cockpit-bridge` skill and does not require you to re-login to your Google accounts).*
 
-3. **Start the Proxy Daemon**
+   You can verify your configured accounts by running:
+   ```bash
+   ai-proxy accounts
+   ```
+
+3. **Configure Pi Agent (`pi`)**
+   To automatically configure the Pi agent to route all its Google provider traffic through your local proxy:
+   ```bash
+   ai-proxy pi-config
+   ```
+
+4. **Start the Proxy Daemon**
    To start the proxy as a background daemon (auto-starts on PC boot):
    ```bash
    ai-proxy enable
@@ -308,7 +325,7 @@ Wizard-AI seamlessly integrates with **Cockpit Tools** via the `ai-proxy` to byp
    ```bash
    ai-proxy disable
    ```
-*Note: This automatically configures your Pi agent to use the `google-antigravity` provider.*
+*Note: Once enabled, simply run `pi` and it will automatically use your rotator accounts!*
 
 ## 🏗️ Master Project Bootstrap
 
