@@ -61,7 +61,7 @@ try {
         $env:ANTHROPIC_API_KEY = "dummy"
         $env:GRAPHIFY_LLM_PROVIDER = "openai"
         $env:GRAPHIFY_LLM_MODEL = "gemini-3.1-pro-high"
-        $CockpitArgs = @("--backend", "openai", "--model", "gemini-3.1-pro-high", "--max-concurrency", "1")
+        $CockpitArgs = @("--backend", "openai", "--model", "gemini-3.1-pro-high", "--max-concurrency", "1", "--token-budget", "25000", "--max-workers", "4")
     }
 } catch {
     # Port not open, ignore
