@@ -16,7 +16,7 @@ if (echo > /dev/tcp/127.0.0.1/51200) >/dev/null 2>&1 || nc -z 127.0.0.1 51200 >/
   export ANTHROPIC_API_KEY="dummy"
   export GRAPHIFY_LLM_PROVIDER="openai"
   export GRAPHIFY_LLM_MODEL="gemini-3.1-pro-high"
-  COCKPIT_ARGS=("--backend" "openai" "--model" "gemini-3.1-pro-high")
+  COCKPIT_ARGS=("--backend" "openai" "--model" "gemini-3.1-pro-high" "--max-concurrency" "2")
 else
   COCKPIT_ARGS=()
 fi
