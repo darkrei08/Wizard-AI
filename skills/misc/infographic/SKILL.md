@@ -8,7 +8,7 @@ description: AI-powered declarative infographic and chart generation
 The Infographic framework (`antvis/Infographic`) is a declarative visualization engine that generates scalable, themed infographics.
 
 ## Repository & Sub-Skills
-The system is installed at `~/.ai-skills/Infographic`. It contains 5 sub-skills in its `skills/` directory that you can use to compose full infographics:
+The system is installed at `~/.wizard-ai/Infographic`. It contains 5 sub-skills in its `skills/` directory that you can use to compose full infographics:
 
 1. `infographic-creator`: Orchestrates full infographic generation.
 2. `infographic-item-creator`: Creates individual data items/components (charts, icons, text blocks).

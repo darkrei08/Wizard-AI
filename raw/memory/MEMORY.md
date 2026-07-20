@@ -15,7 +15,7 @@ Wizard-AI is a local ecosystem for managing AI agent workflows/skills. The repos
 ## [Consolidated Session History (Compressed)]
 
 ### Phase 1: Foundations & Cleanup (2026-06-19)
-- **v0.27.2 – v0.27.6**: Integrated `ai-storybloq` for Windows/Linux. Mapped the entire repository using `graphify` (131 communities, `graph.json`). Performed a drastic optimization of `setup.sh` and `setup.ps1` by removing massive, redundant repository clones to lighten the setup. Done a clean rebuild of the local environment (`~/.ai-skills` and global `uv` tools). Enhanced security and privacy by enforcing strict username anonymization (e.g., using `~/.ai-skills` / relative home paths).
+- **v0.27.2 – v0.27.6**: Integrated `ai-storybloq` for Windows/Linux. Mapped the entire repository using `graphify` (131 communities, `graph.json`). Performed a drastic optimization of `setup.sh` and `setup.ps1` by removing massive, redundant repository clones to lighten the setup. Done a clean rebuild of the local environment (`~/.wizard-ai` and global `uv` tools). Enhanced security and privacy by enforcing strict username anonymization (e.g., using `~/.wizard-ai` / relative home paths).
 
 ### Phase 2: Stitch Integration & Hierarchical Refactoring (2026-06-26)
 - **v0.32.0 – v0.34.0**: Integrated 14 `stitch-*` skills and the `design-md-spec` skill. Created `ai-designmd` CLI wrapper. Restructured all 154 skills into 7 functional categories (core, frontend, backend, etc.) and generated `skills.json` for auto-discovery. Added meta-skills `workflow-production-cycle` and `workflow-agent-management`. Cleaned up external documentation and injected original repository assets/prompts directly into their respective skill folders to facilitate semantic parsing.
@@ -52,7 +52,7 @@ Wizard-AI is a local ecosystem for managing AI agent workflows/skills. The repos
 - **v0.43.0 → v0.43.2**: Completed full architectural restructuring into 5 Sequenced Numbered Loop Workflows (`01. loop-1-plan` through `05. loop-5-release`).
 - **Skill Categorization & Loop-Binding Engine (`loop-install-bind`)**: Implemented Step 3.5 inside `wizard-ai-installer` (`skills/reference/core/wizard-ai-installer/SKILL.md`) and Rule 7 in `AGENTS.md` to automatically categorize and bind newly installed skills/tools into their exact target loop chaining tree and `skills.json`.
 - **Clean Redirects**: Converted legacy `auto-workflow` and `auto-optimize` into clean redirect wrappers pointing to `01. loop-1-plan` / `02. loop-2-develop` and `workflow-agentic-brain` / `04. loop-4-refactor`.
-- **EALLOWGIT Fix (`v0.43.2`)**: Fixed `npm error code EALLOWGIT` in `setup.sh` and `setup.ps1` during global npm install of git packages (`caveman`, `ecc`) by pre-cloning repositories under `~/.ai-skills/` and wrapping npm global installs in non-fatal fallbacks (`try/catch` and `|| true`).
+- **EALLOWGIT Fix (`v0.43.2`)**: Fixed `npm error code EALLOWGIT` in `setup.sh` and `setup.ps1` during global npm install of git packages (`caveman`, `ecc`) by pre-cloning repositories under `~/.wizard-ai/` and wrapping npm global installs in non-fatal fallbacks (`try/catch` and `|| true`).
 - **Sync & Releases**: Synced 193+ skills to all local agent paths (`~/.claude/skills`, `~/.config/amp/skills`, `~/.agents/skills`). Published `@darkrei08/wizard-ai-cli@0.43.2` on NPM, pushed `v0.43.2` git tag on GitHub, and created GitHub Releases (`v0.43.0`, `v0.43.1`, and `v0.43.2 Latest`).
 
 ## [Session State Snapshot] - 2026-07-11 16:15:00 (`Universal AST Pruning & Task Recovery Hub`)

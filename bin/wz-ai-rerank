@@ -4,11 +4,11 @@
 
 set -euo pipefail
 
-VENV="$HOME/.ai-skills/venv"
+VENV="$HOME/.wizard-ai/venv"
 
 if [[ ! -f "$VENV/bin/python" ]]; then
   echo "❌ FlashRank venv not found." >&2
-  echo "   Run: uv venv ~/.ai-skills/venv && uv pip install flashrank --python ~/.ai-skills/venv/bin/python" >&2
+  echo "   Run: uv venv ~/.wizard-ai/venv && uv pip install flashrank --python ~/.wizard-ai/venv/bin/python" >&2
   exit 1
 fi
 

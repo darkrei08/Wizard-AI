@@ -41,6 +41,6 @@ After running `wz-ai-design apply <name>`, the `DESIGN.md` file in your project 
 
 ## Paths
 
-- Local clone: `$HOME/.ai-skills/awesome-design-md`
+- Local clone: `$HOME/.wizard-ai/awesome-design-md`
 - CLI wrapper: `wz-ai-design` (installed to `$HOME/.local/bin/`)
 - Source: https://github.com/VoltAgent/awesome-design-md

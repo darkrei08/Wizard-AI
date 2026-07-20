@@ -48,5 +48,5 @@ After scaffolding, always remind the user to:
 
 ## Paths
 
-- Local clones (cache): `$HOME/.ai-skills/express-typescript-starter`
+- Local clones (cache): `$HOME/.wizard-ai/express-typescript-starter`
 - CLI wrapper: `wz-ai-scaffold` (installed to `$HOME/.local/bin/`)

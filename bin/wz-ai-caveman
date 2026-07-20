@@ -10,7 +10,7 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 RESET='\033[0m'
 
-CAVEMAN_DIR="${HOME}/.ai-skills/caveman"
+CAVEMAN_DIR="${HOME}/.wizard-ai/caveman"
 
 show_help() {
     echo ""

@@ -1,8 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 echo "Configuring LiteLLM for Cockpit Tools..."
-mkdir -p ~/.ai-skills/configs
-cat << 'EOF' > ~/.ai-skills/configs/litellm-config.yaml
+mkdir -p ~/.wizard-ai/configs
+cat << 'EOF' > ~/.wizard-ai/configs/litellm-config.yaml
 model_list:
   - model_name: gpt-4o
     litellm_params:
@@ -22,4 +22,4 @@ model_list:
 general_settings:
   master_key: sk-local-proxy
 EOF
-echo "LiteLLM config successfully generated at ~/.ai-skills/configs/litellm-config.yaml"
+echo "LiteLLM config successfully generated at ~/.wizard-ai/configs/litellm-config.yaml"

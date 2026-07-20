@@ -29,7 +29,7 @@ if (Test-Path (Join-Path $WizardDir '.git')) {
     Pop-Location
 }
 
-$AiSkills = Join-Path $HOME '.ai-skills'
+$AiSkills = Join-Path $HOME '.wizard-ai'
 if (Test-Path $AiSkills) {
     Log "`n📚 Updating external skill repositories..." "Blue"
     

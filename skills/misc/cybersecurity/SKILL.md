@@ -8,7 +8,7 @@ description: 754 structured cybersecurity skills across 26 domains for secure de
 This repository (`mukul975/Anthropic-Cybersecurity-Skills`) contains an exhaustive library of 754 security agent skills mapped to frameworks like MITRE ATT&CK, NIST CSF 2.0, OWASP, CIS, and D3FEND.
 
 ## Repository Location
-Cloned at `~/.ai-skills/cybersecurity-skills/`. The skills are located in the `skills/` subfolder.
+Cloned at `~/.wizard-ai/cybersecurity-skills/`. The skills are located in the `skills/` subfolder.
 
 ## Workflow Integrations
 

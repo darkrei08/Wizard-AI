@@ -16,7 +16,7 @@ We implement three core autonomous pillars that trigger and self-heal at the OS/
 ### 2. Self-Healing Skill Doctor & Autonomous `skills.sh` Daemon (`bin/ai-skill-doctor`)
 - **Mechanism**: A background evaluation and diagnostic daemon that runs during `05. loop-5-release` or on demand (`ai-skill-doctor`).
 - **Function**:
-  1. **Locality Health Check**: Validates YAML frontmatter, file permissions, and AST definitions across all local skills (`skills/` and `~/.ai-skills/`).
+  1. **Locality Health Check**: Validates YAML frontmatter, file permissions, and AST definitions across all local skills (`skills/` and `~/.wizard-ai/`).
   2. **Ecosystem Sync (`https://www.skills.sh/`)**: Queries `skills.sh` for top-ranked community updates (`frontend-design`, `grill-me`, `subagent-driven-development`, `pi-dev` extensions) and auto-installs/binds them via `loop-install-bind`.
   3. **Auto-Repair**: Detects common setup errors (`EALLOWGIT`, missing binaries) and repairs them transparently using fallback fall-through execution (`ai-os`).
 

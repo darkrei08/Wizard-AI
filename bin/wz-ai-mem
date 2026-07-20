@@ -4,8 +4,8 @@
 
 set -euo pipefail
 
-MEM_DIR="$HOME/.ai-skills/claude-mem"
-MEM_STORE="$HOME/.ai-skills/mem-store"
+MEM_DIR="$HOME/.wizard-ai/claude-mem"
+MEM_STORE="$HOME/.wizard-ai/mem-store"
 
 if [[ ! -d "$MEM_DIR" ]]; then
   echo "❌ claude-mem not found." >&2
@@ -51,7 +51,7 @@ else
   ACTION="$1"
   shift || true
   
-  VENV_PYTHON="$HOME/.ai-skills/venv/bin/python"
+  VENV_PYTHON="$HOME/.wizard-ai/venv/bin/python"
   if [ ! -f "$VENV_PYTHON" ]; then
       VENV_PYTHON="python3"
   fi
@@ -69,7 +69,7 @@ if len(sys.argv) < 2:
 action = sys.argv[1]
 args = sys.argv[2:]
 
-store_dir = os.path.expanduser("~/.ai-skills/mem-store")
+store_dir = os.path.expanduser("~/.wizard-ai/mem-store")
 os.makedirs(store_dir, exist_ok=True)
 mem_file = os.path.join(store_dir, "memories.json")
 index_file = os.path.join(store_dir, "turbovec.index")

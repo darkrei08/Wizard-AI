@@ -6,7 +6,7 @@ description: "ECC (Enhanced Claude Code) is a framework of production-ready agen
 # /ecc
 
 ECC is a comprehensive Claude Code plugin with 100+ production-ready agent skills, hooks, commands, and MCP configs.
-Installed at `~/.ai-skills/ECC/`. Source: https://github.com/affaan-m/ECC
+Installed at `~/.wizard-ai/ECC/`. Source: https://github.com/affaan-m/ECC
 
 ## Available Skill Categories
 
@@ -27,14 +27,14 @@ Installed at `~/.ai-skills/ECC/`. Source: https://github.com/affaan-m/ECC
 
 ```bash
 # List all available ECC skills
-ls ~/.ai-skills/ECC/skills/
+ls ~/.wizard-ai/ECC/skills/
 
 # Use a skill in your agent session
 # Point the agent to the skill directory
-cat ~/.ai-skills/ECC/skills/agentic-engineering/SKILL.md
+cat ~/.wizard-ai/ECC/skills/agentic-engineering/SKILL.md
 
 # Install ECC hooks in current project
-~/.ai-skills/ECC/install.sh
+~/.wizard-ai/ECC/install.sh
 ```
 
 ## Key Features
@@ -50,10 +50,10 @@ cat ~/.ai-skills/ECC/skills/agentic-engineering/SKILL.md
 
 ```bash
 # An agent can read any ECC skill directly
-cat ~/.ai-skills/ECC/skills/<skill-name>/SKILL.md
+cat ~/.wizard-ai/ECC/skills/<skill-name>/SKILL.md
 
 # Or reference it in CLAUDE.md
-echo "Skills: ~/.ai-skills/ECC/skills/" >> CLAUDE.md
+echo "Skills: ~/.wizard-ai/ECC/skills/" >> CLAUDE.md
 ```
 
 ## When to Use

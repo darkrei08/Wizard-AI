@@ -6,7 +6,7 @@ description: "Use claude-mem to persist, retrieve, and semantically search memor
 # /claude-mem
 
 claude-mem is a persistent long-term memory system with semantic indexing for LLM agents.
-Source: https://github.com/thedotmack/claude-mem. Installed in `~/.ai-skills/claude-mem/`.
+Source: https://github.com/thedotmack/claude-mem. Installed in `~/.wizard-ai/claude-mem/`.
 
 ## CLI Usage
 
@@ -65,6 +65,6 @@ prompt = f"Context from memory:\n{context}\n\nUser: {user_message}"
 
 ## Storage
 
-- Memories stored in `~/.ai-skills/claude-mem/store/`
+- Memories stored in `~/.wizard-ai/claude-mem/store/`
 - Semantic index built with sentence transformers (CPU-friendly)
 - JSON export/import for backup and migration

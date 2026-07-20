@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Wrapper per l'esecuzione del gestore di sessioni/memoria @storybloq/storybloq
-STORYBLOQ_DIR="$HOME/.ai-skills/storybloq"
+STORYBLOQ_DIR="$HOME/.wizard-ai/storybloq"
 
 CMD="$1"
 ARGS=()

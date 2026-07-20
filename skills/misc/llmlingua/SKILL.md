@@ -7,7 +7,7 @@ description: "Use to compress long prompts, large contexts, or verbose documents
 
 LLMLingua compresses prompts and long contexts for LLMs, reducing token count by 10–20x while preserving semantic meaning.
 
-Installed inside `~/.ai-skills/venv/`. Use via the `wz-ai-compress` wrapper (handles venv activation automatically).
+Installed inside `~/.wizard-ai/venv/`. Use via the `wz-ai-compress` wrapper (handles venv activation automatically).
 
 ## CLI Usage
 

@@ -11,7 +11,7 @@ param (
     [string[]]$Args
 )
 
-$StorybloqDir = Join-Path $HOME '.ai-skills\storybloq'
+$StorybloqDir = Join-Path $HOME '.wizard-ai\storybloq'
 $StorybloqBin = Join-Path $StorybloqDir 'node_modules\.bin\storybloq.cmd'
 
 # Filtraggio degli argomenti "allucinati" per snapshot

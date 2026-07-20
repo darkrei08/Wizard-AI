@@ -30,7 +30,7 @@ cargo install rtk-ai
 curl -fsSL https://rtk-ai.app/install.sh | bash
 ```
 
-Repository cloned at: `~/.ai-skills/rtk`
+Repository cloned at: `~/.wizard-ai/rtk`
 
 ## Usage
 

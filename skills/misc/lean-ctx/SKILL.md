@@ -67,7 +67,7 @@ wz-ai-lean info
 
 ## Paths
 
-- Local clone: `$HOME/.ai-skills/lean-ctx`
+- Local clone: `$HOME/.wizard-ai/lean-ctx`
 - CLI wrapper: `wz-ai-lean` (installed to `$HOME/.local/bin/`)
 - Binary: `lean-ctx` (via npm or cargo)
 - Source: https://github.com/yvgude/lean-ctx

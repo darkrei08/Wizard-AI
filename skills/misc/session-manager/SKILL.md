@@ -37,7 +37,7 @@ This skill provides a native, infallible mechanism for AI agents to persist stat
    ```
    *(Oppure via pipe: `echo "SUMMARY" | wz-ai-session-save`)*
 
-3. **Anonimizzazione**: Anonimizza SEMPRE i percorsi locali prima di salvare (es. usa `~/.ai-skills` invece di `C:\Users\...`) per prevenire leak di dati personali.
+3. **Anonimizzazione**: Anonimizza SEMPRE i percorsi locali prima di salvare (es. usa `~/.wizard-ai` invece di `C:\Users\...`) per prevenire leak di dati personali.
 
 4. **Confirmation**: Aggiorna lo stato `Session Saved: ✅` nel footer di `show-active-skill` (Step 11).
 

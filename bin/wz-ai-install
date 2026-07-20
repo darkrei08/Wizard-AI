@@ -140,8 +140,8 @@ fi
 info "Phase 1: Local Installation"
 
 if [[ "$SKILL_PATH" =~ ^https?:// ]] || [[ "$SKILL_PATH" =~ ^git@ ]]; then
-  # Git URL — clone to ~/.ai-skills/ then copy SKILL.md and relevant files
-  CLONE_DIR="$HOME/.ai-skills/$SKILL_NAME"
+  # Git URL — clone to ~/.wizard-ai/ then copy SKILL.md and relevant files
+  CLONE_DIR="$HOME/.wizard-ai/$SKILL_NAME"
   if [[ -d "$CLONE_DIR" ]]; then
     info "Updating existing clone at $CLONE_DIR..."
     git -C "$CLONE_DIR" pull --ff-only --quiet || true

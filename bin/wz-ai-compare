@@ -3,11 +3,11 @@
 
 set -euo pipefail
 
-VENV="$HOME/.ai-skills/venv"
+VENV="$HOME/.wizard-ai/venv"
 
 if [[ ! -f "$VENV/bin/python" ]]; then
   echo "❌ venv not found." >&2
-  echo "   Run: uv venv ~/.ai-skills/venv && uv pip install aisuite --python ~/.ai-skills/venv/bin/python" >&2
+  echo "   Run: uv venv ~/.wizard-ai/venv && uv pip install aisuite --python ~/.wizard-ai/venv/bin/python" >&2
   exit 1
 fi
 
@@ -29,7 +29,7 @@ def load_cockpit_tools_keys():
     possible_paths = [
         Path.home() / '.config' / 'cockpit-tools' / 'config.json',
         Path.home() / '.cockpit-tools' / 'config.json',
-        Path.home() / '.ai-skills' / 'cockpit-tools' / 'config.json'
+        Path.home() / '.wizard-ai' / 'cockpit-tools' / 'config.json'
     ]
     for path in possible_paths:
         if path.exists():

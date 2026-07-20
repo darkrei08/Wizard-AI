@@ -3,7 +3,7 @@
 # Wizard-AI Ecosystem
 set -e
 
-VENV="$HOME/.ai-skills/venv"
+VENV="$HOME/.wizard-ai/venv"
 
 if [ ! -d "$VENV" ]; then
   echo "❌ Virtual environment non trovato in $VENV."

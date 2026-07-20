@@ -4,7 +4,7 @@
 # Wizard-AI Ecosystem
 set -e
 
-VENV="$HOME/.ai-skills/venv"
+VENV="$HOME/.wizard-ai/venv"
 
 if [ ! -f "$VENV/bin/llmbase" ]; then
   echo "❌ llmwiki (llmbase) non trovato in $VENV/bin/llmbase."

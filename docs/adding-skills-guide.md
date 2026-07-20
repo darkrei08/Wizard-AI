@@ -62,7 +62,7 @@ This command will:
 If your skill requires running custom shell commands (e.g., `ai-my-tool`), follow these steps:
 
 1. **Create the script** in `bin/ai-my-tool`.
-2. **Use dynamic variables** in the script (e.g., `SKILL_DIR="$HOME/.ai-skills/my-new-skill"` or source `$WIZARD_AI_DIR`).
+2. **Use dynamic variables** in the script (e.g., `SKILL_DIR="$HOME/.wizard-ai/my-new-skill"` or source `$WIZARD_AI_DIR`).
 3. **Update setup.sh** if the script requires specific Python libraries or git repositories to clone.
 4. **Run `./setup.sh`** to reinstall and configure executable permissions for the new binaries in `~/.local/bin/`.
 

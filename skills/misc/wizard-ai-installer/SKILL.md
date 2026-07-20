@@ -14,7 +14,7 @@ The Wizard-AI environment uses these standard paths — **all are relative to th
 | Variable / Path | Purpose |
 |---|---|
 | `$WIZARD_AI_DIR` | Root of the cloned Wizard-AI repository (set by `setup.sh`) |
-| `~/.ai-skills/` | Local Python tool installs, venvs, and cloned repos |
+| `~/.wizard-ai/` | Local Python tool installs, venvs, and cloned repos |
 | `~/.local/bin/` | Executable CLI wrappers (on `$PATH`) |
 | `~/.gemini/config/skills/` | Primary skill directory (Antigravity reads this) |
 | `~/.claude/skills/` | Claude Code skill directory (synced by `wz-ai-sync-skills`) |
@@ -45,7 +45,7 @@ Before executing ANY installation commands or modifying the repository, you MUST
 Determine what type of tool it is:
 
 - **Python CLI / Package**: Install it globally using `uv tool install <package>`.
-- **GitHub Repository**: Clone it to `~/.ai-skills/<repo-name>`. If it requires dependencies, create a dedicated `uv venv` or install them using `uv pip`.
+- **GitHub Repository**: Clone it to `~/.wizard-ai/<repo-name>`. If it requires dependencies, create a dedicated `uv venv` or install them using `uv pip`.
 - **Node.js**: Use `npm install -g <package>`.
 
 ### Step 1.5: Dynamic Version Checking & Safe Rollback

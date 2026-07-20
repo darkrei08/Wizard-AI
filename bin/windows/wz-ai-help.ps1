@@ -66,7 +66,7 @@ Write-Host ''
 Section 'MEMORY & CONTEXT'
 Tool (Check-Cmd wz-wz-ai-session-save) 'wz-wz-ai-session-save' 'Save current session context to MEMORY.md'
 Example 'wz-wz-ai-session-save "completed feature X"'
-if (Test-Path (Join-Path $HOME '.ai-skills\claude-mem')) {
+if (Test-Path (Join-Path $HOME '.wizard-ai\claude-mem')) {
     Tool '[OK]' 'claude-mem' 'Persistent semantic memory across sessions'
 } else {
     Tool '[--]' 'claude-mem' 'Persistent semantic memory (not installed)'
@@ -90,15 +90,15 @@ Example 'book-to-skill document.pdf'
 Write-Host ''
 
 Section 'FRAMEWORK'
-$EccDir = Join-Path $HOME '.ai-skills\ECC'
+$EccDir = Join-Path $HOME '.wizard-ai\ECC'
 if ((Test-Path $EccDir) -or (Get-Command ecc -ErrorAction SilentlyContinue)) {
     Tool '[OK]' 'ECC' 'Production-ready agent skills and hooks'
 } else {
     Tool '[--]' 'ECC' 'Agent skills framework (not installed)'
 }
-Example ('dir {0}\.ai-skills\ECC\skills' -f $HOME)
+Example ('dir {0}\.wizard-ai\ECC\skills' -f $HOME)
 
-$CyberDir = Join-Path $HOME '.ai-skills\cybersecurity-skills'
+$CyberDir = Join-Path $HOME '.wizard-ai\cybersecurity-skills'
 if (Test-Path $CyberDir) {
     $CyberSkills = (Get-ChildItem -Path (Join-Path $CyberDir 'skills') -ErrorAction SilentlyContinue | Measure-Object).Count
     Tool '[OK]' 'Cybersecurity' ('{0}+ cybersecurity framework skills' -f $CyberSkills)
@@ -108,7 +108,7 @@ if (Test-Path $CyberDir) {
 Write-Host ''
 
 Section 'VISUALIZATION'
-$InfoDir = Join-Path $HOME '.ai-skills\Infographic'
+$InfoDir = Join-Path $HOME '.wizard-ai\Infographic'
 if (Test-Path $InfoDir) {
     Tool '[OK]' 'Infographic' 'AntV AI-powered declarative infographic generator'
 } else {
@@ -118,7 +118,7 @@ Write-Host ''
 
 Write-Host '-------------------------------------------------------------' -ForegroundColor Magenta
 Write-Host ('Skills directory: {0}\.gemini\config\skills' -f $HOME)
-Write-Host ('Tools directory:  {0}\.ai-skills' -f $HOME)
+Write-Host ('Tools directory:  {0}\.wizard-ai' -f $HOME)
 Write-Host ('CLIs:             {0}\.local\bin' -f $HOME)
 Write-Host ''
 Write-Host 'Tip: all tools work as pipes -> cmd | wz-wz-ai-compress | wz-wz-ai-rerank' -ForegroundColor Cyan

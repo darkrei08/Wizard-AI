@@ -34,7 +34,7 @@ graph TD
 - If category is not specified, run auto-detection or default to `misc`.
 
 ### 2. Local Installation
-- Clone git repositories to `~/.ai-skills/<name>`.
+- Clone git repositories to `~/.wizard-ai/<name>`.
 - Install dependencies using `uv` (for Python) or `npm` (for Node.js).
 - Create a template wrapper script in `bin/ai-<name>` and make it executable.
 

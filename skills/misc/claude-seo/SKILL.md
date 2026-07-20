@@ -12,4 +12,4 @@ description: "SEO Analysis plugin for Claude Code. Runs parallel sub-agents acro
 - `/seo schema <url>`: Detect, validate, and generate Schema.org markup
 - `/seo geo <url>`: AI Overviews / Generative Engine Optimization
 
-Source: `~/.ai-skills/claude-seo`
+Source: `~/.wizard-ai/claude-seo`

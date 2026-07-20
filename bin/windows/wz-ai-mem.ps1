@@ -2,8 +2,8 @@
 # Windows port of bin/wz-wz-ai-mem
 # Source: https://github.com/thedotmack/claude-mem
 
-$MemDir = Join-Path $HOME '.ai-skills\claude-mem'
-$MemStore = Join-Path $HOME '.ai-skills\mem-store'
+$MemDir = Join-Path $HOME '.wizard-ai\claude-mem'
+$MemStore = Join-Path $HOME '.wizard-ai\mem-store'
 
 if (-not (Test-Path $MemDir)) {
     Write-Host '[X] claude-mem not found.' -ForegroundColor Red
@@ -39,7 +39,7 @@ if ($args.Count -eq 0) {
 
 # Resolve a Python interpreter: venv first, then python, then py launcher
 function Resolve-Python {
-    $VenvPy = Join-Path $HOME '.ai-skills\venv\Scripts\python.exe'
+    $VenvPy = Join-Path $HOME '.wizard-ai\venv\Scripts\python.exe'
     if (Test-Path $VenvPy) { return @($VenvPy) }
     if (Get-Command python -ErrorAction SilentlyContinue) { return @('python') }
     if (Get-Command py -ErrorAction SilentlyContinue) { return @('py', '-3') }

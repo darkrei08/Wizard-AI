@@ -9,7 +9,7 @@ Headroom (`chopratejas/headroom`) is a token optimization and API proxy layer. I
 
 ## Installation Status
 The `headroom` CLI is available globally via `uv tool install headroom-ai`.
-Repository is cloned at: `~/.ai-skills/headroom`
+Repository is cloned at: `~/.wizard-ai/headroom`
 
 ## Workflow Integrations
 

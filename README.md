@@ -186,8 +186,8 @@ The interface will be available at `http://localhost:9742`.
 Behind the scenes, `setup.sh` handles everything for you:
 
 1. **Registers `$WIZARD_AI_DIR`**: Saves the repo path in `~/.config/wizard-ai/env` and appends a load instruction to your shell (`~/.bashrc`, `~/.zshrc`).
-2. **Prepares python-venv**: Installs the `uv` package manager and creates a lightweight virtual environment (`~/.ai-skills/venv`).
-3. **Clones dependency repos**: Downloads required helper repositories under `~/.ai-skills/`.
+2. **Prepares python-venv**: Installs the `uv` package manager and creates a lightweight virtual environment (`~/.wizard-ai/venv`).
+3. **Clones dependency repos**: Downloads required helper repositories under `~/.wizard-ai/`.
 4. **Installs Global CLI Tools**: Installs compiled tools (`graphify`, `litellm`, `markitdown`, `sqz`, `serena`) globally via `uv tool`.
 5. **Deploys Custom Wrappers**: Copies the scripts from `bin/` to `~/.local/bin/`.
 6. **Configures Agent Skills**: Deploys all agent skills to `~/.gemini/config/skills/` and runs `wizard-ai sync-skills` to copy them to other agent folders.

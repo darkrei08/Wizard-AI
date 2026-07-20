@@ -41,8 +41,8 @@ if [ -d "$WIZARD_DIR/.git" ]; then
   fi
 fi
 
-# 2. Update all skill repositories in ~/.ai-skills/ with safe rollback
-AI_SKILLS="$HOME/.ai-skills"
+# 2. Update all skill repositories in ~/.wizard-ai/ with safe rollback
+AI_SKILLS="$HOME/.wizard-ai"
 if [ -d "$AI_SKILLS" ]; then
   log "\n📚 Updating external skill repositories..."
   

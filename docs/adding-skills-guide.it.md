@@ -62,7 +62,7 @@ Questo comando:
 Se la tua skill richiede l'esecuzione di un comando personalizzato (es. `ai-mia-utility`), segui questi passi:
 
 1. **Crea lo script** in `bin/ai-mia-utility`.
-2. **Usa percorsi dinamici** nello script (es. `SKILL_DIR="$HOME/.ai-skills/mia-nuova-skill"` o carica `$WIZARD_AI_DIR`).
+2. **Usa percorsi dinamici** nello script (es. `SKILL_DIR="$HOME/.wizard-ai/mia-nuova-skill"` o carica `$WIZARD_AI_DIR`).
 3. **Aggiorna setup.sh** se lo script richiede dipendenze Python speciali o cloni di altri repository git.
 4. **Esegui `./setup.sh`** per reinstallare e configurare i permessi corretti per i nuovi eseguibili in `~/.local/bin/`.
 

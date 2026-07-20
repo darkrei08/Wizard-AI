@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-"exec" "$HOME/.ai-skills/venv/bin/python" "$0" "$@"
+"exec" "$HOME/.wizard-ai/venv/bin/python" "$0" "$@"
 
 import sys
 import json

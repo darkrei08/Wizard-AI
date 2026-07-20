@@ -35,7 +35,7 @@ if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
 # Resolve the absolute path of this script (= repo root)
 $ScriptDir = $PSScriptRoot
 $LocalBin = Join-Path $HOME '.local\bin'
-$AiSkills = Join-Path $HOME '.ai-skills'
+$AiSkills = Join-Path $HOME '.wizard-ai'
 
 # 0. Save WIZARD_AI_DIR so skills and wrappers can reference the repo portably
 Write-Host ''
@@ -155,14 +155,14 @@ Clone-SkillRepo 'https://github.com/chopratejas/headroom.git' 'headroom'
 Clone-SkillRepo 'https://github.com/antvis/Infographic.git' 'Infographic'
 Clone-SkillRepo 'https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git' 'cybersecurity-skills'
 
-Write-Host "Cloning/Verifying ECC and caveman repositories inside ~/.ai-skills/..." -ForegroundColor Cyan
+Write-Host "Cloning/Verifying ECC and caveman repositories inside ~/.wizard-ai/..." -ForegroundColor Cyan
 Clone-SkillRepo 'https://github.com/affaan-m/ECC.git' 'ECC'
 Clone-SkillRepo 'https://github.com/JuliusBrussee/caveman.git' 'caveman'
 
 if (Get-Command npm -ErrorAction SilentlyContinue) {
     Write-Host "Attempting optional NPM global installations (ECC, caveman)..." -ForegroundColor Yellow
     try { npm install -g ecc-universal 2>$null } catch { Write-Host "Note: ecc-universal npm install skipped." -ForegroundColor DarkGray }
-    try { npm install -g https://github.com/JuliusBrussee/caveman.git 2>$null } catch { Write-Host "Note: caveman npm git install skipped (using cloned repo in ~/.ai-skills/caveman)." -ForegroundColor DarkGray }
+    try { npm install -g https://github.com/JuliusBrussee/caveman.git 2>$null } catch { Write-Host "Note: caveman npm git install skipped (using cloned repo in ~/.wizard-ai/caveman)." -ForegroundColor DarkGray }
 } else {
     Write-Host "NPM not found. Using cloned git repos for ECC and caveman." -ForegroundColor Yellow
 }

@@ -83,7 +83,7 @@ pip-audit 2>/dev/null || echo "pip-audit not installed, skipping"
 # Check for hardcoded secrets
 grep -rn "password\|secret\|api_key\|token" --include="*.py" . | grep -v ".git\|test\|#"
 ```
-*Note: Consult the Anthropic Cybersecurity Skills library (`~/.ai-skills/cybersecurity-skills/skills/`) to perform framework-aligned code reviews (e.g. checking for OWASP Top 10).*
+*Note: Consult the Anthropic Cybersecurity Skills library (`~/.wizard-ai/cybersecurity-skills/skills/`) to perform framework-aligned code reviews (e.g. checking for OWASP Top 10).*
 
 ## Project-Specific Debug: SQLite Logger
 

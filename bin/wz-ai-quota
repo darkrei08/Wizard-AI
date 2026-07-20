@@ -1,14 +1,6 @@
 #!/usr/bin/env python3
 
-# Telemetry hook
-import os
-import subprocess
-try:
-    DIR = os.path.dirname(os.path.abspath(__file__))
-    WIZARD_AI_DIR = os.path.dirname(DIR)
-    subprocess.Popen(["python3", os.path.join(WIZARD_AI_DIR, "hub/api/log_event.py"), "wz-ai-quota", "execute", "100", "0.15"])
-except Exception:
-    pass
+
 
 """wz-ai-quota — Wrapper CLI per Cockpit Tools (Quote e Provider AI)
 Legge lo stato delle quote, provider attivi e abbonamenti.
@@ -41,7 +33,7 @@ def get_cockpit_status():
         "/root/.local/share/cockpit-tools/accounts.json",
         "/root/Library/Application Support/cockpit-tools/accounts.json",
         "/root/AppData/Roaming/cockpit-tools/accounts.json",
-        os.path.expanduser("~/.ai-skills/cockpit-tools/accounts.json"),
+        os.path.expanduser("~/.wizard-ai/cockpit-tools/accounts.json"),
         os.path.expanduser("~/.antigravity_cockpit/accounts.json"),
         "/root/.antigravity_cockpit/accounts.json"
     ]
@@ -119,7 +111,7 @@ def get_cockpit_status():
     return {
         "status": "not_configured",
         "message": f"Cockpit Tools non è ancora configurato. Avvia l'app Cockpit Tools per fare il login e collegare i tuoi account AI.\n\nPercorsi cercati:\n  - {searched_paths}",
-        "install_hint": "git clone https://github.com/jlcodes99/cockpit-tools.git ~/.ai-skills/cockpit-tools"
+        "install_hint": "git clone https://github.com/jlcodes99/cockpit-tools.git ~/.wizard-ai/cockpit-tools"
     }
 
 

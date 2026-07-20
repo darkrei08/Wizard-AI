@@ -13,4 +13,4 @@ Since it's a Claude Code skill, it is natively integrated into the agent environ
 - `/blog analyze <file>`: Quality audit with 0-100 score
 - `/blog strategy <niche>`: Blog strategy and topic ideation
 
-Source: `~/.ai-skills/claude-blog`
+Source: `~/.wizard-ai/claude-blog`

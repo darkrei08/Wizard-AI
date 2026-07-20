@@ -2,7 +2,7 @@
 # Windows port of bin/wz-wz-ai-compress
 # Source: https://github.com/microsoft/LLMLingua
 
-$Venv = Join-Path $HOME '.ai-skills\venv'
+$Venv = Join-Path $HOME '.wizard-ai\venv'
 $Py = Join-Path $Venv 'Scripts\python.exe'
 
 if (-not (Test-Path $Py)) {

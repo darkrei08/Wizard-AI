@@ -91,13 +91,13 @@ fi
 
 # Ensure local directories exist
 mkdir -p "$HOME/.local/bin"
-mkdir -p "$HOME/.ai-skills"
+mkdir -p "$HOME/.wizard-ai"
 
 # 2. Recreate Python Virtual Environment for wrappers
 echo -e "\n${BLUE}[2/10] Preparing Python Virtual Environment for LLMLingua & FlashRank...${NC}"
-rm -rf "$HOME/.ai-skills/venv" 2>/dev/null || true
-uv venv "$HOME/.ai-skills/venv" --seed $QUIET_OPT
-VENV_PYTHON="$HOME/.ai-skills/venv/bin/python"
+rm -rf "$HOME/.wizard-ai/venv" 2>/dev/null || true
+uv venv "$HOME/.wizard-ai/venv" --seed $QUIET_OPT
+VENV_PYTHON="$HOME/.wizard-ai/venv/bin/python"
 
 # Auto-install system dependencies for turbovec if possible
 echo -e "${YELLOW}Checking system dependencies (Rust/Cargo & OpenBLAS) for turbovec...${NC}"
@@ -134,7 +134,7 @@ uv pip install $QUIET_OPT --python "$VENV_PYTHON" \
        echo -e "${RED}Ubuntu: sudo apt install cargo libopenblas-dev${NC}"
        exit 1
      }
-echo -e "${GREEN}✓ Virtual environment ready at ~/.ai-skills/venv/${NC}"
+echo -e "${GREEN}✓ Virtual environment ready at ~/.wizard-ai/venv/${NC}"
 
 # 3. Setting up external git skill repositories
 echo -e "\n${BLUE}[3/10] Setting up external git skill repositories...${NC}"
@@ -142,7 +142,7 @@ echo -e "\n${BLUE}[3/10] Setting up external git skill repositories...${NC}"
 clone_skill_repo() {
   local url="$1"
   local dest_name="$2"
-  local dest_dir="$HOME/.ai-skills/$dest_name"
+  local dest_dir="$HOME/.wizard-ai/$dest_name"
   
   if [ ! -d "$dest_dir" ]; then
     echo -e "${YELLOW}Cloning $dest_name from GitHub...${NC}"
@@ -163,14 +163,14 @@ clone_skill_repo "https://github.com/google-labs-code/design.md.git" "design.md"
 clone_skill_repo "https://github.com/SpinaBuilds/goodcode.git" "goodcode"
 clone_skill_repo "https://github.com/mvanhorn/last30days-skill.git" "last30days-skill"
 
-echo -e "\n${BLUE}Cloning/Verifying ECC and caveman repositories inside ~/.ai-skills/...${NC}"
+echo -e "\n${BLUE}Cloning/Verifying ECC and caveman repositories inside ~/.wizard-ai/...${NC}"
 clone_skill_repo "https://github.com/affaan-m/ECC.git" "ECC"
 clone_skill_repo "https://github.com/JuliusBrussee/caveman.git" "caveman"
 
 if command -v npm &>/dev/null; then
   echo -e "\n${BLUE}Attempting optional NPM global installations (ECC, caveman, design.md)...${NC}"
   npm install -g --allow-scripts=ecc-universal ecc-universal 2>/dev/null || echo -e "${YELLOW}Note: ecc-universal npm install skipped/failed (using cloned git repo).${NC}"
-  npm install -g "$HOME/.ai-skills/caveman" 2>/dev/null || echo -e "${YELLOW}Note: caveman global install skipped (using cloned git repo).${NC}"
+  npm install -g "$HOME/.wizard-ai/caveman" 2>/dev/null || echo -e "${YELLOW}Note: caveman global install skipped (using cloned git repo).${NC}"
   npm install -g --allow-scripts=puppeteer @google/design.md 2>/dev/null || echo -e "${YELLOW}Note: @google/design.md npm install skipped/failed.${NC}"
 else
   echo -e "${YELLOW}NPM not found. Using cloned git repos for ECC and caveman.${NC}"
@@ -612,7 +612,7 @@ fi
 # 10. Fix ownership if run via sudo
 if [ -n "${SUDO_USER:-}" ]; then
   echo -e "\n${BLUE}[10/10] Fixing file ownership for user $USER...${NC}"
-  chown -R "$USER:$USER" "$HOME/.config/wizard-ai" "$HOME/.local/bin" "$HOME/.local/share/uv" "$HOME/.ai-skills" "$HOME/.gemini" "$HOME/.cargo" 2>/dev/null || true
+  chown -R "$USER:$USER" "$HOME/.config/wizard-ai" "$HOME/.local/bin" "$HOME/.local/share/uv" "$HOME/.wizard-ai" "$HOME/.gemini" "$HOME/.cargo" 2>/dev/null || true
 fi
 
 # 9. Final summary
@@ -620,21 +620,14 @@ echo -e "\n${GREEN}============================================================"
 echo -e "     🎉  Wizard-AI Environment Installed Successfully! 🎉"
 echo -e "============================================================${NC}"
 echo -e "\nAvailable commands in your terminal:"
-echo -e "  ${CYAN}wizard-ai help${NC}      - Central hub for all AI commands"
-echo -e "  ${CYAN}wizard-ai usage${NC}     - View Gemini usage statistics and token budget"
-echo -e "  ${CYAN}wizard-ai graph${NC}     - Run Graphify to map codebases to knowledge graphs"
-echo -e "  ${CYAN}wizard-ai compress${NC}  - Compress prompt context via LLMLingua (up to 20x)"
-echo -e "  ${CYAN}wizard-ai rerank${NC}    - Re-rank list components for RAG via FlashRank"
-echo -e "  ${CYAN}wizard-ai squeeze${NC}   - Compress CLI outputs / files via Sqz"
-echo -e "  ${CYAN}wizard-ai convert${NC}   - Extract clean Markdown from PDF, DOCX, images, etc."
-echo -e "  ${CYAN}wizard-ai mem${NC}       - Access persistent semantic memory (claude-mem)"
-echo -e "  ${CYAN}wizard-ai design${NC}    - Browse & apply DESIGN.md files for UI generation"
-echo -e "  ${CYAN}wizard-ai taste${NC}     - Apply anti-slop frontend design skill"
-echo -e "  ${CYAN}wizard-ai lean${NC}      - Lean Context Intelligence (60-90% token savings)"
-echo -e "  ${CYAN}wizard-ai caveman${NC}   - Cut output tokens by ~75% while keeping accuracy"
-echo -e "  ${CYAN}wizard-ai scaffold${NC}  - Scaffold Express/Nuxt projects from templates"
-echo -e "  ${CYAN}wizard-ai quota${NC}     - View AI provider quotas and subscriptions"
-echo -e "  ${CYAN}wizard-ai sync-skills${NC} - Sync skills across all AI agents"
+echo -e "  ${CYAN}wz-ai help${NC}      - Central hub for all AI commands"
+echo -e "  ${CYAN}wz-ai usage${NC}     - View Gemini usage statistics and token budget"
+echo -e "  ${CYAN}wz-ai graph${NC}     - Run Graphify to map codebases to knowledge graphs"
+echo -e "  ${CYAN}wz-ai mem${NC}       - Access persistent semantic memory"
+echo -e "  ${CYAN}wz-ai design${NC}    - Browse & apply DESIGN.md files for UI generation"
+echo -e "  ${CYAN}wz-ai scaffold${NC}  - Scaffold Express/Nuxt projects from templates"
+echo -e "  ${CYAN}wz-ai proxy${NC}     - Manage the Cockpit/Antigravity Proxy"
+echo -e "  ${CYAN}wz-ai quota${NC}     - View AI provider quotas and subscriptions"
 echo -e ""
 echo -e "${YELLOW}Important: Reload your shell to activate the environment:${NC}"
 echo -e "  ${PURPLE}source ~/.bashrc${NC}  (or restart your terminal)"
@@ -643,4 +636,4 @@ echo -e "${YELLOW}Your Wizard-AI directory:${NC} ${PURPLE}$WIZARD_AI_DIR${NC}"
 echo -e "${YELLOW}Skills:${NC} ${PURPLE}~/.gemini/config/skills/${NC}"
 echo -e "${YELLOW}CLIs:${NC}   ${PURPLE}~/.local/bin/${NC}"
 echo -e ""
-echo -e "${CYAN}Run 'wizard-ai help' to see all available tools and their usage.${NC}"
+echo -e "${CYAN}Run 'wz-ai help' to see all available tools and their usage.${NC}"

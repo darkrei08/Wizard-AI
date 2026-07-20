@@ -157,7 +157,7 @@ echo ""
 echo -e "${BOLD}${YELLOW}🧠 MEMORY & CONTEXT${RESET}"
 echo -e "  $(check_cmd wz-ai-session-save) ${BOLD}wizard-ai session-save${RESET}  Save current session context to MEMORY.md"
 echo -e "     ${BLUE}wizard-ai session-save \"completed feature X\"${RESET}"
-if [ -d "$HOME/.ai-skills/claude-mem" ]; then
+if [ -d "$HOME/.wizard-ai/claude-mem" ]; then
   echo -e "  ✅ ${BOLD}claude-mem${RESET}       Persistent semantic memory across sessions"
 else
   echo -e "  ❌ ${BOLD}claude-mem${RESET}       Persistent semantic memory (not installed)"
@@ -183,16 +183,16 @@ echo -e "     ${BLUE}book-to-skill document.pdf${RESET}"
 echo ""
 
 echo -e "${BOLD}${YELLOW}⚙️  FRAMEWORK${RESET}"
-if [ -d "$HOME/.ai-skills/ECC" ] || command -v ecc &>/dev/null; then
-  ECC_SKILLS=$(ls ~/.ai-skills/ECC/skills/ 2>/dev/null | wc -l || echo "Many")
+if [ -d "$HOME/.wizard-ai/ECC" ] || command -v ecc &>/dev/null; then
+  ECC_SKILLS=$(ls ~/.wizard-ai/ECC/skills/ 2>/dev/null | wc -l || echo "Many")
   echo -e "  ✅ ${BOLD}ECC${RESET}              $ECC_SKILLS+ production-ready agent skills & hooks"
 else
   echo -e "  ❌ ${BOLD}ECC${RESET}              Agent skills framework (not installed)"
 fi
-echo -e "     ${BLUE}ls ~/.ai-skills/ECC/skills/${RESET}"
+echo -e "     ${BLUE}ls ~/.wizard-ai/ECC/skills/${RESET}"
 
-if [ -d "$HOME/.ai-skills/cybersecurity-skills" ]; then
-  CYBER_SKILLS=$(ls ~/.ai-skills/cybersecurity-skills/skills/ 2>/dev/null | wc -l)
+if [ -d "$HOME/.wizard-ai/cybersecurity-skills" ]; then
+  CYBER_SKILLS=$(ls ~/.wizard-ai/cybersecurity-skills/skills/ 2>/dev/null | wc -l)
   echo -e "  ✅ ${BOLD}Cybersecurity${RESET}    $CYBER_SKILLS+ cybersecurity framework skills"
 else
   echo -e "  ❌ ${BOLD}Cybersecurity${RESET}    Anthropic Cybersecurity Skills (not installed)"
@@ -200,7 +200,7 @@ fi
 echo ""
 
 echo -e "${BOLD}${YELLOW}📊 VISUALIZATION${RESET}"
-if [ -d "$HOME/.ai-skills/Infographic" ]; then
+if [ -d "$HOME/.wizard-ai/Infographic" ]; then
   echo -e "  ✅ ${BOLD}Infographic${RESET}      AntV AI-powered declarative infographic generator"
 else
   echo -e "  ❌ ${BOLD}Infographic${RESET}      AntV Infographic engine (not installed)"
@@ -209,7 +209,7 @@ echo ""
 
 echo -e "${BOLD}${MAGENTA}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
 echo -e "${BOLD}Skills directory:${RESET} ~/.gemini/config/skills/"
-echo -e "${BOLD}Tools directory:${RESET}  ~/.ai-skills/"
+echo -e "${BOLD}Tools directory:${RESET}  ~/.wizard-ai/"
 echo -e "${BOLD}CLIs:${RESET}             ~/.local/bin/ | ~/.wizard-ai/bin/"
 echo ""
 echo -e "${CYAN}Tip: all tools work as pipes → cmd | wz-ai-compress | wz-ai-rerank${RESET}"

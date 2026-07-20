@@ -181,7 +181,7 @@ git push origin main
 
 ### 6.3 Memory & Knowledge Persistence
 - Aggiorna `MEMORY.md` con riassunto delle modifiche
-- **ANONIMIZZA** percorsi locali (usa `~/.ai-skills` non path assoluti)
+- **ANONIMIZZA** percorsi locali (usa `~/.wizard-ai` non path assoluti)
 - Commit: `git add MEMORY.md && git commit -m "docs: Update MEMORY.md" && git push`
 - Se struttura cambiata: esegui `wz-ai-graph .` in background
 

@@ -1,8 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 echo "Setting up geminiusage..."
-if [ ! -d "$HOME/.ai-skills/geminiusage" ]; then
-  git clone https://github.com/rmedranollamas/geminiusage.git "$HOME/.ai-skills/geminiusage"
+if [ ! -d "$HOME/.wizard-ai/geminiusage" ]; then
+  git clone https://github.com/rmedranollamas/geminiusage.git "$HOME/.wizard-ai/geminiusage"
 fi
 mkdir -p "$HOME/.gemini"
 if [ ! -f "$HOME/.gemini/pricing.json" ]; then

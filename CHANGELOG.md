@@ -32,7 +32,7 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ### Changed
 - **`wz-wz-ai-caveman` Rewrite**: Transformed from a bare installer (7 lines calling `install.js`) into a proper runtime wrapper with `show-prompt`, `install`, `info`, and `help` subcommands. Correctly identifies caveman as a behavioral system prompt, not a binary.
-- **`wz-wz-ai-lean-ctx` Unification**: Rewrote from a fragile direct binary exec (`cd ~/.ai-skills/lean-ctx && ./lean-ctx`) to a proper alias that delegates to `wz-wz-ai-lean`, eliminating incoherent duplication and ensuring all robust logic (build fallback, help, subcommands) is always used.
+- **`wz-wz-ai-lean-ctx` Unification**: Rewrote from a fragile direct binary exec (`cd ~/.wizard-ai/lean-ctx && ./lean-ctx`) to a proper alias that delegates to `wz-wz-ai-lean`, eliminating incoherent duplication and ensuring all robust logic (build fallback, help, subcommands) is always used.
 - **`wz-wz-ai-optimize` Real Orchestrator**: Completely rewrote from a 58-line placeholder into a 190-line real orchestrator with: `status` (shows all 5 phases with ✓/✗), `pipeline` (walks through compression phases for a file), `loop` (enhanced with concrete CLI commands), and `evaluate` (kept).
 - **`wz-wz-ai-rtk` Full Wrapper**: Completely rewrote from a 15-line bare exec into a 170-line wrapper with: `help`, `install`, `init` (hooks), `wrap` (compress a command), `status`, `info` (with comparison to sqz/headroom/llmlingua), and pass-through.
 - **RTK SKILL.md Documentation**: Rewrote from a 9-line placeholder to comprehensive 90-line documentation with how-it-works, installation, usage examples, loop integration matrix, and comparison with sqz.
@@ -41,7 +41,7 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 - **Loop 4 Mermaid Diagram**: Updated to include RTK and headroom nodes in the optimization flow (`Brain → RTK → Squeeze → Headroom → Lean → Caveman`).
 
 ### Fixed
-- **Setup Script EALLOWGIT Fix**: Fixed `npm error code EALLOWGIT` during `setup.sh` and `setup.ps1` when npm disables or restricts direct git package fetches (`git+https://...`). Both scripts now pre-clone `caveman` and `ECC` under `~/.ai-skills/` directly via git, and wrap global `npm install -g` checks with non-fatal fallbacks.
+- **Setup Script EALLOWGIT Fix**: Fixed `npm error code EALLOWGIT` during `setup.sh` and `setup.ps1` when npm disables or restricts direct git package fetches (`git+https://...`). Both scripts now pre-clone `caveman` and `ECC` under `~/.wizard-ai/` directly via git, and wrap global `npm install -g` checks with non-fatal fallbacks.
 
 ## [0.43.1] - 2026-07-11
 
@@ -125,7 +125,7 @@ Ora al termine del `setup.sh` l'utente potrà installare queste dipendenze preme
 ## [0.26.0] - 2026-06-19
 
 ### Added
-- **Global Repo Indexing**: Aggiunte tutte le repository, framework, database (Next, Vue, Mongo, ecc.) menzionate nella `WIKI.md` direttamente in `setup.sh` e `setup.ps1` in modo che l'installazione sia completa e autonoma. Tutti i moduli vengono ora scaricati nella directory `.ai-skills`.
+- **Global Repo Indexing**: Aggiunte tutte le repository, framework, database (Next, Vue, Mongo, ecc.) menzionate nella `WIKI.md` direttamente in `setup.sh` e `setup.ps1` in modo che l'installazione sia completa e autonoma. Tutti i moduli vengono ora scaricati nella directory `.wizard-ai`.
 
 ## [0.25.0] - 2026-06-19
 

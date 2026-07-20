@@ -6,7 +6,7 @@
 
 set -euo pipefail
 
-SKILL_DIR="$HOME/.ai-skills/geminiusage"
+SKILL_DIR="$HOME/.wizard-ai/geminiusage"
 
 if [[ ! -d "$SKILL_DIR" ]]; then
   echo "❌ geminiusage not found at $SKILL_DIR" >&2

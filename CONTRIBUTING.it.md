@@ -77,8 +77,8 @@ Aggiungi l'installazione nel blocco appropriato:
 uv tool install nomepacchetto
 
 # Per repository GitHub:
-if [ ! -d "$HOME/.ai-skills/nome-repo" ]; then
-  git clone --quiet https://github.com/autore/repo "$HOME/.ai-skills/nome-repo"
+if [ ! -d "$HOME/.wizard-ai/nome-repo" ]; then
+  git clone --quiet https://github.com/autore/repo "$HOME/.wizard-ai/nome-repo"
 fi
 ```
 

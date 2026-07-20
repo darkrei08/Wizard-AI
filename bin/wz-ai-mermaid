@@ -2,7 +2,7 @@
 # wz-ai-mermaid - Wrapper for @mermaid-js/mermaid-cli
 # Wizard-AI Ecosystem
 
-MERMAID_DIR="$HOME/.ai-skills/mermaid-cli"
+MERMAID_DIR="$HOME/.wizard-ai/mermaid-cli"
 MMDC_BIN="$MERMAID_DIR/node_modules/.bin/mmdc"
 
 if [ ! -x "$MMDC_BIN" ]; then

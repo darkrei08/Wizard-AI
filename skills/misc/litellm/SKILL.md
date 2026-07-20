@@ -17,7 +17,7 @@ litellm --model gemini/gemini-2.0-flash
 litellm --port 4000 --model ollama/llama3
 
 # With config file (recommended for multi-model routing)
-litellm --config ~/.ai-skills/configs/litellm-config.yaml
+litellm --config ~/.wizard-ai/configs/litellm-config.yaml
 
 # Check installed version
 litellm --version
@@ -38,7 +38,7 @@ print(f"Tokens used: {response.usage.total_tokens}")
 print(f"Cost: ${response._hidden_params['response_cost']}")
 ```
 
-## Config File Template (`~/.ai-skills/configs/litellm-config.yaml`)
+## Config File Template (`~/.wizard-ai/configs/litellm-config.yaml`)
 
 ```yaml
 model_list:

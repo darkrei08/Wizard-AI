@@ -77,8 +77,8 @@ Add the installation in the appropriate block:
 uv tool install packagename
 
 # For GitHub repositories:
-if [ ! -d "$HOME/.ai-skills/repo-name" ]; then
-  git clone --quiet https://github.com/author/repo "$HOME/.ai-skills/repo-name"
+if [ ! -d "$HOME/.wizard-ai/repo-name" ]; then
+  git clone --quiet https://github.com/author/repo "$HOME/.wizard-ai/repo-name"
 fi
 ```
 

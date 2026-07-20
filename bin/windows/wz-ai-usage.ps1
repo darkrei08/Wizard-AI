@@ -2,7 +2,7 @@
 # Windows port of bin/wz-wz-ai-usage
 # Source: https://github.com/rmedranollamas/geminiusage
 
-$SkillDir = Join-Path $HOME '.ai-skills\geminiusage'
+$SkillDir = Join-Path $HOME '.wizard-ai\geminiusage'
 
 if (-not (Test-Path $SkillDir)) {
     Write-Host "[X] geminiusage not found at $SkillDir" -ForegroundColor Red

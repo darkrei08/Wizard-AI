@@ -7,7 +7,7 @@ description: "Use to re-rank documents or passages by relevance before inserting
 
 FlashRank is a fast, CPU-optimized reranker for RAG systems. It scores passages by relevance to a query and returns them sorted by score.
 
-Installed inside `~/.ai-skills/venv/`. Use via the `wz-ai-rerank` wrapper (handles venv activation automatically).
+Installed inside `~/.wizard-ai/venv/`. Use via the `wz-ai-rerank` wrapper (handles venv activation automatically).
 
 ## CLI Usage
 
