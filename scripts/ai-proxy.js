@@ -284,7 +284,12 @@ if (!command || command === 'help') {
 try {
   if (command === 'install') {
     console.log("Installing pi-antigravity-rotator...");
-    runCommand('npm install -g pi-antigravity-rotator');
+    try {
+      runCommand('npm install -g pi-antigravity-rotator');
+    } catch(e) {
+      console.log("⚠️ Local install failed (EACCES). Escalating to sudo...");
+      runCommand('sudo npm install -g pi-antigravity-rotator');
+    }
   } 
   else if (command === 'provision') {
     console.log("Provisioning Cockpit Tools accounts...");

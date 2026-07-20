@@ -468,6 +468,13 @@ if command -v npm &>/dev/null; then
   if [[ ! "$RUN_COCKPIT" =~ ^[Nn]$ ]]; then
     echo -e "${CYAN}Running pi-cockpit-proxy-setup via npx...${NC}"
     npx --yes pi-cockpit-proxy-setup || echo -e "${RED}Failed to run pi-cockpit-proxy-setup.${NC}"
+    
+    echo -e "\n${CYAN}⚙️ Installing and enabling background Proxy Rotator...${NC}"
+    echo -e "${YELLOW}Il proxy verrà installato globalmente e abilitato come servizio in background per evitare problemi di quota (429).${NC}"
+    sudo npm install -g pi-antigravity-rotator || npm install -g pi-antigravity-rotator || echo -e "${RED}Failed to install pi-antigravity-rotator.${NC}"
+    "$HOME/.local/bin/ai-proxy" provision || true
+    "$HOME/.local/bin/ai-proxy" enable || true
+
   fi
 else
   echo -e "${YELLOW}NPM not found. Cockpit Proxy setup skipped.${NC}"
