@@ -5,7 +5,7 @@
 <h3 align="center"><b>~78%削減のトークン効率（最大94%省力化）· ~80%のコスト削減 · 5x 高速化 · 100% 安全な自動ロールバック保護</b></h3>
 
 <p align="center">
-  実際のコーディングエージェント（Claude Code、Antigravity、OpenHands）を用いた複雑なアーキテクチャ設計、バグ修正、およびパッケージ導入（<code>bun</code>、<code>nuxt</code>、<code>python</code>、<code>node</code>、<code>rust</code>）で実証済み。Wizard-AIは、<b>#ponytail</b>（実用主義のシニアエンジニア思考）、<b>#caveman</b>（CLI出力の75%削減）、<b>#sqz</b>（JSONの20倍圧縮）、および <b>ai-os</b>（ゼロダウンタイム自動安全ロールバック）を統合します。
+  実際のコーディングエージェント（Claude Code、Antigravity、OpenHands）を用いた複雑なアーキテクチャ設計、バグ修正、およびパッケージ導入（<code>bun</code>、<code>nuxt</code>、<code>python</code>、<code>node</code>、<code>rust</code>）で実証済み。Wizard-AIは、<b>#ponytail</b>（実用主義のシニアエンジニア思考）、<b>#caveman</b>（CLI出力の75%削減）、<b>#sqz</b>（JSONの20倍圧縮）、および <b>wizard-ai os</b>（ゼロダウンタイム自動安全ロールバック）を統合します。
   <br/>
   <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>ベンチマークノートブックを見る</b></a> · <a href="README.md#reproduce-it"><b>再現テストの実行</b></a>。
 </p>
@@ -25,7 +25,7 @@
 
 ### 💡 Wizard-AI による究極の解決策
 
-Wizard-AIは、AIエージェントとOS間の**自己修復型抽象レイヤー (`ai-os`) および 5つのエンジニアリングループ**として機能します：
+Wizard-AIは、AIエージェントとOS間の**自己修復型抽象レイヤー (`wizard-ai os`) および 5つのエンジニアリングループ**として機能します：
 
 ```mermaid
 flowchart TB

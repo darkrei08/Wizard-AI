@@ -5,7 +5,7 @@
 <h3 align="center"><b>~78% menos tokens (hasta un 94%) · ~80% más barato · 5x más rápido · 100% seguro con rollback automático</b></h3>
 
 <p align="center">
-  Medido en sesiones reales con agentes de codificación de IA (Claude Code, Antigravity, OpenHands) en arquitecturas complejas, depuración e instalaciones (<code>bun</code>, <code>nuxt</code>, <code>python</code>, <code>node</code>, <code>rust</code>). Wizard-AI orquesta <b>#ponytail</b> (lógica de desarrollador senior pragmático), <b>#caveman</b> (-75% tokens CLI), <b>#sqz</b> (compresión JSON 20x) y <b>ai-os</b> (puertas de rollback automático sin interrupciones).
+  Medido en sesiones reales con agentes de codificación de IA (Claude Code, Antigravity, OpenHands) en arquitecturas complejas, depuración e instalaciones (<code>bun</code>, <code>nuxt</code>, <code>python</code>, <code>node</code>, <code>rust</code>). Wizard-AI orquesta <b>#ponytail</b> (lógica de desarrollador senior pragmático), <b>#caveman</b> (-75% tokens CLI), <b>#sqz</b> (compresión JSON 20x) y <b>wizard-ai os</b> (puertas de rollback automático sin interrupciones).
   <br/>
   <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>Ver el Notebook de Benchmarks</b></a> · <a href="README.md#reproduce-it"><b>reproducirlo</b></a>.
 </p>
@@ -25,7 +25,7 @@ Cuando dejas que un agente de IA autónomo (como Claude Code, OpenHands o Cursor
 
 ### 💡 Cómo lo Resuelve Wizard-AI Permanentemente
 
-Wizard-AI actúa como una **Capa de Abstracción de Auto-Reparación (`ai-os`) y un Orquestador de 5 Bucles** entre el agente de IA y tu sistema operativo:
+Wizard-AI actúa como una **Capa de Abstracción de Auto-Reparación (`wizard-ai os`) y un Orquestador de 5 Bucles** entre el agente de IA y tu sistema operativo:
 
 ```mermaid
 flowchart TB

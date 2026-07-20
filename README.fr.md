@@ -5,7 +5,7 @@
 <h3 align="center"><b>~78% de tokens en moins (jusqu'à 94%) · ~80% moins cher · 5x plus rapide · 100% sécurisé et protégé par rollback</b></h3>
 
 <p align="center">
-  Mesuré sur des sessions réelles avec des agents de codage IA (Claude Code, Antigravity, OpenHands) sur des architectures complexes, du débogage et des installations (<code>bun</code>, <code>nuxt</code>, <code>python</code>, <code>node</code>, <code>rust</code>). Wizard-AI orchestre <b>#ponytail</b> (discipline de Senior Dev pragmatique), <b>#caveman</b> (-75% tokens CLI), <b>#sqz</b> (compression JSON 20x) et <b>ai-os</b> (barrières de rollback automatique sans interruption).
+  Mesuré sur des sessions réelles avec des agents de codage IA (Claude Code, Antigravity, OpenHands) sur des architectures complexes, du débogage et des installations (<code>bun</code>, <code>nuxt</code>, <code>python</code>, <code>node</code>, <code>rust</code>). Wizard-AI orchestre <b>#ponytail</b> (discipline de Senior Dev pragmatique), <b>#caveman</b> (-75% tokens CLI), <b>#sqz</b> (compression JSON 20x) et <b>wizard-ai os</b> (barrières de rollback automatique sans interruption).
   <br/>
   <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>Voir le Notebook de Benchmarks</b></a> · <a href="README.md#reproduce-it"><b>le reproduire</b></a>.
 </p>
@@ -25,7 +25,7 @@ Quand vous laissez un agent d'IA autonome (comme Claude Code, OpenHands ou Curso
 
 ### 💡 Comment Wizard-AI Résout Ce Problème Définitivement
 
-Wizard-AI agit comme une **Couche d'Abstraction Auto-Réparatrice (`ai-os`) et un Orchestrateur en 5 Boucles** entre l'agent d'IA et votre système d'exploitation :
+Wizard-AI agit comme une **Couche d'Abstraction Auto-Réparatrice (`wizard-ai os`) et un Orchestrateur en 5 Boucles** entre l'agent d'IA et votre système d'exploitation :
 
 ```mermaid
 flowchart TB

@@ -5,7 +5,7 @@
 <h3 align="center"><b>~78% di token in meno (fino al 94%) · ~80% più economico · 5x più veloce · 100% sicuro e con rollback</b></h3>
 
 <p align="center">
-  Misurato su sessioni reali con agenti coding AI (Claude Code, Antigravity, OpenHands) su architetture complesse, debug e installazioni (<code>bun</code>, <code>nuxt</code>, <code>python</code>, <code>node</code>, <code>rust</code>). Wizard-AI orchestra <b>#ponytail</b> (logica da Senior Dev pigro), <b>#caveman</b> (-75% token in output CLI), <b>#sqz</b> (compressione JSON 20x) e <b>ai-os</b> (rollback automatico a zero downtime). Ogni barriera di sicurezza è attiva mentre il contesto resta leggero e fulmineo.
+  Misurato su sessioni reali con agenti coding AI (Claude Code, Antigravity, OpenHands) su architetture complesse, debug e installazioni (<code>bun</code>, <code>nuxt</code>, <code>python</code>, <code>node</code>, <code>rust</code>). Wizard-AI orchestra <b>#ponytail</b> (logica da Senior Dev pigro), <b>#caveman</b> (-75% token in output CLI), <b>#sqz</b> (compressione JSON 20x) e <b>wizard-ai os</b> (rollback automatico a zero downtime). Ogni barriera di sicurezza è attiva mentre il contesto resta leggero e fulmineo.
   <br/>
   <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>Guarda il Notebook Benchmark</b></a> · <a href="README.md#reproduce-it"><b>riproduci i test</b></a>.
 </p>
@@ -25,7 +25,7 @@ Quando lasci che un agente AI autonomo (come Claude Code, OpenHands o Cursor) la
 
 ### 💡 Come funziona
 
-Wizard-AI funge da **Strato di Astrazione Auto-Rigenerante (`ai-os`) e da Orchestratore Deterministico a 5 Loop** tra l'agente AI e il tuo sistema operativo:
+Wizard-AI funge da **Strato di Astrazione Auto-Rigenerante (`wizard-ai os`) e da Orchestratore Deterministico a 5 Loop** tra l'agente AI e il tuo sistema operativo:
 
 ```mermaid
 flowchart TB

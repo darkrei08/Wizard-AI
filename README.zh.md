@@ -5,7 +5,7 @@
 <h3 align="center"><b>~78% 更少 Token（最高省 94%）· ~80% 降低成本 · 5x 极速响应 · 100% 自动回滚保护</b></h3>
 
 <p align="center">
-  在真实编码智能体会话中测试验证（覆盖 Claude Code, Antigravity, OpenHands 等对于复杂架构设计、Bug 诊断与包安装）。Wizard-AI 深度整合了 <b>#ponytail</b>（高级工程师极简开发理念）、<b>#caveman</b>（减少 75% CLI 输出 Token）、<b>#sqz</b>（20x JSON 结构化压缩）以及 <b>ai-os</b>（支持零停机自动安全回滚）。
+  在真实编码智能体会话中测试验证（覆盖 Claude Code, Antigravity, OpenHands 等对于复杂架构设计、Bug 诊断与包安装）。Wizard-AI 深度整合了 <b>#ponytail</b>（高级工程师极简开发理念）、<b>#caveman</b>（减少 75% CLI 输出 Token）、<b>#sqz</b>（20x JSON 结构化压缩）以及 <b>wizard-ai os</b>（支持零停机自动安全回滚）。
   <br/>
   <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>完全版评测 Jupyter Notebook</b></a> · <a href="README.md#reproduce-it"><b>复现测试数据</b></a>。
 </p>
@@ -25,7 +25,7 @@
 
 ### 💡 Wizard-AI 的终极解决方案
 
-Wizard-AI 充当 AI 智能体与您的操作系统之间的**自愈式抽象层 (`ai-os`) 与确定性 5-Loop 工程调度引擎**：
+Wizard-AI 充当 AI 智能体与您的操作系统之间的**自愈式抽象层 (`wizard-ai os`) 与确定性 5-Loop 工程调度引擎**：
 
 ```mermaid
 flowchart TB

@@ -17,7 +17,7 @@
 <h3 align="center"><b>~78% fewer tokens (up to 94%) · ~80% cheaper · 5x faster · 100% safe & rollback-protected</b></h3>
 
 <p align="center">
-  Measured on real coding agent sessions across complex architectures, bug diagnoses, and framework installations (<code>bun</code>, <code>nuxt</code>, <code>node</code>, <code>python</code>, <code>rust</code>). Wizard-AI orchestrates <b>#ponytail</b> (lazy senior dev discipline), <b>#caveman</b> (-75% CLI tokens), <b>#sqz</b> (20x JSON compression), and <b>ai-os</b> (automatic zero-downtime rollback gates). Every safety check is active while your context stays razor-sharp.
+  Measured on real coding agent sessions across complex architectures, bug diagnoses, and framework installations (<code>bun</code>, <code>nuxt</code>, <code>node</code>, <code>python</code>, <code>rust</code>). Wizard-AI orchestrates <b>#ponytail</b> (lazy senior dev discipline), <b>#caveman</b> (-75% CLI tokens), <b>#sqz</b> (20x JSON compression), and <b>wizard-ai os</b> (automatic zero-downtime rollback gates). Every safety check is active while your context stays razor-sharp.
   <br/>
   <a href="benchmarks/wizard_ai_token_benchmark.ipynb"><b>Full benchmark notebook</b></a> · <a href="#reproduce-it"><b>reproduce it</b></a>.
 </p>
@@ -39,7 +39,7 @@ When you let a modern AI coding agent (like raw Claude Code, OpenHands, Aider, o
 
 ### 💡 How Wizard-AI Solves It Permanently
 
-Wizard-AI acts as a **Self-Healing Abstraction Layer (`ai-os`) & Deterministic 5-Loop Orchestrator** between your AI agent and your OS:
+Wizard-AI acts as a **Self-Healing Abstraction Layer (`wizard-ai os`) & Deterministic 5-Loop Orchestrator** between your AI agent and your OS:
 
 ```mermaid
 flowchart TB
@@ -86,12 +86,12 @@ flowchart TB
 
 Inspired by quantified token-saving breakthroughs like [ponytail](https://github.com/DietrichGebert/ponytail) and [caveman](https://github.com/JuliusBrussee/caveman), Wizard-AI combines all major token-compression and behavioral discipline engines into a single unified pipeline:
 
-| Architecture Phase | Standard AI Coding Agent (Raw Claude / GPT-4o) | Wizard-AI (with `ponytail` + `caveman` + `sqz` + `ai-os`) | Net Efficiency & ROI Advantages |
+| Architecture Phase | Standard AI Coding Agent (Raw Claude / GPT-4o) | Wizard-AI (with `ponytail` + `caveman` + `sqz` + `wizard-ai os`) | Net Efficiency & ROI Advantages |
 | :--- | :--- | :--- | :--- |
 | **Codebase Ingestion & RAG** | **85,000 tokens** dumped raw into context (`~$0.25`/turn) | **9,500 tokens** via `sqz` + `flashrank` + `graphify` (`~$0.02`/turn) | 🚀 **88% Token Reduction**<br/>⚡ **5x Faster Time-To-First-Token** |
 | **Feature Architecture & Code** | AI generates 400 lines of boilerplate & over-engineered slop | **`ponytail` mode active:** AI writes 35 lines of surgical, high-leverage code | 🎯 **91% Less Code Bloat**<br/>🐴 *"Laziest Senior Dev Mindset"* |
 | **Terminal / CLI Output Parsing** | Verbose `npm install` / `git log` floods context (15,000 tokens) | **`caveman` + `sqz` wrapper:** Returns 800 tokens of compressed signal | 📉 **94% Context Cost Cut** |
-| **Package & Binary Upgrades** | Agent hallucinates package or breaks runtime → **2 hours manual debug** | **`ai-os` Safe Rollback:** Auto-detects failure, restores `.bak` in 2s | 🛡️ **100% Crash Prevention**<br/>⏱️ **0 min Downtime** |
+| **Package & Binary Upgrades** | Agent hallucinates package or breaks runtime → **2 hours manual debug** | **`wizard-ai os` Safe Rollback:** Auto-detects failure, restores `.bak` in 2s | 🛡️ **100% Crash Prevention**<br/>⏱️ **0 min Downtime** |
 | **Average Complex Feature Cost** | **~$18.50 per feature** (High token burn, context resets, bloat) | **~$3.90 per feature** (Deterministic Loop-Chaining & Compression) | 💸 **78.9% Total Financial Savings** |
 
 ---
@@ -153,14 +153,14 @@ powershell -ExecutionPolicy Bypass -File setup.ps1
 Reload your shell to load the new environment variables, then launch the help menu:
 ```bash
 source ~/.bashrc   # or source ~/.zshrc — on Windows simply open a new terminal
-ai-help
+wizard-ai help
 ```
 You will see the list of 47+ CLI wrappers and 160+ skills.
 
 #### 4️⃣ Launch the Local Dashboard (Hub)
 The ecosystem includes a sleek graphical interface (Hub) to explore skills, inspect your active loops, and view token savings telemetry:
 ```bash
-ai-hub
+wizard-ai hub
 ```
 *Manual alternative to start the server*:
 ```bash
@@ -177,7 +177,7 @@ The interface will be available at `http://localhost:9742`.
 
 ---
 - **Speed**: Generating 1,000 output tokens takes significantly less time than generating 4,000, letting your AI respond in seconds instead of minutes.
-- **Accuracy**: By filtering out noise with `ai-compress` and `ai-rerank`, the LLM hallucinates less and focuses on the actual problem.
+- **Accuracy**: By filtering out noise with `wizard-ai compress` and `wizard-ai rerank`, the LLM hallucinates less and focuses on the actual problem.
 
 ---
 
@@ -190,7 +190,7 @@ Behind the scenes, `setup.sh` handles everything for you:
 3. **Clones dependency repos**: Downloads required helper repositories under `~/.ai-skills/`.
 4. **Installs Global CLI Tools**: Installs compiled tools (`graphify`, `litellm`, `markitdown`, `sqz`, `serena`) globally via `uv tool`.
 5. **Deploys Custom Wrappers**: Copies the scripts from `bin/` to `~/.local/bin/`.
-6. **Configures Agent Skills**: Deploys all agent skills to `~/.gemini/config/skills/` and runs `ai-sync-skills` to copy them to other agent folders.
+6. **Configures Agent Skills**: Deploys all agent skills to `~/.gemini/config/skills/` and runs `wizard-ai sync-skills` to copy them to other agent folders.
 
 ---
 
@@ -200,7 +200,7 @@ Wizard-AI organizes all development, debugging, refactoring, and release tasks i
 
 1. **`01. /loop-1-plan`** — 🎯 **Plan & Spec:** Requirements, alignment, interactive grilling, `.spec.md` specs, and domain modeling.
 2. **`02. /loop-2-develop`** — ⚡ **Develop & TDD:** Isolated git branch, Red-Green-Refactor TDD cycle, parallel subagents, and cybersecurity guardrails.
-3. **`03. /loop-3-debug`** — 🔍 **Debug & Verify:** 4-phase bug diagnosis, `ai-debug check` automated quality gates, and code review.
+3. **`03. /loop-3-debug`** — 🔍 **Debug & Verify:** 4-phase bug diagnosis, `wizard-ai debug check` automated quality gates, and code review.
 4. **`04. /loop-4-refactor`** — 🏗️ **Refactor & Optimize:** Semantic code search (`serena`), clean code/DDD (`ponytail`), and token compression (`sqz`, `caveman`).
 5. **`05. /loop-5-release`** — 🚀 **Release & Learn:** Clean merge to main, SemVer versioning (`auto-release`), npm publishing, user handoff, and `MEMORY.md` persistent learning.
 
@@ -248,41 +248,18 @@ sequenceDiagram
 
 ## 🛠️ Available Commands
 
-After installation, these commands are available in your terminal:
+The list of commands has grown significantly! Please see the [Commands Reference](docs/commands.md) for the full list of available tools.
 
-| Command | Tool | Description |
-|---|---|---|
-| `ai-hub` | Local GUI | Open the dashboard and marketplace in your browser |
-| `ai-help` | Hub | Show all available tools with usage examples |
-| `ai-update` | Updater | Manually pull latest updates for Wizard-AI (includes cross-platform desktop notifications) |
-| `ai-graph [path]` | Graphify | Build knowledge graphs. **Automatically connects to Cockpit Tools to save API Keys!** |
-| `ai-compress --file f.txt` | LLMLingua | Compress prompts/context up to 20x |
-| `headroom` | Headroom | Context compression and API proxy (60-95% fewer tokens) |
-| `ai-caveman` | Caveman | Cut agent output tokens by ~75% while keeping accuracy |
-| `ai-ponytail "prompt"` | Ponytail | Acts as a lazy senior dev to prevent over-engineering |
-| `ai-compare "prompt"` | aisuite | A/B test a prompt across multiple LLM models |
-| `ai-rerank --query "X"` | FlashRank | Re-rank passages by relevance |
-| `ai-squeeze` | Sqz | Compress CLI output / JSON / logs |
-| `ai-convert document.pdf` | MarkItDown | Convert any file to clean Markdown |
-| `ai-session-save "msg"` | Session Save | Save current session context to MEMORY.md |
-| `ai-mem store "text"` | claude-mem | Store a persistent semantic memory |
-| `ai-usage` | GeminiUsage | Track token consumption and budget |
-| `serena find-usages` | Serena | Semantic code search & LSP navigation |
-| `ai-sync-skills` | Sync | Propagate skills to all AI agents |
-| `book-to-skill doc.pdf` | book-to-skill| Convert books/docs into AI skills |
-| `litellm --port 4000` | LiteLLM | Unified LLM API gateway |
-| `wizard-antigravity` | pi-antigravity-rotator | Multi-account rotation proxy for Cockpit Tools |
-| `ai-proxy` | Cockpit Proxy | Manage the Cockpit Tools proxy daemon |
 
 ---
 
 ## 🛩️ AI Proxy (Cockpit Tools) & Pi Integration
 
-Wizard-AI seamlessly integrates with **Cockpit Tools** via the `ai-proxy` to bypass Gemini free-tier rate limits across multiple accounts and route traffic from the `pi-coding-agent`.
+Wizard-AI seamlessly integrates with **Cockpit Tools** via the `wizard-ai proxy` to bypass Gemini free-tier rate limits across multiple accounts and route traffic from the `pi-coding-agent`.
 
 1. **Install Proxy Dependencies**
    ```bash
-   ai-proxy install
+   wizard-ai proxy install
    ```
 
 2. **Add / Import Accounts**
@@ -290,40 +267,40 @@ Wizard-AI seamlessly integrates with **Cockpit Tools** via the `ai-proxy` to byp
 
    *Option A (Manual OAuth):* Add a Google account directly by signing in:
    ```bash
-   ai-proxy login
+   wizard-ai proxy login
    ```
    
    *Option B (Cockpit Tools Auto-Sync):* Securely extract your `refreshTokens` from the local Cockpit Tools database (automatically decrypts AES-256-GCM tokens) and inject them into the proxy's `accounts.json`:
    ```bash
-   ai-proxy provision
+   wizard-ai proxy provision
    ```
 
    You can verify your configured accounts by running:
    ```bash
-   ai-proxy accounts
+   wizard-ai proxy accounts
    ```
 
 3. **Configure Pi Agent (`pi`)**
    To automatically configure the Pi agent to route all its Google provider traffic through your local proxy:
    ```bash
-   ai-proxy pi-config
+   wizard-ai proxy pi-config
    ```
 
 4. **Start the Proxy Daemon**
    To start the proxy as a background daemon (auto-starts on PC boot):
    ```bash
-   ai-proxy enable
+   wizard-ai proxy enable
    ```
    *Note: On Windows, this creates a VBScript in your Startup folder. On Linux, it uses systemd. On Mac, it uses launchd.*
 
    To view live background logs:
    ```bash
-   ai-proxy logs
+   wizard-ai proxy logs
    ```
 
    To stop the daemon later:
    ```bash
-   ai-proxy disable
+   wizard-ai proxy disable
    ```
 *Note: Once enabled, simply run `pi` and it will automatically use your rotator accounts!*
 
@@ -351,13 +328,13 @@ Skills are `SKILL.md` files that teach AI agents **when and how** to use a tool.
 | Claude Code | `~/.claude/skills/` |
 | Amp | `~/.config/amp/skills/` |
 
-**`setup.sh` installs skills once** to `~/.gemini/config/skills/`. Running `ai-sync-skills` then copies them to all other agent directories automatically.
+**`setup.sh` installs skills once** to `~/.gemini/config/skills/`. Running `wizard-ai sync-skills` then copies them to all other agent directories automatically.
 
 ### Syncing Custom Skills
 
 Whenever you write a new skill or modify an existing one, run:
 ```bash
-ai-sync-skills
+wizard-ai sync-skills
 ```
 This script synchronizes your modifications back to your cloned repository under `skills/` and propagates them to other agents.
 
