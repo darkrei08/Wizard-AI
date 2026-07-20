@@ -446,6 +446,7 @@ Keyword specifiche nel prompt dell'utente che triggerano automaticamente loop, w
 | "React", "Vue", "Angular", "Svelte", "Nuxt" | Skill frontend corrispondente |
 | "Python", "Node", "Laravel", "Firebase" | Skill backend corrispondente |
 | "cerca", "memoria", "documentazione", "contesto", "wiki", "ricorda come" | RAG Auto-Activation (`wz-ai-llmwiki`, `graphify`) |
+| "loop", "workflow", "automazione", "/loopy" | `loopy` |
 
 ---
 

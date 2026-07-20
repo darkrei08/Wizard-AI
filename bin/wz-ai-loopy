@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# wz-ai-loopy - Wrapper for Loopy: The Loop Library and Workflow Manager
+# Integrates Forward-Future/loopy into the Wizard-AI ecosystem.
+
+if [ "$1" == "--install" ]; then
+    echo "🪄 Installing Loopy for supported agents..."
+    echo "Running: npx skills add Forward-Future/loopy --skill loopy -g -y"
+    
+    # Prompt the user for which agent they want if not specified
+    if [ -z "$2" ]; then
+        echo "You can install Loopy for specific agents:"
+        echo "  wz-ai-loopy --install claude-code"
+        echo "  wz-ai-loopy --install cursor"
+        echo "  wz-ai-loopy --install codex"
+        echo "Or interactive:"
+        npx skills add Forward-Future/loopy --skill loopy -g
+    else
+        npx skills add Forward-Future/loopy --skill loopy --agent "$2" -g -y
+    fi
+    echo "✅ Loopy installation completed."
+    exit 0
+fi
+
+if [ "$1" == "--help" ] || [ -z "$1" ]; then
+    echo "🪄 Wizard-AI Loopy CLI Wrapper"
+    echo "====================================="
+    echo "Loopy is an installable skill for finding, adapting, and designing repeatable agent workflows."
+    echo ""
+    echo "Usage:"
+    echo "  wz-ai-loopy --install [agent]   Install Loopy globally for an agent (claude-code, cursor, codex)"
+    echo "  wz-ai-loopy --help              Show this help message"
+    echo ""
+    echo "Once installed, you can trigger Loopy inside your agent by typing:"
+    echo "  /loopy Find a loop for improving test reliability."
+    echo "  /loopy Audit this loop and repair material problems."
+    echo ""
+    exit 0
+fi
+
+echo "❌ Unknown option: $1"
+echo "Run 'wz-ai-loopy --help' for usage."
+exit 1

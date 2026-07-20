@@ -190,7 +190,7 @@ function Install-UvTool($Tool, $Pkg) {
     }
 }
 
-Install-UvTool 'graphify' 'graphifyy'
+Install-UvTool 'graphify' 'graphifyy[all]'
 Install-UvTool 'litellm' 'litellm[proxy]'
 Install-UvTool 'markitdown'
 Install-UvTool 'sqz'

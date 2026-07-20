@@ -248,7 +248,7 @@ Welcome to the Wizard-AI knowledge base. All skills and workflows are organized 
 | [📐 Architecture Improver](.agents/skills/5-mattpocock/mattpocock/mp-improve-codebase-architecture) | — | Refactor codebase architecture for better maintainability. |
 | [📝 Scaffold Exercises](.agents/skills/5-mattpocock/misc_mattpocock/mp-scaffold-exercises) | — | Create exercise directory structures with sections, problems, solutions. |
 | [🔀 Merge Conflict Resolver](.agents/skills/5-mattpocock/mattpocock/mp-resolving-merge-conflicts) | — | Step-by-step guide for resolving git merge/rebase conflicts. |
-| [🔄 Loop Me](.agents/skills/5-mattpocock/mattpocock/mp-loop-me) | — | Keep me in the loop — iterative development cycle. |
+| [🔄 Loopy](skills/workflows-and-orchestration/loopy) | — | A library of practical AI-agent loops and an installable skill for finding, adapting, and designing repeatable agent workflows. |
 | [🔥 Grill Me](.agents/skills/5-mattpocock/mattpocock/mp-grill-me) | — | Interactive grilling session to resolve design decisions. |
 | [🔥 The Grilling](.agents/skills/5-mattpocock/mattpocock/mp-grilling) | — | Stress-test a plan relentlessly before building. No mercy. |
 | [🔬 Research](.agents/skills/5-mattpocock/mattpocock/mp-research) | — | Investigate a question against primary sources. Capture as Markdown. |
