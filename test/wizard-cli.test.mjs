@@ -19,8 +19,8 @@ describe('Wizard-AI CLI Environment & Platform Structure', () => {
     expect(content).toContain('setup.sh');
   });
 
-  it('should have scripts/ai-proxy.js with proxy management support', () => {
-    const proxyPath = path.join(rootDir, 'scripts/ai-proxy.js');
+  it('should have scripts/wz-ai-proxy.js with proxy management support', () => {
+    const proxyPath = path.join(rootDir, 'scripts/wz-ai-proxy.js');
     expect(fs.existsSync(proxyPath)).toBe(true);
     const content = fs.readFileSync(proxyPath, 'utf-8');
     expect(content).toContain('litellm_config.yaml');
