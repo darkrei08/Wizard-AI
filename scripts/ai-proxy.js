@@ -77,6 +77,25 @@ function injectDummyAuth() {
   } catch (e) {
     console.error("Warning: Failed to inject dummy auth key", e.message);
   }
+
+  const modelsFile = path.join(os.homedir(), '.pi', 'agent', 'models.json');
+  try {
+    let modelsConfig = { providers: {} };
+    if (fs.existsSync(modelsFile)) {
+      modelsConfig = JSON.parse(fs.readFileSync(modelsFile, 'utf8'));
+    }
+    if (!modelsConfig.providers) modelsConfig.providers = {};
+    if (!modelsConfig.providers.google) {
+      modelsConfig.providers.google = { baseUrl: "http://127.0.0.1:51200/v1beta" };
+    } else {
+      modelsConfig.providers.google.baseUrl = "http://127.0.0.1:51200/v1beta";
+    }
+    fs.mkdirSync(path.dirname(modelsFile), { recursive: true });
+    fs.writeFileSync(modelsFile, JSON.stringify(modelsConfig, null, 2), 'utf8');
+    console.log("✅ Injected pi models.json config to route Google API to local proxy (51200).");
+  } catch (e) {
+    console.error("Warning: Failed to inject models config", e.message);
+  }
 }
 
 // ── OS Daemon Handlers ───────────────────────────────────────────────────
