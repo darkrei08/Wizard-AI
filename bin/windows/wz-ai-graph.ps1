@@ -48,19 +48,24 @@ if (-not $Graphify) {
     exit 1
 }
 
-# Auto-detect Cockpit Tools CLIProxyAPI on port 19528
+# Auto-detect Cockpit Tools CLIProxyAPI / Pi Rotator on port 51200
 $tcpConnection = $null
 try {
-    $tcpConnection = New-Object System.Net.Sockets.TcpClient("127.0.0.1", 19528)
+    $tcpConnection = New-Object System.Net.Sockets.TcpClient("127.0.0.1", 51200)
     if ($tcpConnection.Connected) {
         Write-Host "🚀 Cockpit Tools Proxy detected! Routing LLM requests through local subscription..." -ForegroundColor Cyan
-        $env:OPENAI_API_BASE = "http://127.0.0.1:19528/v1"
+        $env:OPENAI_API_BASE = "http://127.0.0.1:51200/v1"
+        $env:OPENAI_BASE_URL = "http://127.0.0.1:51200/v1"
         $env:OPENAI_API_KEY = "dummy"
         $env:GEMINI_API_KEY = "dummy"
         $env:ANTHROPIC_API_KEY = "dummy"
+        $env:GRAPHIFY_LLM_PROVIDER = "openai"
+        $env:GRAPHIFY_LLM_MODEL = "gemini-3.1-pro-high"
+        $CockpitArgs = @("--backend", "openai", "--model", "gemini-3.1-pro-high")
     }
 } catch {
     # Port not open, ignore
+    $CockpitArgs = @()
 } finally {
     if ($tcpConnection) { $tcpConnection.Close() }
 }
@@ -94,15 +99,15 @@ switch ($First) {
     }
     'update' {
         if ($Rest.Count -eq 0) { $Rest = @('.') }
-        & $Graphify @Rest --update
+        & $Graphify @Rest --update @CockpitArgs
         exit $LASTEXITCODE
     }
     { $_ -in 'query', 'path', 'explain', 'add' } {
-        & $Graphify @args
+        & $Graphify @args @CockpitArgs
         exit $LASTEXITCODE
     }
 }
 
 # Default: run graphify with all remaining args
-& $Graphify @args
+& $Graphify @args @CockpitArgs
 exit $LASTEXITCODE

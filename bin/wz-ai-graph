@@ -6,15 +6,19 @@ set -euo pipefail
 
 GRAPHIFY_BIN="${HOME}/.local/bin/graphify"
 
-# Auto-detect Cockpit Tools CLIProxyAPI on port 19528 (Cross-platform: Linux, macOS, WSL)
-if (echo > /dev/tcp/127.0.0.1/19528) >/dev/null 2>&1 || nc -z 127.0.0.1 19528 >/dev/null 2>&1; then
+# Auto-detect Cockpit Tools CLIProxyAPI / Pi Rotator on port 51200 (Cross-platform: Linux, macOS, WSL)
+if (echo > /dev/tcp/127.0.0.1/51200) >/dev/null 2>&1 || nc -z 127.0.0.1 51200 >/dev/null 2>&1; then
   echo "🚀 Cockpit Tools Proxy detected! Routing LLM requests through local subscription..."
-  export OPENAI_API_BASE="http://127.0.0.1:19528/v1"
+  export OPENAI_API_BASE="http://127.0.0.1:51200/v1"
+  export OPENAI_BASE_URL="http://127.0.0.1:51200/v1"
   export OPENAI_API_KEY="dummy"
   export GEMINI_API_KEY="dummy"
   export ANTHROPIC_API_KEY="dummy"
   export GRAPHIFY_LLM_PROVIDER="openai"
-  export GRAPHIFY_LLM_MODEL="gemini-3.5-pro"
+  export GRAPHIFY_LLM_MODEL="gemini-3.1-pro-high"
+  COCKPIT_ARGS=("--backend" "openai" "--model" "gemini-3.1-pro-high")
+else
+  COCKPIT_ARGS=()
 fi
 
 show_help() {
@@ -73,12 +77,13 @@ case "$1" in
     ;;
   update)
     shift
-    exec "$GRAPHIFY_BIN" "${@:-.}" --update
+    exec "$GRAPHIFY_BIN" "${@:-.}" --update "${COCKPIT_ARGS[@]}"
     ;;
   query|path|explain|add)
-    exec "$GRAPHIFY_BIN" "$@"
+    exec "$GRAPHIFY_BIN" "$@" "${COCKPIT_ARGS[@]}"
     ;;
 esac
 
 # Default: run graphify with all remaining args
-exec "$GRAPHIFY_BIN" "$@"
+exec "$GRAPHIFY_BIN" "$@" "${COCKPIT_ARGS[@]}"
+
