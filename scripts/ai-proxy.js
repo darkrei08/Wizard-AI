@@ -66,16 +66,20 @@ function injectPiConfig() {
     if (fs.existsSync(authFile)) {
       auth = JSON.parse(fs.readFileSync(authFile, 'utf8'));
     }
-    // We unconditionally inject the dummy key because when the proxy is running,
-    // the proxy handles the real OAuth credentials. If pi has a real oauth token,
-    // it might fail validation in newer pi versions expecting an api_key.
+    // We unconditionally inject a dummy OAuth token because when the proxy is running,
+    // the proxy handles the real OAuth credentials and swaps the Authorization header.
+    // If we inject an api_key, pi sends it as x-goog-api-key which the proxy does not
+    // currently strip, causing upstream rejections.
     auth.google = {
-      type: "api_key",
-      key: "AIzaSyDummyKeyForProxyBypass1234567890"
+      type: "oauth",
+      access: "ya29.DummyTokenForProxyBypass1234567890",
+      refresh: "1//DummyTokenForProxyBypass1234567890",
+      expires: Date.now() + 1000 * 60 * 60 * 24 * 365,
+      email: "proxy-bypass@wizard-ai.local"
     };
     fs.mkdirSync(path.dirname(authFile), { recursive: true });
     fs.writeFileSync(authFile, JSON.stringify(auth, null, 2), 'utf8');
-    console.log("✅ Injected dummy Google API key into pi auth.json to bypass CLI validation.");
+    console.log("✅ Injected dummy Google OAuth token into pi auth.json to bypass CLI validation.");
   } catch (e) {
     console.error("Warning: Failed to inject dummy auth key", e.message);
   }
