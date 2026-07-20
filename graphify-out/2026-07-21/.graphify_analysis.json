@@ -5771,17 +5771,17 @@
   "questions": [
     {
       "type": "bridge_node",
-      "question": "Why does `Component Cookbook` connect `UI Component Cookbook Recipes` to `Editorial Theme Collections`, `Design Themes and Genres`, `Microinteraction and Typography Rules`, `Theme Design Protocols`, `Hero Enrichment Strategy`?",
+      "question": "Why does `Component Cookbook` connect `Component Cookbook` to `Editorial Genre`, `Modern-Minimal Genre`, `Load Visual Ruleset`, `Study`, `Hero Enrichment`?",
       "why": "High betweenness centrality (0.000) - this node is a cross-community bridge."
     },
     {
       "type": "bridge_node",
-      "question": "Why does `BaseSchemaValidator` connect `XML Schema Validator Core` to `DOCX Schema Validation Tool`, `PPTX Schema Validator`, `Office Document Validators`?",
+      "question": "Why does `BaseSchemaValidator` connect `BaseSchemaValidator` to `DOCXSchemaValidator`, `PPTXSchemaValidator`, `docx/scripts/office/validators/__init__.py`?",
       "why": "High betweenness centrality (0.000) - this node is a cross-community bridge."
     },
     {
       "type": "bridge_node",
-      "question": "Why does `PPTXSchemaValidator` connect `PPTX Schema Validator` to `XML Schema Validator Core`, `DOCX Redlining Validation`, `DOCX Document Packing`, `Office Document Validators`?",
+      "question": "Why does `PPTXSchemaValidator` connect `PPTXSchemaValidator` to `BaseSchemaValidator`, `RedliningValidator`, `_run_validation`, `docx/scripts/office/validators/__init__.py`?",
       "why": "High betweenness centrality (0.000) - this node is a cross-community bridge."
     },
     {
