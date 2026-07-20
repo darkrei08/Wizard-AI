@@ -134,11 +134,13 @@ dove:
 
 ---
 
-#### Step 3: Intent Routing & MoE Classification 🎯 (ALWAYS)
-**Skill:** `auto-router` (versione MoE estesa)
+#### Step 3: Semantic Intent Routing & MoE Classification 🎯 (ALWAYS)
+**Skill:** `auto-router` (versione MoE v2)
 
-- Calcola `relevance_score` per ogni workflow usando la gating function
-- Determina `task_weight` **Matrice di Routing Estesa (v2 — Loop-First):**
+- **Azione 1: Query The Brain (`brain-tech-stack`)**: Prima di routare, valuta semanticamente i vantaggi dei framework necessari per l'intento dell'utente.
+- **Azione 2: Dynamic Skill Injection**: Componi la Trinità Architetturale (Regole Base + Backend + Frontend) se il progetto è HEAVY.
+- **Azione 3: Task Weight**: Calcola il `task_weight` (LIGHT, MEDIUM, HEAVY) e decidi se delegare a subagents (`4-swarm-manager`).
+- Determina `task_weight` e applica la **Matrice di Routing Estesa (v2 — Loop-First):**
 
 #### Routing Primario: 5 Loop-Engineering Workflows
 
@@ -446,7 +448,6 @@ Keyword specifiche nel prompt dell'utente che triggerano automaticamente loop, w
 | "React", "Vue", "Angular", "Svelte", "Nuxt" | Skill frontend corrispondente |
 | "Python", "Node", "Laravel", "Firebase" | Skill backend corrispondente |
 | "cerca", "memoria", "documentazione", "contesto", "wiki", "ricorda come" | RAG Auto-Activation (`wz-ai-llmwiki`, `graphify`) |
-| "loop", "workflow", "automazione", "/loopy" | `loopy` |
 
 ---
 

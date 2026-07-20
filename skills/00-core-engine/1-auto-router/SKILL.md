@@ -17,19 +17,25 @@ Before any step, execute the mandatory Self-Questioning (`Autoforzatura al Dialo
 `🧠 [SELF-QUESTION] "Quale strada di sviluppo o tool semantico devo usare ora per risolvere questo step col massimo rigore e qual è la condizione esatta per passare al loop successivo?"`
 </MANDATORY>
 
-## 1. Task Weight Classification (MoE Gating)
+## 1. Semantic Intent Routing & Task Weight (MoE Gating v2)
 
-Before executing a task, calculate its weight based on intent, context size, and keywords:
+Before executing a task, DO NOT just match keywords. You must act as the **Semantic Orchestrator (Centralinista)**:
 
-- **LIGHT Weight (Score ≤ 0.3)**
-  - *Keywords:* `spiega, cos'è, mostra, dimmi, fix, typo, commento, allinea, formatta`
-  - *Action:* Execute directly. Skip heavy pre/post processing (no optimize, no graphify).
-- **MEDIUM Weight (Score 0.3 - 0.7)**
-  - *Keywords:* `UI, design, layout, SEO, blog, documento, converti, test, implementa, debug, bug, errore`
-  - *Action:* Route to specific loop or domain workflow.
-- **HEAVY Weight (Score > 0.7)**
-  - *Keywords:* `architettura, refactoring, migrazione, progetto, release, deploy, security audit, feature complessa`
-  - *Action:* Route to loop-engineering workflow. Execute FULL iterative loop.
+1. **Query the Brain (`brain-tech-stack`)**: Evaluate the user's intent to discover the optimal tech stack. What are the advantages of the required frameworks? (e.g. Astro for SEO, Qwik for resumability, Go for concurrency).
+2. **Dynamic Skill Injection (The Architectural Trinity)**: For HEAVY/Full-Stack tasks, automatically assemble a prompt XML that forces the injection of:
+   - *Foundation*: `engineering-excellence` & `devboards-architecture` (Clean architecture, SOLID, TDD).
+   - *Backend*: Backend constraints (`mongodb`, `strix` for security).
+   - *Frontend*: Design constraints (`frontend-design`, `stitch-taste-design`).
+3. **Weight Classification**:
+   - **LIGHT Weight (Score ≤ 0.3)**: Execute directly. Keywords: `spiega, fix, typo, commento`.
+   - **MEDIUM Weight (Score 0.3 - 0.7)**: Route to specific loop. Keywords: `UI, SEO, blog, test, implementa, debug`.
+   - **HEAVY Weight (Score > 0.7)**: Route to loop-engineering workflow with Multi-Agent Handoff. Keywords: `architettura, refactoring, migrazione, progetto full-stack, release`.
+
+## 1.b Multi-Agent Handoff (Swarm Strategy)
+If the task is HEAVY (e.g., "Build a full-stack web app"), do NOT execute everything in one context. Use `4-swarm-manager` and `dispatching-parallel-agents`:
+- **Sub-Agent 1 (Master API)**: Injected with backend rules + `engineering-excellence`. Builds the API.
+- **Sub-Agent 2 (Master UI)**: Injected with `stitch-taste-design`. Builds the frontend consuming the API.
+- **Sub-Agent 3 (Security Auditor)**: Injected with `cybersecurity`. Audits both.
 
 ## 2. Primary Routing: 5 Sequenced Loop-Engineering Workflows (01 → 05)
 
