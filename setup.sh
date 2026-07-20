@@ -460,8 +460,8 @@ fi
 if command -v npm &>/dev/null; then
   echo -e "${YELLOW}Do you want to configure the Cockpit Proxy and select a default model for Pi? [Y/n]${NC}"
   if [ "$YES_MODE" -eq 1 ]; then
-    RUN_COCKPIT="n"
-    echo -e "${YELLOW}  (auto-skipped in --yes mode)${NC}"
+    RUN_COCKPIT="y"
+    echo -e "${YELLOW}  (auto-accepted in --yes mode)${NC}"
   else
     read -p "> " RUN_COCKPIT
   fi
