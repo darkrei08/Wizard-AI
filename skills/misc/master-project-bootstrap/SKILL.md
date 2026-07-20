@@ -14,14 +14,16 @@ This is the ultimate meta-skill for bootstrapping and managing software projects
 - **TDD (Test-Driven Development)**: Red → Green → Refactor. Never skip tests. Minimum coverage is 85%. **Trigger `test-driven-development`**.
 - **Security & A11y**: Never hardcode secrets (`.env.example` only). Always enforce WCAG 2.2 AA accessibility in frontends. Implement proper i18n routing from day 1.
 
-## 2. Dynamic Framework Selection
+## 2. Dynamic Framework Selection (`brain-tech-stack`)
 
-Evaluate project complexity and choose the technology stack from the Wizard-AI recommended list:
-- **Microservices & APIs**: Use `express-typescript-starter` (Node.js, Express, TS, Zod) or `bun`/`deno`.
-- **Full-stack Web Apps**: Use **Next.js 15+** (App Router, Server Components) or **Nuxt v4**.
-- **Backend-as-a-Service (BaaS)**: Use **PocketBase** (SQLite, realtime, auth), **Trailbase** (open-source Firebase alternative using Rust, Wasmtime & SQLite for sub-millisecond realtime APIs), or **Firebase** for fast integrations.
-- **Databases**: Use **SQLite + Drizzle ORM** for standard relational needs, **MySQL/PostgreSQL** for massive scale, and **Zvec** / **TurboVec** for local RAG/Vector searches.
-- **Mobile**: Use **React Native** or **Flutter**.
+Evaluate project complexity and ALWAYS consult the `brain-tech-stack` skill to choose the technology stack. You have a massive arsenal at your disposal:
+- **Frontend SPA/SSR**: `react` (Next.js), `vue` (Nuxt 4), `svelte` (SvelteKit), `angular`, `framework-astro5` or `framework-qwik`.
+- **Mobile Apps**: `flutter` or `react-native`.
+- **Backend APIs & Monoliths**: `laravel` (PHP), `express-typescript-starter` / `bun` (Node.js), or `pocketbase` (Go).
+- **Databases**: `mongodb` (NoSQL), SQLite + Drizzle, PostgreSQL, or `zvec` / `turbovec` for local Vector searches.
+- **AI Agentic Layer**: Use `mem0`, `litellm`, `aisuite`, or `qwenpaw` when building autonomous workflows.
+
+**CRITICAL RULE**: Once you decide on a stack (e.g. `laravel` + `vue`), you MUST trigger the respective skills to read their specific architecture guidelines before generating code.
 
 ## 3. Mandatory "Living Documents" System
 
