@@ -134,7 +134,7 @@ function enableLinux() {
   // Pi Rotator Service
   const ExecStart = runCommandSilent('which pi-antigravity-rotator');
   if (!ExecStart) {
-    console.error("pi-antigravity-rotator not found. Run 'ai-proxy install' first.");
+    console.error("pi-antigravity-rotator not found. Run 'wizard-ai proxy install' first.");
     process.exit(1);
   }
   const serviceContent = `[Unit]
@@ -197,7 +197,7 @@ function enableMac() {
     if (prefix) ExecStart = path.join(prefix, 'bin', 'pi-antigravity-rotator');
   }
   if (!ExecStart || !fs.existsSync(ExecStart)) {
-    console.error("pi-antigravity-rotator not found. Run 'ai-proxy install' first.");
+    console.error("pi-antigravity-rotator not found. Run 'wizard-ai proxy install' first.");
     process.exit(1);
   }
 
@@ -336,7 +336,7 @@ function showLogs() {
 
 if (!command || command === 'help') {
   console.log("🚀 Wizard-AI Proxy Manager (Cross-Platform Daemon)");
-  console.log("Usage: ai-proxy <command>");
+  console.log("Usage: wizard-ai proxy <command>");
   console.log("");
   console.log("  install    - Install pi-antigravity-rotator globally");
   console.log("  login      - Add a Google account to the rotator via OAuth");
@@ -350,10 +350,10 @@ if (!command || command === 'help') {
   console.log("  pi-config  - (Re)generate pi's auth.json + models.json to use the local proxy");
   console.log("");
   console.log("Quick Start:");
-  console.log("  1. ai-proxy install          # Install the rotator");
-  console.log("  2. ai-proxy login            # Add at least one Google account");
-  console.log("  3. ai-proxy enable           # Start as background daemon");
-  console.log("  4. pi                        # Pi now uses the rotator automatically");
+  console.log("  1. wizard-ai proxy install          # Install the rotator");
+  console.log("  2. wizard-ai proxy login            # Add at least one Google account");
+  console.log("  3. wizard-ai proxy enable           # Start as background daemon");
+  console.log("  4. pi                               # Pi now uses the rotator automatically");
   process.exit(1);
 }
 
@@ -384,13 +384,13 @@ try {
     // Show all rotator accounts with their quota
     const configPath = path.join(os.homedir(), '.pi-antigravity-rotator', 'accounts.json');
     if (!fs.existsSync(configPath)) {
-      console.log("No accounts configured. Run 'ai-proxy login' to add one.");
+      console.log("No accounts configured. Run 'wizard-ai proxy login' to add one.");
       process.exit(0);
     }
     const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
     const accounts = config.accounts || [];
     if (accounts.length === 0) {
-      console.log("No accounts configured. Run 'ai-proxy login' to add one.");
+      console.log("No accounts configured. Run 'wizard-ai proxy login' to add one.");
     } else {
       console.log(`\n📋 Rotator Accounts (${accounts.length} total):\n`);
       accounts.forEach((a, i) => {
@@ -414,7 +414,7 @@ try {
       runCommand(`node "${readerPath}" provision-rotator`);
     } else {
       console.log("cockpit-bridge skill not found. Ensure Wizard-AI is installed correctly.");
-      console.log("Tip: Use 'ai-proxy login' to add accounts directly via Google OAuth instead.");
+      console.log("Tip: Use 'wizard-ai proxy login' to add accounts directly via Google OAuth instead.");
     }
   } 
   else if (command === 'start') {
@@ -447,7 +447,7 @@ try {
     console.log("\nDone! Pi will now route all Google requests through the local rotator.");
   }
   else {
-    console.log(`Unknown command: ${command}. Run 'ai-proxy help' for usage.`);
+    console.log(`Unknown command: ${command}. Run 'wizard-ai proxy help' for usage.`);
   }
 } catch (e) {
   process.exit(1);
