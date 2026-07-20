@@ -33,7 +33,7 @@ Tutte le seguenti skills appartengono alla categoria di **Sviluppo, TDD ed Esecu
 
 ### 1. Categoria: Git Flow & Workspace Isolation (Protezione del Ramo)
 Queste skill garantiscono che nessuna modifica produttiva avvenga su rami instabili o condivisi senza isolamento:
-- **`auto-branch` (`ai-branch`)**: *Quando usarla:* All'avvio immediato del loop per ogni nuovo task. *Cosa fa:* Crea un branch isolato (`feature/nome-ticket` o `fix/nome-ticket`) applicando convenzioni di naming e tracciamento.
+- **`auto-branch` (`wizard-ai branch`)**: *Quando usarla:* All'avvio immediato del loop per ogni nuovo task. *Cosa fa:* Crea un branch isolato (`feature/nome-ticket` o `fix/nome-ticket`) applicando convenzioni di naming e tracciamento.
 - **`using-git-worktrees`**: *Quando usarla:* Quando si eseguono modifiche architetturali pesanti o esecuzioni parallele in subagent che necessitano di filesystem separati per non causare conflitti di blocco file.
 - **`mp-git-guardrails`**: *Quando usarla:* Sempre attiva in background. *Cosa fa:* Intercetta e blocca comandi Git distruttivi (`--force`, `reset --hard`, rebase su branch condivisi).
 - **`mp-resolving-merge-conflicts`**: *Quando usarla:* Quando un `git pull` o un rebase locale genera conflitti. *Cosa fa:* Protocollo di isolamento e merge manuale assistito per non perdere modifiche di dominio.
@@ -62,7 +62,7 @@ Queste skill gestiscono la scalabilità orizzontale e la sicurezza del codice sc
 Queste skill forniscono le best practice di linguaggio e di design UI:
 - **Runtime Backend/Mobile:** `python`, `nodejs` (`engines.node: ">=22.0.0"` e Docker `node:22-alpine` per build container stabili e senza `ENOENT`), `bun` (solo come package installer veloce nel multi-stage build, mai come bundler nativo in contesti Rollup/Vite per CI/CD), `deno`, `php` (`laravel`), `flutter`, `android-studio`, `go-whatsapp`.
 - **UI & Web Moderni:** `react`, `vue`, `angular`, `svelte`, `next`, `astro`, `nuxt` (`npx nuxt build` / `npm run build` su runtime Node 22 + QEMU setup in CI per multi-arch).
-- **Taste & Aesthetics:** `frontend-design`, `taste-skill` (`ai-taste`), `awesome-design`, `theme-factory`, `kinetics-ui`, `mengto-skills`: Imponi un design anti-slop, palette HSL curate, tipografia eccellente, layout asimmetrici (MengTo) e micro-animazioni avanzate spring-physics (Kinetics).
+- **Taste & Aesthetics:** `frontend-design`, `taste-skill` (`wizard-ai taste`), `awesome-design`, `theme-factory`, `kinetics-ui`, `mengto-skills`: Imponi un design anti-slop, palette HSL curate, tipografia eccellente, layout asimmetrici (MengTo) e micro-animazioni avanzate spring-physics (Kinetics).
 
 ---
 
@@ -104,7 +104,7 @@ graph TD
 - **VIETATO lavorare direttamente su `main` o `staging`. Il ramo di partenza e destinazione principale deve essere sempre e solo `main` (`master` è vietato e deve essere migrato in `main` via `spec-kit`).**
 - Esegui il comando di branching associato al ticket o al piano:
   ```bash
-  ai-branch feature "nome-del-task"
+  wizard-ai branch feature "nome-del-task"
   ```
 - Se la codebase richiede modifiche distruttive in parallelo, attiva `using-git-worktrees`.
 
@@ -136,5 +136,5 @@ Non delegare MAI task massivi o multi-dominio direttamente agli agenti operai (w
 ### Step 2.5: Never-Stop Autonomous Handoff verso Loop 3 (`ZERO-STOP MANDATE`)
 Una volta che i test TDD sono verdi (`Red-Green-Refactor` completato), **NON FERMARTI E NON CHIEDERE ALL'UTENTE DI TESTARE O VERIFICARE**.
 Applica la regola del dialogo interno:
-`🧠 [SELF-QUESTION] "Codice e test sono pronti. Quale suite di diagnosi e verifica rigorosa (`diagnosing-bugs` + `ai-debug`) devo avviare ora nel Loop 3?"`
+`🧠 [SELF-QUESTION] "Codice e test sono pronti. Quale suite di diagnosi e verifica rigorosa (`diagnosing-bugs` + `wizard-ai debug`) devo avviare ora nel Loop 3?"`
 > **Azione Immediata e Unconditional:** Stampa il banner `🔄 [AUTONOMOUS BATON-PASSING] 02. loop-2-develop completato -> Auto-Triggering 03. loop-3-debug` ed entra immediatamente nell'esecuzione dei verification gates e code review!

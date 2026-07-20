@@ -24,7 +24,7 @@ MinerU is a high-accuracy document parsing engine that converts PDF, DOCX, PPTX,
 You can invoke MinerU via its CLI wrapper.
 
 ```bash
-ai-mineru <path-to-document>
+wizard-ai mineru <path-to-document>
 ```
 Or you can use the raw binary `mineru` or `magic-pdf` if the wrapper delegates to it.
 
