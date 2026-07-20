@@ -65,8 +65,11 @@ function injectDummyAuth() {
     if (fs.existsSync(authFile)) {
       auth = JSON.parse(fs.readFileSync(authFile, 'utf8'));
     }
-    if (!auth.google) {
-      auth.google = "AIzaSyDummyKeyForProxyBypass1234567890";
+    if (!auth.google || typeof auth.google === 'string') {
+      auth.google = {
+        type: "api_key",
+        key: "AIzaSyDummyKeyForProxyBypass1234567890"
+      };
       fs.mkdirSync(path.dirname(authFile), { recursive: true });
       fs.writeFileSync(authFile, JSON.stringify(auth, null, 2), 'utf8');
       console.log("✅ Injected dummy Google API key into pi auth.json to bypass CLI validation.");
