@@ -348,8 +348,8 @@ echo -e "\n${BLUE}[6/10] Deploying custom AI CLI wrappers to ~/.local/bin/...${N
 cp -p "$SCRIPT_DIR"/bin/* "$HOME/.local/bin/" 2>/dev/null || true
 chmod +x "$HOME/.local/bin"/ai-* 2>/dev/null || true
 chmod +x "$HOME/.local/bin"/book-to-skill 2>/dev/null || true
-# Create symlink for gemini-usage pointing to ai-usage to avoid duplicate script files
-ln -sf ai-usage "$HOME/.local/bin/gemini-usage"
+# Create symlink for gemini-usage pointing to wz-ai-usage to avoid duplicate script files
+ln -sf wz-ai-usage "$HOME/.local/bin/gemini-usage"
 echo -e "${GREEN}✓ $(ls "$SCRIPT_DIR/bin/" | wc -l) wrapper scripts installed to ~/.local/bin/ (with gemini-usage symlinked)${NC}"
 
 # 7. Install Skills for all agents (hierarchical → flat)
@@ -371,7 +371,7 @@ cp -f "$SCRIPT_DIR/.agents/skills.json" "$SKILLS_DEST/" 2>/dev/null || true
 echo -e "${GREEN}✓ $SKILL_COUNT skills installed to ~/.gemini/config/skills/${NC}"
 
 echo -e "${YELLOW}Syncing skills to Claude Code, Amp, and other agents...${NC}"
-"$HOME/.local/bin/ai-sync-skills"
+"$HOME/.local/bin/wz-ai-sync-skills"
 
 # 7.5. Interactive Skill Setup & Configuration
 echo -e "\n${BLUE}[7.5/10] Interactive Skill Setup & Configuration...${NC}"
@@ -478,14 +478,14 @@ if command -v npm &>/dev/null; then
       || echo -e "${RED}Failed to install pi-antigravity-rotator.${NC}"
     
     # Generate Pi's auth.json + models.json to route google provider through local rotator
-    "$HOME/.local/bin/ai-proxy" pi-config || true
+    "$HOME/.local/bin/wz-ai-proxy" pi-config || true
     # Enable the background daemon
-    "$HOME/.local/bin/ai-proxy" enable || true
+    "$HOME/.local/bin/wz-ai-proxy" enable || true
 
     echo -e "\n${GREEN}✓ Proxy configured. Pi will route through the local rotator on port 51200.${NC}"
-    echo -e "${CYAN}  To add Google accounts: ai-proxy login${NC}"
-    echo -e "${CYAN}  To see accounts:        ai-proxy accounts${NC}"
-    echo -e "${CYAN}  To check status:        ai-proxy status${NC}"
+    echo -e "${CYAN}  To add Google accounts: wz-ai-proxy login${NC}"
+    echo -e "${CYAN}  To see accounts:        wz-ai-proxy accounts${NC}"
+    echo -e "${CYAN}  To check status:        wz-ai-proxy status${NC}"
   fi
 else
   echo -e "${YELLOW}NPM not found. Cockpit Proxy setup skipped.${NC}"
@@ -548,20 +548,20 @@ fi
 if [[ "$ENABLE_UPDATE" =~ ^[Yy]$ ]]; then
   echo -e "${GREEN}✓ Enabling automatic background updates at boot...${NC}"
   if command -v crontab &>/dev/null; then
-    CRON_CMD="@reboot $HOME/.local/bin/ai-update --quiet"
-    (crontab -u "$USER" -l 2>/dev/null | grep -v "ai-update" ; echo "$CRON_CMD") | crontab -u "$USER" -
+    CRON_CMD="@reboot $HOME/.local/bin/wz-ai-update --quiet"
+    (crontab -u "$USER" -l 2>/dev/null | grep -v "wz-ai-update" ; echo "$CRON_CMD") | crontab -u "$USER" -
     echo -e "${GREEN}  ✓ Cronjob installed for user $USER.${NC}"
   elif command -v systemctl &>/dev/null; then
     echo -e "${BLUE}  i  cron not found. Setting up systemd user service instead...${NC}"
     mkdir -p "$HOME/.config/systemd/user"
-    cat > "$HOME/.config/systemd/user/ai-update.service" <<EOF
+    cat > "$HOME/.config/systemd/user/wz-ai-update.service" <<EOF
 [Unit]
 Description=Wizard-AI Auto Update
 After=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=$HOME/.local/bin/ai-update --quiet
+ExecStart=$HOME/.local/bin/wz-ai-update --quiet
 
 [Install]
 WantedBy=default.target
@@ -569,15 +569,15 @@ EOF
     chown -R "$USER:$USER" "$HOME/.config/systemd"
     REAL_UID=$(id -u "$USER")
     sudo -u "$USER" XDG_RUNTIME_DIR="/run/user/$REAL_UID" systemctl --user daemon-reload || true
-    sudo -u "$USER" XDG_RUNTIME_DIR="/run/user/$REAL_UID" systemctl --user enable ai-update.service || true
+    sudo -u "$USER" XDG_RUNTIME_DIR="/run/user/$REAL_UID" systemctl --user enable wz-ai-update.service || true
     echo -e "${GREEN}  ✓ systemd service installed for user $USER.${NC}"
   else
     echo -e "${RED}⚠ cron and systemctl not found. Auto-updates cannot be configured.${NC}"
   fi
 else
-  echo -e "${YELLOW}  Auto-updates disabled. Update manually using 'ai-update'.${NC}"
+  echo -e "${YELLOW}  Auto-updates disabled. Update manually using 'wz-ai-update'.${NC}"
   if command -v crontab &>/dev/null; then
-    crontab -u "$USER" -l 2>/dev/null | grep -v "ai-update" | crontab -u "$USER" - || true
+    crontab -u "$USER" -l 2>/dev/null | grep -v "wz-ai-update" | crontab -u "$USER" - || true
   fi
 fi
 
@@ -603,7 +603,7 @@ if command -v docker &>/dev/null; then
       echo -e "${RED}⚠ compose.yaml not found in docker/mineru/${NC}"
     fi
   else
-    echo -e "${YELLOW}Skipping MinerU Web UI deployment. You can start it later with 'ai-mineru-gui up'.${NC}"
+    echo -e "${YELLOW}Skipping MinerU Web UI deployment. You can start it later with 'wz-ai-mineru-gui up'.${NC}"
   fi
 else
   echo -e "${YELLOW}Docker not found. Skipping MinerU Web UI deployment.${NC}"

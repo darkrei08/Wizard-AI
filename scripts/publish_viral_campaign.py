@@ -24,8 +24,8 @@ CAMPAIGN_PAYLOADS = {
             "they bloat context windows (80k+ tokens/turn) and they brick local development environments "
             "when running `npm install -g` or `uv tool install` autonomously.\n\n"
             "Wizard-AI v0.45.0 introduces a deterministic 5-Loop engineering engine combined with token-compressors "
-            "(`sqz`, `caveman`, `ponytail`) and a Universal Safe Rollback pre-flight gate (`ai-os`). If an agent "
-            "downloads a broken binary or bad dependency, `ai-os` catches the non-zero exit or syntax error and "
+            "(`sqz`, `caveman`, `ponytail`) and a Universal Safe Rollback pre-flight gate (`wz-ai-os`). If an agent "
+            "downloads a broken binary or bad dependency, `wz-ai-os` catches the non-zero exit or syntax error and "
             "restores the previous `.bak` snapshot in 1.2 seconds.\n\n"
             "Reproducible Jupyter Benchmark Notebook: https://github.com/darkrei08/Wizard-AI/blob/main/benchmarks/wizard_ai_token_benchmark.ipynb"
         )
@@ -37,7 +37,7 @@ CAMPAIGN_PAYLOADS = {
             "Ever noticed how AI agents love to write 400 lines of code when 20 lines would do? Or how piping `git log` "
             "or verbose npm logs eats 20,000 tokens in seconds?\n\n"
             "We integrated `#ponytail` mode (forcing the LLM to adopt the pragmatic, zero-slop mindset of a senior dev) and `#caveman` "
-            "directly into our 5-Loop pre-prompt router. Combined with `ai-os` v0.45.0 (which gives your AI safe, rollback-protected "
+            "directly into our 5-Loop pre-prompt router. Combined with `wz-ai-os` v0.45.0 (which gives your AI safe, rollback-protected "
             "access to bun, nuxt, python, and rust), your agent stops bricking your environment and cuts total token burn by ~78%.\n\n"
             "**Benchmark Matrix:**\n"
             "- Codebase RAG: 85,000 raw tokens -> **9,500 compressed tokens (-88%)**\n"
@@ -94,7 +94,7 @@ https://github.com/darkrei08/Wizard-AI
 ```text
 Abbiamo creato Wizard-AI perché gli agenti di coding autonomi soffrono di due problemi strutturali: saturano velocemente la context window (80k+ token a turno) e rischiano di distruggere l'ambiente locale quando eseguono comandi come `npm install -g` o `uv tool install` in autonomia.
 
-Wizard-AI v0.45.0 introduce un motore di ingegneria deterministico a 5 Loop combinato con compressori di token (`sqz`, `caveman`, `ponytail`) e un gate pre-flight di Rollback Universale (`ai-os`). Se l'agente scarica un binario rotto o una dipendenza errata, `ai-os` intercetta l'uscita non-zero o l'errore di sintassi e ripristina l'istantanea `.bak` precedente in 1.2 secondi.
+Wizard-AI v0.45.0 introduce un motore di ingegneria deterministico a 5 Loop combinato con compressori di token (`sqz`, `caveman`, `ponytail`) e un gate pre-flight di Rollback Universale (`wz-ai-os`). Se l'agente scarica un binario rotto o una dipendenza errata, `wz-ai-os` intercetta l'uscita non-zero o l'errore di sintassi e ripristina l'istantanea `.bak` precedente in 1.2 secondi.
 
 Notebook Jupyter interattivo e riproducibile di benchmark: https://github.com/darkrei08/Wizard-AI/blob/main/benchmarks/wizard_ai_token_benchmark.ipynb
 ```
@@ -110,7 +110,7 @@ Come abbiamo unito 'Ponytail' (logica pragmatica da senior dev) + 'Caveman' (-75
 ## 📄 CORPO MARKDOWN DA COPIARE
 Hai mai notato come gli AI Agent adorino scrivere 400 righe di codice quando ne basterebbero 20? O come l'invio in pipe di `git log` o log prolissi di npm bruci 20.000 token in pochi secondi?
 
-Abbiamo integrato la modalità `#ponytail` (che costringe l'LLM ad adottare la logica pragmatica e senza slop di un senior dev) e `#caveman` direttamente nel nostro router a 5 Loop. Unito a `ai-os` v0.45.0 (che offre all'IA accesso protetto da rollback su Node, Bun, Python e Rust), il tuo agente smette di far crashare l'ambiente e riduce il consumo totale di token del ~78%.
+Abbiamo integrato la modalità `#ponytail` (che costringe l'LLM ad adottare la logica pragmatica e senza slop di un senior dev) e `#caveman` direttamente nel nostro router a 5 Loop. Unito a `wz-ai-os` v0.45.0 (che offre all'IA accesso protetto da rollback su Node, Bun, Python e Rust), il tuo agente smette di far crashare l'ambiente e riduce il consumo totale di token del ~78%.
 
 **Matrice di Benchmark:**
 - Codebase RAG: 85.000 token grezzi -> **9.500 token compressi (-88%)**
@@ -134,7 +134,7 @@ Oggi rilasciamo **Wizard-AI v0.45.0 (Open Source)**, un sistema operativo di ast
 
 **Vantaggi Chiave dell'Architettura:**
 📊 **Riduzione Token del ~78%:** Combinazione di `#ponytail` (disciplina da senior dev), `#caveman` (-75% verbosità CLI) e `#sqz` (compressione JSON 20x).
-🛡️ **Protezione Rollback a Zero-Downtime (`ai-os`):** I gate pre-flight intercettano comandi falliti su `node`, `bun`, `python` e `rust`. Se viene installato un pacchetto rotto, il sistema ripristina l'istantanea `.bak` pulita in 1.2 secondi.
+🛡️ **Protezione Rollback a Zero-Downtime (`wz-ai-os`):** I gate pre-flight intercettano comandi falliti su `node`, `bun`, `python` e `rust`. Se viene installato un pacchetto rotto, il sistema ripristina l'istantanea `.bak` pulita in 1.2 secondi.
 
 📓 Esplora l'architettura, la documentazione in 6 lingue e il nostro Notebook Jupyter interattivo di benchmark:
 🔗 https://github.com/darkrei08/Wizard-AI
@@ -157,7 +157,7 @@ Per risolvere tutto questo abbiamo rilasciato **Wizard-AI v0.45.0 (Open Source, 
 **💡 Cosa fa all'istante:**
 ✅ **#ponytail & #caveman mode:** Pulisce il 75% dell'output da terminale e costringe l'IA a scrivere codice chirurgico (senza 400 righe di boilerplate inutile).
 ✅ **#sqz & RAG semantico:** Comprime file JSON del 20x e taglia il consumo token da 85k a ~9.5k.
-✅ **100% Rollback Automatico (`ai-os`):** Se l'IA installa una libreria rotta o un binario incompatibile su Node (`bun`/`npm`) o Python, il sistema intercetta l'errore ed esegue il ripristino istantaneo dell'ambiente in soli **1.2 secondi**.
+✅ **100% Rollback Automatico (`wz-ai-os`):** Se l'IA installa una libreria rotta o un binario incompatibile su Node (`bun`/`npm`) o Python, il sistema intercetta l'errore ed esegue il ripristino istantaneo dell'ambiente in soli **1.2 secondi**.
 
 🧪 Abbiamo pubblicato su GitHub anche il **Notebook Jupyter interattivo** e riproducibile per verificare i benchmark di consumo in tempo reale.
 
@@ -175,7 +175,7 @@ Per risolvere tutto questo abbiamo rilasciato **Wizard-AI v0.45.0 (Open Source, 
 
 ## 🤖 COMANDO DA TERMINALE PER INVIO WEBHOOK:
 ```bash
-ai-campaign --platform discord --webhook "https://discord.com/api/webhooks/TUO_URL_QUI"
+wz-ai-campaign --platform discord --webhook "https://discord.com/api/webhooks/TUO_URL_QUI"
 ```
 """,
         "06_twitter_x_IT.md": """# 🐦 X (Twitter) Thread in 6 Tweet - Versione Italiana
@@ -194,11 +194,11 @@ Risultato RAG: 85k -> 9.5k token (-88%).
 
 3/6 🛡️ **Il problema dei crash da $50:**
 Quando un agente esegue `npm install -g` o `uv tool install` in autonomia, spesso corrompe le dipendenze locali.
-Wizard-AI introduce `ai-os`: uno strato di astrazione che avvolge `node`, `bun`, `python` e `rust`.
+Wizard-AI introduce `wz-ai-os`: uno strato di astrazione che avvolge `node`, `bun`, `python` e `rust`.
 
-4/6 ⚡ **Come funziona il Rollback di `ai-os`:**
-Prima di eseguire qualsiasi installazione, `ai-os` crea una fulminea istantanea pre-flight `.bak`.
-Se l'agente scarica un binario rotto o genera errori di sintassi, `ai-os` intercetta l'uscita non-zero ed esegue il rollback in **1.2 secondi**.
+4/6 ⚡ **Come funziona il Rollback di `wz-ai-os`:**
+Prima di eseguire qualsiasi installazione, `wz-ai-os` crea una fulminea istantanea pre-flight `.bak`.
+Se l'agente scarica un binario rotto o genera errori di sintassi, `wz-ai-os` intercetta l'uscita non-zero ed esegue il rollback in **1.2 secondi**.
 
 5/6 📓 **I benchmark vanno provati dal vivo:**
 Abbiamo pubblicato l'intero Notebook Jupyter riproducibile (`wizard_ai_token_benchmark.ipynb`) direttamente nella repo. Esegui le celle per verificare il risparmio di tempo e costi!
@@ -218,7 +218,7 @@ Stufo degli AI Agent che sprecano 80.000+ token a turno per colpa di log infinit
 
 Abbiamo rilasciato **Wizard-AI v0.45.0**, lo strato di astrazione e auto-riparazione tra l'IA e il sistema operativo:
 ✅ **Taglio del ~78% dei Token (`#ponytail` + `#caveman` + `#sqz`):** Elimina output terminale superfluo e riduce il consumo RAG da 85k a ~9.5k token.
-✅ **Protezione Rollback in 1.2 secondi (`ai-os`):** Se l'agente installa una libreria rotta o incompatibile su Node, Bun, Python o Rust, il sistema intercetta l'errore e ripristina l'istantanea pulita al volo.
+✅ **Protezione Rollback in 1.2 secondi (`wz-ai-os`):** Se l'agente installa una libreria rotta o incompatibile su Node, Bun, Python o Rust, il sistema intercetta l'errore e ripristina l'istantanea pulita al volo.
 ✅ **Notebook Jupyter di Benchmark Riproducibile** incluso nella repo!
 
 ⭐ **Lascia una stellina e scopri il repo (6 lingue attive):**
@@ -288,7 +288,7 @@ Today, we are releasing **Wizard-AI v0.45.0**, a deterministic **5-Loop Engineer
 
 **Key Architecture Advantages:**
 📊 **~78% Token Reduction:** Combining `#ponytail` (senior developer zero-slop discipline), `#caveman` (-75% CLI verbosity suppression), and `#sqz` (20x JSON payload compression).
-🛡️ **Zero-Downtime Rollback Protection (`ai-os`):** Pre-flight gates trap failing commands across `node`, `bun`, `python`, and `rust`. If a broken package is installed, the system restores the clean `.bak` snapshot in 1.2s.
+🛡️ **Zero-Downtime Rollback Protection (`wz-ai-os`):** Pre-flight gates trap failing commands across `node`, `bun`, `python`, and `rust`. If a broken package is installed, the system restores the clean `.bak` snapshot in 1.2s.
 
 📓 Explore the architecture, 6-language documentation, and our reproducible Jupyter Token Benchmark Notebook:
 🔗 https://github.com/darkrei08/Wizard-AI
@@ -307,7 +307,7 @@ When autonomous coding agents run `npm install -g` or `uv tool install` on their
 Today we released Wizard-AI v0.45.0: an Agentic OS abstraction layer with:
 ✅ **#ponytail & #caveman mode:** Cuts terminal verbosity by 75% & enforces surgical senior-dev code diffs without 400 lines of boilerplate.
 ✅ **#sqz & Semantic RAG:** 20x JSON compression, dropping context from 85k to ~9.5k tokens.
-✅ **100% Zero-Downtime Rollback (`ai-os`):** If an agent installs a broken binary across Node (`bun`/`npm`) or Python, our pre-flight gates catch the syntax/exit error and restore the clean `.bak` snapshot in 1.2 seconds.
+✅ **100% Zero-Downtime Rollback (`wz-ai-os`):** If an agent installs a broken binary across Node (`bun`/`npm`) or Python, our pre-flight gates catch the syntax/exit error and restore the clean `.bak` snapshot in 1.2 seconds.
 
 🧪 We also published the full **interactive Jupyter Benchmark Notebook** on GitHub so you can verify token savings live.
 
@@ -324,7 +324,7 @@ Today we released Wizard-AI v0.45.0: an Agentic OS abstraction layer with:
 
 ## 🤖 AUTOMATIC TERMINAL DISPATCH COMMAND:
 ```bash
-ai-campaign --platform discord --webhook "https://discord.com/api/webhooks/YOUR_URL_HERE"
+wz-ai-campaign --platform discord --webhook "https://discord.com/api/webhooks/YOUR_URL_HERE"
 ```
 """,
         "06_twitter_x_EN.md": """# 🐦 X (Twitter) Tech Thread / Tweet Copy - English Version
@@ -344,11 +344,11 @@ Result: 85k -> 9.5k tokens (-88% RAG usage).
 
 3/6 🛡️ **The $50 Environment Crash Problem:**
 When an agent runs `npm install -g` or `uv tool install` autonomously, it often corrupts local dependencies.
-Wizard-AI introduces `ai-os`: a local abstraction layer wrapping `node`, `bun`, `python`, and `rust`.
+Wizard-AI introduces `wz-ai-os`: a local abstraction layer wrapping `node`, `bun`, `python`, and `rust`.
 
-4/6 ⚡ **How `ai-os` Rollback works:**
-Before running any package installation or script, `ai-os` creates a lightning-fast `.bak` pre-flight snapshot.
-If the agent downloads a broken binary or throws syntax errors, `ai-os` catches the non-zero exit and rolls back in **1.2 seconds**.
+4/6 ⚡ **How `wz-ai-os` Rollback works:**
+Before running any package installation or script, `wz-ai-os` creates a lightning-fast `.bak` pre-flight snapshot.
+If the agent downloads a broken binary or throws syntax errors, `wz-ai-os` catches the non-zero exit and rolls back in **1.2 seconds**.
 
 5/6 📓 **Don't trust benchmarks without data:**
 We published the full, reproducible Jupyter Token Benchmark Notebook (`wizard_ai_token_benchmark.ipynb`) right in our repo. Run the cells and see the ~78% cost & latency reduction live.
@@ -368,7 +368,7 @@ Tired of AI coding agents burning 80,000+ tokens per turn on endless build logs 
 
 We just released **Wizard-AI v0.45.0**, the self-healing abstraction layer between LLMs and your operating system:
 ✅ **~78% Token Reduction (`#ponytail` + `#caveman` + `#sqz`):** Eliminates verbose CLI output and drops RAG token burn from 85k to ~9.5k.
-✅ **1.2s Rollback Protection (`ai-os`):** If an agent downloads a broken binary or throws syntax errors across Node, Bun, Python, or Rust, our pre-flight gates instantly restore the clean snapshot.
+✅ **1.2s Rollback Protection (`wz-ai-os`):** If an agent downloads a broken binary or throws syntax errors across Node, Bun, Python, or Rust, our pre-flight gates instantly restore the clean snapshot.
 ✅ **Reproducible Jupyter Benchmark Notebook** included in the repo!
 
 ⭐ **Drop a star and explore the 6-language docs:**
@@ -440,11 +440,11 @@ def print_payloads_guide(platform="all", lang="both"):
     print("─"*70)
     print("💡 TIPS & OPTIONS")
     print("─"*70)
-    print("• Filter by language: `ai-campaign --lang it` or `ai-campaign --lang en`")
+    print("• Filter by language: `wz-ai-campaign --lang it` or `wz-ai-campaign --lang en`")
     print("• Open directly in VS Code: `code .secret_viral_posts/IT/04_facebook_IT.md`")
     print("─"*70)
     print("\n🤖 TO AUTOMATICALLY SEND TO DISCORD / SLACK VIA WEBHOOK:")
-    print('   ai-campaign --platform discord --webhook "https://discord.com/api/webhooks/YOUR_URL_HERE"')
+    print('   wz-ai-campaign --platform discord --webhook "https://discord.com/api/webhooks/YOUR_URL_HERE"')
     print("======================================================================\n")
 
 if __name__ == "__main__":

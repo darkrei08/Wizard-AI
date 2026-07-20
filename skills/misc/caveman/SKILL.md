@@ -9,18 +9,18 @@ When the user asks to talk less, output fewer tokens, or be more terse, install 
 
 ## Usage
 
-You can use the wrapper script `ai-caveman` to install the hooks or configure the agent settings.
+You can use the wrapper script `wz-ai-caveman` to install the hooks or configure the agent settings.
 
 ### Examples
 
 - List supported agents:
-  `ai-caveman --list`
+  `wz-ai-caveman --list`
 
 - Install rules for the current workspace:
-  `ai-caveman --with-init`
+  `wz-ai-caveman --with-init`
 
 - Uninstall the skill:
-  `ai-caveman --uninstall`
+  `wz-ai-caveman --uninstall`
 
 ## Integration
 

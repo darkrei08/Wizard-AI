@@ -1,4 +1,4 @@
-# ai_mem_fallback.py — simple JSON-based memory store used by ai-mem.ps1
+# ai_mem_fallback.py — simple JSON-based memory store used by wz-wz-ai-mem.ps1
 # when claude-mem does not expose a CLI entry point.
 # Usage: python ai_mem_fallback.py <mem_file> <action> [text...]
 import json

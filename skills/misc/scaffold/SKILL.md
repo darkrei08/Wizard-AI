@@ -5,7 +5,7 @@ description: "Scaffold new projects from curated templates (Express+TypeScript, 
 
 # Scaffold — Project Generator
 
-Use `ai-scaffold` to quickly initialize new projects from curated, production-ready templates.
+Use `wz-ai-scaffold` to quickly initialize new projects from curated, production-ready templates.
 
 ## When to Use
 
@@ -17,13 +17,13 @@ Use `ai-scaffold` to quickly initialize new projects from curated, production-re
 
 ```bash
 # List available templates
-ai-scaffold list
+wz-ai-scaffold list
 
 # Create a new Express.js + TypeScript API
-ai-scaffold express my-backend-api
+wz-ai-scaffold express my-backend-api
 
 # Create a new Nuxt v4 full-stack app
-ai-scaffold nuxt my-web-app
+wz-ai-scaffold nuxt my-web-app
 ```
 
 ## Available Templates
@@ -49,4 +49,4 @@ After scaffolding, always remind the user to:
 ## Paths
 
 - Local clones (cache): `$HOME/.ai-skills/express-typescript-starter`
-- CLI wrapper: `ai-scaffold` (installed to `$HOME/.local/bin/`)
+- CLI wrapper: `wz-ai-scaffold` (installed to `$HOME/.local/bin/`)

@@ -1,0 +1,198 @@
+#!/usr/bin/env bash
+# wz-ai-scaffold — Scaffold new projects from curated templates (Express, Nuxt)
+# Source: Wizard-AI ecosystem
+set -euo pipefail
+
+# Telemetry hook
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+WIZARD_AI_DIR="$(dirname "$DIR")"
+python3 "$WIZARD_AI_DIR/hub/api/log_event.py" "wz-ai-scaffold" "execute" 100 0.15 &
+
+
+BOLD='\033[1m'
+CYAN='\033[0;36m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+RESET='\033[0m'
+
+EXPRESS_DIR="${HOME}/.ai-skills/express-typescript-starter"
+NUXT_DIR="${HOME}/.ai-skills/nuxt"
+
+show_help() {
+    echo ""
+    echo -e "${BOLD}${CYAN}wz-ai-scaffold${RESET} — Scaffold projects from curated templates"
+    echo ""
+    echo -e "${BOLD}Usage:${RESET}"
+    echo -e "  wz-ai-scaffold express <name>   Create an Express + TypeScript API project"
+    echo -e "  wz-ai-scaffold nuxt <name>      Create a Nuxt v4 application"
+    echo -e "  wz-ai-scaffold list             Show available templates"
+    echo ""
+    echo -e "${BOLD}Templates:${RESET}"
+    echo -e "  ${CYAN}express${RESET}  Production-ready Express.js + TypeScript (Zod, Winston, Helmet, JWT)"
+    echo -e "           Source: github.com/ToniR7/express-typescript-starter"
+    echo -e "  ${CYAN}nuxt${RESET}     Nuxt v4 full-stack Vue framework"
+    echo -e "           Source: github.com/nuxt/nuxt (v4.4.7)"
+    echo ""
+    echo -e "${BOLD}Examples:${RESET}"
+    echo -e "  ${CYAN}wz-ai-scaffold express my-api${RESET}"
+    echo -e "  ${CYAN}wz-ai-scaffold nuxt my-app${RESET}"
+    echo ""
+}
+
+cmd_express() {
+    local name="${1:-}"
+    if [ -z "$name" ]; then
+        echo -e "${RED}✗ Please provide a project name.${RESET}"
+        echo -e "  ${CYAN}wz-ai-scaffold express my-api${RESET}"
+        exit 1
+    fi
+    if [ -d "$name" ]; then
+        echo -e "${RED}✗ Directory '$name' already exists.${RESET}"
+        exit 1
+    fi
+    if [ ! -d "$EXPRESS_DIR" ]; then
+        echo -e "${YELLOW}Template not found. Cloning express-typescript-starter...${RESET}"
+        if ! git clone --quiet "https://github.com/ToniR7/express-typescript-starter.git" "$EXPRESS_DIR"; then
+            echo -e "${RED}✗ Failed to clone template repository.${RESET}"
+            rm -rf "$EXPRESS_DIR"
+            exit 1
+        fi
+    else
+        echo -e "${YELLOW}Updating express-typescript-starter template...${RESET}"
+        local prev_commit=$(git -C "$EXPRESS_DIR" rev-parse HEAD 2>/dev/null || echo "")
+        if ! git -C "$EXPRESS_DIR" pull --ff-only --quiet 2>/dev/null || [ ! -f "$EXPRESS_DIR/package.json" ]; then
+            [ -n "$prev_commit" ] && git -C "$EXPRESS_DIR" reset --hard "$prev_commit" --quiet 2>/dev/null || true
+            echo -e "${YELLOW}⚠ Template update failed or invalid. Rolled back to previous working commit (${prev_commit}).${RESET}"
+        fi
+    fi
+
+    echo -e "${CYAN}Scaffolding Express + TypeScript project: $name${RESET}"
+    if ! cp -r "$EXPRESS_DIR" "$name"; then
+        echo -e "${RED}✗ Failed to copy template files. Rolling back directory creation.${RESET}"
+        rm -rf "$name"
+        exit 1
+    fi
+    rm -rf "$name/.git"
+    cd "$name"
+    
+    # Update package.json name
+    if [ -f "package.json" ]; then
+        sed -i "s/\"name\":.*$/\"name\": \"$name\",/" package.json 2>/dev/null || true
+    fi
+
+    # Initialize fresh git
+    git init --quiet
+    
+    echo ""
+    echo -e "${GREEN}✓ Project '$name' scaffolded successfully!${RESET}"
+    echo ""
+    echo -e "${BOLD}Next steps:${RESET}"
+    echo -e "  ${CYAN}cd $name${RESET}"
+    echo -e "  ${CYAN}npm install${RESET}"
+    echo -e "  ${CYAN}cp .env.example .env${RESET}  (if available)"
+    echo -e "  ${CYAN}npm run dev${RESET}"
+    echo ""
+    echo -e "${BOLD}Features included:${RESET}"
+    echo -e "  ✅ Express.js + TypeScript"
+    echo -e "  ✅ Zod validation + OpenAPI docs"
+    echo -e "  ✅ Winston logging + Morgan"
+    echo -e "  ✅ Helmet + CORS + Rate Limiting"
+    echo -e "  ✅ JWT Authentication"
+    echo -e "  ✅ Husky + Commitlint"
+}
+
+cmd_nuxt() {
+    local name="${1:-}"
+    if [ -z "$name" ]; then
+        echo -e "${RED}✗ Please provide a project name.${RESET}"
+        echo -e "  ${CYAN}wz-ai-scaffold nuxt my-app${RESET}"
+        exit 1
+    fi
+    if [ -d "$name" ]; then
+        echo -e "${RED}✗ Directory '$name' already exists.${RESET}"
+        exit 1
+    fi
+
+    echo -e "${CYAN}Scaffolding Nuxt v4 project: $name${RESET}"
+    
+    # Use the official nuxi CLI for best results with safe cleanup/rollback on failure
+    if command -v npx &>/dev/null; then
+        if npx -y nuxi@latest init "$name"; then
+            echo ""
+            echo -e "${GREEN}✓ Nuxt project '$name' created!${RESET}"
+            echo ""
+            echo -e "${BOLD}Next steps:${RESET}"
+            echo -e "  ${CYAN}cd $name${RESET}"
+            echo -e "  ${CYAN}npm install${RESET}"
+            echo -e "  ${CYAN}npm run dev${RESET}"
+        else
+            echo -e "${RED}✗ nuxi init failed. Cleaning up incomplete directory '$name' (rollback)...${RESET}"
+            rm -rf "$name"
+            exit 1
+        fi
+    else
+        echo -e "${RED}✗ npx not found. Install Node.js first.${RESET}"
+        exit 1
+    fi
+}
+
+cmd_bun() {
+    local name="${1:-}"
+    if [ -z "$name" ]; then
+        echo -e "${RED}✗ Please provide a project name.${RESET}"
+        echo -e "  ${CYAN}wz-ai-scaffold bun my-app${RESET}"
+        exit 1
+    fi
+    if [ -d "$name" ]; then
+        echo -e "${RED}✗ Directory '$name' already exists.${RESET}"
+        exit 1
+    fi
+
+    echo -e "${CYAN}Scaffolding Bun project: $name${RESET}"
+    if command -v bun &>/dev/null; then
+        mkdir -p "$name" && cd "$name"
+        if bun init -y; then
+            echo ""
+            echo -e "${GREEN}✓ Bun project '$name' created successfully!${RESET}"
+        else
+            echo -e "${RED}✗ bun init failed. Cleaning up incomplete directory '$name' (rollback)...${RESET}"
+            cd .. && rm -rf "$name"
+            exit 1
+        fi
+    else
+        echo -e "${RED}✗ bun not found. Install Bun first: wz-ai-os install bun${RESET}"
+        exit 1
+    fi
+}
+
+cmd_list() {
+    echo -e "${BOLD}${CYAN}Available Project Templates${RESET}"
+    echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+    
+    local express_status="❌"
+    if [ -d "$EXPRESS_DIR" ]; then express_status="✅"; fi
+    echo -e "  $express_status ${BOLD}express${RESET}  Express.js + TypeScript (Zod, Winston, Helmet, JWT)"
+    echo -e "              Source: github.com/ToniR7/express-typescript-starter"
+    
+    local nuxt_status="✅"  # Always available via npx
+    echo -e "  $nuxt_status ${BOLD}nuxt${RESET}     Nuxt v4 full-stack Vue framework"
+    echo -e "              Created via: npx nuxi@latest init"
+
+    local bun_status="❌"
+    if command -v bun &>/dev/null; then bun_status="✅"; fi
+    echo -e "  $bun_status ${BOLD}bun${RESET}      Bun modern JavaScript/TypeScript project"
+    echo -e "              Created via: bun init -y"
+    
+    echo ""
+    echo -e "Use: ${CYAN}wz-ai-scaffold <template> <project-name>${RESET}"
+}
+
+case "${1:-help}" in
+    express) cmd_express "${2:-}" ;;
+    nuxt)    cmd_nuxt "${2:-}" ;;
+    bun)     cmd_bun "${2:-}" ;;
+    list)    cmd_list ;;
+    -h|--help|help) show_help ;;
+    *) echo -e "${RED}Unknown template: $1${RESET}"; show_help; exit 1 ;;
+esac

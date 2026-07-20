@@ -22,7 +22,7 @@ RTK employs four compression strategies:
 ## Installation & CLI Wrapper
 ```bash
 # Via Wizard-AI wrapper
-ai-rtk install
+wz-ai-rtk install
 
 # Or manually
 cargo install rtk-ai
@@ -36,27 +36,27 @@ Repository cloned at: `~/.ai-skills/rtk`
 
 ### Global Hook Installation (Recommended)
 ```bash
-ai-rtk init --global    # Rewrites common commands to rtk equivalents automatically
+wz-ai-rtk init --global    # Rewrites common commands to rtk equivalents automatically
 ```
 
 ### Per-Command Wrapping
 ```bash
-ai-rtk wrap git status           # Compressed git status
-ai-rtk wrap npm test             # Compressed test output
-ai-rtk wrap ls -la src/          # Compressed directory listing
-ai-rtk wrap grep -rn "pattern"   # Compressed grep results
+wz-ai-rtk wrap git status           # Compressed git status
+wz-ai-rtk wrap npm test             # Compressed test output
+wz-ai-rtk wrap ls -la src/          # Compressed directory listing
+wz-ai-rtk wrap grep -rn "pattern"   # Compressed grep results
 ```
 
 ### Pipeline with Other Optimization Tools
 ```bash
 # RTK + sqz double compression
-ai-rtk wrap git log -100 | ai-squeeze
+wz-ai-rtk wrap git log -100 | wz-ai-squeeze
 
 # RTK + llmlingua for maximum compression
-ai-rtk wrap npm test | ai-compress --ratio 0.3
+wz-ai-rtk wrap npm test | wz-ai-compress --ratio 0.3
 
 # Full pipeline: RTK → squeeze → headroom
-ai-rtk wrap cat large_log.txt | ai-squeeze | ai-headroom compress
+wz-ai-rtk wrap cat large_log.txt | wz-ai-squeeze | wz-ai-headroom compress
 ```
 
 ## Loop Integration
@@ -64,11 +64,11 @@ RTK is part of the **Phase 5 (CLI Output Interception)** in the `workflow-agenti
 
 | Phase | Tool | Purpose |
 |-------|------|---------|
-| 1 | `markitdown` / `ai-convert` | Binary → Markdown conversion |
-| 2 | `flashrank` / `ai-rerank` | RAG passage re-ranking |
+| 1 | `markitdown` / `wz-ai-convert` | Binary → Markdown conversion |
+| 2 | `flashrank` / `wz-ai-rerank` | RAG passage re-ranking |
 | 3 | `llmlingua` / `sqz` / `headroom` | Deep token compression |
 | 4 | `lean-ctx` / `caveman` | Context guarding & output reduction |
-| **5** | **`rtk` / `ai-rtk`** | **CLI output interception & compression** |
+| **5** | **`rtk` / `wz-ai-rtk`** | **CLI output interception & compression** |
 
 ## Comparison with sqz
 | Feature | RTK | sqz |
@@ -86,7 +86,7 @@ RTK is part of the **Phase 5 (CLI Output Interception)** in the `workflow-agenti
 - You need the fastest possible compression (<10ms)
 
 ## Related Tools
-- `ai-squeeze` / `sqz` (text/JSON compression)
-- `ai-headroom` / `headroom` (context proxy compression)
-- `ai-compress` / `llmlingua` (ML-powered prompt compression)
-- `ai-lean` / `lean-ctx` (context visibility control)
+- `wz-ai-squeeze` / `sqz` (text/JSON compression)
+- `wz-ai-headroom` / `headroom` (context proxy compression)
+- `wz-ai-compress` / `llmlingua` (ML-powered prompt compression)
+- `wz-ai-lean` / `lean-ctx` (context visibility control)

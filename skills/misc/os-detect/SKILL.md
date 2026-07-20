@@ -4,7 +4,7 @@ description: >
   MASTER PRE-INSTALL SKILL. Call this BEFORE installing ANY software, package,
   CLI tool, Python library, Node module, Rust crate, or system dependency.
   Provides cross-platform OS detection and a unified installation interface
-  (ai-os) that works on Arch, Ubuntu, Fedora, macOS, WSL, Windows and more.
+  (wz-ai-os) that works on Arch, Ubuntu, Fedora, macOS, WSL, Windows and more.
   This skill is a mandatory gate — no installation happens without it.
 ---
 
@@ -12,30 +12,30 @@ description: >
 
 > **This is a mandatory pre-installation gate for the entire Wizard-AI ecosystem.**
 > Any skill, script, or agent that needs to install ANYTHING must route through
-> `ai-os` before calling any package manager directly.
+> `wz-ai-os` before calling any package manager directly.
 
 ## When to Use This Skill
 
-Use `os-detect` / `ai-os` in **ALL** of the following cases:
+Use `os-detect` / `wz-ai-os` in **ALL** of the following cases:
 
 | Scenario | Correct action |
 |---|---|
-| Install a system package (git, curl, jq, gh…) | `ai-os install <pkg>` |
-| Install a Python package/tool | `ai-os python <pkg>` |
-| Install a Node.js package | `ai-os node <pkg>` |
-| Install a Rust crate | `ai-os cargo <pkg>` |
-| Install a Go binary | `ai-os go <pkg>` |
-| Install via uv tool | `ai-os uv <pkg>` |
-| Check if tool is present, install if missing | `ai-os ensure <tool>` |
-| Know which package manager to use | `ai-os pm` |
-| Get full OS environment report | `ai-os info` |
-| Run any pre-install environment check | `ai-os pre-check` |
+| Install a system package (git, curl, jq, gh…) | `wz-ai-os install <pkg>` |
+| Install a Python package/tool | `wz-ai-os python <pkg>` |
+| Install a Node.js package | `wz-ai-os node <pkg>` |
+| Install a Rust crate | `wz-ai-os cargo <pkg>` |
+| Install a Go binary | `wz-ai-os go <pkg>` |
+| Install via uv tool | `wz-ai-os uv <pkg>` |
+| Check if tool is present, install if missing | `wz-ai-os ensure <tool>` |
+| Know which package manager to use | `wz-ai-os pm` |
+| Get full OS environment report | `wz-ai-os info` |
+| Run any pre-install environment check | `wz-ai-os pre-check` |
 
 ## CRITICAL Rules for ALL AI Agents
 
 > [!IMPORTANT]
 > **NEVER write a raw install command directly.**
-> Always use `ai-os` as the abstraction layer.
+> Always use `wz-ai-os` as the abstraction layer.
 
 ```
 ❌ WRONG:  sudo apt install gh
@@ -44,46 +44,46 @@ Use `os-detect` / `ai-os` in **ALL** of the following cases:
 ❌ WRONG:  pip install ruff
 ❌ WRONG:  npm install -g <pkg>
 
-✅ CORRECT: ai-os install gh
-✅ CORRECT: ai-os python ruff
-✅ CORRECT: ai-os node <pkg>
-✅ CORRECT: ai-os ensure gh
+✅ CORRECT: wz-ai-os install gh
+✅ CORRECT: wz-ai-os python ruff
+✅ CORRECT: wz-ai-os node <pkg>
+✅ CORRECT: wz-ai-os ensure gh
 ```
 
 > [!NOTE]
-> `ai-os` detects the OS automatically and maps tool names to the correct
+> `wz-ai-os` detects the OS automatically and maps tool names to the correct
 > package name for each platform (e.g. `github-cli` on Arch, `gh` on apt/dnf).
 
 ## Full Command Reference
 
 ```bash
 # ── OS Information ──────────────────────────────────────────────────────────
-ai-os info              # Full report: OS, distro, PM, tool status, JSON
-ai-os type              # → linux | macos | wsl | windows
-ai-os pm                # → pacman | apt | dnf | brew | winget | apk | zypper
-ai-os distro            # → arch | ubuntu | debian | fedora | macos | alpine …
-ai-os pre-check         # Run full pre-install environment validation
+wz-ai-os info              # Full report: OS, distro, PM, tool status, JSON
+wz-ai-os type              # → linux | macos | wsl | windows
+wz-ai-os pm                # → pacman | apt | dnf | brew | winget | apk | zypper
+wz-ai-os distro            # → arch | ubuntu | debian | fedora | macos | alpine …
+wz-ai-os pre-check         # Run full pre-install environment validation
 
 # ── System Packages ─────────────────────────────────────────────────────────
-ai-os install <pkg>     # Install using the OS package manager (pacman/apt/dnf…)
-ai-os ensure <pkg>      # Install only if missing (idempotent — safe to call always)
-ai-os check <tool>      # Exit 0 if installed, exit 1 if missing (for scripting)
-ai-os remove <pkg>      # Uninstall using the OS package manager
+wz-ai-os install <pkg>     # Install using the OS package manager (pacman/apt/dnf…)
+wz-ai-os ensure <pkg>      # Install only if missing (idempotent — safe to call always)
+wz-ai-os check <tool>      # Exit 0 if installed, exit 1 if missing (for scripting)
+wz-ai-os remove <pkg>      # Uninstall using the OS package manager
 
 # ── Language Ecosystems ─────────────────────────────────────────────────────
-ai-os python <pkg>      # Python: uv tool install (preferred) or pip install
-ai-os pip <pkg>         # Python: pip install in current venv
-ai-os uv <pkg>          # Python: uv tool install globally
-ai-os node <pkg>        # Node.js: npm install -g (or pnpm/yarn if available)
-ai-os cargo <pkg>       # Rust: cargo install
-ai-os go <pkg>          # Go: go install <pkg>@latest
+wz-ai-os python <pkg>      # Python: uv tool install (preferred) or pip install
+wz-ai-os pip <pkg>         # Python: pip install in current venv
+wz-ai-os uv <pkg>          # Python: uv tool install globally
+wz-ai-os node <pkg>        # Node.js: npm install -g (or pnpm/yarn if available)
+wz-ai-os cargo <pkg>       # Rust: cargo install
+wz-ai-os go <pkg>          # Go: go install <pkg>@latest
 
 # ── GitHub CLI Setup ────────────────────────────────────────────────────────
-ai-os install gh        # Install gh with correct PM for this OS
-ai-os gh-setup          # Install gh + run gh auth login (full setup)
+wz-ai-os install gh        # Install gh with correct PM for this OS
+wz-ai-os gh-setup          # Install gh + run gh auth login (full setup)
 
 # ── Batch Operations ────────────────────────────────────────────────────────
-ai-os ensure git gh jq curl   # Ensure multiple tools at once
+wz-ai-os ensure git gh jq curl   # Ensure multiple tools at once
 ```
 
 ## Supported Platforms
@@ -101,7 +101,7 @@ ai-os ensure git gh jq curl   # Ensure multiple tools at once
 
 ## Package Name Mapping
 
-`ai-os` resolves tool names to the correct package name per platform:
+`wz-ai-os` resolves tool names to the correct package name per platform:
 
 | Tool | pacman | apt | dnf | brew | winget |
 |---|---|---|---|---|---|
@@ -122,13 +122,13 @@ at the top, **before any installation logic**:
 #!/usr/bin/env bash
 # ... script header ...
 
-# ── Locate ai-os (mandatory pre-install hook) ──────────────────────────────
+# ── Locate wz-ai-os (mandatory pre-install hook) ──────────────────────────────
 AI_OS_CMD=""
-if   command -v ai-os              &>/dev/null; then AI_OS_CMD="ai-os"
-elif [ -x "$HOME/.local/bin/ai-os" ];           then AI_OS_CMD="$HOME/.local/bin/ai-os"
-elif [ -x "$HOME/.wizard-ai/bin/ai-os" ];       then AI_OS_CMD="$HOME/.wizard-ai/bin/ai-os"
+if   command -v wz-ai-os              &>/dev/null; then AI_OS_CMD="wz-ai-os"
+elif [ -x "$HOME/.local/bin/wz-ai-os" ];           then AI_OS_CMD="$HOME/.local/bin/wz-ai-os"
+elif [ -x "$HOME/.wizard-ai/bin/wz-ai-os" ];       then AI_OS_CMD="$HOME/.wizard-ai/bin/wz-ai-os"
 else
-  echo "⚠️  ai-os not found. Install it: cp ~/.wizard-ai/bin/ai-os ~/.local/bin/"
+  echo "⚠️  wz-ai-os not found. Install it: cp ~/.wizard-ai/bin/wz-ai-os ~/.local/bin/"
   # Fallback: do NOT hardcode apt/pacman/brew here — fail gracefully
   exit 1
 fi
@@ -141,19 +141,19 @@ fi
 
 ## Integration with wizard-ai-installer
 
-The `wizard-ai-installer` Step 1 MUST call `ai-os` instead of using
+The `wizard-ai-installer` Step 1 MUST call `wz-ai-os` instead of using
 `uv tool install` or `npm install -g` directly:
 
 ```bash
-# Step 1 (Python tool):  ai-os uv <package>
-# Step 1 (Node tool):    ai-os node <package>
-# Step 1 (System tool):  ai-os install <package>
+# Step 1 (Python tool):  wz-ai-os uv <package>
+# Step 1 (Node tool):    wz-ai-os node <package>
+# Step 1 (System tool):  wz-ai-os install <package>
 # Step 1 (GitHub repo):  git clone ... (no change needed)
 ```
 
 ## post-install hooks
 
-After installing, `ai-os` automatically runs post-install hints:
+After installing, `wz-ai-os` automatically runs post-install hints:
 - `gh` → reminds to run `gh auth login`
 - `brew` → reminds to add brew to PATH
 - `node/npm` → checks if pnpm/yarn is preferred

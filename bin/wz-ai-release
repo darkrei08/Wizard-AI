@@ -1,0 +1,466 @@
+#!/usr/bin/env bash
+# wz-ai-release — Semantic versioning, GitHub release, and staging→main promotion
+# Source: Wizard-AI skill (auto-release)
+# Usage: wz-ai-release [patch|minor|major|vX.Y.Z|promote] [OPTIONS]
+set -euo pipefail
+
+BOLD='\033[1m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+CYAN='\033[0;36m'
+BLUE='\033[0;34m'
+MAGENTA='\033[0;35m'
+DIM='\033[2m'
+RESET='\033[0m'
+
+DRY_RUN=false
+DRAFT=false
+GENERATE_NOTES=false
+PRE_RELEASE=false
+AUTO=false
+BUMP=""
+
+usage() {
+  echo -e "${BOLD}Usage:${RESET} wz-ai-release [patch|minor|major|vX.Y.Z|promote] [OPTIONS]"
+  echo ""
+  echo -e "${BOLD}Commands:${RESET}"
+  echo "  patch                     Bump patch version (v1.2.0 → v1.2.1)"
+  echo "  minor                     Bump minor version (v1.2.1 → v1.3.0)"
+  echo "  major                     Bump major version (v1.x.x → v2.0.0)"
+  echo "  vX.Y.Z                    Release a specific version"
+  echo "  promote                   Promote dev branch (staging) → main via PR"
+  echo ""
+  echo -e "${BOLD}Options:${RESET}"
+  echo "  --dry-run                 Preview actions without making changes"
+  echo "  --draft                   Create a draft release (not published)"
+  echo "  --generate-notes          Let GitHub auto-generate release notes"
+  echo "  --pre-release             Create a pre-release tag (e.g. v1.3.0-rc.1)"
+  echo "  --auto                    Auto-merge promotion PR (owner/collaborator only)"
+  echo "  --help                    Show this help"
+  echo ""
+  echo -e "${BOLD}Examples:${RESET}"
+  echo "  wz-ai-release patch                     # bug fix release"
+  echo "  wz-ai-release minor                     # feature release"
+  echo "  wz-ai-release minor --pre-release       # pre-release for testing"
+  echo "  wz-ai-release major --draft             # draft major release"
+  echo "  wz-ai-release promote                   # promote staging → main (interactive)"
+  echo "  wz-ai-release promote --auto            # promote staging → main (auto-merge)"
+  echo "  wz-ai-release minor --dry-run           # preview only"
+  exit 0
+}
+
+for arg in "$@"; do
+  case "$arg" in
+    --dry-run) DRY_RUN=true ;;
+    --draft) DRAFT=true ;;
+    --generate-notes) GENERATE_NOTES=true ;;
+    --pre-release) PRE_RELEASE=true ;;
+    --auto) AUTO=true ;;
+    --help|-h) usage ;;
+    *) BUMP="$arg" ;;
+  esac
+done
+
+if [ -z "$BUMP" ]; then
+  echo -e "${RED}Error:${RESET} Specify bump type: patch, minor, major, vX.Y.Z, or promote"
+  usage
+fi
+
+# ── Role Detection (shared with wz-ai-branch) ────────────────────────────────────
+detect_role() {
+  if ! command -v gh &>/dev/null; then echo "UNKNOWN"; return; fi
+  if ! gh auth status &>/dev/null 2>&1; then echo "UNKNOWN"; return; fi
+
+  local repo perms
+  repo=$(gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null || true)
+  if [ -z "$repo" ]; then echo "UNKNOWN"; return; fi
+
+  perms=$(gh api "repos/$repo" --jq '.permissions // empty' 2>/dev/null || true)
+  if [ -z "$perms" ]; then echo "EXTERNAL"; return; fi
+
+  local is_admin is_push
+  is_admin=$(echo "$perms" | grep -o '"admin":true' || true)
+  is_push=$(echo "$perms" | grep -o '"push":true' || true)
+
+  if [ -n "$is_admin" ]; then echo "OWNER"
+  elif [ -n "$is_push" ]; then echo "COLLABORATOR"
+  else echo "EXTERNAL"
+  fi
+}
+
+# ── Dev Branch Detection ──────────────────────────────────────────────────────
+detect_dev_branch() {
+  for candidate in staging develop dev; do
+    if git show-ref --verify --quiet "refs/heads/$candidate" 2>/dev/null || \
+       git show-ref --verify --quiet "refs/remotes/origin/$candidate" 2>/dev/null; then
+      echo "$candidate"
+      return
+    fi
+  done
+  echo "main"
+}
+
+# ── Check prerequisites ────────────────────────────────────────────────────────
+echo -e "${CYAN}🔍 Checking prerequisites...${RESET}"
+
+# Ensure wz-ai-os is available for cross-platform tool management
+AI_OS_CMD=""
+if command -v wz-ai-os &>/dev/null; then
+  AI_OS_CMD="wz-ai-os"
+elif [ -x "$HOME/.local/bin/wz-ai-os" ]; then
+  AI_OS_CMD="$HOME/.local/bin/wz-ai-os"
+elif [ -x "$HOME/.wizard-ai/bin/wz-ai-os" ]; then
+  AI_OS_CMD="$HOME/.wizard-ai/bin/wz-ai-os"
+fi
+
+if ! command -v git &>/dev/null; then
+  echo -e "${RED}❌ git not found${RESET}"; exit 1
+fi
+
+# Check working tree
+if ! git rev-parse --is-inside-work-tree &>/dev/null 2>&1; then
+  echo -e "${RED}❌ Not inside a git repository${RESET}"; exit 1
+fi
+
+# ── PROMOTE COMMAND ────────────────────────────────────────────────────────────
+if [ "$BUMP" = "promote" ]; then
+  DEV_BRANCH=$(detect_dev_branch)
+  ROLE=$(detect_role)
+
+  echo -e ""
+  echo -e "${BOLD}${CYAN}🚀 Promote ${DEV_BRANCH} → main${RESET}"
+  echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo ""
+
+  # Role check: only owner/collaborator can promote
+  if [ "$ROLE" = "EXTERNAL" ]; then
+    echo -e "${RED}❌ Only repo owners and collaborators can promote to main.${RESET}"
+    echo -e "   ${DIM}Contact the repo maintainer to request a release.${RESET}"
+    exit 1
+  fi
+
+  # Ensure we are on the dev branch or main
+  CURRENT=$(git branch --show-current)
+  if [ "$CURRENT" != "$DEV_BRANCH" ] && [ "$CURRENT" != "main" ]; then
+    echo -e "${YELLOW}⚠️  Switching to ${DEV_BRANCH}...${RESET}"
+    git checkout "$DEV_BRANCH"
+  fi
+
+  # Update both branches
+  git fetch origin --quiet
+  git checkout "$DEV_BRANCH"
+  git pull origin "$DEV_BRANCH"
+
+  # Check if there are changes to promote
+  AHEAD=$(git rev-list --count "origin/main..origin/${DEV_BRANCH}" 2>/dev/null || echo "0")
+  if [ "$AHEAD" = "0" ]; then
+    echo -e "${GREEN}✅ ${DEV_BRANCH} is already in sync with main. Nothing to promote.${RESET}"
+    exit 0
+  fi
+
+  echo -e "  ${BOLD}Commits to promote:${RESET} ${GREEN}${AHEAD}${RESET} commits"
+  echo ""
+  echo -e "${BOLD}Changes:${RESET}"
+  git log "origin/main..origin/${DEV_BRANCH}" --oneline --no-merges | head -20
+  echo ""
+
+  if $DRY_RUN; then
+    echo -e "${YELLOW}[DRY RUN] Would create PR: ${DEV_BRANCH} → main with ${AHEAD} commits${RESET}"
+    exit 0
+  fi
+
+  # ── PR-based promotion (if gh available) ──────────────────────────────────
+  if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
+    # Check if a promotion PR already exists
+    EXISTING_PR=$(gh pr list --base main --head "$DEV_BRANCH" --json number -q '.[0].number' 2>/dev/null || true)
+
+    if [ -n "$EXISTING_PR" ]; then
+      echo -e "${YELLOW}ℹ️  Promotion PR #${EXISTING_PR} already exists${RESET}"
+      PR_URL=$(gh pr view "$EXISTING_PR" --json url -q .url 2>/dev/null || echo "")
+      echo -e "  ${BLUE}${PR_URL}${RESET}"
+    else
+      # Create the promotion PR
+      echo -e "${CYAN}📝 Creating promotion PR: ${DEV_BRANCH} → main${RESET}"
+
+      # Generate a promotion title with version hint
+      LATEST_TAG=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+' | head -1 || true)
+      PR_TITLE="chore: promote ${DEV_BRANCH} to main"
+      if [ -n "$LATEST_TAG" ]; then
+        PR_TITLE="chore: promote ${DEV_BRANCH} to main (since ${LATEST_TAG})"
+      fi
+
+      CHANGELOG=$(git log "origin/main..origin/${DEV_BRANCH}" --pretty=format:"- %s (%h)" --no-merges | head -30)
+      PR_BODY="## Promotion: ${DEV_BRANCH} → main
+
+### Changes since last release (${LATEST_TAG:-none})
+
+${CHANGELOG}
+
+---
+*Created by \`wz-ai-release promote\`*"
+
+      gh pr create --base main --head "$DEV_BRANCH" \
+        --title "$PR_TITLE" \
+        --body "$PR_BODY" || {
+        echo -e "${RED}❌ Failed to create promotion PR${RESET}"
+        exit 1
+      }
+
+      EXISTING_PR=$(gh pr list --base main --head "$DEV_BRANCH" --json number -q '.[0].number' 2>/dev/null || true)
+      echo -e "${GREEN}✅ Promotion PR #${EXISTING_PR} created${RESET}"
+    fi
+
+    # Auto-merge if requested
+    if $AUTO && [ -n "$EXISTING_PR" ]; then
+      if [ "$ROLE" = "OWNER" ] || [ "$ROLE" = "COLLABORATOR" ]; then
+        echo ""
+        echo -e "${CYAN}🤖 Enabling auto-merge for PR #${EXISTING_PR}...${RESET}"
+        gh pr merge --auto --merge "$EXISTING_PR" 2>/dev/null && \
+          echo -e "${GREEN}✅ Auto-merge enabled — PR will merge when CI passes${RESET}" || {
+          echo -e "${YELLOW}⚠️  Auto-merge not available. Merging directly...${RESET}"
+          read -r -p "$(echo -e "${BOLD}Merge PR #${EXISTING_PR} now? [y/N]:${RESET} ")" MERGE_NOW
+          if [[ "$MERGE_NOW" =~ ^[Yy]$ ]]; then
+            gh pr merge --merge "$EXISTING_PR" && \
+              echo -e "${GREEN}✅ PR merged into main${RESET}" || \
+              echo -e "${RED}❌ Merge failed${RESET}"
+          fi
+        }
+      fi
+    elif [ -n "$EXISTING_PR" ] && ! $AUTO; then
+      echo ""
+      read -r -p "$(echo -e "${BOLD}Merge PR #${EXISTING_PR} into main now? [y/N]:${RESET} ")" MERGE_NOW
+      if [[ "$MERGE_NOW" =~ ^[Yy]$ ]]; then
+        gh pr merge --merge "$EXISTING_PR" && \
+          echo -e "${GREEN}✅ PR merged into main${RESET}" || \
+          echo -e "${RED}❌ Merge failed${RESET}"
+      fi
+    fi
+
+  else
+    # ── Direct merge fallback ────────────────────────────────────────────────
+    echo -e "${YELLOW}⚠️  gh CLI not available — using direct merge${RESET}"
+    echo ""
+
+    read -r -p "$(echo -e "${BOLD}Merge ${DEV_BRANCH} → main? [y/N]:${RESET} ")" CONFIRM
+    if [[ ! "$CONFIRM" =~ ^[Yy]$ ]]; then
+      echo "Aborted."
+      exit 0
+    fi
+
+    git checkout main
+    git pull origin main
+    git merge --no-ff "$DEV_BRANCH" -m "chore: promote ${DEV_BRANCH} to main"
+    git push origin main
+    echo -e "${GREEN}✅ ${DEV_BRANCH} promoted to main${RESET}"
+  fi
+
+  echo ""
+  echo -e "${GREEN}${BOLD}🎉 Promotion complete!${RESET}"
+  echo -e "   ${BLUE}Next: run ${CYAN}wz-ai-release minor${BLUE} (or patch/major) to tag and publish${RESET}"
+  exit 0
+fi
+
+# ── Standard release flow ──────────────────────────────────────────────────────
+
+# Check role: only owner/collaborator can release
+ROLE=$(detect_role)
+if [ "$ROLE" = "EXTERNAL" ]; then
+  echo -e "${RED}❌ Only repo owners and collaborators can create releases.${RESET}"
+  echo -e "   ${DIM}Submit a PR instead: wz-ai-branch pr --target staging${RESET}"
+  exit 1
+fi
+
+DIRTY=$(git status --short)
+if [ -n "$DIRTY" ]; then
+  echo -e "${YELLOW}⚠️  Working tree is dirty:${RESET}"
+  echo "$DIRTY"
+  echo -e "${YELLOW}Commit or stash changes before releasing.${RESET}"
+  exit 1
+fi
+
+# Ensure we are on main for releases (unless pre-release)
+CURRENT_BRANCH=$(git branch --show-current)
+if ! $PRE_RELEASE && [ "$CURRENT_BRANCH" != "main" ]; then
+  echo -e "${YELLOW}⚠️  Releases should be created from 'main' branch.${RESET}"
+  echo -e "   Current branch: ${CURRENT_BRANCH}"
+  read -r -p "$(echo -e "${BOLD}Switch to main? [Y/n]:${RESET} ")" SWITCH
+  SWITCH="${SWITCH:-y}"
+  if [[ "$SWITCH" =~ ^[Yy]$ ]]; then
+    git checkout main
+    git pull origin main
+  else
+    echo -e "${YELLOW}Continuing on '${CURRENT_BRANCH}'...${RESET}"
+  fi
+fi
+
+# ── Get latest semver tag ──────────────────────────────────────────────────────
+LATEST=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1 || true)
+
+if [ -z "$LATEST" ]; then
+  echo -e "${YELLOW}⚠️  No semver tags found. Starting from v0.0.0${RESET}"
+  LATEST="v0.0.0"
+fi
+
+echo -e "  Latest tag: ${BOLD}$LATEST${RESET}"
+
+# Strip 'v'
+VERSION="${LATEST#v}"
+MAJOR=$(echo "$VERSION" | cut -d. -f1)
+MINOR=$(echo "$VERSION" | cut -d. -f2)
+PATCH=$(echo "$VERSION" | cut -d. -f3)
+
+# ── Compute new version ────────────────────────────────────────────────────────
+case "$BUMP" in
+  patch)
+    NEW_TAG="v$MAJOR.$MINOR.$((PATCH + 1))"
+    ;;
+  minor)
+    NEW_TAG="v$MAJOR.$((MINOR + 1)).0"
+    ;;
+  major)
+    NEW_TAG="v$((MAJOR + 1)).0.0"
+    ;;
+  v*)
+    NEW_TAG="$BUMP"
+    ;;
+  *)
+    echo -e "${RED}❌ Unknown bump type: $BUMP${RESET}"
+    usage
+    ;;
+esac
+
+# ── Pre-release suffix ────────────────────────────────────────────────────────
+if $PRE_RELEASE; then
+  # Count existing pre-releases for this version
+  BASE_VERSION="${NEW_TAG}"
+  RC_COUNT=$(git tag --sort=-v:refname | grep -cE "^${NEW_TAG}-rc\." || echo "0")
+  RC_NUM=$((RC_COUNT + 1))
+  NEW_TAG="${NEW_TAG}-rc.${RC_NUM}"
+  echo -e "  ${MAGENTA}Pre-release mode:${RESET} ${BASE_VERSION} → ${BOLD}${NEW_TAG}${RESET}"
+fi
+
+# ── Generate changelog ─────────────────────────────────────────────────────────
+if [ "$LATEST" = "v0.0.0" ]; then
+  CHANGELOG=$(git log --pretty=format:"- %s (%h)" --no-merges | head -30)
+else
+  CHANGELOG=$(git log "${LATEST}..HEAD" --pretty=format:"- %s (%h)" --no-merges)
+fi
+
+if [ -z "$CHANGELOG" ]; then
+  CHANGELOG="- No new commits since $LATEST"
+fi
+
+# ── Preview ────────────────────────────────────────────────────────────────────
+echo ""
+echo -e "${BOLD}${GREEN}🚀 Release Preview${RESET}"
+echo -e "  ${LATEST} → ${BOLD}${NEW_TAG}${RESET}"
+if $PRE_RELEASE; then
+  echo -e "  ${MAGENTA}(pre-release — for testing only)${RESET}"
+fi
+echo ""
+echo -e "${BOLD}Changelog:${RESET}"
+echo "$CHANGELOG"
+echo ""
+
+if $DRY_RUN; then
+  echo -e "${YELLOW}[DRY RUN] No changes made.${RESET}"
+  exit 0
+fi
+
+# ── Confirm ────────────────────────────────────────────────────────────────────
+read -r -p "$(echo -e "${BOLD}Proceed with release ${NEW_TAG}? [y/N]:${RESET} ")" CONFIRM
+if [[ ! "$CONFIRM" =~ ^[Yy]$ ]]; then
+  echo "Aborted."
+  exit 0
+fi
+
+# ── Sync version files (if they exist) ─────────────────────────────────────────
+PLAIN_VERSION="${NEW_TAG#v}"  # Remove 'v' prefix for file sync
+
+# package.json
+if [ -f "package.json" ]; then
+  sed -i "s/\"version\": \".*\"/\"version\": \"${PLAIN_VERSION}\"/" package.json
+  git add package.json
+  git commit -m "chore: bump version to ${NEW_TAG}" --allow-empty
+  echo -e "${GREEN}✅ package.json updated to ${PLAIN_VERSION}${RESET}"
+fi
+
+# pyproject.toml
+if [ -f "pyproject.toml" ]; then
+  sed -i "s/^version = .*/version = \"${PLAIN_VERSION}\"/" pyproject.toml
+  git add pyproject.toml
+  git commit -m "chore: bump version to ${NEW_TAG}" --allow-empty --amend 2>/dev/null || \
+    git commit -m "chore: bump version to ${NEW_TAG}" --allow-empty
+  echo -e "${GREEN}✅ pyproject.toml updated to ${PLAIN_VERSION}${RESET}"
+fi
+
+# Push version bump
+git push origin "$(git branch --show-current)" 2>/dev/null || true
+
+# ── Tag ────────────────────────────────────────────────────────────────────────
+echo -e "${CYAN}📌 Tagging ${NEW_TAG}...${RESET}"
+git tag "$NEW_TAG" -m "Release $NEW_TAG"
+git push origin "$NEW_TAG"
+echo -e "${GREEN}✅ Tag pushed${RESET}"
+
+# ── GitHub Release ─────────────────────────────────────────────────────────────
+# Ensure gh CLI is installed using the correct package manager for this OS
+if ! command -v gh &>/dev/null; then
+  echo -e "${YELLOW}⚠️  gh CLI not found — installing automatically...${RESET}"
+  if [ -n "${AI_OS_CMD:-}" ]; then
+    "$AI_OS_CMD" install gh
+    # After install, remind user to authenticate
+    if ! gh auth status &>/dev/null 2>&1; then
+      echo -e ""
+      echo -e "${YELLOW}⚡ gh installed! You need to authenticate before creating releases:${RESET}"
+      echo -e "   Run: ${CYAN}gh auth login${RESET}   then re-run: ${CYAN}wz-ai-release $BUMP${RESET}"
+      exit 0
+    fi
+  else
+    echo -e "${YELLOW}⚠️  wz-ai-os not found. Install gh manually for your OS:${RESET}"
+    echo -e "   ${CYAN}Arch/CachyOS:${RESET}   sudo pacman -S github-cli"
+    echo -e "   ${CYAN}Ubuntu/Debian:${RESET}  sudo apt install gh"
+    echo -e "   ${CYAN}Fedora:${RESET}         sudo dnf install gh"
+    echo -e "   ${CYAN}macOS:${RESET}          brew install gh"
+    echo -e "   ${CYAN}Windows:${RESET}        winget install GitHub.cli"
+    echo -e "   Then run: ${CYAN}gh auth login && wz-ai-release $BUMP${RESET}"
+    exit 0
+  fi
+fi
+
+# Check gh authentication
+if ! gh auth status &>/dev/null 2>&1; then
+  echo -e ""
+  echo -e "${YELLOW}⚡ gh is installed but NOT authenticated.${RESET}"
+  echo -e "   Run: ${CYAN}gh auth login${RESET}   then re-run: ${CYAN}wz-ai-release $BUMP${RESET}"
+  exit 0
+fi
+
+GH_ARGS=("release" "create" "$NEW_TAG" "--title" "$NEW_TAG - $(date +%Y-%m-%d)")
+
+if $DRAFT; then
+  GH_ARGS+=("--draft")
+fi
+
+if $PRE_RELEASE; then
+  GH_ARGS+=("--prerelease")
+fi
+
+if $GENERATE_NOTES; then
+  GH_ARGS+=("--generate-notes")
+else
+  GH_ARGS+=("--notes" "$CHANGELOG")
+fi
+
+echo -e "${CYAN}📦 Creating GitHub release...${RESET}"
+gh "${GH_ARGS[@]}"
+echo -e "${GREEN}✅ GitHub release created: ${NEW_TAG}${RESET}"
+
+echo ""
+echo -e "${GREEN}${BOLD}🎉 Release ${NEW_TAG} complete!${RESET}"
+if $PRE_RELEASE; then
+  echo -e "   ${MAGENTA}This is a pre-release. When ready for production:${RESET}"
+  echo -e "   ${BLUE}1. ${CYAN}wz-ai-release promote --auto${RESET}  ${DIM}(merge staging → main)${RESET}"
+  echo -e "   ${BLUE}2. ${CYAN}wz-ai-release ${BUMP}${RESET}            ${DIM}(final release from main)${RESET}"
+fi

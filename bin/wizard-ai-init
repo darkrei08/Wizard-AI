@@ -40,7 +40,7 @@ cat << EOF > "$TARGET_DIR/.wizard-ai.json"
       "args": ["codebase-memory-mcp"]
     },
     "llmwiki": {
-      "command": "/home/ema/.local/bin/ai-wiki",
+      "command": "/home/ema/.local/bin/wz-ai-wiki",
       "args": ["mcp", "--base-dir", "."]
     },
     "serena": {
@@ -53,12 +53,12 @@ cat << EOF > "$TARGET_DIR/.wizard-ai.json"
     }
   },
   "tools": {
-    "wiki": "/home/ema/.local/bin/ai-wiki",
-    "vector": "/home/ema/.local/bin/ai-vector",
-    "graph": "/home/ema/.local/bin/ai-graph",
-    "compress": "/home/ema/.local/bin/ai-squeeze",
+    "wiki": "/home/ema/.local/bin/wz-ai-wiki",
+    "vector": "/home/ema/.local/bin/wz-ai-vector",
+    "graph": "/home/ema/.local/bin/wz-ai-graph",
+    "compress": "/home/ema/.local/bin/wz-ai-squeeze",
     "context": "/home/ema/.local/bin/ai-context",
-    "session": "/home/ema/.local/bin/ai-session-save"
+    "session": "/home/ema/.local/bin/wz-ai-session-save"
   }
 }
 EOF
@@ -78,7 +78,7 @@ MCP_CONFIG='{
       "args": ["codebase-memory-mcp"]
     },
     "llmwiki": {
-      "command": "/home/ema/.local/bin/ai-wiki",
+      "command": "/home/ema/.local/bin/wz-ai-wiki",
       "args": ["mcp", "--base-dir", "."]
     },
     "serena": {
@@ -117,7 +117,7 @@ INSTRUCTION_BLOCK='# 🪄 Wizard-AI Project Ecosystem — Mandatory Agent Instru
 ## 🔄 The 5-Loop Sequential Pipeline (`01. loop-1-plan` ➔ `05. loop-5-release`)
 
 1. **`01. loop-1-plan` (Discovery, Requirements & RAG Strategy)**
-   - **MANDATORY**: Before proposing plans or modifying files, you MUST query the semantic knowledge base (`ai-wiki query / search` or `ai-vector search`) and AST call graph (`serena`).
+   - **MANDATORY**: Before proposing plans or modifying files, you MUST query the semantic knowledge base (`wz-ai-wiki query / search` or `wz-ai-vector search`) and AST call graph (`serena`).
    - **External Docs**: If the task involves documentation or manuals, invoke `book-to-skill`.
    - **Context Pruning**: Pass search output through `sqz` or `ktx` (`lean-ctx`) to prune boilerplate before reading (>60% savings).
 
@@ -127,20 +127,20 @@ INSTRUCTION_BLOCK='# 🪄 Wizard-AI Project Ecosystem — Mandatory Agent Instru
 
 3. **`03. loop-3-debug` (Adversarial Verification, Quality & Security Gates)**
    - **MANDATORY SECURITY AUDIT (`cybersecurity` / `strix`)**: You MUST verify that all paths and file access boundaries are standardized/sanitizied (`path.resolve()`, `os.homedir()`) and against path traversal. You MUST verify that NO API keys (`GEMINI_API_KEY`, `OPENAI_API_KEY`, `TOKEN`, `DB_PASSWORD`) or secrets are hardcoded in code or configs; they MUST be read via environment variables (`process.env` / `.env` git-ignored).
-   - Run linter/typechecker (`ai-llmwiki lint check` or project linter) and automated test suites (`bun test` / `npm test`).
+   - Run linter/typechecker (`wz-ai-llmwiki lint check` or project linter) and automated test suites (`bun test` / `npm test`).
 
 4. **`04. loop-4-refactor` (Clean Architecture & Token Squeezing)**
-   - Remove YAGNI code (`ponytail` mindset). Verify dependency graphs via `ai-graph query`.
+   - Remove YAGNI code (`ponytail` mindset). Verify dependency graphs via `wz-ai-graph query`.
 
 5. **`05. loop-5-release` (Handoff, Memory Sync & Graph Compilation)**
-   - **MANDATORY POST-GATE 1**: Run `ai-graph . --update` to refresh the code relationship map (`graphify-out/`).
-   - **MANDATORY POST-GATE 2**: Run `ai-wiki ingest / compile` (or `ai-llmwiki`) to crystallize session markdown files (`MEMORY.md`, `walkthrough.md`) into the multilingual knowledge graph.
-   - **MANDATORY POST-GATE 3**: Run `ai-session-save "<summary>"` to persist session state on `MEMORY.md`.
+   - **MANDATORY POST-GATE 1**: Run `wz-ai-graph . --update` to refresh the code relationship map (`graphify-out/`).
+   - **MANDATORY POST-GATE 2**: Run `wz-ai-wiki ingest / compile` (or `wz-ai-llmwiki`) to crystallize session markdown files (`MEMORY.md`, `walkthrough.md`) into the multilingual knowledge graph.
+   - **MANDATORY POST-GATE 3**: Run `wz-ai-session-save "<summary>"` to persist session state on `MEMORY.md`.
 
 ---
 
 ## 🗜️ Mandatory Context & Output Optimization Rules
-- **Output Compression (`sqz`)**: Never pipe raw verbose JSON, build logs, or large git outputs into your context. Always pipe through `ai-squeeze` (`sqz`).
+- **Output Compression (`sqz`)**: Never pipe raw verbose JSON, build logs, or large git outputs into your context. Always pipe through `wz-ai-squeeze` (`sqz`).
 - **Response Efficiency (`caveman`)**: Keep your conversational explanation concise (~75% token reduction) while retaining 100% technical code accuracy.
 - **MCP Tool Priority**: When available, prefer calling `llmwiki` / `serena` MCP tools directly over spawning heavy terminal shell commands.
 '
@@ -153,13 +153,13 @@ echo "  ✓ Created/Updated mandatory agent guidelines: AGENTS.md, CLAUDE.md, GE
 # 4. Initialize graphify and llmwiki indices if not present
 if [ ! -d "$TARGET_DIR/graphify-out" ]; then
   echo "  ⏳ Initializing quick graphify skeleton..."
-  "/home/ema/.local/bin/ai-graph" "$TARGET_DIR" --cluster-only 2>/dev/null || true
+  "/home/ema/.local/bin/wz-ai-graph" "$TARGET_DIR" --cluster-only 2>/dev/null || true
 fi
 
 if [ -f "$TARGET_DIR/MEMORY.md" ]; then
   echo "  ⏳ Ingesting MEMORY.md into llmwiki..."
-  "/home/ema/.local/bin/ai-wiki" --base-dir "$TARGET_DIR" ingest file "$TARGET_DIR/MEMORY.md" 2>/dev/null || true
-  "/home/ema/.local/bin/ai-wiki" --base-dir "$TARGET_DIR" compile index 2>/dev/null || true
+  "/home/ema/.local/bin/wz-ai-wiki" --base-dir "$TARGET_DIR" ingest file "$TARGET_DIR/MEMORY.md" 2>/dev/null || true
+  "/home/ema/.local/bin/wz-ai-wiki" --base-dir "$TARGET_DIR" compile index 2>/dev/null || true
 fi
 
 echo "🚀 [Wizard-AI Plugin] Bootstrap Complete for $TARGET_DIR!"

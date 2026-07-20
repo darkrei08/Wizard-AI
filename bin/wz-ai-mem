@@ -1,0 +1,184 @@
+#!/usr/bin/env bash
+# wz-ai-mem — Persistent semantic memory for LLM sessions (claude-mem)
+# Source: https://github.com/thedotmack/claude-mem
+
+set -euo pipefail
+
+MEM_DIR="$HOME/.ai-skills/claude-mem"
+MEM_STORE="$HOME/.ai-skills/mem-store"
+
+if [[ ! -d "$MEM_DIR" ]]; then
+  echo "❌ claude-mem not found." >&2
+  echo "   Clone: git clone https://github.com/thedotmack/claude-mem $MEM_DIR" >&2
+  exit 1
+fi
+
+mkdir -p "$MEM_STORE"
+
+show_help() {
+  echo "wz-ai-mem — Persistent semantic memory across AI sessions"
+  echo ""
+  echo "Usage:"
+  echo "  wz-ai-mem store <text>          Store a memory"
+  echo "  wz-ai-mem store --tag X <text>  Store with a tag"
+  echo "  wz-ai-mem search <query>        Semantic search memories"
+  echo "  wz-ai-mem list [--tag X]        List all memories"
+  echo "  wz-ai-mem delete <id>           Delete a memory"
+  echo "  wz-ai-mem export [file.json]    Export all memories"
+  echo "  wz-ai-mem import <file.json>    Import memories"
+  echo ""
+  echo "Examples:"
+  echo "  wz-ai-mem store \"User prefers Python over JavaScript\""
+  echo "  wz-ai-mem store --tag project \"Uses PostgreSQL 16 and Redis 7\""
+  echo "  wz-ai-mem search \"technology stack\""
+  echo "  wz-ai-mem list --tag project"
+}
+
+if [[ $# -eq 0 ]]; then
+  show_help
+  exit 0
+fi
+
+# Check if claude-mem has a CLI entry point
+if [[ -f "$MEM_DIR/mem.py" ]]; then
+  exec python3 "$MEM_DIR/mem.py" "$@"
+elif [[ -f "$MEM_DIR/claude_mem/cli.py" ]]; then
+  exec python3 -m claude_mem.cli "$@"
+elif command -v claude-mem &>/dev/null; then
+  exec claude-mem "$@"
+else
+  # Fallback: simple JSON-based memory store (with optional Turbovec semantic search)
+  ACTION="$1"
+  shift || true
+  
+  VENV_PYTHON="$HOME/.ai-skills/venv/bin/python"
+  if [ ! -f "$VENV_PYTHON" ]; then
+      VENV_PYTHON="python3"
+  fi
+
+  exec "$VENV_PYTHON" - "$ACTION" "$@" << 'EOF'
+import sys
+import json
+import os
+import hashlib
+from datetime import datetime
+
+if len(sys.argv) < 2:
+    sys.exit(0)
+
+action = sys.argv[1]
+args = sys.argv[2:]
+
+store_dir = os.path.expanduser("~/.ai-skills/mem-store")
+os.makedirs(store_dir, exist_ok=True)
+mem_file = os.path.join(store_dir, "memories.json")
+index_file = os.path.join(store_dir, "turbovec.index")
+
+if not os.path.exists(mem_file):
+    with open(mem_file, "w") as f:
+        json.dump({"memories": []}, f)
+
+def get_embedding(text):
+    import litellm
+    import numpy as np
+    litellm.suppress_debug_info = True
+    model = os.environ.get("AI_VECTOR_MODEL", "text-embedding-3-small")
+    response = litellm.embedding(model=model, input=text)
+    emb = response.data[0]['embedding']
+    return np.array(emb, dtype=np.float32)
+
+if action == "store":
+    text = " ".join(args)
+    mid = hashlib.md5(str(datetime.now().timestamp()).encode()).hexdigest()[:8]
+    ts = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+    
+    with open(mem_file) as f:
+        data = json.load(f)
+    
+    doc_id = len(data["memories"])
+    vector_status = ""
+    
+    # Try to index with Turbovec
+    try:
+        import turbovec
+        import numpy as np
+        
+        vec = get_embedding(text)
+        vec_2d = vec.reshape(1, -1)
+        dim = vec.shape[0]
+        
+        if not os.path.exists(index_file):
+            index = turbovec.IdMapIndex(dim=dim, bit_width=4)
+        else:
+            index = turbovec.IdMapIndex.load(index_file)
+            
+        ids = np.array([doc_id], dtype=np.uint64)
+        index.add_with_ids(vec_2d, ids)
+        index.save(index_file)
+        vector_status = "(Semantic Indexed)"
+    except Exception as e:
+        vector_status = f"(Naive mode)"
+        
+    data["memories"].append({"id": mid, "doc_id": doc_id, "text": text, "ts": ts})
+    with open(mem_file, "w") as f:
+        json.dump(data, f, indent=2)
+        
+    print(f"✅ Stored memory: {mid} {vector_status}")
+
+elif action == "list":
+    with open(mem_file) as f:
+        data = json.load(f)
+    mems = data["memories"]
+    if not mems:
+        print("No memories stored.")
+    else:
+        for m in mems[-20:]:
+            print(f"[{m['id']}] {m['ts']} — {m['text'][:80]}")
+    print(f"\nTotal: {len(mems)} memories stored in {mem_file}")
+
+elif action == "search":
+    query = " ".join(args)
+    with open(mem_file) as f:
+        data = json.load(f)
+    mems = data["memories"]
+    
+    # Try Semantic Search
+    try:
+        import turbovec
+        import numpy as np
+        if os.path.exists(index_file):
+            index = turbovec.IdMapIndex.load(index_file)
+            vec = get_embedding(query)
+            vec_2d = vec.reshape(1, -1)
+            
+            k = min(5, len(mems))
+            if k > 0:
+                distances, ids = index.search(vec_2d, k)
+                
+                print(f"🔎 Semantic Search via Turbovec per: '{query}'")
+                for dist, d_id in zip(distances[0], ids[0]):
+                    m = next((x for x in mems if x.get("doc_id") == d_id), None)
+                    if m:
+                        print(f"[{dist:.4f}] {m['text']}")
+                sys.exit(0)
+    except Exception:
+        pass
+        
+    # Fallback to Naive text search
+    print(f"🔎 Naive Text Search per: '{query}'")
+    query_words = query.lower().split()
+    results = [m for m in mems if any(w in m['text'].lower() for w in query_words)]
+    if not results:
+        print("No matching memories found.")
+    else:
+        for m in results:
+            print(f"[{m['id']}] {m['text']}")
+
+elif action == "export":
+    with open(mem_file) as f:
+        print(f.read())
+else:
+    print("Invalid action.")
+    sys.exit(1)
+EOF
+fi

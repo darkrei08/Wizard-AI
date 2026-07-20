@@ -290,7 +290,7 @@ $null = New-Item -ItemType Directory -Force -Path (Join-Path $LocalBin 'lib')
 Copy-Item -Path (Join-Path $WrappersSrc 'lib\*') -Destination (Join-Path $LocalBin 'lib') -Recurse -Force
 
 # Generate .cmd shims so wrappers can be invoked as plain commands
-# (e.g. "ai-help") from cmd.exe, PowerShell, and other AI agents.
+# (e.g. "wz-ai-help") from cmd.exe, PowerShell, and other AI agents.
 function New-CmdShim($CommandName, $Ps1Name) {
     $ShimPath = Join-Path $LocalBin "$CommandName.cmd"
     $Content = "@echo off`r`npowershell -NoProfile -ExecutionPolicy Bypass -File `"%~dp0$Ps1Name`" %*"
@@ -301,8 +301,8 @@ $Wrappers = Get-ChildItem -Path $WrappersSrc -Filter '*.ps1'
 foreach ($W in $Wrappers) {
     New-CmdShim $W.BaseName $W.Name
 }
-# gemini-usage is an alias of ai-usage (same script, no duplicate files)
-New-CmdShim 'gemini-usage' 'ai-usage.ps1'
+# gemini-usage is an alias of wz-ai-usage (same script, no duplicate files)
+New-CmdShim 'gemini-usage' 'wz-ai-usage.ps1'
 Write-Host "[ok] $($Wrappers.Count) wrapper scripts installed to $LocalBin (with gemini-usage shim)" -ForegroundColor Green
 
 # 7. Install Skills for all agents (hierarchical → flat)
@@ -325,7 +325,7 @@ Copy-Item -Path (Join-Path $ScriptDir 'skills\skills.json') -Destination $Skills
 Write-Host "[ok] $SkillCount skills installed to $SkillsDst" -ForegroundColor Green
 
 Write-Host 'Syncing skills to Claude Code, Amp, and other agents...' -ForegroundColor Yellow
-& (Join-Path $LocalBin 'ai-sync-skills.ps1')
+& (Join-Path $LocalBin 'wz-ai-sync-skills.ps1')
 
 # 8. Auto-Update Configuration
 Write-Host ''
@@ -355,7 +355,7 @@ $StartupShortcut = Join-Path $StartupFolder "WizardAI-AutoUpdate.lnk"
 
 if ($EnableUpdate -eq 'Y') {
     Write-Host "  [ok] Enabling automatic background updates at logon..." -ForegroundColor Green
-    $UpdateScriptPath = Join-Path $LocalBin 'ai-update.ps1'
+    $UpdateScriptPath = Join-Path $LocalBin 'wz-ai-update.ps1'
     
     # Security: Ensure the file exists before creating the shortcut
     if (Test-Path $UpdateScriptPath) {
@@ -375,7 +375,7 @@ if ($EnableUpdate -eq 'Y') {
     }
 }
 else {
-    Write-Host "  Auto-updates disabled. Update manually using 'ai-update'." -ForegroundColor Yellow
+    Write-Host "  Auto-updates disabled. Update manually using 'wz-ai-update'." -ForegroundColor Yellow
     if (Test-Path $StartupShortcut) {
         Remove-Item $StartupShortcut -Force
     }
@@ -388,17 +388,17 @@ Write-Host '      Wizard-AI Environment Installed Successfully!' -ForegroundColo
 Write-Host '============================================================' -ForegroundColor Green
 Write-Host ''
 Write-Host 'Available commands in your terminal:'
-Write-Host '  ai-help      ' -ForegroundColor Cyan -NoNewline; Write-Host '- Central hub for all AI commands'
-Write-Host '  ai-usage     ' -ForegroundColor Cyan -NoNewline; Write-Host '- View Gemini usage statistics and token budget'
-Write-Host '  ai-graph     ' -ForegroundColor Cyan -NoNewline; Write-Host '- Run Graphify to map codebases to knowledge graphs'
-Write-Host '  ai-compress  ' -ForegroundColor Cyan -NoNewline; Write-Host '- Compress prompt context via LLMLingua (up to 20x)'
-Write-Host '  ai-rerank    ' -ForegroundColor Cyan -NoNewline; Write-Host '- Re-rank list components for RAG via FlashRank'
-Write-Host '  ai-squeeze   ' -ForegroundColor Cyan -NoNewline; Write-Host '- Compress CLI outputs / files via Sqz'
-Write-Host '  ai-headroom  ' -ForegroundColor Cyan -NoNewline; Write-Host '- Headroom proxy and context compression'
-Write-Host '  ai-lean      ' -ForegroundColor Cyan -NoNewline; Write-Host '- Lean Context Intelligence wrapper'
-Write-Host '  ai-convert   ' -ForegroundColor Cyan -NoNewline; Write-Host '- Extract clean Markdown from PDF, DOCX, images, etc.'
-Write-Host '  ai-mem       ' -ForegroundColor Cyan -NoNewline; Write-Host '- Access persistent semantic memory (claude-mem)'
-Write-Host '  ai-sync-skills ' -ForegroundColor Cyan -NoNewline; Write-Host '- Sync skills across all AI agents'
+Write-Host '  wz-ai-help      ' -ForegroundColor Cyan -NoNewline; Write-Host '- Central hub for all AI commands'
+Write-Host '  wz-ai-usage     ' -ForegroundColor Cyan -NoNewline; Write-Host '- View Gemini usage statistics and token budget'
+Write-Host '  wz-ai-graph     ' -ForegroundColor Cyan -NoNewline; Write-Host '- Run Graphify to map codebases to knowledge graphs'
+Write-Host '  wz-ai-compress  ' -ForegroundColor Cyan -NoNewline; Write-Host '- Compress prompt context via LLMLingua (up to 20x)'
+Write-Host '  wz-ai-rerank    ' -ForegroundColor Cyan -NoNewline; Write-Host '- Re-rank list components for RAG via FlashRank'
+Write-Host '  wz-ai-squeeze   ' -ForegroundColor Cyan -NoNewline; Write-Host '- Compress CLI outputs / files via Sqz'
+Write-Host '  wz-ai-headroom  ' -ForegroundColor Cyan -NoNewline; Write-Host '- Headroom proxy and context compression'
+Write-Host '  wz-ai-lean      ' -ForegroundColor Cyan -NoNewline; Write-Host '- Lean Context Intelligence wrapper'
+Write-Host '  wz-ai-convert   ' -ForegroundColor Cyan -NoNewline; Write-Host '- Extract clean Markdown from PDF, DOCX, images, etc.'
+Write-Host '  wz-ai-mem       ' -ForegroundColor Cyan -NoNewline; Write-Host '- Access persistent semantic memory (claude-mem)'
+Write-Host '  wz-ai-sync-skills ' -ForegroundColor Cyan -NoNewline; Write-Host '- Sync skills across all AI agents'
 Write-Host ''
 Write-Host 'Important: open a NEW terminal to load the updated PATH.' -ForegroundColor Yellow
 Write-Host ''
@@ -406,4 +406,4 @@ Write-Host 'Your Wizard-AI directory: ' -ForegroundColor Yellow -NoNewline; Writ
 Write-Host 'Skills: ' -ForegroundColor Yellow -NoNewline; Write-Host $SkillsDst -ForegroundColor Magenta
 Write-Host 'CLIs:   ' -ForegroundColor Yellow -NoNewline; Write-Host $LocalBin -ForegroundColor Magenta
 Write-Host ''
-Write-Host "Run 'ai-help' to see all available tools and their usage." -ForegroundColor Cyan
+Write-Host "Run 'wz-ai-help' to see all available tools and their usage." -ForegroundColor Cyan

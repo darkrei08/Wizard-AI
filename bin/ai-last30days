@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-# ai-last30days — Multi-source last-30-days research skill
-# Source: https://github.com/mvanhorn/last30days-skill
-set -euo pipefail
-
-python3 "$HOME/.ai-skills/last30days-skill/skills/last30days/scripts/last30days.py" "$@"

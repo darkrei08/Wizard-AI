@@ -66,34 +66,34 @@ The body must use `##` (H2) headings. The sequences of sections must appear in t
 ---
 
 ## CLI Reference
-You can invoke the CLI wrapper `ai-designmd` (or the direct `designmd`/`design.md` binaries) to lint, diff, and export design systems.
+You can invoke the CLI wrapper `wz-ai-designmd` (or the direct `designmd`/`design.md` binaries) to lint, diff, and export design systems.
 
 ### 1. Linting DESIGN.md
 Validates the structure, token references, and checks color contrast ratios:
 ```bash
-ai-designmd lint DESIGN.md
+wz-ai-designmd lint DESIGN.md
 # or: npx @google/design.md lint DESIGN.md
 ```
 
 ### 2. Differing DESIGN.md
 Compares two design system versions to find additions, modifications, or regressions:
 ```bash
-ai-designmd diff DESIGN.md DESIGN-v2.md
+wz-ai-designmd diff DESIGN.md DESIGN-v2.md
 ```
 
 ### 3. Exporting Tokens
 Converts `DESIGN.md` tokens into other code configurations:
 - **Tailwind v3 Config (JSON)**:
   ```bash
-  ai-designmd export --format json-tailwind DESIGN.md > tailwind.theme.json
+  wz-ai-designmd export --format json-tailwind DESIGN.md > tailwind.theme.json
   ```
 - **Tailwind v4 Theme (CSS)**:
   ```bash
-  ai-designmd export --format css-tailwind DESIGN.md > theme.css
+  wz-ai-designmd export --format css-tailwind DESIGN.md > theme.css
   ```
 - **W3C DTCG Format (JSON)**:
   ```bash
-  ai-designmd export --format dtcg DESIGN.md > tokens.json
+  wz-ai-designmd export --format dtcg DESIGN.md > tokens.json
   ```
 
 ---

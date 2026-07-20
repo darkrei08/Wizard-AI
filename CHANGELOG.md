@@ -10,8 +10,8 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 ## [0.49.0] - 2026-07-12
 
 ### Added
-- **Interactive RTK & Optimization Monitor (`rtk-monitor`)**: Added a dedicated route and interactive dashboard in the Local Hub to monitor token savings, compression ratios, latency (<10ms), and cost reductions in real time. Includes live simulations for `ai-rtk wrap git status`, `ai-squeeze --mode log`, and `ai-headroom compress`.
-- **Interactive CLI Simulator (`cli-sim`)**: Added a built-in terminal emulator within the Local Hub to run and test `wizard-ai-cli` commands (`ai-optimize status`, `ai-rtk info`, `ai-headroom info`, `ai-loop-sentinel`) directly from the browser.
+- **Interactive RTK & Optimization Monitor (`rtk-monitor`)**: Added a dedicated route and interactive dashboard in the Local Hub to monitor token savings, compression ratios, latency (<10ms), and cost reductions in real time. Includes live simulations for `wz-wz-ai-rtk wrap git status`, `wz-wz-ai-squeeze --mode log`, and `wz-wz-ai-headroom compress`.
+- **Interactive CLI Simulator (`cli-sim`)**: Added a built-in terminal emulator within the Local Hub to run and test `wizard-ai-cli` commands (`wz-wz-ai-optimize status`, `wz-wz-ai-rtk info`, `wz-wz-ai-headroom info`, `wz-wz-ai-loop-sentinel`) directly from the browser.
 - **Top Live Status Bar**: Added a sleek top navigation banner in the Local Hub showing real-time token savings counter, RTK engine status (`Active <10ms`), and air-gapped local mode confirmation.
 - **Air-Gapped Dashboard Fallback**: Added robust local simulation fallback in `dashboard.js` when the background API server is unreachable, displaying real-time local model status (`LiteLLM / Gemini 3.1 Pro`) and infinite on-device budget.
 
@@ -20,23 +20,23 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
   - `design-system.css`: Upgraded with calibrated cyber-glass dark tokens, neon indigo/cyan accents, hardware-accelerated gradients, custom futuristic scrollbars, and dynamic layout variables.
   - `components.css`: Upgraded buttons with hardware-accelerated micro-motion (`pulseGlow`, `float`), glassmorphic interactive cards with radial gradient highlights (`--glass-highlight`), glowing badges (`badge-neon`), and interactive simulated terminal boxes (`terminal-box`).
   - `pages.css`: Upgraded hero section typography with deep drop shadows, polished stats grid layouts, and responsive spacing across mobile and tablet.
-- **5-Loop MoE Routing Verification**: Successfully executed and validated the complete 5-Loop sequential workflow (`01. loop-1-plan` → `02. loop-2-develop` → `03. loop-3-debug` → `04. loop-4-refactor` → `05. loop-5-release`) orchestrated by `ai-loop-sentinel`.
+- **5-Loop MoE Routing Verification**: Successfully executed and validated the complete 5-Loop sequential workflow (`01. loop-1-plan` → `02. loop-2-develop` → `03. loop-3-debug` → `04. loop-4-refactor` → `05. loop-5-release`) orchestrated by `wz-wz-ai-loop-sentinel`.
 
 ## [0.48.0] - 2026-07-12
 
 ### Added
-- **`ai-headroom` CLI Wrapper**: Created the missing CLI wrapper for `headroom` context compression & API proxy (60-95% token reduction). Provides `compress`, `proxy`, `status`, `info` subcommands with installation fallback and telemetry hook.
-- **RTK Integration in Loop 4 & Brain**: Integrated `rtk` (`ai-rtk`) — Rust Token Killer — as Phase 5 (CLI Output Interception) in `loop-4-refactor/SKILL.md` and `workflow-agentic-brain/SKILL.md`. RTK compresses shell command outputs (git, npm, ls, grep, kubectl) by 60-90%.
-- **Explicit CLI Commands in Loop 4**: Added Step 4.2b with exact `ai-*` CLI commands for all 5 phases of the token optimization pipeline, including cascade/pipe examples (`ai-rtk wrap npm test | ai-squeeze | ai-headroom compress`).
+- **`wz-wz-ai-headroom` CLI Wrapper**: Created the missing CLI wrapper for `headroom` context compression & API proxy (60-95% token reduction). Provides `compress`, `proxy`, `status`, `info` subcommands with installation fallback and telemetry hook.
+- **RTK Integration in Loop 4 & Brain**: Integrated `rtk` (`wz-wz-ai-rtk`) — Rust Token Killer — as Phase 5 (CLI Output Interception) in `loop-4-refactor/SKILL.md` and `workflow-agentic-brain/SKILL.md`. RTK compresses shell command outputs (git, npm, ls, grep, kubectl) by 60-90%.
+- **Explicit CLI Commands in Loop 4**: Added Step 4.2b with exact `ai-*` CLI commands for all 5 phases of the token optimization pipeline, including cascade/pipe examples (`wz-wz-ai-rtk wrap npm test | wz-wz-ai-squeeze | wz-wz-ai-headroom compress`).
 - **Quick Reference Table**: Added a CLI command reference table to `workflow-agentic-brain/SKILL.md` mapping each phase to its exact wrapper invocation.
 
 ### Changed
-- **`ai-caveman` Rewrite**: Transformed from a bare installer (7 lines calling `install.js`) into a proper runtime wrapper with `show-prompt`, `install`, `info`, and `help` subcommands. Correctly identifies caveman as a behavioral system prompt, not a binary.
-- **`ai-lean-ctx` Unification**: Rewrote from a fragile direct binary exec (`cd ~/.ai-skills/lean-ctx && ./lean-ctx`) to a proper alias that delegates to `ai-lean`, eliminating incoherent duplication and ensuring all robust logic (build fallback, help, subcommands) is always used.
-- **`ai-optimize` Real Orchestrator**: Completely rewrote from a 58-line placeholder into a 190-line real orchestrator with: `status` (shows all 5 phases with ✓/✗), `pipeline` (walks through compression phases for a file), `loop` (enhanced with concrete CLI commands), and `evaluate` (kept).
-- **`ai-rtk` Full Wrapper**: Completely rewrote from a 15-line bare exec into a 170-line wrapper with: `help`, `install`, `init` (hooks), `wrap` (compress a command), `status`, `info` (with comparison to sqz/headroom/llmlingua), and pass-through.
+- **`wz-wz-ai-caveman` Rewrite**: Transformed from a bare installer (7 lines calling `install.js`) into a proper runtime wrapper with `show-prompt`, `install`, `info`, and `help` subcommands. Correctly identifies caveman as a behavioral system prompt, not a binary.
+- **`wz-wz-ai-lean-ctx` Unification**: Rewrote from a fragile direct binary exec (`cd ~/.ai-skills/lean-ctx && ./lean-ctx`) to a proper alias that delegates to `wz-wz-ai-lean`, eliminating incoherent duplication and ensuring all robust logic (build fallback, help, subcommands) is always used.
+- **`wz-wz-ai-optimize` Real Orchestrator**: Completely rewrote from a 58-line placeholder into a 190-line real orchestrator with: `status` (shows all 5 phases with ✓/✗), `pipeline` (walks through compression phases for a file), `loop` (enhanced with concrete CLI commands), and `evaluate` (kept).
+- **`wz-wz-ai-rtk` Full Wrapper**: Completely rewrote from a 15-line bare exec into a 170-line wrapper with: `help`, `install`, `init` (hooks), `wrap` (compress a command), `status`, `info` (with comparison to sqz/headroom/llmlingua), and pass-through.
 - **RTK SKILL.md Documentation**: Rewrote from a 9-line placeholder to comprehensive 90-line documentation with how-it-works, installation, usage examples, loop integration matrix, and comparison with sqz.
-- **`ai-help` Updates**: Added `ai-headroom` to TOKEN OPTIMIZATION section, moved `ai-rtk` from CONTEXT & SCAFFOLDING to TOKEN OPTIMIZATION with full description, added pipeline and cascade examples.
+- **`wz-wz-ai-help` Updates**: Added `wz-wz-ai-headroom` to TOKEN OPTIMIZATION section, moved `wz-wz-ai-rtk` from CONTEXT & SCAFFOLDING to TOKEN OPTIMIZATION with full description, added pipeline and cascade examples.
 - **WIKI Updates**: Updated RTK description in both `WIKI.md` and `WIKI.it.md` from generic "Native AI toolkit" to accurate CLI compression proxy description with usage examples.
 - **Loop 4 Mermaid Diagram**: Updated to include RTK and headroom nodes in the optimization flow (`Brain → RTK → Squeeze → Headroom → Lean → Caveman`).
 
@@ -102,25 +102,25 @@ Ora al termine del `setup.sh` l'utente potrà installare queste dipendenze preme
 ## [0.40.1] - 2026-07-08
 
 ### Fixed
-- Risolto errore in `setup.sh` e `ai-install` causato da variabili ANSI non dichiarate (`$BOLD` e `$PURPLE`) che causavano il fallimento dello script con `set -u` abilitato.
+- Risolto errore in `setup.sh` e `wz-wz-ai-install` causato da variabili ANSI non dichiarate (`$BOLD` e `$PURPLE`) che causavano il fallimento dello script con `set -u` abilitato.
 
 ## [0.40.0] - 2026-07-08
 
 ### Added
-- **Interactive Configuration Guides**: Aggiunta la procedura di setup guidato durante le installazioni tramite `setup.sh` e `ai-install`. Gli script estraggono automaticamente la sezione "Configuration" o "Setup" da `SKILL.md` e la mostrano all'utente.
-- **Pass-through CLI Wrapper**: `ai-install` genera ora un wrapper che inoltra trasparentemente gli argomenti (via `"$@"`) agli script interni delle skill (es. `run.sh`, `main.py`).
+- **Interactive Configuration Guides**: Aggiunta la procedura di setup guidato durante le installazioni tramite `setup.sh` e `wz-wz-ai-install`. Gli script estraggono automaticamente la sezione "Configuration" o "Setup" da `SKILL.md` e la mostrano all'utente.
+- **Pass-through CLI Wrapper**: `wz-wz-ai-install` genera ora un wrapper che inoltra trasparentemente gli argomenti (via `"$@"`) agli script interni delle skill (es. `run.sh`, `main.py`).
 - **2026 Models Reference**: Aggiunto `docs/MODELS_REFERENCE.md` come risorsa centralizzata che mappa il panorama dei modelli (frontiera vs open-source) e l'utilizzo dei Cockpit Tools e runner locali (LM Studio, Ollama). Linkato nella WIKI.
 
 ### Changed
-- Modificato il default model in `ai-graph` per forzare `gemini-3.5-pro` (attraverso il proxy Cockpit Tools `openai`), risolvendo gli errori del client nativo.
+- Modificato il default model in `wz-wz-ai-graph` per forzare `gemini-3.5-pro` (attraverso il proxy Cockpit Tools `openai`), risolvendo gli errori del client nativo.
 - Risolto errore cache di `uv` che bloccava le installazioni a causa di permessi errati (fallback directory `UV_CACHE_DIR`).
 
 ### Refactored
 - Riorganizzazione completa dell'architettura in 11-Step **Loop Engineering Pipeline**, fondendo skill duplicate come `auto-workflow` + `workflow-production-cycle` e centralizzando il routing tramite MoE.## [0.27.0] - 2026-06-19
 
 ### Added
-- **Session Manager & Memory Persistence**: Aggiunta la nuova skill `session-manager` e gli script CLI nativi (`ai-session-save` in Bash e PowerShell) per permettere agli agenti AI (Claude Code, Antigravity) di salvare fisicamente lo stato della sessione in `MEMORY.md`. Questo garantisce la persistenza del contesto al 100% tra un riavvio e l'altro del terminale.
-- Aggiunto `ai-session-save` all'help interattivo (`ai-help`).
+- **Session Manager & Memory Persistence**: Aggiunta la nuova skill `session-manager` e gli script CLI nativi (`wz-wz-ai-session-save` in Bash e PowerShell) per permettere agli agenti AI (Claude Code, Antigravity) di salvare fisicamente lo stato della sessione in `MEMORY.md`. Questo garantisce la persistenza del contesto al 100% tra un riavvio e l'altro del terminale.
+- Aggiunto `wz-wz-ai-session-save` all'help interattivo (`wz-wz-ai-help`).
 
 ## [0.26.0] - 2026-06-19
 
@@ -130,7 +130,7 @@ Ora al termine del `setup.sh` l'utente potrà installare queste dipendenze preme
 ## [0.25.0] - 2026-06-19
 
 ### Added
-- **Ponytail Skill (`ai-ponytail`)**: Integrata la skill "lazy senior dev" per forzare la valutazione YAGNI e prevenire l'over-engineering prima di scrivere codice. Aggiunto il wrapper `ai-ponytail` e integrata la logica nei workflow principali (e.g. `workflow-agentic-brain`).
+- **Ponytail Skill (`wz-wz-ai-ponytail`)**: Integrata la skill "lazy senior dev" per forzare la valutazione YAGNI e prevenire l'over-engineering prima di scrivere codice. Aggiunto il wrapper `wz-wz-ai-ponytail` e integrata la logica nei workflow principali (e.g. `workflow-agentic-brain`).
 - **Microsoft Coreutils (Windows)**: Aggiunta l'installazione opzionale via Winget di `Microsoft.Coreutils` in `setup.ps1` per fornire tool Unix nativi (ls, cp, grep) agli utenti Windows.
 
 ### Changed
@@ -153,8 +153,8 @@ Ora al termine del `setup.sh` l'utente potrà installare queste dipendenze preme
   - `auto-release`: Automazione del versionamento semantico e rilascio su GitHub.
   - `os-detect`: Gestore di pacchetti universale cross-platform per hook di pre-installazione.
 - **CLI DevOps Wrappers**: Aggiunti in `bin/` i corrispettivi wrapper CLI:
-  - `ai-branch`, `ai-debug`, `ai-release`, `ai-os` con relativi permessi di esecuzione.
-- **Unified Helper (`ai-help`)**: Unificato lo script globale di help in `bin/ai-help` per presentare sia la nuova sezione DevOps che gli strumenti di design e lean esistenti.
+  - `wz-wz-ai-branch`, `wz-wz-ai-debug`, `wz-wz-ai-release`, `wz-wz-ai-os` con relativi permessi di esecuzione.
+- **Unified Helper (`wz-wz-ai-help`)**: Unificato lo script globale di help in `bin/wz-wz-ai-help` per presentare sia la nuova sezione DevOps che gli strumenti di design e lean esistenti.
 - **Skill Ecosystem Expansion**: Integrate nel repository le skill per:
   - `awesome-design`: Assistente per framework grafici e UI design.
   - `taste-skill`: Strumenti di sviluppo frontend e pattern anti-slop.
@@ -162,7 +162,7 @@ Ora al termine del `setup.sh` l'utente potrà installare queste dipendenze preme
   - `scaffold`: Assistente per il bootstrapping rapido dei progetti.
 - **Material UI Redesign**: Rinnovata l'interfaccia dell'Hub locale per allinearsi con i design system Google Material e Apple. Introdotta sidebar responsive (hamburger menu), Glassmorphism avanzato ed effetti di micro-animazione.
 - **Docker Support**: Creati `Dockerfile` e `docker-compose.yml` per l'Hub Web e il server API, con relativo file `.dockerignore`.
-- **Cockpit Tools Enhancements**: `ai-quota` reso interamente cross-platform e basato su hook in Python per una migliore cattura ed elaborazione degli errori. Aggiunto supporto a docker mounts e al formato pacchetto AUR reale.
+- **Cockpit Tools Enhancements**: `wz-wz-ai-quota` reso interamente cross-platform e basato su hook in Python per una migliore cattura ed elaborazione degli errori. Aggiunto supporto a docker mounts e al formato pacchetto AUR reale.
 - **Skills.sh Integration**: Endpoint `/api/skills-trending` per caricare le skill trending direttamente tramite scraping caching server-side (TTL 5 min) con fallback resiliente.
 
 ### Changed
@@ -175,8 +175,8 @@ Ora al termine del `setup.sh` l'utente potrà installare queste dipendenze preme
 ## [v0.4.0] - 2026-06-13
 
 ### Added
-- **Global Telemetry Hooks**: Creata l'utility `log_event.py`. Iniettato un hook automatico di background in tutti i wrapper CLI `bin/ai-*` (es. `ai-taste`, `ai-compress`, `ai-graph`) per far affluire i dati di utilizzo direttamente nel database SQLite e aggiornare il grafico web in tempo reale.
-- **Spec-Kit Integration**: Aggiunta l'installazione nativa per il toolkit SDD `spec-kit` di GitHub. Creata la directory skill relativa e il comando shell `ai-spec`.
+- **Global Telemetry Hooks**: Creata l'utility `log_event.py`. Iniettato un hook automatico di background in tutti i wrapper CLI `bin/ai-*` (es. `wz-wz-ai-taste`, `wz-wz-ai-compress`, `wz-wz-ai-graph`) per far affluire i dati di utilizzo direttamente nel database SQLite e aggiornare il grafico web in tempo reale.
+- **Spec-Kit Integration**: Aggiunta l'installazione nativa per il toolkit SDD `spec-kit` di GitHub. Creata la directory skill relativa e il comando shell `wz-wz-ai-spec`.
 - **Knowledge Graph Update**: Forzato l'aggiornamento del Grafo semantico per far digerire l'ingresso di `spec-kit` all'intero ecosistema.
 
 ## [v0.3.0] - 2026-06-12

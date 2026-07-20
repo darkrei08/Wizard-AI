@@ -26,7 +26,7 @@
     </fixed_skills>
     <dynamic_skills>
       <!-- Skill CONSIGLIATE da usare dinamicamente all'occorrenza -->
-      <skill name="auto-debug" description="Esegui 'ai-debug check' se incontri errori o prima delle PR" />
+      <skill name="auto-debug" description="Esegui 'wz-ai-debug check' se incontri errori o prima delle PR" />
       <skill name="auto-branch" description="Usa per creare branch o PR" />
       {{DYNAMIC_SKILLS_INJECTED}}
     </dynamic_skills>

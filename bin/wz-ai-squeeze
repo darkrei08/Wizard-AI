@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# wz-ai-squeeze — sqz wrapper for compressing CLI output, JSON, logs
+# Source: https://github.com/ojuschugh1/sqz
+
+set -euo pipefail
+
+SQZ_BIN="${HOME}/.local/bin/sqz"
+
+if [[ ! -x "$SQZ_BIN" ]]; then
+  echo "❌ sqz not found at $SQZ_BIN" >&2
+  echo "   Install: uv tool install sqz" >&2
+  exit 1
+fi
+
+if [[ $# -eq 0 ]] && [[ -t 0 ]]; then
+  echo "wz-ai-squeeze — Compress CLI output, JSON, and logs"
+  echo ""
+  echo "Usage:"
+  echo "  command | wz-ai-squeeze              # Compress command output"
+  echo "  wz-ai-squeeze < file.json            # Compress a file"
+  echo "  wz-ai-squeeze --stats < data.json    # Show compression stats"
+  echo "  wz-ai-squeeze --decompress < file    # Decompress"
+  echo ""
+  echo "Pipeline examples:"
+  echo "  git log --oneline -100 | wz-ai-squeeze"
+  echo "  kubectl get pods -A -o json | wz-ai-squeeze --stats"
+  echo "  npm run build 2>&1 | wz-ai-squeeze"
+  exit 0
+fi
+
+exec "$SQZ_BIN" "$@"

@@ -7,28 +7,28 @@ description: "Use to compress long prompts, large contexts, or verbose documents
 
 LLMLingua compresses prompts and long contexts for LLMs, reducing token count by 10–20x while preserving semantic meaning.
 
-Installed inside `~/.ai-skills/venv/`. Use via the `ai-compress` wrapper (handles venv activation automatically).
+Installed inside `~/.ai-skills/venv/`. Use via the `wz-ai-compress` wrapper (handles venv activation automatically).
 
 ## CLI Usage
 
 ```bash
 # Compress a file (50% reduction by default)
-ai-compress --file long_context.txt
+wz-ai-compress --file long_context.txt
 
 # Compress with custom ratio (0.1 = 90% reduction, 0.9 = 10% reduction)
-ai-compress --file document.txt --ratio 0.3
+wz-ai-compress --file document.txt --ratio 0.3
 
 # Compress stdin
-cat large_file.txt | ai-compress --ratio 0.5
+cat large_file.txt | wz-ai-compress --ratio 0.5
 
 # Guide compression towards a specific question (keeps relevant info)
-ai-compress --file codebase_dump.txt --ratio 0.4 --question "How does authentication work?"
+wz-ai-compress --file codebase_dump.txt --ratio 0.4 --question "How does authentication work?"
 
 # Save output to file
-ai-compress --file input.txt --ratio 0.5 --output compressed.txt
+wz-ai-compress --file input.txt --ratio 0.5 --output compressed.txt
 
 # Show compression stats
-ai-compress --file input.txt --ratio 0.5 --verbose
+wz-ai-compress --file input.txt --ratio 0.5 --verbose
 ```
 
 ## Python Usage
@@ -64,4 +64,4 @@ print(f"Tokens: {result['origin_tokens']} → {result['compressed_tokens']}")
 
 - Runs on CPU — no GPU required
 - Best ratio for code: `--ratio 0.5` | For narrative text: `--ratio 0.3`
-- Use with `ai-rerank` for a full token-efficient RAG pipeline
+- Use with `wz-ai-rerank` for a full token-efficient RAG pipeline

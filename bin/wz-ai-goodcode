@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# wz-ai-goodcode — Host-agnostic exhaustive multi-agent orchestration skill
+# Source: https://github.com/SpinaBuilds/goodcode
+set -euo pipefail
+echo "goodcode is an Agent Skill for exhaustive multi-agent orchestration. It doesn't have a standalone CLI executable. To run it, trigger it within your agent context by saying 'goodcode', 'orchestrate exhaustively', or '/goodcode'."

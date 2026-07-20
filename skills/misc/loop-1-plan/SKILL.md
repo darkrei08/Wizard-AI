@@ -49,9 +49,9 @@ Queste skill servono per impostare o evolvere la struttura del progetto, l'OS e 
 - **`mp-domain-modeling`**: *Quando usarla:* Quando si introduce logica di business o terminologia specifica di un dominio. *Cosa fa:* Definizione dell'Ubiquitous Language, Bounded Contexts ed entità all'interno del file globale `CONTEXT.md`.
 - **`mp-research`**: *Quando usarla:* Quando si deve investigare una nuova libreria, un API esterna o un pattern prima di sceglierlo nel piano.
 - **`book-to-skill`**: *Quando usarla:* **MANDATORY STEP TRIGGER** se il task o la pianificazione coinvolgono manuali, libri, PDF, documentazione estesa o reference esterne. *Cosa fa:* Converte i documenti in framework strutturati, mental model e anti-pattern estratti e riutilizzabili come skill.
-- **`rag-anything` (`turbovec / zvec / llmwiki` via `ai-vector / ai-zvec / ai-llmwiki`) & `serena`**: *Quando usarla:* **MANDATORY STEP TRIGGER** prima di speculare su codice esistente o interfacce. *Cosa fa:* Interroga il database vettoriale (`ai-vector search`) o il grafo semantico (`serena analyze / find-usages`, `ai-llmwiki query`) e convoglia i passaggi trovati dentro `sqz` e `lean-ctx` (`ai-lean`) prima di includerli nel piano d'azione (`-60-90% token overhead`).
+- **`rag-anything` (`turbovec / zvec / llmwiki` via `wz-ai-vector / wz-ai-zvec / wz-ai-llmwiki`) & `serena`**: *Quando usarla:* **MANDATORY STEP TRIGGER** prima di speculare su codice esistente o interfacce. *Cosa fa:* Interroga il database vettoriale (`wz-ai-vector search`) o il grafo semantico (`serena analyze / find-usages`, `wz-ai-llmwiki query`) e convoglia i passaggi trovati dentro `sqz` e `lean-ctx` (`wz-ai-lean`) prima di includerli nel piano d'azione (`-60-90% token overhead`).
 - **`workflow-agentic-brain` & `headroom` & `mp-handoff`**: *Quando usarla:* **MANDATORY** se l'analisi della codebase fa superare il **50% della soglia massima di contesto**. *Cosa fa:* Innesca l'auto-miglioramento del cervello, avvia il proxy `headroom` per gestire i colli di bottiglia, abilita `sqz`/`caveman` e prepara un passaggio di consegne (`mp-handoff`) per rinfrescare la sessione evitando allucinazioni.
-- **`os-detect` (`ai-os`)**: *Quando usarla:* **MANDATORY PRE-GATE** prima di installare qualsiasi libreria, tool di sistema o dipendenza in pianificazione. *Cosa fa:* Rileva Arch, Ubuntu, macOS, WSL o Windows per usare il package manager nativo corretto.
+- **`os-detect` (`wz-ai-os`)**: *Quando usarla:* **MANDATORY PRE-GATE** prima di installare qualsiasi libreria, tool di sistema o dipendenza in pianificazione. *Cosa fa:* Rileva Arch, Ubuntu, macOS, WSL o Windows per usare il package manager nativo corretto.
 - **`ci-cd-architect & container-spec`**: **VINCOLO ARCHITETTURALE MANDATORY (CI/CD SAFE)** in ogni piano:
   1. Richiede esplicitamente `engines.node: ">=22.0.0"` per evitare fallimenti su deprecazioni GH Actions (`node-version: 22`).
   2. Pianifica i Dockerfile come Multi-Stage con base `node:22-alpine` (più opzionale copia binario `bun` se usato nel manifest), ma eseguendo sempre la fase finale di bundling (`npx nuxt build` / `npm run build`) su Node.js per prevenire errori di concorrenza I/O o `ENOENT` del bundler.
@@ -66,7 +66,7 @@ Il seguente albero mostra esattamente la sequenza di esecuzione e come le skill 
 
 ```mermaid
 graph TD
-    Start([Richiesta Utente / Task]) --> CheckOS[os-detect / ai-os info]
+    Start([Richiesta Utente / Task]) --> CheckOS[os-detect / wz-ai-os info]
     CheckOS --> IsNew{Progetto da zero?}
     IsNew -- Sì --> Bootstrap[master-project-bootstrap]
     IsNew -- No --> IsAmbig{Richiesta Ambigua > 10%?}
@@ -90,7 +90,7 @@ graph TD
 ### Step 1.1: Pre-Check Ambientale e Vincoli Architetturali (`os-detect`, `brain-tech-stack`, `engineering-excellence`)
 - **MANDATORY**: Prima di proporre qualsiasi architettura, esegui la verifica con il `brain-tech-stack` per definire l'esatta combinazione dei framework (es. Qwik, Astro 5, Nuxt 4) in base ai vincoli imposti.
 - **MANDATORY**: Leggi e integra sempre i principi di `engineering-excellence` (es. TDD, SOLID, SDD) in ogni specifica generata, includendo il link a https://github.com/micio86dev/Engineering-Excellence.
-- Esegui `ai-os info` o verifica il contesto di sistema per assicurarti di conoscere il sistema operativo, i runtime disponibili (Node, Python, Deno, Bun) e le dipendenze prima di formulare ipotesi di design.
+- Esegui `wz-ai-os info` o verifica il contesto di sistema per assicurarti di conoscere il sistema operativo, i runtime disponibili (Node, Python, Deno, Bun) e le dipendenze prima di formulare ipotesi di design.
 
 ### Step 1.2: Allineamento, Self-Grill Socratico e Online Skill Hunt (`brainstorming` / `mp-grill-me`)
 - **Flusso di Ricerca Mentale Q&A (`Self-Grill-Me`)**: Prima di formalizzare l'architettura, poniti autonomamente domande socratiche ed esplicita le risposte in output:

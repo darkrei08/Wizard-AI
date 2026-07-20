@@ -1,0 +1,217 @@
+#!/usr/bin/env bash
+# wz-ai-help — Central hub for all AI tools and skills
+# Shows all available AI CLI tools with descriptions and usage hints
+
+set -euo pipefail
+
+BOLD='\033[1m'
+CYAN='\033[0;36m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+MAGENTA='\033[0;35m'
+DIM='\033[2m'
+RESET='\033[0m'
+
+check_cmd() {
+  command -v "$1" &>/dev/null && echo "✅" || echo "❌"
+}
+
+echo ""
+echo -e "${BOLD}${CYAN}╔══════════════════════════════════════════════════════════╗${RESET}"
+echo -e "${BOLD}${CYAN}║         🤖  AI Tools & Skills Hub — $(hostname)        ║${RESET}"
+echo -e "${BOLD}${CYAN}╚══════════════════════════════════════════════════════════╝${RESET}"
+echo ""
+
+echo -e "${BOLD}${GREEN}🔄 5 SEQUENCED LOOP-ENGINEERING WORKFLOWS (01 → 05)${RESET}"
+echo -e "  ${BOLD}01. /loop-1-plan${RESET}      🎯 Plan & Spec (Brainstorm → Grill → Spec .spec.md → Domain Model → task.md)"
+echo -e "  ${BOLD}02. /loop-2-develop${RESET}   ⚡ Develop & TDD (Branch isolato → TDD Red-Green-Refactor → Subagents → Security)"
+echo -e "  ${BOLD}03. /loop-3-debug${RESET}     🔍 Debug & Verify (Diagnosi in 4 fasi → Fix → Quality Gates wz-ai-debug → Code Review)"
+echo -e "  ${BOLD}04. /loop-4-refactor${RESET}  🏗️  Refactor & Optimize (Serena → DDD → Clean Code ponytail → Token Opt sqz/caveman)"
+echo -e "  ${BOLD}05. /loop-5-release${RESET}   🚀 Release & Learn (Merge su main → SemVer Release → Publish → Handoff → MEMORY.md)"
+echo -e "  ${DIM}    (/auto-workflow reindirizza in sequenza automatica ai 5 Loop Numerati)${RESET}"
+echo -e "  $(check_cmd wz-ai-loop-sentinel) ${BOLD}wizard-ai loop-sentinel${RESET} Systemic Loop Interceptor & MoE Task Weight Classification"
+echo -e "  $(check_cmd wz-ai-skill-doctor)  ${BOLD}wizard-ai skill-doctor${RESET}  Self-Healing Diagnostic & skills.sh Hunt Daemon"
+echo ""
+echo -e "  ${BOLD}${YELLOW}mattpocock Skills (Direct)${RESET}: /grill-me /grill-with-docs /to-spec /tdd /code-review /diagnosing-bugs"
+echo -e "  ${BOLD}${YELLOW}                          ${RESET}  /implement /wayfinder /triage /to-tickets /prototype /handoff /teach"
+echo ""
+
+echo -e "${BOLD}${RED}⚡ PRE-INSTALL GATE — Always use wz-ai-os before installing anything${RESET}"
+echo -e "  $(check_cmd wz-ai-os) ${BOLD}wizard-ai os${RESET}            Universal OS-aware installer (os-detect skill)"
+echo -e "     ${BLUE}wizard-ai os info                     ${RESET}→ full OS/distro/PM/tool environment report"
+echo -e "     ${BLUE}wizard-ai os install <pkg>            ${RESET}→ system package via pacman|apt|dnf|brew|winget…"
+echo -e "     ${BLUE}wizard-ai os ensure git gh jq         ${RESET}→ install multiple tools only if missing"
+echo -e "     ${BLUE}wizard-ai os python ruff              ${RESET}→ Python tool via uv tool install"
+echo -e "     ${BLUE}wizard-ai os node prettier            ${RESET}→ Node.js tool via npm/pnpm"
+echo -e "     ${BLUE}wizard-ai os cargo bat                ${RESET}→ Rust crate via cargo install"
+echo -e "     ${BLUE}wizard-ai os pre-check                ${RESET}→ validate environment before any install"
+echo -e "     ${BLUE}wizard-ai os gh-setup                 ${RESET}→ GitHub CLI install + auth in one command"
+echo ""
+
+echo -e "${BOLD}${YELLOW}🚀 GIT DEVOPS — Auto-Release, Branch & Debug${RESET}"
+echo -e "  $(check_cmd wz-ai-release) ${BOLD}wizard-ai release${RESET}       Semantic versioning + GitHub releases (auto-release)"
+echo -e "     ${BLUE}wizard-ai release minor               ${RESET}→ bump MINOR, tag, push, publish GitHub release"
+echo -e "     ${BLUE}wizard-ai release patch --dry-run     ${RESET}→ preview only, no changes"
+echo -e "     ${BLUE}wizard-ai release v2.0.0 --draft      ${RESET}→ create draft release"
+echo ""
+echo -e "  $(check_cmd wz-ai-branch) ${BOLD}wizard-ai branch${RESET}        Automated branch lifecycle management (auto-branch)"
+echo -e "     ${BLUE}wizard-ai branch feature \"my feature\" ${RESET}→ create feature/<slug> from main"
+echo -e "     ${BLUE}wizard-ai branch merge                ${RESET}→ pre-merge checks + merge to main"
+echo -e "     ${BLUE}wizard-ai branch list                 ${RESET}→ branch status report"
+echo ""
+echo -e "  $(check_cmd wz-ai-debug) ${BOLD}wizard-ai debug${RESET}         Spec-kit: lint + format + test + secret scan (auto-debug)"
+echo -e "     ${BLUE}wizard-ai debug check                 ${RESET}→ full quality gate"
+echo -e "     ${BLUE}wizard-ai debug check --fix           ${RESET}→ full gate + auto-correct"
+echo -e "     ${BLUE}wizard-ai debug log --errors          ${RESET}→ inspect SQLite debug log"
+echo ""
+echo -e "  $(check_cmd wz-ai-npm-setup) ${BOLD}wizard-ai npm-setup${RESET}     NPM Publish Setup: configure tokens & check workflows"
+echo -e "     ${BLUE}wizard-ai npm-setup                   ${RESET}→ check npm secrets & GitHub actions"
+echo ""
+echo -e "  $(check_cmd wz-ai-goodcode) ${BOLD}wizard-ai goodcode${RESET}      Exhaustive multi-agent orchestration (goodcode)"
+echo -e "     ${BLUE}wizard-ai goodcode                    ${RESET}→ check skill info"
+echo ""
+
+echo -e "${BOLD}${YELLOW}📊 KNOWLEDGE GRAPH${RESET}"
+echo -e "  $(check_cmd graphify) ${BOLD}graphify${RESET}         Build knowledge graphs from any codebase/docs"
+echo -e "     ${BLUE}wizard-ai graph .${RESET}                  → Run Graphify on current directory"
+echo -e "     ${BLUE}graphify query \"how does X work?\"${RESET}"
+echo -e "  ✅ ${BOLD}auto-graphify${RESET}    Behavioral hook to auto-update codebase graph"
+echo -e "  $(check_cmd wz-ai-last30days) ${BOLD}wizard-ai last30days${RESET}    Research what people say in the last 30 days"
+echo -e "     ${BLUE}wizard-ai last30days \"topic\"${RESET}"
+echo ""
+
+echo -e "${BOLD}${YELLOW}🗜️  TOKEN OPTIMIZATION${RESET}"
+echo -e "  $(check_cmd wz-ai-optimize) ${BOLD}wizard-ai optimize${RESET}      Master orchestrator for token optimization pipeline"
+echo -e "     ${BLUE}wizard-ai optimize status                        ${RESET}→ check all optimization tools"
+echo -e "     ${BLUE}wizard-ai optimize pipeline large_doc.pdf        ${RESET}→ run 5-phase compression pipeline"
+echo -e "     ${BLUE}wizard-ai optimize loop \"my task\"                ${RESET}→ print optimization instructions"
+echo -e "  $(check_cmd wz-ai-compress) ${BOLD}wizard-ai compress${RESET}      Compress prompts/context up to 20x (LLMLingua)"
+echo -e "     ${BLUE}wizard-ai compress --file doc.txt --ratio 0.5${RESET}"
+echo -e "  $(check_cmd wz-ai-headroom) ${BOLD}wizard-ai headroom${RESET}      Context compression & API proxy (60-95% fewer tokens)"
+echo -e "     ${BLUE}cat large_file.txt | wz-ai-headroom compress --ratio 0.4${RESET}"
+echo -e "     ${BLUE}wizard-ai headroom proxy --port 8000             ${RESET}→ start compression proxy"
+echo -e "  $(check_cmd wz-ai-caveman) ${BOLD}wizard-ai caveman${RESET}       Cut agent output tokens by ~75% (behavioral skill)"
+echo -e "     ${BLUE}wizard-ai caveman                                ${RESET}→ show compression rules"
+echo -e "     ${BLUE}wizard-ai caveman install                        ${RESET}→ install/update from source"
+echo -e "  $(check_cmd wz-ai-ponytail) ${BOLD}wizard-ai ponytail${RESET}      Acts as a lazy senior dev to prevent over-engineering (YAGNI)"
+echo -e "     ${BLUE}wizard-ai ponytail \"write a datepicker\"${RESET}"
+echo -e "  $(check_cmd wz-ai-rerank) ${BOLD}wizard-ai rerank${RESET}        Re-rank passages by relevance (FlashRank RAG)"
+echo -e "     ${BLUE}wizard-ai rerank --query \"X\" --passages docs.json${RESET}"
+echo -e "  $(check_cmd sqz) ${BOLD}sqz (wz-ai-squeeze)${RESET}  Compress CLI output / JSON / logs"
+echo -e "     ${BLUE}command | wz-ai-squeeze${RESET}"
+echo -e "  $(check_cmd rtk) ${BOLD}rtk (wz-ai-rtk)${RESET}      Rust Token Killer — CLI output compression 60-90%"
+echo -e "     ${BLUE}wizard-ai rtk wrap git status                    ${RESET}→ compressed git output"
+echo -e "     ${BLUE}wizard-ai rtk init --global                      ${RESET}→ install hooks globally"
+echo -e "     ${BLUE}wizard-ai rtk status                             ${RESET}→ check installation"
+echo -e "  $(check_cmd markitdown) ${BOLD}markitdown${RESET}       Convert any file to Markdown for LLM ingestion"
+echo -e "     ${BLUE}wizard-ai convert document.pdf${RESET}"
+echo -e ""
+echo -e "  ${BOLD}${CYAN}Pipeline example:${RESET} ${BLUE}wizard-ai convert doc.pdf | wz-ai-rerank -q \"auth\" -k 5 --compact | wz-ai-compress --ratio 0.3${RESET}"
+echo -e "  ${BOLD}${CYAN}CLI cascade:${RESET}      ${BLUE}wizard-ai rtk wrap npm test | wz-ai-squeeze | wz-ai-headroom compress${RESET}"
+echo ""
+
+echo -e "${BOLD}${YELLOW}🌐 PROXY & PI INTEGRATION${RESET}"
+echo -e "  $(check_cmd wz-ai-proxy) ${BOLD}wizard-ai proxy${RESET}          Manage the Cockpit/Antigravity Proxy for pi.dev"
+echo -e "     ${BLUE}wizard-ai proxy install                       ${RESET}→ install pi-antigravity-rotator"
+echo -e "     ${BLUE}wizard-ai proxy login                         ${RESET}→ add a Google account via OAuth"
+echo -e "     ${BLUE}wizard-ai proxy accounts                      ${RESET}→ list rotator accounts"
+echo -e "     ${BLUE}wizard-ai proxy enable                        ${RESET}→ start proxy as background daemon"
+echo -e "     ${BLUE}wizard-ai proxy disable                       ${RESET}→ stop the background daemon"
+echo -e "     ${BLUE}wizard-ai proxy status                        ${RESET}→ show rotation status & quota"
+echo -e "     ${BLUE}wizard-ai proxy logs                          ${RESET}→ view live proxy logs"
+echo -e "     ${BLUE}wizard-ai proxy pi-config                     ${RESET}→ regenerate pi's auth/models config"
+echo -e "     ${BLUE}wizard-ai proxy provision                     ${RESET}→ import Cockpit Tools accounts"
+echo -e "  $(check_cmd litellm) ${BOLD}litellm${RESET}          Unified API for 100+ LLM providers + cost tracking"
+echo -e "     ${BLUE}litellm --model gemini/gemini-2.0-flash --port 4000${RESET}"
+echo ""
+
+echo -e "${BOLD}${YELLOW}📈 USAGE & MONITORING${RESET}"
+echo -e "  $(check_cmd wz-ai-usage) ${BOLD}wizard-ai usage${RESET}          Track Gemini CLI token/context usage"
+echo -e "     ${BLUE}wizard-ai usage${RESET}"
+echo -e "  $(check_cmd wz-ai-quota) ${BOLD}wizard-ai quota${RESET}          View AI provider quotas and subscriptions"
+echo -e "     ${BLUE}wizard-ai quota${RESET}"
+echo ""
+
+echo -e "${BOLD}${YELLOW}🎨 DESIGN & FRONTEND${RESET}"
+echo -e "  $(check_cmd wz-ai-design) ${BOLD}wizard-ai design${RESET}         Browse & apply DESIGN.md files for UI generation"
+echo -e "     ${BLUE}wizard-ai design apply vercel${RESET}"
+echo -e "  $(check_cmd designmd) ${BOLD}designmd / wz-ai-designmd${RESET} Linter, differ & exporter for DESIGN.md specification"
+echo -e "     ${BLUE}wizard-ai designmd lint DESIGN.md     ${RESET}→ validate a DESIGN.md file"
+echo -e "     ${BLUE}wizard-ai designmd diff A.md B.md     ${RESET}→ compare two DESIGN.md files"
+echo -e "     ${BLUE}wizard-ai designmd export --format css-tailwind DESIGN.md${RESET}"
+echo -e "  $(check_cmd wz-ai-taste) ${BOLD}wizard-ai taste${RESET}          Apply anti-slop frontend design skill"
+echo -e "     ${BLUE}wizard-ai taste install${RESET}"
+echo ""
+
+echo -e "${BOLD}${YELLOW}🔧 CONTEXT & SCAFFOLDING${RESET}"
+echo -e "  $(check_cmd wz-ai-lean) ${BOLD}wizard-ai lean${RESET}           Lean Context Intelligence (60-90% token savings)"
+echo -e "     ${BLUE}wizard-ai lean read src/main.py map${RESET}"
+echo -e "  $(check_cmd wz-ai-scaffold) ${BOLD}wizard-ai scaffold${RESET}       Scaffold Express/Nuxt projects from templates"
+echo -e "     ${BLUE}wizard-ai scaffold nuxt my-app${RESET}"
+echo -e "  $(check_cmd wz-ai-install) ${BOLD}wizard-ai install${RESET}        Install & validate skills with loop engineering"
+echo -e "     ${BLUE}wizard-ai install --name my-skill --path ./path --category frontend${RESET}"
+echo ""
+
+echo -e "${BOLD}${YELLOW}🧠 MEMORY & CONTEXT${RESET}"
+echo -e "  $(check_cmd wz-ai-session-save) ${BOLD}wizard-ai session-save${RESET}  Save current session context to MEMORY.md"
+echo -e "     ${BLUE}wizard-ai session-save \"completed feature X\"${RESET}"
+if [ -d "$HOME/.ai-skills/claude-mem" ]; then
+  echo -e "  ✅ ${BOLD}claude-mem${RESET}       Persistent semantic memory across sessions"
+else
+  echo -e "  ❌ ${BOLD}claude-mem${RESET}       Persistent semantic memory (not installed)"
+fi
+echo -e "     ${BLUE}wizard-ai mem store \"user prefers Python\"${RESET}"
+echo -e "     ${BLUE}wizard-ai mem search \"tech preferences\"${RESET}"
+echo ""
+
+echo -e "${BOLD}${YELLOW}🔍 CODE INTELLIGENCE & SECURITY${RESET}"
+if command -v serena &>/dev/null; then
+  echo -e "  ✅ ${BOLD}serena${RESET}           Semantic code search & LSP navigation (MCP + CLI)"
+else
+  echo -e "  ❌ ${BOLD}serena${RESET}           Semantic code search (install: uv tool install serena)"
+fi
+echo -e "     ${BLUE}serena find-usages MyClass${RESET}"
+echo -e "  $(check_cmd wz-ai-strix) ${BOLD}wizard-ai strix${RESET}         Autonomous AI hackers that find and fix vulnerabilities"
+echo -e "     ${BLUE}wizard-ai strix --target ./app-directory${RESET}"
+echo ""
+
+echo -e "${BOLD}${YELLOW}📚 KNOWLEDGE BUILDING${RESET}"
+echo -e "  $(check_cmd book-to-skill) ${BOLD}book-to-skill${RESET}    Convert books/PDFs into AI skills"
+echo -e "     ${BLUE}book-to-skill document.pdf${RESET}"
+echo ""
+
+echo -e "${BOLD}${YELLOW}⚙️  FRAMEWORK${RESET}"
+if [ -d "$HOME/.ai-skills/ECC" ] || command -v ecc &>/dev/null; then
+  ECC_SKILLS=$(ls ~/.ai-skills/ECC/skills/ 2>/dev/null | wc -l || echo "Many")
+  echo -e "  ✅ ${BOLD}ECC${RESET}              $ECC_SKILLS+ production-ready agent skills & hooks"
+else
+  echo -e "  ❌ ${BOLD}ECC${RESET}              Agent skills framework (not installed)"
+fi
+echo -e "     ${BLUE}ls ~/.ai-skills/ECC/skills/${RESET}"
+
+if [ -d "$HOME/.ai-skills/cybersecurity-skills" ]; then
+  CYBER_SKILLS=$(ls ~/.ai-skills/cybersecurity-skills/skills/ 2>/dev/null | wc -l)
+  echo -e "  ✅ ${BOLD}Cybersecurity${RESET}    $CYBER_SKILLS+ cybersecurity framework skills"
+else
+  echo -e "  ❌ ${BOLD}Cybersecurity${RESET}    Anthropic Cybersecurity Skills (not installed)"
+fi
+echo ""
+
+echo -e "${BOLD}${YELLOW}📊 VISUALIZATION${RESET}"
+if [ -d "$HOME/.ai-skills/Infographic" ]; then
+  echo -e "  ✅ ${BOLD}Infographic${RESET}      AntV AI-powered declarative infographic generator"
+else
+  echo -e "  ❌ ${BOLD}Infographic${RESET}      AntV Infographic engine (not installed)"
+fi
+echo ""
+
+echo -e "${BOLD}${MAGENTA}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+echo -e "${BOLD}Skills directory:${RESET} ~/.gemini/config/skills/"
+echo -e "${BOLD}Tools directory:${RESET}  ~/.ai-skills/"
+echo -e "${BOLD}CLIs:${RESET}             ~/.local/bin/ | ~/.wizard-ai/bin/"
+echo ""
+echo -e "${CYAN}Tip: all tools work as pipes → cmd | wz-ai-compress | wz-ai-rerank${RESET}"
+echo -e "${CYAN}Tip: use 'wizard-ai branch feature <desc>' to start a feature, 'wizard-ai branch merge' to merge${RESET}"
+echo ""

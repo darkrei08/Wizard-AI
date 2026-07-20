@@ -21,29 +21,29 @@ Use this skill whenever the user asks to:
 | Experiment | `exp/<slug>` | `exp/new-ui-layout` |
 | Release prep | `release/v<X.Y.Z>` | `release/v1.4.0` |
 
-## Using the ai-branch Wrapper
+## Using the wz-ai-branch Wrapper
 
 ```bash
 # Start a new feature branch
-ai-branch feature "file manager and wifi passwords"
+wz-ai-branch feature "file manager and wifi passwords"
 # → creates: feature/file-manager-wifi
 
 # Start a hotfix
-ai-branch hotfix "crash when backup path has spaces"
+wz-ai-branch hotfix "crash when backup path has spaces"
 # → creates: hotfix/crash-backup-path-spaces
 
 # Start a fix branch
-ai-branch fix "resolve tcl9 trace variable deprecation"
+wz-ai-branch fix "resolve tcl9 trace variable deprecation"
 # → creates: fix/resolve-tcl9-trace-variable-deprecation
 
 # List all branches and their status
-ai-branch list
+wz-ai-branch list
 
 # Merge current branch to main (with safety checks)
-ai-branch merge
+wz-ai-branch merge
 
 # Clean up merged branches
-ai-branch cleanup
+wz-ai-branch cleanup
 ```
 
 ## Step-by-Step Branch Lifecycle
@@ -86,7 +86,7 @@ Commit prefixes:
 
 ```bash
 # Run before every merge:
-ai-debug check   # ← triggers auto-debug skill for quality gates
+wz-ai-debug check   # ← triggers auto-debug skill for quality gates
 
 # Alternatively manually:
 python -m ruff check .        # linting
@@ -121,8 +121,8 @@ echo "✅ $BRANCH merged and cleaned up"
 
 After merge, trigger the auto-release skill:
 ```bash
-ai-release minor   # for a new feature milestone
-ai-release patch   # for a fix
+wz-ai-release minor   # for a new feature milestone
+wz-ai-release patch   # for a fix
 ```
 
 ## Automatic Branch Status Report
@@ -144,6 +144,6 @@ git log staging..feature/my-branch --oneline
 - NEVER commit directly to `main` or `staging` without a PR or merge.
 - Use `--no-ff` when merging to preserve branch history in the graph.
 - Delete remote branches after merging to keep the repo clean.
-- Run `ai-debug check` before every merge to main.
+- Run `wz-ai-debug check` before every merge to main.
 - After creating or merging a branch, run `graphify update .` to update the knowledge graph.
 - Update `PROJECT_ROADMAP.md`: mark the relevant milestone branch when starting (`*Branch: feature/...`).

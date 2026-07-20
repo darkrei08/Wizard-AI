@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# wz-ai-usage — Track Gemini/AI token usage across sessions
+# Source: https://github.com/rmedranollamas/geminiusage
+#
+# Wrapper around gemini-usage with a built-in help fallback.
+
+set -euo pipefail
+
+SKILL_DIR="$HOME/.ai-skills/geminiusage"
+
+if [[ ! -d "$SKILL_DIR" ]]; then
+  echo "❌ geminiusage not found at $SKILL_DIR" >&2
+  echo ""
+  echo "Install with:"
+  echo "  git clone https://github.com/rmedranollamas/geminiusage.git $SKILL_DIR"
+  echo ""
+  echo "Or re-run setup.sh to install everything automatically."
+  exit 1
+fi
+
+if [[ $# -eq 0 ]]; then
+  echo "wz-ai-usage — Track Gemini CLI token usage and session costs"
+  echo ""
+  echo "Usage:"
+  echo "  wz-ai-usage                   Show current session usage"
+  echo "  wz-ai-usage --today           Consumption today"
+  echo "  wz-ai-usage --rolling-24h     Last 24 hours"
+  echo "  wz-ai-usage --quota           Quota status"
+  echo "  wz-ai-usage --history         Full usage history"
+  echo ""
+  echo "Aliases: gemini-usage (same binary)"
+  echo ""
+fi
+
+exec python3 "$SKILL_DIR/scripts/token_usage.py" "$@"

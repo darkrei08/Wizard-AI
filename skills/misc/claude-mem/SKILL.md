@@ -12,27 +12,27 @@ Source: https://github.com/thedotmack/claude-mem. Installed in `~/.ai-skills/cla
 
 ```bash
 # Store a memory
-ai-mem store "User prefers Python over JavaScript for backend services"
-ai-mem store "Project uses PostgreSQL 16, Redis 7, and Docker Compose"
-ai-mem store --tag "preference" "Dark mode and vim keybindings"
+wz-ai-mem store "User prefers Python over JavaScript for backend services"
+wz-ai-mem store "Project uses PostgreSQL 16, Redis 7, and Docker Compose"
+wz-ai-mem store --tag "preference" "Dark mode and vim keybindings"
 
 # Retrieve memories (semantic search)
-ai-mem search "technology preferences"
-ai-mem search "database configuration"
+wz-ai-mem search "technology preferences"
+wz-ai-mem search "database configuration"
 
 # List recent memories
-ai-mem list
-ai-mem list --tag "preference"
-ai-mem list --limit 20
+wz-ai-mem list
+wz-ai-mem list --tag "preference"
+wz-ai-mem list --limit 20
 
 # Delete a memory
-ai-mem delete <id>
+wz-ai-mem delete <id>
 
 # Export all memories
-ai-mem export > memories.json
+wz-ai-mem export > memories.json
 
 # Import memories
-ai-mem import memories.json
+wz-ai-mem import memories.json
 ```
 
 ## Python / Agent Usage

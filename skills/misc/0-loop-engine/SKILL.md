@@ -88,7 +88,7 @@ dove:
 
 - Leggi `MEMORY.md` (`Diario di Bordo Personale`) e inietta il contesto della sessione precedente.
 - **Task Recovery Hub & Summarizer**: Leggi attentamente la sezione **Summarizer / Task Perse o Sospese (`[⏳ TASK SOSPESA DA RIPRENDERE]`)**. Se ci sono task interrotte da sessioni precedenti o da step falliti, re-inizializzale immediatamente come priorità del loop corrente senza perdere contesto.
-- **Brain-to-Skill & Graph Check**: Verifica lo stato del grafo semantico (`graphify` / `ai-graph`) e delle skill (`book-to-skill`). Se necessario, carica la mappa aggiornata del progetto per garantire piena cognizione architettonica all'avvio.
+- **Brain-to-Skill & Graph Check**: Verifica lo stato del grafo semantico (`graphify` / `wz-ai-graph`) e delle skill (`book-to-skill`). Se necessario, carica la mappa aggiornata del progetto per garantire piena cognizione architettonica all'avvio.
 - Se la finestra di contesto è già ampia (>60%), attiva automaticamente Step 4.
 
 **Self-Check Questions:**
@@ -115,13 +115,13 @@ dove:
   - Bug/domande aperti
   - Prossimi step
   - Decisioni di design
-- **Brain-to-Skill & Graph Sync**: Prima della chiusura, esegui o verifica l'aggiornamento del grafo di progetto (`ai-graph update`) e la sincronizzazione delle skill/knowledge base (`book-to-skill` / wiki), per preservare il quadro strutturale nelle future o successive sessioni.
-- Esegui `ai-session-save` e `ai-storybloq snapshot`
+- **Brain-to-Skill & Graph Sync**: Prima della chiusura, esegui o verifica l'aggiornamento del grafo di progetto (`wz-ai-graph update`) e la sincronizzazione delle skill/knowledge base (`book-to-skill` / wiki), per preservare il quadro strutturale nelle future o successive sessioni.
+- Esegui `wz-ai-session-save` e `wz-ai-storybloq snapshot`
 - **ANONIMIZZA** percorsi locali prima di salvare
 
 **Self-Check Questions:**
 > ☐ Il riassunto è conciso ma completo?
-> ☐ Ho aggiornato il grafo (`ai-graph`) e la memoria di progetto per la successiva sessione?
+> ☐ Ho aggiornato il grafo (`wz-ai-graph`) e la memoria di progetto per la successiva sessione?
 > ☐ Ho anonimizzato i percorsi?
 > ☐ I prossimi step sono chiari per la sessione successiva?
 - Inietta `<fixed_skills>` (skill obbligatorie) e `<dynamic_skills>` (skill suggerite)
@@ -188,14 +188,14 @@ Pipeline universale di ottimizzazione contesto per TUTTI I COMANDI e TUTTI I LOO
 1. **Limite Deterministico del 50%:** Per prevenire il "Lost in the middle" o "Context Rot", la soglia del 50% è il trigger deterministico assoluto per fermare l'inclusione di file crudi.
 2. **Dynamic Context Pruning (DyCP) & Semantic Sieving:** Quando la finestra di contesto si avvicina al 50%, il sistema SMETTE di fare "append" del contesto crudo. Inizia a valutare l'informazione tramite filtri di importanza semantica: scarta i log vecchi, mantiene solo le regole strutturali, usa le memorie a breve/lungo termine e comprime i dati con logiche come `LLMLingua` o `sqz`.
 
-Inoltre, i **Sistemi RAG si attivano automaticamente** tramite text analysis: parole trigger come "cerca", "memoria", "documentazione", o l'intento di recuperare vecchi file innescano istantaneamente `ai-llmwiki` o `graphify` prima ancora di saturare il contesto.
+Inoltre, i **Sistemi RAG si attivano automaticamente** tramite text analysis: parole trigger come "cerca", "memoria", "documentazione", o l'intento di recuperare vecchi file innescano istantaneamente `wz-ai-llmwiki` o `graphify` prima ancora di saturare il contesto.
 
 Fasi operative:
 1. **Tree-sitter AST Pruning (`pi.dev / Rust-Cline Wrapper`)**: Prima di iniettare file sorgente o schemi complessi nel contesto, estrai **solo le firme (signatures, interfacce, tipi, header SEO o metadata design)**. Rimuovi i body delle funzioni non oggetto di modifica immediata (`Lean Context Intelligence`).
 2. **Sharded Subagent Execution (`pi-subagents`)**: Per refactoring multi-modulo o audit esaustivi, dividi il lavoro in subagent isolati in parallelo (`dispatching-parallel-agents` / `goodcode`). Ogni subagent lavora in una finestra di contesto potata separata (`Sub-process Context Isolation`).
-3. **Ingestion & Conversion**: Se ci sono file binari o documenti articolati → `markitdown` / `ai-convert`.
+3. **Ingestion & Conversion**: Se ci sono file binari o documenti articolati → `markitdown` / `wz-ai-convert`.
 4. **Filtering & Squeezing**: Se l'output CLI o il contesto supera la soglia ottima → `sqz` / `flashrank` per re-ranking e rimozione rumore.
-5. **Compression & Guarding**: Se il contesto residuo resta pesante → `llmlingua` / `headroom` e preserva le decisioni chiave in `ai-lean-ctx` / `MEMORY.md`.
+5. **Compression & Guarding**: Se il contesto residuo resta pesante → `llmlingua` / `headroom` e preserva le decisioni chiave in `wz-ai-lean-ctx` / `MEMORY.md`.
 
 **Self-Check Questions:**
 > ☐ Ho applicato il Pruning AST (`pi.dev` wrapper) per caricare solo le firme/header necessari anziché l'intero file?
@@ -264,7 +264,7 @@ L'agente principale (Tu) agisce esclusivamente come **Supreme Orchestrator (Tier
 **Protocollo: "Shadow Clone Memory Merge" & Mente Alveare (Hive Mind)**
 - **Riassorbimento e Compressione:** Quando un subagent di livello inferiore (Worker o Department Head) termina il suo ciclo, prima del despawn DEVE eseguire una "Shadow Clone Memory Merge". Il Master riassorbe i workaround e bug-fix scoperti dal clone tramite `mp-handoff` o file condiviso semantico.
 - **Ottimizzazione Post-Merge:** Subito dopo il riassorbimento, la memoria grezza *deve* essere riorganizzata e perfezionata (usando `sqz`, `llmlingua` o astrazioni sintetiche) in modo da non aggravare il context window (token limit) del caricamento iniziale della sessione successiva. Nessun clone porta con sé i dump o i log verbosi.
-- **Active Learning (The Brain):** Addestra costantemente lo swarm facendolo imparare da fonti autorevoli. Fai esplorare attivamente documentazioni e guide architetturali esterne (es. `https://www.anthropic.com/learn`), clona le pagine salienti in formato Markdown puro, e ingestale nella wiki locale di Wizard-AI (`ai-llmwiki` o grafo della conoscenza). Questa è la linfa vitale che rende lo sciame una Mente Alveare autonoma.
+- **Active Learning (The Brain):** Addestra costantemente lo swarm facendolo imparare da fonti autorevoli. Fai esplorare attivamente documentazioni e guide architetturali esterne (es. `https://www.anthropic.com/learn`), clona le pagine salienti in formato Markdown puro, e ingestale nella wiki locale di Wizard-AI (`wz-ai-llmwiki` o grafo della conoscenza). Questa è la linfa vitale che rende lo sciame una Mente Alveare autonoma.
 
 **Vincoli Enterprise** (attivati automaticamente se `task_weight == HEAVY`):
 - Importa le regole chiave da `enterprise-development-protocol`:
@@ -298,9 +298,9 @@ L'agente principale (Tu) agisce esclusivamente come **Supreme Orchestrator (Tier
 **Skill:** `auto-graphify`
 
 - **IF** `files_added == true` OR `codebase_structure_changed == true`:
-  - Run `ai-graph .` in background per aggiornare il knowledge graph
+  - Run `wz-ai-graph .` in background per aggiornare il knowledge graph
 - **IF** decisioni architetturali prese:
-  - Persisti in `claude-mem` con `ai-mem store`
+  - Persisti in `claude-mem` con `wz-ai-mem store`
 
 **Self-Check Questions:**
 > ☐ Ho aggiunto nuovi file o cambiato la struttura?
@@ -333,7 +333,7 @@ L'agente principale (Tu) agisce esclusivamente come **Supreme Orchestrator (Tier
   - Bug/domande aperti
   - Prossimi step
   - Decisioni di design
-- Esegui `ai-session-save` e `ai-storybloq snapshot`
+- Esegui `wz-ai-session-save` e `wz-ai-storybloq snapshot`
 - **ANONIMIZZA** percorsi locali prima di salvare
 
 **Self-Check Questions:**
@@ -445,7 +445,7 @@ Keyword specifiche nel prompt dell'utente che triggerano automaticamente loop, w
 | "comprimi", "troppi token" | `auto-optimize` chain |
 | "React", "Vue", "Angular", "Svelte", "Nuxt" | Skill frontend corrispondente |
 | "Python", "Node", "Laravel", "Firebase" | Skill backend corrispondente |
-| "cerca", "memoria", "documentazione", "contesto", "wiki", "ricorda come" | RAG Auto-Activation (`ai-llmwiki`, `graphify`) |
+| "cerca", "memoria", "documentazione", "contesto", "wiki", "ricorda come" | RAG Auto-Activation (`wz-ai-llmwiki`, `graphify`) |
 
 ---
 

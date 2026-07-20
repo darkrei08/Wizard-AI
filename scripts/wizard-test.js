@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * wizard-test / ai-test — Unified CLI Wrapper for Antigravity IDE & Terminal Testing
+ * wizard-test / wz-ai-test — Unified CLI Wrapper for Antigravity IDE & Terminal Testing
  *
  * Integrates:
  * 1. vscode-jest-runner & Vitest / Bun test support across any workspace (waforge, Wizard-AI, etc.)

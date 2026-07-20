@@ -20,10 +20,10 @@ This meta-skill orchestrates building APIs, integrating with external systems, t
 
 4. **Ship It (`loop-develop`, `loop-release`, `auto-npm-publish`)**
    Enforce the Wizard-AI Git flow (`loop-develop`): 
-   - Isolate in a branch (`ai-branch`).
+   - Isolate in a branch (`wz-ai-branch`).
    - Run tests (`mp-tdd`).
    - Merge to main (`loop-release`).
-   - Use `loop-release` (`ai-release`) to tag semver and `auto-npm-publish` to deploy the package automatically.
+   - Use `loop-release` (`wz-ai-release`) to tag semver and `auto-npm-publish` to deploy the package automatically.
 
 ## Execution Rules
 

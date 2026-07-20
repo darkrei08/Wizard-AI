@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+# wz-ai-graph — Graphify wrapper with convenient shortcuts
+# Source: https://github.com/safishamsi/graphify
+
+set -euo pipefail
+
+GRAPHIFY_BIN="${HOME}/.local/bin/graphify"
+
+# Auto-detect Cockpit Tools CLIProxyAPI on port 19528 (Cross-platform: Linux, macOS, WSL)
+if (echo > /dev/tcp/127.0.0.1/19528) >/dev/null 2>&1 || nc -z 127.0.0.1 19528 >/dev/null 2>&1; then
+  echo "🚀 Cockpit Tools Proxy detected! Routing LLM requests through local subscription..."
+  export OPENAI_API_BASE="http://127.0.0.1:19528/v1"
+  export OPENAI_API_KEY="dummy"
+  export GEMINI_API_KEY="dummy"
+  export ANTHROPIC_API_KEY="dummy"
+  export GRAPHIFY_LLM_PROVIDER="openai"
+  export GRAPHIFY_LLM_MODEL="gemini-3.5-pro"
+fi
+
+show_help() {
+  echo "wz-ai-graph — Graphify knowledge graph builder"
+  echo ""
+  echo "Usage:"
+  echo "  wz-ai-graph [path]              Build graph for path (default: current dir)"
+  echo "  wz-ai-graph <github-url>        Clone repo and build graph"
+  echo "  wz-ai-graph query \"<question>\"  Query existing graph"
+  echo "  wz-ai-graph update              Incremental update (only changed files)"
+  echo "  wz-ai-graph open                Open graph.html in browser"
+  echo "  wz-ai-graph report              Show GRAPH_REPORT.md"
+  echo "  wz-ai-graph wiki                Build agent-crawlable wiki"
+  echo ""
+  echo "Options:"
+  echo "  --deep          Thorough extraction, richer edges"
+  echo "  --directed      Build directed graph (preserves edge direction)"  
+  echo "  --no-viz        Skip visualization, just report + JSON"
+  echo "  --mcp           Start MCP stdio server for agent access"
+  echo "  --help, -h      Show this help"
+  echo ""
+  echo "Examples:"
+  echo "  wz-ai-graph .                   # Current directory"
+  echo "  wz-ai-graph ~/projects/myapp    # Specific project"
+  echo "  wz-ai-graph https://github.com/user/repo"
+  echo "  wz-ai-graph query \"how does auth work?\""
+  echo "  wz-ai-graph open                # Open in browser"
+}
+
+if [[ $# -eq 0 ]] || [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
+  show_help
+  exit 0
+fi
+
+# Special subcommands
+case "$1" in
+  open)
+    GRAPH_HTML=$(find . -name "graph.html" -path "*/graphify-out/*" 2>/dev/null | head -1)
+    if [[ -z "$GRAPH_HTML" ]]; then
+      echo "❌ No graph.html found. Run 'wz-ai-graph .' first."
+      exit 1
+    fi
+    echo "Opening: $GRAPH_HTML"
+    xdg-open "$GRAPH_HTML" 2>/dev/null || open "$GRAPH_HTML" 2>/dev/null || \
+      echo "Open manually: $GRAPH_HTML"
+    exit 0
+    ;;
+  report)
+    REPORT=$(find . -name "GRAPH_REPORT.md" -path "*/graphify-out/*" 2>/dev/null | head -1)
+    if [[ -z "$REPORT" ]]; then
+      echo "❌ No GRAPH_REPORT.md found. Run 'wz-ai-graph .' first."
+      exit 1
+    fi
+    cat "$REPORT"
+    exit 0
+    ;;
+  update)
+    shift
+    exec "$GRAPHIFY_BIN" "${@:-.}" --update
+    ;;
+  query|path|explain|add)
+    exec "$GRAPHIFY_BIN" "$@"
+    ;;
+esac
+
+# Default: run graphify with all remaining args
+exec "$GRAPHIFY_BIN" "$@"

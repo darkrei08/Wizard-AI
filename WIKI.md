@@ -191,7 +191,7 @@ Welcome to the Wizard-AI knowledge base. All skills and workflows are organized 
 |---|---|---|
 | [🌐 Personal Graph](.agents/skills/4-domain-workflows/memory-knowledge/official/personal-graph) | — | Personal knowledge graph construction and query. |
 | [💾 Mem0](.agents/skills/4-domain-workflows/memory-knowledge/official/mem0) | — | External memory management reference. |
-| [💾 Session Manager](.agents/skills/4-domain-workflows/memory-knowledge/official/session-manager) | — | Restore context at start, save persistent state at end. MEMORY.md + ai-session-save. |
+| [💾 Session Manager](.agents/skills/4-domain-workflows/memory-knowledge/official/session-manager) | — | Restore context at start, save persistent state at end. MEMORY.md + wz-wz-ai-session-save. |
 | [📖 Wiki Brain](.agents/skills/4-domain-workflows/memory-knowledge/official/wiki-brain-skill) | — | Every conversation feeds into a personal wiki you browse in Obsidian. |
 | [🔎 Serena](.agents/skills/4-domain-workflows/memory-knowledge/official/serena) | — | Semantic code search via LSP. Find usages, trace call graphs, navigate symbols. |
 | [🔑 Claude API Reference](.agents/skills/4-domain-workflows/memory-knowledge/official/claude-api) | — | Models, pricing, params, streaming, tool use, MCP, caching, tokens. |

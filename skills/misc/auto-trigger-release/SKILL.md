@@ -11,14 +11,14 @@ This skill is a behavioral hook for AI agents. Use this skill **whenever the use
 
 1. When you finish an implementation or a bugfix, ensure the code compiles and tests pass.
 2. Commit all changes to the current branch using a standard conventional commit message.
-3. Run the `auto-release` skill workflow (or execute the CLI wrapper `ai-release` if available).
+3. Run the `auto-release` skill workflow (or execute the CLI wrapper `wz-ai-release` if available).
 4. If no CLI is available, you can run the `auto-release` shell script manually to generate the semantic version bump, changelog, and push the tags.
 
 ## Automated Hook
 
 You should consider this skill as an internal rule:
 - **IF** task == complete AND requires_release == true
-- **THEN** run tests -> commit -> `ai-release`
+- **THEN** run tests -> commit -> `wz-ai-release`
 
 ## Example Usage
 
@@ -28,5 +28,5 @@ git add .
 # 2. Commit
 git commit -m "feat: complete enterprise feature"
 # 3. Trigger release
-ai-release
+wz-ai-release
 ```

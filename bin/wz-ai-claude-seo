@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# wz-ai-claude-seo — SEO Skill for Claude Code
+# Source: https://github.com/AgriciDaniel/claude-seo
+set -euo pipefail
+echo "claude-seo is a Claude Code skill. It doesn't have a standalone CLI executable, but provides sub-skills."

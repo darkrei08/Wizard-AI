@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+# wz-ai-mineru — MinerU PDF parsing wrapper (LLM-Optimized)
+# Source: https://github.com/opendatalab/MinerU
+set -euo pipefail
+
+if [ $# -eq 0 ] || [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
+    echo "Usage: wz-ai-mineru <path-to-file> [mineru-options]"
+    echo "This wrapper automatically saves output to the same directory as the input file"
+    echo "and generates highly token-efficient LLM-ready formats (.md and .json)."
+    
+    if command -v magic-pdf &> /dev/null; then
+        magic-pdf --help
+    elif command -v mineru &> /dev/null; then
+        mineru --help
+    fi
+    exit 0
+fi
+
+FILEPATH="$1"
+shift
+
+# If the first argument is not a file, let mineru handle it natively
+if [ ! -f "$FILEPATH" ]; then
+    echo "Error: File not found at $FILEPATH"
+    exit 1
+fi
+
+INPUT_DIR=$(dirname "$(realpath "$FILEPATH")")
+FILENAME=$(basename -- "$FILEPATH")
+BASENAME="${FILENAME%.*}"
+
+# Default output directory is the same as input
+OUTPUT_DIR="$INPUT_DIR/MinerU_Output"
+
+echo "🪄 [Wizard-AI] Invoking MinerU on $FILENAME..."
+echo "📂 Output will be saved to: $OUTPUT_DIR"
+
+# Call the actual mineru / magic-pdf executable
+if command -v magic-pdf &> /dev/null; then
+    CMD="magic-pdf"
+elif command -v mineru &> /dev/null; then
+    CMD="mineru"
+elif [ -f "$HOME/.local/bin/magic-pdf" ]; then
+    CMD="$HOME/.local/bin/magic-pdf"
+elif [ -f "$HOME/.cargo/bin/magic-pdf" ]; then
+    CMD="$HOME/.cargo/bin/magic-pdf"
+else
+    echo "Error: MinerU (magic-pdf) executable not found. Make sure it is installed via uv tool install 'mineru[all]'."
+    exit 1
+fi
+
+# Run MinerU with default pipeline backend if not specified
+"$CMD" -p "$FILEPATH" -o "$OUTPUT_DIR" -b pipeline "$@"
+
+# Locate the generated Markdown and JSON
+GEN_DIR="$OUTPUT_DIR/$BASENAME/auto"
+if [ ! -d "$GEN_DIR" ]; then
+    # Fallback if MinerU changes directory structure
+    GEN_DIR="$OUTPUT_DIR/$BASENAME"
+fi
+
+MD_FILE="$GEN_DIR/$BASENAME.md"
+JSON_FILE="$GEN_DIR/${BASENAME}_content_list.json"
+
+if [ -f "$MD_FILE" ] && [ -f "$JSON_FILE" ]; then
+    echo "⚙️  Optimizing output for LLM Token Efficiency (removing noise/images/bboxes)..."
+    OPTIMIZER="$(dirname "$(realpath "$0")")/wz-ai-mineru-optimizer.py"
+    if [ -f "$OPTIMIZER" ]; then
+        python3 "$OPTIMIZER" "$MD_FILE" "$JSON_FILE"
+    else
+        echo "⚠️ Optimizer script not found at $OPTIMIZER"
+    fi
+else
+    echo "⚠️ MinerU completed, but expected output files were not found for optimization."
+fi
+
+echo "✅ All done! Check the output directory: $GEN_DIR"

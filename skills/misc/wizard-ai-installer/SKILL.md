@@ -17,8 +17,8 @@ The Wizard-AI environment uses these standard paths — **all are relative to th
 | `~/.ai-skills/` | Local Python tool installs, venvs, and cloned repos |
 | `~/.local/bin/` | Executable CLI wrappers (on `$PATH`) |
 | `~/.gemini/config/skills/` | Primary skill directory (Antigravity reads this) |
-| `~/.claude/skills/` | Claude Code skill directory (synced by `ai-sync-skills`) |
-| `~/.config/amp/skills/` | Amp skill directory (synced by `ai-sync-skills`) |
+| `~/.claude/skills/` | Claude Code skill directory (synced by `wz-ai-sync-skills`) |
+| `~/.config/amp/skills/` | Amp skill directory (synced by `wz-ai-sync-skills`) |
 
 Before starting, verify that `$WIZARD_AI_DIR` is set:
 
@@ -141,7 +141,7 @@ Edit `"$WIZARD_AI_DIR/setup.sh"`:
 
 ### Step 5: Update the Help Dashboard
 
-Edit `"$WIZARD_AI_DIR/bin/ai-help"` and add a new entry in the appropriate category:
+Edit `"$WIZARD_AI_DIR/bin/wz-ai-help"` and add a new entry in the appropriate category:
 ```bash
 echo -e "  $(check_cmd ai-<tool>) ${BOLD}ai-<tool>${RESET}   Brief description"
 echo -e "     ${BLUE}ai-<tool> --example${RESET}"
@@ -149,7 +149,7 @@ echo -e "     ${BLUE}ai-<tool> --example${RESET}"
 
 Then sync the updated binary:
 ```bash
-cp "$WIZARD_AI_DIR/bin/ai-help" "$HOME/.local/bin/ai-help"
+cp "$WIZARD_AI_DIR/bin/wz-ai-help" "$HOME/.local/bin/wz-ai-help"
 ```
 
 ### Step 6: Update the Resources Wiki
@@ -167,7 +167,7 @@ echo "- **<tool-name>**: Description of what it does." \
 Execute the sync script to broadcast the new skill to Claude, Amp, Antigravity, etc.:
 
 ```bash
-ai-sync-skills
+wz-ai-sync-skills
 ```
 
 ## 3. Communication
@@ -175,5 +175,5 @@ ai-sync-skills
 Once all 7 steps are completed, present a concise summary to the user:
 - Name of the tool installed
 - Wrapper created (`ai-<tool>`)
-- Confirmation that `setup.sh` and `ai-help` have been permanently updated
+- Confirmation that `setup.sh` and `wz-ai-help` have been permanently updated
 - Command to test: `ai-<tool> --help`

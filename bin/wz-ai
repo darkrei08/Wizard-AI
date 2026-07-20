@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Wizard-AI Central Dispatcher
+
+if [ $# -eq 0 ]; then
+    echo "Usage: wz-ai <command> [args...]"
+    echo "Run 'wz-ai help' for a list of available commands."
+    exit 1
+fi
+
+CMD=$1
+shift
+
+# Check if the subcommand wrapper exists
+if command -v "wz-ai-$CMD" &> /dev/null; then
+    exec "wz-ai-$CMD" "$@"
+elif [ -x "$(dirname "$0")/wz-ai-$CMD" ]; then
+    exec "$(dirname "$0")/wz-ai-$CMD" "$@"
+else
+    echo "Unknown command: $CMD"
+    echo "Run 'wz-ai help' for a list of available commands."
+    exit 1
+fi

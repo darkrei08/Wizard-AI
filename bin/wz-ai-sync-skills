@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+# wz-ai-sync-skills — Sync skills from ~/.gemini/config/skills/ to all agent paths.
+#
+# Direction 1 (always): ~/.gemini/config/skills/ → claude, amp, agents, etc.
+# Direction 2 (if $WIZARD_AI_DIR is set): ~/.gemini/config/skills/ → repo/skills/
+#
+# Run this after adding or modifying any skill to propagate changes everywhere.
+
+set -euo pipefail
+
+SKILLS_SRC="$HOME/.gemini/config/skills"
+TARGETS=(
+  "$HOME/.claude/skills"
+  "$HOME/.config/amp/skills"
+  "$HOME/.agents/skills"
+  "$HOME/.config/agents/skills"
+)
+
+# Load wizard-ai env if not already set
+if [[ -z "${WIZARD_AI_DIR:-}" ]] && [[ -f "$HOME/.config/wizard-ai/env" ]]; then
+  source "$HOME/.config/wizard-ai/env"
+fi
+
+echo "🔄 Syncing AI skills from: $SKILLS_SRC"
+echo ""
+
+# --- Direction 1: Gemini → All other agents ---
+synced=0
+for TARGET in "${TARGETS[@]}"; do
+  mkdir -p "$TARGET"
+  for SKILL_DIR in "$SKILLS_SRC"/*/; do
+    [[ -d "$SKILL_DIR" ]] || continue
+    SKILL_NAME=$(basename "$SKILL_DIR")
+    mkdir -p "$TARGET/$SKILL_NAME"
+    # Copy SKILL.md first (guaranteed)
+    cp -f "$SKILL_DIR/SKILL.md" "$TARGET/$SKILL_NAME/SKILL.md" 2>/dev/null || true
+    # Copy any additional files (references/, scripts/, examples/, etc.)
+    rsync -a --quiet "$SKILL_DIR" "$TARGET/$SKILL_NAME/" 2>/dev/null || \
+      cp -rf "$SKILL_DIR"* "$TARGET/$SKILL_NAME/" 2>/dev/null || true
+  done
+  COUNT=$(ls "$TARGET" 2>/dev/null | wc -l)
+  echo "  ✅ $TARGET ($COUNT skills)"
+  ((synced++)) || true
+done
+
+# --- Direction 2: Gemini → Wizard-AI repo (backup into categories) ---
+if [[ -n "${WIZARD_AI_DIR:-}" ]] && [[ -d "${WIZARD_AI_DIR}/skills" ]]; then
+  echo ""
+  echo "  📦 Backing up new skills to repo..."
+  backed_up=0
+  for SKILL_DIR in "$SKILLS_SRC"/*/; do
+    [[ -d "$SKILL_DIR" ]] || continue
+    SKILL_NAME=$(basename "$SKILL_DIR")
+    # Search recursively (up to 3 levels) if this skill already exists anywhere in the repo
+    EXISTING=$(find "$WIZARD_AI_DIR/skills" -maxdepth 3 -type d -name "$SKILL_NAME" 2>/dev/null | head -1)
+    if [[ -z "$EXISTING" ]]; then
+      # New skill: back up into the misc category by default
+      REPO_SKILL_DIR="$WIZARD_AI_DIR/skills/misc/$SKILL_NAME"
+      mkdir -p "$REPO_SKILL_DIR"
+      rsync -a --quiet "$SKILL_DIR" "$REPO_SKILL_DIR/" 2>/dev/null || \
+        cp -rf "$SKILL_DIR"* "$REPO_SKILL_DIR/" 2>/dev/null || true
+      echo "    + $SKILL_NAME (new → repo/skills/misc/)"
+      ((backed_up++)) || true
+    fi
+  done
+  if [[ $backed_up -eq 0 ]]; then
+    echo "    ✓ All skills already in sync with repo."
+  else
+    echo "  ✅ $WIZARD_AI_DIR/skills/ ($backed_up new skills backed up to misc/)"
+  fi
+elif [[ -z "${WIZARD_AI_DIR:-}" ]]; then
+  echo ""
+  echo "  ℹ️  \$WIZARD_AI_DIR not set — skipping repo backup."
+  echo "     Run setup.sh once to enable automatic repo backup."
+fi
+
+echo ""
+TOTAL=$(ls "$SKILLS_SRC" 2>/dev/null | wc -l)
+echo "Done! $TOTAL skills synced. Run 'wz-ai-help' to see all available tools."

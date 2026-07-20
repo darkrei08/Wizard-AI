@@ -18,25 +18,25 @@ Per prevenire il "Context Rot" (degrado cognitivo dell'LLM noto come "Lost in th
 - Si scartano log vecchi e ridondanti.
 - Si mantengono SOLO le regole strutturali e l'AST.
 - Si utilizzano le memorie a breve e lungo termine al posto del testo flat.
-- Si comprimono i dati tramite `LLMLingua` e si attiva dinamicamente il RAG (`ai-llmwiki`, `graphify`) in base all'analisi del testo dell'utente per estrarre solo l'essenziale.
+- Si comprimono i dati tramite `LLMLingua` e si attiva dinamicamente il RAG (`wz-ai-llmwiki`, `graphify`) in base all'analisi del testo dell'utente per estrarre solo l'essenziale.
 
 Applica queste 6 fasi obbligatorie in ordine:
 
-### Fase 1: Ingestion & Conversion (`markitdown`, `ai-convert`)
+### Fase 1: Ingestion & Conversion (`markitdown`, `wz-ai-convert`)
 Se il task coinvolge file binari o complessi (PDF, DOCX, XLSX, PPTX, immagini, audio):
-- Usa `ai-convert <file>` per trasformare tutto in Markdown pulito.
+- Usa `wz-ai-convert <file>` per trasformare tutto in Markdown pulito.
 - Evita di leggere file grezzi.
 
-### Fase 2: RAG / Semantic Filtering (`flashrank`, `ai-rerank`, `ai-llmwiki`, `ai-vector`)
+### Fase 2: RAG / Semantic Filtering (`flashrank`, `wz-ai-rerank`, `wz-ai-llmwiki`, `wz-ai-vector`)
 Se il contesto è frammentato su decine di documenti o il retrieval è ampio:
-- Usa `ai-llmwiki query / search` o `ai-vector search` per interrogare la knowledge base vettoriale interconnessa.
-- Usa `ai-rerank` per filtrare e classificare i passaggi per pertinenza rispetto al prompt.
+- Usa `wz-ai-llmwiki query / search` o `wz-ai-vector search` per interrogare la knowledge base vettoriale interconnessa.
+- Usa `wz-ai-rerank` per filtrare e classificare i passaggi per pertinenza rispetto al prompt.
 - Conserva solo i top K risultati rilevanti.
 
 ### Fase 3: Token & Output Compression (`llmlingua`, `sqz`, `headroom`, `caveman`)
 Per testi voluminosi, log di build o chiamate di rete:
-- **Prompt/Codice esteso & Latenza:** Usa `headroom` / `ai-headroom` o `ai-compress` per comprimere la richiesta prima di inviarla (riduzione token fino a 20x e proxying API ottimizzato).
-- **Log, JSON, CLI Output:** Usa sempre `ai-squeeze` / `sqz` per rimuovere sintassi inutile, righe di debug prolisse e spazi vuoti prima di passarla al modello.
+- **Prompt/Codice esteso & Latenza:** Usa `headroom` / `wz-ai-headroom` o `wz-ai-compress` per comprimere la richiesta prima di inviarla (riduzione token fino a 20x e proxying API ottimizzato).
+- **Log, JSON, CLI Output:** Usa sempre `wz-ai-squeeze` / `sqz` per rimuovere sintassi inutile, righe di debug prolisse e spazi vuoti prima di passarla al modello.
 - **Risposta dell'Agente (`caveman` mode):** Assicurati che il plugin `caveman` sia attivo per ridurre del ~75% i token in uscita nella risposta dell'agente pur mantenendo 100% di accuratezza tecnica e sintattica.
 
 ### Fase 4: Context Guarding & Pruning (`lean-ctx` / `ktx`)
@@ -51,8 +51,8 @@ Per testi voluminosi, log di build o chiamate di rete:
 - Prima di chiudere la sessione o eseguire il despawn di un subagent, esegui il protocollo **Shadow Clone Memory Merge**:
   1. **`mp-handoff` (`handoff`)**: Cristallizza i workaround, bug-fix e contesti scoperti dal clone.
   2. **Ottimizzazione Pre-Merge (`sqz` / `llmlingua`)**: Comprimi e riorganizza la memoria grezza per non sovraccaricare i token al momento dell'assorbimento. Nessun log o dump verboso deve finire nel master.
-  3. **`session-manager` (`ai-session-save`)**: Fonde la memoria compressa nel `MEMORY.md` del Master Orchestrator, garantendo che nessuna conoscenza vada persa.
-  4. **Active Learning (The Brain):** Arricchisci costantemente la wiki. Se trovi pattern nuovi o guide esterne rilevanti (es. clonando da `https://www.anthropic.com/learn`), usa `ai-llmwiki ingest / compile` per salvarle in puro Markdown. Il Master riassorbe questa conoscenza, espandendo strutturalmente la "Mente Alveare" per le sessioni future.
+  3. **`session-manager` (`wz-ai-session-save`)**: Fonde la memoria compressa nel `MEMORY.md` del Master Orchestrator, garantendo che nessuna conoscenza vada persa.
+  4. **Active Learning (The Brain):** Arricchisci costantemente la wiki. Se trovi pattern nuovi o guide esterne rilevanti (es. clonando da `https://www.anthropic.com/learn`), usa `wz-ai-llmwiki ingest / compile` per salvarle in puro Markdown. Il Master riassorbe questa conoscenza, espandendo strutturalmente la "Mente Alveare" per le sessioni future.
 
 ## ═══════════ META-SKILL EXPANSION & ONLINE HUNT (`skills.sh`) ═══════════
 

@@ -35,7 +35,7 @@ You MUST instantiate and continuously update the following documentation structu
 ## 4. Master Skill Chaining ⛓️
 
 To achieve maximum efficiency, you MUST seamlessly chain other Wizard-AI skills throughout the lifecycle:
-1. **Init**: Use `ai-scaffold` to generate the base framework. Apply `taste-skill` and `awesome-design` for premium UI.
+1. **Init**: Use `wz-ai-scaffold` to generate the base framework. Apply `taste-skill` and `awesome-design` for premium UI.
 2. **Context Ingestion**: Use `markitdown` / `book-to-skill` on files in `docs/references/` to learn user requirements.
 3. **Mapping**: Trigger `auto-graphify` to continuously map the codebase, and `serena` for semantic LSP navigation.
 4. **Execution**: Rely on `loop-develop` to manage Git Flow (branches, isolated testing, merging). Engage `caveman` and `sqz` to compress your own terminal output and save tokens.
