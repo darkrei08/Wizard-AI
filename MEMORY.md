@@ -52,3 +52,7 @@
 - Problema: `GITHUB_TOKEN=github_pat_antigravitydummytoken` è iniettato da **Antigravity IDE** (non dal file env di Wizard-AI — quello è pulito)
 - Il keyring ha il token valido `gho_****` ma è marcato come INATTIVO
 - Soluzione: `gh auth switch`, `gh auth setup-git`, check nel setup.sh
+
+## [Session State Snapshot] - 2026-07-20 19:33:10
+Rilasciata versione: implementato loopy, autonomous refactoring loop e fix test suite vitest
+
