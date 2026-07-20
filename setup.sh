@@ -170,7 +170,7 @@ clone_skill_repo "https://github.com/JuliusBrussee/caveman.git" "caveman"
 if command -v npm &>/dev/null; then
   echo -e "\n${BLUE}Attempting optional NPM global installations (ECC, caveman, design.md)...${NC}"
   npm install -g --allow-scripts=ecc-universal ecc-universal 2>/dev/null || echo -e "${YELLOW}Note: ecc-universal npm install skipped/failed (using cloned git repo).${NC}"
-  npm install -g https://github.com/JuliusBrussee/caveman.git 2>/dev/null || echo -e "${YELLOW}Note: caveman npm git fetch restricted by EALLOWGIT (using cloned git repo in ~/.ai-skills/caveman).${NC}"
+  npm install -g "$HOME/.ai-skills/caveman" 2>/dev/null || echo -e "${YELLOW}Note: caveman global install skipped (using cloned git repo).${NC}"
   npm install -g --allow-scripts=puppeteer @google/design.md 2>/dev/null || echo -e "${YELLOW}Note: @google/design.md npm install skipped/failed.${NC}"
 else
   echo -e "${YELLOW}NPM not found. Using cloned git repos for ECC and caveman.${NC}"
