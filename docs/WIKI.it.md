@@ -99,6 +99,7 @@ Di seguito la categorizzazione rigorosa dell'arsenale a tua disposizione:
 
 #### 6. Frontend, UI/UX e Design (Design System)
 - **`taste-skill`**: Framework "anti-slop" per forzare layout e spaziature di altissima gamma.
+- **`design-hallmark-frontend`**: Skill anti-AI-slop per nuovi progetti, audit, restyling ed estrazione di design system.
 - **`awesome-design`**: Iniezione di stili e linguaggi brand-specifici (Vercel, Cursor, Claude).
 - **`infographic`**: Generatore dichiarativo di infografiche e grafici basato su AI.
 - **`design-md-spec`**: Specifiche del formato e validatore per lo standard `DESIGN.md`.

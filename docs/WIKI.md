@@ -101,6 +101,7 @@ Below is the rigorous categorization of the arsenal at your disposal, which has 
 
 #### 6. Frontend, UI/UX & Design (Design System)
 - **`taste-skill`**: "Anti-slop" framework to force ultra-premium layouts and spacing.
+- **`design-hallmark-frontend`**: Anti-AI-slop design skill for greenfield pages, audits, redesigns, and design extraction.
 - **`awesome-design`**: Injection of brand-specific styles and languages (Vercel, Cursor, Claude).
 - **`infographic`**: AI-powered declarative infographic and chart generator.
 - **`design-md-spec`**: Format specification and validation tool for the `DESIGN.md` standard.

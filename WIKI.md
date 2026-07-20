@@ -94,6 +94,7 @@ Welcome to the Wizard-AI knowledge base. All skills and workflows are organized 
 | [🌟 Astro 5 Stack](.agents/skills/4-domain-workflows/frontend/official/framework-astro5) | — | Astro 5 SSG + Tailwind v4 + Native i18n + Google GSI Auth. |
 | [🎨 AionUI Framework](.agents/skills/4-domain-workflows/frontend/official/aionui) | — | Custom UI component framework implementation. |
 | [🎨 Design Taste](.agents/skills/4-domain-workflows/frontend/official/taste-skill) | — | Anti-slop frontend skill. Audit-first on redesigns, strict pre-flight. |
+| [🎨 Hallmark Design](.agents/skills/4-domain-workflows/frontend/official/design-hallmark-frontend) | — | Anti-AI-slop design skill. Audit-first, redesigns, and design extraction. |
 | [🎨 Frontend Design Pipeline](.agents/skills/4-domain-workflows/frontend/workflow-frontend-design) | — | Chains brand-guidelines + theme-factory + awesome-design + taste-skill for premium UI. |
 | [🎨 Theme Factory](.agents/skills/4-domain-workflows/frontend/official/theme-factory) | — | 10 pre-set themes with colors/fonts. Apply to slides, docs, HTML. Or generate on-the-fly. |
 | [🎭 Design System Browser](.agents/skills/4-domain-workflows/frontend/official/awesome-design) | — | Browse DESIGN.md files from famous brands (Vercel, Cursor, Claude). Pick a design language. |
