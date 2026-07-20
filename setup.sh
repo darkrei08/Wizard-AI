@@ -470,11 +470,22 @@ if command -v npm &>/dev/null; then
     npx --yes pi-cockpit-proxy-setup || echo -e "${RED}Failed to run pi-cockpit-proxy-setup.${NC}"
     
     echo -e "\n${CYAN}⚙️ Installing and enabling background Proxy Rotator...${NC}"
-    echo -e "${YELLOW}Il proxy verrà installato globalmente e abilitato come servizio in background per evitare problemi di quota (429).${NC}"
-    sudo npm install -g pi-antigravity-rotator || npm install -g pi-antigravity-rotator || echo -e "${RED}Failed to install pi-antigravity-rotator.${NC}"
-    "$HOME/.local/bin/ai-proxy" provision || true
+    echo -e "${YELLOW}Il proxy verrà installato e abilitato come servizio in background per evitare problemi di quota (429).${NC}"
+    # Try local prefix first (no EACCES), then global, then sudo
+    npm install -g pi-antigravity-rotator --prefix "$HOME/.local" 2>/dev/null \
+      || npm install -g pi-antigravity-rotator 2>/dev/null \
+      || sudo npm install -g pi-antigravity-rotator \
+      || echo -e "${RED}Failed to install pi-antigravity-rotator.${NC}"
+    
+    # Generate Pi's auth.json + models.json to route google provider through local rotator
+    "$HOME/.local/bin/ai-proxy" pi-config || true
+    # Enable the background daemon
     "$HOME/.local/bin/ai-proxy" enable || true
 
+    echo -e "\n${GREEN}✓ Proxy configured. Pi will route through the local rotator on port 51200.${NC}"
+    echo -e "${CYAN}  To add Google accounts: ai-proxy login${NC}"
+    echo -e "${CYAN}  To see accounts:        ai-proxy accounts${NC}"
+    echo -e "${CYAN}  To check status:        ai-proxy status${NC}"
   fi
 else
   echo -e "${YELLOW}NPM not found. Cockpit Proxy setup skipped.${NC}"

@@ -58,14 +58,16 @@ function writeLitellmConfig() {
   fs.writeFileSync(LITELLM_CONFIG_FILE, config, 'utf8');
 }
 
-function injectDummyAuth() {
+function injectPiConfig() {
+  // 1. Write auth.json with a dummy API key so pi sees the google provider as "available"
   const authFile = path.join(os.homedir(), '.pi', 'agent', 'auth.json');
   try {
     let auth = {};
     if (fs.existsSync(authFile)) {
       auth = JSON.parse(fs.readFileSync(authFile, 'utf8'));
     }
-    if (!auth.google || typeof auth.google === 'string') {
+    // Only inject dummy key if no real OAuth token is present
+    if (!auth.google || (auth.google.type === 'api_key' && auth.google.key?.includes('Dummy'))) {
       auth.google = {
         type: "api_key",
         key: "AIzaSyDummyKeyForProxyBypass1234567890"
@@ -73,28 +75,50 @@ function injectDummyAuth() {
       fs.mkdirSync(path.dirname(authFile), { recursive: true });
       fs.writeFileSync(authFile, JSON.stringify(auth, null, 2), 'utf8');
       console.log("✅ Injected dummy Google API key into pi auth.json to bypass CLI validation.");
+    } else {
+      console.log("ℹ️  Pi auth.json already has a valid google credential (keeping it).");
     }
   } catch (e) {
     console.error("Warning: Failed to inject dummy auth key", e.message);
   }
 
+  // 2. Write models.json to override the built-in google provider so ALL requests
+  //    go through the local rotator proxy on port 51200 instead of googleapis.com
   const modelsFile = path.join(os.homedir(), '.pi', 'agent', 'models.json');
   try {
-    let modelsConfig = { providers: {} };
+    let modelsConfig = {};
     if (fs.existsSync(modelsFile)) {
       modelsConfig = JSON.parse(fs.readFileSync(modelsFile, 'utf8'));
     }
     if (!modelsConfig.providers) modelsConfig.providers = {};
-    if (!modelsConfig.providers.google) {
-      modelsConfig.providers.google = { baseUrl: "http://127.0.0.1:51200/v1beta" };
-    } else {
-      modelsConfig.providers.google.baseUrl = "http://127.0.0.1:51200/v1beta";
-    }
+    modelsConfig.providers.google = {
+      baseUrl: "http://127.0.0.1:51200/v1beta"
+    };
     fs.mkdirSync(path.dirname(modelsFile), { recursive: true });
     fs.writeFileSync(modelsFile, JSON.stringify(modelsConfig, null, 2), 'utf8');
-    console.log("✅ Injected pi models.json config to route Google API to local proxy (51200).");
+    console.log("✅ Pi models.json: google provider → http://127.0.0.1:51200/v1beta (rotator proxy).");
   } catch (e) {
     console.error("Warning: Failed to inject models config", e.message);
+  }
+
+  // 3. Write settings.json defaults if pi is detected
+  const settingsFile = path.join(os.homedir(), '.pi', 'agent', 'settings.json');
+  try {
+    let settings = {};
+    if (fs.existsSync(settingsFile)) {
+      settings = JSON.parse(fs.readFileSync(settingsFile, 'utf8'));
+    }
+    if (!settings.defaultProvider) {
+      settings.defaultProvider = 'google';
+    }
+    if (!settings.defaultModel) {
+      settings.defaultModel = 'gemini-pro-agent';
+    }
+    fs.mkdirSync(path.dirname(settingsFile), { recursive: true });
+    fs.writeFileSync(settingsFile, JSON.stringify(settings, null, 2), 'utf8');
+    console.log("✅ Pi settings.json: defaults set.");
+  } catch (e) {
+    // non-fatal
   }
 }
 
@@ -104,7 +128,7 @@ const LOG_FILE = path.join(os.homedir(), '.pi-antigravity-rotator', 'proxy.log')
 
 function enableLinux() {
   writeLitellmConfig();
-  injectDummyAuth();
+  injectPiConfig();
   const serviceDir = path.join(os.homedir(), '.config', 'systemd', 'user');
   
   // Pi Rotator Service
@@ -164,7 +188,7 @@ function disableLinux() {
 
 function enableMac() {
   writeLitellmConfig();
-  injectDummyAuth();
+  injectPiConfig();
   const plistDir = path.join(os.homedir(), 'Library', 'LaunchAgents');
   
   let ExecStart = runCommandSilent('which pi-antigravity-rotator');
@@ -254,7 +278,7 @@ function disableMac() {
 
 function enableWindows() {
   writeLitellmConfig();
-  injectDummyAuth();
+  injectPiConfig();
   const startupDir = path.join(process.env.APPDATA, 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup');
   const scriptPath = path.join(startupDir, 'ai-proxy.vbs');
   
@@ -315,32 +339,82 @@ if (!command || command === 'help') {
   console.log("Usage: ai-proxy <command>");
   console.log("");
   console.log("  install    - Install pi-antigravity-rotator globally");
+  console.log("  login      - Add a Google account to the rotator via OAuth");
+  console.log("  accounts   - List all accounts in the rotator (with quota)");
   console.log("  provision  - Import all Cockpit Tools accounts into the proxy");
   console.log("  start      - Start the proxy server in the foreground (blocking)");
   console.log("  enable     - Register & start proxy as a background daemon (systemd/launchd/startup)");
   console.log("  disable    - Stop & remove the background daemon");
   console.log("  status     - Show the proxy rotation status (if running)");
   console.log("  logs       - View live background logs");
+  console.log("  pi-config  - (Re)generate pi's auth.json + models.json to use the local proxy");
+  console.log("");
+  console.log("Quick Start:");
+  console.log("  1. ai-proxy install          # Install the rotator");
+  console.log("  2. ai-proxy login            # Add at least one Google account");
+  console.log("  3. ai-proxy enable           # Start as background daemon");
+  console.log("  4. pi                        # Pi now uses the rotator automatically");
   process.exit(1);
 }
 
 try {
   if (command === 'install') {
     console.log("Installing pi-antigravity-rotator...");
+    // Try local prefix first (no sudo needed), then global, then sudo global
+    const localPrefix = path.join(os.homedir(), '.local');
     try {
-      runCommand('npm install -g pi-antigravity-rotator');
-    } catch(e) {
-      console.log("⚠️ Local install failed (EACCES). Escalating to sudo...");
-      runCommand('sudo npm install -g pi-antigravity-rotator');
+      runCommand(`npm install -g pi-antigravity-rotator --prefix "${localPrefix}"`);
+    } catch(e1) {
+      try {
+        runCommand('npm install -g pi-antigravity-rotator');
+      } catch(e2) {
+        console.log("⚠️ Local install failed (EACCES). Trying with sudo...");
+        runCommand('sudo npm install -g pi-antigravity-rotator');
+      }
     }
   } 
+  else if (command === 'login') {
+    // Add account to the rotator via OAuth
+    console.log("Adding a new Google account to the rotator...");
+    console.log("A browser window will open for Google OAuth sign-in.");
+    console.log("");
+    runCommand('pi-antigravity-rotator login');
+  }
+  else if (command === 'accounts') {
+    // Show all rotator accounts with their quota
+    const configPath = path.join(os.homedir(), '.pi-antigravity-rotator', 'accounts.json');
+    if (!fs.existsSync(configPath)) {
+      console.log("No accounts configured. Run 'ai-proxy login' to add one.");
+      process.exit(0);
+    }
+    const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+    const accounts = config.accounts || [];
+    if (accounts.length === 0) {
+      console.log("No accounts configured. Run 'ai-proxy login' to add one.");
+    } else {
+      console.log(`\n📋 Rotator Accounts (${accounts.length} total):\n`);
+      accounts.forEach((a, i) => {
+        const label = a.label || a.email || `Account ${i + 1}`;
+        const tier = a.tier || 'unknown';
+        const source = a.syncedFromCockpit ? ' (Cockpit)' : '';
+        console.log(`  ${i + 1}. ${label} — tier: ${tier}${source}`);
+      });
+      console.log("");
+    }
+  }
   else if (command === 'provision') {
     console.log("Provisioning Cockpit Tools accounts...");
-    const readerPath = path.join(os.homedir(), '.agents', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs');
-    if (fs.existsSync(readerPath)) {
+    // Look for cockpit-reader in multiple possible locations
+    const searchPaths = [
+      path.join(os.homedir(), '.gemini', 'config', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+      path.join(os.homedir(), '.agents', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+    ];
+    const readerPath = searchPaths.find(p => fs.existsSync(p));
+    if (readerPath) {
       runCommand(`node "${readerPath}" provision-rotator`);
     } else {
       console.log("cockpit-bridge skill not found. Ensure Wizard-AI is installed correctly.");
+      console.log("Tip: Use 'ai-proxy login' to add accounts directly via Google OAuth instead.");
     }
   } 
   else if (command === 'start') {
@@ -367,8 +441,13 @@ try {
   else if (command === 'logs') {
     showLogs();
   }
+  else if (command === 'pi-config') {
+    console.log("(Re)generating Pi configuration to use local proxy...");
+    injectPiConfig();
+    console.log("\nDone! Pi will now route all Google requests through the local rotator.");
+  }
   else {
-    console.log(`Unknown command: ${command}`);
+    console.log(`Unknown command: ${command}. Run 'ai-proxy help' for usage.`);
   }
 } catch (e) {
   process.exit(1);
