@@ -214,7 +214,7 @@ install_uv_tool() {
 install_uv_tool "graphify"    "graphifyy"
 # Fix pyo3 max version compatibility error for litellm and strix on python >= 3.14
 export PYO3_USE_ABI3_FORWARD_COMPATIBILITY=1
-install_uv_tool "litellm"
+install_uv_tool "litellm" "litellm[proxy]"
 install_uv_tool "markitdown"
 install_uv_tool "sqz"
 install_uv_tool "headroom"    "headroom-ai"
