@@ -58,12 +58,31 @@ function writeLitellmConfig() {
   fs.writeFileSync(LITELLM_CONFIG_FILE, config, 'utf8');
 }
 
+function injectDummyAuth() {
+  const authFile = path.join(os.homedir(), '.pi', 'agent', 'auth.json');
+  try {
+    let auth = {};
+    if (fs.existsSync(authFile)) {
+      auth = JSON.parse(fs.readFileSync(authFile, 'utf8'));
+    }
+    if (!auth.google) {
+      auth.google = "AIzaSyDummyKeyForProxyBypass1234567890";
+      fs.mkdirSync(path.dirname(authFile), { recursive: true });
+      fs.writeFileSync(authFile, JSON.stringify(auth, null, 2), 'utf8');
+      console.log("✅ Injected dummy Google API key into pi auth.json to bypass CLI validation.");
+    }
+  } catch (e) {
+    console.error("Warning: Failed to inject dummy auth key", e.message);
+  }
+}
+
 // ── OS Daemon Handlers ───────────────────────────────────────────────────
 
 const LOG_FILE = path.join(os.homedir(), '.pi-antigravity-rotator', 'proxy.log');
 
 function enableLinux() {
   writeLitellmConfig();
+  injectDummyAuth();
   const serviceDir = path.join(os.homedir(), '.config', 'systemd', 'user');
   
   // Pi Rotator Service
@@ -123,6 +142,7 @@ function disableLinux() {
 
 function enableMac() {
   writeLitellmConfig();
+  injectDummyAuth();
   const plistDir = path.join(os.homedir(), 'Library', 'LaunchAgents');
   
   let ExecStart = runCommandSilent('which pi-antigravity-rotator');
@@ -212,6 +232,7 @@ function disableMac() {
 
 function enableWindows() {
   writeLitellmConfig();
+  injectDummyAuth();
   const startupDir = path.join(process.env.APPDATA, 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup');
   const scriptPath = path.join(startupDir, 'ai-proxy.vbs');
   
