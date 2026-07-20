@@ -1,6 +1,6 @@
 {
   "name": "@darkrei08/wizard-ai-cli",
-  "version": "0.50.7",
+  "version": "0.50.8",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
