@@ -18,5 +18,5 @@ A deterministic, multi-agent orchestration framework initially built for Pi, but
 
 ## Integration:
 - Workflows are defined in `.wizard-ai/workflows/`.
-- Use the CLI wrapper `wizard-workflow run <file.yaml>` to execute.
+- Use the CLI wrapper `wz-ai-workflow run <file.yaml>` to execute.
 - In `02. loop-2-develop`, the Master of Department creates the `job.yaml` and executes it, aggregating the results before proceeding to TDD tests.
