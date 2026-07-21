@@ -14,10 +14,10 @@ Il testo del riassunto, passato anche tramite pipeline.
 Il testo del riassunto, se passato come argomento.
 
 .EXAMPLE
-wz-wz-ai-session-save "Il progetto è stato migrato a Next.js"
+wz-ai-session-save "Il progetto è stato migrato a Next.js"
 
 .EXAMPLE
-"Tutti i test passano. Prossimo step: login" | wz-wz-ai-session-save
+"Tutti i test passano. Prossimo step: login" | wz-ai-session-save
 #>
 [CmdletBinding()]
 param (
@@ -36,8 +36,8 @@ if ($InputObject) {
 } elseif ($Message) {
     $Content = $Message
 } else {
-    Write-Host "Usage: wz-wz-ai-session-save `"Il tuo riassunto della sessione...`"" -ForegroundColor Yellow
-    Write-Host "       `"Riassunto`" | wz-wz-ai-session-save" -ForegroundColor Yellow
+    Write-Host "Usage: wz-ai-session-save `"Il tuo riassunto della sessione...`"" -ForegroundColor Yellow
+    Write-Host "       `"Riassunto`" | wz-ai-session-save" -ForegroundColor Yellow
     exit 1
 }
 

@@ -1,22 +1,25 @@
 # Project Loops
 
-Questi loop sono stati generati e salvati tramite la skill **Loopy** per l'esecuzione autonoma e ripetibile di task nel progetto Wizard-AI.
+These loops were generated and saved via the **Loopy** skill for autonomous and repeatable execution of tasks in the Wizard-AI project.
+
+---
 
 ## 🔄 Autonomous Maintenance & Refactor Loop
-**Use when:** Il progetto accumula debito tecnico minore, dipendenze da aggiornare o necessita di una passata strutturale seguendo i principi di `04. loop-4-refactor`.
+
+**Use when:** The project accumulates minor technical debt, outdated dependencies, or requires a structural pass following the principles of `04. loop-4-refactor`.
 
 **Prompt:**
 ```text
-Analizza la codebase di Wizard-AI, cerca snippet duplicati, dipendenze CLI non allineate (in package.json o script bash) e ottimizza le dimensioni del contesto. Rimuovi YAGNI tramite la skill `ponytail`. Al termine, esegui la suite di test e salva un resoconto nel log. Ripeti l'azione per ogni macro-modulo in `skills/` e `bin/` finché non trovi più debito tecnico da consolidare.
+Analyze the Wizard-AI codebase, look for duplicated snippets, misaligned CLI dependencies (in package.json or bash scripts), and optimize the context size. Remove YAGNI using the `ponytail` skill. Once finished, run the test suite and save a report in the log. Repeat the action for each macro-module in `skills/` and `bin/` until no more technical debt can be consolidated.
 ```
 
 **Verify:**
-L'architettura è più coesa (minori linee di codice), nessun test fallisce, e non è stata rimossa alcuna funzionalità in produzione.
+The architecture is more cohesive (fewer lines of code), no tests fail, and no production functionality has been removed.
 
 **Steps:**
-1. **Discover:** Trova file duplicati o script Bash disallineati in `bin/`.
-2. **Refactor:** Consolida il codice rimuovendo astrazioni premature.
-3. **Verify:** Lancia l'intera suite di diagnostica o `auto-debug`.
-4. **Stop:** Ferma il loop quando 2 moduli consecutivi non mostrano miglioramenti o il linter è al 100% verde.
+1. **Discover:** Find duplicated files or misaligned Bash scripts in `bin/`.
+2. **Refactor:** Consolidate code by removing premature abstractions.
+3. **Verify:** Run the full diagnostics suite or `auto-debug`.
+4. **Stop:** Stop the loop when 2 consecutive modules show no improvements or the linter is 100% green.
 
 ---

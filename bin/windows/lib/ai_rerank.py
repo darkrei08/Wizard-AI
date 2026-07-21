@@ -1,5 +1,5 @@
 # ai_rerank.py — FlashRank passage reranker for RAG pipelines (CPU-optimized)
-# Windows companion of bin/wz-wz-ai-rerank (same CLI, Python extracted to a file).
+# Windows companion of bin/wz-ai-rerank (same CLI, Python extracted to a file).
 # Source: https://github.com/PrithivirajDamodaran/FlashRank
 import sys
 import json
@@ -11,20 +11,20 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        prog="wz-wz-ai-rerank",
+        prog="wz-ai-rerank",
         description="Re-rank passages/documents for RAG using FlashRank (fast, CPU-only)",
         epilog="""Examples:
   # Re-rank passages from a JSON file
-  wz-wz-ai-rerank --query "How does auth work?" --passages passages.json
+  wz-ai-rerank --query "How does auth work?" --passages passages.json
 
   # Pipe JSON passages: [{"id":0,"text":"..."},{"id":1,"text":"..."}]
-  echo "[{...}]" | wz-wz-ai-rerank --query "question" --top-k 3
+  echo "[{...}]" | wz-ai-rerank --query "question" --top-k 3
 
   # Compact output (just text, ranked)
-  wz-wz-ai-rerank --query "X" --passages docs.json --top-k 5 --compact
+  wz-ai-rerank --query "X" --passages docs.json --top-k 5 --compact
 
   # Full JSON with scores
-  wz-wz-ai-rerank --query "X" --passages docs.json --json
+  wz-ai-rerank --query "X" --passages docs.json --json
         """,
     )
     parser.add_argument(

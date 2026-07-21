@@ -1,5 +1,5 @@
 # ai_compress.py — LLMLingua prompt/context compressor (up to 20x token reduction)
-# Windows companion of bin/wz-wz-ai-compress (same CLI, Python extracted to a file).
+# Windows companion of bin/wz-ai-compress (same CLI, Python extracted to a file).
 # Source: https://github.com/microsoft/LLMLingua
 import sys
 
@@ -8,13 +8,13 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        prog="wz-wz-ai-compress",
+        prog="wz-ai-compress",
         description="Compress prompts/context for LLMs using LLMLingua (up to 20x reduction)",
         epilog="""Examples:
-  echo "Long prompt text..." | wz-wz-ai-compress --ratio 0.5
-  wz-wz-ai-compress --file long_context.txt --ratio 0.3 --output compressed.txt
-  wz-wz-ai-compress --file big_doc.txt --question "What is the auth flow?"
-  type codebase_dump.txt | wz-wz-ai-compress --ratio 0.4 --verbose
+  echo "Long prompt text..." | wz-ai-compress --ratio 0.5
+  wz-ai-compress --file long_context.txt --ratio 0.3 --output compressed.txt
+  wz-ai-compress --file big_doc.txt --question "What is the auth flow?"
+  type codebase_dump.txt | wz-ai-compress --ratio 0.4 --verbose
         """,
     )
     parser.add_argument(
@@ -50,7 +50,7 @@ def main():
 
     if args.verbose:
         words = len(text.split())
-        print(f"[wz-wz-ai-compress] Input: ~{words} words", file=sys.stderr)
+        print(f"[wz-ai-compress] Input: ~{words} words", file=sys.stderr)
 
     from llmlingua import PromptCompressor
 
@@ -70,7 +70,7 @@ def main():
         comp = result.get("compressed_tokens", "?")
         ratio = result.get("ratio", "?")
         print(
-            f"[wz-wz-ai-compress] {orig} -> {comp} tokens | Ratio: {ratio}x", file=sys.stderr
+            f"[wz-ai-compress] {orig} -> {comp} tokens | Ratio: {ratio}x", file=sys.stderr
         )
 
     if args.output:

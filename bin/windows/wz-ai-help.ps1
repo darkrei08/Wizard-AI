@@ -1,5 +1,5 @@
-# wz-wz-ai-help - Central hub for all AI tools and skills
-# Windows port of bin/wz-wz-ai-help
+# wz-ai-help - Central hub for all AI tools and skills
+# Windows port of bin/wz-ai-help
 # Shows all available AI CLI tools with descriptions and usage hints
 
 function Check-Cmd($Name) {
@@ -32,25 +32,25 @@ Write-Host ''
 
 Section 'KNOWLEDGE GRAPH'
 Tool (Check-Cmd graphify) 'graphify' 'Build knowledge graphs from any codebase/docs'
-Example 'wz-wz-ai-graph .                  -> Run Graphify on current directory'
+Example 'wz-ai-graph .                  -> Run Graphify on current directory'
 Example 'graphify query "how does X work?"'
 Write-Host ''
 
 Section 'TOKEN OPTIMIZATION'
-Tool (Check-Cmd wz-wz-ai-compress) 'wz-wz-ai-compress' 'Compress prompts/context up to 20x (LLMLingua)'
-Example 'wz-wz-ai-compress --file doc.txt --ratio 0.5'
+Tool (Check-Cmd wz-ai-compress) 'wz-ai-compress' 'Compress prompts/context up to 20x (LLMLingua)'
+Example 'wz-ai-compress --file doc.txt --ratio 0.5'
 Tool (Check-Cmd headroom) 'headroom' 'Context compression and API proxy (60-95% fewer tokens)'
 Example 'echo "large context" | headroom compress'
-Tool (Check-Cmd wz-wz-ai-caveman) 'wz-wz-ai-caveman' 'Cut agent output tokens by ~75% while keeping accuracy'
-Example 'wz-wz-ai-caveman --with-init'
-Tool (Check-Cmd wz-wz-ai-ponytail) 'wz-wz-ai-ponytail' 'Acts as a lazy senior dev to prevent over-engineering (YAGNI)'
-Example 'wz-wz-ai-ponytail "write a datepicker"'
-Tool (Check-Cmd wz-wz-ai-rerank) 'wz-wz-ai-rerank' 'Re-rank passages by relevance (FlashRank RAG)'
-Example 'wz-wz-ai-rerank --query "X" --passages docs.json'
+Tool (Check-Cmd wz-ai-caveman) 'wz-ai-caveman' 'Cut agent output tokens by ~75% while keeping accuracy'
+Example 'wz-ai-caveman --with-init'
+Tool (Check-Cmd wz-ai-ponytail) 'wz-ai-ponytail' 'Acts as a lazy senior dev to prevent over-engineering (YAGNI)'
+Example 'wz-ai-ponytail "write a datepicker"'
+Tool (Check-Cmd wz-ai-rerank) 'wz-ai-rerank' 'Re-rank passages by relevance (FlashRank RAG)'
+Example 'wz-ai-rerank --query "X" --passages docs.json'
 Tool (Check-Cmd sqz) 'sqz' 'Compress CLI output / JSON / logs'
-Example 'command | wz-wz-ai-squeeze'
+Example 'command | wz-ai-squeeze'
 Tool (Check-Cmd markitdown) 'markitdown' 'Convert any file to Markdown for LLM ingestion'
-Example 'wz-wz-ai-convert document.pdf'
+Example 'wz-ai-convert document.pdf'
 Write-Host ''
 
 Section 'LLM GATEWAY'
@@ -59,20 +59,20 @@ Example 'litellm --model gemini/gemini-2.0-flash --port 4000'
 Write-Host ''
 
 Section 'USAGE & MONITORING'
-Tool (Check-Cmd wz-wz-ai-usage) 'wz-wz-ai-usage' 'Track Gemini CLI token/context usage'
-Example 'wz-wz-ai-usage'
+Tool (Check-Cmd wz-ai-usage) 'wz-ai-usage' 'Track Gemini CLI token/context usage'
+Example 'wz-ai-usage'
 Write-Host ''
 
 Section 'MEMORY & CONTEXT'
-Tool (Check-Cmd wz-wz-ai-session-save) 'wz-wz-ai-session-save' 'Save current session context to MEMORY.md'
-Example 'wz-wz-ai-session-save "completed feature X"'
+Tool (Check-Cmd wz-ai-session-save) 'wz-ai-session-save' 'Save current session context to MEMORY.md'
+Example 'wz-ai-session-save "completed feature X"'
 if (Test-Path (Join-Path $HOME '.wizard-ai\claude-mem')) {
     Tool '[OK]' 'claude-mem' 'Persistent semantic memory across sessions'
 } else {
     Tool '[--]' 'claude-mem' 'Persistent semantic memory (not installed)'
 }
-Example 'wz-wz-ai-mem store "user prefers Python"'
-Example 'wz-wz-ai-mem search "tech preferences"'
+Example 'wz-ai-mem store "user prefers Python"'
+Example 'wz-ai-mem search "tech preferences"'
 Write-Host ''
 
 Section 'CODE INTELLIGENCE'
@@ -121,6 +121,6 @@ Write-Host ('Skills directory: {0}\.gemini\config\skills' -f $HOME)
 Write-Host ('Tools directory:  {0}\.wizard-ai' -f $HOME)
 Write-Host ('CLIs:             {0}\.local\bin' -f $HOME)
 Write-Host ''
-Write-Host 'Tip: all tools work as pipes -> cmd | wz-wz-ai-compress | wz-wz-ai-rerank' -ForegroundColor Cyan
+Write-Host 'Tip: all tools work as pipes -> cmd | wz-ai-compress | wz-ai-rerank' -ForegroundColor Cyan
 Write-Host ''
 

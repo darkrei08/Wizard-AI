@@ -1,5 +1,5 @@
-# wz-wz-ai-lean — Lean Context Intelligence wrapper
-# Windows port of bin/wz-wz-ai-lean
+# wz-ai-lean — Lean Context Intelligence wrapper
+# Windows port of bin/wz-ai-lean
 # Source: https://github.com/yvgude/lean-ctx
 
 $Lean = $null
@@ -18,13 +18,13 @@ if (-not $Lean) {
 }
 
 if ($args.Count -eq 0 -and -not $MyInvocation.ExpectingInput -and -not [Console]::IsInputRedirected) {
-    Write-Host 'wz-wz-ai-lean — Lean Context Intelligence'
+    Write-Host 'wz-ai-lean — Lean Context Intelligence'
     Write-Host ''
     Write-Host 'Usage:'
-    Write-Host '  wz-wz-ai-lean setup'
-    Write-Host '  wz-wz-ai-lean status'
-    Write-Host '  wz-wz-ai-lean read <file> [mode]'
-    Write-Host '  wz-wz-ai-lean benchmark'
+    Write-Host '  wz-ai-lean setup'
+    Write-Host '  wz-ai-lean status'
+    Write-Host '  wz-ai-lean read <file> [mode]'
+    Write-Host '  wz-ai-lean benchmark'
     exit 0
 }
 

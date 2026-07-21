@@ -1,5 +1,5 @@
-﻿# wz-wz-ai-convert — markitdown wrapper for converting files to Markdown
-# Windows port of bin/wz-wz-ai-convert
+﻿# wz-ai-convert — markitdown wrapper for converting files to Markdown
+# Windows port of bin/wz-ai-convert
 # Source: https://github.com/microsoft/markitdown
 
 $Md = $null
@@ -17,13 +17,13 @@ if (-not $Md) {
 }
 
 if ($args.Count -eq 0) {
-    Write-Host 'wz-wz-ai-convert — Convert any file to Markdown for LLM ingestion'
+    Write-Host 'wz-ai-convert — Convert any file to Markdown for LLM ingestion'
     Write-Host ''
     Write-Host 'Usage:'
-    Write-Host '  wz-wz-ai-convert <file>              Convert file to Markdown (stdout)'
-    Write-Host '  wz-wz-ai-convert <file> -o out.md    Save to file'
-    Write-Host '  wz-wz-ai-convert <url>               Convert URL to Markdown'
-    Write-Host '  wz-wz-ai-convert *.pdf               Convert multiple files'
+    Write-Host '  wz-ai-convert <file>              Convert file to Markdown (stdout)'
+    Write-Host '  wz-ai-convert <file> -o out.md    Save to file'
+    Write-Host '  wz-ai-convert <url>               Convert URL to Markdown'
+    Write-Host '  wz-ai-convert *.pdf               Convert multiple files'
     Write-Host ''
     Write-Host 'Supported formats:'
     Write-Host '  Documents: PDF, DOCX, PPTX, XLSX, ODT, EPUB'
@@ -34,9 +34,9 @@ if ($args.Count -eq 0) {
     Write-Host '  Archives:  ZIP (recursive conversion)'
     Write-Host ''
     Write-Host 'Examples:'
-    Write-Host '  wz-wz-ai-convert report.pdf > report.md'
-    Write-Host '  wz-wz-ai-convert https://docs.example.com/api'
-    Write-Host '  wz-wz-ai-convert presentation.pptx -o slides.md'
+    Write-Host '  wz-ai-convert report.pdf > report.md'
+    Write-Host '  wz-ai-convert https://docs.example.com/api'
+    Write-Host '  wz-ai-convert presentation.pptx -o slides.md'
     exit 0
 }
 

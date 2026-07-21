@@ -1,5 +1,5 @@
-﻿# wz-wz-ai-mem — Persistent semantic memory for LLM sessions (claude-mem)
-# Windows port of bin/wz-wz-ai-mem
+﻿# wz-ai-mem — Persistent semantic memory for LLM sessions (claude-mem)
+# Windows port of bin/wz-ai-mem
 # Source: https://github.com/thedotmack/claude-mem
 
 $MemDir = Join-Path $HOME '.wizard-ai\claude-mem'
@@ -14,22 +14,22 @@ if (-not (Test-Path $MemDir)) {
 $null = New-Item -ItemType Directory -Force -Path $MemStore
 
 function Show-Help {
-    Write-Host 'wz-wz-ai-mem — Persistent semantic memory across AI sessions'
+    Write-Host 'wz-ai-mem — Persistent semantic memory across AI sessions'
     Write-Host ''
     Write-Host 'Usage:'
-    Write-Host '  wz-wz-ai-mem store <text>          Store a memory'
-    Write-Host '  wz-wz-ai-mem store --tag X <text>  Store with a tag'
-    Write-Host '  wz-wz-ai-mem search <query>        Semantic search memories'
-    Write-Host '  wz-wz-ai-mem list [--tag X]        List all memories'
-    Write-Host '  wz-wz-ai-mem delete <id>           Delete a memory'
-    Write-Host '  wz-wz-ai-mem export [file.json]    Export all memories'
-    Write-Host '  wz-wz-ai-mem import <file.json>    Import memories'
+    Write-Host '  wz-ai-mem store <text>          Store a memory'
+    Write-Host '  wz-ai-mem store --tag X <text>  Store with a tag'
+    Write-Host '  wz-ai-mem search <query>        Semantic search memories'
+    Write-Host '  wz-ai-mem list [--tag X]        List all memories'
+    Write-Host '  wz-ai-mem delete <id>           Delete a memory'
+    Write-Host '  wz-ai-mem export [file.json]    Export all memories'
+    Write-Host '  wz-ai-mem import <file.json>    Import memories'
     Write-Host ''
     Write-Host 'Examples:'
-    Write-Host '  wz-wz-ai-mem store "User prefers Python over JavaScript"'
-    Write-Host '  wz-wz-ai-mem store --tag project "Uses PostgreSQL 16 and Redis 7"'
-    Write-Host '  wz-wz-ai-mem search "technology stack"'
-    Write-Host '  wz-wz-ai-mem list --tag project'
+    Write-Host '  wz-ai-mem store "User prefers Python over JavaScript"'
+    Write-Host '  wz-ai-mem store --tag project "Uses PostgreSQL 16 and Redis 7"'
+    Write-Host '  wz-ai-mem search "technology stack"'
+    Write-Host '  wz-ai-mem list --tag project'
 }
 
 if ($args.Count -eq 0) {

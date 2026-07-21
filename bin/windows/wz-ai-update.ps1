@@ -1,4 +1,4 @@
-# wz-wz-ai-update.ps1 — Automates the update process for Wizard-AI and external skills.
+# wz-ai-update.ps1 — Automates the update process for Wizard-AI and external skills.
 
 param (
     [switch]$Quiet
@@ -81,7 +81,7 @@ if (Get-Command uv -ErrorAction SilentlyContinue) {
     }
 }
 
-$SyncScript = Join-Path $HOME '.local\bin\wz-wz-ai-sync-skills.ps1'
+$SyncScript = Join-Path $HOME '.local\bin\wz-ai-sync-skills.ps1'
 if (Test-Path $SyncScript) {
     Log "`n🔄 Syncing agent skills..." "Blue"
     & $SyncScript | Out-Null
