@@ -56,3 +56,7 @@
 ## [Session State Snapshot] - 2026-07-20 19:33:10
 Rilasciata versione: implementato loopy, autonomous refactoring loop e fix test suite vitest
 
+
+## [Session State Snapshot] - 2026-07-21 13:33:29
+Fixed headroom-ai proxy crash by reinstalling uv and headroom-ai with missing fastapi and uvicorn dependencies.
+
