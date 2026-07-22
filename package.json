@@ -1,6 +1,6 @@
 {
   "name": "@darkrei08/wizard-ai-cli",
-  "version": "0.50.47",
+  "version": "0.50.48",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
@@ -16,8 +16,6 @@
     "ai-test": "./scripts/wizard-test.js",
     "wz-ai-context": "./scripts/wz-ai-context.js"
   },
-
-
   "files": [
     "cli.js",
     "index.js",
