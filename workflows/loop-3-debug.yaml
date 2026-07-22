@@ -1,0 +1,49 @@
+name: loop-3-debug
+description: >
+  Loop 3 (Debug & Verify) workflow using pi-extensible-workflows.
+  Diagnoses root cause, implements minimal fix, verifies regression suite.
+  Phases: diagnose → fix-and-test → verify-gate → handoff or escalate.
+
+trigger:
+  loop: "03. loop-3-debug"
+  complexity: [LIGHT, MEDIUM, HEAVY]
+  keywords:
+    - bug
+    - error
+    - fails
+    - broken
+    - debug
+    - diagnose
+    - investigate
+    - not working
+    - exception
+    - crash
+
+roles_used:
+  - master-debug
+  - worker-generic
+
+primitives_used:
+  - agent
+  - checkpoint
+  - prompt
+  - phase
+  - log
+
+phases:
+  - name: diagnose
+    description: Isolate root cause from error log, stack trace, or failure description
+  - name: fix-and-test
+    description: Implement minimal root-cause fix and verify regression test suite
+  - name: verify-gate
+    description: Human checkpoint to confirm fix quality before merging
+  - name: handoff
+    description: Pass verified fix to Loop 4 (refactor) or Loop 5 (release)
+
+budget:
+  soft_limit:
+    tokens: 300000
+    agent_launches: 8
+  hard_limit:
+    tokens: 700000
+    agent_launches: 15

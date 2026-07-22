@@ -6,11 +6,11 @@
       "description": "Standalone multi-agent harnesses, execution engines, and orchestrators",
       "repos": [
         { "name": "earendil-pi", "url": "https://github.com/earendil-works/pi.git", "desc": "Pi Agent Framework" },
-        { "name": "ECC", "url": "https://github.com/affaan-m/ECC.git", "desc": "Enhanced Claude Code" },
+        { "name": "ecc", "url": "https://github.com/affaan-m/ECC.git", "desc": "Enhanced Claude Code" },
         { "name": "caveman", "url": "https://github.com/JuliusBrussee/caveman.git", "desc": "Caveman behavioral compression" },
         { "name": "goodcode", "url": "https://github.com/SpinaBuilds/goodcode.git", "desc": "Multi-agent orchestration" },
         { "name": "openhuman", "url": "https://github.com/tinyhumansai/openhuman.git", "desc": "OpenHuman agent harness" },
-        { "name": "QwenPaw", "url": "https://github.com/agentscope-ai/QwenPaw.git", "desc": "QwenPaw agent scope" },
+        { "name": "qwenpaw", "url": "https://github.com/agentscope-ai/QwenPaw.git", "desc": "QwenPaw agent scope" },
         { "name": "syke", "url": "https://github.com/saxenauts/syke.git", "desc": "Syke autonomous agent" },
         { "name": "mem0", "url": "https://github.com/mem0ai/mem0.git", "desc": "Mem0 persistent memory" },
         { "name": "personal-graph", "url": "https://github.com/Technoculture/personal-graph.git", "desc": "Personal knowledge graph" }
@@ -22,8 +22,8 @@
       "description": "Binary command-line utilities, LSP servers, and token context squeezers",
       "repos": [
         { "name": "sqz", "url": "https://github.com/ojuschugh1/sqz.git", "desc": "Token compression CLI" },
-        { "name": "LLMLingua", "url": "https://github.com/microsoft/LLMLingua.git", "desc": "Prompt compression (Microsoft)" },
-        { "name": "FlashRank", "url": "https://github.com/PrithivirajDamodaran/FlashRank.git", "desc": "Document re-ranking" },
+        { "name": "llmlingua", "url": "https://github.com/microsoft/LLMLingua.git", "desc": "Prompt compression (Microsoft)" },
+        { "name": "flashrank", "url": "https://github.com/PrithivirajDamodaran/FlashRank.git", "desc": "Document re-ranking" },
         { "name": "serena", "url": "https://github.com/oraios/serena.git", "desc": "Semantic code intelligence" },
         { "name": "graphify", "url": "https://github.com/safishamsi/graphify.git", "desc": "Knowledge graph builder" },
         { "name": "claude-mem", "url": "https://github.com/thedotmack/claude-mem.git", "desc": "Persistent LLM memory" },
@@ -54,13 +54,35 @@
         { "name": "claude-seo", "url": "https://github.com/AgriciDaniel/claude-seo.git", "desc": "SEO analysis plugin" }
       ]
     },
+    "memory-knowledge": {
+      "name": "🧠 Memory, Context & Knowledge Graph",
+      "badge": "[MEMORY]",
+      "description": "Persistent memory engines, vector stores, context pruning, and knowledge graph tools",
+      "repos": [
+        { "name": "engram", "url": "https://github.com/koalazub/engram.git", "desc": "SQLite-backed agent memory" },
+        { "name": "turbovec", "url": "https://github.com/RyanCodrai/turbovec.git", "desc": "TurboVec vector DB" },
+        { "name": "zvec", "url": "https://github.com/alibaba/zvec.git", "desc": "ZVec vector DB" },
+        { "name": "headroom", "url": "https://github.com/chopratejas/headroom.git", "desc": "Headroom context proxy" }
+      ]
+    },
+    "frontend-frameworks": {
+      "name": "🎨 Frontend Frameworks & UI Toolkits",
+      "badge": "[FRONTEND]",
+      "description": "Web and mobile frontend frameworks, design systems, and UI libraries",
+      "repos": [
+        { "name": "aionui", "url": "https://github.com/iOfficeAI/AionUi.git", "desc": "AionUI desktop harness" },
+        { "name": "phantom-ui", "url": "https://github.com/Aejkatappaja/phantom-ui.git", "desc": "Phantom UI components" },
+        { "name": "mengto-skills", "url": "https://github.com/MengTo/Skills.git", "desc": "MengTo UI/UX design skills" },
+        { "name": "infographic", "url": "https://github.com/antvis/Infographic.git", "desc": "Infographic generator" },
+        { "name": "kinetics-ui", "url": "https://github.com/ckissi/kinetics.git", "desc": "Spring-physics micro-interactions" },
+        { "name": "easy-vibe", "url": "https://github.com/datawhalechina/easy-vibe.git", "desc": "Easy Vibe multi-modal" }
+      ]
+    },
     "graphical-and-services": {
       "name": "🖥️ Graphical Apps, Desktop & Media Services",
       "badge": "[DESKTOP / SERVICE]",
       "description": "Desktop UI harnesses, audio/video studios, realtime DBs, and API bridges",
       "repos": [
-        { "name": "aionui", "url": "https://github.com/iOfficeAI/AionUi.git", "desc": "AionUI desktop harness" },
-        { "name": "phantom-ui", "url": "https://github.com/Aejkatappaja/phantom-ui.git", "desc": "Phantom UI desktop" },
         { "name": "voicebox", "url": "https://github.com/jamiepine/voicebox.git", "desc": "Voicebox audio processor" },
         { "name": "omnivoice-studio", "url": "https://github.com/debpalash/OmniVoice-Studio.git", "desc": "OmniVoice Studio" },
         { "name": "supertonic", "url": "https://github.com/supertone-inc/supertonic.git", "desc": "Supertonic audio tools" },
@@ -68,15 +90,10 @@
         { "name": "wslens", "url": "https://github.com/vekexasia/wslens.git", "desc": "WSLens GUI backend" },
         { "name": "pocketbase", "url": "https://github.com/pocketbase/pocketbase.git", "desc": "PocketBase realtime DB" },
         { "name": "trailbase", "url": "https://github.com/trailbaseio/trailbase.git", "desc": "TrailBase realtime DB" },
-        { "name": "zvec", "url": "https://github.com/alibaba/zvec.git", "desc": "ZVec vector DB" },
-        { "name": "turbovec", "url": "https://github.com/RyanCodrai/turbovec.git", "desc": "TurboVec vector DB" },
         { "name": "go-whatsapp", "url": "https://github.com/aldinokemal/go-whatsapp-web-multidevice.git", "desc": "WhatsApp REST bridge" },
         { "name": "wuzapi", "url": "https://github.com/asternic/wuzapi.git", "desc": "WuzAPI WhatsApp REST" },
         { "name": "openwa", "url": "https://github.com/rmyndharis/OpenWA.git", "desc": "OpenWA WebSocket engine" },
-        { "name": "cockpit-tools", "url": "https://github.com/jlcodes99/cockpit-tools.git", "desc": "Cockpit local proxy" },
-        { "name": "Infographic", "url": "https://github.com/antvis/Infographic.git", "desc": "Infographic generator" },
-        { "name": "headroom", "url": "https://github.com/chopratejas/headroom.git", "desc": "Headroom context proxy" },
-        { "name": "easy-vibe", "url": "https://github.com/datawhalechina/easy-vibe.git", "desc": "Easy Vibe multi-modal CLI" }
+        { "name": "cockpit-tools", "url": "https://github.com/jlcodes99/cockpit-tools.git", "desc": "Cockpit local proxy" }
       ]
     },
     "starter-templates": {

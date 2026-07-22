@@ -1,0 +1,49 @@
+name: loop-4-refactor
+description: >
+  Loop 4 (Refactor & Optimize) workflow using pi-extensible-workflows.
+  Parallel AST cleanup and token optimization. Removes YAGNI code.
+  Phases: analyze-tech-debt → parallel(ast-cleanup + token-optimization) → verify → handoff.
+
+trigger:
+  loop: "04. loop-4-refactor"
+  complexity: [MEDIUM, HEAVY]
+  keywords:
+    - refactor
+    - clean up
+    - optimize
+    - reduce tokens
+    - tech debt
+    - ddd
+    - restructure
+    - dead code
+    - simplify
+
+roles_used:
+  - master-refactor
+  - worker-generic
+
+primitives_used:
+  - parallel
+  - agent
+  - checkpoint
+  - prompt
+  - phase
+  - log
+
+phases:
+  - name: analyze-tech-debt
+    description: Scan AST for duplication, YAGNI code, and token reduction opportunities
+  - name: execute-refactor
+    description: Parallel fan-out — ast-cleanup and token-optimization run simultaneously
+  - name: verify
+    description: Human checkpoint to approve refactored modules
+  - name: handoff
+    description: Pass clean codebase to Loop 5 (release)
+
+budget:
+  soft_limit:
+    tokens: 400000
+    agent_launches: 8
+  hard_limit:
+    tokens: 800000
+    agent_launches: 16

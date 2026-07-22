@@ -224,11 +224,167 @@ async function runRemoveSkills(selectedRepos) {
   nodeEnd("Done! Selected repositories removed successfully.");
 }
 
+// Agent targets for URL-based skill install (mirrors `npx skills` convention)
+const os = require("os");
+const AGENT_TARGETS_UNIVERSAL = [
+  { name: "Amp",            path: path.join(os.homedir(), ".config", "amp", "skills") },
+  { name: "Antigravity",    path: path.join(os.homedir(), ".antigravity", "skills") },
+  { name: "Antigravity CLI",path: path.join(os.homedir(), ".config", "antigravity", "skills") },
+  { name: "Claude Code",    path: path.join(os.homedir(), ".claude", "skills") },
+  { name: "Cline",          path: path.join(os.homedir(), ".cline", "skills") },
+  { name: "Codex",          path: path.join(os.homedir(), ".codex", "skills") },
+  { name: "Cursor",         path: path.join(os.homedir(), ".cursor", "skills") },
+  { name: "Deep Agents",    path: path.join(os.homedir(), ".deep-agents", "skills") },
+  { name: "Gemini CLI",     path: path.join(os.homedir(), ".gemini", "config", "skills") },
+  { name: "GitHub Copilot", path: path.join(os.homedir(), ".github-copilot", "skills") },
+  { name: "Kimi Code CLI",  path: path.join(os.homedir(), ".kimi", "skills") },
+  { name: "OpenCode",       path: path.join(os.homedir(), ".opencode", "skills") },
+  { name: "Pi",             path: path.join(os.homedir(), ".pi", "agent", "skills") },
+  { name: "Warp",           path: path.join(os.homedir(), ".warp", "skills") },
+  { name: "Windsurf",       path: path.join(os.homedir(), ".windsurf", "skills") },
+  { name: "Zed",            path: path.join(os.homedir(), ".config", "zed", "skills") },
+];
+const AGENT_TARGETS_ADDITIONAL = [
+  { name: "AiderDesk",      path: path.join(os.homedir(), ".aider-desk", "skills") },
+  { name: "Augment",        path: path.join(os.homedir(), ".augment", "skills") },
+  { name: "Aider",          path: path.join(os.homedir(), ".aider", "skills") },
+];
+
+async function runUrlInstall(repoUrl, skillFilter, allAgents) {
+  const tmpDir = path.join(os.tmpdir(), `wz-ai-skill-${Date.now()}`);
+  const repoName = repoUrl.replace(/\.git$/, "").split("/").pop();
+
+  nodeStart(`Wizard-AI Skill Install from URL`);
+  nodeStep(`Source: ${repoUrl}`);
+
+  // Clone to temp
+  nodeAction(`Cloning ${repoName}...`);
+  const cloneStatus = spawnSync("git", ["clone", "--depth", "1", repoUrl, tmpDir], { stdio: "ignore" });
+  if (cloneStatus.status !== 0) {
+    console.error(`${RED}[ERROR] git clone failed for ${repoUrl}${RESET}`);
+    return;
+  }
+
+  // Find SKILL.md files
+  function findSkillDirs(dir, filter) {
+    const results = [];
+    function walk(current) {
+      let entries;
+      try { entries = fs.readdirSync(current); } catch { return; }
+      for (const entry of entries) {
+        const full = path.join(current, entry);
+        let stat;
+        try { stat = fs.statSync(full); } catch { continue; }
+        if (stat.isDirectory()) {
+          if (fs.existsSync(path.join(full, "SKILL.md"))) {
+            if (!filter || entry.toLowerCase() === filter.toLowerCase()) {
+              results.push({ name: entry, dir: full });
+            }
+          } else {
+            walk(full);
+          }
+        }
+      }
+    }
+    // Also check root SKILL.md
+    if (fs.existsSync(path.join(dir, "SKILL.md"))) {
+      if (!filter || repoName.toLowerCase() === filter.toLowerCase()) {
+        results.push({ name: repoName, dir });
+      }
+    }
+    walk(dir);
+    return results;
+  }
+
+  const skills = findSkillDirs(tmpDir, skillFilter);
+  if (skills.length === 0) {
+    const msg = skillFilter ? `Skill '${skillFilter}' not found in ${repoName}` : `No SKILL.md found in ${repoName}`;
+    console.error(`${RED}[ERROR] ${msg}${RESET}`);
+    try { fs.rmSync(tmpDir, { recursive: true, force: true }); } catch {}
+    return;
+  }
+
+  nodeStep(`Found ${skills.length} skill${skills.length > 1 ? "s" : ""}: ${skills.map(s => s.name).join(", ")}`);
+
+  // Determine target agents
+  let selectedAgents;
+  if (allAgents) {
+    selectedAgents = AGENT_TARGETS_UNIVERSAL;
+  } else if (!process.stdin.isTTY) {
+    selectedAgents = AGENT_TARGETS_UNIVERSAL;
+  } else {
+    // Interactive agent selector
+    const rl2 = readline.createInterface({ input: process.stdin, output: process.stdout });
+    console.log(`${CYAN}│${RESET}`);
+    console.log(`${CYAN}◇  ${BOLD}Select agents (Universal always included):${RESET}`);
+    AGENT_TARGETS_ADDITIONAL.forEach((a, i) => {
+      console.log(`${CYAN}│${RESET}    [${i + 1}] ${BOLD}${a.name}${RESET} ${DIM}(${a.path})${RESET}`);
+    });
+    console.log(`${CYAN}│${RESET}    [enter] skip additional`);
+    const ans = (await promptQuestion(rl2, `${CYAN}◇  Additional agents > ${RESET}`)).trim();
+    rl2.close();
+    const extra = [];
+    if (ans && ans.toLowerCase() !== "" ) {
+      ans.split(",").forEach(tok => {
+        const idx = parseInt(tok.trim(), 10) - 1;
+        if (idx >= 0 && idx < AGENT_TARGETS_ADDITIONAL.length) extra.push(AGENT_TARGETS_ADDITIONAL[idx]);
+      });
+    }
+    selectedAgents = [...AGENT_TARGETS_UNIVERSAL, ...extra];
+  }
+
+  // Universal .agents/skills always included
+  const universalAgentsDir = path.join(os.homedir(), ".agents", "skills");
+  const agentDirs = [{ name: "Universal (.agents/skills)", path: universalAgentsDir }, ...selectedAgents];
+
+  nodeAction(`Installing ${skills.length} skill(s) to ${agentDirs.length} agent target(s)...`);
+
+  const summaryLines = [];
+  for (const skill of skills) {
+    for (const agent of agentDirs) {
+      const dest = path.join(agent.path, skill.name);
+      try {
+        fs.mkdirSync(dest, { recursive: true });
+        // Copy all files from skill dir
+        const copyAll = (src, dst) => {
+          for (const f of fs.readdirSync(src)) {
+            const s = path.join(src, f), d = path.join(dst, f);
+            if (fs.statSync(s).isDirectory()) { fs.mkdirSync(d, { recursive: true }); copyAll(s, d); }
+            else fs.copyFileSync(s, d);
+          }
+        };
+        copyAll(skill.dir, dest);
+        summaryLines.push(`  ${GREEN}✓${RESET} ${BOLD}${skill.name}${RESET} ${DIM}→ ${dest}${RESET}`);
+      } catch (e) {
+        summaryLines.push(`  ${RED}✗${RESET} ${skill.name} → ${dest}: ${e.message}`);
+      }
+    }
+  }
+
+  boxPanel("Install Summary", summaryLines, 80);
+
+  // Cleanup temp
+  try { fs.rmSync(tmpDir, { recursive: true, force: true }); } catch {}
+
+  nodeEnd(`Done! ${skills.length} skill(s) installed to ${agentDirs.length} agents.`);
+}
+
 async function main() {
   printLogo();
 
   // Handle command line mode e.g. add / remove
   const cmd = args[0];
+
+  // URL-based install: `wizard-ai add https://github.com/org/repo [--skill name] [--all-agents]`
+  if (cmd === "add" && args[1] && (args[1].startsWith("https://") || args[1].startsWith("git@"))) {
+    const repoUrl = args[1];
+    const skillIdx = args.indexOf("--skill");
+    const skillFilter = skillIdx !== -1 ? args[skillIdx + 1] : null;
+    const allAgents = args.includes("--all-agents") || args.includes("-a");
+    await runUrlInstall(repoUrl, skillFilter, allAgents);
+    return;
+  }
+
   if (cmd === "remove" || cmd === "delete") {
     const installed = ALL_REPOS.filter(r => fs.existsSync(path.join(process.env.WIZARD_AI_DIR || path.join(require("os").homedir(), ".wizard-ai"), r.name)));
     if (installed.length === 0) {

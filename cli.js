@@ -39,10 +39,18 @@ if (subcmd === "--help" || subcmd === "-h") {
   console.log("Commands:");
   console.log("  (default/skills) Launch interactive skills & framework manager");
   console.log("  setup            Clone & run full platform environment installer");
-  console.log("  install          Install skills by category");
+  console.log("  add <url>        Install skill(s) from a GitHub repo URL");
+  console.log("  install          Install skills by category from registry");
   console.log("  remove           Remove installed skills");
   console.log("  test             Run wizard-test suite");
   console.log("  proxy            Start wz-ai-proxy");
+  console.log("\nURL Install Flags:");
+  console.log("  --skill <name>   Install only the named skill from the repo");
+  console.log("  --all-agents     Install to all known agent paths without prompting");
+  console.log("\nExamples:");
+  console.log("  npx wizard-ai add https://github.com/org/repo");
+  console.log("  npx wizard-ai add https://github.com/org/repo --skill find-skills");
+  console.log("  npx wizard-ai add https://github.com/org/repo --skill caveman --all-agents");
   console.log("\nFlags:");
   console.log("  --sudo           Escalate setup.sh to sudo (if needed)");
   console.log("  --verbose        Verbose output");
@@ -64,7 +72,9 @@ if (subcmd === "proxy") {
 if (!subcmd || subcmd === "skills" || subcmd === "install" || subcmd === "add" || subcmd === "remove" || subcmd === "delete") {
   const installerScript = path.join(__dirname, "scripts", "wizard-installer.js");
   if (fs.existsSync(installerScript)) {
-    const status = run("node", [installerScript, ...process.argv.slice(!subcmd ? 2 : 3)]);
+    // Pass all args including URL and --skill flag when doing URL-based install
+    const installerArgs = !subcmd ? process.argv.slice(2) : process.argv.slice(2);
+    const status = run("node", [installerScript, ...installerArgs]);
     process.exit(status === null ? 1 : status);
   }
 }

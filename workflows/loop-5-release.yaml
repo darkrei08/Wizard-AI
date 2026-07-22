@@ -1,0 +1,55 @@
+name: loop-5-release
+description: >
+  Loop 5 (Release & Learn) workflow using pi-extensible-workflows.
+  Parallel SemVer bump + knowledge graph sync + MEMORY.md persistence.
+  Phases: verify-release-readiness → parallel(git-tag + graph-sync) → confirm → publish.
+
+trigger:
+  loop: "05. loop-5-release"
+  complexity: [LIGHT, MEDIUM]
+  keywords:
+    - release
+    - publish
+    - merge
+    - deploy
+    - bump version
+    - handoff
+    - ship
+    - tag
+    - changelog
+
+roles_used:
+  - orchestrator
+  - worker-generic
+
+primitives_used:
+  - parallel
+  - agent
+  - checkpoint
+  - prompt
+  - phase
+  - log
+
+phases:
+  - name: verify-release-readiness
+    description: Confirm changelog items, tests pass, and determine SemVer bump type
+  - name: execute-release
+    description: Parallel — git tag + CHANGELOG update + graph update + MEMORY.md sync
+  - name: confirm-publish
+    description: Human checkpoint to approve npm publish / GitHub release
+  - name: post-release
+    description: Run wz-ai-graph update and ai-session-save for persistent memory
+
+post_gates:
+  - cmd: "wz-ai-graph . --update"
+    desc: Refresh code relationship map in graphify-out/
+  - cmd: "wz-ai-session-save"
+    desc: Persist session state to MEMORY.md
+
+budget:
+  soft_limit:
+    tokens: 200000
+    agent_launches: 6
+  hard_limit:
+    tokens: 400000
+    agent_launches: 12

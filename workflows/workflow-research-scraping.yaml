@@ -1,0 +1,44 @@
+name: workflow-research-scraping
+description: >
+  Research & Web Scraping workflow. Parallel source analysis across Reddit,
+  X, HN, GitHub, YouTube. Produces structured market pulse report.
+  Chains last30days + sqz + graphify for knowledge graph ingestion.
+
+trigger:
+  keywords:
+    - research
+    - what do people say
+    - market pulse
+    - trending
+    - scrape
+    - last 30 days
+    - web research
+
+roles_used:
+  - worker-generic
+  - orchestrator
+
+primitives_used:
+  - parallel
+  - agent
+  - prompt
+  - phase
+  - log
+
+phases:
+  - name: define-query
+    description: Parse research topic, define sources and date range
+  - name: parallel-scrape
+    description: Fan-out across Reddit, X, HN, GitHub, YouTube simultaneously
+  - name: synthesize
+    description: Merge and de-duplicate findings, score by relevance (flashrank)
+  - name: persist
+    description: Ingest synthesis into graphify knowledge graph
+
+budget:
+  soft_limit:
+    tokens: 400000
+    agent_launches: 10
+  hard_limit:
+    tokens: 800000
+    agent_launches: 20

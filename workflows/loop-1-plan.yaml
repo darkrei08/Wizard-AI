@@ -1,0 +1,47 @@
+name: loop-1-plan
+description: >
+  Loop 1 (Plan & Spec) workflow using pi-extensible-workflows.
+  Explores user intent, generates requirements, produces formal spec doc.
+  Phases: brainstorm → spec-alignment checkpoint → generate-spec → handoff to Loop 2.
+
+trigger:
+  loop: "01. loop-1-plan"
+  complexity: [LIGHT, MEDIUM, HEAVY]
+  keywords:
+    - plan
+    - design
+    - requirements
+    - spec
+    - architecture
+    - new feature
+    - what should
+    - how should
+
+roles_used:
+  - master-plan
+  - orchestrator
+
+primitives_used:
+  - agent
+  - checkpoint
+  - prompt
+  - phase
+  - log
+
+phases:
+  - name: brainstorm
+    description: Explore user intent, background context, and architectural options
+  - name: grill-alignment
+    description: Human checkpoint to validate design direction before spec generation
+  - name: generate-spec
+    description: Produce formal .spec.md with task breakdown and acceptance criteria
+  - name: handoff-to-develop
+    description: Pass spec to Loop 2 (develop) for implementation
+
+budget:
+  soft_limit:
+    tokens: 200000
+    agent_launches: 5
+  hard_limit:
+    tokens: 500000
+    agent_launches: 10

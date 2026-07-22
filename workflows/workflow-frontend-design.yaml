@@ -1,0 +1,41 @@
+name: workflow-frontend-design
+description: >
+  Frontend Design Aesthetics workflow. Scrapes UI, extracts design tokens,
+  chains brand-guidelines + theme-factory + awesome-design + taste-skill.
+  Produces DESIGN.md and styled components for any web framework.
+
+trigger:
+  keywords:
+    - design UI
+    - frontend design
+    - landing page
+    - redesign
+    - design system
+    - tailwind
+    - component library
+
+roles_used:
+  - worker-generic
+
+primitives_used:
+  - parallel
+  - agent
+  - prompt
+  - phase
+  - log
+
+phases:
+  - name: extract-design-context
+    description: Scrape existing UI or parse design brief into structured tokens
+  - name: generate-design-system
+    description: Parallel — generate DESIGN.md + theme tokens + component scaffolds
+  - name: apply-and-verify
+    description: Apply design system to target framework components
+
+budget:
+  soft_limit:
+    tokens: 300000
+    agent_launches: 6
+  hard_limit:
+    tokens: 600000
+    agent_launches: 12
