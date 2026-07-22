@@ -35,12 +35,11 @@ for TARGET in "${TARGETS[@]}"; do
     # Copy SKILL.md first (guaranteed)
     cp -f "$SKILL_DIR/SKILL.md" "$TARGET/$SKILL_NAME/SKILL.md" 2>/dev/null || true
     # Copy any additional files (references/, scripts/, examples/, etc.)
-    rsync -a --quiet "$SKILL_DIR" "$TARGET/$SKILL_NAME/" 2>/dev/null || \
-      cp -rf "$SKILL_DIR"* "$TARGET/$SKILL_NAME/" 2>/dev/null || true
+    rsync -a --quiet "$SKILL_DIR" "$TARGET/$SKILL_NAME/" 2>/dev/null || cp -rf "$SKILL_DIR"* "$TARGET/$SKILL_NAME/" 2>/dev/null || true
   done
   COUNT=$(ls "$TARGET" 2>/dev/null | wc -l)
   echo "  ✅ $TARGET ($COUNT skills)"
-  ((synced++)) || true
+  synced=$((synced + 1))
 done
 
 # --- Direction 2: Gemini → Wizard-AI repo (backup into categories) ---
@@ -57,10 +56,9 @@ if [[ -n "${WIZARD_AI_DIR:-}" ]] && [[ -d "${WIZARD_AI_DIR}/skills" ]]; then
       # New skill: back up into the misc category by default
       REPO_SKILL_DIR="$WIZARD_AI_DIR/skills/misc/$SKILL_NAME"
       mkdir -p "$REPO_SKILL_DIR"
-      rsync -a --quiet "$SKILL_DIR" "$REPO_SKILL_DIR/" 2>/dev/null || \
-        cp -rf "$SKILL_DIR"* "$REPO_SKILL_DIR/" 2>/dev/null || true
+      rsync -a --quiet "$SKILL_DIR" "$REPO_SKILL_DIR/" 2>/dev/null || cp -rf "$SKILL_DIR"* "$REPO_SKILL_DIR/" 2>/dev/null || true
       echo "    + $SKILL_NAME (new → repo/skills/misc/)"
-      ((backed_up++)) || true
+      backed_up=$((backed_up + 1))
     fi
   done
   if [[ $backed_up -eq 0 ]]; then

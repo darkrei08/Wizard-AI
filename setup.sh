@@ -79,14 +79,12 @@ echo -e "${GREEN}✓ WIZARD_AI_DIR=\"$WIZARD_AI_DIR\"${NC}"
 
 # 1. Check/Install UV
 echo -e "\n${BLUE}[1/10] Checking for modern Python & Package Manager (uv)...${NC}"
-if ! command -v uv &>/dev/null; then
-  echo -e "${YELLOW}uv not found. Installing uv via official script...${NC}"
-  # SECURITY: Executing scripts directly from the internet via pipe is a security risk.
-  # Ideally, verify the hash before execution in a production environment.
+if ! command -v uv &>/dev/null || [ -z "$(uv --version 2>/dev/null)" ]; then
+  echo -e "${YELLOW}uv not found or corrupted (segfault). Re-installing uv via official script...${NC}"
   curl -LsSf https://astral.sh/uv/install.sh | sh
-  export PATH="$HOME/.local/bin:$PATH"
+  export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 else
-  echo -e "${GREEN}✓ uv is already installed: $(uv --version)${NC}"
+  echo -e "${GREEN}✓ uv is already installed: $(uv --version 2>/dev/null)${NC}"
 fi
 
 # Ensure local directories exist
@@ -96,18 +94,26 @@ mkdir -p "$HOME/.wizard-ai"
 # 2. Recreate Python Virtual Environment for wrappers
 echo -e "\n${BLUE}[2/10] Preparing Python Virtual Environment for LLMLingua & FlashRank...${NC}"
 rm -rf "$HOME/.wizard-ai/venv" 2>/dev/null || true
-uv venv "$HOME/.wizard-ai/venv" --python 3.12 --seed $QUIET_OPT
+if ! uv venv "$HOME/.wizard-ai/venv" --python 3.12 --seed $QUIET_OPT 2>/dev/null; then
+  echo -e "${YELLOW}uv venv with Python 3.12 failed (WSL segfault?). Trying system Python...${NC}"
+  if ! uv venv "$HOME/.wizard-ai/venv" --seed $QUIET_OPT 2>/dev/null; then
+    echo -e "${YELLOW}uv venv failed completely. Falling back to python3 -m venv...${NC}"
+    python3 -m venv "$HOME/.wizard-ai/venv" || {
+      echo -e "${RED}❌ Failed to create virtual environment. Please install python3-venv.${NC}"
+      exit 1
+    }
+  fi
+fi
 VENV_PYTHON="$HOME/.wizard-ai/venv/bin/python"
 
-
-
 echo -e "${YELLOW}Installing llmlingua and flashrank inside the venv...${NC}"
-uv pip install $QUIET_OPT --python "$VENV_PYTHON" \
-  llmlingua flashrank "aisuite[all]" \
-  || {
-       echo -e "${RED}❌ Failed to install Python dependencies.${NC}"
-       exit 1
-     }
+if ! uv pip install $QUIET_OPT --python "$VENV_PYTHON" llmlingua flashrank "aisuite[all]"; then
+  echo -e "${YELLOW}uv pip install failed. Falling back to standard pip...${NC}"
+  "$VENV_PYTHON" -m pip install llmlingua flashrank "aisuite[all]" || {
+    echo -e "${RED}❌ Failed to install Python dependencies.${NC}"
+    exit 1
+  }
+fi
 echo -e "${GREEN}✓ Virtual environment ready at ~/.wizard-ai/venv/${NC}"
 
 # 3. Setting up external git skill repositories
@@ -226,14 +232,45 @@ else
       echo -e "${GREEN}  ✓ lean-ctx installed via npm locally (~/.local/bin).${NC}"
     elif command -v cargo &>/dev/null; then
       echo -e "${YELLOW}  ⚠ npm installation failed. Falling back to Cargo...${NC}"
-      cargo install lean-ctx --locked --quiet 2>/dev/null && echo -e "${GREEN}  ✓ lean-ctx installed via cargo.${NC}" || echo -e "${RED}  ✗ lean-ctx installation failed (Rust version too old or build error).${NC}"
+      cargo install lean-ctx --locked --quiet 2>/dev/null && echo -e "${GREEN}  ✓ lean-ctx installed via cargo.${NC}" || {
+        echo -e "${RED}  ✗ lean-ctx installation failed (Rust version too old or build error).${NC}"
+        echo -e "${YELLOW}  Suggestion: Install build dependencies (e.g. sudo apt install -y build-essential pkg-config libssl-dev)${NC}"
+      }
     else
       echo -e "${RED}  ✗ lean-ctx installation via npm failed and Cargo is not available.${NC}"
       echo -e "${YELLOW}  Suggestion: run 'sudo npm install -g lean-ctx-bin' manually.${NC}"
     fi
   elif command -v cargo &>/dev/null; then
     echo -e "${BLUE}  NPM not found, but Cargo detected. Installing via Cargo...${NC}"
-    cargo install lean-ctx --locked --quiet 2>/dev/null && echo -e "${GREEN}  ✓ lean-ctx installed via cargo.${NC}" || echo -e "${RED}  ✗ lean-ctx installation failed (Rust version too old or build error).${NC}"
+    cargo install lean-ctx --locked --quiet 2>/dev/null && echo -e "${GREEN}  ✓ lean-ctx installed via cargo.${NC}" || {
+      echo -e "${RED}  ✗ lean-ctx installation failed (Rust version too old or build error).${NC}"
+      echo -e "${YELLOW}  Attempting fallback to pre-compiled binary from GitHub...${NC}"
+      ARCH=$(uname -m)
+      LEAN_CTX_LATEST=$(curl -sL https://api.github.com/repos/yvgude/lean-ctx/releases/latest | grep -m 1 '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/' || echo "")
+      if [ -n "$LEAN_CTX_LATEST" ]; then
+        case "$ARCH" in
+          x86_64) LEAN_CTX_URL="https://github.com/yvgude/lean-ctx/releases/download/${LEAN_CTX_LATEST}/lean-ctx-x86_64-unknown-linux-musl.tar.gz" ;;
+          aarch64|arm64) LEAN_CTX_URL="https://github.com/yvgude/lean-ctx/releases/download/${LEAN_CTX_LATEST}/lean-ctx-aarch64-unknown-linux-musl.tar.gz" ;;
+          *) LEAN_CTX_URL="" ;;
+        esac
+        if [ -n "$LEAN_CTX_URL" ]; then
+          TMP_DIR=$(mktemp -d)
+          curl -L -s "$LEAN_CTX_URL" -o "$TMP_DIR/lean-ctx.tar.gz" && tar -xzf "$TMP_DIR/lean-ctx.tar.gz" -C "$TMP_DIR/" 2>/dev/null || true
+          if [ -x "$TMP_DIR/lean-ctx" ]; then
+            mkdir -p "$HOME/.local/bin"
+            cp -f "$TMP_DIR/lean-ctx" "$HOME/.local/bin/lean-ctx"
+            chmod +x "$HOME/.local/bin/lean-ctx"
+            echo -e "${GREEN}  ✓ lean-ctx binary fallback installed to ~/.local/bin/lean-ctx.${NC}"
+          else
+            echo -e "${RED}  ✗ Pre-compiled binary fallback failed.${NC}"
+            echo -e "${YELLOW}  Suggestion: Install build dependencies (e.g. sudo apt install -y build-essential pkg-config libssl-dev)${NC}"
+          fi
+          rm -rf "$TMP_DIR"
+        fi
+      else
+        echo -e "${YELLOW}  Suggestion: Install build dependencies (e.g. sudo apt install -y build-essential pkg-config libssl-dev)${NC}"
+      fi
+    }
   else
     echo -e "${YELLOW}  ⚠ lean-ctx requires Node.js (npm) or Rust (cargo). Neither found.${NC}"
     echo -e "  Please install Node.js (https://nodejs.org) to enable context intelligence."
