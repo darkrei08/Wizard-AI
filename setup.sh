@@ -114,14 +114,14 @@ if [ -n "$MISSING_PKGS" ]; then
     apt-get install -y git curl build-essential pkg-config libssl-dev nodejs
   elif [[ "$OS_ID" == "fedora" || "$OS_LIKE" == *"fedora"* || "$OS_LIKE" == *"rhel"* || "$OS_ID" == "centos" ]]; then
     dnf install -y git curl gcc gcc-c++ make openssl-devel pkgconf-pkg-config nodejs npm
-  elif [[ "$OS_ID" == "arch" || "$OS_LIKE" == *"arch"* ]]; then
-    pacman -Syu --noconfirm git curl base-devel pkgconf openssl nodejs npm
+  elif [[ "$OS_ID" == "arch" || "$OS_LIKE" == *"arch"* || "$OS_ID" == "cachyos" ]]; then
+    pacman -Syu --noconfirm git curl base-devel pkgconf openssl nodejs npm uv || pacman -Syu --noconfirm git curl base-devel pkgconf openssl nodejs npm
   elif [[ "$OS_ID" == "darwin" || "$(uname)" == "Darwin" ]]; then
     if ! command -v brew &>/dev/null; then
       echo -e "${RED}Homebrew is required on macOS but not installed. Please install it first: https://brew.sh/${NC}"
     else
       BREW_USER="${REAL_USER:-$USER}"
-      sudo -u "$BREW_USER" brew install git curl node pkg-config openssl
+      sudo -u "$BREW_USER" brew install git curl node pkg-config openssl uv
     fi
   else
     echo -e "${RED}Unsupported OS for automatic dependency installation. Please install Node.js, npm, git, curl, and build tools manually.${NC}"
@@ -131,14 +131,45 @@ else
   echo -e "${GREEN}✓ All system dependencies are already installed.${NC}"
 fi
 
-# 1. Check/Install UV
+# Ensure local user bin paths are exported in PATH before checking tools
+if [ -n "${SUDO_USER:-}" ] && [ "$SUDO_USER" != "root" ]; then
+  SUDO_HOME=$(eval echo "~$SUDO_USER" 2>/dev/null || echo "/home/$SUDO_USER")
+  export PATH="$SUDO_HOME/.local/bin:$SUDO_HOME/.cargo/bin:$PATH"
+fi
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
+
+# 1. Check/Install UV with Segfault Protection
 echo -e "\n${BLUE}[1/10] Checking for modern Python & Package Manager (uv)...${NC}"
-if ! command -v uv &>/dev/null || [ -z "$(uv --version 2>/dev/null)" ]; then
-  echo -e "${YELLOW}uv not found or corrupted (segfault). Re-installing uv via official script...${NC}"
-  curl -LsSf https://astral.sh/uv/install.sh | sh
-  export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
-else
-  echo -e "${GREEN}✓ uv is already installed: $(uv --version 2>/dev/null)${NC}"
+UV_OK=0
+if command -v uv &>/dev/null; then
+  UV_VER=$(uv --version 2>/dev/null || echo "")
+  if [ -n "$UV_VER" ]; then
+    UV_OK=1
+    echo -e "${GREEN}✓ uv is already installed: ${UV_VER}${NC}"
+  else
+    echo -e "${YELLOW}Detected corrupted or segfaulting prebuilt uv binary. Cleaning up...${NC}"
+    rm -f "$HOME/.local/bin/uv" "$HOME/.cargo/bin/uv" 2>/dev/null || true
+  fi
+fi
+
+if [ "$UV_OK" -eq 0 ]; then
+  echo -e "${YELLOW}Installing native uv package manager...${NC}"
+  if command -v pacman &>/dev/null; then
+    pacman -S --noconfirm uv 2>/dev/null || true
+  elif command -v apt-get &>/dev/null; then
+    apt-get install -y uv 2>/dev/null || true
+  fi
+
+  if ! command -v uv &>/dev/null || [ -z "$(uv --version 2>/dev/null)" ]; then
+    curl -LsSf https://astral.sh/uv/install.sh | sh 2>/dev/null || true
+    export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
+  fi
+
+  if command -v uv &>/dev/null && [ -n "$(uv --version 2>/dev/null)" ]; then
+    echo -e "${GREEN}✓ uv installed successfully: $(uv --version 2>/dev/null)${NC}"
+  else
+    echo -e "${YELLOW}⚠ Prebuilt uv binary not compatible with system glibc/CPU. Falling back to python3 -m venv...${NC}"
+  fi
 fi
 
 # Ensure local directories exist
