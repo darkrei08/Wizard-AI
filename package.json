@@ -52,10 +52,10 @@
   "license": "AGPL-3.0-only",
   "devDependencies": {
     "@vitalets/google-translate-api": "^9.2.1",
-    "pi-extensible-workflows": "^1.0.1",
     "vitest": "^4.1.10"
   },
   "dependencies": {
-    "@toon-format/toon": "^2.3.1"
+    "@toon-format/toon": "^2.3.1",
+    "pi-extensible-workflows": "^1.0.1"
   }
 }
