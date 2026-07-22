@@ -35,7 +35,6 @@ Welcome to the Wizard-AI knowledge base. All skills and workflows are organized 
 | [▶️ The Plan Runner](.agents/skills/2-production-loops/executing-plans) | `/execute` | Have a written plan? Execute it step-by-step with review checkpoints. The autopilot. |
 | [⚙️ Loop 2 — The Builder](.agents/skills/2-production-loops/loop-2-develop) | `/02-develop` | Second gear: TDD, write code, implement features. Hands on the keyboard, tests first. |
 | [🏆 The Quality Gate](.agents/skills/2-production-loops/engineering-excellence) | `/excellence` | TDD + SOLID + Clean Code + Quality Gates. The bar you must clear before claiming 'done'. |
-| [🏆 The Quality Gate](.agents/skills/2-production-loops/engineering-excellence/Engineering-Excellence/skills/engineering-excellence) | `/excellence` | TDD + SOLID + Clean Code + Quality Gates. The bar you must clear before claiming 'done'. |
 | [🏢 The Enterprise Standard](.agents/skills/2-production-loops/enterprise-development-protocol) | `/enterprise` | Production-ready or nothing. Eliminates tech debt through strict development cycles. |
 | [🐛 Loop 3 — The Bug Hunter](.agents/skills/2-production-loops/loop-3-debug) | `/03-debug` | Third gear: something broke? Diagnose, verify, review. The detective loop. |
 | [💭 The Idea Storm](.agents/skills/2-production-loops/brainstorming) | `/brainstorm` | MANDATORY before any creative work. Explore intent, requirements, and design BEFORE touching code. |
@@ -56,7 +55,6 @@ Welcome to the Wizard-AI knowledge base. All skills and workflows are organized 
 | [💇 The Lazy Senior Dev](.agents/skills/3-agentic-brain/ponytail) | `/lazy` | The best code is the code you never wrote. Think minimal, ship essential. |
 | [🧠 The Master Brain](.agents/skills/3-agentic-brain/0-master-brain) | `/brain` | The optimizer of optimizers. Fuses all context-compression and meta-agent tools into one command center. |
 | [🪨 The Caveman Compressor](.agents/skills/3-agentic-brain/caveman) | `/caveman` | Think like the laziest senior dev. Strip 75% of tokens while keeping full accuracy. Grunt, don't lecture. |
-| [🪨 The Caveman Compressor](.agents/skills/4-domain-workflows/devops/official/caveman) | `/caveman` | Think like the laziest senior dev. Strip 75% of tokens while keeping full accuracy. Grunt, don't lecture. |
 
 ## Tier 3 — Worker (Backend)
 
@@ -135,7 +133,6 @@ Welcome to the Wizard-AI knowledge base. All skills and workflows are organized 
 | [🎯 Auto Trigger Release](.agents/skills/4-domain-workflows/devops/official/auto-trigger-release) | — | Intercepts agent completions and auto-runs the release flow. |
 | [🎯 Headroom Proxy](.agents/skills/4-domain-workflows/devops/official/headroom) | — | Context compression and API proxy for reducing token costs. |
 | [🎯 Lean Context](.agents/skills/3-agentic-brain/lean-ctx) | `DevOps copy` | Context intelligence — controls visibility, memory, and file access. |
-| [🎯 Lean Context](.agents/skills/4-domain-workflows/devops/official/lean-ctx) | `DevOps copy` | Context intelligence — controls visibility, memory, and file access. |
 | [🏎️ PageSpeed](.agents/skills/4-domain-workflows/devops/official/pagespeed) | — | Google PageSpeed Insights optimization. |
 | [🏗️ Project Scaffold](.agents/skills/4-domain-workflows/devops/official/scaffold) | — | Scaffold new projects from curated templates (Express+TS, Nuxt v4). |
 | [🏷️ Auto Release](.agents/skills/4-domain-workflows/devops/official/auto-release) | — | Semantic versioning, Git tags, GitHub releases. Automate the version bump. |
@@ -148,7 +145,6 @@ Welcome to the Wizard-AI knowledge base. All skills and workflows are organized 
 | [📤 Review Requester](.agents/skills/4-domain-workflows/devops/awesome-agent-skills/requesting-code-review) | — | Before merging, verify your work meets requirements. |
 | [📥 Review Receiver](.agents/skills/4-domain-workflows/devops/awesome-agent-skills/receiving-code-review) | — | Got feedback? Verify it technically before blindly implementing. |
 | [📦 SQZ](.agents/skills/3-agentic-brain/sqz) | `DevOps copy` | Compress verbose CLI output and JSON payloads. |
-| [📦 SQZ](.agents/skills/4-domain-workflows/devops/official/sqz) | `DevOps copy` | Compress verbose CLI output and JSON payloads. |
 | [🔀 LiteLLM Router](.agents/skills/4-domain-workflows/devops/official/litellm) | — | Unified API for 100+ LLM providers. Switch, track costs, proxy. |
 | [🔌 MCP Server Builder](.agents/skills/4-domain-workflows/devops/official/mcp-builder) | — | Guide for creating MCP servers. Python (FastMCP) or Node (MCP SDK). |
 | [🔒 Cybersecurity Arsenal](.agents/skills/4-domain-workflows/devops/official/cybersecurity) | — | 754 structured skills across 26 domains. The security encyclopedia. |
@@ -159,7 +155,6 @@ Welcome to the Wizard-AI knowledge base. All skills and workflows are organized 
 | [🔬 Systematic Debugger](.agents/skills/4-domain-workflows/devops/awesome-agent-skills/systematic-debugging) | — | Bug? Stop guessing. Follow the systematic diagnosis protocol. |
 | [🖨️ CLI Printing Press](.agents/skills/4-domain-workflows/devops/official/cli-printing-press) | — | CLI output formatting and printing tools. |
 | [🗜️ LLMLingua](.agents/skills/3-agentic-brain/llmlingua) | `DevOps copy` | Prompt compression — up to 20x reduction. |
-| [🗜️ LLMLingua](.agents/skills/4-domain-workflows/devops/official/llmlingua) | `DevOps copy` | Prompt compression — up to 20x reduction. |
 | [🚀 Master Bootstrap](.agents/skills/4-domain-workflows/devops/official/master-project-bootstrap) | — | The ultimate skill to bootstrap any new project. Clean Architecture + SDD/TDD. |
 | [🚧 Git Guardrails](.agents/skills/4-domain-workflows/devops/mattpocock/mp-git-guardrails) | — | Hooks to block dangerous git commands (push, reset --hard, clean). |
 | [🛤️ TrailBase](.agents/skills/4-domain-workflows/devops/official/trailbase) | — | Backend framework reference. |

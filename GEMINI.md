@@ -3,12 +3,12 @@
 > **MANDATORY PROTOCOL**: You are operating inside a **Wizard-AI Enabled Repository**.
 > You MUST strictly obey the following 5-Loop sequential workflow, mandatory step triggers, and token compression rules on EVERY task.
 
-## 🧠 Provider-Agnostic Swarm Architecture
-This repository uses a strict 3-Tier Agent Swarm initialized in the `.agents/` directory.
+## 🧠 Provider-Agnostic Swarm Architecture & Hybrid Workflow
+This repository uses a strict 3-Tier Agent Swarm orchestrated by `pi-extensible-workflows`.
 Whether you are Claude, Gemini, or any other LLM, you MUST:
-- Use `.agents/hooks/` to invoke deterministic scripts (like `SessionStart.sh`, `PostToolUse.sh` for Shadow Clone Memory Merge).
-- Respect the Department Head definitions in `.agents/roles/` (`master-ui.md`, `master-api.md`, `master-security.md`).
-- Utilize the `mcp.json` context.
+- **Understand the Hybrid JS + YAML Paradigm**: Workflow execution is handled programmatically via JavaScript scripts in `workflows/*.js` using primitives like `parallel()`, `agent()`, and `checkpoint()`. YAML files are used strictly for metadata, routing, and LLM training.
+- **Respect the Role definitions** located in `.pi/pi-extensible-workflows/roles/` (`orchestrator.md`, `master-develop.md`, `master-debug.md`, `master-refactor.md`, `worker-generic.md`).
+- **Use `.agents/hooks/`** to invoke deterministic scripts for backward compatibility.
 
 ---
 
@@ -53,7 +53,8 @@ Whether you are Claude, Gemini, or any other LLM, you MUST:
 ---
 
 ## 🗜️ Mandatory Context & Output Optimization Rules
-- **Output Compression (`sqz`)**: Never pipe raw verbose JSON, build logs, or large git outputs into your context. Always pipe through `ai-squeeze` (`sqz`).
+- **4-Layer Format Stack (TOON/LEA)**: Use `node scripts/wz-ai-context.js` to compress data. Inject `MEMORY.md` via Lossless Evidence Aliases (LEA). Convert JSON objects to TOON format or Markdown Tables before injecting them into prompts to save up to 75% tokens.
+- **Output Compression (`sqz` / `rtk`)**: Never pipe raw verbose JSON, build logs, or large git outputs into your context. Always pipe through `ai-squeeze` (`sqz`) or `rtk`.
 - **Response Efficiency (`caveman`)**: Keep your conversational explanation concise (~75% token reduction) while retaining 100% technical code accuracy.
 - **MCP Tool Priority**: When available, prefer calling `llmwiki` / `serena` MCP tools directly over spawning heavy terminal shell commands.
 
