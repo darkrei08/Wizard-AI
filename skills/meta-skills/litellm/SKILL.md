@@ -42,18 +42,85 @@ print(f"Cost: ${response._hidden_params['response_cost']}")
 
 ```yaml
 model_list:
+  # --- OpenAI ---
   - model_name: gpt-4o
     litellm_params:
       model: openai/gpt-4o
       api_key: os.environ/OPENAI_API_KEY
-  - model_name: claude-sonnet
+  - model_name: gpt-4o-mini
+    litellm_params:
+      model: openai/gpt-4o-mini
+      api_key: os.environ/OPENAI_API_KEY
+  - model_name: o3-mini
+    litellm_params:
+      model: openai/o3-mini
+      api_key: os.environ/OPENAI_API_KEY
+
+  # --- Anthropic ---
+  - model_name: claude-3-7-sonnet
+    litellm_params:
+      model: anthropic/claude-3-7-sonnet-20250219
+      api_key: os.environ/ANTHROPIC_API_KEY
+  - model_name: claude-3-5-sonnet
     litellm_params:
       model: anthropic/claude-3-5-sonnet-20241022
       api_key: os.environ/ANTHROPIC_API_KEY
+  - model_name: claude-3-5-haiku
+    litellm_params:
+      model: anthropic/claude-3-5-haiku-20241022
+      api_key: os.environ/ANTHROPIC_API_KEY
+
+  # --- Google Gemini ---
+  - model_name: gemini-3.1-pro
+    litellm_params:
+      model: gemini/gemini-3.1-pro
+      api_key: os.environ/GEMINI_API_KEY
+  - model_name: gemini-3.5-flash
+    litellm_params:
+      model: gemini/gemini-3.5-flash
+      api_key: os.environ/GEMINI_API_KEY
   - model_name: gemini-flash
     litellm_params:
-      model: gemini/gemini-2.0-flash
+      model: gemini/gemini-2.5-flash
       api_key: os.environ/GEMINI_API_KEY
+
+  # --- DeepSeek ---
+  - model_name: deepseek-chat
+    litellm_params:
+      model: deepseek/deepseek-chat
+      api_key: os.environ/DEEPSEEK_API_KEY
+  - model_name: deepseek-r1
+    litellm_params:
+      model: deepseek/deepseek-reasoner
+      api_key: os.environ/DEEPSEEK_API_KEY
+
+  # --- Mistral AI ---
+  - model_name: mistral-large
+    litellm_params:
+      model: mistral/mistral-large-latest
+      api_key: os.environ/MISTRAL_API_KEY
+  - model_name: codestral
+    litellm_params:
+      model: mistral/codestral-latest
+      api_key: os.environ/MISTRAL_API_KEY
+
+  # --- Groq ---
+  - model_name: groq-llama3-70b
+    litellm_params:
+      model: groq/llama-3.3-70b-versatile
+      api_key: os.environ/GROQ_API_KEY
+
+  # --- OpenRouter (Meta Gateway) ---
+  - model_name: openrouter-auto
+    litellm_params:
+      model: openrouter/auto
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  # --- Local Ollama ---
+  - model_name: local-llama3
+    litellm_params:
+      model: ollama/llama3.3
+      api_base: http://localhost:11434
 
 general_settings:
   master_key: sk-local-proxy
