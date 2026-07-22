@@ -444,8 +444,8 @@ echo -e "${GREEN}✓ $SKILL_COUNT skills installed to ~/.gemini/config/skills/${
 echo -e "${YELLOW}Syncing skills to Claude Code, Amp, and other agents...${NC}"
 "$HOME/.local/bin/wz-ai-sync-skills"
 
-# 7.5. Interactive Skill Setup & Configuration
-echo -e "\n${BLUE}[7.5/10] Interactive Skill Setup & Configuration...${NC}"
+# 7.5. Interactive Skill Setup and Configuration
+echo -e "\n${BLUE}[7.5/10] Interactive Skill Setup and Configuration...${NC}"
 for skill_dir in "$HOME/.gemini/config/skills"/*; do
   if [ -d "$skill_dir" ]; then
     skill_name=$(basename "$skill_dir")
