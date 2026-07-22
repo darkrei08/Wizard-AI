@@ -1,4 +1,4 @@
-# wz-ai-update.ps1 — Automates the update process for Wizard-AI and external skills.
+﻿# wz-ai-update.ps1 — Automates the update process for Wizard-AI and external skills.
 
 param (
     [switch]$Quiet
@@ -25,7 +25,12 @@ Log "=================================" "Cyan"
 if (Test-Path (Join-Path $WizardDir '.git')) {
     Log "`n📦 Updating Wizard-AI repository..." "Blue"
     Push-Location $WizardDir
-    if ($Quiet) { git pull --ff-only --quiet } else { git pull --ff-only }
+    $PreUpdateCommit = git rev-parse HEAD
+    if ($Quiet) { git pull --ff-only --quiet 2>$null } else { git pull --ff-only }
+    if ($LASTEXITCODE -ne 0) {
+        Log "  [!] Update failed for Wizard-AI. Rolling back to stable commit $PreUpdateCommit..." "Red"
+        git reset --hard $PreUpdateCommit 2>$null | Out-Null
+    }
     Pop-Location
 }
 
@@ -39,18 +44,26 @@ if (Test-Path $AiSkills) {
         'Infographic' = 'https://github.com/antvis/Infographic.git'
         'cybersecurity-skills' = 'https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git'
         'lean-ctx' = 'https://github.com/yvgude/lean-ctx.git'
+        'wslens' = 'https://github.com/vekexasia/wslens.git'
+        'ECC' = 'https://github.com/affaan-m/ECC.git'
+        'caveman' = 'https://github.com/JuliusBrussee/caveman.git'
     }
 
     foreach ($Repo in $CoreRepos.GetEnumerator()) {
         $RepoDir = Join-Path $AiSkills $Repo.Key
         if (-not (Test-Path $RepoDir)) {
             Log "  -> Cloning missing repository $($Repo.Key)..." "Yellow"
-            if ($Quiet) { git clone --depth 1 --quiet $Repo.Value $RepoDir } else { git clone --depth 1 $Repo.Value $RepoDir }
+            if ($Quiet) { git clone --depth 1 --quiet $Repo.Value $RepoDir 2>$null } else { git clone --depth 1 $Repo.Value $RepoDir }
         } else {
             if (Test-Path (Join-Path $RepoDir '.git')) {
                 Log "  -> Updating $($Repo.Key)..." "Yellow"
                 Push-Location $RepoDir
-                if ($Quiet) { git pull --ff-only --quiet } else { git pull --ff-only }
+                $PreUpdateCommit = git rev-parse HEAD
+                if ($Quiet) { git pull --ff-only --quiet 2>$null } else { git pull --ff-only }
+                if ($LASTEXITCODE -ne 0) {
+                    Log "  [!] Update failed for $($Repo.Key). Rolling back to stable commit $PreUpdateCommit..." "Red"
+                    git reset --hard $PreUpdateCommit 2>$null | Out-Null
+                }
                 Pop-Location
             }
         }
@@ -77,7 +90,18 @@ if (Get-Command uv -ErrorAction SilentlyContinue) {
     # Auto-inject updated CLI skills into the master skills folder
     if (Get-Command graphify -ErrorAction SilentlyContinue) {
         Log "  -> Auto-injecting graphify skill updates..." "Yellow"
-        graphify antigravity install 2>$null | Out-Null
+        if ($Quiet) { graphify install 2>$null | Out-Null } else { graphify install }
+        $GraphifySrc = Join-Path $HOME '.claude\skills\graphify'
+        $GraphifyDst = Join-Path $WizardDir 'skills\devops-and-tools\graphify'
+        if ((Test-Path $GraphifySrc) -and (Test-Path $GraphifyDst)) {
+            Copy-Item -Path "$GraphifySrc\*" -Destination $GraphifyDst -Recurse -Force
+            # Force update version cache
+            $Version = (graphify --version) -replace "graphify ",""
+            if ($Version) {
+                $Version | Out-File -FilePath (Join-Path $GraphifyDst '.graphify_version') -Encoding ascii
+                Log "  [ok] Graphify skill synchronized to v$Version" "Green"
+            }
+        }
     }
 }
 
