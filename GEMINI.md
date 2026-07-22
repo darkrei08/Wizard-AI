@@ -48,7 +48,7 @@ Whether you are Claude, Gemini, or any other LLM, you MUST:
 ### 2️⃣ POST-PROMPT LOOP (Refactor & Save State)
 - **Refactoring & Debug Loop**: Before declaring completion, autonomously trigger `loop-3-debug` (verify code) and `loop-4-refactor` (clean architecture).
 - **Graph Update**: Run `ai-graph . --update` (or `npx graphify update`) to index the changes into the semantic brain.
-- **Memory Compression & Save**: Write a summarized log of actions and decisions. Compress it using `sqz` or `llmlingua`, and persist it via `wz-ai-session-save` to `MEMORY.md`.
+- **Memory Compression & Save**: Write a summarized log of actions and decisions. Compress it using `sqz` or `llmlingua`, and persist it via `wz-ai session-save` to `MEMORY.md`.
 
 ---
 

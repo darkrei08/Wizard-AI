@@ -14,7 +14,7 @@ This meta-skill orchestrates a powerful frontend workflow by combining Anthropic
 
 2. **Establish the Theme (`theme-factory` & `awesome-design`)**
    - If generating from scratch: Use `theme-factory` to build a coherent color palette and CSS custom properties.
-   - If the user requested a specific known brand (e.g., Vercel, Cursor): Run `wz-ai-design apply <brand>` from `awesome-design` to fetch the baseline `DESIGN.md`.
+   - If the user requested a specific known brand (e.g., Vercel, Cursor): Run `wz-ai design apply <brand>` from `awesome-design` to fetch the baseline `DESIGN.md`.
 
 3. **Convert Canvas to Code (`canvas-design` & `algorithmic-art`)**
    If the user provides rough sketches, images, or canvas diagrams, use these skills to interpret them into HTML/CSS structure.

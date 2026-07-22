@@ -1,5 +1,5 @@
-# wz-ai-proxy - Manage the Cockpit Tools proxy daemon
-# Wraps scripts/wz-ai-proxy.js
+# wz-ai proxy - Manage the Cockpit Tools proxy daemon
+# Wraps scripts/wz-ai proxy.js
 
 $WizardAiDir = $env:WIZARD_AI_DIR
 if (-not $WizardAiDir) {
@@ -14,5 +14,5 @@ if (-not $NodeCmd) {
     exit 1
 }
 
-& $NodeCmd "$WizardAiDir\scripts\wz-ai-proxy.js" @args
+& $NodeCmd "$WizardAiDir\scripts\wz-ai proxy.js" @args
 exit $LASTEXITCODE

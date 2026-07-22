@@ -5,7 +5,7 @@ description: "Lean Context Intelligence for AI agents. Controls what your AI can
 
 # LeanCTX — Lean Context Intelligence
 
-Use `wz-ai-lean` to control what your AI agents can see, compress file reads, persist session memory, and save 60-90% on tokens.
+Use `wz-ai lean` to control what your AI agents can see, compress file reads, persist session memory, and save 60-90% on tokens.
 
 ## When to Use
 
@@ -19,24 +19,24 @@ Use `wz-ai-lean` to control what your AI agents can see, compress file reads, pe
 
 ```bash
 # Initialize lean-ctx for the current project
-wz-ai-lean setup
+wz-ai lean setup
 
 # Show context savings statistics
-wz-ai-lean status
+wz-ai lean status
 
 # Launch live savings dashboard
-wz-ai-lean gain
+wz-ai lean gain
 
 # Run compression benchmark
-wz-ai-lean benchmark
+wz-ai lean benchmark
 
 # Read a file with compression
-wz-ai-lean read src/main.py map
-wz-ai-lean read src/utils.ts signatures
-wz-ai-lean read src/config.py density:0.4
+wz-ai lean read src/main.py map
+wz-ai lean read src/utils.ts signatures
+wz-ai lean read src/config.py density:0.4
 
 # Show installation info
-wz-ai-lean info
+wz-ai lean info
 ```
 
 ## Read Modes
@@ -68,6 +68,6 @@ wz-ai-lean info
 ## Paths
 
 - Local clone: `$HOME/.wizard-ai/lean-ctx`
-- CLI wrapper: `wz-ai-lean` (installed to `$HOME/.local/bin/`)
+- CLI wrapper: `wz-ai lean` (installed to `$HOME/.local/bin/`)
 - Binary: `lean-ctx` (via npm or cargo)
 - Source: https://github.com/yvgude/lean-ctx

@@ -35,20 +35,20 @@ Tutte le seguenti skills appartengono alla categoria di **Ristrutturazione del C
 Queste skill riorganizzano il codice per renderlo modulare, coeso e disaccoppiato senza alterarne il comportamento esterno:
 - **`mp-improve-codebase-architecture`**: *Quando usarla:* All'avvio di un refactoring di modulo o servizio. *Cosa fa:* Analizza le dipendenze interne, separa le responsabilità (SRP) e riduce l'accoppiamento verso un'architettura a strati pulita.
 - **`serena`**: *Quando usarla:* Obbligatoria prima di rinominare simboli o spostare file su larga scala. *Cosa fa:* Esegue ricerca semantica profonda e navigazione symbol/LSP per mappare esattamente dove una funzione o classe viene richiamata in tutta la codebase.
-- **`ponytail` (`wz-ai-ponytail`)**: *Quando usarla:* Quando il codice mostra segnali di over-engineering, design pattern speculativi o gerarchie di classi inutilmente complesse. *Cosa fa:* Applica la mentalità del "senior dev pigro", eliminando astrazioni premature (`YAGNI`) e riducendo le righe di codice.
+- **`ponytail` (`wz-ai ponytail`)**: *Quando usarla:* Quando il codice mostra segnali di over-engineering, design pattern speculativi o gerarchie di classi inutilmente complesse. *Cosa fa:* Applica la mentalità del "senior dev pigro", eliminando astrazioni premature (`YAGNI`) e riducendo le righe di codice.
 - **`mp-migrate-to-shoehorn`**: *Quando usarla:* Per migrazioni graduali di architettura (es. passaggio a un nuovo pattern o framework) in modo incrementale senza interrompere il servizio in produzione.
 - **`mp-domain-modeling`**: *Quando usarla:* Per disaccoppiare la logica di business dalla persistenza o dalla UI ridefinendo le entità del dominio.
 
 ### 2. Categoria: Token & Context Optimization (Risparmio Risorse LLM)
 Queste skill controllano e comprimono i payload inviati e ricevuti dal modello per evitare di intasare la context window:
-- **`workflow-agentic-brain` (`wz-ai-optimize`)**: *Quando usarla:* Come Master Optimizer quando la sessione supera il 60% della context window o quando si debbono elaborare file enormi. *Cosa fa:* Orchestra dinamicamente le skill di compressione sottostanti (`caveman`, `ponytail`, `sqz`, `lean-ctx` / `ktx`, `headroom`, `handoff`).
-- **`caveman` (`wz-ai-caveman`)**: *Quando usarla:* Quando l'agente deve generare lunghe analisi o log. *Cosa fa:* Riduce del ~75% i token in uscita dall'agente rimuovendo parole di riempimento pur mantenendo assoluta accuratezza sintattica e tecnica.
-- **`sqz` (`wz-ai-squeeze`)**: *Quando usarla:* Prima di passare all'LLM l'output di comandi del terminale prolissi, build log giganti o file JSON di grandi dimensioni. *Cosa fa:* Comprime e riassume il payload mantenendo solo gli errori o i dati strutturali salienti.
-- **`llmlingua` (`wz-ai-compress`)**: *Quando usarla:* Per comprimere prompt storici o documenti RAG estesi fino a 20x.
-- **`lean-ctx` (`ktx` / `wz-ai-lean`)**: *Quando usarla:* Per governare l'intelligenza di visibilità del contesto (`Lean Context Intelligence`), potando file già letti o non più al centro dell'attenzione ed eliminando il rumore (risparmio 60-90% token).
-- **`headroom` (`wz-ai-headroom`)**: *Quando usarla:* Per gestire il proxying e la compressione del contesto riducendo la latenza e i costi delle chiamate API prima dell'invio.
-- **`mp-handoff` (`handoff` / `wz-ai-handoff`)**: *Quando usarla:* Al termine della fase di ottimizzazione, prima di passare il controllo a una nuova sessione o subagent, per serializzare lo stato ed eliminare ri-letture ridondanti.
-- **`flashrank` (`wz-ai-rerank`)**: *Quando usarla:* Durante la ricerca di documenti o frammenti di codice per ri-ordinare e mettere i frammenti più rilevanti nei primissimi token del prompt.
+- **`workflow-agentic-brain` (`wz-ai optimize`)**: *Quando usarla:* Come Master Optimizer quando la sessione supera il 60% della context window o quando si debbono elaborare file enormi. *Cosa fa:* Orchestra dinamicamente le skill di compressione sottostanti (`caveman`, `ponytail`, `sqz`, `lean-ctx` / `ktx`, `headroom`, `handoff`).
+- **`caveman` (`wz-ai caveman`)**: *Quando usarla:* Quando l'agente deve generare lunghe analisi o log. *Cosa fa:* Riduce del ~75% i token in uscita dall'agente rimuovendo parole di riempimento pur mantenendo assoluta accuratezza sintattica e tecnica.
+- **`sqz` (`wz-ai squeeze`)**: *Quando usarla:* Prima di passare all'LLM l'output di comandi del terminale prolissi, build log giganti o file JSON di grandi dimensioni. *Cosa fa:* Comprime e riassume il payload mantenendo solo gli errori o i dati strutturali salienti.
+- **`llmlingua` (`wz-ai compress`)**: *Quando usarla:* Per comprimere prompt storici o documenti RAG estesi fino a 20x.
+- **`lean-ctx` (`ktx` / `wz-ai lean`)**: *Quando usarla:* Per governare l'intelligenza di visibilità del contesto (`Lean Context Intelligence`), potando file già letti o non più al centro dell'attenzione ed eliminando il rumore (risparmio 60-90% token).
+- **`headroom` (`wz-ai headroom`)**: *Quando usarla:* Per gestire il proxying e la compressione del contesto riducendo la latenza e i costi delle chiamate API prima dell'invio.
+- **`mp-handoff` (`handoff` / `wz-ai handoff`)**: *Quando usarla:* Al termine della fase di ottimizzazione, prima di passare il controllo a una nuova sessione o subagent, per serializzare lo stato ed eliminare ri-letture ridondanti.
+- **`flashrank` (`wz-ai rerank`)**: *Quando usarla:* Durante la ricerca di documenti o frammenti di codice per ri-ordinare e mettere i frammenti più rilevanti nei primissimi token del prompt.
 
 ---
 

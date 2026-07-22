@@ -378,7 +378,7 @@ Copy-Item -Path (Join-Path $ScriptDir 'skills\skills.json') -Destination $Skills
 Write-Log "[ok] $SkillCount skills installed to $SkillsDst" -ForegroundColor Green
 
 Write-Log 'Syncing skills to Claude Code, Amp, and other agents...' -ForegroundColor Yellow
-& (Join-Path $LocalBin 'wz-ai-sync-skills.ps1')
+& (Join-Path $LocalBin 'wz-ai sync-skills.ps1')
 
 # 8. Auto-Update Configuration
 Write-Log ' '
@@ -433,7 +433,7 @@ if ($EnableUpdate -eq 'Y') {
     }
 }
 else {
-    Write-Log "  Auto-updates disabled. Update manually using 'wz-ai-update'." -ForegroundColor Yellow
+    Write-Log "  Auto-updates disabled. Update manually using 'wz-ai update'." -ForegroundColor Yellow
     if (Test-Path $StartupShortcut) {
         Remove-Item $StartupShortcut -Force
     }

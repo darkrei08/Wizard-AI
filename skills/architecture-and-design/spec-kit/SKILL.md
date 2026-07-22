@@ -12,7 +12,7 @@ version: 1.0.0
 This skill integrates `spec-kit` from GitHub, a toolkit for Specification-Driven Development (SDD) tailored for AI agents.
 
 ## Usage
-Use `wz-ai-spec` to read and enforce architectural and structural specifications in the codebase.
+Use `wz-ai spec` to read and enforce architectural and structural specifications in the codebase.
 
 ## Capabilities
 - Read `spec.md` files

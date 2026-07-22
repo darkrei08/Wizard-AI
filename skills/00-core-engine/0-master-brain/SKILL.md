@@ -16,25 +16,25 @@ To prevent "Context Rot" (cognitive degradation of LLM known as "Lost in the mid
 - Old and redundant logs are discarded.
 - ONLY the structural rules and the AST are maintained.
 - Short and long term memories are used instead of flat text.
-- You compress the data via`LLMLingua`and the RAG is dynamically activated (`wz-ai-llmwiki`,`graphify`) based on the analysis of the user's text to extract only the essentials.
+- You compress the data via`LLMLingua`and the RAG is dynamically activated (`wz-ai llmwiki`,`graphify`) based on the analysis of the user's text to extract only the essentials.
 
 Apply these 6 mandatory steps in order:
 
-### Phase 1: Ingestion & Conversion (`markitdown`,`wz-ai-convert`)
+### Phase 1: Ingestion & Conversion (`markitdown`,`wz-ai convert`)
 If the task involves binary or complex files (PDF, DOCX, XLSX, PPTX, images, audio):
-- Use`wz-ai-convert <file>`to turn everything into clean Markdown.
+- Use`wz-ai convert <file>`to turn everything into clean Markdown.
 - Avoid reading raw files.
 
-### Step 2: RAG / Semantic Filtering (`flashrank`,`wz-ai-rerank`,`wz-ai-llmwiki`,`wz-ai-vector`)
+### Step 2: RAG / Semantic Filtering (`flashrank`,`wz-ai rerank`,`wz-ai llmwiki`,`wz-ai vector`)
 If the context is fragmented across dozens of documents or the retrieval is large:
-- Use`wz-ai-llmwiki query / search`o`wz-ai-vector search`to query the interconnected vector knowledge base.
-- USA`wz-ai-rerank`to filter and rank passages by relevance to the prompt.
+- Use`wz-ai llmwiki query / search`o`wz-ai vector search`to query the interconnected vector knowledge base.
+- USA`wz-ai rerank`to filter and rank passages by relevance to the prompt.
 - Keep only the top K relevant results.
 
 ### Step 3: Token & Output Compression (`llmlingua`,`sqz`,`headroom`,`caveman`)
 For large texts, build logs or network calls:
-- **Prompt/Extended Code & Latency:** Use`headroom`/`wz-ai-headroom`o`wz-ai-compress`to compress the request before sending it (up to 20x token reduction and optimized API proxying).
-- **Log, JSON, CLI Output:** Always use`wz-ai-squeeze`/`sqz`to remove unnecessary syntax, verbose debug lines, and whitespace before passing it to the template.
+- **Prompt/Extended Code & Latency:** Use`headroom`/`wz-ai headroom`o`wz-ai compress`to compress the request before sending it (up to 20x token reduction and optimized API proxying).
+- **Log, JSON, CLI Output:** Always use`wz-ai squeeze`/`sqz`to remove unnecessary syntax, verbose debug lines, and whitespace before passing it to the template.
 - **Agent Response (`caveman`mode):** Make sure the plugin`caveman`is active to reduce the outgoing tokens in the agent response by ~75% while maintaining 100% technical and syntactic accuracy.
 
 ### Phase 4: Context Guarding & Pruning (`lean-ctx`/`ktx`)
@@ -49,8 +49,8 @@ For large texts, build logs or network calls:
 - Before closing the session or despawning a subagent, run the **Shadow Clone Memory Merge** protocol:
   1. **`mp-handoff`(`handoff`)**: Crystallizes the workarounds, bug-fixes and contexts discovered by the clone.
   2. **Pre-Merge Optimization (`sqz`/`llmlingua`)**: Compress and reorganize raw memory so as not to overload tokens upon ingestion. No verbose logs or dumps should end up in the master.
-  3. **`session-manager`(`wz-ai-session-save`)**: Merges the compressed memory into the`MEMORY.md`of the Master Orchestrator, ensuring that no knowledge is lost.
-  4. **Active Learning (The Brain):** Constantly enrich the wiki. If you find new patterns or relevant external guides (e.g. cloning from`https://www.anthropic.com/learn`), usa`wz-ai-llmwiki ingest / compile`to save them in pure Markdown. The Master reabsorbs this knowledge, structurally expanding the "Hive Mind" for future sessions.
+  3. **`session-manager`(`wz-ai session-save`)**: Merges the compressed memory into the`MEMORY.md`of the Master Orchestrator, ensuring that no knowledge is lost.
+  4. **Active Learning (The Brain):** Constantly enrich the wiki. If you find new patterns or relevant external guides (e.g. cloning from`https://www.anthropic.com/learn`), usa`wz-ai llmwiki ingest / compile`to save them in pure Markdown. The Master reabsorbs this knowledge, structurally expanding the "Hive Mind" for future sessions.
 
 ## ═══════════ META-SKILL EXPANSION & ONLINE HUNT (`skills.sh`) ═══════════
 

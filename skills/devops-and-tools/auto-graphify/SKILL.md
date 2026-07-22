@@ -11,11 +11,11 @@ This skill is a behavioral hook for AI agents. Use this skill **whenever you fin
 
 You should consider this skill as an internal rule:
 - **IF** task == complete AND (files_added == true OR codebase_structure_changed == true OR user_requested_graph == true)
-- **THEN** run `wz-ai-graph .` or `graphify .` in the background.
+- **THEN** run `wz-ai graph .` or `graphify .` in the background.
 
 ## Example Usage
 
 ```bash
 # Generate the project graph
-wz-ai-graph .
+wz-ai graph .
 ```

@@ -52,23 +52,23 @@ echo "Latest version: ${LATEST:-none}"
 # - Breaking API change → MAJOR
 ```
 
-### 2. Run the wz-ai-release Wrapper
+### 2. Run the wz-ai release Wrapper
 
 ```bash
 # Bump PATCH (bug fixes)
-wz-ai-release patch
+wz-ai release patch
 
 # Bump MINOR (new feature)
-wz-ai-release minor
+wz-ai release minor
 
 # Bump MAJOR (breaking change)
-wz-ai-release major
+wz-ai release major
 
 # Release a specific version
-wz-ai-release v2.0.0
+wz-ai release v2.0.0
 
 # Dry-run to preview (no changes made)
-wz-ai-release minor --dry-run
+wz-ai release minor --dry-run
 ```
 
 ### 3. Manual Release (step by step)

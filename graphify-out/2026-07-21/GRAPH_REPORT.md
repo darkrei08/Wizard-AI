@@ -1421,7 +1421,7 @@ Nodes (16): Base UI, Radix UI, React, react-hook-form, shadcn/ui, Astro Skill, E
 
 ### Community 29 - "OS Package Installer"
 Cohesion: 0.22
-Nodes (12): wz-ai-os script, _cargo_install(), detect_distro(), detect_os_type(), detect_package_manager(), _go_install(), _node_install(), _pip_install() (+4 more)
+Nodes (12): wz-ai os script, _cargo_install(), detect_distro(), detect_os_type(), detect_package_manager(), _go_install(), _node_install(), _pip_install() (+4 more)
 
 ### Community 30 - "Stitch Design Guidelines"
 Cohesion: 0.12
@@ -1589,11 +1589,11 @@ Nodes (11): Assets, Generated Illustrations, Placeholder Strategy, Custom Craft,
 
 ### Community 74 - "Wizard-AI Installer Script"
 Cohesion: 0.49
-Nodes (9): wz-ai-install script, fail(), info(), is_valid_category(), ok(), self_repair(), usage(), validate_skill() (+1 more)
+Nodes (9): wz-ai install script, fail(), info(), is_valid_category(), ok(), self_repair(), usage(), validate_skill() (+1 more)
 
 ### Community 75 - "Wizard-AI Lean Script"
 Cohesion: 0.49
-Nodes (9): wz-ai-lean script, check_binary(), cmd_benchmark(), cmd_gain(), cmd_info(), cmd_read(), cmd_setup(), cmd_status() (+1 more)
+Nodes (9): wz-ai lean script, check_binary(), cmd_benchmark(), cmd_gain(), cmd_info(), cmd_read(), cmd_setup(), cmd_status() (+1 more)
 
 ### Community 76 - "Agent Swarm Orchestration"
 Cohesion: 0.20
@@ -1641,7 +1641,7 @@ Nodes (10): PocketBase Dart SDK, PocketBase JavaScript SDK, PocketBase, SQLite, 
 
 ### Community 87 - "Wizard-AI RTK Script"
 Cohesion: 0.56
-Nodes (8): wz-ai-rtk script, check_binary(), cmd_info(), cmd_init(), cmd_install(), cmd_status(), cmd_wrap(), show_help()
+Nodes (8): wz-ai rtk script, check_binary(), cmd_info(), cmd_init(), cmd_install(), cmd_status(), cmd_wrap(), show_help()
 
 ### Community 88 - "PDF to Skill Extraction"
 Cohesion: 0.28
@@ -1673,19 +1673,19 @@ Nodes (9): MCP Builder README, MCP Server Evaluation Guide, Evaluation Python Sc
 
 ### Community 96 - "Design Application CLI"
 Cohesion: 0.57
-Nodes (7): wz-ai-design script, check_installed(), cmd_apply(), cmd_list(), cmd_search(), cmd_show(), show_help()
+Nodes (7): wz-ai design script, check_installed(), cmd_apply(), cmd_list(), cmd_search(), cmd_show(), show_help()
 
 ### Community 97 - "Headroom Compression Script"
 Cohesion: 0.57
-Nodes (7): wz-ai-headroom script, check_binary(), cmd_compress(), cmd_info(), cmd_proxy(), cmd_status(), show_help()
+Nodes (7): wz-ai headroom script, check_binary(), cmd_compress(), cmd_info(), cmd_proxy(), cmd_status(), show_help()
 
 ### Community 98 - "Optimization Pipeline Script"
 Cohesion: 0.43
-Nodes (6): wz-ai-optimize script, cmd_evaluate(), cmd_loop(), cmd_pipeline(), cmd_status(), usage()
+Nodes (6): wz-ai optimize script, cmd_evaluate(), cmd_loop(), cmd_pipeline(), cmd_status(), usage()
 
 ### Community 99 - "Taste Management Script"
 Cohesion: 0.57
-Nodes (7): wz-ai-taste script, check_installed(), cmd_info(), cmd_install(), cmd_list(), cmd_show(), show_help()
+Nodes (7): wz-ai taste script, check_installed(), cmd_info(), cmd_install(), cmd_list(), cmd_show(), show_help()
 
 ### Community 100 - "Frontend JavaScript Frameworks"
 Cohesion: 0.25
@@ -1753,7 +1753,7 @@ Nodes (8): Cobalt Theme, Hum Theme, Aurora Theme, Bloom Theme, Coral Theme, Lume
 
 ### Community 119 - "AI Project Scaffold CLI"
 Cohesion: 0.52
-Nodes (6): wz-ai-scaffold script, cmd_bun(), cmd_express(), cmd_list(), cmd_nuxt(), show_help()
+Nodes (6): wz-ai scaffold script, cmd_bun(), cmd_express(), cmd_list(), cmd_nuxt(), show_help()
 
 ### Community 120 - "Local Data CLI Tools"
 Cohesion: 0.29
@@ -1789,7 +1789,7 @@ Nodes (7): Microinteraction Tells, Copy Rules, Microinteractions, Motion, Typogr
 
 ### Community 128 - "CLI Package Manager Commands"
 Cohesion: 0.60
-Nodes (5): wz-ai-caveman script, cmd_info(), cmd_install(), cmd_show_prompt(), show_help()
+Nodes (5): wz-ai caveman script, cmd_info(), cmd_install(), cmd_show_prompt(), show_help()
 
 ### Community 129 - "DevOps Review Worker Tier"
 Cohesion: 0.33
@@ -2065,15 +2065,15 @@ Nodes (3): load(), main(), save()
 
 ### Community 201 - "AI Debug CLI Script"
 Cohesion: 0.83
-Nodes (3): wz-ai-debug script, gate_status(), usage()
+Nodes (3): wz-ai debug script, gate_status(), usage()
 
 ### Community 202 - "AI Loop Sentinel Script"
 Cohesion: 0.83
-Nodes (3): wz-ai-loop-sentinel script, calculate_and_route(), show_banner()
+Nodes (3): wz-ai loop-sentinel script, calculate_and_route(), show_banner()
 
 ### Community 204 - "AI Update Notification Script"
 Cohesion: 0.83
-Nodes (3): wz-ai-update script, log(), show_notification()
+Nodes (3): wz-ai update script, log(), show_notification()
 
 ### Community 205 - "Cockpit Tools and Graphify"
 Cohesion: 0.50
@@ -2229,7 +2229,7 @@ Nodes (3): Claude Opus 4.8, Prompt Caching Concepts, messages.create()
 
 ### Community 246 - "Cockpit Proxy Bridge Tools"
 Cohesion: 0.50
-Nodes (4): Cockpit Bridge, cockpit-reader.mjs, wz-ai-proxy, Cockpit Tools
+Nodes (4): Cockpit Bridge, cockpit-reader.mjs, wz-ai proxy, Cockpit Tools
 
 ### Community 247 - "Specification Driven Development Tools"
 Cohesion: 0.50
@@ -2377,7 +2377,7 @@ Nodes (3): Graphify Skill, Graphify Extraction Specification, Graphify Query Con
 
 ### Community 299 - "Linux Package Managers"
 Cohesion: 0.67
-Nodes (3): APT, Pacman, wz-ai-os
+Nodes (3): APT, Pacman, wz-ai os
 
 ### Community 300 - "Playwright Webapp Testing"
 Cohesion: 0.67
@@ -2481,7 +2481,7 @@ Nodes (3): Cognitive Load, Router Skill, User-Invoked
 
 ### Community 327 - "Developer AI Tools"
 Cohesion: 0.67
-Nodes (3): pi-dev Skill, sqz tool, wz-ai-lean-ctx tool
+Nodes (3): pi-dev Skill, sqz tool, wz-ai lean-ctx tool
 
 ### Community 328 - "Feedback Run Management"
 Cohesion: 0.67

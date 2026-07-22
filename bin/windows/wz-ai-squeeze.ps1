@@ -1,5 +1,5 @@
-﻿# wz-ai-squeeze — sqz wrapper for compressing CLI output, JSON, logs
-# Windows port of bin/wz-ai-squeeze
+# wz-ai squeeze — sqz wrapper for compressing CLI output, JSON, logs
+# Windows port of bin/wz-ai squeeze
 # Source: https://github.com/ojuschugh1/sqz
 
 $Sqz = $null
@@ -19,19 +19,19 @@ if (-not $Sqz) {
 $HasStdin = $MyInvocation.ExpectingInput -or [Console]::IsInputRedirected
 
 if ($args.Count -eq 0 -and -not $HasStdin) {
-    Write-Host 'wz-ai-squeeze — Compress CLI output, JSON, and logs'
+    Write-Host 'wz-ai squeeze — Compress CLI output, JSON, and logs'
     Write-Host ''
     Write-Host 'Usage:'
-    Write-Host '  command | wz-ai-squeeze                      # Compress command output'
-    Write-Host '  wz-ai-squeeze < file.json                    # Compress a file (cmd.exe)'
-    Write-Host '  command | wz-ai-squeeze compress --verify    # Show confidence score'
-    Write-Host '  wz-ai-squeeze stats                          # Session compression report'
-    Write-Host '  wz-ai-squeeze expand "<ref-token>"           # Expand a dedup token'
+    Write-Host '  command | wz-ai squeeze                      # Compress command output'
+    Write-Host '  wz-ai squeeze < file.json                    # Compress a file (cmd.exe)'
+    Write-Host '  command | wz-ai squeeze compress --verify    # Show confidence score'
+    Write-Host '  wz-ai squeeze stats                          # Session compression report'
+    Write-Host '  wz-ai squeeze expand "<ref-token>"           # Expand a dedup token'
     Write-Host ''
     Write-Host 'Pipeline examples:'
-    Write-Host '  git log --oneline -100 | wz-ai-squeeze'
-    Write-Host '  kubectl get pods -A -o json | wz-ai-squeeze compress --mode aggressive'
-    Write-Host '  npm run build 2>&1 | wz-ai-squeeze'
+    Write-Host '  git log --oneline -100 | wz-ai squeeze'
+    Write-Host '  kubectl get pods -A -o json | wz-ai squeeze compress --mode aggressive'
+    Write-Host '  npm run build 2>&1 | wz-ai squeeze'
     exit 0
 }
 

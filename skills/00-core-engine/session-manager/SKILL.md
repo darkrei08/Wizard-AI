@@ -1,6 +1,6 @@
 ---
 name: session-manager
-description: "SESSION MANAGER — Dual mode skill (Step 1 PRE e Step 10 POST). Ripristina il contesto all'inizio e salva lo stato persistente alla fine. Utilizza MEMORY.md e wz-ai-session-save."
+description: "SESSION MANAGER — Dual mode skill (Step 1 PRE e Step 10 POST). Ripristina il contesto all'inizio e salva lo stato persistente alla fine. Utilizza MEMORY.md e wz-ai session-save."
 ---
 
 # Session Manager & Persistent Memory (Step 1 & Step 10)
@@ -30,12 +30,12 @@ This skill provides a native, infallible mechanism for AI agents to persist stat
    
    ```bash
    # Snapshot per Storybloq
-   wz-ai-storybloq snapshot
+   wz-ai storybloq snapshot
    
    # Scrittura fisica su MEMORY.md
-   wz-ai-session-save "YOUR_SUMMARY_HERE"
+   wz-ai session-save "YOUR_SUMMARY_HERE"
    ```
-   *(Oppure via pipe: `echo "SUMMARY" | wz-ai-session-save`)*
+   *(Oppure via pipe: `echo "SUMMARY" | wz-ai session-save`)*
 
 3. **Anonimizzazione**: Anonimizza SEMPRE i percorsi locali prima di salvare (es. usa `~/.wizard-ai` invece di `C:\Users\...`) per prevenire leak di dati personali.
 

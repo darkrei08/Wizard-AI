@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-wz-ai-ponytail — AI skill to cut output tokens by acting like a lazy senior dev
+wz-ai ponytail — AI skill to cut output tokens by acting like a lazy senior dev
 
 .DESCRIPTION
 Source: https://github.com/DietrichGebert/ponytail

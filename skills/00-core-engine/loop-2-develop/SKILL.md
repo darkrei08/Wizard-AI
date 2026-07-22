@@ -136,7 +136,7 @@ Non delegare MAI task massivi (> 100 righe o multi-dominio) direttamente agli ag
   ```
 - **Esecuzione del Workflow:** Il Department Head avvia lo sciame eseguendo il CLI wrapper di Pi Workflows:
   ```bash
-  wz-ai-workflow run .wizard-ai/workflows/feature-job.yaml
+  wz-ai workflow run .wizard-ai/workflows/feature-job.yaml
   ```
 - **Sincronizzazione e Verifica:** I risultati aggregati dai subagent (tramite `subagent-driven-development` e `dispatching-parallel-agents`) vengono poi sottoposti a validazione avversaria (`goodcode`) prima di unire il codice e lanciare la suite di test globale.
 

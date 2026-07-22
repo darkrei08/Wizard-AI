@@ -50,22 +50,22 @@ When a user wants to configure Pi to bypass the Gemini API free-tier limits usin
 
 1. Install the rotator proxy:
    ```bash
-   wz-ai-proxy install
+   wz-ai proxy install
    ```
 
 2. Iniziate l'account provisioning (estrae silenziosamente i tokens da Cockpit Tools):
    ```bash
-   wz-ai-proxy provision
+   wz-ai proxy provision
    ```
 
 3. Attivate il demone proxy in background (si avvierà in automatico all'accensione del PC):
    ```bash
-   wz-ai-proxy enable
+   wz-ai proxy enable
    ```
 
 4. Controllate i log del proxy in background:
    ```bash
-   wz-ai-proxy logs
+   wz-ai proxy logs
    ```
 
 This automates the entire process: reading from Cockpit Tools, normalizing the schema (tier and project ID validation), and configuring Pi's `models.json` and `auth.json` to use the `google-antigravity` provider.

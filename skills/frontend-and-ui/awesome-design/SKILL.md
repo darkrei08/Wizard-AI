@@ -5,7 +5,7 @@ description: "Browse and apply DESIGN.md files from popular brand design systems
 
 # Awesome Design (DESIGN.md Collection)
 
-Use `wz-ai-design` (or the `awesome-design-md` repo directly) to browse, preview, and apply curated DESIGN.md files from popular brand design systems.
+Use `wz-ai design` (or the `awesome-design-md` repo directly) to browse, preview, and apply curated DESIGN.md files from popular brand design systems.
 
 ## What is DESIGN.md?
 
@@ -15,16 +15,16 @@ A plain-text design system document that AI agents read to generate consistent U
 
 ```bash
 # List all available design systems
-wz-ai-design list
+wz-ai design list
 
 # Show a specific design system
-wz-ai-design show vercel
+wz-ai design show vercel
 
 # Copy a DESIGN.md into your current project root
-wz-ai-design apply cursor
+wz-ai design apply cursor
 
 # Search by keyword
-wz-ai-design search "dark theme"
+wz-ai design search "dark theme"
 ```
 
 ## Available Design Systems
@@ -37,10 +37,10 @@ The collection includes 73+ design systems from brands including:
 
 ## Integration with AI Agents
 
-After running `wz-ai-design apply <name>`, the `DESIGN.md` file in your project root will be automatically read by agents (Claude Code, Cursor, Codex, Gemini, etc.) and used as a design system reference for UI generation.
+After running `wz-ai design apply <name>`, the `DESIGN.md` file in your project root will be automatically read by agents (Claude Code, Cursor, Codex, Gemini, etc.) and used as a design system reference for UI generation.
 
 ## Paths
 
 - Local clone: `$HOME/.wizard-ai/awesome-design-md`
-- CLI wrapper: `wz-ai-design` (installed to `$HOME/.local/bin/`)
+- CLI wrapper: `wz-ai design` (installed to `$HOME/.local/bin/`)
 - Source: https://github.com/VoltAgent/awesome-design-md

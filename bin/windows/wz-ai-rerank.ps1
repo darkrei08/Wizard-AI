@@ -1,5 +1,5 @@
-﻿# wz-ai-rerank — FlashRank passage reranker for RAG pipelines (CPU-optimized)
-# Windows port of bin/wz-ai-rerank
+# wz-ai rerank — FlashRank passage reranker for RAG pipelines (CPU-optimized)
+# Windows port of bin/wz-ai rerank
 # Source: https://github.com/PrithivirajDamodaran/FlashRank
 
 $Venv = Join-Path $HOME '.wizard-ai\venv'

@@ -28,7 +28,7 @@ When executing a complex plan, you MUST follow this loop:
 
 ### 3. Verification & Review (`receiving-code-review`)
 - Once a subagent finishes, the Orchestrator MUST review the work.
-- Run `wz-ai-debug` or equivalent test commands to ensure the subagent didn't break the build.
+- Run `wz-ai debug` or equivalent test commands to ensure the subagent didn't break the build.
 - If the work is flawed, spawn a new debugging subagent or fix it yourself (`systematic-debugging`).
 
 ### 4. Integration

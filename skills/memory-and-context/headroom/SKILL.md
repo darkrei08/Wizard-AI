@@ -38,9 +38,9 @@ headroom proxy --port 8000 &
 ## When to trigger this skill:
 - A user sends an extremely large prompt (e.g. paste of multiple log files).
 - You are fetching extensive tool output (like a 10,000 line grep) and need to compress it before returning it to your context.
-- When organizing the LLM context (e.g. running `wz-ai-optimize` pipelines).
+- When organizing the LLM context (e.g. running `wz-ai optimize` pipelines).
 
 ## Related Tools
-- `wz-ai-compress` (LLMLingua)
-- `wz-ai-caveman` (output token reduction)
+- `wz-ai compress` (LLMLingua)
+- `wz-ai caveman` (output token reduction)
 - `sqz` (fast string compression)

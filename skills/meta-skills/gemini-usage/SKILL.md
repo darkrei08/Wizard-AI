@@ -7,29 +7,29 @@ description: "Use to track Gemini CLI token usage, context window consumption, a
 
 GeminiUsage tracks token and context usage for Gemini CLI (Antigravity) sessions.
 
-Available as both `gemini-usage` (base command) and `wz-ai-usage` (wrapper alias) — both are installed and interchangeable.
+Available as both `gemini-usage` (base command) and `wz-ai usage` (wrapper alias) — both are installed and interchangeable.
 Source in `~/.wizard-ai/geminiusage/`.
 
 ## CLI Usage
 
 ```bash
 # Show current session token usage
-wz-ai-usage
+wz-ai usage
 
 # Show usage for today
-wz-ai-usage --today
+wz-ai usage --today
 
 # Show last 24 hours of usage
-wz-ai-usage --rolling-24h
+wz-ai usage --rolling-24h
 
 # Check quota status
-wz-ai-usage --quota
+wz-ai usage --quota
 
 # Full usage history
-wz-ai-usage --history
+wz-ai usage --history
 
 # Show help
-wz-ai-usage --help
+wz-ai usage --help
 
 # Also works with base command
 gemini-usage --stats

@@ -1,5 +1,5 @@
-# wz-ai-sync-skills — Sync skills from ~\.gemini\config\skills\ to all agent paths.
-# Windows port of bin/wz-ai-sync-skills
+# wz-ai sync-skills — Sync skills from ~\.gemini\config\skills\ to all agent paths.
+# Windows port of bin/wz-ai sync-skills
 #
 # Direction 1 (always): ~\.gemini\config\skills\ -> claude, amp, agents, etc.
 # Direction 2 (if WIZARD_AI_DIR is set): ~\.gemini\config\skills\ -> repo\skills\
@@ -73,4 +73,4 @@ if ($WizardDir -and (Test-Path (Join-Path $WizardDir 'skills'))) {
 
 Write-Host ''
 $Total = (Get-ChildItem -Path $SkillsSrc -Directory -ErrorAction SilentlyContinue | Measure-Object).Count
-Write-Host "Done! $Total skills synced. Run 'wz-ai-help' to see all available tools."
+Write-Host "Done! $Total skills synced. Run 'wz-ai help' to see all available tools."

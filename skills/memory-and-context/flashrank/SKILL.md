@@ -7,28 +7,28 @@ description: "Use to re-rank documents or passages by relevance before inserting
 
 FlashRank is a fast, CPU-optimized reranker for RAG systems. It scores passages by relevance to a query and returns them sorted by score.
 
-Installed inside `~/.wizard-ai/venv/`. Use via the `wz-ai-rerank` wrapper (handles venv activation automatically).
+Installed inside `~/.wizard-ai/venv/`. Use via the `wz-ai rerank` wrapper (handles venv activation automatically).
 
 ## CLI Usage
 
 ```bash
 # Re-rank JSON passages (format: [{"id": 0, "text": "..."}])
-wz-ai-rerank --query "How does authentication work?" --passages passages.json
+wz-ai rerank --query "How does authentication work?" --passages passages.json
 
 # Return top 3 results
-wz-ai-rerank --query "What is the API rate limit?" --passages docs.json --top-k 3
+wz-ai rerank --query "What is the API rate limit?" --passages docs.json --top-k 3
 
 # Pipe JSON from stdin
-echo '[{"id":0,"text":"doc1"},{"id":1,"text":"doc2"}]' | wz-ai-rerank --query "question"
+echo '[{"id":0,"text":"doc1"},{"id":1,"text":"doc2"}]' | wz-ai rerank --query "question"
 
 # Output full JSON with scores
-wz-ai-rerank --query "X" --passages docs.json --json
+wz-ai rerank --query "X" --passages docs.json --json
 
 # Output only ranked text (for piping)
-wz-ai-rerank --query "X" --passages docs.json --compact
+wz-ai rerank --query "X" --passages docs.json --compact
 
 # Use a different model
-wz-ai-rerank --query "X" --passages docs.json --model ms-marco-TinyBERT-L-2-v2
+wz-ai rerank --query "X" --passages docs.json --model ms-marco-TinyBERT-L-2-v2
 ```
 
 ## Input Format
@@ -79,7 +79,7 @@ for r in results[:3]:
 
 ```bash
 # Compress → Rerank → Send to LLM
-kubectl describe pods -A | wz-ai-squeeze | \
-  wz-ai-rerank --query "errors and warnings" --compact | \
-  wz-ai-compress --ratio 0.5
+kubectl describe pods -A | wz-ai squeeze | \
+  wz-ai rerank --query "errors and warnings" --compact | \
+  wz-ai compress --ratio 0.5
 ```

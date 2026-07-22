@@ -57,12 +57,12 @@ Ogni task di sviluppo (feature, bugfix, refactoring, release) DEVE seguire quest
 
 ### 2.1 Creazione Branch
 - Verifica di essere su `staging` (MAI lavorare su `main`)
-- Crea branch isolato: `wz-ai-branch feature "nome-feature"`
+- Crea branch isolato: `wz-ai branch feature "nome-feature"`
 - Tutti i commit, test, e modifiche avvengono QUI
 
 ### 2.2 Workspace
 - Se il task è complesso e richiede isolamento filesystem: usa git worktrees
-- Se sono necessari file template: usa `scaffold` / `wz-ai-scaffold`
+- Se sono necessari file template: usa `scaffold` / `wz-ai scaffold`
 
 ### Self-Check
 > ☐ Sono su un branch isolato, NON su main o staging?
@@ -93,7 +93,7 @@ Per ogni unità di lavoro, segui il ciclo:
 - Per audit approfonditi: usa `strix` (penetration testing automatizzato)
 
 ### 3.4 Orchestrazione Esaustiva (task HEAVY)
-- Per task sostanziali: esegui `goodcode` / `wz-ai-goodcode`
+- Per task sostanziali: esegui `goodcode` / `wz-ai goodcode`
   - Pool di subagent a-priori briefed con ruoli specialist
   - Verifica adversarial incrociata
   - Dedup/score/synthesize dei risultati
@@ -131,15 +131,15 @@ Per ogni unità di lavoro, segui il ciclo:
 - Controlla: bug, performance regressions, security issues
 
 ### 4.4 Merge to Staging
-- Esegui: `printf "y\ny\n" | wz-ai-branch merge`
-- Questo triggera automaticamente `wz-ai-debug`
-- Se `wz-ai-debug` riporta errori → FIX con `systematic-debugging` prima di procedere
+- Esegui: `printf "y\ny\n" | wz-ai branch merge`
+- Questo triggera automaticamente `wz-ai debug`
+- Se `wz-ai debug` riporta errori → FIX con `systematic-debugging` prima di procedere
 
 ### Self-Check
 > ☐ Tutti i test passano (EVIDENZA, non opinione)?
 > ☐ Ho letto l'output completo del linter?
 > ☐ Nessun critical issue aperto?
-> ☐ wz-ai-debug è passato senza errori?
+> ☐ wz-ai debug è passato senza errori?
 
 ---
 
@@ -172,7 +172,7 @@ git push origin main
   - `patch`: bugfix, minor improvements
   - `minor`: nuove feature backward-compatible
   - `major`: breaking changes
-- Esegui: `wz-ai-release [patch|minor|major]`
+- Esegui: `wz-ai release [patch|minor|major]`
 - Questo crea tag, changelog, e GitHub release
 
 ### 6.2 Cleanup
@@ -183,7 +183,7 @@ git push origin main
 - Aggiorna `MEMORY.md` con riassunto delle modifiche
 - **ANONIMIZZA** percorsi locali (usa `~/.wizard-ai` non path assoluti)
 - Commit: `git add MEMORY.md && git commit -m "docs: Update MEMORY.md" && git push`
-- Se struttura cambiata: esegui `wz-ai-graph .` in background
+- Se struttura cambiata: esegui `wz-ai graph .` in background
 
 ### Self-Check
 > ☐ Il bump semantico è corretto?
@@ -201,7 +201,7 @@ git push origin main
 4. **MAI dichiarare completamento senza EVIDENZA.** (Step 4 verification gate)
 5. **MAI lasciare codice incompleto.** Nessun TODO, placeholder, stub, `throw new Error("Not implemented")`.
 6. **MAI fidarti dell'output di un subagent.** Verifica indipendentemente.
-7. **SEMPRE esegui `wz-ai-release`** quando il ciclo raggiunge `main`.
+7. **SEMPRE esegui `wz-ai release`** quando il ciclo raggiunge `main`.
 8. **SEMPRE salva la sessione** (MEMORY.md) prima di concludere. Non aspettare che l'utente lo chieda.
 9. **Il task è INCOMPLETO** finché la Fase 6 non è completata con successo.
 10. **VINCOLO DI PROGETTAZIONE E BUILD (CI/CD SAFE):** OGNI progetto o repository deve disporre di `engines.node: ">=22.0.0"`, container basati su `node:22-alpine` (con copia selettiva o npx nativo per evitare race condition Rollup/Bun ENOENT), e workflow di build CI/CD multi-architettura dotati di step `docker/setup-qemu-action@v3` prima del buildx per evitare fallimenti e hang sulle action di qualsiasi repo provider.
@@ -233,9 +233,9 @@ auto-router → [domain skills]            cybersecurity + goodcode
                                                      ↓
                                           requesting-code-review
                                                      ↓
-                                          wz-ai-branch merge → wz-ai-debug
+                                          wz-ai branch merge → wz-ai debug
                                                      ↓
-                                          git merge main → wz-ai-release
+                                          git merge main → wz-ai release
                                                      ↓
                                           session-manager → auto-graphify
 ```

@@ -34,9 +34,9 @@ Tutte le seguenti skills appartengono alla categoria di **Rilascio, Consegna, Ha
 ### 1. Categoria: Merge Strategy & Semantic Release (Consegna e Tagging)
 Queste skill gestiscono la fusione sicura in produzione, l'incremento di versione e la pubblicazione su registry esterni:
 - **`finishing-a-development-branch`**: *Quando usarla:* Come primo step per chiudere il branch di lavoro (`feature/...` o `fix/...`). *Cosa fa:* Esegue gli ultimi controlli di pre-merge, assicura la coerenza della history e fa il merge (no-ff o squash) sul branch di rilascio `main`.
-- **`auto-release` (`wz-ai-release`)**: *Quando usarla:* Subito dopo il merge su `main`. *Cosa fa:* Calcola il bump del Semantic Versioning (`MAJOR.MINOR.PATCH`), aggiorna `CHANGELOG.md`, crea il commit di versione, il tag Git (`vX.Y.Z`) e la GitHub Release.
+- **`auto-release` (`wz-ai release`)**: *Quando usarla:* Subito dopo il merge su `main`. *Cosa fa:* Calcola il bump del Semantic Versioning (`MAJOR.MINOR.PATCH`), aggiorna `CHANGELOG.md`, crea il commit di versione, il tag Git (`vX.Y.Z`) e la GitHub Release.
 - **`auto-trigger-release`**: *Quando usarla:* Attivata come intercettore automatico per avviare il flusso di rilascio senza input manuale quando un task è completato.
-- **`auto-npm-publish` (`wz-ai-npm-setup`)**: *Quando usarla:* Se il progetto è una libreria o un pacchetto NPM/Node. *Cosa fa:* Sincronizza la versione di `package.json`, verifica i token di autenticazione e pubblica il pacchetto su registro globale npm (`@darkrei08/wizard-ai-cli`).
+- **`auto-npm-publish` (`wz-ai npm-setup`)**: *Quando usarla:* Se il progetto è una libreria o un pacchetto NPM/Node. *Cosa fa:* Sincronizza la versione di `package.json`, verifica i token di autenticazione e pubblica il pacchetto su registro globale npm (`@darkrei08/wizard-ai-cli`).
 
 ### 2. Categoria: Knowledge Handoff & Teaching (Documentazione e Apprendimento)
 Queste skill (che inglobano l'ex `loop-learn`) trasformano il lavoro svolto in conoscenza cristallizzata per l'utente, il team o gli agenti futuri:
@@ -48,14 +48,14 @@ Queste skill (che inglobano l'ex `loop-learn`) trasformano il lavoro svolto in c
 
 ### 3. Categoria: Persistent Memory & Knowledge Graph (Memoria a Lungo Termine)
 Queste skill garantiscono il **Loop-First Approach**: ogni ciclo deve arricchire la memoria e azzerare il rumore semantico per rendere il ciclo successivo più intelligente e leggero del precedente:
-- **`mp-handoff` (`handoff` / `wz-ai-handoff`)**: *Quando usarla:* **MANDATORY PRE-GATE** prima della chiusura o transizione del subagent. *Cosa fa:* Esegue il dump strutturato del contesto, delle decisioni e del debito risolto.
-- **`session-manager` (`wz-ai-session-save`)**: *Quando usarla:* **MANDATORY POST-GATE** alla fine esatta di ogni sessione. *Cosa fa:* Scrive lo snapshot finale in `MEMORY.md`, salvando i pattern di successo, le decisioni prese e le preferenze dell'utente.
-- **`lean-ctx` (`ktx` / `wz-ai-lean`) & `sqz` (`wz-ai-squeeze`)**: *Quando usarle:* Nel salvataggio dell'istantanea di memoria. *Cosa fanno:* Potano i file non attivi dal contesto residuo (`ktx`) e comprimono i log del rilascio (`sqz`) prima di registrarli nella knowledge base.
-- **`caveman` (`wz-ai-caveman`) & `headroom` (`wz-ai-headroom`)**: *Quando usarle:* Durante la sintesi finale in `MEMORY.md`. *Cosa fanno:* Garantiscono che i log di sessione e i prompt cross-session siano compatti e non disperdano budget o token (-75% overhead).
+- **`mp-handoff` (`handoff` / `wz-ai handoff`)**: *Quando usarla:* **MANDATORY PRE-GATE** prima della chiusura o transizione del subagent. *Cosa fa:* Esegue il dump strutturato del contesto, delle decisioni e del debito risolto.
+- **`session-manager` (`wz-ai session-save`)**: *Quando usarla:* **MANDATORY POST-GATE** alla fine esatta di ogni sessione. *Cosa fa:* Scrive lo snapshot finale in `MEMORY.md`, salvando i pattern di successo, le decisioni prese e le preferenze dell'utente.
+- **`lean-ctx` (`ktx` / `wz-ai lean`) & `sqz` (`wz-ai squeeze`)**: *Quando usarle:* Nel salvataggio dell'istantanea di memoria. *Cosa fanno:* Potano i file non attivi dal contesto residuo (`ktx`) e comprimono i log del rilascio (`sqz`) prima di registrarli nella knowledge base.
+- **`caveman` (`wz-ai caveman`) & `headroom` (`wz-ai headroom`)**: *Quando usarle:* Durante la sintesi finale in `MEMORY.md`. *Cosa fanno:* Garantiscono che i log di sessione e i prompt cross-session siano compatti e non disperdano budget o token (-75% overhead).
 - **`claude-mem`**: *Quando usarla:* Per salvare e indicizzare memorie semantiche persistenti e recuperarle cross-session.
-- **`auto-graphify` (`wz-ai-graph . --update`)**: *Quando usarla:* **MANDATORY STEP TRIGGER** alla fine di ogni task per rigenerare la mappa semantica interattiva HTML/JSON (`graphify-out/`).
-- **`llmwiki` (`wz-ai-llmwiki` / `wz-ai-wiki`) & `wiki-brain`**: *Quando usarle:* **MANDATORY STEP TRIGGER** alla fine di ogni sessione per trasformare `MEMORY.md`, `walkthrough.md` e la documentazione in un knowledge graph interattivo accessibile da Web UI (`wz-ai-llmwiki web / serve`).
-- **`rag-anything` (`turbovec / zvec / llmwiki` via `wz-ai-vector / wz-ai-zvec / wz-ai-llmwiki`)**: *Quando usarla:* **MANDATORY STEP TRIGGER** per indicizzare vettorialmente i nuovi snippet di codice (`wz-ai-vector add / wz-ai-zvec add / wz-ai-llmwiki ingest`).
+- **`auto-graphify` (`wz-ai graph . --update`)**: *Quando usarla:* **MANDATORY STEP TRIGGER** alla fine di ogni task per rigenerare la mappa semantica interattiva HTML/JSON (`graphify-out/`).
+- **`llmwiki` (`wz-ai llmwiki` / `wz-ai wiki`) & `wiki-brain`**: *Quando usarle:* **MANDATORY STEP TRIGGER** alla fine di ogni sessione per trasformare `MEMORY.md`, `walkthrough.md` e la documentazione in un knowledge graph interattivo accessibile da Web UI (`wz-ai llmwiki web / serve`).
+- **`rag-anything` (`turbovec / zvec / llmwiki` via `wz-ai vector / wz-ai zvec / wz-ai llmwiki`)**: *Quando usarla:* **MANDATORY STEP TRIGGER** per indicizzare vettorialmente i nuovi snippet di codice (`wz-ai vector add / wz-ai zvec add / wz-ai llmwiki ingest`).
 - **`book-to-skill`**: *Quando usarla:* **MANDATORY STEP TRIGGER** quando la sessione ha studiato documentazione esterna, manuali PDF o specifiche tecniche, trasformandole in nuove skill salvate nella cartella `skills/`.
 
 ---
@@ -82,10 +82,10 @@ graph TD
     LearnLoop --> Teach[mp-teach / Estrarre best practice o pattern di dominio]
     Teach --> UpdateCtx[Aggiornare CONTEXT.md o WIKI del progetto]
     
-    UpdateCtx --> Graph[auto-graphify / wz-ai-graph . per aggiornare grafo]
+    UpdateCtx --> Graph[auto-graphify / wz-ai graph . per aggiornare grafo]
     Graph --> HandoffDoc[mp-handoff / Scrivi riassunto per utente/team]
     
-    HandoffDoc --> MemSave[session-manager / wz-ai-session-save -> MEMORY.md]
+    HandoffDoc --> MemSave[session-manager / wz-ai session-save -> MEMORY.md]
     MemSave --> AllDone([✅ Loop Completo e Memoria Consolidata])
 ```
 
@@ -117,7 +117,7 @@ graph TD
 
 - Altrimenti, per procedure manuali o disgiunte:
   ```bash
-  wz-ai-release patch  # Crea la release (oppure minor/major)
+  wz-ai release patch  # Crea la release (oppure minor/major)
   npm publish          # Pubblica su registry se è un pacchetto NPM
   ```
 
@@ -132,12 +132,12 @@ Il Loop 5 e l'intera catena `01 → 05` NON POSSONO terminare senza aver verific
 
 1. Esegui il salvataggio dello stato in `MEMORY.md`:
    ```bash
-   wz-ai-session-save "Rilasciata versione vX.Y.Z: implementato [descrizione task]"
+   wz-ai session-save "Rilasciata versione vX.Y.Z: implementato [descrizione task]"
    ```
 2. Accertati che **mai nessuna chiave API o percorso locale privato** venga memorizzato in `MEMORY.md` (privacy check).
 3. Se sono state create nuove cartelle o moduli, avvia in background l'aggiornamento del knowledge graph semantico:
    ```bash
-   wz-ai-graph .
+   wz-ai graph .
    ```
 4. Applica il check finale di autodiagnosi:
    `🧠 [SELF-QUESTION] "Ho completato il ciclo 01->05? I test sono verdi, il refactoring è fatto, la release/commit è creata e la memoria (MEMORY.md) è aggiornata al 100%?"`

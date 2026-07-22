@@ -58,11 +58,11 @@ If the request spans specific creative, analytical, or specialized domains beyon
 |---|---|---|---|
 | **SEO, Search & Inbound Marketing** ("SEO audit", "Analisi nicchia", "Blog SEO") | `workflow-seo-research` | Estrai solo meta-tags, header H1-H6 e sitemap via AST per non intasare i token | `claude-seo`, `claude-blog`, `last30days`, `firecrawl` |
 | **Generazione Immagini, Arte & Infografiche** ("Crea poster", "Infografica", "Chart", "Art") | `canvas-design` / `infographic` | Estrai solo JSON schema e strutture layout prima di generare l'asset visivo | `algorithmic-art`, `canvas-design`, `infographic`, `theme-factory` |
-| **Diagrammi, Mermaid CLI & Grafo Architettura** ("Diagramma flusso", "Map codebase", "Mermaid") | `mermaid-cli` + `graphify` | Pruning AST di classi e relazioni dipendenza per generare il codice `mermaid` esatto | `mermaid-cli`, `graphify`, `wz-ai-graph` |
+| **Diagrammi, Mermaid CLI & Grafo Architettura** ("Diagramma flusso", "Map codebase", "Mermaid") | `mermaid-cli` + `graphify` | Pruning AST di classi e relazioni dipendenza per generare il codice `mermaid` esatto | `mermaid-cli`, `graphify`, `wz-ai graph` |
 | **Frontend Design, UI/UX Taste & Impeccable Polish** ("UI looks bad", "Make it premium", "Stitch") | `workflow-frontend-design` | Estrai design tokens (`DESIGN.md`), CSS variabili ed esporta componenti isolati | `taste-skill`, `awesome-design`, `impeccable` (`polish`, `audit`), `stitch-taste-design` |
 | **Video, Walkthrough & Motion Graphics** ("Genera video", "Walkthrough animato") | `hyperframes` / `stitch-remotion` | Estrai timesteps e keyframes strutturali | `hyperframes`, `stitch-remotion`, `voicebox` |
-| **Document Parsing & Extraction** ("Extract text", "Read PDF/Word", "Analyze doc") | `workflow-doc-processing` | Converti in Markdown pulito (`wz-ai-convert`) ed estrai solo indici/sommario | `markitdown`, `pdf`, `docx`, `xlsx`, `pptx` |
-| **Universal Context Compression & AST Pruning** ("Too long", "Reduce tokens", "Compress") | `workflow-agentic-brain` | Esegui Pruning AST (`pi.dev` wrapper) e delegazione a subagent shardati (`pi-subagents`) | `wz-ai-compress`, `wz-ai-squeeze`, `lean-ctx`, `caveman` |
+| **Document Parsing & Extraction** ("Extract text", "Read PDF/Word", "Analyze doc") | `workflow-doc-processing` | Converti in Markdown pulito (`wz-ai convert`) ed estrai solo indici/sommario | `markitdown`, `pdf`, `docx`, `xlsx`, `pptx` |
+| **Universal Context Compression & AST Pruning** ("Too long", "Reduce tokens", "Compress") | `workflow-agentic-brain` | Esegui Pruning AST (`pi.dev` wrapper) e delegazione a subagent shardati (`pi-subagents`) | `wz-ai compress`, `wz-ai squeeze`, `lean-ctx`, `caveman` |
 | **Security Audit & Pentesting** ("Security check", "Vulnerabilities") | `cybersecurity` / `strix` | Fan-out di subagent in parallelo su singoli moduli architetturali | `strix`, `cybersecurity`, `goodcode` |
 | **Start a New Project / Bootstrap** ("Initialize", "Scaffold", "Nuovo progetto") | `loop-1-plan` + `master-project-bootstrap` | Pipeline sequenziale completa 01→05 con isolamento branch e TDD | `scaffold`, `master-project-bootstrap` |
 
@@ -89,7 +89,7 @@ These skills from `mattpocock/skills` are available with `mp-` prefix and can be
 - If the user's request spans multiple domains (e.g., "Build a backend API and design the frontend UI"):
   - **Combine Loops:** Route to `loop-2-develop` + `workflow-frontend-design`.
   - **Elevate Weight:** Always elevate to **HEAVY**.
-- If the request doesn't match perfectly, run `wz-ai-help` to list all available tools and capabilities.
+- If the request doesn't match perfectly, run `wz-ai help` to list all available tools and capabilities.
 - If the user explicitly names a loop (e.g., `/loop-3-debug` or `/loop-3`), bypass routing and execute directly.
 
 ## Self-Improvement Constraint (Extracted Rule)

@@ -7,17 +7,17 @@ description: "Use to compress verbose CLI output, JSON payloads, logs, and agent
 
 sqz compresses CLI output, JSON, and logs for token-efficient agentic sessions.
 
-Available as both `sqz` (base command) and `wz-ai-squeeze` (wrapper alias) — both are installed and interchangeable.
+Available as both `sqz` (base command) and `wz-ai squeeze` (wrapper alias) — both are installed and interchangeable.
 
 ## CLI Usage
 
 ```bash
 # Compress command output before passing to LLM
-git log --oneline -50 | wz-ai-squeeze
-kubectl get pods -A -o json | wz-ai-squeeze
+git log --oneline -50 | wz-ai squeeze
+kubectl get pods -A -o json | wz-ai squeeze
 
 # Compress a JSON file
-wz-ai-squeeze < large_output.json
+wz-ai squeeze < large_output.json
 
 # Compress with custom compression level (1-9)
 cat verbose_log.txt | sqz --level 7
@@ -29,7 +29,7 @@ cat data.json | sqz --stats
 cat compressed.sqz | sqz --decompress
 
 # Pipe multiple tools together
-npm run build 2>&1 | wz-ai-squeeze
+npm run build 2>&1 | wz-ai squeeze
 ```
 
 ## MCP Server
@@ -70,7 +70,7 @@ compressed = result.stdout
 
 ```bash
 # Compress output → rerank → compress prompt → send to LLM
-kubectl describe pods -A | wz-ai-squeeze | \
-  wz-ai-rerank --query "errors and warnings" --compact | \
-  wz-ai-compress --ratio 0.5
+kubectl describe pods -A | wz-ai squeeze | \
+  wz-ai rerank --query "errors and warnings" --compact | \
+  wz-ai compress --ratio 0.5
 ```

@@ -1,5 +1,5 @@
-# wz-ai-headroom — Headroom proxy and context compression wrapper
-# Windows port of bin/wz-ai-headroom
+# wz-ai headroom — Headroom proxy and context compression wrapper
+# Windows port of bin/wz-ai headroom
 
 $Cmd = Get-Command headroom -ErrorAction SilentlyContinue
 if (-not $Cmd) {
@@ -9,12 +9,12 @@ if (-not $Cmd) {
 }
 
 if ($args.Count -eq 0 -and -not $MyInvocation.ExpectingInput -and -not [Console]::IsInputRedirected) {
-    Write-Host 'wz-ai-headroom — Context compression and API proxy for token efficiency'
+    Write-Host 'wz-ai headroom — Context compression and API proxy for token efficiency'
     Write-Host ''
     Write-Host 'Usage:'
-    Write-Host '  wz-ai-headroom proxy --port 8080      # Start the local API proxy'
-    Write-Host '  wz-ai-headroom auth                   # Setup API keys'
-    Write-Host '  wz-ai-headroom status                 # View headroom status'
+    Write-Host '  wz-ai headroom proxy --port 8080      # Start the local API proxy'
+    Write-Host '  wz-ai headroom auth                   # Setup API keys'
+    Write-Host '  wz-ai headroom status                 # View headroom status'
     exit 0
 }
 

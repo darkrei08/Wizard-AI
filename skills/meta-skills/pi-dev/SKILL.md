@@ -14,7 +14,7 @@ This skill integrates `pi.dev` development tools and high-performance **Rust/Cli
 When managing large codebases or heavy prompts (`task_weight == HEAVY`), apply these `pi.dev` / Rust wrapper patterns:
 1. **AST Signature Extraction (`Tree-sitter Pruning`)**: Before injecting code into context, use `pi` AST tools or `grep_search`/tree-sitter wrappers to extract **only class/function signatures and types**, stripping out heavy implementation bodies when navigating or planning (`Lean Context Intelligence`).
 2. **Sharded Subagent Execution (`pi-subagents`)**: For multi-file refactoring or deep reviews, dispatch tasks to isolated subagents (`subagent` / `dispatching-parallel-agents`). Each subagent operates inside a clean, pruned context window (`Sub-process Context Isolation`), preventing context window overflow and token drift.
-3. **Hybrid Context Pipeline (`pi.dev + sqz + lean-ctx`)**: Pipe CLI and compiler outputs directly through `sqz` before feeding them to the model, or use `wz-ai-lean-ctx` to drop stale conversation history while preserving core `MEMORY.md` state.
+3. **Hybrid Context Pipeline (`pi.dev + sqz + lean-ctx`)**: Pipe CLI and compiler outputs directly through `sqz` before feeding them to the model, or use `wz-ai lean-ctx` to drop stale conversation history while preserving core `MEMORY.md` state.
 
 ## Integration & Best Practices
 - Always prefer `pi.dev` / native Rust wrappers over heavy Node/Python runtimes when speed and memory efficiency are paramount.

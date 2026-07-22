@@ -57,4 +57,4 @@ gh pr list --label dependencies
 ```
 
 ## Commands
-- `wz-ai-npm-setup`: Starts an interactive setup for NPM tokens and workflow checks.
+- `wz-ai npm-setup`: Starts an interactive setup for NPM tokens and workflow checks.
