@@ -24,7 +24,10 @@ TARGETS=(
 # Load wizard-ai env if not already set
 if [[ -z "${WIZARD_AI_DIR:-}" ]] && [[ -f "$HOME/.config/wizard-ai/env" ]]; then
   source "$HOME/.config/wizard-ai/env"
+fi
+
 # --- Direction 0: Wizard-AI Repo -> Gemini Config Skills ---
+
 if [[ -n "${WIZARD_AI_DIR:-}" ]] && [[ -d "${WIZARD_AI_DIR}/skills" ]]; then
   mkdir -p "$SKILLS_SRC"
   while IFS= read -r -d '' skill_md; do

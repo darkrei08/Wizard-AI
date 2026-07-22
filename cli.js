@@ -38,7 +38,16 @@ if (subcmd === "proxy") {
   }
 }
 
+if (subcmd === "skills" || subcmd === "install" || subcmd === "remove" || subcmd === "delete") {
+  const installerScript = path.join(__dirname, "scripts", "wizard-installer.js");
+  if (fs.existsSync(installerScript)) {
+    const status = run("node", [installerScript, ...process.argv.slice(3)]);
+    process.exit(status === null ? 1 : status);
+  }
+}
+
 if (subcmd === "test" || subcmd === "webnative-inspect" || subcmd === "webnative") {
+
   const testScript = path.join(__dirname, "scripts", "wizard-test.js");
   if (fs.existsSync(testScript)) {
     const status = run("node", [testScript, ...process.argv.slice(subcmd === "test" ? 3 : 2)]);

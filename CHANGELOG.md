@@ -7,6 +7,14 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
+## [0.50.47] - 2026-07-22
+
+### Fixed
+- **Executable Resolver & Syntax Bug Fix (`cli.js`, `bin/wz-ai-sync-skills`)**:
+  - Registered `"wizard-ai-cli"` in `package.json` `bin` map so `npx @darkrei08/wizard-ai-cli` works directly.
+  - Added subcommands (`skills`, `install`, `remove`, `delete`) to `cli.js`.
+  - Fixed missing `fi` syntax error on line 26 of `bin/wz-ai-sync-skills`.
+
 ## [0.50.46] - 2026-07-22
 
 ### Added

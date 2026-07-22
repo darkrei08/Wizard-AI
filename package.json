@@ -1,6 +1,6 @@
 {
   "name": "@darkrei08/wizard-ai-cli",
-  "version": "0.50.46",
+  "version": "0.50.47",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
@@ -8,10 +8,15 @@
   "description": "Installer for the Wizard-AI environment: AI CLI tools and Claude Code skills (graphify, llmlingua, flashrank, markitdown and more). Clones the repo and runs the platform setup script.",
   "bin": {
     "wizard-ai": "cli.js",
+    "wizard-ai-cli": "cli.js",
+    "wizard-installer": "scripts/wizard-installer.js",
+    "wizard-skills": "scripts/wizard-installer.js",
+    "skills-wizard": "scripts/wizard-installer.js",
     "wizard-test": "scripts/wizard-test.js",
     "ai-test": "scripts/wizard-test.js",
     "wz-ai-context": "scripts/wz-ai-context.js"
   },
+
   "files": [
     "cli.js",
     "index.js",
@@ -52,6 +57,7 @@
     "vitest": "^4.1.10"
   },
   "dependencies": {
+    "@darkrei08/wizard-ai-cli": "^0.50.46",
     "@toon-format/toon": "^2.3.1"
   }
 }
