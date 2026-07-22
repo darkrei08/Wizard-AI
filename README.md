@@ -96,6 +96,19 @@ Inspired by quantified token-saving breakthroughs like [ponytail](https://github
 
 ---
 
+## 🧠 Agentic Context Engineering & The 4-Layer Format Stack
+
+In the 2026 AI ecosystem, prompting is dead; **Context Engineering** is the new gold standard. Wizard-AI introduces the **4-Layer Format Stack**, a strict structural separation designed to eliminate context collapse and maximize LLM token optimization:
+
+1. **Layer 4: JavaScript (Execution)** — Workflow logic runs in secure sandboxes via `pi-extensible-workflows`. No more verbose bash scripts clogging the LLM context.
+2. **Layer 3: YAML (Orchestration)** — Purely for routing, configuration, and agent roles.
+3. **Layer 2: Markdown + LEA (Content)** — Uses **Lossless Evidence Aliases (LEA)**. Instead of repeating file paths and instructions, Wizard-AI defines them once (`[S1]: MEMORY.md`) and cites them (`[E1]`). Saves **60-80%** on repetitive semantic memory.
+4. **Layer 1: TOON Format (API Boundaries)** — Replaces bloated JSON with **Token Oriented Object Notation (TOON)** via `@toon-format/toon`. Removes repetitive keys for structured data, achieving **40-75% token reduction** over raw JSON.
+
+**The PRE & POST Autoloop Rule:** Every session is strictly gated. Agents are forced to execute context compression, memory sync (`MEMORY.md`), and graph compilation before and after every prompt. No manual intervention required.
+
+---
+
 ## 🚀 Quick Start
 
 ### ⚡ Option A — One command via npm (recommended)

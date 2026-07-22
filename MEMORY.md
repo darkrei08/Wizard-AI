@@ -68,3 +68,10 @@ Rilasciata versione v0.50.12: sync memory and skills, published to GitHub and np
 ## [Session State Snapshot] - 2026-07-22 09:43:04
 Fixed setup.ps1 crash on daemon auto-update, added JSON/TXT Write-Log system, tested sync of 219 skills. Releasing version.
 
+
+## [Session State Snapshot] - 2026-07-22 12:35:00
+Implementato e integrato il paradigma **4-Layer Format Stack (TOON/LEA)**.
+- Integrata libreria ufficiale `@toon-format/toon` in `wz-ai-context-formats.js` (risparmio 40-75% vs JSON).
+- Creata CLI `wz-ai-context` per testing dei formati (TOON, LEA, Markdown).
+- Aggiornate documentazioni di sistema (GEMINI.md, CLAUDE.md) con le nuove linee guida `pi-extensible-workflows` ibride e vincolo rigoroso su PRE/POST loop.
+- Modificato README.md introducendo la sezione SEO-optimized per "Agentic Context Engineering" e "Token Optimization".
