@@ -55,33 +55,88 @@ module.exports = async function (api) {
       // Expose reusable functions callable from any workflow script
       functions: {
         loadProjectContext: {
-          description: 'Loads essential project context (MEMORY.md + PROJECT_STATUS.md) for subagent injection. Keeps context lean.',
+          description: 'Loads essential project context using LEA (Lossless Evidence Aliases) format for maximum token efficiency. Returns compressed context with source dictionary and evidence table.',
           input: {
             type: 'object',
             properties: {
               cwd: { type: 'string', description: 'Project working directory' },
               maxBytes: { type: 'number', description: 'Max bytes to read per file (default: 2000)' },
+              format: { type: 'string', description: 'Output format: lea, toon, markdown, raw (default: lea)' },
             },
           },
           output: {
             type: 'object',
             properties: {
-              memory: { type: 'string' },
-              status: { type: 'string' },
+              context: { type: 'string', description: 'Compressed context string' },
+              tokenEstimate: { type: 'number', description: 'Estimated token count' },
+              format: { type: 'string' },
             },
           },
-          handler: async ({ cwd, maxBytes = 2000 }) => {
-            const readSafe = (filePath) => {
-              try {
-                return fs.readFileSync(filePath, 'utf-8').slice(0, maxBytes);
-              } catch {
-                return '';
-              }
-            };
+          handler: async ({ cwd, maxBytes = 2000, format = 'lea' }) => {
+            const fmt = require(path.join(__dirname, 'scripts', 'wz-ai-context-formats.js'));
+            const contextStr = fmt.compressContext(cwd, {
+              format,
+              files: ['MEMORY.md', 'PROJECT_STATUS.md', 'NOTES.md'],
+              maxTokenBudget: Math.floor(maxBytes / 4),
+            });
+            const est = fmt.estimateTokens(contextStr);
             return {
-              memory: readSafe(path.join(cwd, 'MEMORY.md')),
-              status: readSafe(path.join(cwd, 'PROJECT_STATUS.md')),
+              context: contextStr,
+              tokenEstimate: est.estimatedTokens,
+              format,
             };
+          },
+        },
+        convertToTOON: {
+          description: 'Convert a JSON array to TOON format for 40-75% token savings. Use for passing structured data between agents.',
+          input: {
+            type: 'object',
+            properties: {
+              label: { type: 'string', description: 'Collection name (e.g., "skills", "issues")' },
+              data: { type: 'array', description: 'Array of uniform objects' },
+            },
+          },
+          output: {
+            type: 'object',
+            properties: {
+              toon: { type: 'string', description: 'TOON-formatted string' },
+              tokenEstimate: { type: 'number' },
+              savingsVsJson: { type: 'string' },
+            },
+          },
+          handler: async ({ label, data }) => {
+            const fmt = require(path.join(__dirname, 'scripts', 'wz-ai-context-formats.js'));
+            const toonStr = fmt.toTOON(label, data);
+            const comparison = fmt.compareFormats(data, label);
+            return {
+              toon: toonStr,
+              tokenEstimate: comparison.toon,
+              savingsVsJson: comparison.savings.toonVsJson,
+            };
+          },
+        },
+        encodeLEA: {
+          description: 'Encode sources and evidence into LEA (Lossless Evidence Aliases) format. Saves 60-80% on repeated metadata.',
+          input: {
+            type: 'object',
+            properties: {
+              sources: { type: 'object', description: 'Source dictionary { "S1": "file.md", "S2": "file2.md" }' },
+              evidence: { type: 'array', description: 'Array of { id, source, content } entries' },
+              instruction: { type: 'string', description: 'Analysis instruction for the LLM' },
+            },
+          },
+          output: {
+            type: 'object',
+            properties: {
+              lea: { type: 'string', description: 'LEA-formatted Markdown string' },
+              tokenEstimate: { type: 'number' },
+            },
+          },
+          handler: async ({ sources, evidence, instruction }) => {
+            const fmt = require(path.join(__dirname, 'scripts', 'wz-ai-context-formats.js'));
+            const leaStr = fmt.encodeLEA({ sources, evidence, instruction });
+            const est = fmt.estimateTokens(leaStr);
+            return { lea: leaStr, tokenEstimate: est.estimatedTokens };
           },
         },
         classifyComplexity: {
@@ -112,6 +167,7 @@ module.exports = async function (api) {
           },
         },
       },
+
 
       // Register named workflows that can be invoked by name
       workflows: {
