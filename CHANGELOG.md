@@ -7,6 +7,18 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
+## [0.50.45] - 2026-07-22
+
+### Added
+- **Interactive Skill & Framework Selector (`setup.sh`, `setup.ps1`)**: Transformed the monolithic step `[3/10]` from "install everything" into an interactive, caveman-style menu with 4 modes: `[1] Install Everything`, `[2] Select by Category`, `[3] Select Individual Skills`, `[4] Skip`. Supports number ranges (e.g. `1,5,10-15`), backwards compatible with `--yes`/`--all`.
+- **Centralized Repo Registry (`scripts/repo-registry.json`)**: Single source of truth for all 53 external repositories across 5 categories. Consumed by `setup.sh`, `setup.ps1`, and `wizard-installer.js` — eliminates duplicated hardcoded URL lists.
+- **Post-Install Summary Dashboard**: After installation, displays a summary with counts of installed, skipped, and failed repos with names.
+- **Refactored `wizard-installer.js`**: Now imports categories dynamically from `repo-registry.json` instead of hardcoding 80+ lines of repo definitions.
+
+### Changed
+- **`setup.sh` Step [3/10]**: Reads repos from `repo-registry.json` via Node.js, shows ANSI box-drawing menu, tracks install/skip/fail counters, and displays a summary at the end.
+- **`setup.ps1` Step [3/8]**: Mirrors the Bash interactive UX using PowerShell-native `Read-Host` and `Write-Host` with colors, reading from the same `repo-registry.json`.
+
 ## [0.50.44] - 2026-07-22
 
 ### Added

@@ -30,88 +30,28 @@ const MAGENTA = "\x1b[35m";
 const RED = "\x1b[31m";
 const DIM = "\x1b[2m";
 
-const CATEGORIES = {
-  "agent-frameworks": {
-    name: "🤖 Autonomous Agent Frameworks & Runtimes [AGENT FRAMEWORK]",
-    description: "Standalone multi-agent harnesses, execution engines, and orchestrators",
-    repos: {
-      "earendil-pi": { url: "https://github.com/earendil-works/pi.git", type: "[AGENT FRAMEWORK]" },
-      "ECC": { url: "https://github.com/affaan-m/ECC.git", type: "[AGENT FRAMEWORK]" },
-      "caveman": { url: "https://github.com/JuliusBrussee/caveman.git", type: "[AGENT FRAMEWORK]" },
-      "goodcode": { url: "https://github.com/SpinaBuilds/goodcode.git", type: "[AGENT FRAMEWORK]" },
-      "openhuman": { url: "https://github.com/tinyhumansai/openhuman.git", type: "[AGENT FRAMEWORK]" },
-      "QwenPaw": { url: "https://github.com/agentscope-ai/QwenPaw.git", type: "[AGENT FRAMEWORK]" },
-      "syke": { url: "https://github.com/saxenauts/syke.git", type: "[AGENT FRAMEWORK]" },
-      "mem0": { url: "https://github.com/mem0ai/mem0.git", type: "[AGENT FRAMEWORK]" },
-      "personal-graph": { url: "https://github.com/Technoculture/personal-graph.git", type: "[AGENT FRAMEWORK]" },
-    }
-  },
-  "cli-tools": {
-    name: "⚡ CLI Tools & Context Squeezers [CLI TOOL]",
-    description: "Binary command-line utilities, LSP servers, and token context squeezers",
-    repos: {
-      "sqz": { url: "https://github.com/ojuschugh1/sqz.git", type: "[CLI TOOL]" },
-      "LLMLingua": { url: "https://github.com/microsoft/LLMLingua.git", type: "[CLI TOOL]" },
-      "FlashRank": { url: "https://github.com/PrithivirajDamodaran/FlashRank.git", type: "[CLI TOOL]" },
-      "serena": { url: "https://github.com/oraios/serena.git", type: "[CLI TOOL]" },
-      "graphify": { url: "https://github.com/safishamsi/graphify.git", type: "[CLI TOOL]" },
-      "claude-mem": { url: "https://github.com/thedotmack/claude-mem.git", type: "[CLI TOOL]" },
-      "geminiusage": { url: "https://github.com/rmedranollamas/geminiusage.git", type: "[CLI TOOL]" },
-      "litellm": { url: "https://github.com/BerriAI/litellm.git", type: "[CLI TOOL]" },
-      "markitdown": { url: "https://github.com/microsoft/markitdown.git", type: "[CLI TOOL]" },
-      "mermaid-cli": { url: "https://github.com/mermaid-js/mermaid-cli.git", type: "[CLI TOOL]" },
-      "spec-kit": { url: "https://github.com/github/spec-kit.git", type: "[CLI TOOL]" },
-      "cli-anything": { url: "https://github.com/HKUDS/CLI-Anything.git", type: "[CLI TOOL]" },
-      "cli-printing-press": { url: "https://github.com/mvanhorn/cli-printing-press.git", type: "[CLI TOOL]" },
-    }
-  },
-  "native-skills": {
-    name: "🧩 Native LLM Prompt Skills & Packs [NATIVE SKILL]",
-    description: "Agent directives, rulebooks, and specialized skill packs",
-    repos: {
-      "antigravity-awesome-skills": { url: "https://github.com/sickn33/antigravity-awesome-skills.git", type: "[NATIVE SKILL]" },
-      "awesome-agent-skills": { url: "https://github.com/VoltAgent/awesome-agent-skills.git", type: "[NATIVE SKILL]" },
-      "cybersecurity-skills": { url: "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git", type: "[NATIVE SKILL]" },
-      "stitch-skills": { url: "https://github.com/google-labs-code/stitch-skills.git", type: "[NATIVE SKILL]" },
-      "design.md": { url: "https://github.com/google-labs-code/design.md.git", type: "[NATIVE SKILL]" },
-      "book-to-skill": { url: "https://github.com/virgiliojr94/book-to-skill.git", type: "[NATIVE SKILL]" },
-      "wiki-brain-skill": { url: "https://github.com/tenfoldmarc/wiki-brain-skill.git", type: "[NATIVE SKILL]" },
-      "impeccable": { url: "https://github.com/pbakaus/impeccable.git", type: "[NATIVE SKILL]" },
-      "last30days-skill": { url: "https://github.com/mvanhorn/last30days-skill.git", type: "[NATIVE SKILL]" },
-      "claude-blog": { url: "https://github.com/AgriciDaniel/claude-blog.git", type: "[NATIVE SKILL]" },
-      "claude-seo": { url: "https://github.com/AgriciDaniel/claude-seo.git", type: "[NATIVE SKILL]" },
-    }
-  },
-  "graphical-and-services": {
-    name: "🖥️ Graphical Apps, Desktop & Media Services [DESKTOP / SERVICE]",
-    description: "Desktop UI harnesses, audio/video studios, realtime DBs, and API bridges",
-    repos: {
-      "aionui": { url: "https://github.com/iOfficeAI/AionUi.git", type: "[DESKTOP / APP]" },
-      "phantom-ui": { url: "https://github.com/Aejkatappaja/phantom-ui.git", type: "[DESKTOP / APP]" },
-      "voicebox": { url: "https://github.com/jamiepine/voicebox.git", type: "[DESKTOP / SERVICE]" },
-      "omnivoice-studio": { url: "https://github.com/debpalash/OmniVoice-Studio.git", type: "[DESKTOP / SERVICE]" },
-      "supertonic": { url: "https://github.com/supertone-inc/supertonic.git", type: "[MEDIA SERVICE]" },
-      "hyperframes": { url: "https://github.com/heygen-com/hyperframes.git", type: "[MEDIA SERVICE]" },
-      "wslens": { url: "https://github.com/vekexasia/wslens.git", type: "[GUI BACKEND]" },
-      "pocketbase": { url: "https://github.com/pocketbase/pocketbase.git", type: "[REALTIME DB]" },
-      "trailbase": { url: "https://github.com/trailbaseio/trailbase.git", type: "[REALTIME DB]" },
-      "zvec": { url: "https://github.com/alibaba/zvec.git", type: "[VECTOR DB]" },
-      "turbovec": { url: "https://github.com/RyanCodrai/turbovec.git", type: "[VECTOR DB]" },
-      "go-whatsapp": { url: "https://github.com/aldinokemal/go-whatsapp-web-multidevice.git", type: "[REST BRIDGE]" },
-      "wuzapi": { url: "https://github.com/asternic/wuzapi.git", type: "[REST API]" },
-      "openwa": { url: "https://github.com/rmyndharis/OpenWA.git", type: "[WEBSOCKET ENGINE]" },
-      "cockpit-tools": { url: "https://github.com/jlcodes99/cockpit-tools.git", type: "[LOCAL PROXY]" },
-    }
-  },
-  "starter-templates": {
-    name: "🏗️ Starter Templates & Benchmarks [STARTER TEMPLATE]",
-    description: "Production API starters, scaffolding, and A/B test benchmarking libraries",
-    repos: {
-      "express-typescript-starter": { url: "https://github.com/ToniR7/express-typescript-starter.git", type: "[STARTER TEMPLATE]" },
-      "aisuite": { url: "https://github.com/andrewyng/aisuite.git", type: "[BENCHMARK FRAMEWORK]" },
-    }
+// ── Load categories from centralized registry (single source of truth) ──────
+const REGISTRY_PATH = path.join(__dirname, "repo-registry.json");
+if (!fs.existsSync(REGISTRY_PATH)) {
+  console.error(`${RED}[ERROR] Missing repo-registry.json at ${REGISTRY_PATH}${RESET}`);
+  process.exit(1);
+}
+const REGISTRY = JSON.parse(fs.readFileSync(REGISTRY_PATH, "utf-8"));
+
+// Transform registry format to internal CATEGORIES format
+const CATEGORIES = {};
+for (const [catKey, catData] of Object.entries(REGISTRY.categories)) {
+  const repos = {};
+  for (const repo of catData.repos) {
+    repos[repo.name] = { url: repo.url, type: catData.badge, desc: repo.desc };
   }
-};
+  CATEGORIES[catKey] = {
+    name: `${catData.name} ${catData.badge}`,
+    description: catData.description,
+    repos,
+  };
+}
+
 
 function printBanner() {
   console.log(`\n${CYAN}============================================================${RESET}`);

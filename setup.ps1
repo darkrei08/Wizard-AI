@@ -166,39 +166,83 @@ Write-Log 'Installing llmlingua and flashrank inside the venv (this can take a w
 if ($QuietOpt) { uv pip install --quiet --python $VenvPython llmlingua flashrank aisuite } else { uv pip install --python $VenvPython llmlingua flashrank aisuite }
 Write-Log "[ok] Virtual environment ready at $VenvDir" -ForegroundColor Green
 
-# 3. Clone and install required skill repositories if not present
+# 3. Setting up external git skill & framework repositories (Interactive Selector)
+# ═══════════════════════════════════════════════════════════════════════════════
+# Reads from scripts/repo-registry.json — single source of truth for all repos.
+# Inspired by caveman installer UX: numbered categories, selectable items.
+# ═══════════════════════════════════════════════════════════════════════════════
 Write-Log ' '
-Write-Log "[3/8] Setting up 52 external git skill & framework repositories in $AiSkills..." -ForegroundColor Blue
-if (-not $Verbose) {
-    Write-Log '💡 [Tip] To watch full verbose build & dependency logs line-by-line, run setup with: .\setup.ps1 -Verbose' -ForegroundColor Cyan
+Write-Log '[3/8] Setting up external git skill & framework repositories...' -ForegroundColor Blue
+
+$RegistryFile = Join-Path $ScriptDir 'scripts\repo-registry.json'
+if (-not (Test-Path $RegistryFile)) {
+    Write-Log "[ERROR] Missing repo-registry.json at $RegistryFile" -ForegroundColor Red
+    exit 1
 }
+$Registry = Get-Content $RegistryFile -Raw | ConvertFrom-Json
 
+# Build flat list and category summary
+$AllItems = @()
+$CategoryList = @()
+foreach ($catKey in $Registry.categories.PSObject.Properties.Name) {
+    $cat = $Registry.categories.$catKey
+    $CategoryList += [PSCustomObject]@{
+        Key         = $catKey
+        Name        = $cat.name
+        Badge       = $cat.badge
+        Description = $cat.description
+        Count       = $cat.repos.Count
+    }
+    foreach ($repo in $cat.repos) {
+        $AllItems += [PSCustomObject]@{
+            CatKey  = $catKey
+            CatName = $cat.name
+            Badge   = $cat.badge
+            Name    = $repo.name
+            Url     = $repo.url
+            Desc    = $repo.desc
+        }
+    }
+}
+$TotalRepos = $AllItems.Count
+
+# Install counters
 $script:SkillRepoIndex = 0
-$script:SkillRepoTotal = 52
+$script:SkillRepoTotal = 0
+$script:InstallOK = 0
+$script:InstallSkip = 0
+$script:InstallFail = 0
+$script:FailedRepos = @()
 
-function Clone-SkillRepo($Url, $DestName) {
+function Clone-SkillRepo {
+    param([string]$Url, [string]$DestName, [string]$Badge = '')
     $script:SkillRepoIndex++
     $DestDir = Join-Path $AiSkills $DestName
 
-    Write-Log "[3/8] [Repo $script:SkillRepoIndex/$script:SkillRepoTotal] Processing $DestName..." -ForegroundColor White
+    $badgeStr = if ($Badge) { " $Badge" } else { '' }
+    Write-Log "[3/8] [$($script:SkillRepoIndex)/$($script:SkillRepoTotal)] $DestName$badgeStr" -ForegroundColor White
 
     if (-not (Test-Path $DestDir)) {
-        Write-Log "  ↳ Cloning $DestName from GitHub..." -ForegroundColor Yellow
-        if ($QuietOpt) {
-            git clone --depth 1 --quiet $Url $DestDir
-        } else {
+        Write-Log "  > Cloning $DestName from $Url..." -ForegroundColor Yellow
+        if ($VerboseMode) {
             git clone --depth 1 $Url $DestDir
+        } else {
+            git clone --depth 1 --quiet $Url $DestDir 2>$null
         }
         if ($LASTEXITCODE -ne 0) {
-            Write-Log "  [!] $DestName clone failed" -ForegroundColor Red
-        } else {
-            Write-Log "  [ok] $DestName cloned successfully." -ForegroundColor Green
+            $script:InstallFail++
+            $script:FailedRepos += $DestName
+            Write-Log "  [X] Clone failed for $DestName" -ForegroundColor Red
+            return
         }
+        Write-Log "  [ok] $DestName cloned." -ForegroundColor Green
+        $script:InstallOK++
     } else {
         Write-Log "  [ok] $DestName is already present." -ForegroundColor Green
+        $script:InstallSkip++
     }
 
-    # Auto-install framework / skill dependencies per OS specification
+    # Auto-install framework / skill dependencies
     if (Test-Path $DestDir) {
         $InstallPs1 = Join-Path $DestDir 'install.ps1'
         $SetupPs1   = Join-Path $DestDir 'setup.ps1'
@@ -208,125 +252,207 @@ function Clone-SkillRepo($Url, $DestName) {
         $PkgJson    = Join-Path $DestDir 'package.json'
 
         if (Test-Path $InstallPs1) {
-            Write-Log "  ↳ Running install.ps1 for $DestName..." -ForegroundColor Cyan
+            Write-Log "  > Running install.ps1 for $DestName..." -ForegroundColor Cyan
             try { & $InstallPs1 } catch {}
-        } elseif (Test-Path $SetupPs1) {
-            Write-Log "  ↳ Running setup.ps1 for $DestName..." -ForegroundColor Cyan
+        } elseif ((Test-Path $SetupPs1) -and ($SetupPs1 -ne (Join-Path $ScriptDir 'setup.ps1'))) {
+            Write-Log "  > Running setup.ps1 for $DestName..." -ForegroundColor Cyan
             try { & $SetupPs1 } catch {}
         } elseif (Test-Path $InstallJs) {
-            Write-Log "  ↳ Running bin\install.js for $DestName..." -ForegroundColor Cyan
-            try { $env:GITHUB_TOKEN=""; node $InstallJs --all --non-interactive } catch {}
+            Write-Log "  > Running bin\install.js for $DestName..." -ForegroundColor Cyan
+            try { $env:GITHUB_TOKEN=''; node $InstallJs --all --non-interactive } catch {}
         } elseif ((Test-Path $PyProj) -or (Test-Path $SetupPy)) {
-            Write-Log "  ↳ Building Python dependencies for $DestName..." -ForegroundColor Cyan
+            Write-Log "  > Building Python package for $DestName..." -ForegroundColor Cyan
             try { uv pip install --python $VenvPython -e $DestDir } catch {}
         } elseif (Test-Path $PkgJson) {
-            Write-Log "  ↳ Installing Node.js npm packages for $DestName..." -ForegroundColor Cyan
+            Write-Log "  > Installing npm packages for $DestName..." -ForegroundColor Cyan
             try { npm install --prefix $DestDir --no-audit --no-fund } catch {}
         }
     }
 }
 
-Clone-SkillRepo 'https://github.com/thedotmack/claude-mem.git' 'claude-mem'
-Clone-SkillRepo 'https://github.com/chopratejas/headroom.git' 'headroom'
-Clone-SkillRepo 'https://github.com/antvis/Infographic.git' 'Infographic'
-Clone-SkillRepo 'https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git' 'cybersecurity-skills'
-Clone-SkillRepo 'https://github.com/AgriciDaniel/claude-blog.git' 'claude-blog'
-Clone-SkillRepo 'https://github.com/AgriciDaniel/claude-seo.git' 'claude-seo'
-Clone-SkillRepo 'https://github.com/google-labs-code/stitch-skills.git' 'stitch-skills'
-Clone-SkillRepo 'https://github.com/google-labs-code/design.md.git' 'design.md'
-Clone-SkillRepo 'https://github.com/SpinaBuilds/goodcode.git' 'goodcode'
-Clone-SkillRepo 'https://github.com/mvanhorn/last30days-skill.git' 'last30days-skill'
-Clone-SkillRepo 'https://github.com/earendil-works/pi.git' 'earendil-pi'
-Clone-SkillRepo 'https://github.com/tinyhumansai/openhuman.git' 'openhuman'
-Clone-SkillRepo 'https://github.com/agentscope-ai/QwenPaw.git' 'QwenPaw'
-Clone-SkillRepo 'https://github.com/saxenauts/syke.git' 'syke'
-Clone-SkillRepo 'https://github.com/mem0ai/mem0.git' 'mem0'
-Clone-SkillRepo 'https://github.com/Technoculture/personal-graph.git' 'personal-graph'
-Clone-SkillRepo 'https://github.com/safishamsi/graphify.git' 'graphify'
-Clone-SkillRepo 'https://github.com/rmedranollamas/geminiusage.git' 'geminiusage'
-Clone-SkillRepo 'https://github.com/BerriAI/litellm.git' 'litellm'
-Clone-SkillRepo 'https://github.com/microsoft/LLMLingua.git' 'LLMLingua'
-Clone-SkillRepo 'https://github.com/PrithivirajDamodaran/FlashRank.git' 'FlashRank'
-Clone-SkillRepo 'https://github.com/ojuschugh1/sqz.git' 'sqz'
-Clone-SkillRepo 'https://github.com/microsoft/markitdown.git' 'markitdown'
-Clone-SkillRepo 'https://github.com/mermaid-js/mermaid-cli.git' 'mermaid-cli'
-Clone-SkillRepo 'https://github.com/tenfoldmarc/wiki-brain-skill.git' 'wiki-brain-skill'
-Clone-SkillRepo 'https://github.com/oraios/serena.git' 'serena'
-Clone-SkillRepo 'https://github.com/github/spec-kit.git' 'spec-kit'
-Clone-SkillRepo 'https://github.com/sickn33/antigravity-awesome-skills.git' 'antigravity-awesome-skills'
-Clone-SkillRepo 'https://github.com/VoltAgent/awesome-agent-skills.git' 'awesome-agent-skills'
-Clone-SkillRepo 'https://github.com/HKUDS/CLI-Anything.git' 'cli-anything'
-Clone-SkillRepo 'https://github.com/mvanhorn/cli-printing-press.git' 'cli-printing-press'
-Clone-SkillRepo 'https://github.com/virgiliojr94/book-to-skill.git' 'book-to-skill'
-Clone-SkillRepo 'https://github.com/pbakaus/impeccable.git' 'impeccable'
-Clone-SkillRepo 'https://github.com/jlcodes99/cockpit-tools.git' 'cockpit-tools'
-Clone-SkillRepo 'https://github.com/jamiepine/voicebox.git' 'voicebox'
-Clone-SkillRepo 'https://github.com/datawhalechina/easy-vibe.git' 'easy-vibe'
-Clone-SkillRepo 'https://github.com/debpalash/OmniVoice-Studio.git' 'omnivoice-studio'
-Clone-SkillRepo 'https://github.com/supertone-inc/supertonic.git' 'supertonic'
-Clone-SkillRepo 'https://github.com/heygen-com/hyperframes.git' 'hyperframes'
-Clone-SkillRepo 'https://github.com/iOfficeAI/AionUi.git' 'aionui'
-Clone-SkillRepo 'https://github.com/Aejkatappaja/phantom-ui.git' 'phantom-ui'
-Clone-SkillRepo 'https://github.com/pocketbase/pocketbase.git' 'pocketbase'
-Clone-SkillRepo 'https://github.com/trailbaseio/trailbase.git' 'trailbase'
-Clone-SkillRepo 'https://github.com/alibaba/zvec.git' 'zvec'
-Clone-SkillRepo 'https://github.com/RyanCodrai/turbovec.git' 'turbovec'
-Clone-SkillRepo 'https://github.com/aldinokemal/go-whatsapp-web-multidevice.git' 'go-whatsapp'
-Clone-SkillRepo 'https://github.com/asternic/wuzapi.git' 'wuzapi'
-Clone-SkillRepo 'https://github.com/rmyndharis/OpenWA.git' 'openwa'
-Clone-SkillRepo 'https://github.com/ToniR7/express-typescript-starter.git' 'express-typescript-starter'
-Clone-SkillRepo 'https://github.com/andrewyng/aisuite.git' 'aisuite'
+# ── Determine if interactive ──
+$IsNonInteractive = $false
+foreach ($a in $args) { if ($a -match '(?i)^(-y|--yes|--all)$') { $IsNonInteractive = $true } }
+if (-not [Environment]::UserInteractive) { $IsNonInteractive = $true }
 
-Write-Log "Cloning/Verifying ECC and caveman repositories inside ~/.wizard-ai/..." -ForegroundColor Cyan
-Clone-SkillRepo 'https://github.com/vekexasia/wslens.git' 'wslens'
-if (Test-Path (Join-Path $AiSkills 'wslens\install.ps1')) {
-    Write-Log "Installing wslens backend..." -ForegroundColor Yellow
-    # Save original directory
-    $OldDir = Get-Location
-    Set-Location (Join-Path $AiSkills 'wslens')
-    & .\install.ps1
-    Set-Location $OldDir
-    
-    # Also create a wrapper for wz-ai so we can do 'wz-ai wslens'
-    $WslensWrapper = Join-Path $LocalBin 'wz-ai-wslens.ps1'
-    "<#
-.SYNOPSIS
-Wrapper for wslens
-#>
-if (`$args.Count -eq 0) { wslens } else { wslens @args }" | Set-Content -Path $WslensWrapper -Encoding utf8
-}
-Clone-SkillRepo 'https://github.com/affaan-m/ECC.git' 'ECC'
-Clone-SkillRepo 'https://github.com/JuliusBrussee/caveman.git' 'caveman'
+$SelectedItems = @()
 
-if (Get-Command npm -ErrorAction SilentlyContinue) {
-    Write-Log "Attempting optional NPM global installations (ECC)..." -ForegroundColor Yellow
-    try { npm install -g ecc-universal 2>$null } catch { Write-Log "Note: ecc-universal npm install skipped." -ForegroundColor DarkGray }
+if ($IsNonInteractive) {
+    Write-Log "Installing all $TotalRepos repositories (non-interactive mode)..." -ForegroundColor Yellow
+    $SelectedItems = $AllItems
 } else {
-    Write-Log "NPM not found. Using cloned git repos for ECC." -ForegroundColor Yellow
-}
+    # ── Interactive menu ──
+    Write-Host ''
+    Write-Host '  ╔══════════════════════════════════════════════════════════════╗' -ForegroundColor Cyan
+    Write-Host '  ║  Wizard-AI — Skill & Framework Selector                     ║' -ForegroundColor Cyan
+    Write-Host '  ╠══════════════════════════════════════════════════════════════╣' -ForegroundColor Cyan
+    Write-Host '  ║                                                              ║' -ForegroundColor Cyan
+    Write-Host '  ║  How would you like to install skills & frameworks?          ║' -ForegroundColor Cyan
+    Write-Host '  ║                                                              ║' -ForegroundColor Cyan
+    Write-Host '  ║  [1] Install Everything (Recommended)                        ║' -ForegroundColor Cyan
+    Write-Host '  ║  [2] Select by Category                                      ║' -ForegroundColor Cyan
+    Write-Host '  ║  [3] Select Individual Skills                                ║' -ForegroundColor Cyan
+    Write-Host '  ║  [4] Skip (install only core tools)                          ║' -ForegroundColor Cyan
+    Write-Host '  ║                                                              ║' -ForegroundColor Cyan
+    Write-Host '  ╚══════════════════════════════════════════════════════════════╝' -ForegroundColor Cyan
+    Write-Host ''
+    $mode = Read-Host '> '
+    if (-not $mode) { $mode = '1' }
 
-Write-Log "Installing Caveman agent skill globally..." -ForegroundColor Yellow
-try {
-    $cavemanJs = Join-Path $AiSkills "caveman\bin\install.js"
-    if (Test-Path $cavemanJs) {
-        $env:GITHUB_TOKEN = ""
-        node $cavemanJs --all --non-interactive 2>$null
-        Write-Log "  [ok] Caveman skill installed successfully." -ForegroundColor Green
-    } else {
-        $tempPs1 = Join-Path $env:TEMP "caveman_install.ps1"
-        Invoke-RestMethod https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.ps1 -OutFile $tempPs1
-        $proc = Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$tempPs1`" --all --non-interactive" -Wait -NoNewWindow -PassThru
-        Remove-Item $tempPs1 -ErrorAction SilentlyContinue
-        if ($proc.ExitCode -eq 0) {
-            Write-Log "  [ok] Caveman skill installed successfully." -ForegroundColor Green
-        } else {
-            Write-Log "  [!] Caveman skill installation returned exit code $($proc.ExitCode)." -ForegroundColor Yellow
+    switch ($mode) {
+        '1' {
+            Write-Log "Installing all $TotalRepos repositories..." -ForegroundColor Green
+            $SelectedItems = $AllItems
+        }
+        '2' {
+            # ── Category Selection ──
+            Write-Host ''
+            Write-Host '  Available Categories:' -ForegroundColor White
+            Write-Host ''
+            for ($i = 0; $i -lt $CategoryList.Count; $i++) {
+                $c = $CategoryList[$i]
+                $idx = $i + 1
+                Write-Host "    [$idx] $($c.Name)  ($($c.Count) repos)  $($c.Badge)" -ForegroundColor White
+                Write-Host "        $($c.Description)" -ForegroundColor DarkGray
+            }
+            Write-Host ''
+            Write-Host "  Enter numbers separated by commas (e.g. 1,3,5) or 'all':" -ForegroundColor White
+            $catSel = Read-Host '> '
+            if (-not $catSel) { $catSel = 'all' }
+
+            if ($catSel -eq 'all') {
+                $SelectedItems = $AllItems
+            } else {
+                $indices = $catSel -split ',' | ForEach-Object { [int]($_.Trim()) - 1 }
+                foreach ($ci in $indices) {
+                    if ($ci -ge 0 -and $ci -lt $CategoryList.Count) {
+                        $selKey = $CategoryList[$ci].Key
+                        $SelectedItems += $AllItems | Where-Object { $_.CatKey -eq $selKey }
+                    }
+                }
+            }
+        }
+        '3' {
+            # ── Individual Skill Selection ──
+            Write-Host ''
+            Write-Host '  All Available Skills & Frameworks:' -ForegroundColor White
+            $currentCat = ''
+            for ($i = 0; $i -lt $AllItems.Count; $i++) {
+                $item = $AllItems[$i]
+                if ($item.CatKey -ne $currentCat) {
+                    $currentCat = $item.CatKey
+                    Write-Host ''
+                    Write-Host "    $($item.CatName)" -ForegroundColor Magenta
+                }
+                $idx = $i + 1
+                $padName = $item.Name.PadRight(28)
+                $padBadge = $item.Badge.PadRight(18)
+                Write-Host "      [$($idx.ToString().PadLeft(2))] $padName $padBadge $($item.Desc)" -ForegroundColor White
+            }
+            Write-Host ''
+            Write-Host "  Enter numbers/ranges (e.g. 1,5,10-15) or 'all':" -ForegroundColor White
+            $skillSel = Read-Host '> '
+            if (-not $skillSel) { $skillSel = 'all' }
+
+            if ($skillSel -eq 'all') {
+                $SelectedItems = $AllItems
+            } else {
+                $tokens = $skillSel -split ','
+                $selIndices = @()
+                foreach ($tok in $tokens) {
+                    $tok = $tok.Trim()
+                    if ($tok -match '^(\d+)-(\d+)$') {
+                        $rs = [int]$Matches[1]; $re = [int]$Matches[2]
+                        for ($r = $rs; $r -le $re; $r++) { $selIndices += $r }
+                    } else {
+                        $selIndices += [int]$tok
+                    }
+                }
+                foreach ($si in $selIndices) {
+                    $siIdx = $si - 1
+                    if ($siIdx -ge 0 -and $siIdx -lt $AllItems.Count) {
+                        $SelectedItems += $AllItems[$siIdx]
+                    }
+                }
+            }
+        }
+        '4' {
+            Write-Log 'Skipping skill & framework installation. Only core tools will be installed.' -ForegroundColor Yellow
+            $SelectedItems = @()
+        }
+        default {
+            Write-Log 'Invalid selection. Installing everything...' -ForegroundColor Yellow
+            $SelectedItems = $AllItems
         }
     }
-} catch {
-    Write-Log "  [!] Failed to install caveman. You can install manually: irm https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.ps1 | iex" -ForegroundColor Red
 }
-Clone-SkillRepo 'https://github.com/yvgude/lean-ctx.git' 'lean-ctx'
+
+# ── Execute installation for selected repos ─────────────────────────────────
+$script:SkillRepoTotal = $SelectedItems.Count
+
+if ($SelectedItems.Count -gt 0) {
+    Write-Log '' -ForegroundColor White
+    Write-Log "Installing $($SelectedItems.Count) selected repositories..." -ForegroundColor Green
+    Write-Log '' -ForegroundColor White
+
+    foreach ($item in $SelectedItems) {
+        Clone-SkillRepo -Url $item.Url -DestName $item.Name -Badge $item.Badge
+    }
+
+    # Special wslens handler (Windows-specific)
+    if ($SelectedItems | Where-Object { $_.Name -eq 'wslens' }) {
+        $WslensInstall = Join-Path $AiSkills 'wslens\install.ps1'
+        if (Test-Path $WslensInstall) {
+            Write-Log 'Installing wslens backend...' -ForegroundColor Yellow
+            $OldDir = Get-Location
+            Set-Location (Join-Path $AiSkills 'wslens')
+            & .\install.ps1
+            Set-Location $OldDir
+            $WslensWrapper = Join-Path $LocalBin 'wz-ai-wslens.ps1'
+            "<#`n.SYNOPSIS`nWrapper for wslens`n#>`nif (`$args.Count -eq 0) { wslens } else { wslens @args }" | Set-Content -Path $WslensWrapper -Encoding utf8
+        }
+    }
+} else {
+    Write-Log 'No repositories selected for installation.' -ForegroundColor Yellow
+}
+
+# ── Post-install: optional NPM global packages ─────────────────────────────
+$selectedNames = $SelectedItems | ForEach-Object { $_.Name }
+if (($selectedNames -contains 'ECC') -or ($selectedNames -contains 'caveman') -or ($selectedNames -contains 'design.md')) {
+    if (Get-Command npm -ErrorAction SilentlyContinue) {
+        Write-Log 'Running post-install hooks for special packages...' -ForegroundColor Blue
+        if ($selectedNames -contains 'ECC') {
+            try { npm install -g ecc-universal 2>$null } catch { Write-Log 'Note: ecc-universal npm install skipped.' -ForegroundColor DarkGray }
+        }
+        if ($selectedNames -contains 'caveman') {
+            $cavemanJs = Join-Path $AiSkills 'caveman\bin\install.js'
+            if (Test-Path $cavemanJs) {
+                Write-Log '  > Running caveman installer...' -ForegroundColor Cyan
+                try { $env:GITHUB_TOKEN=''; node $cavemanJs --all --non-interactive } catch {}
+            }
+        }
+        if ($selectedNames -contains 'design.md') {
+            try { npm install -g @google/design.md 2>$null } catch { Write-Log 'Note: @google/design.md npm install skipped.' -ForegroundColor DarkGray }
+        }
+    }
+}
+# lean-ctx (always install if skipped from registry)
+Clone-SkillRepo -Url 'https://github.com/yvgude/lean-ctx.git' -DestName 'lean-ctx' -Badge '[CLI TOOL]'
+
+# ── Installation Summary ────────────────────────────────────────────────────
+if ($SelectedItems.Count -gt 0) {
+    Write-Host ''
+    Write-Host '  ────────────────────────────────────────────────────────' -ForegroundColor Cyan
+    Write-Log "  Repository Installation Summary:" -ForegroundColor White
+    Write-Host '  ────────────────────────────────────────────────────────' -ForegroundColor Cyan
+    Write-Log "    [ok] Installed: $($script:InstallOK) new" -ForegroundColor Green
+    Write-Log "    [>>] Skipped:  $($script:InstallSkip) (already present)" -ForegroundColor Blue
+    if ($script:InstallFail -gt 0) {
+        Write-Log "    [X]  Failed:   $($script:InstallFail) ($($script:FailedRepos -join ', '))" -ForegroundColor Red
+    }
+    Write-Host '  ────────────────────────────────────────────────────────' -ForegroundColor Cyan
+}
+
 
 # 4. Install UV Global Tools
 Write-Log ' '

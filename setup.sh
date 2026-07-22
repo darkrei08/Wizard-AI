@@ -201,33 +201,49 @@ if ! uv pip install $QUIET_OPT --python "$VENV_PYTHON" llmlingua flashrank aisui
 fi
 echo -e "${GREEN}✓ Virtual environment ready at ~/.wizard-ai/venv/${NC}"
 
-# 3. Setting up external git skill repositories
-echo -e "\n${BLUE}[3/10] Setting up 52 external git skill & framework repositories...${NC}"
-if [ "$VERBOSE" -eq 0 ]; then
-  echo -e "${CYAN}💡 [Tip] To watch full verbose build & dependency logs line-by-line, run setup with: ./setup.sh --verbose${NC}"
+# 3. Setting up external git skill & framework repositories (Interactive Selector)
+# ═══════════════════════════════════════════════════════════════════════════════
+# Reads from scripts/repo-registry.json — single source of truth for all repos.
+# Inspired by caveman installer UX: numbered categories, selectable items.
+# ═══════════════════════════════════════════════════════════════════════════════
+
+REGISTRY_FILE="$SCRIPT_DIR/scripts/repo-registry.json"
+if [ ! -f "$REGISTRY_FILE" ]; then
+  echo -e "${RED}[ERROR] Missing repo-registry.json at $REGISTRY_FILE${NC}"
+  exit 1
 fi
 
+# ── clone_skill_repo: clone + auto-install dependencies ────────────────────
 SKILL_REPO_INDEX=0
-SKILL_REPO_TOTAL=52
+SKILL_REPO_TOTAL=0
+INSTALL_OK=0
+INSTALL_SKIP=0
+INSTALL_FAIL=0
+FAILED_REPOS=""
 
 clone_skill_repo() {
   local url="$1"
   local dest_name="$2"
+  local badge="${3:-}"
   local dest_dir="$HOME/.wizard-ai/$dest_name"
   SKILL_REPO_INDEX=$((SKILL_REPO_INDEX + 1))
-  
-  echo -e "${BOLD}[3/10] [Repo $SKILL_REPO_INDEX/$SKILL_REPO_TOTAL] Processing $dest_name...${NC}"
+
+  local badge_str=""
+  [ -n "$badge" ] && badge_str=" ${CYAN}${badge}${NC}"
+  echo -e "${BOLD}[3/10] [${SKILL_REPO_INDEX}/${SKILL_REPO_TOTAL}] ${dest_name}${badge_str}${NC}"
 
   if [ ! -d "$dest_dir" ]; then
-    echo -e "${YELLOW}  ↳ Cloning $dest_name from $url...${NC}"
+    echo -e "${YELLOW}  ↳ Cloning ${dest_name} from ${url}...${NC}"
     if [ "$VERBOSE" -eq 1 ]; then
-      git clone --depth 1 "$url" "$dest_dir" || true
+      git clone --depth 1 "$url" "$dest_dir" || { INSTALL_FAIL=$((INSTALL_FAIL+1)); FAILED_REPOS="$FAILED_REPOS $dest_name"; echo -e "${RED}  ✗ Clone failed for $dest_name${NC}"; return; }
     else
-      git clone --depth 1 $QUIET_OPT "$url" "$dest_dir" 2>/dev/null || true
+      git clone --depth 1 $QUIET_OPT "$url" "$dest_dir" 2>/dev/null || { INSTALL_FAIL=$((INSTALL_FAIL+1)); FAILED_REPOS="$FAILED_REPOS $dest_name"; echo -e "${RED}  ✗ Clone failed for $dest_name${NC}"; return; }
     fi
-    echo -e "${GREEN}  ✓ $dest_name cloned successfully.${NC}"
+    echo -e "${GREEN}  ✓ ${dest_name} cloned.${NC}"
+    INSTALL_OK=$((INSTALL_OK + 1))
   else
-    echo -e "${GREEN}  ✓ $dest_name is already present.${NC}"
+    echo -e "${GREEN}  ✓ ${dest_name} is already present.${NC}"
+    INSTALL_SKIP=$((INSTALL_SKIP + 1))
   fi
 
   # Auto-install framework / skill dependencies per OS specification
@@ -246,7 +262,7 @@ clone_skill_repo() {
       else
         bash "$dest_dir/install.sh" >/dev/null 2>&1 || true
       fi
-    elif [ -f "$dest_dir/setup.sh" ]; then
+    elif [ -f "$dest_dir/setup.sh" ] && [ "$dest_dir/setup.sh" != "$SCRIPT_DIR/setup.sh" ]; then
       echo -e "${CYAN}  ↳ Running setup.sh script for $dest_name...${NC}"
       if [ "$VERBOSE" -eq 1 ]; then
         bash "$dest_dir/setup.sh" || true
@@ -254,14 +270,14 @@ clone_skill_repo() {
         bash "$dest_dir/setup.sh" >/dev/null 2>&1 || true
       fi
     elif [ -f "$dest_dir/pyproject.toml" ] || [ -f "$dest_dir/setup.py" ]; then
-      echo -e "${CYAN}  ↳ Building Python package dependencies for $dest_name...${NC}"
+      echo -e "${CYAN}  ↳ Building Python package for $dest_name...${NC}"
       if [ "$VERBOSE" -eq 1 ]; then
         uv pip install --python "$VENV_PYTHON" -e "$dest_dir" || true
       else
         uv pip install --python "$VENV_PYTHON" -e "$dest_dir" $QUIET_OPT 2>/dev/null || true
       fi
     elif [ -f "$dest_dir/package.json" ] && command -v npm &>/dev/null; then
-      echo -e "${CYAN}  ↳ Installing Node.js npm packages for $dest_name...${NC}"
+      echo -e "${CYAN}  ↳ Installing npm packages for $dest_name...${NC}"
       if [ "$VERBOSE" -eq 1 ]; then
         npm install --prefix "$dest_dir" --no-audit --no-fund || true
       else
@@ -270,72 +286,207 @@ clone_skill_repo() {
     fi
   fi
 }
-clone_skill_repo "https://github.com/thedotmack/claude-mem.git" "claude-mem"
-clone_skill_repo "https://github.com/chopratejas/headroom.git" "headroom"
-clone_skill_repo "https://github.com/antvis/Infographic.git" "Infographic"
-clone_skill_repo "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git" "cybersecurity-skills"
-clone_skill_repo "https://github.com/AgriciDaniel/claude-blog.git" "claude-blog"
-clone_skill_repo "https://github.com/AgriciDaniel/claude-seo.git" "claude-seo"
-clone_skill_repo "https://github.com/google-labs-code/stitch-skills.git" "stitch-skills"
-clone_skill_repo "https://github.com/google-labs-code/design.md.git" "design.md"
-clone_skill_repo "https://github.com/SpinaBuilds/goodcode.git" "goodcode"
-clone_skill_repo "https://github.com/mvanhorn/last30days-skill.git" "last30days-skill"
-clone_skill_repo "https://github.com/earendil-works/pi.git" "earendil-pi"
-clone_skill_repo "https://github.com/tinyhumansai/openhuman.git" "openhuman"
-clone_skill_repo "https://github.com/agentscope-ai/QwenPaw.git" "QwenPaw"
-clone_skill_repo "https://github.com/saxenauts/syke.git" "syke"
-clone_skill_repo "https://github.com/mem0ai/mem0.git" "mem0"
-clone_skill_repo "https://github.com/Technoculture/personal-graph.git" "personal-graph"
-clone_skill_repo "https://github.com/safishamsi/graphify.git" "graphify"
-clone_skill_repo "https://github.com/rmedranollamas/geminiusage.git" "geminiusage"
-clone_skill_repo "https://github.com/BerriAI/litellm.git" "litellm"
-clone_skill_repo "https://github.com/microsoft/LLMLingua.git" "LLMLingua"
-clone_skill_repo "https://github.com/PrithivirajDamodaran/FlashRank.git" "FlashRank"
-clone_skill_repo "https://github.com/ojuschugh1/sqz.git" "sqz"
-clone_skill_repo "https://github.com/microsoft/markitdown.git" "markitdown"
-clone_skill_repo "https://github.com/mermaid-js/mermaid-cli.git" "mermaid-cli"
-clone_skill_repo "https://github.com/tenfoldmarc/wiki-brain-skill.git" "wiki-brain-skill"
-clone_skill_repo "https://github.com/oraios/serena.git" "serena"
-clone_skill_repo "https://github.com/github/spec-kit.git" "spec-kit"
-clone_skill_repo "https://github.com/sickn33/antigravity-awesome-skills.git" "antigravity-awesome-skills"
-clone_skill_repo "https://github.com/VoltAgent/awesome-agent-skills.git" "awesome-agent-skills"
-clone_skill_repo "https://github.com/HKUDS/CLI-Anything.git" "cli-anything"
-clone_skill_repo "https://github.com/mvanhorn/cli-printing-press.git" "cli-printing-press"
-clone_skill_repo "https://github.com/virgiliojr94/book-to-skill.git" "book-to-skill"
-clone_skill_repo "https://github.com/pbakaus/impeccable.git" "impeccable"
-clone_skill_repo "https://github.com/jlcodes99/cockpit-tools.git" "cockpit-tools"
-clone_skill_repo "https://github.com/jamiepine/voicebox.git" "voicebox"
-clone_skill_repo "https://github.com/datawhalechina/easy-vibe.git" "easy-vibe"
-clone_skill_repo "https://github.com/debpalash/OmniVoice-Studio.git" "omnivoice-studio"
-clone_skill_repo "https://github.com/supertone-inc/supertonic.git" "supertonic"
-clone_skill_repo "https://github.com/heygen-com/hyperframes.git" "hyperframes"
-clone_skill_repo "https://github.com/iOfficeAI/AionUi.git" "aionui"
-clone_skill_repo "https://github.com/Aejkatappaja/phantom-ui.git" "phantom-ui"
-clone_skill_repo "https://github.com/pocketbase/pocketbase.git" "pocketbase"
-clone_skill_repo "https://github.com/trailbaseio/trailbase.git" "trailbase"
-clone_skill_repo "https://github.com/alibaba/zvec.git" "zvec"
-clone_skill_repo "https://github.com/RyanCodrai/turbovec.git" "turbovec"
-clone_skill_repo "https://github.com/aldinokemal/go-whatsapp-web-multidevice.git" "go-whatsapp"
-clone_skill_repo "https://github.com/asternic/wuzapi.git" "wuzapi"
-clone_skill_repo "https://github.com/rmyndharis/OpenWA.git" "openwa"
-clone_skill_repo "https://github.com/ToniR7/express-typescript-starter.git" "express-typescript-starter"
-clone_skill_repo "https://github.com/andrewyng/aisuite.git" "aisuite"
 
-echo -e "\n${BLUE}Cloning/Verifying ECC and caveman repositories inside ~/.wizard-ai/...${NC}"
-clone_skill_repo "https://github.com/affaan-m/ECC.git" "ECC"
-clone_skill_repo "https://github.com/JuliusBrussee/caveman.git" "caveman"
+# ── Parse repo-registry.json with Node.js (available on all supported OSes) ──
+# Outputs flat lines: CATEGORY_KEY|CATEGORY_NAME|BADGE|REPO_NAME|URL|DESC
+REGISTRY_LINES=$(node -e "
+  const r = require('$REGISTRY_FILE');
+  for (const [ck, cv] of Object.entries(r.categories)) {
+    for (const rp of cv.repos) {
+      console.log([ck, cv.name, cv.badge, rp.name, rp.url, rp.desc].join('|'));
+    }
+  }
+")
 
-if command -v npm &>/dev/null; then
-  echo -e "\n${BLUE}Attempting optional NPM global installations (ECC, caveman, design.md)...${NC}"
-  npm install -g --allow-scripts=ecc-universal ecc-universal 2>/dev/null || echo -e "${YELLOW}Note: ecc-universal npm install skipped/failed (using cloned git repo).${NC}"
-  if [ -f "$HOME/.wizard-ai/caveman/bin/install.js" ]; then
-    GITHUB_TOKEN="" node "$HOME/.wizard-ai/caveman/bin/install.js" --all --non-interactive 2>/dev/null || true
-  else
-    GITHUB_TOKEN="" curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash -s -- --all --non-interactive 2>/dev/null || echo -e "${YELLOW}Note: caveman install failed.${NC}"
-  fi
-  npm install -g --allow-scripts=puppeteer @google/design.md 2>/dev/null || echo -e "${YELLOW}Note: @google/design.md npm install skipped/failed.${NC}"
+# Build category summary (for menu display)
+CATEGORY_KEYS=()
+CATEGORY_NAMES=()
+CATEGORY_BADGES=()
+CATEGORY_COUNTS=()
+CATEGORY_DESCS=()
+
+eval "$(node -e "
+  const r = require('$REGISTRY_FILE');
+  const keys = Object.keys(r.categories);
+  keys.forEach((k, i) => {
+    const c = r.categories[k];
+    console.log('CATEGORY_KEYS[' + i + ']=\"' + k + '\"');
+    console.log('CATEGORY_NAMES[' + i + ']=\"' + c.name + '\"');
+    console.log('CATEGORY_BADGES[' + i + ']=\"' + c.badge + '\"');
+    console.log('CATEGORY_COUNTS[' + i + ']=' + c.repos.length);
+    console.log('CATEGORY_DESCS[' + i + ']=\"' + (c.description || '') + '\"');
+  });
+")"
+
+TOTAL_REPOS=$(echo "$REGISTRY_LINES" | wc -l)
+
+# ── Interactive Selection Menu ──────────────────────────────────────────────
+echo -e "\n${BLUE}[3/10] Setting up external git skill & framework repositories...${NC}"
+if [ "$VERBOSE" -eq 0 ]; then
+  echo -e "${CYAN}💡 [Tip] Run setup with --verbose to see full clone & build logs.${NC}"
+fi
+
+SELECTED_REPOS=""  # newline-separated "name|url|badge" of repos to install
+
+if [ "$YES_MODE" -eq 1 ] || [ ! -t 0 ]; then
+  # Non-interactive: install everything
+  echo -e "${YELLOW}Installing all $TOTAL_REPOS repositories (--yes mode)...${NC}"
+  SELECTED_REPOS="$REGISTRY_LINES"
 else
-  echo -e "${YELLOW}NPM not found. Using cloned git repos for ECC and caveman.${NC}"
+  # ── Interactive menu ──
+  echo -e ""
+  echo -e "${CYAN}╔══════════════════════════════════════════════════════════════╗${NC}"
+  echo -e "${CYAN}║${NC}  ${BOLD}🧙‍♂️  Wizard-AI — Skill & Framework Selector${NC}                ${CYAN}║${NC}"
+  echo -e "${CYAN}╠══════════════════════════════════════════════════════════════╣${NC}"
+  echo -e "${CYAN}║${NC}                                                            ${CYAN}║${NC}"
+  echo -e "${CYAN}║${NC}  How would you like to install skills & frameworks?        ${CYAN}║${NC}"
+  echo -e "${CYAN}║${NC}                                                            ${CYAN}║${NC}"
+  echo -e "${CYAN}║${NC}  ${BOLD}[1]${NC} 🚀 Install Everything ${GREEN}(Recommended)${NC}                   ${CYAN}║${NC}"
+  echo -e "${CYAN}║${NC}  ${BOLD}[2]${NC} 📦 Select by Category                               ${CYAN}║${NC}"
+  echo -e "${CYAN}║${NC}  ${BOLD}[3]${NC} 🔧 Select Individual Skills                         ${CYAN}║${NC}"
+  echo -e "${CYAN}║${NC}  ${BOLD}[4]${NC} ⏭️  Skip (install only core tools)                    ${CYAN}║${NC}"
+  echo -e "${CYAN}║${NC}                                                            ${CYAN}║${NC}"
+  echo -e "${CYAN}╚══════════════════════════════════════════════════════════════╝${NC}"
+  echo -e ""
+  read -p "> " INSTALL_MODE
+  INSTALL_MODE="${INSTALL_MODE:-1}"
+
+  case "$INSTALL_MODE" in
+    1)
+      echo -e "${GREEN}Installing all $TOTAL_REPOS repositories...${NC}"
+      SELECTED_REPOS="$REGISTRY_LINES"
+      ;;
+    2)
+      # ── Category Selection ──
+      echo -e "\n${BOLD}Available Categories:${NC}\n"
+      for i in "${!CATEGORY_KEYS[@]}"; do
+        idx=$((i + 1))
+        echo -e "  ${BOLD}[${idx}]${NC} ${CATEGORY_NAMES[$i]}  ${PURPLE}(${CATEGORY_COUNTS[$i]} repos)${NC}  ${CYAN}${CATEGORY_BADGES[$i]}${NC}"
+        echo -e "      ${YELLOW}${CATEGORY_DESCS[$i]}${NC}"
+      done
+      echo -e ""
+      echo -e "Enter numbers separated by commas (e.g. ${BOLD}1,3,5${NC}) or ${BOLD}'all'${NC}:"
+      read -p "> " CAT_SELECTION
+      CAT_SELECTION="${CAT_SELECTION:-all}"
+
+      if [ "${CAT_SELECTION,,}" = "all" ]; then
+        SELECTED_REPOS="$REGISTRY_LINES"
+      else
+        IFS=',' read -ra CAT_INDICES <<< "$CAT_SELECTION"
+        for ci in "${CAT_INDICES[@]}"; do
+          ci=$(echo "$ci" | tr -d ' ')
+          ci=$((ci - 1))
+          if [ "$ci" -ge 0 ] && [ "$ci" -lt "${#CATEGORY_KEYS[@]}" ]; then
+            local_cat_key="${CATEGORY_KEYS[$ci]}"
+            SELECTED_REPOS="${SELECTED_REPOS}$(echo "$REGISTRY_LINES" | grep "^${local_cat_key}|")
+"
+          fi
+        done
+      fi
+      ;;
+    3)
+      # ── Individual Skill Selection ──
+      echo -e "\n${BOLD}All Available Skills & Frameworks:${NC}\n"
+      GLOBAL_IDX=0
+      ALL_ITEMS=()
+      CURRENT_CAT=""
+      while IFS='|' read -r cat_key cat_name badge repo_name url desc; do
+        if [ "$cat_key" != "$CURRENT_CAT" ]; then
+          CURRENT_CAT="$cat_key"
+          echo -e "\n  ${PURPLE}${cat_name}${NC}"
+        fi
+        GLOBAL_IDX=$((GLOBAL_IDX + 1))
+        ALL_ITEMS+=("$cat_key|$cat_name|$badge|$repo_name|$url|$desc")
+        printf "    ${BOLD}[%2d]${NC} %-28s ${CYAN}%-18s${NC} ${YELLOW}%s${NC}\n" "$GLOBAL_IDX" "$repo_name" "$badge" "$desc"
+      done <<< "$REGISTRY_LINES"
+      echo -e ""
+      echo -e "Enter numbers/ranges (e.g. ${BOLD}1,5,10-15${NC}) or ${BOLD}'all'${NC}:"
+      read -p "> " SKILL_SELECTION
+      SKILL_SELECTION="${SKILL_SELECTION:-all}"
+
+      if [ "${SKILL_SELECTION,,}" = "all" ]; then
+        SELECTED_REPOS="$REGISTRY_LINES"
+      else
+        # Parse comma-separated, support ranges (e.g. 10-15)
+        IFS=',' read -ra TOKENS <<< "$SKILL_SELECTION"
+        SELECTED_INDICES=()
+        for token in "${TOKENS[@]}"; do
+          token=$(echo "$token" | tr -d ' ')
+          if [[ "$token" == *"-"* ]]; then
+            IFS='-' read -r range_start range_end <<< "$token"
+            for ((ri=range_start; ri<=range_end; ri++)); do
+              SELECTED_INDICES+=("$ri")
+            done
+          else
+            SELECTED_INDICES+=("$token")
+          fi
+        done
+        for si in "${SELECTED_INDICES[@]}"; do
+          si_idx=$((si - 1))
+          if [ "$si_idx" -ge 0 ] && [ "$si_idx" -lt "${#ALL_ITEMS[@]}" ]; then
+            SELECTED_REPOS="${SELECTED_REPOS}${ALL_ITEMS[$si_idx]}
+"
+          fi
+        done
+      fi
+      ;;
+    4)
+      echo -e "${YELLOW}⏭️  Skipping skill & framework installation. Only core tools will be installed.${NC}"
+      SELECTED_REPOS=""
+      ;;
+    *)
+      echo -e "${YELLOW}Invalid selection. Installing everything...${NC}"
+      SELECTED_REPOS="$REGISTRY_LINES"
+      ;;
+  esac
+fi
+
+# ── Execute installation for selected repos ─────────────────────────────────
+SELECTED_COUNT=$(echo "$SELECTED_REPOS" | sed '/^$/d' | wc -l)
+SKILL_REPO_TOTAL=$SELECTED_COUNT
+
+if [ "$SELECTED_COUNT" -gt 0 ]; then
+  echo -e "\n${GREEN}🚀 Installing ${SELECTED_COUNT} selected repositories...${NC}\n"
+  while IFS='|' read -r cat_key cat_name badge repo_name url desc; do
+    [ -z "$repo_name" ] && continue
+    clone_skill_repo "$url" "$repo_name" "$badge"
+  done <<< "$(echo "$SELECTED_REPOS" | sed '/^$/d')"
+else
+  echo -e "${YELLOW}No repositories selected for installation.${NC}"
+fi
+
+# ── Post-install: optional NPM global packages for special repos ─────────
+# Only run if ECC or caveman were among the selected repos
+if echo "$SELECTED_REPOS" | grep -q "ECC\|caveman\|design\.md"; then
+  if command -v npm &>/dev/null; then
+    echo -e "\n${BLUE}Running post-install hooks for special packages...${NC}"
+    if echo "$SELECTED_REPOS" | grep -q "ECC"; then
+      npm install -g --allow-scripts=ecc-universal ecc-universal 2>/dev/null || echo -e "${YELLOW}Note: ecc-universal npm install skipped/failed.${NC}"
+    fi
+    if echo "$SELECTED_REPOS" | grep -q "caveman"; then
+      if [ -f "$HOME/.wizard-ai/caveman/bin/install.js" ]; then
+        echo -e "${CYAN}  ↳ Running caveman installer...${NC}"
+        GITHUB_TOKEN="" node "$HOME/.wizard-ai/caveman/bin/install.js" --all --non-interactive 2>/dev/null || true
+      fi
+    fi
+    if echo "$SELECTED_REPOS" | grep -q "design\.md"; then
+      npm install -g --allow-scripts=puppeteer @google/design.md 2>/dev/null || echo -e "${YELLOW}Note: @google/design.md npm install skipped/failed.${NC}"
+    fi
+  fi
+fi
+
+# ── Installation Summary ────────────────────────────────────────────────────
+if [ "$SELECTED_COUNT" -gt 0 ]; then
+  echo -e ""
+  echo -e "${CYAN}────────────────────────────────────────────────────────────${NC}"
+  echo -e "${BOLD}📊 Repository Installation Summary:${NC}"
+  echo -e "${CYAN}────────────────────────────────────────────────────────────${NC}"
+  echo -e "  ${GREEN}✓ Installed:${NC}  $INSTALL_OK new"
+  echo -e "  ${BLUE}⏭ Skipped:${NC}   $INSTALL_SKIP (already present)"
+  if [ "$INSTALL_FAIL" -gt 0 ]; then
+    echo -e "  ${RED}✗ Failed:${NC}    $INSTALL_FAIL ($FAILED_REPOS)"
+  fi
+  echo -e "${CYAN}────────────────────────────────────────────────────────────${NC}"
 fi
 
 # 4. Install UV Global Tools
