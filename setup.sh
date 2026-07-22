@@ -202,33 +202,71 @@ fi
 echo -e "${GREEN}✓ Virtual environment ready at ~/.wizard-ai/venv/${NC}"
 
 # 3. Setting up external git skill repositories
-echo -e "\n${BLUE}[3/10] Setting up external git skill repositories...${NC}"
+echo -e "\n${BLUE}[3/10] Setting up 52 external git skill & framework repositories...${NC}"
+if [ "$VERBOSE" -eq 0 ]; then
+  echo -e "${CYAN}💡 [Tip] To watch full verbose build & dependency logs line-by-line, run setup with: ./setup.sh --verbose${NC}"
+fi
+
+SKILL_REPO_INDEX=0
+SKILL_REPO_TOTAL=52
 
 clone_skill_repo() {
   local url="$1"
   local dest_name="$2"
   local dest_dir="$HOME/.wizard-ai/$dest_name"
+  SKILL_REPO_INDEX=$((SKILL_REPO_INDEX + 1))
   
+  echo -e "${BOLD}[3/10] [Repo $SKILL_REPO_INDEX/$SKILL_REPO_TOTAL] Processing $dest_name...${NC}"
+
   if [ ! -d "$dest_dir" ]; then
-    echo -e "${YELLOW}Cloning $dest_name from GitHub...${NC}"
-    git clone --depth 1 $QUIET_OPT "$url" "$dest_dir" || true
-    echo -e "${GREEN}  ✓ $dest_name cloned.${NC}"
+    echo -e "${YELLOW}  ↳ Cloning $dest_name from $url...${NC}"
+    if [ "$VERBOSE" -eq 1 ]; then
+      git clone --depth 1 "$url" "$dest_dir" || true
+    else
+      git clone --depth 1 $QUIET_OPT "$url" "$dest_dir" 2>/dev/null || true
+    fi
+    echo -e "${GREEN}  ✓ $dest_name cloned successfully.${NC}"
   else
-    echo -e "${GREEN}✓ $dest_name is already present.${NC}"
+    echo -e "${GREEN}  ✓ $dest_name is already present.${NC}"
   fi
 
   # Auto-install framework / skill dependencies per OS specification
   if [ -d "$dest_dir" ]; then
     if [ -f "$dest_dir/bin/install.js" ]; then
-      GITHUB_TOKEN="" node "$dest_dir/bin/install.js" --all --non-interactive 2>/dev/null || true
+      echo -e "${CYAN}  ↳ Running bin/install.js installer for $dest_name...${NC}"
+      if [ "$VERBOSE" -eq 1 ]; then
+        GITHUB_TOKEN="" node "$dest_dir/bin/install.js" --all --non-interactive || true
+      else
+        GITHUB_TOKEN="" node "$dest_dir/bin/install.js" --all --non-interactive >/dev/null 2>&1 || true
+      fi
     elif [ -f "$dest_dir/install.sh" ]; then
-      bash "$dest_dir/install.sh" 2>/dev/null || true
+      echo -e "${CYAN}  ↳ Running install.sh script for $dest_name...${NC}"
+      if [ "$VERBOSE" -eq 1 ]; then
+        bash "$dest_dir/install.sh" || true
+      else
+        bash "$dest_dir/install.sh" >/dev/null 2>&1 || true
+      fi
     elif [ -f "$dest_dir/setup.sh" ]; then
-      bash "$dest_dir/setup.sh" 2>/dev/null || true
+      echo -e "${CYAN}  ↳ Running setup.sh script for $dest_name...${NC}"
+      if [ "$VERBOSE" -eq 1 ]; then
+        bash "$dest_dir/setup.sh" || true
+      else
+        bash "$dest_dir/setup.sh" >/dev/null 2>&1 || true
+      fi
     elif [ -f "$dest_dir/pyproject.toml" ] || [ -f "$dest_dir/setup.py" ]; then
-      uv pip install --python "$VENV_PYTHON" -e "$dest_dir" $QUIET_OPT 2>/dev/null || true
+      echo -e "${CYAN}  ↳ Building Python package dependencies for $dest_name...${NC}"
+      if [ "$VERBOSE" -eq 1 ]; then
+        uv pip install --python "$VENV_PYTHON" -e "$dest_dir" || true
+      else
+        uv pip install --python "$VENV_PYTHON" -e "$dest_dir" $QUIET_OPT 2>/dev/null || true
+      fi
     elif [ -f "$dest_dir/package.json" ] && command -v npm &>/dev/null; then
-      npm install --prefix "$dest_dir" --no-audit --no-fund 2>/dev/null || true
+      echo -e "${CYAN}  ↳ Installing Node.js npm packages for $dest_name...${NC}"
+      if [ "$VERBOSE" -eq 1 ]; then
+        npm install --prefix "$dest_dir" --no-audit --no-fund || true
+      else
+        npm install --prefix "$dest_dir" --no-audit --no-fund >/dev/null 2>&1 || true
+      fi
     fi
   fi
 }

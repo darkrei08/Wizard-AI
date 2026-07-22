@@ -7,6 +7,12 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
+## [0.50.44] - 2026-07-22
+
+### Added
+- **Verbose Build Logs & Progress Visibility (`--verbose` / `-v`)**: Added explicit `--verbose` / `-v` flag support to `setup.sh`, `setup.ps1`, `wz-ai-install`, and `scripts/wizard-installer.js`.
+- **Real-Time Step Counters & Active Status Feedback**: Updated `clone_skill_repo` (Bash & PowerShell) and `wizard-installer.js` to display real-time repository progress (`[Repo 1/52] Processing repo... ↳ Installing Node.js npm packages...`) eliminating frozen/stuck terminal perception.
+
 ## [0.50.43] - 2026-07-22
 
 ### Added

@@ -132,6 +132,13 @@ async function runInstallation(selectedCategoryKeys) {
 
   console.log(`\n🚀 ${BOLD}Starting installation for selected categories...${RESET}\n`);
 
+  const isVerbose = args.includes("--verbose") || args.includes("-v");
+  const buildStdio = isVerbose ? "inherit" : "ignore";
+
+  if (!isVerbose) {
+    console.log(`${CYAN}💡 [Tip] Pass --verbose or -v to watch full line-by-line build & download logs.${RESET}\n`);
+  }
+
   for (const catKey of selectedCategoryKeys) {
     const cat = CATEGORIES[catKey];
     if (!cat) continue;
@@ -144,7 +151,7 @@ async function runInstallation(selectedCategoryKeys) {
       const destDir = path.join(wizardHome, repoName);
       if (!fs.existsSync(destDir)) {
         console.log(`  ${YELLOW}Cloning ${repoName}${itemType}...${RESET}`);
-        spawnSync("git", ["clone", "--depth", "1", repoUrl, destDir], { stdio: "ignore" });
+        spawnSync("git", ["clone", "--depth", "1", repoUrl, destDir], { stdio: buildStdio });
         console.log(`  ${GREEN}✓ ${repoName}${itemType} cloned.${RESET}`);
       } else {
         console.log(`  ${GREEN}✓ ${repoName}${itemType} is already present.${RESET}`);
@@ -152,11 +159,17 @@ async function runInstallation(selectedCategoryKeys) {
 
       // Execute build/install script per OS guideline
       if (fs.existsSync(path.join(destDir, "bin", "install.js"))) {
-        spawnSync("node", [path.join(destDir, "bin", "install.js"), "--all", "--non-interactive"], { stdio: "ignore" });
+        console.log(`  ${CYAN}  ↳ Executing bin/install.js installer...${RESET}`);
+        spawnSync("node", [path.join(destDir, "bin", "install.js"), "--all", "--non-interactive"], { stdio: buildStdio });
       } else if (fs.existsSync(path.join(destDir, "install.sh")) && !isWin) {
-        spawnSync("bash", [path.join(destDir, "install.sh")], { stdio: "ignore" });
+        console.log(`  ${CYAN}  ↳ Running install.sh...${RESET}`);
+        spawnSync("bash", [path.join(destDir, "install.sh")], { stdio: buildStdio });
       } else if (fs.existsSync(path.join(destDir, "install.ps1")) && isWin) {
-        spawnSync("powershell", ["-ExecutionPolicy", "Bypass", "-File", path.join(destDir, "install.ps1")], { stdio: "ignore" });
+        console.log(`  ${CYAN}  ↳ Running install.ps1...${RESET}`);
+        spawnSync("powershell", ["-ExecutionPolicy", "Bypass", "-File", path.join(destDir, "install.ps1")], { stdio: buildStdio });
+      } else if (fs.existsSync(path.join(destDir, "package.json"))) {
+        console.log(`  ${CYAN}  ↳ Running npm install for ${repoName}...${RESET}`);
+        spawnSync("npm", ["install", "--prefix", destDir, "--no-audit", "--no-fund"], { stdio: buildStdio });
       }
     }
   }

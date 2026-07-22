@@ -31,6 +31,10 @@
 
 ## 📜 Key Changelog Snapshots
 
+### v0.50.44 (2026-07-22)
+- **Verbose Build Logs & Progress Visibility**: Added `--verbose` / `-v` flag support to `setup.sh`, `setup.ps1`, `wz-ai-install`, and `wizard-installer.js`.
+- **Real-Time Step Counters**: Updated `clone_skill_repo` to output repository step progress (`[Repo 1/52]`) and explicit build action lines (`↳ Installing Node.js npm packages for phantom-ui...`).
+
 ### v0.50.43 (2026-07-22)
 - **Multi-Agent Syncing**: Synced skills to Cursor, Windsurf, OpenCode, and Pi.
 - **Auto-Installation of 52 External Repos**: `setup.sh` and `setup.ps1` execute OS-specific build/install routines.

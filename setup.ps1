@@ -168,12 +168,22 @@ Write-Log "[ok] Virtual environment ready at $VenvDir" -ForegroundColor Green
 
 # 3. Clone and install required skill repositories if not present
 Write-Log ' '
-Write-Log "[3/8] Setting up external git skill repositories in $AiSkills..." -ForegroundColor Blue
+Write-Log "[3/8] Setting up 52 external git skill & framework repositories in $AiSkills..." -ForegroundColor Blue
+if (-not $Verbose) {
+    Write-Log '💡 [Tip] To watch full verbose build & dependency logs line-by-line, run setup with: .\setup.ps1 -Verbose' -ForegroundColor Cyan
+}
+
+$script:SkillRepoIndex = 0
+$script:SkillRepoTotal = 52
 
 function Clone-SkillRepo($Url, $DestName) {
+    $script:SkillRepoIndex++
     $DestDir = Join-Path $AiSkills $DestName
+
+    Write-Log "[3/8] [Repo $script:SkillRepoIndex/$script:SkillRepoTotal] Processing $DestName..." -ForegroundColor White
+
     if (-not (Test-Path $DestDir)) {
-        Write-Log "Cloning $DestName from GitHub..." -ForegroundColor Yellow
+        Write-Log "  ↳ Cloning $DestName from GitHub..." -ForegroundColor Yellow
         if ($QuietOpt) {
             git clone --depth 1 --quiet $Url $DestDir
         } else {
@@ -182,7 +192,7 @@ function Clone-SkillRepo($Url, $DestName) {
         if ($LASTEXITCODE -ne 0) {
             Write-Log "  [!] $DestName clone failed" -ForegroundColor Red
         } else {
-            Write-Log "  [ok] $DestName cloned." -ForegroundColor Green
+            Write-Log "  [ok] $DestName cloned successfully." -ForegroundColor Green
         }
     } else {
         Write-Log "  [ok] $DestName is already present." -ForegroundColor Green
@@ -198,15 +208,20 @@ function Clone-SkillRepo($Url, $DestName) {
         $PkgJson    = Join-Path $DestDir 'package.json'
 
         if (Test-Path $InstallPs1) {
-            try { & $InstallPs1 2>$null } catch {}
+            Write-Log "  ↳ Running install.ps1 for $DestName..." -ForegroundColor Cyan
+            try { & $InstallPs1 } catch {}
         } elseif (Test-Path $SetupPs1) {
-            try { & $SetupPs1 2>$null } catch {}
+            Write-Log "  ↳ Running setup.ps1 for $DestName..." -ForegroundColor Cyan
+            try { & $SetupPs1 } catch {}
         } elseif (Test-Path $InstallJs) {
-            try { $env:GITHUB_TOKEN=""; node $InstallJs --all --non-interactive 2>$null } catch {}
+            Write-Log "  ↳ Running bin\install.js for $DestName..." -ForegroundColor Cyan
+            try { $env:GITHUB_TOKEN=""; node $InstallJs --all --non-interactive } catch {}
         } elseif ((Test-Path $PyProj) -or (Test-Path $SetupPy)) {
-            try { uv pip install --python $VenvPython -e $DestDir --quiet 2>$null } catch {}
+            Write-Log "  ↳ Building Python dependencies for $DestName..." -ForegroundColor Cyan
+            try { uv pip install --python $VenvPython -e $DestDir } catch {}
         } elseif (Test-Path $PkgJson) {
-            try { npm install --prefix $DestDir --no-audit --no-fund 2>$null } catch {}
+            Write-Log "  ↳ Installing Node.js npm packages for $DestName..." -ForegroundColor Cyan
+            try { npm install --prefix $DestDir --no-audit --no-fund } catch {}
         }
     }
 }
