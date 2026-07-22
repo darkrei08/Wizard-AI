@@ -96,3 +96,9 @@ Corretto refuso nel nome file 'wz-ai-sync-skills.ps1' su setup.ps1 e wz-ai-updat
 - Resolved Linux turbovec compilation issue by removing it from setup.sh (requires nightly rust which breaks standard apt installs).
 - Created and closed GitHub issue #12.
 - Bumped version to v0.50.27, published to npm and GitHub.
+
+
+## Session 2026-07-22T11:22:18.596Z
+- Resolved numpy build failure on Linux by forcing python 3.12 via uv venv to prevent it using python 3.13 default which lacked wheels.
+- Created and closed GitHub issue #13.
+- Bumped version to v0.50.28, published to npm and GitHub.

@@ -226,14 +226,14 @@ else
       echo -e "${GREEN}  ✓ lean-ctx installed via npm locally (~/.local/bin).${NC}"
     elif command -v cargo &>/dev/null; then
       echo -e "${YELLOW}  ⚠ npm installation failed. Falling back to Cargo...${NC}"
-      cargo install lean-ctx && echo -e "${GREEN}  ✓ lean-ctx installed via cargo.${NC}" || echo -e "${RED}  ✗ lean-ctx installation failed.${NC}"
+      cargo install lean-ctx --locked --quiet 2>/dev/null && echo -e "${GREEN}  ✓ lean-ctx installed via cargo.${NC}" || echo -e "${RED}  ✗ lean-ctx installation failed (Rust version too old or build error).${NC}"
     else
       echo -e "${RED}  ✗ lean-ctx installation via npm failed and Cargo is not available.${NC}"
       echo -e "${YELLOW}  Suggestion: run 'sudo npm install -g lean-ctx-bin' manually.${NC}"
     fi
   elif command -v cargo &>/dev/null; then
     echo -e "${BLUE}  NPM not found, but Cargo detected. Installing via Cargo...${NC}"
-    cargo install lean-ctx && echo -e "${GREEN}  ✓ lean-ctx installed via cargo.${NC}" || echo -e "${RED}  ✗ lean-ctx installation failed.${NC}"
+    cargo install lean-ctx --locked --quiet 2>/dev/null && echo -e "${GREEN}  ✓ lean-ctx installed via cargo.${NC}" || echo -e "${RED}  ✗ lean-ctx installation failed (Rust version too old or build error).${NC}"
   else
     echo -e "${YELLOW}  ⚠ lean-ctx requires Node.js (npm) or Rust (cargo). Neither found.${NC}"
     echo -e "  Please install Node.js (https://nodejs.org) to enable context intelligence."
@@ -322,6 +322,12 @@ echo -e "\n${BLUE}[6/10] Deploying custom AI CLI wrappers to ~/.local/bin/...${N
 cp -p "$SCRIPT_DIR"/bin/* "$HOME/.local/bin/" 2>/dev/null || true
 chmod +x "$HOME/.local/bin"/ai-* 2>/dev/null || true
 chmod +x "$HOME/.local/bin"/book-to-skill 2>/dev/null || true
+# Fix CRLF line endings for WSL users cloning from Windows
+for file in "$HOME/.local/bin/"*; do
+  if [ -f "$file" ]; then
+    sed -i 's/\r$//' "$file" 2>/dev/null || true
+  fi
+done
 # Create symlink for gemini-usage pointing to wz-ai-usage to avoid duplicate script files
 ln -sf wz-ai-usage "$HOME/.local/bin/gemini-usage"
 echo -e "${GREEN}✓ $(ls "$SCRIPT_DIR/bin/" | wc -l) wrapper scripts installed to ~/.local/bin/ (with gemini-usage symlinked)${NC}"
