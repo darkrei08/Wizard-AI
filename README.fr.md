@@ -66,6 +66,17 @@ flowchart TB
     class Router mainColor;
 ```
 
+## 🧠 Agentic Context Engineering & The 4-Layer Format Stack
+
+Dans l'écosystème de l'IA de 2026, l'ingénierie du contexte est la nouvelle norme. Wizard-AI introduit le **4-Layer Format Stack**, conçu pour éliminer les hallucinations et maximiser l'optimisation des tokens :
+
+1. **Layer 4: JavaScript (Exécution)** — La logique s'exécute dans un bac à sable sécurisé via `pi-extensible-workflows`. Fini les scripts bash verbeux.
+2. **Layer 3: YAML (Orchestration)** — Uniquement pour le routage, la configuration et les rôles.
+3. **Layer 2: Markdown + LEA (Contenu)** — Utilise les **Lossless Evidence Aliases (LEA)** (`[S1]: MEMORY.md` cité comme `[E1]`). Économise jusqu'à 80 % sur les métadonnées répétitives.
+4. **Layer 1: Format TOON (Limites API)** — Remplace le JSON par la **Token Oriented Object Notation (TOON)** (réduction de 40 à 75 % des tokens par rapport au JSON brut).
+
+**Règle du PRE & POST Autoloop :** Chaque session compresse le contexte, synchronise la mémoire (`MEMORY.md`) et met à jour le graphe du projet avant et après chaque itération de façon autonome.
+
 ## 🚀 Démarrage Rapide (`One-Command Setup`)
 
 ```bash

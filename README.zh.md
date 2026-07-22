@@ -66,6 +66,17 @@ flowchart TB
     class Router mainColor;
 ```
 
+## 🧠 Agentic Context Engineering & The 4-Layer Format Stack
+
+在 2026 年的 AI 生态系统中，上下文工程是新的黄金标准。Wizard-AI 引入了 **4-Layer Format Stack**，旨在消除幻觉并最大化 Token 优化：
+
+1. **Layer 4: JavaScript (执行)** — 逻辑通过 `pi-extensible-workflows` 在安全的沙盒中运行。
+2. **Layer 3: YAML (编排)** — 仅用于路由、配置和 Agent 角色。
+3. **Layer 2: Markdown + LEA (内容)** — 使用 **Lossless Evidence Aliases (LEA)** (如 `[S1]: MEMORY.md` 引用为 `[E1]`)。在重复元数据上节省高达 80%。
+4. **Layer 1: TOON 格式 (API 边界)** — 用 **Token Oriented Object Notation (TOON)** 替换 JSON (与原始 JSON 相比减少 40-75% 的 token)。
+
+**PRE & POST Autoloop 规则：** 每次会话在每次迭代前后都会自动压缩上下文、同步记忆 (`MEMORY.md`) 并更新项目图。
+
 ## 🚀 快速安装 (`一键初始化`)
 
 ```bash
