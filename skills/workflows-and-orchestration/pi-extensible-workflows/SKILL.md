@@ -7,16 +7,51 @@ description: "Multi-agent task orchestration using deterministic jobs. Injected 
 
 A deterministic, multi-agent orchestration framework initially built for Pi, but abstracted into the Wizard-AI core loops.
 
-## When to use:
-- In `02. loop-2-develop` when dealing with tasks > 100 lines of code or multi-module refactoring.
-- When `subagent-driven-development` needs a structured JSON/YAML Job definition to execute.
+## Installation & Setup
 
-## Core Concepts:
-- **Jobs & Steps:** Work is defined deterministically in a JSON/YAML file. Each Job has multiple Steps.
-- **Fan-Out:** A step can spawn multiple Subagents in parallel (e.g. 5 subagents testing 5 different React components concurrently).
+**For pi.dev native integration:**
+```shell
+# Requires Node.js 22.19+
+npm ci
+npm run check
+pi install /absolute/path/to/pi-extensible-workflows
+```
+*Note: We have a helper script `scripts/install-pi-workflows.sh` to automate this.*
+
+## Configuration (`settings.json`)
+
+Settings are located at `~/.pi/agent/pi-extensible-workflows/settings.json` (global) or `.pi/pi-extensible-workflows/settings.json` (project-level).
+
+```json
+{
+  "concurrency": 8,
+  "modelAliases": {
+    "reviewer-model": "anthropic/claude-3-5-haiku:high",
+    "developer-model": "openai-codex/gpt-4o:xhigh"
+  },
+  "disabledAgentResources": {
+    "skills": ["project-interactive-skill"],
+    "extensions": ["../../extensions/project-only-extension.ts"]
+  }
+}
+```
+* `concurrency`: Active sub-agent limits (1-16). Overridden per workflow run.
+* `modelAliases`: Resolves aliases to concrete targets `provider/model:thinking`. Exact alias overrides native targets.
+* `disabledAgentResources`: Filters skills and extensions. Used as project policy for Workflow Agents.
+
+## Tool API Reference
+
+When loaded, this extension exposes several tools:
+- `workflow`: Runs an inline or registered deterministic JS workflow.
+  - Parameters: `name`, `script` or `workflow` (registered fn), `args`, `foreground`, `concurrency`, `budget`, `parentRunId`.
+- `workflow_resume`: Resumes a budget-exhausted run (`{ "runId": "...", "budget": { "tokens": { "hard": 120000 } } }`).
+- `workflow_respond`: Approves/rejects pending checkpoints (`{ "runId": "...", "proposalId": "...", "approved": true }`).
+- `workflow_stop`: Stops an active run (`{ "runId": "..." }`).
+- `workflow_catalog`: Lists registered functions, variables, and model aliases.
+- `/workflow`: Lists and controls runs in the current Pi session.
+
+## Core Concepts
+
+- **Jobs & Steps:** Work is defined deterministically in a script or JSON/YAML file.
+- **Fan-Out:** A step can spawn multiple Subagents in parallel (`concurrency`).
 - **Delegation:** Agents are given strict scopes and isolated workspaces/budgets.
-
-## Integration:
-- Workflows are defined in `.wizard-ai/workflows/`.
-- Use the CLI wrapper `wz-ai workflow run <file.yaml>` to execute.
-- In `02. loop-2-develop`, the Master of Department creates the `job.yaml` and executes it, aggregating the results before proceeding to TDD tests.

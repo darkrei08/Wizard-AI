@@ -5,6 +5,10 @@
     "smart": "anthropic/claude-sonnet-4",
     "deep": "anthropic/claude-opus-4"
   },
+  "disabledAgentResources": {
+    "skills": [],
+    "extensions": []
+  },
   "budget": {
     "default": {
       "soft": {

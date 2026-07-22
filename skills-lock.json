@@ -1009,12 +1009,6 @@
       "skillPath": "skills/nuxt/SKILL.md",
       "computedHash": "5a75c04a773da40f6cb496a64f008fb9c53df098fe647fcea669a852630d0d33"
     },
-    "pi-extensible-workflows": {
-      "source": "local",
-      "sourceType": "local",
-      "skillPath": "skills/workflows-and-orchestration/pi-extensible-workflows/SKILL.md",
-      "computedHash": "b56c241cd4a842765d44e33a4e5a68c2e2681c208934e3642e74f57e4e4a4d6c"
-    },
     "prompt-loop-engine": {
       "source": "local",
       "sourceType": "local",
@@ -1272,6 +1266,12 @@
       "sourceType": "local",
       "skillPath": "skills/workflows-and-orchestration/mp-wayfinder/SKILL.md",
       "computedHash": "bef437de697fb6984a8a90b7fd82f128609148d6e02f635ce419d03555b351e1"
+    },
+    "pi-extensible-workflows": {
+      "source": "local",
+      "sourceType": "local",
+      "skillPath": "skills/workflows-and-orchestration/pi-extensible-workflows/SKILL.md",
+      "computedHash": "4356fcd3bae5398d9d29a3609b7db55eb2ca06b161b086f8e6959056db455701"
     },
     "receiving-code-review": {
       "source": "local",
