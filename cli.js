@@ -30,6 +30,29 @@ function run(cmd, args, opts) {
 }
 
 const subcmd = process.argv[2];
+
+// Handle --help and --version before anything else
+if (!subcmd || subcmd === "--help" || subcmd === "-h") {
+  const ver = require("./package.json").version;
+  console.log(`wizard-ai v${ver}`);
+  console.log("Usage: npx @darkrei08/wizard-ai-cli [command]\n");
+  console.log("Commands:");
+  console.log("  (default)    Clone & setup Wizard-AI into ~/.wizard-ai");
+  console.log("  skills       Interactive skills manager");
+  console.log("  install      Install skills by category");
+  console.log("  remove       Remove installed skills");
+  console.log("  test         Run wizard-test suite");
+  console.log("  proxy        Start wz-ai-proxy");
+  console.log("\nFlags:");
+  console.log("  --sudo       Escalate setup.sh to sudo (for global installs)");
+  console.log("  --verbose    Verbose output");
+  process.exit(0);
+}
+if (subcmd === "--version" || subcmd === "-V") {
+  console.log(require("./package.json").version);
+  process.exit(0);
+}
+
 if (subcmd === "proxy") {
   const proxyScript = path.join(__dirname, "scripts", "wz-ai-proxy.js");
   if (fs.existsSync(proxyScript)) {
@@ -113,13 +136,14 @@ if (isWin) {
 } else {
   const shArgs = ["bash", path.join(installDir, "setup.sh")];
   if (isVerbose) shArgs.push("--verbose");
-  
-  // We now enforce sudo for setup.sh to globally install npm/cargo tools
-  // Security: only use sudo if we aren't already running as root
-  if (process.getuid && process.getuid() === 0) {
-    status = run(shArgs[0], shArgs.slice(1));
-  } else {
+
+  // Run setup.sh directly — ~/.wizard-ai is user-space, no root needed.
+  // Use --sudo flag only when explicitly requested (e.g. global npm/cargo installs).
+  const wantSudo = args.includes("--sudo");
+  if (wantSudo && process.getuid && process.getuid() !== 0) {
     status = run("sudo", shArgs);
+  } else {
+    status = run(shArgs[0], shArgs.slice(1));
   }
 }
 
