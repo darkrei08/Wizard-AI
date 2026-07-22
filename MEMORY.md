@@ -102,3 +102,10 @@ Corretto refuso nel nome file 'wz-ai-sync-skills.ps1' su setup.ps1 e wz-ai-updat
 - Resolved numpy build failure on Linux by forcing python 3.12 via uv venv to prevent it using python 3.13 default which lacked wheels.
 - Created and closed GitHub issue #13.
 - Bumped version to v0.50.28, published to npm and GitHub.
+
+
+## Session 2026-07-22T11:29:41.019Z
+- Resolved CRLF issues (nv: bash\r) for bash wrappers deployed via setup.sh on WSL by applying sed -i s/\r$//.
+- Suppressed noisy cargo install errors when lean-ctx fallback fails on older Linux distros.
+- Created and closed GitHub issue #14.
+- Bumped version to v0.50.29, published to npm and GitHub Release.
