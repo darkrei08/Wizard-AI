@@ -1,134 +1,45 @@
-# Wizard-AI Session Memory — 2026-07-15T17:46
+# 🧠 Wizard-AI Session Memory & Architecture Knowledge Base
 
-## Stato Corrente
-- **Task Attiva**: Pulizia global config duplicati, creazione ~170 README evocativi, WIKI.md, fix GitHub auth
-- **Piano**: In review — vedi `implementation_plan.md` nel brain Antigravity
-- **Workspace `.agents/skills/`**: 198 SKILL.md in 5 categorie (1-core-engine, 2-production-loops, 3-agentic-brain, 4-domain-workflows, 5-mattpocock)
-- **Global config `~/.gemini/config/skills/`**: 209 skill — ~192 duplicati esatti del workspace, 5 REDIRECT, 5 alias, 4 uniche genuine
-- **6-misc**: GIÀ ELIMINATA nel workspace. Il problema è nel GLOBAL CONFIG che duplica tutto.
-- **Setup.sh**: Aggiornato con sezione 7.6 (Pi + Cockpit Proxy), path corretto a `.agents/skills`
-- **Plugin npm**: `pi-cockpit-proxy-setup@1.0.0` pubblicato su npm
+## 📍 System Status & Architecture Overview
 
-## Audit Skill Completato (Dettaglio)
-- **Workspace**: 198 SKILL.md — tutti già categorizzati in 1-5
-- **Global**: 209 skill, di cui:
-  - 192 duplicati esatti → da eliminare o escludere
-  - 5 REDIRECT/obsolete: `auto-optimize`, `auto-workflow`, `subagent-driven-development`, `writing-skills`, `handoff`
-  - 5 alias: `prompt-loop-engine`=`0-loop-engine`, `auto-router`=`1-auto-router`, `wizard-ai-hub`=`2-wizard-hub`, `community`=`goodcode`=`5-goodcode-orchestrator`
-  - 4 uniche genuine: `dispatching-parallel-agents`, `workflow-agent-management`, `ecc`, `rtk`
-- **README mancanti**: ~170 skill nel workspace non hanno README.md
-- **README esistenti**: 5 con formato italiano evocativo (loop-engine, shadow-clone, swarm-manager, goodcode, master-brain)
+- **Package**: `@darkrei08/wizard-ai-cli` (`v0.50.43`)
+- **Master Pipeline**: 11-Step Loop Engineering Pipeline (`0-loop-engine` -> `1-auto-router` MoE -> `01-05 Loops`)
+- **Skill Engine**: 219+ Skills synced across 10 Agent IDE targets:
+  - `~/.gemini/config/skills`
+  - `~/.claude/skills`
+  - `~/.config/amp/skills`
+  - `~/.agents/skills`
+  - `~/.config/agents/skills`
+  - `~/.cursor/skills`
+  - `~/.windsurf/skills`
+  - `~/.opencode/skills`
+  - `~/.pi/skills`
+  - `~/.pi/agent/skills`
 
-## Decisioni Utente (Naming & Architettura)
-- L'utente vuole nomi **evocativi e memorabili**, non tecnici/freddi
-- Architettura: **3-Tier Agent Swarm** (Supreme Orchestrator → Department Heads → Workers)
-- Protocollo: **Shadow Clone Memory Merge** (subagent riassorbono memoria prima del despawn)
-- L'utente chiama il parallelismo "Shadow Clone Jutsu" (da Naruto)
-- Vuole che ogni skill abbia un **README** con appunti di riferimento
-- Vuole **numerazione** o richiami mnemonici per le slash commands
+---
 
-## Decisioni Pendenti (Attendere Approvazione)
-1. **Strategia global config**: Opzione A (svuota) vs B (exclude) vs C (backup+rigenera)
-2. **Lingua README**: Italiano (coerente con quelli esistenti) vs Inglese
-3. **GITHUB_TOKEN**: iniettato da Antigravity IDE, non da wizard-ai/env — serve workaround diverso
+## 🏛️ Core Principles & Conventions
 
-## File Modificati (Sessioni Precedenti)
-- `/home/ema/Scrivania/altri repooo/Wizard-AI/setup.sh` — sezione 7.6 + fix path .agents/skills
-- `/home/ema/Scrivania/altri repooo/Wizard-AI/.agents/skills/1-core-engine/wizard-ai-core/SKILL.md` — manifest nativo Pi
-- `/home/ema/Scrivania/altri repooo/Wizard-AI/workflows/multi_agent_resolution.md` — workflow Shadow Clone Jutsu
-- `/home/ema/Scrivania/altri repooo/Wizard-AI/NOTES.md` — contesto ecosistema
+1. **2-Level Taxonomy Hierarchy**:
+   - **Macro Domain Areas**: `3.1 Core Engine`, `3.2 Token Squeezing & Context`, `3.3 Frontend & Design`, `3.4 DevOps & Security`, `3.5 Multimodal & Messaging`, `3.6 Starter Templates`.
+   - **Software Natures**: `[🧠 SKILL PER LLM]`, `[⚡ SOFTWARE CLI]`, `[🖥️ APP GRAFICA / DESKTOP]`, `[🏗️ STARTER TEMPLATE]`.
+2. **Context Efficiency Stack**: `RTK` (<10ms CLI wrapper) + `sqz` + `headroom` + `LLMLingua` + `caveman` + `TOON/LEA`.
+3. **Cross-OS Parity**: Every feature MUST be backed by both POSIX Bash (`setup.sh`, `bin/wz-ai-*`) and Windows PowerShell (`setup.ps1`, `bin/windows/wz-ai-*.ps1`).
+4. **Testing Isolation**: `vitest.config.mjs` explicitly limits test inclusion to `test/**/*.test.mjs` (runtime <150ms).
 
-## Prossimi Step (Completati)
-1. ✅ Attendere approvazione piano (strategia global + lingua)
-2. ✅ Migrare 4 skill uniche dal global al workspace
-3. ✅ Pulire global config (secondo strategia scelta)
-4. ✅ Generare ~170 README evocativi
-5. ✅ Creare WIKI.md indice navigabile
-6. ✅ Fix GitHub auth (workaround per GITHUB_TOKEN di Antigravity)
-7. ✅ Commit e push (push eseguito su main)
+---
 
-## GitHub Auth
-- Account: darkrei08
-- Problema: `GITHUB_TOKEN=github_pat_antigravitydummytoken` è iniettato da **Antigravity IDE** (non dal file env di Wizard-AI — quello è pulito)
-- Il keyring ha il token valido `gho_****` ma è marcato come INATTIVO
-- Soluzione: `gh auth switch`, `gh auth setup-git`, check nel setup.sh
+## 📜 Key Changelog Snapshots
 
-## [Session State Snapshot] - 2026-07-20 19:33:10
-Rilasciata versione: implementato loopy, autonomous refactoring loop e fix test suite vitest
+### v0.50.43 (2026-07-22)
+- **Multi-Agent Syncing**: Synced skills to Cursor, Windsurf, OpenCode, and Pi.
+- **Auto-Installation of 52 External Repos**: `setup.sh` and `setup.ps1` execute OS-specific build/install routines.
+- **earendil-works/pi Integration**: Added native support for Pi Agent Framework.
+- **Interactive Terminal Installer (`wz-ai install`)**: Launched ANSI category menu (`scripts/wizard-installer.js`).
+- **2-Level Taxonomy & Auto-Wiki Injection**: Upgraded Wiki ([docs/WIKI.md](docs/WIKI.md), [WIKI.md](WIKI.md)), `wz-ai-install`, and `wizard-ai-installer/SKILL.md`.
 
-
-## [Session State Snapshot] - 2026-07-21 13:33:29
-Fixed headroom-ai proxy crash by reinstalling uv and headroom-ai with missing fastapi and uvicorn dependencies.
-
-
-## [Session State Snapshot] - 2026-07-21 13:39:21
-Rilasciata versione v0.50.12: sync memory and skills, published to GitHub and npm.
-
-
-## [Session State Snapshot] - 2026-07-22 09:43:04
-Fixed setup.ps1 crash on daemon auto-update, added JSON/TXT Write-Log system, tested sync of 219 skills. Releasing version.
-
-
-## [Session State Snapshot] - 2026-07-22 12:35:00
-Implementato e integrato il paradigma **4-Layer Format Stack (TOON/LEA)**.
-- Integrata libreria ufficiale `@toon-format/toon` in `wz-ai-context-formats.js` (risparmio 40-75% vs JSON).
-- Creata CLI `wz-ai-context` per testing dei formati (TOON, LEA, Markdown).
-- Aggiornate documentazioni di sistema (GEMINI.md, CLAUDE.md) con le nuove linee guida `pi-extensible-workflows` ibride e vincolo rigoroso su PRE/POST loop.
-- Modificato README.md introducendo la sezione SEO-optimized per "Agentic Context Engineering" e "Token Optimization".
-
-## [Session State Snapshot] - 2026-07-22 12:55:34
-Spiegata all'utente l'equivalenza tra l'installer npm (CLI) e il setup.bat per l'installazione dell'ecosistema (skill, python venv, caveman). Eseguito loop di controllo e verifica.
-
-## [Session State Snapshot] - 2026-07-22 12:59:54
-Bugfix in setup.ps1: l'installazione di Caveman (Invoke-Expression di uno script remoto con exit code) causava l'interruzione prematura dell'intero setup. Modificato per eseguire l'installazione in un processo powershell separato.
-
-## [Session State Snapshot] - 2026-07-22 13:02:00
-Eseguito commit, bump versione a v0.50.24, git push e npm publish.
-
-## [Session State Snapshot] - 2026-07-22 13:02:54
-Bugfix esteso a wz-ai-update.ps1 e rilasciato con versione v0.50.25 su GitHub ed npm.
-
-## [Session State Snapshot] - 2026-07-22 13:04:56
-Corretto refuso nel nome file 'wz-ai-sync-skills.ps1' su setup.ps1 e wz-ai-update.ps1. Rilasciato come v0.50.26.
-
-
-## Session 2026-07-22T11:18:03.436Z
-- Resolved Linux turbovec compilation issue by removing it from setup.sh (requires nightly rust which breaks standard apt installs).
-- Created and closed GitHub issue #12.
-- Bumped version to v0.50.27, published to npm and GitHub.
-
-
-## Session 2026-07-22T11:22:18.596Z
-- Resolved numpy build failure on Linux by forcing python 3.12 via uv venv to prevent it using python 3.13 default which lacked wheels.
-- Created and closed GitHub issue #13.
-- Bumped version to v0.50.28, published to npm and GitHub.
-
-
-## Session 2026-07-22T11:29:41.019Z
-- Resolved CRLF issues ( nv: bash\r) for bash wrappers deployed via setup.sh on WSL by applying sed -i s/\r$//.
-- Suppressed noisy cargo install errors when lean-ctx fallback fails on older Linux distros.
-- Created and closed GitHub issue #14.
-- Bumped version to v0.50.29, published to npm and GitHub Release.
-
-
-## [Session State Snapshot] - 2026-07-22 16:28:25
-- **D-Bus & Systemd User Bus Fix**: Resolved `$DBUS_SESSION_BUS_ADDRESS and $XDG_RUNTIME_DIR not defined` by passing environment variables in `scripts/wz-ai-proxy.js` and `setup.sh`.
-- **Systemd Cleanup**: Cleaned up legacy units (`ai-update.service`, `ai-proxy.service`) and reset failed states; systemd user scope restored to `State: running` (0 failed units).
-- **aisuite Dependency Fix**: Replaced `aisuite[all]` with `aisuite` in `setup.sh` and `setup.ps1` to eliminate the `google-cloud-aiplatform` missing `all` extra warning.
-- **Caveman Official Installer**: Integrated local `bin/install.js --all --non-interactive` execution in `setup.sh` and `setup.ps1`.
-- **Shell Parser Fix**: Sanitized section 7.5 headers in `setup.sh` (removed unescaped string parentheses and ampersands) to eliminate `ctive: command not found` errors.
-- **2-Way Skill Persistence System**: Documented bi-directional skill auto-backup engine (`wz-ai-sync-skills`) in `README.md` and `README.it.md` and updated terminal logs.
-- **Automated Model Data Scraper**: Created `scripts/fetch_latest_models.py` scraping 2970+ live models from LiteLLM DB, OpenRouter API, and Hugging Face Hub, updating `litellm` SKILL.md templates and live config (`~/.wizard-ai/configs/litellm-config.yaml`).
-- **UV Segfault Protection**: Fixed `uv` segfault re-install loop by auto-deleting corrupted prebuilt binaries and installing native OS packages (`pacman -S uv` / `apt-get install uv`).
-- **Releases**: Released and published versions `v0.50.35` through `v0.50.42` to GitHub and NPM (`@darkrei08/wizard-ai-cli`).
-
-## [Session State Snapshot] - 2026-07-22 16:58:00
-- **Expanded Multi-Agent & IDE Target Syncing**: Updated `wz-ai-sync-skills` and `wz-ai-sync-skills.ps1` to sync 88+ skills to `.gemini`, `.claude`, `.amp`, `.agents`, `.cursor`, `.windsurf`, `.opencode`, and `.pi` (`~/.pi/skills` & `~/.pi/agent/skills`).
-- **Full OS-Specific Build & Install Pipeline**: Updated `setup.sh` and `setup.ps1` to clone, build, and link all 52 external skill repositories tracked in the Wiki per OS guidelines (`node bin/install.js`, `install.sh`/`install.ps1`, `uv pip`, `npm`).
-- **earendil-works/pi Framework Integration**: Added native support for `earendil-works/pi` in setup scripts, skill sync, and Wiki documentation ([docs/WIKI.md](file:///home/ema/Scrivania/altri%20repooo/Wizard-AI/docs/WIKI.md), [WIKI.md](file:///home/ema/Scrivania/altri%20repooo/Wizard-AI/WIKI.md)).
-- **Interactive Terminal Skill & Framework Installer**: Built `scripts/wizard-installer.js` and wired `wz-ai install` to launch a rich ANSI interactive terminal menu with category filters and `--all` non-interactive support.
-- **2-Level Nested Hierarchy & Software Nature Categorization**: Reorganized the Wiki and terminal installer by Macro Domain Area AND Software Nature Subcategory (`[🧠 SKILL PER LLM]`, `[⚡ SOFTWARE CLI]`, `[🖥️ APP GRAFICA / DESKTOP]`, `[🏗️ STARTER TEMPLATE]`).
-- **Meta-Skill & CLI Installer Auto-Wiki Injection**: Upgraded `skills/00-core-engine/wizard-ai-installer/SKILL.md` and `bin/wz-ai-install` to prompt for Software Nature and automatically inject formatted entries into `docs/WIKI.md` and `WIKI.md`.
-- **Knowledge Graph Rebuilt**: Ran `graphify .` (`wz-ai-graph .`) to update the knowledge graph in `graphify-out/`.
-- **Vitest Scope Fix**: Added `vitest.config.mjs` to isolate Wizard-AI test execution (149ms runtime, 7/7 tests passing).
-- **Release**: Bumped version to `v0.50.43`.
+### v0.50.12 - v0.50.42 (2026-07-20 to 2026-07-22)
+- **4-Layer Format Stack (TOON/LEA)**: Integrated `@toon-format/toon` for token reduction (40-75%).
+- **UV Segfault Protection**: Auto-fallbacks to OS native package manager when uv prebuilt binary fails.
+- **LiteLLM / Model Data Scraper**: Automated live model fetching (`scripts/fetch_latest_models.py`) updating 2970+ model specs.
+- **Systemd & D-Bus Fixes**: Resolved `$DBUS_SESSION_BUS_ADDRESS` and `$XDG_RUNTIME_DIR` environment propagation.

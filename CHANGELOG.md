@@ -7,6 +7,16 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
+## [0.50.43] - 2026-07-22
+
+### Added
+- **Multi-Agent & IDE Target Syncing (`wz-ai-sync-skills`)**: Expanded skill synchronizers (`wz-ai-sync-skills` and `wz-ai-sync-skills.ps1`) to propagate all 88+ skills across `.gemini`, `.claude`, `.amp`, `.agents`, `.cursor`, `.windsurf`, `.opencode`, and `.pi` (`~/.pi/skills` & `~/.pi/agent/skills`).
+- **Complete OS-Specific Build & Install Pipeline**: Enhanced `setup.sh` and `setup.ps1` to clone, build, and link all 52 external skill repositories tracked in the Wiki per OS guidelines (`bin/install.js`, `install.sh`/`install.ps1`, `uv pip`, `npm`).
+- **Pi Agent Framework Integration (`earendil-works/pi`)**: Added native integration and wiki tracking for the Pi Agent Framework across POSIX and Windows setups.
+- **Interactive Terminal Skill & Framework Installer (`scripts/wizard-installer.js`)**: Built an interactive ANSI CLI installer launched via `wz-ai install` with category filters and `--all` non-interactive support.
+- **2-Level Nested Taxonomy & Software Nature Categorization**: Reorganized the Wiki ([docs/WIKI.md](docs/WIKI.md) and [WIKI.md](WIKI.md)) and CLI installer into Macro Domain Areas and Software Nature Subcategories (`[🧠 SKILL PER LLM]`, `[⚡ SOFTWARE CLI]`, `[🖥️ APP GRAFICA / DESKTOP]`, `[🏗️ STARTER TEMPLATE]`).
+- **Automated Wiki Injection (`bin/wz-ai-install` & `wizard-ai-installer`)**: Upgraded `bin/wz-ai-install` and `wizard-ai-installer` to prompt for Software Nature and automatically inject formatted entries into `docs/WIKI.md` and `WIKI.md`.
+
 ## [0.49.0] - 2026-07-12
 
 ### Added
