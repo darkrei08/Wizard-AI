@@ -116,9 +116,24 @@ async function runAddInstallation(selectedRepos) {
       spawnSync("node", [path.join(destDir, "bin", "install.js"), "--all", "--non-interactive"], { stdio: buildStdio });
     } else if (fs.existsSync(path.join(destDir, "install.sh")) && !isWin) {
       spawnSync("bash", [path.join(destDir, "install.sh")], { stdio: buildStdio });
+    } else if (fs.existsSync(path.join(destDir, "setup.sh")) && path.join(destDir, "setup.sh") !== path.join(process.cwd(), "setup.sh") && !isWin) {
+      spawnSync("bash", [path.join(destDir, "setup.sh")], { stdio: buildStdio });
+    } else if (fs.existsSync(path.join(destDir, "pyproject.toml")) || fs.existsSync(path.join(destDir, "setup.py"))) {
+      const venvPython = path.join(wizardHome, "venv", "bin", "python");
+      if (fs.existsSync(venvPython)) {
+        spawnSync("uv", ["pip", "install", "--python", venvPython, "-e", destDir], { stdio: buildStdio });
+      }
     } else if (fs.existsSync(path.join(destDir, "package.json"))) {
       spawnSync("npm", ["install", "--prefix", destDir, "--no-audit", "--no-fund"], { stdio: buildStdio });
     }
+
+    if (repo.name === "ECC") {
+      spawnSync("npm", ["install", "-g", "--allow-scripts=ecc-universal", "ecc-universal"], { stdio: buildStdio });
+    }
+    if (repo.name === "design.md") {
+      spawnSync("npm", ["install", "-g", "--allow-scripts=puppeteer", "@google/design.md"], { stdio: buildStdio });
+    }
+
     installedCount++;
   }
 

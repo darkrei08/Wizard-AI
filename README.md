@@ -116,8 +116,14 @@ In the 2026 AI ecosystem, prompting is dead; **Context Engineering** is the new 
 If you have [Node.js](https://nodejs.org) (≥ 14) and `git` installed, this works identical across Linux, macOS and Windows:
 
 ```bash
+# 1. Full Platform Installation (installs Python, uv, tools, and skills)
 npx -y @darkrei08/wizard-ai-cli@latest
-# or 'npx -y @darkrei08/wizard-ai-cli@latest --verbose' for detailed logs
+
+# 2. Universal Skill Manager (launch the beautiful interactive UI to add/remove skills)
+npx -y @darkrei08/wizard-ai-cli@latest skills
+
+# 3. Add a custom skill from any GitHub repository directly
+npx -y @darkrei08/wizard-ai-cli@latest add https://github.com/vercel-labs/skills
 ```
 
 The launcher clones the repository into `~/.wizard-ai` and runs the platform installer (`setup.sh` or `setup.ps1`) automatically with self-healing safeguards. Re-running the command updates an existing install safely. You can also install it as a global command:
