@@ -90,3 +90,9 @@ Bugfix esteso a wz-ai-update.ps1 e rilasciato con versione v0.50.25 su GitHub ed
 
 ## [Session State Snapshot] - 2026-07-22 13:04:56
 Corretto refuso nel nome file 'wz-ai-sync-skills.ps1' su setup.ps1 e wz-ai-update.ps1. Rilasciato come v0.50.26.
+
+
+## Session 2026-07-22T11:18:03.436Z
+- Resolved Linux turbovec compilation issue by removing it from setup.sh (requires nightly rust which breaks standard apt installs).
+- Created and closed GitHub issue #12.
+- Bumped version to v0.50.27, published to npm and GitHub.

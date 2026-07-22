@@ -96,7 +96,7 @@ mkdir -p "$HOME/.wizard-ai"
 # 2. Recreate Python Virtual Environment for wrappers
 echo -e "\n${BLUE}[2/10] Preparing Python Virtual Environment for LLMLingua & FlashRank...${NC}"
 rm -rf "$HOME/.wizard-ai/venv" 2>/dev/null || true
-uv venv "$HOME/.wizard-ai/venv" --seed $QUIET_OPT
+uv venv "$HOME/.wizard-ai/venv" --python 3.12 --seed $QUIET_OPT
 VENV_PYTHON="$HOME/.wizard-ai/venv/bin/python"
 
 
