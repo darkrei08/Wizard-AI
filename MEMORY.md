@@ -81,3 +81,9 @@ Spiegata all'utente l'equivalenza tra l'installer npm (CLI) e il setup.bat per l
 
 ## [Session State Snapshot] - 2026-07-22 12:59:54
 Bugfix in setup.ps1: l'installazione di Caveman (Invoke-Expression di uno script remoto con exit code) causava l'interruzione prematura dell'intero setup. Modificato per eseguire l'installazione in un processo powershell separato.
+
+## [Session State Snapshot] - 2026-07-22 13:02:00
+Eseguito commit, bump versione a v0.50.24, git push e npm publish.
+
+## [Session State Snapshot] - 2026-07-22 13:02:54
+Bugfix esteso a wz-ai-update.ps1 e rilasciato con versione v0.50.25 su GitHub ed npm.
