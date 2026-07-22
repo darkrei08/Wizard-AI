@@ -20,6 +20,6 @@ Engram is a persistent memory system for AI agents, replacing `claude-mem`. It u
 - **FTS5 Search**: Highly efficient string matching without heavy local embedding models.
 
 ## Integration (CLI):
-Use the wrapper `wizard-engram` to interact manually:
-- `wizard-engram store "Deciso l'utilizzo di Tailwind v4"`
-- `wizard-engram search "Tailwind"`
+Use the wrapper `wz-ai engram` to interact manually:
+- `wz-ai engram store "Deciso l'utilizzo di Tailwind v4"`
+- `wz-ai engram search "Tailwind"`

@@ -211,7 +211,6 @@ if (Test-Path (Join-Path $AiSkills 'wslens\install.ps1')) {
 Wrapper for wslens
 #>
 if (`$args.Count -eq 0) { wslens } else { wslens @args }" | Set-Content -Path $WslensWrapper -Encoding utf8
-    New-CmdShim 'wz-ai-wslens' 'wz-ai-wslens.ps1'
 }
 Clone-SkillRepo 'https://github.com/affaan-m/ECC.git' 'ECC'
 Clone-SkillRepo 'https://github.com/JuliusBrussee/caveman.git' 'caveman'
@@ -347,20 +346,17 @@ $null = New-Item -ItemType Directory -Force -Path (Join-Path $LocalBin 'lib')
 Copy-Item -Path (Join-Path $WrappersSrc 'lib\*') -Destination (Join-Path $LocalBin 'lib') -Recurse -Force
 
 # Generate .cmd shims so wrappers can be invoked as plain commands
-# (e.g. "wz-ai-help") from cmd.exe, PowerShell, and other AI agents.
+# (e.g. "wz-ai") from cmd.exe, PowerShell, and other AI agents.
 function New-CmdShim($CommandName, $Ps1Name) {
     $ShimPath = Join-Path $LocalBin "$CommandName.cmd"
     $Content = "@echo off`r`npowershell -NoProfile -ExecutionPolicy Bypass -File `"%~dp0$Ps1Name`" %*"
     Set-Content -Path $ShimPath -Value $Content -Encoding Ascii
 }
 
-$Wrappers = Get-ChildItem -Path $WrappersSrc -Filter '*.ps1'
-foreach ($W in $Wrappers) {
-    New-CmdShim $W.BaseName $W.Name
-}
-# gemini-usage is an alias of wz-ai-usage (same script, no duplicate files)
-New-CmdShim 'gemini-usage' 'wz-ai-usage.ps1'
-Write-Log "[ok] $($Wrappers.Count) wrapper scripts installed to $LocalBin (with gemini-usage shim)" -ForegroundColor Green
+# Only create the main dispatcher shim to prevent PATH pollution
+New-CmdShim 'wz-ai' 'wz-ai.ps1'
+
+Write-Log "[ok] Main dispatcher wz-ai.cmd installed to $LocalBin (subcommands are encapsulated)" -ForegroundColor Green
 
 # 7. Install Skills for all agents (hierarchical → flat)
 Write-Log ' '
