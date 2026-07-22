@@ -154,7 +154,7 @@ async function runAddInstallation(selectedRepos) {
   s2.start("Syncing skills to AI Agent IDE targets...");
   const syncScript = isWin ? path.join(wizardHome, "bin", "windows", "wz-ai-sync-skills.ps1") : path.join(wizardHome, "bin", "wz-ai-sync-skills");
   if (fs.existsSync(syncScript)) {
-    spawnSync(isWin ? "powershell" : "bash", [isWin ? "-ExecutionPolicy Bypass -File " + syncScript : syncScript], { stdio: "ignore" });
+    spawnSync(isWin ? "powershell" : "bash", [isWin ? "-ExecutionPolicy Bypass -File " + syncScript : syncScript], { stdio: buildStdio });
   }
   s2.stop("Sync complete.");
 
