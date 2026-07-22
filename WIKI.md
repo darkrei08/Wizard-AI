@@ -129,6 +129,7 @@ Welcome to the Wizard-AI knowledge base. All skills and workflows are organized 
 | [🌊 Apache Airflow](.agents/skills/4-domain-workflows/devops/official/airflow) | — | DAG-based task orchestration. Schedule, monitor, retry workflows. |
 | [🌪️ TurboVec](.agents/skills/4-domain-workflows/devops/official/turbovec) | — | Vector operations and embeddings tool. |
 | [🌳 Git Worktrees](.agents/skills/4-domain-workflows/devops/awesome-agent-skills/using-git-worktrees) | — | Isolate feature work with git worktree for parallel development. |
+| [🪟 WSLens Windows Manager](skills/wslens) | — | Control Windows windows from WSL or Agent: list, capture, resize, focus, click. |
 | [🌿 Auto Branch](.agents/skills/4-domain-workflows/devops/official/auto-branch) | — | Automate Git branch creation and naming conventions. Clean merge strategies. |
 | [🎛️ Cockpit Tools](.agents/skills/4-domain-workflows/devops/official/cockpit-tools) | — | Account management and quota tools for AI agent environments. |
 | [🎯 Auto Trigger Release](.agents/skills/4-domain-workflows/devops/official/auto-trigger-release) | — | Intercepts agent completions and auto-runs the release flow. |

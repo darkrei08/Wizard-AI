@@ -195,6 +195,24 @@ Clone-SkillRepo 'https://github.com/antvis/Infographic.git' 'Infographic'
 Clone-SkillRepo 'https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git' 'cybersecurity-skills'
 
 Write-Log "Cloning/Verifying ECC and caveman repositories inside ~/.wizard-ai/..." -ForegroundColor Cyan
+Clone-SkillRepo 'https://github.com/vekexasia/wslens.git' 'wslens'
+if (Test-Path (Join-Path $AiSkills 'wslens\install.ps1')) {
+    Write-Log "Installing wslens backend..." -ForegroundColor Yellow
+    # Save original directory
+    $OldDir = Get-Location
+    Set-Location (Join-Path $AiSkills 'wslens')
+    & .\install.ps1
+    Set-Location $OldDir
+    
+    # Also create a wrapper for wz-ai so we can do 'wz-ai wslens'
+    $WslensWrapper = Join-Path $LocalBin 'wz-ai-wslens.ps1'
+    "<#
+.SYNOPSIS
+Wrapper for wslens
+#>
+if (`$args.Count -eq 0) { wslens } else { wslens @args }" | Set-Content -Path $WslensWrapper -Encoding utf8
+    New-CmdShim 'wz-ai-wslens' 'wz-ai-wslens.ps1'
+}
 Clone-SkillRepo 'https://github.com/affaan-m/ECC.git' 'ECC'
 Clone-SkillRepo 'https://github.com/JuliusBrussee/caveman.git' 'caveman'
 
