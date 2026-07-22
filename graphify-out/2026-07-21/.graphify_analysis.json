@@ -7186,17 +7186,17 @@
   "questions": [
     {
       "type": "bridge_node",
-      "question": "Why does `BaseSchemaValidator` connect `BaseSchemaValidator` to `DOCXSchemaValidator`, `xlsx/scripts/office/validators/__init__.py`, `PPTXSchemaValidator`?",
+      "question": "Why does `BaseSchemaValidator` connect `XML Schema Validation Tools` to `DOCX Validation Logic`, `XLSX Validation Modules`, `PowerPoint Schema Validation`?",
       "why": "High betweenness centrality (0.001) - this node is a cross-community bridge."
     },
     {
       "type": "bridge_node",
-      "question": "Why does `DOCXSchemaValidator` connect `DOCXSchemaValidator` to `pptx/scripts/office/validators/__init__.py`, `RedliningValidator`, `_run_validation`, `BaseSchemaValidator`?",
+      "question": "Why does `DOCXSchemaValidator` connect `DOCX Paragraph Validation` to `PPTX Validation Modules`, `PPTX Redlining Validation`, `PPTX File Packaging Script`, `XML Validator Preprocessing`?",
       "why": "High betweenness centrality (0.000) - this node is a cross-community bridge."
     },
     {
       "type": "bridge_node",
-      "question": "Why does `BaseSchemaValidator` connect `BaseSchemaValidator` to `pptx/scripts/office/validators/__init__.py`, `PPTXSchemaValidator`, `DOCXSchemaValidator`?",
+      "question": "Why does `BaseSchemaValidator` connect `XML Validator Preprocessing` to `PPTX Validation Modules`, `PowerPoint Schema Validation`, `DOCX Paragraph Validation`?",
       "why": "High betweenness centrality (0.000) - this node is a cross-community bridge."
     },
     {

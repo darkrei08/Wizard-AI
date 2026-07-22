@@ -13,6 +13,45 @@ param (
     [switch]$VerboseMode
 )
 
+# -------------------------------------------------------------
+# Detailed Logging System (Human & LLM / JSON)
+# -------------------------------------------------------------
+$GlobalLogFile = Join-Path $HOME '.wizard-ai\setup.log'
+$GlobalJsonLog = Join-Path $HOME '.wizard-ai\setup.json'
+
+function Write-Log {
+    param(
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true, Position=0)]
+        [string]$Message,
+        [ConsoleColor]$ForegroundColor = 'Gray',
+        [switch]$NoNewline
+    )
+    
+    $Timestamp = (Get-Date).ToString('o')
+    $CleanMessage = $Message -replace '\e\[[0-9;]*m', '' # Remove ANSI
+    
+    # JSON Log
+    $LogEntry = @{
+        timestamp = $Timestamp
+        level     = 'INFO'
+        message   = $CleanMessage
+    }
+    $JsonString = $LogEntry | ConvertTo-Json -Compress
+    Add-Content -Path $GlobalJsonLog -Value $JsonString
+    
+    # Text Log
+    Add-Content -Path $GlobalLogFile -Value "[$Timestamp] $CleanMessage"
+    
+    # Console Output
+    if ($NoNewline) {
+        Write-Host $Message -ForegroundColor $ForegroundColor -NoNewline
+    } else {
+        Write-Host $Message -ForegroundColor $ForegroundColor
+    }
+}
+# -------------------------------------------------------------
+
+
 # PowerShell security hardening: Enforce TLS 1.2 and TLS 1.3 explicitly
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 -bor [Net.SecurityProtocolType]::Tls13
 
@@ -23,12 +62,12 @@ if ($VerboseMode) {
     $DebugPreference = 'Continue'
 }
 
-Write-Host '============================================================' -ForegroundColor Cyan
-Write-Host '          Wizard-AI Environment Setup Wizard (Windows)' -ForegroundColor Cyan
-Write-Host '============================================================' -ForegroundColor Cyan
+Write-Log '============================================================' -ForegroundColor Cyan
+Write-Log '          Wizard-AI Environment Setup Wizard (Windows)' -ForegroundColor Cyan
+Write-Log '============================================================' -ForegroundColor Cyan
 
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
-    Write-Host '[X] git not found on PATH. Install Git for Windows first: https://git-scm.com/download/win' -ForegroundColor Red
+    Write-Log '[X] git not found on PATH. Install Git for Windows first: https://git-scm.com/download/win' -ForegroundColor Red
     exit 1
 }
 
@@ -38,8 +77,8 @@ $LocalBin = Join-Path $HOME '.local\bin'
 $AiSkills = Join-Path $HOME '.wizard-ai'
 
 # 0. Save WIZARD_AI_DIR so skills and wrappers can reference the repo portably
-Write-Host ''
-Write-Host '[0/8] Registering Wizard-AI installation path...' -ForegroundColor Blue
+Write-Log ' '
+Write-Log '[0/8] Registering Wizard-AI installation path...' -ForegroundColor Blue
 $ConfigDir = Join-Path $HOME '.config\wizard-ai'
 $null = New-Item -ItemType Directory -Force -Path $ConfigDir
 $EnvFile = Join-Path $ConfigDir 'env.ps1'
@@ -57,28 +96,28 @@ $UserPath = [Environment]::GetEnvironmentVariable('Path', 'User')
 if (-not $UserPath) { $UserPath = '' }
 if ($UserPath -notlike "*$LocalBin*") {
     [Environment]::SetEnvironmentVariable('Path', "$LocalBin;$UserPath", 'User')
-    Write-Host "  [ok] Added $LocalBin to your user PATH" -ForegroundColor Green
+    Write-Log "  [ok] Added $LocalBin to your user PATH" -ForegroundColor Green
 }
 # Export for the current session
 $env:WIZARD_AI_DIR = $ScriptDir
 if ($env:Path -notlike "*$LocalBin*") { $env:Path = "$LocalBin;$($env:Path)" }
-Write-Host "[ok] WIZARD_AI_DIR=`"$ScriptDir`"" -ForegroundColor Green
+Write-Log "[ok] WIZARD_AI_DIR=`"$ScriptDir`"" -ForegroundColor Green
 
 # 1. Check/Install UV
-Write-Host ''
-Write-Host '[1/8] Checking for modern Python & Package Manager (uv)...' -ForegroundColor Blue
+Write-Log ' '
+Write-Log '[1/8] Checking for modern Python & Package Manager (uv)...' -ForegroundColor Blue
 if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
-    Write-Host 'uv not found. Installing uv via official script...' -ForegroundColor Yellow
+    Write-Log 'uv not found. Installing uv via official script...' -ForegroundColor Yellow
     # SECURITY: Executing scripts directly from the internet via pipe is a security risk.
     # Ideally, download the script, verify its hash/signature, and then execute it.
     Invoke-RestMethod https://astral.sh/uv/install.ps1 | Invoke-Expression
     if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
-        Write-Host '[X] uv installation failed. Install manually: https://docs.astral.sh/uv/' -ForegroundColor Red
+        Write-Log '[X] uv installation failed. Install manually: https://docs.astral.sh/uv/' -ForegroundColor Red
         exit 1
     }
 }
 else {
-    Write-Host "[ok] uv is already installed: $(uv --version)" -ForegroundColor Green
+    Write-Log "[ok] uv is already installed: $(uv --version)" -ForegroundColor Green
 }
 
 # Ensure local directories exist
@@ -86,19 +125,19 @@ $null = New-Item -ItemType Directory -Force -Path $LocalBin
 $null = New-Item -ItemType Directory -Force -Path $AiSkills
 
 # Optional: Install native Unix tools for Windows (ls, cp, grep, etc.)
-Write-Host 'Checking for Microsoft.Coreutils...' -ForegroundColor Yellow
+Write-Log 'Checking for Microsoft.Coreutils...' -ForegroundColor Yellow
 if (-not (Get-Command ls -ErrorAction SilentlyContinue | Where-Object { $_.Source -match "coreutils" })) {
-    Write-Host '  > Command: winget install Microsoft.Coreutils --accept-package-agreements --accept-source-agreements --verbose-logs' -ForegroundColor DarkGray
-    Write-Host '  > Note: If this hangs, check for hidden UAC prompts in your taskbar, or press Enter.' -ForegroundColor DarkGray
+    Write-Log '  > Command: winget install Microsoft.Coreutils --accept-package-agreements --accept-source-agreements --verbose-logs' -ForegroundColor DarkGray
+    Write-Log '  > Note: If this hangs, check for hidden UAC prompts in your taskbar, or press Enter.' -ForegroundColor DarkGray
     winget install Microsoft.Coreutils --accept-package-agreements --accept-source-agreements --verbose-logs
-    Write-Host '  > winget command finished.' -ForegroundColor DarkGray
+    Write-Log '  > winget command finished.' -ForegroundColor DarkGray
 }
 else {
-    Write-Host '[ok] Microsoft.Coreutils is already installed.' -ForegroundColor Green
+    Write-Log '[ok] Microsoft.Coreutils is already installed.' -ForegroundColor Green
 }
 
 # Ensure MSVC C++ Build Tools are installed for headroom-ai compilation
-Write-Host 'Checking for MSVC C++ Build Tools...' -ForegroundColor Yellow
+Write-Log 'Checking for MSVC C++ Build Tools...' -ForegroundColor Yellow
 $VsWherePath = 'C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe'
 $HasMsvc = $false
 if (Test-Path $VsWherePath) {
@@ -106,47 +145,47 @@ if (Test-Path $VsWherePath) {
     if ($MsvcCheck) { $HasMsvc = $true }
 }
 if (-not $HasMsvc) {
-    Write-Host 'MSVC C++ Build Tools not found. Installing via winget (this may take a few minutes)...' -ForegroundColor Yellow
-    Write-Host '  > Note: A UAC prompt may appear in the background for Visual Studio Installer. Please accept it.' -ForegroundColor Yellow
+    Write-Log 'MSVC C++ Build Tools not found. Installing via winget (this may take a few minutes)...' -ForegroundColor Yellow
+    Write-Log '  > Note: A UAC prompt may appear in the background for Visual Studio Installer. Please accept it.' -ForegroundColor Yellow
     $VsOverride = '--quiet --wait --norestart --nocache --add Microsoft.VisualStudio.Workload.VCTools --includeRecommended'
-    Write-Host "  > Command: winget install --id Microsoft.VisualStudio.2022.BuildTools --exact --force --accept-package-agreements --accept-source-agreements --override `"$VsOverride`" --verbose-logs" -ForegroundColor DarkGray
+    Write-Log "  > Command: winget install --id Microsoft.VisualStudio.2022.BuildTools --exact --force --accept-package-agreements --accept-source-agreements --override `"$VsOverride`" --verbose-logs" -ForegroundColor DarkGray
     winget install --id Microsoft.VisualStudio.2022.BuildTools --exact --force --accept-package-agreements --accept-source-agreements --override $VsOverride --verbose-logs
-    Write-Host '  > winget command finished.' -ForegroundColor DarkGray
-    Write-Host '[ok] MSVC C++ Build Tools installed.' -ForegroundColor Green
+    Write-Log '  > winget command finished.' -ForegroundColor DarkGray
+    Write-Log '[ok] MSVC C++ Build Tools installed.' -ForegroundColor Green
 } else {
-    Write-Host '[ok] MSVC C++ Build Tools are already installed.' -ForegroundColor Green
+    Write-Log '[ok] MSVC C++ Build Tools are already installed.' -ForegroundColor Green
 }
 
 # 2. Recreate Python Virtual Environment for wrappers
-Write-Host ''
-Write-Host '[2/8] Preparing Python Virtual Environment for LLMLingua & FlashRank...' -ForegroundColor Blue
+Write-Log ' '
+Write-Log '[2/8] Preparing Python Virtual Environment for LLMLingua & FlashRank...' -ForegroundColor Blue
 $VenvDir = Join-Path $AiSkills 'venv'
 if ($QuietOpt) { uv venv $VenvDir --python 3.12 --seed --quiet } else { uv venv $VenvDir --python 3.12 --seed }
 $VenvPython = Join-Path $VenvDir 'Scripts\python.exe'
-Write-Host 'Installing llmlingua and flashrank inside the venv (this can take a while)...' -ForegroundColor Yellow
+Write-Log 'Installing llmlingua and flashrank inside the venv (this can take a while)...' -ForegroundColor Yellow
 if ($QuietOpt) { uv pip install --quiet --python $VenvPython llmlingua flashrank "aisuite[all]" } else { uv pip install --python $VenvPython llmlingua flashrank "aisuite[all]" }
-Write-Host "[ok] Virtual environment ready at $VenvDir" -ForegroundColor Green
+Write-Log "[ok] Virtual environment ready at $VenvDir" -ForegroundColor Green
 
 # 3. Clone and install required skill repositories if not present
-Write-Host ''
-Write-Host "[3/8] Setting up external git skill repositories in $AiSkills..." -ForegroundColor Blue
+Write-Log ' '
+Write-Log "[3/8] Setting up external git skill repositories in $AiSkills..." -ForegroundColor Blue
 
 function Clone-SkillRepo($Url, $DestName) {
     $DestDir = Join-Path $AiSkills $DestName
     if (-not (Test-Path $DestDir)) {
-        Write-Host "Cloning $DestName from GitHub..." -ForegroundColor Yellow
+        Write-Log "Cloning $DestName from GitHub..." -ForegroundColor Yellow
         if ($QuietOpt) {
             git clone --depth 1 --quiet $Url $DestDir
         } else {
             git clone --depth 1 $Url $DestDir
         }
         if ($LASTEXITCODE -ne 0) {
-            Write-Host "  [!] $DestName clone failed" -ForegroundColor Red
+            Write-Log "  [!] $DestName clone failed" -ForegroundColor Red
         } else {
-            Write-Host "  [ok] $DestName cloned." -ForegroundColor Green
+            Write-Log "  [ok] $DestName cloned." -ForegroundColor Green
         }
     } else {
-        Write-Host "  [ok] $DestName is already present." -ForegroundColor Green
+        Write-Log "  [ok] $DestName is already present." -ForegroundColor Green
     }
 }
 
@@ -155,37 +194,37 @@ Clone-SkillRepo 'https://github.com/chopratejas/headroom.git' 'headroom'
 Clone-SkillRepo 'https://github.com/antvis/Infographic.git' 'Infographic'
 Clone-SkillRepo 'https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git' 'cybersecurity-skills'
 
-Write-Host "Cloning/Verifying ECC and caveman repositories inside ~/.wizard-ai/..." -ForegroundColor Cyan
+Write-Log "Cloning/Verifying ECC and caveman repositories inside ~/.wizard-ai/..." -ForegroundColor Cyan
 Clone-SkillRepo 'https://github.com/affaan-m/ECC.git' 'ECC'
 Clone-SkillRepo 'https://github.com/JuliusBrussee/caveman.git' 'caveman'
 
 if (Get-Command npm -ErrorAction SilentlyContinue) {
-    Write-Host "Attempting optional NPM global installations (ECC, caveman)..." -ForegroundColor Yellow
-    try { npm install -g ecc-universal 2>$null } catch { Write-Host "Note: ecc-universal npm install skipped." -ForegroundColor DarkGray }
-    try { npm install -g https://github.com/JuliusBrussee/caveman.git 2>$null } catch { Write-Host "Note: caveman npm git install skipped (using cloned repo in ~/.wizard-ai/caveman)." -ForegroundColor DarkGray }
+    Write-Log "Attempting optional NPM global installations (ECC, caveman)..." -ForegroundColor Yellow
+    try { npm install -g ecc-universal 2>$null } catch { Write-Log "Note: ecc-universal npm install skipped." -ForegroundColor DarkGray }
+    try { npm install -g https://github.com/JuliusBrussee/caveman.git 2>$null } catch { Write-Log "Note: caveman npm git install skipped (using cloned repo in ~/.wizard-ai/caveman)." -ForegroundColor DarkGray }
 } else {
-    Write-Host "NPM not found. Using cloned git repos for ECC and caveman." -ForegroundColor Yellow
+    Write-Log "NPM not found. Using cloned git repos for ECC and caveman." -ForegroundColor Yellow
 }
 Clone-SkillRepo 'https://github.com/yvgude/lean-ctx.git' 'lean-ctx'
 
 # 4. Install UV Global Tools
-Write-Host ''
-Write-Host '[4/8] Installing global CLI Tools via uv tool...' -ForegroundColor Blue
+Write-Log ' '
+Write-Log '[4/8] Installing global CLI Tools via uv tool...' -ForegroundColor Blue
 
 function Install-UvTool($Tool, $Pkg) {
     if (-not $Pkg) { $Pkg = $Tool }
-    Write-Host "Installing/Updating $Tool..." -ForegroundColor Yellow
+    Write-Log "Installing/Updating $Tool..." -ForegroundColor Yellow
     
     # Run uv tool install and capture stderr
     $err = $(uv tool install --force $Pkg 2>&1)
     if ($LASTEXITCODE -eq 0) {
-        Write-Host "  [ok] $Tool installed." -ForegroundColor Green
+        Write-Log "  [ok] $Tool installed." -ForegroundColor Green
     } else {
         if ($Tool -eq 'headroom') {
-            Write-Host "  [!] Failed to install $Tool (MSVC C++ Build Tools required). Skipping headroom setup, proceeding with the rest..." -ForegroundColor Yellow
+            Write-Log "  [!] Failed to install $Tool (MSVC C++ Build Tools required). Skipping headroom setup, proceeding with the rest..." -ForegroundColor Yellow
         } else {
-            Write-Host "  [!] Failed to install $Tool (exit code $LASTEXITCODE). You may need to install MSVC C++ Build Tools." -ForegroundColor Red
-            Write-Host "      Details: $err" -ForegroundColor DarkGray
+            Write-Log "  [!] Failed to install $Tool (exit code $LASTEXITCODE). You may need to install MSVC C++ Build Tools." -ForegroundColor Red
+            Write-Log "      Details: $err" -ForegroundColor DarkGray
         }
     }
 }
@@ -197,25 +236,25 @@ Install-UvTool 'sqz'
 Install-UvTool 'headroom' 'headroom-ai'
 
 # Install serena (semantic code intelligence — available via uvx)
-Write-Host 'Checking serena (semantic code search)...' -ForegroundColor Yellow
+Write-Log 'Checking serena (semantic code search)...' -ForegroundColor Yellow
 if (-not (Get-Command serena -ErrorAction SilentlyContinue)) {
     uv tool install --force serena-agent | Out-Null
-    Write-Host '  [ok] serena installed.' -ForegroundColor Green
+    Write-Log '  [ok] serena installed.' -ForegroundColor Green
 }
 else {
-    Write-Host '[ok] serena already installed.' -ForegroundColor Green
+    Write-Log '[ok] serena already installed.' -ForegroundColor Green
 }
 
 # 5. Fix sqz binary (pre-compiled native binary for token compression)
-Write-Host ''
-Write-Host '[5/8] Placing pre-compiled sqz binary...' -ForegroundColor Blue
+Write-Log ' '
+Write-Log '[5/8] Placing pre-compiled sqz binary...' -ForegroundColor Blue
 $SqzVer = ((Invoke-RestMethod -Uri 'https://api.github.com/repos/ojuschugh1/sqz/releases/latest' -UseBasicParsing -ErrorAction SilentlyContinue).tag_name)
 if (-not $SqzVer) { $SqzVer = 'v1.3.0' }
 $Arch = $env:PROCESSOR_ARCHITECTURE
 
 if ($Arch -eq 'AMD64') {
     $SqzUrl = "https://github.com/ojuschugh1/sqz/releases/download/$SqzVer/sqz-$SqzVer-x86_64-pc-windows-msvc.zip"
-    Write-Host "Fetching compiled sqz $SqzVer binary for x86_64..." -ForegroundColor Yellow
+    Write-Log "Fetching compiled sqz $SqzVer binary for x86_64..." -ForegroundColor Yellow
     $TmpDir = Join-Path $env:TEMP ([guid]::NewGuid().ToString())
     $null = New-Item -ItemType Directory -Force -Path $TmpDir
     try {
@@ -233,7 +272,7 @@ if ($Arch -eq 'AMD64') {
             } catch { $IsWorking = $false }
 
             if (-not $IsWorking) {
-                Write-Host "[!] Downloaded sqz $SqzVer binary failed execution check. Keeping previous working installation." -ForegroundColor Yellow
+                Write-Log "[!] Downloaded sqz $SqzVer binary failed execution check. Keeping previous working installation." -ForegroundColor Yellow
             } else {
                 # Try to place in uv tool site-packages first, fallback to ~\.local\bin
                 $PlacedInSitePackages = $false
@@ -247,41 +286,41 @@ if ($Arch -eq 'AMD64') {
                             $null = New-Item -ItemType Directory -Force -Path $BinDir
                             Copy-Item -Path $SqzExe.FullName -Destination (Join-Path $BinDir 'sqz.exe') -Force
                             Copy-Item -Path $SqzExe.FullName -Destination (Join-Path $BinDir 'sqz') -Force
-                            Write-Host "[ok] sqz $SqzVer binary placed safely in Python site-packages (x86_64)." -ForegroundColor Green
+                            Write-Log "[ok] sqz $SqzVer binary placed safely in Python site-packages (x86_64)." -ForegroundColor Green
                             $PlacedInSitePackages = $true
                         }
                     }
                 }
                 if (-not $PlacedInSitePackages) {
                     Copy-Item -Path $SqzExe.FullName -Destination (Join-Path $LocalBin 'sqz.exe') -Force
-                    Write-Host "[!] sqz $SqzVer binary placed safely in $LocalBin\sqz.exe (fallback)." -ForegroundColor Yellow
+                    Write-Log "[!] sqz $SqzVer binary placed safely in $LocalBin\sqz.exe (fallback)." -ForegroundColor Yellow
                 }
             }
         }
         else {
-            Write-Host '[!] sqz.exe not found inside the release archive — keeping previous working version.' -ForegroundColor Yellow
+            Write-Log '[!] sqz.exe not found inside the release archive — keeping previous working version.' -ForegroundColor Yellow
         }
     }
     catch {
-        Write-Host "[!] Could not download/extract sqz $SqzVer binary: $($_.Exception.Message). Keeping previous working version." -ForegroundColor Yellow
+        Write-Log "[!] Could not download/extract sqz $SqzVer binary: $($_.Exception.Message). Keeping previous working version." -ForegroundColor Yellow
     }
     finally {
         Remove-Item -Path $TmpDir -Recurse -Force -ErrorAction SilentlyContinue
     }
 }
 else {
-    Write-Host "[X] No pre-compiled sqz Windows binary for architecture '$Arch'. Compile sqz manually." -ForegroundColor Red
+    Write-Log "[X] No pre-compiled sqz Windows binary for architecture '$Arch'. Compile sqz manually." -ForegroundColor Red
 }
 
 # 6. Copy and configure CLI Wrappers
-Write-Host ''
-Write-Host "[6/8] Deploying custom AI CLI wrappers to $LocalBin..." -ForegroundColor Blue
+Write-Log ' '
+Write-Log "[6/8] Deploying custom AI CLI wrappers to $LocalBin..." -ForegroundColor Blue
 $WrappersSrc = Join-Path $ScriptDir 'bin\windows'
 
 # Security: Ensure paths are strictly within the project directory to prevent path traversal
 $ResolvedSrc = Resolve-Path $WrappersSrc -ErrorAction SilentlyContinue
 if (-not $ResolvedSrc -or -not $ResolvedSrc.Path.StartsWith($ScriptDir)) {
-    Write-Host "[X] Invalid wrappers source path. Potential path traversal detected." -ForegroundColor Red
+    Write-Log "[X] Invalid wrappers source path. Potential path traversal detected." -ForegroundColor Red
     exit 1
 }
 
@@ -303,11 +342,11 @@ foreach ($W in $Wrappers) {
 }
 # gemini-usage is an alias of wz-ai-usage (same script, no duplicate files)
 New-CmdShim 'gemini-usage' 'wz-ai-usage.ps1'
-Write-Host "[ok] $($Wrappers.Count) wrapper scripts installed to $LocalBin (with gemini-usage shim)" -ForegroundColor Green
+Write-Log "[ok] $($Wrappers.Count) wrapper scripts installed to $LocalBin (with gemini-usage shim)" -ForegroundColor Green
 
 # 7. Install Skills for all agents (hierarchical → flat)
-Write-Host ''
-Write-Host '[7/8] Installing AI agent skills...' -ForegroundColor Blue
+Write-Log ' '
+Write-Log '[7/8] Installing AI agent skills...' -ForegroundColor Blue
 $SkillsDst = Join-Path $HOME '.gemini\config\skills'
 $null = New-Item -ItemType Directory -Force -Path $SkillsDst
 $SkillCount = 0
@@ -322,39 +361,44 @@ Get-ChildItem -Path (Join-Path $ScriptDir 'skills') -Filter 'SKILL.md' -Recurse 
 }
 # Also copy skills.json for reference
 Copy-Item -Path (Join-Path $ScriptDir 'skills\skills.json') -Destination $SkillsDst -Force -ErrorAction SilentlyContinue
-Write-Host "[ok] $SkillCount skills installed to $SkillsDst" -ForegroundColor Green
+Write-Log "[ok] $SkillCount skills installed to $SkillsDst" -ForegroundColor Green
 
-Write-Host 'Syncing skills to Claude Code, Amp, and other agents...' -ForegroundColor Yellow
+Write-Log 'Syncing skills to Claude Code, Amp, and other agents...' -ForegroundColor Yellow
 & (Join-Path $LocalBin 'wz-ai-sync-skills.ps1')
 
 # 8. Auto-Update Configuration
-Write-Host ''
-Write-Host '[8/8] Auto-Update Configuration...' -ForegroundColor Blue
-Write-Host 'Do you want to enable automatic background updates at system logon? [Y/n] (Auto-yes in 10s) ' -ForegroundColor Yellow -NoNewline
+Write-Log ' '
+Write-Log '[8/8] Auto-Update Configuration...' -ForegroundColor Blue
+Write-Log 'Do you want to enable automatic background updates at system logon? [Y/n] (Auto-yes in 10s) ' -ForegroundColor Yellow -NoNewline
 
 $EnableUpdate = 'Y'
 $TimeoutSeconds = 10
 $Watch = [System.Diagnostics.Stopwatch]::StartNew()
-$Host.UI.RawUI.FlushInputBuffer()
-while ($Watch.Elapsed.TotalSeconds -lt $TimeoutSeconds) {
-    if ($Host.UI.RawUI.KeyAvailable) {
-        $KeyInfo = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-        if ($KeyInfo.Character -ne 0) {
-            $Key = $KeyInfo.Character
-            Write-Host $Key
-            if ($Key -eq 'n' -or $Key -eq 'N') { $EnableUpdate = 'N' }
-            break
+try {
+    $Host.UI.RawUI.FlushInputBuffer()
+    while ($Watch.Elapsed.TotalSeconds -lt $TimeoutSeconds) {
+        if ($Host.UI.RawUI.KeyAvailable) {
+            $KeyInfo = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+            if ($KeyInfo.Character -ne 0) {
+                $Key = $KeyInfo.Character
+                Write-Log $Key
+                if ($Key -eq 'n' -or $Key -eq 'N') { $EnableUpdate = 'N' }
+                break
+            }
         }
+        Start-Sleep -Milliseconds 100
     }
-    Start-Sleep -Milliseconds 100
+} catch {
+    Write-Log "[!] Interactive prompt not supported in this terminal. Defaulting to Y in $TimeoutSeconds seconds..." -ForegroundColor Yellow
+    Start-Sleep -Seconds $TimeoutSeconds
 }
-if (-not $Host.UI.RawUI.KeyAvailable) { Write-Host '' }
+if (-not $Host.UI.RawUI.KeyAvailable) { Write-Log ' ' }
 
 $StartupFolder = [Environment]::GetFolderPath('Startup')
 $StartupShortcut = Join-Path $StartupFolder "WizardAI-AutoUpdate.lnk"
 
 if ($EnableUpdate -eq 'Y') {
-    Write-Host "  [ok] Enabling automatic background updates at logon..." -ForegroundColor Green
+    Write-Log "  [ok] Enabling automatic background updates at logon..." -ForegroundColor Green
     $UpdateScriptPath = Join-Path $LocalBin 'wz-ai-update.ps1'
     
     # Security: Ensure the file exists before creating the shortcut
@@ -365,45 +409,36 @@ if ($EnableUpdate -eq 'Y') {
             $Shortcut.TargetPath = "powershell.exe"
             $Shortcut.Arguments = "-WindowStyle Hidden -NoProfile -ExecutionPolicy Bypass -File `"$UpdateScriptPath`" -Quiet"
             $Shortcut.Save()
-            Write-Host "  [ok] Startup shortcut installed for user." -ForegroundColor Green
+            Write-Log "  [ok] Startup shortcut installed for user." -ForegroundColor Green
         }
         catch {
-            Write-Host "  [!] Could not create startup shortcut: $($_.Exception.Message)" -ForegroundColor Yellow
+            Write-Log "  [!] Could not create startup shortcut: $($_.Exception.Message)" -ForegroundColor Yellow
         }
     } else {
-        Write-Host "  [!] Update script not found at $UpdateScriptPath. Skipping auto-update setup." -ForegroundColor Red
+        Write-Log "  [!] Update script not found at $UpdateScriptPath. Skipping auto-update setup." -ForegroundColor Red
     }
 }
 else {
-    Write-Host "  Auto-updates disabled. Update manually using 'wz-ai-update'." -ForegroundColor Yellow
+    Write-Log "  Auto-updates disabled. Update manually using 'wz-ai-update'." -ForegroundColor Yellow
     if (Test-Path $StartupShortcut) {
         Remove-Item $StartupShortcut -Force
     }
 }
 
 # 9. Final summary
-Write-Host ''
-Write-Host '============================================================' -ForegroundColor Green
-Write-Host '      Wizard-AI Environment Installed Successfully!' -ForegroundColor Green
-Write-Host '============================================================' -ForegroundColor Green
-Write-Host ''
-Write-Host 'Available commands in your terminal:'
-Write-Host '  wz-ai-help      ' -ForegroundColor Cyan -NoNewline; Write-Host '- Central hub for all AI commands'
-Write-Host '  wz-ai-usage     ' -ForegroundColor Cyan -NoNewline; Write-Host '- View Gemini usage statistics and token budget'
-Write-Host '  wz-ai-graph     ' -ForegroundColor Cyan -NoNewline; Write-Host '- Run Graphify to map codebases to knowledge graphs'
-Write-Host '  wz-ai-compress  ' -ForegroundColor Cyan -NoNewline; Write-Host '- Compress prompt context via LLMLingua (up to 20x)'
-Write-Host '  wz-ai-rerank    ' -ForegroundColor Cyan -NoNewline; Write-Host '- Re-rank list components for RAG via FlashRank'
-Write-Host '  wz-ai-squeeze   ' -ForegroundColor Cyan -NoNewline; Write-Host '- Compress CLI outputs / files via Sqz'
-Write-Host '  wz-ai-headroom  ' -ForegroundColor Cyan -NoNewline; Write-Host '- Headroom proxy and context compression'
-Write-Host '  wz-ai-lean      ' -ForegroundColor Cyan -NoNewline; Write-Host '- Lean Context Intelligence wrapper'
-Write-Host '  wz-ai-convert   ' -ForegroundColor Cyan -NoNewline; Write-Host '- Extract clean Markdown from PDF, DOCX, images, etc.'
-Write-Host '  wz-ai-mem       ' -ForegroundColor Cyan -NoNewline; Write-Host '- Access persistent semantic memory (claude-mem)'
-Write-Host '  wz-ai-sync-skills ' -ForegroundColor Cyan -NoNewline; Write-Host '- Sync skills across all AI agents'
-Write-Host ''
-Write-Host 'Important: open a NEW terminal to load the updated PATH.' -ForegroundColor Yellow
-Write-Host ''
-Write-Host 'Your Wizard-AI directory: ' -ForegroundColor Yellow -NoNewline; Write-Host $ScriptDir -ForegroundColor Magenta
-Write-Host 'Skills: ' -ForegroundColor Yellow -NoNewline; Write-Host $SkillsDst -ForegroundColor Magenta
-Write-Host 'CLIs:   ' -ForegroundColor Yellow -NoNewline; Write-Host $LocalBin -ForegroundColor Magenta
-Write-Host ''
-Write-Host "Run 'wz-ai-help' to see all available tools and their usage." -ForegroundColor Cyan
+Write-Log ' '
+Write-Log '============================================================' -ForegroundColor Green
+Write-Log '      Wizard-AI Environment Installed Successfully!' -ForegroundColor Green
+Write-Log '============================================================' -ForegroundColor Green
+Write-Log ' '
+Write-Log ' '
+Write-Log 'To see all available tools, wrappers, and their usage, simply run:'
+Write-Log '  wz-ai help' -ForegroundColor Cyan
+Write-Log ' '
+Write-Log 'Important: open a NEW terminal to load the updated PATH.' -ForegroundColor Yellow
+Write-Log ' '
+Write-Log 'Your Wizard-AI directory: ' -ForegroundColor Yellow -NoNewline; Write-Log $ScriptDir -ForegroundColor Magenta
+Write-Log 'Skills: ' -ForegroundColor Yellow -NoNewline; Write-Log $SkillsDst -ForegroundColor Magenta
+Write-Log 'CLIs:   ' -ForegroundColor Yellow -NoNewline; Write-Log $LocalBin -ForegroundColor Magenta
+Write-Log ' '
+Write-Log "Run 'wz-ai help' to see all available tools and their usage." -ForegroundColor Cyan

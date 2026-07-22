@@ -60,3 +60,11 @@ Rilasciata versione: implementato loopy, autonomous refactoring loop e fix test 
 ## [Session State Snapshot] - 2026-07-21 13:33:29
 Fixed headroom-ai proxy crash by reinstalling uv and headroom-ai with missing fastapi and uvicorn dependencies.
 
+
+## [Session State Snapshot] - 2026-07-21 13:39:21
+Rilasciata versione v0.50.12: sync memory and skills, published to GitHub and npm.
+
+
+## [Session State Snapshot] - 2026-07-22 09:43:04
+Fixed setup.ps1 crash on daemon auto-update, added JSON/TXT Write-Log system, tested sync of 219 skills. Releasing version.
+

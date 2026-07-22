@@ -150,17 +150,21 @@ powershell -ExecutionPolicy Bypass -File setup.ps1
 > **Flags:** `-v` / `--verbose` shows detailed logs. `-y` / `--yes` auto-accepts all prompts (skill setups, auto-updates, credentials skip).
 
 #### 3️⃣ Verify Installation & Help Menu
-Reload your shell to load the new environment variables, then launch the help menu:
+**Important Post-Installation Step:** You MUST reload your shell to load the new environment variables and path.
 ```bash
 source ~/.bashrc   # or source ~/.zshrc — on Windows simply open a new terminal
-wizard-ai help
+```
+
+Then, launch the help menu using the unified `wz-ai` command (do not use the `wizard-ai` npm installer command for this):
+```bash
+wz-ai help
 ```
 You will see the list of 47+ CLI wrappers and 160+ skills.
 
 #### 4️⃣ Launch the Local Dashboard (Hub)
 The ecosystem includes a sleek graphical interface (Hub) to explore skills, inspect your active loops, and view token savings telemetry:
 ```bash
-wizard-ai hub
+wz-ai hub
 ```
 *Manual alternative to start the server*:
 ```bash
@@ -248,7 +252,10 @@ sequenceDiagram
 
 ## 🛠️ Available Commands
 
-The list of commands has grown significantly! Please see the [Commands Reference](docs/commands.md) for the full list of available tools.
+The list of commands has grown significantly! Please see the [Commands Reference](docs/commands.md) for the full list of available tools. You can view them in the terminal by running:
+```bash
+wz-ai help
+```
 
 
 ---
@@ -428,6 +435,10 @@ Wizard-AI integrates these excellent open-source projects:
 - [ECC](https://github.com/affaan-m/ECC)
 - [book-to-skill](https://github.com/virgiliojr94/book-to-skill)
 - [Cockpit Tools](https://github.com/jlcodes99/cockpit-tools) - Local proxy to slash LLM API costs
+- [Headroom](https://github.com/jlcodes99/headroom-ai) - Context compression proxy
+- [Caveman](https://github.com/JuliusBrussee/caveman) - Output token optimization
+- [Ponytail](https://github.com/DietrichGebert/ponytail) - YAGNI coding mindset
+- [MinerU](https://github.com/opendatalab/MinerU) - VLM-powered document extraction
 
 ---
 
