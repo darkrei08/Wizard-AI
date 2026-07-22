@@ -36,24 +36,9 @@
  * @returns {string} TOON-formatted string
  */
 function toTOON(label, items, options = {}) {
-  if (!Array.isArray(items) || items.length === 0) return `${label}[0]{}:\n  (empty)`;
-
-  const delimiter = options.delimiter || ',';
-  const fields = options.fields || Object.keys(items[0]);
-  const header = `${label}[${items.length}]{${fields.join(delimiter)}}:`;
-
-  const rows = items.map(item => {
-    return '  ' + fields.map(f => {
-      const val = item[f];
-      if (val === null || val === undefined) return '';
-      if (typeof val === 'object') return JSON.stringify(val);
-      const str = String(val);
-      // Escape delimiter in values
-      return str.includes(delimiter) ? `"${str}"` : str;
-    }).join(delimiter);
-  });
-
-  return [header, ...rows].join('\n');
+  const toon = require('@toon-format/toon');
+  if (!Array.isArray(items) || items.length === 0) return `${label}:\n(empty)`;
+  return `${label}:\n${toon.encode(items)}`;
 }
 
 /**
@@ -65,50 +50,27 @@ function toTOON(label, items, options = {}) {
  * @returns {string} TOON-formatted string
  */
 function objToTOON(label, obj) {
-  if (!obj || typeof obj !== 'object') return `${label}: (empty)`;
-
-  const lines = Object.entries(obj).map(([key, value]) => {
-    if (typeof value === 'object' && value !== null) {
-      return `  ${key}: ${JSON.stringify(value)}`;
-    }
-    return `  ${key}: ${value}`;
-  });
-
-  return [`${label}:`, ...lines].join('\n');
+  const toon = require('@toon-format/toon');
+  if (!obj || typeof obj !== 'object') return `${label}:\n(empty)`;
+  return `${label}:\n${toon.encode(obj)}`;
 }
 
 /**
  * Parse TOON array format back to JSON objects.
  * 
- * @param {string} toon - TOON-formatted string
- * @returns {{ label: string, items: Object[] }}
+ * @param {string} toonStr - TOON-formatted string
+ * @returns {{ label: string, items: Object[] | Object }}
  */
-function fromTOON(toon) {
-  const lines = toon.trim().split('\n');
-  const headerMatch = lines[0].match(/^(\w+)\[(\d+)\]\{(.+)\}:$/);
-  if (!headerMatch) throw new Error('Invalid TOON header: ' + lines[0]);
-
-  const label = headerMatch[1];
-  const fields = headerMatch[3].split(',');
-
-  const items = lines.slice(1)
-    .filter(line => line.trim() && line.trim() !== '(empty)')
-    .map(line => {
-      const values = line.trim().split(',');
-      const obj = {};
-      fields.forEach((field, i) => {
-        const val = (values[i] || '').trim();
-        // Try to parse numbers
-        if (/^\d+$/.test(val)) obj[field] = parseInt(val, 10);
-        else if (/^\d+\.\d+$/.test(val)) obj[field] = parseFloat(val);
-        else if (val === 'true') obj[field] = true;
-        else if (val === 'false') obj[field] = false;
-        else obj[field] = val;
-      });
-      return obj;
-    });
-
-  return { label, items };
+function fromTOON(toonStr) {
+  const toon = require('@toon-format/toon');
+  const lines = toonStr.trim().split('\n');
+  let label = 'unknown';
+  if (lines[0] && lines[0].endsWith(':')) {
+    label = lines[0].slice(0, -1);
+    lines.shift();
+  }
+  const decoded = toon.decode(lines.join('\n'));
+  return { label, items: decoded };
 }
 
 

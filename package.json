@@ -1,6 +1,6 @@
 {
   "name": "@darkrei08/wizard-ai-cli",
-  "version": "0.50.21",
+  "version": "0.50.22",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
@@ -50,5 +50,8 @@
     "@vitalets/google-translate-api": "^9.2.1",
     "pi-extensible-workflows": "^1.0.1",
     "vitest": "^4.1.10"
+  },
+  "dependencies": {
+    "@toon-format/toon": "^2.3.1"
   }
 }
