@@ -117,10 +117,10 @@ If you have [Node.js](https://nodejs.org) (≥ 14) and `git` installed, this wor
 
 ```bash
 # 1. Full Platform Installation (installs Python, uv, tools, and skills)
-npx -y @darkrei08/wizard-ai-cli@latest
+npx -y @darkrei08/wizard-ai-cli@latest setup
 
 # 2. Universal Skill Manager (launch the beautiful interactive UI to add/remove skills)
-npx -y @darkrei08/wizard-ai-cli@latest skills
+npx -y @darkrei08/wizard-ai-cli@latest skills --verbose
 
 # 3. Add a custom skill from any GitHub repository directly
 npx -y @darkrei08/wizard-ai-cli@latest add https://github.com/vercel-labs/skills
