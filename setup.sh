@@ -161,9 +161,9 @@ fi
 VENV_PYTHON="$HOME/.wizard-ai/venv/bin/python"
 
 echo -e "${YELLOW}Installing llmlingua and flashrank inside the venv...${NC}"
-if ! uv pip install $QUIET_OPT --python "$VENV_PYTHON" llmlingua flashrank "aisuite[all]"; then
+if ! uv pip install $QUIET_OPT --python "$VENV_PYTHON" llmlingua flashrank aisuite; then
   echo -e "${YELLOW}uv pip install failed. Falling back to standard pip...${NC}"
-  "$VENV_PYTHON" -m pip install llmlingua flashrank "aisuite[all]" || {
+  "$VENV_PYTHON" -m pip install llmlingua flashrank aisuite || {
     echo -e "${RED}❌ Failed to install Python dependencies.${NC}"
     exit 1
   }

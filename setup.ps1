@@ -163,7 +163,7 @@ $VenvDir = Join-Path $AiSkills 'venv'
 if ($QuietOpt) { uv venv $VenvDir --python 3.12 --seed --quiet } else { uv venv $VenvDir --python 3.12 --seed }
 $VenvPython = Join-Path $VenvDir 'Scripts\python.exe'
 Write-Log 'Installing llmlingua and flashrank inside the venv (this can take a while)...' -ForegroundColor Yellow
-if ($QuietOpt) { uv pip install --quiet --python $VenvPython llmlingua flashrank "aisuite[all]" } else { uv pip install --python $VenvPython llmlingua flashrank "aisuite[all]" }
+if ($QuietOpt) { uv pip install --quiet --python $VenvPython llmlingua flashrank aisuite } else { uv pip install --python $VenvPython llmlingua flashrank aisuite }
 Write-Log "[ok] Virtual environment ready at $VenvDir" -ForegroundColor Green
 
 # 3. Clone and install required skill repositories if not present
