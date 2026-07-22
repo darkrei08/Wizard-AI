@@ -90,9 +90,9 @@
     "semantic_hash": "6bd11fac0769c46766eaeda65cb12ef6"
   },
   "package.json": {
-    "mtime": 1784711665.0982635,
-    "ast_hash": "19e128b1c4db976f9b7757a2e80127ed",
-    "semantic_hash": "19e128b1c4db976f9b7757a2e80127ed"
+    "mtime": 1784633924.8869295,
+    "ast_hash": "5c133eb4e6df17ec0c83891dcf6c4f0a",
+    "semantic_hash": "5c133eb4e6df17ec0c83891dcf6c4f0a"
   },
   "patch_bins.py": {
     "mtime": 1784630336.0373764,
@@ -110,14 +110,14 @@
     "semantic_hash": "6c233861ec812b5245df792c3bf27078"
   },
   "setup.ps1": {
-    "mtime": 1784711214.6696162,
-    "ast_hash": "246aec669ea02936c380acbf708030bc",
-    "semantic_hash": "246aec669ea02936c380acbf708030bc"
+    "mtime": 1784630336.0744393,
+    "ast_hash": "9714d87d57de3f73b1404532b60221ea",
+    "semantic_hash": "9714d87d57de3f73b1404532b60221ea"
   },
   "setup.sh": {
-    "mtime": 1784634266.915512,
-    "ast_hash": "0c142f33e8d9a7ae5a79a9c094eb32a1",
-    "semantic_hash": "0c142f33e8d9a7ae5a79a9c094eb32a1"
+    "mtime": 1784630336.07744,
+    "ast_hash": "ae2da00d084cb94aede7fd32d44be8d4",
+    "semantic_hash": "ae2da00d084cb94aede7fd32d44be8d4"
   },
   "scripts/fetch_repos_knowledge.py": {
     "mtime": 1784630336.0519156,
@@ -300,64 +300,64 @@
     "semantic_hash": "bc59d034414b57c4ec713ef5ffe9f6ac"
   },
   "bin/windows/wz-ai-compress.ps1": {
-    "mtime": 1784711208.7801466,
-    "ast_hash": "f57bfbc45635192ca58d0e280d08689a",
-    "semantic_hash": "f57bfbc45635192ca58d0e280d08689a"
+    "mtime": 1784630760.2454937,
+    "ast_hash": "afd388302af2308a440dc275d9b59e19",
+    "semantic_hash": "afd388302af2308a440dc275d9b59e19"
   },
   "bin/windows/wz-ai-convert.ps1": {
-    "mtime": 1784711208.8377728,
-    "ast_hash": "1750aac4633f9394db06c2ff9cba0dff",
-    "semantic_hash": "1750aac4633f9394db06c2ff9cba0dff"
+    "mtime": 1784630760.2472274,
+    "ast_hash": "85995604221619944302edd4ddcb25a8",
+    "semantic_hash": "85995604221619944302edd4ddcb25a8"
   },
   "bin/windows/wz-ai-graph.ps1": {
-    "mtime": 1784711208.8718863,
-    "ast_hash": "e6097f4a24971edf4446b32d6a4f5467",
-    "semantic_hash": "e6097f4a24971edf4446b32d6a4f5467"
+    "mtime": 1784630760.2484212,
+    "ast_hash": "222df0622eec8b5921d1b0a3ca4ef985",
+    "semantic_hash": "222df0622eec8b5921d1b0a3ca4ef985"
   },
   "bin/windows/wz-ai-headroom.ps1": {
-    "mtime": 1784711208.878371,
-    "ast_hash": "dce1c4708d000003bdd598f93d370a4c",
-    "semantic_hash": "dce1c4708d000003bdd598f93d370a4c"
+    "mtime": 1784630760.2502432,
+    "ast_hash": "7afd4f03b1719562aaacee8dd005230a",
+    "semantic_hash": "7afd4f03b1719562aaacee8dd005230a"
   },
   "bin/windows/wz-ai-help.ps1": {
-    "mtime": 1784711208.891022,
-    "ast_hash": "01ee0655d7b2209383c9a93926e68ba4",
-    "semantic_hash": "01ee0655d7b2209383c9a93926e68ba4"
+    "mtime": 1784630760.2514737,
+    "ast_hash": "21b8e4f92d8ae068eea04fba63cc7afc",
+    "semantic_hash": "21b8e4f92d8ae068eea04fba63cc7afc"
   },
   "bin/windows/wz-ai-lean.ps1": {
-    "mtime": 1784711208.901703,
-    "ast_hash": "9d33bc2c615ca4a4d1c57d61fef6b81b",
-    "semantic_hash": "9d33bc2c615ca4a4d1c57d61fef6b81b"
+    "mtime": 1784630760.2531488,
+    "ast_hash": "023bd832af110c46564fda5e6097125e",
+    "semantic_hash": "023bd832af110c46564fda5e6097125e"
   },
   "bin/windows/wz-ai-mem.ps1": {
-    "mtime": 1784711208.909903,
-    "ast_hash": "10c0241b68d0dc439a12d6890721fbf5",
-    "semantic_hash": "10c0241b68d0dc439a12d6890721fbf5"
+    "mtime": 1784630760.2542734,
+    "ast_hash": "cae094c7870f34e05d9c7ce482bc2190",
+    "semantic_hash": "cae094c7870f34e05d9c7ce482bc2190"
   },
   "bin/windows/wz-ai-ponytail.ps1": {
-    "mtime": 1784711208.9177797,
-    "ast_hash": "ea54af9b63838cfdb5c91793617754a2",
-    "semantic_hash": "ea54af9b63838cfdb5c91793617754a2"
+    "mtime": 1784630760.2554355,
+    "ast_hash": "7cf165841e6ecc71a523a21c608e3123",
+    "semantic_hash": "7cf165841e6ecc71a523a21c608e3123"
   },
   "bin/windows/wz-ai-proxy.ps1": {
-    "mtime": 1784711208.9267612,
-    "ast_hash": "23e861de681b9ce456de9f45824cdc67",
-    "semantic_hash": "23e861de681b9ce456de9f45824cdc67"
+    "mtime": 1784630760.2565773,
+    "ast_hash": "f2888aa4e1a88a77d5ef75d0e733d23b",
+    "semantic_hash": "f2888aa4e1a88a77d5ef75d0e733d23b"
   },
   "bin/windows/wz-ai-rerank.ps1": {
-    "mtime": 1784711208.933918,
-    "ast_hash": "1ad75b820d36ded984ac5221b6f56dfd",
-    "semantic_hash": "1ad75b820d36ded984ac5221b6f56dfd"
+    "mtime": 1784630760.2571318,
+    "ast_hash": "dfefe52d9bcac1978c79b1c72883a3de",
+    "semantic_hash": "dfefe52d9bcac1978c79b1c72883a3de"
   },
   "bin/windows/wz-ai-session-save.ps1": {
-    "mtime": 1784711208.9404323,
-    "ast_hash": "7709a01facaef14f621db1c6349e0451",
-    "semantic_hash": "7709a01facaef14f621db1c6349e0451"
+    "mtime": 1784630760.2595365,
+    "ast_hash": "0d29c2f5756ba4e461d4eddc62abf2c1",
+    "semantic_hash": "0d29c2f5756ba4e461d4eddc62abf2c1"
   },
   "bin/windows/wz-ai-squeeze.ps1": {
-    "mtime": 1784711208.946569,
-    "ast_hash": "134ed1840416bc42174c63fe72f0d266",
-    "semantic_hash": "134ed1840416bc42174c63fe72f0d266"
+    "mtime": 1784630760.2608106,
+    "ast_hash": "be308b344c36d024a0ac72973707f5cf",
+    "semantic_hash": "be308b344c36d024a0ac72973707f5cf"
   },
   "bin/windows/wz-ai-storybloq.ps1": {
     "mtime": 1784630335.5579274,
@@ -365,29 +365,29 @@
     "semantic_hash": "7e6c5a9b8b79e92c1cf6adabe2ccb808"
   },
   "bin/windows/wz-ai-sync-skills.ps1": {
-    "mtime": 1784711208.954173,
-    "ast_hash": "2a0d1cdc0b2d7b9fa2be88f48ee55b7e",
-    "semantic_hash": "2a0d1cdc0b2d7b9fa2be88f48ee55b7e"
+    "mtime": 1784630760.2620065,
+    "ast_hash": "a9eb96b9a0c2b02e58b8f3ea13628982",
+    "semantic_hash": "a9eb96b9a0c2b02e58b8f3ea13628982"
   },
   "bin/windows/wz-ai-test.ps1": {
-    "mtime": 1784711208.9662988,
-    "ast_hash": "9409eb0ad9a8af7dd9e97e7dd3511b51",
-    "semantic_hash": "9409eb0ad9a8af7dd9e97e7dd3511b51"
+    "mtime": 1784630760.2631881,
+    "ast_hash": "b355b02d684e75dcde24c8919ffb93d9",
+    "semantic_hash": "b355b02d684e75dcde24c8919ffb93d9"
   },
   "bin/windows/wz-ai-update.ps1": {
-    "mtime": 1784711208.9729424,
-    "ast_hash": "9c12b274c8cedef3718d6938ee589a16",
-    "semantic_hash": "9c12b274c8cedef3718d6938ee589a16"
+    "mtime": 1784630760.2637572,
+    "ast_hash": "15f8aa3fd4457f1a5494b2cca3fc05f0",
+    "semantic_hash": "15f8aa3fd4457f1a5494b2cca3fc05f0"
   },
   "bin/windows/wz-ai-usage.ps1": {
-    "mtime": 1784711208.9789813,
-    "ast_hash": "829e65809b0bb921cd3ddd0aa9d5b3fc",
-    "semantic_hash": "829e65809b0bb921cd3ddd0aa9d5b3fc"
+    "mtime": 1784630760.2648993,
+    "ast_hash": "0040c69f05b03179ef07c9b1e51c3388",
+    "semantic_hash": "0040c69f05b03179ef07c9b1e51c3388"
   },
   "bin/windows/wz-ai-webnative.ps1": {
-    "mtime": 1784711208.9846256,
-    "ast_hash": "d472ddde5b2722c29af1fc2e1d56b92e",
-    "semantic_hash": "d472ddde5b2722c29af1fc2e1d56b92e"
+    "mtime": 1784630760.2660575,
+    "ast_hash": "9bce84f9d8f0d6fe10e43fbe49731dc4",
+    "semantic_hash": "9bce84f9d8f0d6fe10e43fbe49731dc4"
   },
   "bin/wizard-ai": {
     "mtime": 1784630335.5629277,
@@ -6803,15 +6803,5 @@
     "mtime": 1784016763.705369,
     "ast_hash": "8146396a77faca5a8b3358d1a274b654",
     "semantic_hash": "8146396a77faca5a8b3358d1a274b654"
-  },
-  "bin/windows/wz-ai-engram.ps1": {
-    "mtime": 1784710341.5888355,
-    "ast_hash": "cf3a79fc85ff454c62f4f6b00ec5460d",
-    "semantic_hash": "cf3a79fc85ff454c62f4f6b00ec5460d"
-  },
-  "bin/windows/wz-ai.ps1": {
-    "mtime": 1784634173.8161013,
-    "ast_hash": "6f025b880d6e4259befe24af99aa7545",
-    "semantic_hash": "6f025b880d6e4259befe24af99aa7545"
   }
 }

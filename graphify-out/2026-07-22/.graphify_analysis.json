@@ -1442,17 +1442,17 @@
       "skills_architecture_and_design_engineering_excellence_skill"
     ],
     "69": [
-      "skills_docs_and_coauthoring_docx_scripts_office_validate",
-      "skills_docs_and_coauthoring_docx_scripts_office_validate_main",
-      "skills_docs_and_coauthoring_docx_scripts_office_validate_rationale_1",
-      "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining_redliningvalidator",
-      "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining_redliningvalidator_extract_text_content",
-      "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining_redliningvalidator_generate_detailed_diff",
-      "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining_redliningvalidator_get_git_word_diff",
-      "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining_redliningvalidator_init",
-      "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining_redliningvalidator_remove_author_tracked_changes",
-      "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining_redliningvalidator_repair",
-      "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining_redliningvalidator_validate"
+      "skills_docs_and_coauthoring_pptx_scripts_office_validate",
+      "skills_docs_and_coauthoring_pptx_scripts_office_validate_main",
+      "skills_docs_and_coauthoring_pptx_scripts_office_validate_rationale_1",
+      "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining_redliningvalidator",
+      "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining_redliningvalidator_extract_text_content",
+      "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining_redliningvalidator_generate_detailed_diff",
+      "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining_redliningvalidator_get_git_word_diff",
+      "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining_redliningvalidator_init",
+      "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining_redliningvalidator_remove_author_tracked_changes",
+      "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining_redliningvalidator_repair",
+      "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining_redliningvalidator_validate"
     ],
     "70": [
       "skills_docs_and_coauthoring_xlsx_scripts_office_validate",
@@ -1554,16 +1554,16 @@
       "skills_architecture_and_design_brainstorming_readme_brainstorming"
     ],
     "78": [
-      "skills_docs_and_coauthoring_docx_scripts_office_validators_base",
-      "skills_docs_and_coauthoring_docx_scripts_office_validators_base_rationale_1",
-      "skills_docs_and_coauthoring_docx_scripts_office_validators_docx",
-      "skills_docs_and_coauthoring_docx_scripts_office_validators_docx_rationale_1",
-      "skills_docs_and_coauthoring_docx_scripts_office_validators_init",
-      "skills_docs_and_coauthoring_docx_scripts_office_validators_init_rationale_1",
-      "skills_docs_and_coauthoring_docx_scripts_office_validators_pptx",
-      "skills_docs_and_coauthoring_docx_scripts_office_validators_pptx_rationale_1",
       "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining",
-      "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining_rationale_1"
+      "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining_rationale_1",
+      "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining_redliningvalidator",
+      "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining_redliningvalidator_extract_text_content",
+      "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining_redliningvalidator_generate_detailed_diff",
+      "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining_redliningvalidator_get_git_word_diff",
+      "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining_redliningvalidator_init",
+      "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining_redliningvalidator_remove_author_tracked_changes",
+      "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining_redliningvalidator_repair",
+      "skills_docs_and_coauthoring_docx_scripts_office_validators_redlining_redliningvalidator_validate"
     ],
     "79": [
       "skills_docs_and_coauthoring_pptx_scripts_add_slide",
@@ -1578,16 +1578,16 @@
       "skills_docs_and_coauthoring_pptx_scripts_add_slide_rationale_1"
     ],
     "80": [
+      "skills_docs_and_coauthoring_pptx_scripts_office_validators_base",
+      "skills_docs_and_coauthoring_pptx_scripts_office_validators_base_rationale_1",
+      "skills_docs_and_coauthoring_pptx_scripts_office_validators_docx",
+      "skills_docs_and_coauthoring_pptx_scripts_office_validators_docx_rationale_1",
+      "skills_docs_and_coauthoring_pptx_scripts_office_validators_init",
+      "skills_docs_and_coauthoring_pptx_scripts_office_validators_init_rationale_1",
+      "skills_docs_and_coauthoring_pptx_scripts_office_validators_pptx",
+      "skills_docs_and_coauthoring_pptx_scripts_office_validators_pptx_rationale_1",
       "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining",
-      "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining_rationale_1",
-      "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining_redliningvalidator",
-      "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining_redliningvalidator_extract_text_content",
-      "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining_redliningvalidator_generate_detailed_diff",
-      "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining_redliningvalidator_get_git_word_diff",
-      "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining_redliningvalidator_init",
-      "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining_redliningvalidator_remove_author_tracked_changes",
-      "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining_redliningvalidator_repair",
-      "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining_redliningvalidator_validate"
+      "skills_docs_and_coauthoring_pptx_scripts_office_validators_redlining_rationale_1"
     ],
     "81": [
       "skills_docs_and_coauthoring_xlsx_scripts_office_validators_base",
@@ -1716,9 +1716,9 @@
       "skills_architecture_and_design_brainstorming_scripts_helper_websocketurl"
     ],
     "92": [
-      "skills_docs_and_coauthoring_pptx_scripts_office_validate",
-      "skills_docs_and_coauthoring_pptx_scripts_office_validate_main",
-      "skills_docs_and_coauthoring_pptx_scripts_office_validate_rationale_1",
+      "skills_docs_and_coauthoring_docx_scripts_office_validate",
+      "skills_docs_and_coauthoring_docx_scripts_office_validate_main",
+      "skills_docs_and_coauthoring_docx_scripts_office_validate_rationale_1",
       "skills_docs_and_coauthoring_slack_gif_creator_core_validators",
       "skills_docs_and_coauthoring_slack_gif_creator_core_validators_is_slack_ready",
       "skills_docs_and_coauthoring_slack_gif_creator_core_validators_py_path",
@@ -1861,6 +1861,16 @@
       "scripts_wizard_test_spawnsync"
     ],
     "106": [
+      "skills_docs_and_coauthoring_docx_scripts_office_validators_base",
+      "skills_docs_and_coauthoring_docx_scripts_office_validators_base_rationale_1",
+      "skills_docs_and_coauthoring_docx_scripts_office_validators_docx",
+      "skills_docs_and_coauthoring_docx_scripts_office_validators_docx_rationale_1",
+      "skills_docs_and_coauthoring_docx_scripts_office_validators_init",
+      "skills_docs_and_coauthoring_docx_scripts_office_validators_init_rationale_1",
+      "skills_docs_and_coauthoring_docx_scripts_office_validators_pptx",
+      "skills_docs_and_coauthoring_docx_scripts_office_validators_pptx_rationale_1"
+    ],
+    "107": [
       "skills_docs_and_coauthoring_docx_scripts_office_validators_pptx_pptxschemavalidator",
       "skills_docs_and_coauthoring_docx_scripts_office_validators_pptx_pptxschemavalidator_looks_like_uuid",
       "skills_docs_and_coauthoring_docx_scripts_office_validators_pptx_pptxschemavalidator_validate",
@@ -1870,7 +1880,7 @@
       "skills_docs_and_coauthoring_docx_scripts_office_validators_pptx_pptxschemavalidator_validate_uuid_ids",
       "skills_docs_and_coauthoring_docx_scripts_office_validators_pptx_py_baseschemavalidator"
     ],
-    "107": [
+    "108": [
       "skills_docs_and_coauthoring_last30days_readme_github",
       "skills_docs_and_coauthoring_last30days_readme_hacker_news",
       "skills_docs_and_coauthoring_last30days_readme_last_30_days_pulse",
@@ -1880,7 +1890,7 @@
       "skills_docs_and_coauthoring_last30days_readme_x",
       "skills_docs_and_coauthoring_last30days_readme_youtube"
     ],
-    "108": [
+    "109": [
       "skills_docs_and_coauthoring_pdf_forms",
       "skills_docs_and_coauthoring_pdf_forms_check_bounding_boxes",
       "skills_docs_and_coauthoring_pdf_forms_check_fillable_fields",
@@ -1890,7 +1900,7 @@
       "skills_docs_and_coauthoring_pdf_forms_fill_fillable_fields",
       "skills_docs_and_coauthoring_pdf_forms_fill_pdf_form_with_annotations"
     ],
-    "109": [
+    "110": [
       "skills_docs_and_coauthoring_pdf_reference",
       "skills_docs_and_coauthoring_pdf_reference_pdf_lib",
       "skills_docs_and_coauthoring_pdf_reference_pdfjs_dist",
@@ -1899,16 +1909,6 @@
       "skills_docs_and_coauthoring_pdf_reference_pypdfium2",
       "skills_docs_and_coauthoring_pdf_reference_qpdf",
       "skills_docs_and_coauthoring_pdf_reference_reportlab"
-    ],
-    "110": [
-      "skills_docs_and_coauthoring_pptx_scripts_office_validators_base",
-      "skills_docs_and_coauthoring_pptx_scripts_office_validators_base_rationale_1",
-      "skills_docs_and_coauthoring_pptx_scripts_office_validators_docx",
-      "skills_docs_and_coauthoring_pptx_scripts_office_validators_docx_rationale_1",
-      "skills_docs_and_coauthoring_pptx_scripts_office_validators_init",
-      "skills_docs_and_coauthoring_pptx_scripts_office_validators_init_rationale_1",
-      "skills_docs_and_coauthoring_pptx_scripts_office_validators_pptx",
-      "skills_docs_and_coauthoring_pptx_scripts_office_validators_pptx_rationale_1"
     ],
     "111": [
       "skills_docs_and_coauthoring_pptx_scripts_office_validators_pptx_pptxschemavalidator",
@@ -2453,324 +2453,323 @@
       "scripts_update_skills_processskills"
     ],
     "177": [
-      "setup_clone_skillrepo",
-      "setup_install_uvtool",
-      "setup_new_cmdshim",
-      "setup_ps1_setup",
-      "setup_write_log"
-    ],
-    "178": [
       "skills_architecture_and_design_mp_codebase_design_deepening",
       "skills_architecture_and_design_mp_codebase_design_design_it_twice",
       "skills_architecture_and_design_mp_codebase_design_skill",
       "skills_architecture_and_design_mp_improve_codebase_architecture_html_report",
       "skills_architecture_and_design_mp_improve_codebase_architecture_skill"
     ],
-    "179": [
+    "178": [
       "skills_bun_skill_bun",
       "skills_bun_skill_bun_install",
       "skills_bun_skill_bun_test",
       "skills_bun_skill_javascriptcore",
       "skills_bun_skill_node_js"
     ],
-    "180": [
+    "179": [
       "skills_deno_skill_deno",
       "skills_deno_skill_jsr",
       "skills_deno_skill_rust",
       "skills_deno_skill_tokio",
       "skills_deno_skill_v8"
     ],
-    "181": [
+    "180": [
       "skills_devops_and_tools_graphify_skill_build_from_json",
       "skills_devops_and_tools_graphify_skill_cluster",
       "skills_devops_and_tools_graphify_skill_detect",
       "skills_devops_and_tools_graphify_skill_extract",
       "skills_devops_and_tools_graphify_skill_graphify"
     ],
-    "182": [
+    "181": [
       "skills_docs_and_coauthoring_internal_comms_examples_3p_updates_3p_updates",
       "skills_docs_and_coauthoring_internal_comms_examples_company_newsletter_company_newsletter",
       "skills_docs_and_coauthoring_internal_comms_examples_faq_answers_faq_answers",
       "skills_docs_and_coauthoring_internal_comms_examples_general_comms_general_comms",
       "skills_docs_and_coauthoring_internal_comms_skill_internal_comms"
     ],
-    "183": [
+    "182": [
       "skills_docs_and_coauthoring_last30days_skill_categories_py",
       "skills_docs_and_coauthoring_last30days_skill_last30days",
       "skills_docs_and_coauthoring_last30days_skill_last30days_py",
       "skills_docs_and_coauthoring_last30days_skill_polymarket",
       "skills_docs_and_coauthoring_last30days_skill_scrapecreators"
     ],
-    "184": [
+    "183": [
       "skills_docs_and_coauthoring_slack_gif_creator_readme",
       "skills_docs_and_coauthoring_slack_gif_creator_requirements",
       "skills_docs_and_coauthoring_slack_gif_creator_requirements_imageio",
       "skills_docs_and_coauthoring_slack_gif_creator_requirements_numpy",
       "skills_docs_and_coauthoring_slack_gif_creator_requirements_pillow"
     ],
-    "185": [
+    "184": [
       "skills_frameworks_and_stacks_gatsby_skill_gatsby",
       "skills_frameworks_and_stacks_ionic_skill_ionic",
       "skills_frameworks_and_stacks_react_native_skill_react_native",
       "skills_frameworks_and_stacks_react_skill_react",
       "skills_frameworks_and_stacks_vue_skill_vue"
     ],
-    "186": [
+    "185": [
       "skills_markitdown_skill_convert",
       "skills_markitdown_skill_convert_local",
       "skills_markitdown_skill_convert_response",
       "skills_markitdown_skill_convert_stream",
       "skills_markitdown_skill_markitdown"
     ],
-    "187": [
+    "186": [
       "skills_memory_and_context_personal_graph_skill_libsql",
       "skills_memory_and_context_personal_graph_skill_networkx",
       "skills_memory_and_context_personal_graph_skill_personal_graph",
       "skills_memory_and_context_personal_graph_skill_pyg",
       "skills_memory_and_context_personal_graph_skill_turso_db"
     ],
-    "188": [
+    "187": [
       "skills_meta_skills_claude_api_php_managed_agents_readme_agents",
       "skills_meta_skills_claude_api_php_managed_agents_readme_client",
       "skills_meta_skills_claude_api_php_managed_agents_readme_environments",
       "skills_meta_skills_claude_api_php_managed_agents_readme_sessions",
       "skills_meta_skills_claude_api_php_managed_agents_readme_vaults"
     ],
-    "189": [
+    "188": [
       "skills_meta_skills_claude_api_shared_model_migration_adaptive_thinking",
       "skills_meta_skills_claude_api_shared_model_migration_claude_opus_4_6",
       "skills_meta_skills_claude_api_shared_model_migration_claude_opus_4_7",
       "skills_meta_skills_claude_api_shared_model_migration_claude_opus_4_8",
       "skills_meta_skills_claude_api_shared_model_migration_task_budget"
     ],
-    "190": [
+    "189": [
       "skills_meta_skills_litellm_references_original_repo_readme",
       "skills_meta_skills_litellm_references_original_repo_readme_proxy_server",
       "skills_meta_skills_litellm_references_original_repo_readme_python_sdk",
       "skills_meta_skills_litellm_references_original_repo_readme_terraform_aws",
       "skills_meta_skills_litellm_references_original_repo_readme_terraform_gcp"
     ],
-    "191": [
+    "190": [
       "skills_meta_skills_mp_setup_matt_pocock_skills_domain_domain_docs",
       "skills_meta_skills_mp_setup_matt_pocock_skills_issue_tracker_github_github_tracker",
       "skills_meta_skills_mp_setup_matt_pocock_skills_issue_tracker_gitlab_gitlab_tracker",
       "skills_meta_skills_mp_setup_matt_pocock_skills_issue_tracker_local_local_tracker",
       "skills_meta_skills_mp_setup_matt_pocock_skills_skill_setup_skills"
     ],
-    "192": [
+    "191": [
       "skills_meta_skills_qwenpaw_readme_qwenpaw",
       "skills_meta_skills_qwenpaw_references_original_repo_readme_agentscope",
       "skills_meta_skills_qwenpaw_references_original_repo_readme_copaw",
       "skills_meta_skills_qwenpaw_references_original_repo_readme_modelscope",
       "skills_meta_skills_qwenpaw_references_original_repo_readme_qwenpaw"
     ],
-    "193": [
+    "192": [
       "skills_misc_hallmark_references_components_f1_bento_grid",
       "skills_misc_hallmark_references_components_f2_sticky_scroll_stack",
       "skills_misc_hallmark_references_components_f3_tabular_spec_sheet",
       "skills_misc_hallmark_references_components_f4_step_sequence",
       "skills_misc_hallmark_references_components_f5_annotated_screenshot"
     ],
-    "194": [
+    "193": [
       "skills_misc_hallmark_references_macrostructures_18_portfolio_grid_14islands",
       "skills_misc_hallmark_references_macrostructures_18_portfolio_grid_bureau_borsche",
       "skills_misc_hallmark_references_macrostructures_18_portfolio_grid_locomotive",
       "skills_misc_hallmark_references_macrostructures_18_portfolio_grid_pentagram",
       "skills_misc_hallmark_references_macrostructures_18_portfolio_grid_portfolio_grid"
     ],
-    "195": [
+    "194": [
       "skills_openwa_skill_baileys",
       "skills_openwa_skill_nestjs",
       "skills_openwa_skill_openwa",
       "skills_openwa_skill_typeorm",
       "skills_openwa_skill_whatsapp_web_js"
     ],
-    "196": [
+    "195": [
       "skills_qwenpaw_skill_agentscope",
       "skills_qwenpaw_skill_lm_studio",
       "skills_qwenpaw_skill_ollama",
       "skills_qwenpaw_skill_qwenpaw",
       "skills_qwenpaw_skill_qwenpaw_flash"
     ],
-    "197": [
+    "196": [
       "skills_react_native_skill_expo",
       "skills_react_native_skill_react",
       "skills_react_native_skill_react_native",
       "skills_react_skill_react",
       "skills_react_skill_react_native"
     ],
-    "198": [
+    "197": [
       "skills_stitch_design_stitch_loop_examples_next_prompt_next_prompt_md",
       "skills_stitch_design_stitch_loop_examples_site_site_md",
       "skills_stitch_design_stitch_loop_readme_stitch_loop",
       "skills_stitch_design_stitch_loop_resources_baton_schema_baton_schema",
       "skills_stitch_design_stitch_loop_resources_site_template_site_template"
     ],
-    "199": [
+    "198": [
       "skills_stitch_design_stitch_shadcn_ui_examples_data_table",
       "skills_stitch_design_stitch_shadcn_ui_examples_data_table_columns",
       "skills_stitch_design_stitch_shadcn_ui_examples_data_table_data",
       "skills_stitch_design_stitch_shadcn_ui_examples_data_table_datatableexample",
       "skills_stitch_design_stitch_shadcn_ui_examples_data_table_user"
     ],
-    "200": [
+    "199": [
       "skills_voicebox_skill_fastmcp",
       "skills_voicebox_skill_qwen3",
       "skills_voicebox_skill_tauri",
       "skills_voicebox_skill_voicebox",
       "skills_voicebox_skill_whisper"
     ],
-    "201": [
+    "200": [
       "skills_workflows_and_orchestration_executing_plans_skill_executing_plans",
       "skills_workflows_and_orchestration_finishing_a_development_branch_skill_finishing_a_development_branch",
       "superpowers_subagent_driven_development",
       "superpowers_using_git_worktrees",
       "superpowers_writing_plans"
     ],
-    "202": [
+    "201": [
       "skills_workflows_and_orchestration_mp_teach_glossary_format_glossary_format",
       "skills_workflows_and_orchestration_mp_teach_learning_record_format_learning_record_format",
       "skills_workflows_and_orchestration_mp_teach_mission_format_mission_format",
       "skills_workflows_and_orchestration_mp_teach_resources_format_resources_format",
       "skills_workflows_and_orchestration_mp_teach_skill_teach"
     ],
-    "203": [
+    "202": [
       "bin_windows_lib_ai_mem_fallback",
       "bin_windows_lib_ai_mem_fallback_load",
       "bin_windows_lib_ai_mem_fallback_main",
       "bin_windows_lib_ai_mem_fallback_save"
     ],
-    "204": [
+    "203": [
       "bin_wz_ai_debug",
       "bin_wz_ai_debug__entry",
       "bin_wz_ai_debug_gate_status",
       "bin_wz_ai_debug_usage"
     ],
-    "205": [
+    "204": [
       "bin_wz_ai_loop_sentinel",
       "bin_wz_ai_loop_sentinel__entry",
       "bin_wz_ai_loop_sentinel_calculate_and_route",
       "bin_wz_ai_loop_sentinel_show_banner"
     ],
-    "206": [
+    "205": [
       "bin_wz_ai_prompt",
       "bin_wz_ai_prompt__entry",
       "bin_wz_ai_prompt_execute_llm",
       "bin_wz_ai_prompt_usage"
     ],
-    "207": [
+    "206": [
       "bin_wz_ai_update",
       "bin_wz_ai_update__entry",
       "bin_wz_ai_update_log",
       "bin_wz_ai_update_show_notification"
     ],
-    "208": [
+    "207": [
       "docs_commands",
       "docs_models_reference_cockpit_tools",
       "docs_token_reduction_graphify_it",
       "docs_wiki_graphify"
     ],
-    "209": [
+    "208": [
       "docs_external_repos_angular_readme_angular",
       "docs_external_repos_angular_readme_angular_cli",
       "docs_external_repos_angular_readme_angular_core",
       "docs_external_repos_angular_readme_angular_material"
     ],
-    "210": [
+    "209": [
       "docs_external_repos_bun_readme_bun",
       "docs_external_repos_bun_readme_javascriptcore",
       "docs_external_repos_bun_readme_nodejs",
       "docs_external_repos_bun_readme_rust"
     ],
-    "211": [
+    "210": [
       "docs_external_repos_deno_readme_deno",
       "docs_external_repos_deno_readme_rust",
       "docs_external_repos_deno_readme_tokio",
       "docs_external_repos_deno_readme_v8"
     ],
-    "212": [
+    "211": [
       "docs_external_repos_flutter_readme_dart",
       "docs_external_repos_flutter_readme_flutter",
       "docs_external_repos_flutter_readme_impeller",
       "docs_external_repos_flutter_readme_skia"
     ],
-    "213": [
+    "212": [
       "docs_external_repos_llmlingua_readme_langchain",
       "docs_external_repos_llmlingua_readme_llamaindex",
       "docs_external_repos_llmlingua_readme_llmlingua",
       "docs_external_repos_llmlingua_readme_prompt_flow"
     ],
-    "214": [
+    "213": [
       "docs_external_repos_mongo_readme_mongo",
       "docs_external_repos_mongo_readme_mongod",
       "docs_external_repos_mongo_readme_mongodb",
       "docs_external_repos_mongo_readme_mongos"
     ],
-    "215": [
+    "214": [
       "docs_external_repos_openhuman_readme",
       "docs_external_repos_openhuman_readme_agentmemory",
       "docs_external_repos_openhuman_readme_tinyagents",
       "docs_external_repos_openhuman_readme_tinyflows"
     ],
-    "216": [
+    "215": [
       "docs_external_repos_personal_graph_readme_graphdb",
       "docs_external_repos_personal_graph_readme_personalrm",
       "docs_external_repos_personal_graph_readme_rag",
       "docs_external_repos_personal_graph_readme_vlitevss"
     ],
-    "217": [
+    "216": [
       "docs_external_repos_pocketbase_readme",
       "docs_external_repos_pocketbase_readme_dart_sdk",
       "docs_external_repos_pocketbase_readme_js_sdk",
       "docs_external_repos_portfolio_readme_contactform"
     ],
-    "218": [
+    "217": [
       "docs_external_repos_spec_kit_readme_spec_driven_development",
       "docs_external_repos_spec_kit_readme_spec_kit",
       "docs_external_repos_spec_kit_readme_specify_cli",
       "docs_external_repos_spec_kit_readme_uv"
     ],
-    "219": [
+    "218": [
       "docs_external_repos_sqz_readme_claude_code",
       "docs_external_repos_sqz_readme_sqz",
       "docs_external_repos_sqz_readme_sqz_cli",
       "docs_external_repos_sqz_readme_sqz_mcp"
     ],
-    "220": [
+    "219": [
       "graphify_analyze",
       "graphify_build",
       "graphify_detect",
       "skills_devops_and_tools_graphify_references_update"
     ],
-    "221": [
+    "220": [
       "hub_js_app",
       "hub_js_app_app",
       "hub_js_app_appstate",
       "hub_js_app_routes"
     ],
-    "222": [
+    "221": [
       "hub_js_dashboard",
       "hub_js_dashboard_fetchquotastatus",
       "hub_js_dashboard_init",
       "hub_js_dashboard_renderchart"
     ],
-    "223": [
+    "222": [
       "hub_js_installer",
       "hub_js_installer_complete",
       "hub_js_installer_init",
       "hub_js_installer_rendersteps"
     ],
-    "224": [
+    "223": [
       "role_tier_3_worker_devops",
       "skills_workflows_and_orchestration_finishing_a_development_branch_readme",
       "skills_workflows_and_orchestration_mp_code_review_readme",
       "skills_workflows_and_orchestration_mp_diagnosing_bugs_readme"
     ],
-    "225": [
+    "224": [
       "scripts_publish_viral_campaign",
       "scripts_publish_viral_campaign_generate_markdown_files",
       "scripts_publish_viral_campaign_print_payloads_guide",
       "scripts_publish_viral_campaign_publish_to_discord"
+    ],
+    "225": [
+      "setup_clone_skillrepo",
+      "setup_install_uvtool",
+      "setup_new_cmdshim",
+      "setup_ps1_setup"
     ],
     "226": [
       "skills_antigravity_awesome_skills_skill_aas_core",
@@ -4300,1668 +4299,1662 @@
       "bin_windows_wizard_test"
     ],
     "568": [
-      "bin_windows_wz_ai"
-    ],
-    "569": [
       "bin_windows_wz_ai_caveman"
     ],
-    "570": [
+    "569": [
       "bin_windows_wz_ai_compress"
     ],
-    "571": [
+    "570": [
       "bin_windows_wz_ai_convert"
     ],
-    "572": [
-      "bin_windows_wz_ai_engram"
-    ],
-    "573": [
+    "571": [
       "bin_windows_wz_ai_headroom"
     ],
-    "574": [
+    "572": [
       "bin_windows_wz_ai_lean"
     ],
-    "575": [
+    "573": [
       "bin_windows_wz_ai_ponytail"
     ],
-    "576": [
+    "574": [
       "bin_windows_wz_ai_proxy"
     ],
-    "577": [
+    "575": [
       "bin_windows_wz_ai_rerank"
     ],
-    "578": [
+    "576": [
       "bin_windows_wz_ai_session_save"
     ],
-    "579": [
+    "577": [
       "bin_windows_wz_ai_squeeze"
     ],
-    "580": [
+    "578": [
       "bin_windows_wz_ai_storybloq"
     ],
-    "581": [
+    "579": [
       "bin_windows_wz_ai_sync_skills"
     ],
-    "582": [
+    "580": [
       "bin_windows_wz_ai_test"
     ],
-    "583": [
+    "581": [
       "bin_windows_wz_ai_usage"
     ],
-    "584": [
+    "582": [
       "bin_windows_wz_ai_webnative"
     ],
-    "585": [
+    "583": [
       "class_variance_authority"
     ],
-    "586": [
+    "584": [
       "contributing"
     ],
-    "587": [
+    "585": [
       "contributing_it"
     ],
-    "588": [
+    "586": [
       "design"
     ],
-    "589": [
+    "587": [
       "docker_compose"
     ],
-    "590": [
+    "588": [
       "docker_mineru_compose"
     ],
-    "591": [
+    "589": [
       "docker_mineru_compose_mineru_gradio"
     ],
-    "592": [
+    "590": [
       "docker_mineru_compose_mineru_openai_server"
     ],
-    "593": [
+    "591": [
       "docs_adding_skills_guide_it_ai_sync_skills"
     ],
-    "594": [
+    "592": [
       "docs_adr_adr_005_definitive_autonomous_engine_ai_skill_doctor"
     ],
-    "595": [
+    "593": [
       "docs_commands_caveman_caveman"
     ],
-    "596": [
+    "594": [
       "docs_commands_compress_compress"
     ],
-    "597": [
+    "595": [
       "docs_commands_proxy_wizard_ai_proxy"
     ],
-    "598": [
+    "596": [
       "docs_external_repos_antigravity_awesome_skills_readme_cursor"
     ],
-    "599": [
+    "597": [
       "docs_external_repos_antigravity_awesome_skills_readme_gemini_cli"
     ],
-    "600": [
+    "598": [
       "docs_external_repos_awesome_agent_skills_readme_browser_automation"
     ],
-    "601": [
+    "599": [
       "docs_external_repos_awesome_agent_skills_readme_databases"
     ],
-    "602": [
+    "600": [
       "docs_external_repos_awesome_agent_skills_readme_product_management"
     ],
-    "603": [
+    "601": [
       "docs_external_repos_awesome_agent_skills_readme_web3"
     ],
-    "604": [
+    "602": [
       "docs_external_repos_core_readme_vue"
     ],
-    "605": [
+    "603": [
       "docs_external_repos_ecc_readme_planner"
     ],
-    "606": [
+    "604": [
       "docs_external_repos_llmlingua_readme_llmlingua_2"
     ],
-    "607": [
+    "605": [
       "docs_external_repos_llmlingua_readme_longllmlingua"
     ],
-    "608": [
+    "606": [
       "docs_external_repos_llmlingua_readme_securitylingua"
     ],
-    "609": [
+    "607": [
       "docs_external_repos_personal_graph_readme"
     ],
-    "610": [
+    "608": [
       "docs_external_repos_portfolio_readme"
     ],
-    "611": [
+    "609": [
       "docs_external_repos_quickjs_readme"
     ],
-    "612": [
+    "610": [
       "docs_external_repos_react_readme"
     ],
-    "613": [
+    "611": [
       "docs_external_repos_svelte_readme_svelte"
     ],
-    "614": [
+    "612": [
       "docs_external_repos_trailbase_readme"
     ],
-    "615": [
+    "613": [
       "docs_external_repos_voicebox_readme"
     ],
-    "616": [
+    "614": [
       "docs_external_repos_vuetify_readme"
     ],
-    "617": [
+    "615": [
       "docs_external_repos_zvec_readme"
     ],
-    "618": [
+    "616": [
       "docs_legal_privacy_policy_privacy_policy"
     ],
-    "619": [
+    "617": [
       "docs_legal_terms_of_service_terms_of_service"
     ],
-    "620": [
+    "618": [
       "docs_models_reference"
     ],
-    "621": [
+    "619": [
       "docs_models_reference_claude_5_fable"
     ],
-    "622": [
+    "620": [
       "docs_models_reference_gemini_3_5_pro"
     ],
-    "623": [
+    "621": [
       "docs_models_reference_gpt_5_6_sol"
     ],
-    "624": [
+    "622": [
       "docs_split_readme"
     ],
-    "625": [
+    "623": [
       "docs_templates_claude_mattpocock_reference_ask_matt"
     ],
-    "626": [
+    "624": [
       "docs_templates_prompt_template"
     ],
-    "627": [
+    "625": [
       "docs_token_reduction_graphify_wiki_brain"
     ],
-    "628": [
+    "626": [
       "docs_wiki"
     ],
-    "629": [
+    "627": [
       "docs_wiki_prompt_loop_engine"
     ],
-    "630": [
+    "628": [
       "external_headroom"
     ],
-    "631": [
+    "629": [
       "external_loop_1_plan"
     ],
-    "632": [
+    "630": [
       "external_loop_2_develop"
     ],
-    "633": [
+    "631": [
       "global_awesome_design"
     ],
-    "634": [
+    "632": [
       "global_brand_guidelines"
     ],
-    "635": [
+    "633": [
       "global_canvas_design"
     ],
-    "636": [
+    "634": [
       "global_concept_managed_agents"
     ],
-    "637": [
+    "635": [
       "global_concept_prompt_caching"
     ],
-    "638": [
+    "636": [
       "global_docx_parser"
     ],
-    "639": [
+    "637": [
       "global_loop_4_refactor"
     ],
-    "640": [
+    "638": [
       "global_model_fable_5"
     ],
-    "641": [
+    "639": [
       "global_model_opus_4_8"
     ],
-    "642": [
+    "640": [
       "global_model_sonnet_4_6"
     ],
-    "643": [
+    "641": [
       "global_pdf_parser"
     ],
-    "644": [
+    "642": [
       "global_pptx_parser"
     ],
-    "645": [
+    "643": [
       "global_taste_skill"
     ],
-    "646": [
+    "644": [
       "global_xlsx_parser"
     ],
-    "647": [
+    "645": [
       "graphify_skill"
     ],
-    "648": [
+    "646": [
       "index"
     ],
-    "649": [
+    "647": [
       "markitdown_skill"
     ],
-    "650": [
+    "648": [
       "patch_bins"
     ],
-    "651": [
+    "649": [
       "patch_bins_v2"
     ],
-    "652": [
+    "650": [
       "readme_readme"
     ],
-    "653": [
+    "651": [
       "skills_00_core_engine_0_loop_engine_readme"
     ],
-    "654": [
+    "652": [
       "skills_00_core_engine_0_master_brain_readme"
     ],
-    "655": [
+    "653": [
       "skills_00_core_engine_1_auto_router_readme"
     ],
-    "656": [
+    "654": [
       "skills_00_core_engine_2_wizard_hub_readme"
     ],
-    "657": [
+    "655": [
       "skills_00_core_engine_3_shadow_clone_parallelism_readme"
     ],
-    "658": [
+    "656": [
       "skills_00_core_engine_4_swarm_manager_readme"
     ],
-    "659": [
+    "657": [
       "skills_00_core_engine_5_goodcode_orchestrator_readme"
     ],
-    "660": [
+    "658": [
       "skills_00_core_engine_5_goodcode_orchestrator_references_examples"
     ],
-    "661": [
+    "659": [
       "skills_00_core_engine_auto_trigger_release_readme"
     ],
-    "662": [
+    "660": [
       "skills_00_core_engine_auto_trigger_release_skill"
     ],
-    "663": [
+    "661": [
       "skills_00_core_engine_loop_1_plan_readme"
     ],
-    "664": [
+    "662": [
       "skills_00_core_engine_loop_2_develop_readme"
     ],
-    "665": [
+    "663": [
       "skills_00_core_engine_using_superpowers_readme_superpowers"
     ],
-    "666": [
+    "664": [
       "skills_00_core_engine_using_superpowers_references_antigravity_tools_md_antigravity"
     ],
-    "667": [
+    "665": [
       "skills_00_core_engine_using_superpowers_references_claude_code_tools_md_claude_code"
     ],
-    "668": [
+    "666": [
       "skills_00_core_engine_using_superpowers_references_codex_tools_md_codex"
     ],
-    "669": [
+    "667": [
       "skills_00_core_engine_using_superpowers_references_copilot_tools_md_copilot"
     ],
-    "670": [
+    "668": [
       "skills_00_core_engine_using_superpowers_references_gemini_tools_md_gemini"
     ],
-    "671": [
+    "669": [
       "skills_00_core_engine_using_superpowers_references_pi_tools_md_pi"
     ],
-    "672": [
+    "670": [
       "skills_00_core_engine_using_superpowers_skill_using_superpowers"
     ],
-    "673": [
+    "671": [
       "skills_architecture_and_design_brainstorming_skill_brainstorming"
     ],
-    "674": [
+    "672": [
       "skills_architecture_and_design_brainstorming_spec_document_reviewer_prompt"
     ],
-    "675": [
+    "673": [
       "skills_architecture_and_design_engineering_excellence_examples_generic"
     ],
-    "676": [
+    "674": [
       "skills_architecture_and_design_engineering_excellence_examples_go"
     ],
-    "677": [
+    "675": [
       "skills_architecture_and_design_engineering_excellence_examples_laravel"
     ],
-    "678": [
+    "676": [
       "skills_architecture_and_design_engineering_excellence_examples_nuxt"
     ],
-    "679": [
+    "677": [
       "skills_architecture_and_design_engineering_excellence_examples_react"
     ],
-    "680": [
+    "678": [
       "skills_architecture_and_design_engineering_excellence_examples_spring"
     ],
-    "681": [
+    "679": [
       "skills_architecture_and_design_engineering_excellence_references_architecture"
     ],
-    "682": [
+    "680": [
       "skills_architecture_and_design_engineering_excellence_references_ci"
     ],
-    "683": [
+    "681": [
       "skills_architecture_and_design_engineering_excellence_references_code_review"
     ],
-    "684": [
+    "682": [
       "skills_architecture_and_design_engineering_excellence_references_dependencies"
     ],
-    "685": [
+    "683": [
       "skills_architecture_and_design_engineering_excellence_references_docker"
     ],
-    "686": [
+    "684": [
       "skills_architecture_and_design_engineering_excellence_references_documentation"
     ],
-    "687": [
+    "685": [
       "skills_architecture_and_design_engineering_excellence_references_dry"
     ],
-    "688": [
+    "686": [
       "skills_architecture_and_design_engineering_excellence_references_engineering_principles"
     ],
-    "689": [
+    "687": [
       "skills_architecture_and_design_engineering_excellence_references_engineering_score"
     ],
-    "690": [
+    "688": [
       "skills_architecture_and_design_engineering_excellence_references_i18n"
     ],
-    "691": [
+    "689": [
       "skills_architecture_and_design_engineering_excellence_references_kiss"
     ],
-    "692": [
+    "690": [
       "skills_architecture_and_design_engineering_excellence_references_performance"
     ],
-    "693": [
+    "691": [
       "skills_architecture_and_design_engineering_excellence_references_sdd"
     ],
-    "694": [
+    "692": [
       "skills_architecture_and_design_engineering_excellence_references_solid"
     ],
-    "695": [
+    "693": [
       "skills_architecture_and_design_engineering_excellence_references_tdd"
     ],
-    "696": [
+    "694": [
       "skills_architecture_and_design_engineering_excellence_references_technical_debt"
     ],
-    "697": [
+    "695": [
       "skills_architecture_and_design_engineering_excellence_references_testing"
     ],
-    "698": [
+    "696": [
       "skills_architecture_and_design_engineering_excellence_references_yagni"
     ],
-    "699": [
+    "697": [
       "skills_architecture_and_design_engineering_excellence_templates_adr"
     ],
-    "700": [
+    "698": [
       "skills_architecture_and_design_engineering_excellence_templates_architecture"
     ],
-    "701": [
+    "699": [
       "skills_architecture_and_design_engineering_excellence_templates_engineering_report"
     ],
-    "702": [
+    "700": [
       "skills_architecture_and_design_engineering_excellence_templates_openspec"
     ],
-    "703": [
+    "701": [
       "skills_architecture_and_design_engineering_excellence_templates_pull_request"
     ],
-    "704": [
+    "702": [
       "skills_architecture_and_design_mp_codebase_design_readme"
     ],
-    "705": [
+    "703": [
       "skills_architecture_and_design_mp_improve_codebase_architecture_readme"
     ],
-    "706": [
+    "704": [
       "skills_architecture_and_design_ponytail_readme"
     ],
-    "707": [
+    "705": [
       "skills_architecture_and_design_ponytail_skill"
     ],
-    "708": [
+    "706": [
       "skills_architecture_and_design_spec_kit_readme"
     ],
-    "709": [
+    "707": [
       "skills_architecture_and_design_spec_kit_references_original_repo_readme"
     ],
-    "710": [
+    "708": [
       "skills_architecture_and_design_spec_kit_skill"
     ],
-    "711": [
+    "709": [
       "skills_codebase_memory_mcp_skill"
     ],
-    "712": [
+    "710": [
       "skills_data_science_docx_scripts_comment_py_path"
     ],
-    "713": [
+    "711": [
       "skills_data_science_docx_scripts_office_helpers_simplify_redlines_py_path"
     ],
-    "714": [
+    "712": [
       "skills_data_science_docx_scripts_office_pack_py_path"
     ],
-    "715": [
+    "713": [
       "skills_data_science_docx_scripts_office_soffice_py_completedprocess"
     ],
-    "716": [
+    "714": [
       "skills_data_science_docx_scripts_office_soffice_py_path"
     ],
-    "717": [
+    "715": [
       "skills_data_science_docx_scripts_office_unpack_py_path"
     ],
-    "718": [
+    "716": [
       "skills_data_science_docx_scripts_office_validators_docx_py_baseschemavalidator"
     ],
-    "719": [
+    "717": [
       "skills_data_science_docx_scripts_office_validators_pptx_py_baseschemavalidator"
     ],
-    "720": [
+    "718": [
       "skills_data_science_pptx_scripts_add_slide_py_path"
     ],
-    "721": [
+    "719": [
       "skills_data_science_pptx_scripts_clean_py_path"
     ],
-    "722": [
+    "720": [
       "skills_data_science_pptx_scripts_office_helpers_simplify_redlines_py_path"
     ],
-    "723": [
+    "721": [
       "skills_data_science_pptx_scripts_office_pack_py_path"
     ],
-    "724": [
+    "722": [
       "skills_data_science_pptx_scripts_office_soffice_py_completedprocess"
     ],
-    "725": [
+    "723": [
       "skills_data_science_pptx_scripts_office_soffice_py_path"
     ],
-    "726": [
+    "724": [
       "skills_data_science_pptx_scripts_office_unpack_py_path"
     ],
-    "727": [
+    "725": [
       "skills_data_science_pptx_scripts_office_validators_docx_py_baseschemavalidator"
     ],
-    "728": [
+    "726": [
       "skills_data_science_pptx_scripts_office_validators_pptx_py_baseschemavalidator"
     ],
-    "729": [
+    "727": [
       "skills_data_science_pptx_scripts_thumbnail_py_image"
     ],
-    "730": [
+    "728": [
       "skills_data_science_pptx_scripts_thumbnail_py_path"
     ],
-    "731": [
+    "729": [
       "skills_data_science_xlsx_scripts_office_helpers_simplify_redlines_py_path"
     ],
-    "732": [
+    "730": [
       "skills_data_science_xlsx_scripts_office_pack_py_path"
     ],
-    "733": [
+    "731": [
       "skills_data_science_xlsx_scripts_office_soffice_py_completedprocess"
     ],
-    "734": [
+    "732": [
       "skills_data_science_xlsx_scripts_office_soffice_py_path"
     ],
-    "735": [
+    "733": [
       "skills_data_science_xlsx_scripts_office_unpack_py_path"
     ],
-    "736": [
+    "734": [
       "skills_data_science_xlsx_scripts_office_validators_docx_py_baseschemavalidator"
     ],
-    "737": [
+    "735": [
       "skills_data_science_xlsx_scripts_office_validators_pptx_py_baseschemavalidator"
     ],
-    "738": [
+    "736": [
       "skills_devops_and_tools_cli_printing_press_references_original_repo_readme_cli_printing_press"
     ],
-    "739": [
+    "737": [
       "skills_devops_and_tools_cybersecurity_references_prompts_security_audit_full_it_audit"
     ],
-    "740": [
+    "738": [
       "skills_devops_and_tools_graphify_references_github_and_merge"
     ],
-    "741": [
+    "739": [
       "skills_devops_and_tools_graphify_references_hooks"
     ],
-    "742": [
+    "740": [
       "skills_devops_and_tools_graphify_references_original_repo_readme"
     ],
-    "743": [
+    "741": [
       "skills_devops_and_tools_mermaid_cli_skill_mermaid_cli"
     ],
-    "744": [
+    "742": [
       "skills_devops_and_tools_mp_git_guardrails_readme"
     ],
-    "745": [
+    "743": [
       "skills_devops_and_tools_mp_setup_pre_commit_readme"
     ],
-    "746": [
+    "744": [
       "skills_devops_and_tools_os_detect_readme"
     ],
-    "747": [
+    "745": [
       "skills_devops_and_tools_pagespeed_readme"
     ],
-    "748": [
+    "746": [
       "skills_devops_and_tools_pagespeed_skill_pagespeed"
     ],
-    "749": [
+    "747": [
       "skills_devops_and_tools_scaffold_readme"
     ],
-    "750": [
+    "748": [
       "skills_devops_and_tools_scaffold_skill_wz_ai_scaffold"
     ],
-    "751": [
+    "749": [
       "skills_devops_and_tools_serena_readme_serena"
     ],
-    "752": [
+    "750": [
       "skills_devops_and_tools_serena_references_original_repo_readme"
     ],
-    "753": [
+    "751": [
       "skills_devops_and_tools_serena_skill_serena"
     ],
-    "754": [
+    "752": [
       "skills_devops_and_tools_strix_readme"
     ],
-    "755": [
+    "753": [
       "skills_devops_and_tools_strix_skill_wz_ai_strix"
     ],
-    "756": [
+    "754": [
       "skills_devops_and_tools_trailbase_readme_trailbase"
     ],
-    "757": [
+    "755": [
       "skills_devops_and_tools_trailbase_skill_trailbase"
     ],
-    "758": [
+    "756": [
       "skills_devops_and_tools_webapp_testing_examples_element_discovery"
     ],
-    "759": [
+    "757": [
       "skills_devops_and_tools_webapp_testing_examples_static_html_automation"
     ],
-    "760": [
+    "758": [
       "skills_devops_and_tools_webapp_testing_readme_webapp_testing"
     ],
-    "761": [
+    "759": [
       "skills_devops_mcp_builder_scripts_connections_py_any"
     ],
-    "762": [
+    "760": [
       "skills_devops_mcp_builder_scripts_evaluation_py_any"
     ],
-    "763": [
+    "761": [
       "skills_devops_mcp_builder_scripts_evaluation_py_path"
     ],
-    "764": [
+    "762": [
       "skills_docs_and_coauthoring_aisuite_readme_aisuite"
     ],
-    "765": [
+    "763": [
       "skills_docs_and_coauthoring_algorithmic_art_readme_algorithmic_art"
     ],
-    "766": [
+    "764": [
       "skills_docs_and_coauthoring_claude_blog_readme_claude_blog"
     ],
-    "767": [
+    "765": [
       "skills_docs_and_coauthoring_claude_blog_skill_claude_blog"
     ],
-    "768": [
+    "766": [
       "skills_docs_and_coauthoring_claude_seo_readme_claude_seo"
     ],
-    "769": [
+    "767": [
       "skills_docs_and_coauthoring_claude_seo_skill_claude_seo"
     ],
-    "770": [
+    "768": [
       "skills_docs_and_coauthoring_doc_coauthoring_readme_doc_coauthor"
     ],
-    "771": [
+    "769": [
       "skills_docs_and_coauthoring_doc_coauthoring_skill_doc_coauthoring"
     ],
-    "772": [
+    "770": [
       "skills_docs_and_coauthoring_docx_readme_word_documents"
     ],
-    "773": [
+    "771": [
       "skills_docs_and_coauthoring_docx_scripts_init"
     ],
-    "774": [
+    "772": [
       "skills_docs_and_coauthoring_docx_scripts_office_helpers_init"
     ],
-    "775": [
+    "773": [
       "skills_docs_and_coauthoring_easy_vibe_skill_easy_vibe"
     ],
-    "776": [
+    "774": [
       "skills_docs_and_coauthoring_internal_comms_readme_internal_comms"
     ],
-    "777": [
+    "775": [
       "skills_docs_and_coauthoring_last30days_skill"
     ],
-    "778": [
+    "776": [
       "skills_docs_and_coauthoring_last30days_skill_reddit"
     ],
-    "779": [
+    "777": [
       "skills_docs_and_coauthoring_last30days_skill_x"
     ],
-    "780": [
+    "778": [
       "skills_docs_and_coauthoring_last30days_skill_youtube"
     ],
-    "781": [
+    "779": [
       "skills_docs_and_coauthoring_pdf_readme_pdf_toolkit"
     ],
-    "782": [
+    "780": [
       "skills_docs_and_coauthoring_pdf_scripts_check_fillable_fields"
     ],
-    "783": [
+    "781": [
       "skills_docs_and_coauthoring_pdf_skill"
     ],
-    "784": [
+    "782": [
       "skills_docs_and_coauthoring_pptx_readme_powerpoint"
     ],
-    "785": [
+    "783": [
       "skills_docs_and_coauthoring_pptx_scripts_init"
     ],
-    "786": [
+    "784": [
       "skills_docs_and_coauthoring_pptx_scripts_office_helpers_init"
     ],
-    "787": [
+    "785": [
       "skills_docs_and_coauthoring_pptx_skill"
     ],
-    "788": [
+    "786": [
       "skills_docs_and_coauthoring_slack_gif_creator_license_apache_license"
     ],
-    "789": [
+    "787": [
       "skills_docs_and_coauthoring_slack_gif_creator_skill"
     ],
-    "790": [
+    "788": [
       "skills_docs_and_coauthoring_xlsx_license_anthropic_license"
     ],
-    "791": [
+    "789": [
       "skills_docs_and_coauthoring_xlsx_readme_excel_spreadsheets"
     ],
-    "792": [
+    "790": [
       "skills_docs_and_coauthoring_xlsx_scripts_office_helpers_init"
     ],
-    "793": [
+    "791": [
       "skills_docs_and_coauthoring_xlsx_skill"
     ],
-    "794": [
+    "792": [
       "skills_ecc_skill_code_reviewer"
     ],
-    "795": [
+    "793": [
       "skills_engram_skill"
     ],
-    "796": [
+    "794": [
       "skills_frameworks_and_stacks_android_studio_skill"
     ],
-    "797": [
+    "795": [
       "skills_frameworks_and_stacks_angular_readme"
     ],
-    "798": [
+    "796": [
       "skills_frameworks_and_stacks_angular_skill"
     ],
-    "799": [
+    "797": [
       "skills_frameworks_and_stacks_astro_readme"
     ],
-    "800": [
+    "798": [
       "skills_frameworks_and_stacks_bun_readme"
     ],
-    "801": [
+    "799": [
       "skills_frameworks_and_stacks_bun_references_original_repo_readme"
     ],
-    "802": [
+    "800": [
       "skills_frameworks_and_stacks_deno_readme"
     ],
-    "803": [
+    "801": [
       "skills_frameworks_and_stacks_deno_skill"
     ],
-    "804": [
+    "802": [
       "skills_frameworks_and_stacks_express_typescript_starter_readme"
     ],
-    "805": [
+    "803": [
       "skills_frameworks_and_stacks_express_typescript_starter_references_original_repo_readme"
     ],
-    "806": [
+    "804": [
       "skills_frameworks_and_stacks_flutter_readme"
     ],
-    "807": [
+    "805": [
       "skills_frameworks_and_stacks_flutter_references_original_repo_readme"
     ],
-    "808": [
+    "806": [
       "skills_frameworks_and_stacks_flutter_skill"
     ],
-    "809": [
+    "807": [
       "skills_frameworks_and_stacks_framework_astro5_readme"
     ],
-    "810": [
+    "808": [
       "skills_frameworks_and_stacks_framework_nuxt4_readme"
     ],
-    "811": [
+    "809": [
       "skills_frameworks_and_stacks_framework_nuxt4_readme_nuxt_4"
     ],
-    "812": [
+    "810": [
       "skills_frameworks_and_stacks_framework_nuxt4_readme_pinia"
     ],
-    "813": [
+    "811": [
       "skills_frameworks_and_stacks_framework_nuxt4_readme_vite"
     ],
-    "814": [
+    "812": [
       "skills_frameworks_and_stacks_framework_nuxt4_readme_vue_3"
     ],
-    "815": [
+    "813": [
       "skills_frameworks_and_stacks_framework_nuxt4_skill"
     ],
-    "816": [
+    "814": [
       "skills_frameworks_and_stacks_framework_qwik_readme"
     ],
-    "817": [
+    "815": [
       "skills_frameworks_and_stacks_framework_qwik_readme_playwright"
     ],
-    "818": [
+    "816": [
       "skills_frameworks_and_stacks_framework_qwik_readme_qwik"
     ],
-    "819": [
+    "817": [
       "skills_frameworks_and_stacks_framework_qwik_readme_qwikcity"
     ],
-    "820": [
+    "818": [
       "skills_frameworks_and_stacks_gatsby_skill"
     ],
-    "821": [
+    "819": [
       "skills_frameworks_and_stacks_laravel_skill_laravel"
     ],
-    "822": [
+    "820": [
       "skills_frameworks_and_stacks_nodejs_readme"
     ],
-    "823": [
+    "821": [
       "skills_frameworks_and_stacks_nodejs_skill_nodejs"
     ],
-    "824": [
+    "822": [
       "skills_frameworks_and_stacks_quickjs_skill_quickjs"
     ],
-    "825": [
+    "823": [
       "skills_frameworks_and_stacks_svelte_skill_svelte"
     ],
-    "826": [
+    "824": [
       "skills_frameworks_and_stacks_wordpress_readme"
     ],
-    "827": [
+    "825": [
       "skills_frameworks_and_stacks_wordpress_skill_wordpress"
     ],
-    "828": [
+    "826": [
       "skills_frontend_and_ui_aionui_readme"
     ],
-    "829": [
+    "827": [
       "skills_frontend_and_ui_aionui_skill_aionui"
     ],
-    "830": [
+    "828": [
       "skills_frontend_and_ui_awesome_design_readme"
     ],
-    "831": [
+    "829": [
       "skills_frontend_and_ui_brand_guidelines_skill_brand_guidelines"
     ],
-    "832": [
+    "830": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_crimsonpro_ofl"
     ],
-    "833": [
+    "831": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_dmmono_ofl"
     ],
-    "834": [
+    "832": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_ericaone_ofl"
     ],
-    "835": [
+    "833": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_geistmono_ofl"
     ],
-    "836": [
+    "834": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_gloock_ofl"
     ],
-    "837": [
+    "835": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_ibmplexmono_ofl"
     ],
-    "838": [
+    "836": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_instrumentsans_ofl"
     ],
-    "839": [
+    "837": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_italiana_ofl"
     ],
-    "840": [
+    "838": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_jetbrainsmono_ofl"
     ],
-    "841": [
+    "839": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_jura_ofl"
     ],
-    "842": [
+    "840": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_librebaskerville_ofl"
     ],
-    "843": [
+    "841": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_lora_ofl"
     ],
-    "844": [
+    "842": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_nationalpark_ofl"
     ],
-    "845": [
+    "843": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_nothingyoucoulddo_ofl"
     ],
-    "846": [
+    "844": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_outfit_ofl"
     ],
-    "847": [
+    "845": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_pixelifysans_ofl"
     ],
-    "848": [
+    "846": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_poiretone_ofl"
     ],
-    "849": [
+    "847": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_redhatmono_ofl"
     ],
-    "850": [
+    "848": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_silkscreen_ofl"
     ],
-    "851": [
+    "849": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_smoochsans_ofl"
     ],
-    "852": [
+    "850": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_tektur_ofl"
     ],
-    "853": [
+    "851": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_worksans_ofl"
     ],
-    "854": [
+    "852": [
       "skills_frontend_and_ui_canvas_design_canvas_fonts_youngserif_ofl"
     ],
-    "855": [
+    "853": [
       "skills_frontend_and_ui_infographic_readme"
     ],
-    "856": [
+    "854": [
       "skills_frontend_and_ui_micio86_portfolio_readme"
     ],
-    "857": [
+    "855": [
       "skills_frontend_and_ui_micio86_portfolio_skill_portfolio"
     ],
-    "858": [
+    "856": [
       "skills_frontend_and_ui_phantom_ui_readme"
     ],
-    "859": [
+    "857": [
       "skills_frontend_and_ui_theme_factory_license"
     ],
-    "860": [
+    "858": [
       "skills_frontend_and_ui_theme_factory_skill_theme_factory"
     ],
-    "861": [
+    "859": [
       "skills_frontend_hallmark_references_components_c1_outlined_chip"
     ],
-    "862": [
+    "860": [
       "skills_frontend_hallmark_references_components_c2_inline_form_as_cta"
     ],
-    "863": [
+    "861": [
       "skills_frontend_hallmark_references_components_c3_typographic_link"
     ],
-    "864": [
+    "862": [
       "skills_frontend_hallmark_references_components_c4_sticky_bottom_bar"
     ],
-    "865": [
+    "863": [
       "skills_frontend_hallmark_references_components_f1_bento_grid"
     ],
-    "866": [
+    "864": [
       "skills_frontend_hallmark_references_components_f2_sticky_scroll_stack"
     ],
-    "867": [
+    "865": [
       "skills_frontend_hallmark_references_components_f3_tabular_spec_sheet"
     ],
-    "868": [
+    "866": [
       "skills_frontend_hallmark_references_components_f4_step_sequence"
     ],
-    "869": [
+    "867": [
       "skills_frontend_hallmark_references_components_f5_annotated_screenshot"
     ],
-    "870": [
+    "868": [
       "skills_frontend_hallmark_references_components_f6_product_card_grid"
     ],
-    "871": [
+    "869": [
       "skills_frontend_hallmark_references_components_ft1_mast_headed"
     ],
-    "872": [
+    "870": [
       "skills_frontend_hallmark_references_components_ft2_inline_rule_single_line"
     ],
-    "873": [
+    "871": [
       "skills_frontend_hallmark_references_components_ft3_index_style_category_list"
     ],
-    "874": [
+    "872": [
       "skills_frontend_hallmark_references_components_ft4_dense_typographic"
     ],
-    "875": [
+    "873": [
       "skills_frontend_hallmark_references_components_ft5_statement"
     ],
-    "876": [
+    "874": [
       "skills_frontend_hallmark_references_components_ft6_letter_close"
     ],
-    "877": [
+    "875": [
       "skills_frontend_hallmark_references_components_ft7_newsletter_first"
     ],
-    "878": [
+    "876": [
       "skills_frontend_hallmark_references_components_ft8_marquee_scroll"
     ],
-    "879": [
+    "877": [
       "skills_frontend_hallmark_references_components_h1_marquee"
     ],
-    "880": [
+    "878": [
       "skills_frontend_hallmark_references_components_h2_split_diptych"
     ],
-    "881": [
+    "879": [
       "skills_frontend_hallmark_references_components_h3_quote_led"
     ],
-    "882": [
+    "880": [
       "skills_frontend_hallmark_references_components_h4_stat_led"
     ],
-    "883": [
+    "881": [
       "skills_frontend_hallmark_references_components_h5_letter_hero"
     ],
-    "884": [
+    "882": [
       "skills_frontend_hallmark_references_components_h6_photographic_fold"
     ],
-    "885": [
+    "883": [
       "skills_frontend_hallmark_references_components_h7_demo_video_clipped_by_viewport_edge"
     ],
-    "886": [
+    "884": [
       "skills_frontend_hallmark_references_components_h8_mockup_split_browser_framed"
     ],
-    "887": [
+    "885": [
       "skills_frontend_hallmark_references_components_h9_custom_illustration_centerpiece"
     ],
-    "888": [
+    "886": [
       "skills_frontend_hallmark_references_components_n10_floating_on_scroll_morph"
     ],
-    "889": [
+    "887": [
       "skills_frontend_hallmark_references_components_n11_mega_menu"
     ],
-    "890": [
+    "888": [
       "skills_frontend_hallmark_references_components_n12_banner_retract"
     ],
-    "891": [
+    "889": [
       "skills_frontend_hallmark_references_components_n13_inline_cmdk_pill"
     ],
-    "892": [
+    "890": [
       "skills_frontend_hallmark_references_components_n1_wordmark_2_links"
     ],
-    "893": [
+    "891": [
       "skills_frontend_hallmark_references_components_n1b_saas_three_section"
     ],
-    "894": [
+    "892": [
       "skills_frontend_hallmark_references_components_n2_floating_chip"
     ],
-    "895": [
+    "893": [
       "skills_frontend_hallmark_references_components_n3_side_rail"
     ],
-    "896": [
+    "894": [
       "skills_frontend_hallmark_references_components_n4_hidden_behind_k"
     ],
-    "897": [
+    "895": [
       "skills_frontend_hallmark_references_components_n8_terminal_command_component"
     ],
-    "898": [
+    "896": [
       "skills_frontend_hallmark_references_components_t2_logo_wall_hairline_component"
     ],
-    "899": [
+    "897": [
       "skills_frontend_hallmark_references_components_t4_numbered_stat_strip_component"
     ],
-    "900": [
+    "898": [
       "skills_frontend_hallmark_references_contract"
     ],
-    "901": [
+    "899": [
       "skills_frontend_hallmark_references_copy"
     ],
-    "902": [
+    "900": [
       "skills_frontend_hallmark_references_macrostructures_02_long_document"
     ],
-    "903": [
+    "901": [
       "skills_frontend_hallmark_references_macrostructures_06_conversational_faq"
     ],
-    "904": [
+    "902": [
       "skills_frontend_hallmark_references_macrostructures_09_quote_led"
     ],
-    "905": [
+    "903": [
       "skills_frontend_hallmark_references_macrostructures_10_specimen"
     ],
-    "906": [
+    "904": [
       "skills_frontend_hallmark_references_macrostructures_11_catalogue"
     ],
-    "907": [
+    "905": [
       "skills_frontend_hallmark_references_macrostructures_12_letter"
     ],
-    "908": [
+    "906": [
       "skills_frontend_hallmark_references_macrostructures_13_index_first"
     ],
-    "909": [
+    "907": [
       "skills_frontend_hallmark_references_macrostructures_14_narrative_workflow"
     ],
-    "910": [
+    "908": [
       "skills_frontend_hallmark_references_macrostructures_15_split_studio"
     ],
-    "911": [
+    "909": [
       "skills_frontend_hallmark_references_macrostructures_16_feature_stack"
     ],
-    "912": [
+    "910": [
       "skills_frontend_hallmark_references_macrostructures_18_portfolio_grid"
     ],
-    "913": [
+    "911": [
       "skills_frontend_hallmark_references_macrostructures_19_map_diagram"
     ],
-    "914": [
+    "912": [
       "skills_frontend_hallmark_references_macrostructures_20_ecosystem_index"
     ],
-    "915": [
+    "913": [
       "skills_frontend_hallmark_references_macrostructures_21_component_playground"
     ],
-    "916": [
+    "914": [
       "skills_frontend_hallmark_references_structure"
     ],
-    "917": [
+    "915": [
       "skills_frontend_hallmark_references_study"
     ],
-    "918": [
+    "916": [
       "skills_frontend_hallmark_references_themes_hum_theme_hum"
     ],
-    "919": [
+    "917": [
       "skills_frontend_hallmark_references_themes_lumen_theme_lumen"
     ],
-    "920": [
+    "918": [
       "skills_frontend_hallmark_references_typography"
     ],
-    "921": [
+    "919": [
       "skills_frontend_hallmark_references_verbs_audit_hallmark_audit"
     ],
-    "922": [
+    "920": [
       "skills_frontend_hallmark_references_verbs_redesign_hallmark_redesign"
     ],
-    "923": [
+    "921": [
       "skills_loop_2_develop_readme_loop_2"
     ],
-    "924": [
+    "922": [
       "skills_marketing_media_slack_gif_creator_core_frame_composer_py_image"
     ],
-    "925": [
+    "923": [
       "skills_marketing_media_slack_gif_creator_core_gif_builder_py_image"
     ],
-    "926": [
+    "924": [
       "skills_marketing_media_slack_gif_creator_core_gif_builder_py_path"
     ],
-    "927": [
+    "925": [
       "skills_marketing_media_slack_gif_creator_core_validators_py_path"
     ],
-    "928": [
+    "926": [
       "skills_memory_and_context_caveman_readme_caveman"
     ],
-    "929": [
+    "927": [
       "skills_memory_and_context_flashrank_readme_flashrank"
     ],
-    "930": [
+    "928": [
       "skills_memory_and_context_headroom_readme_headroom"
     ],
-    "931": [
+    "929": [
       "skills_memory_and_context_lean_ctx_readme_lean_context"
     ],
-    "932": [
+    "930": [
       "skills_memory_and_context_llmlingua_readme_llmlingua"
     ],
-    "933": [
+    "931": [
       "skills_memory_and_context_markitdown_references_original_repo_readme_markitdown"
     ],
-    "934": [
+    "932": [
       "skills_memory_and_context_mem0_references_original_repo_readme_mem0"
     ],
-    "935": [
+    "933": [
       "skills_memory_and_context_personal_graph_readme"
     ],
-    "936": [
+    "934": [
       "skills_memory_and_context_personal_graph_references_original_repo_readme_personal_graph"
     ],
-    "937": [
+    "935": [
       "skills_memory_and_context_rtk_readme_rtk"
     ],
-    "938": [
+    "936": [
       "skills_memory_and_context_sqz_references_original_repo_readme_sqz"
     ],
-    "939": [
+    "937": [
       "skills_memory_and_context_wiki_brain_skill_readme"
     ],
-    "940": [
+    "938": [
       "skills_memory_and_context_zvec_skill_zvec"
     ],
-    "941": [
+    "939": [
       "skills_memory_knowledge_claude_mem_readme_claude_mem"
     ],
-    "942": [
+    "940": [
       "skills_mermaid_cli_skill"
     ],
-    "943": [
+    "941": [
       "skills_meta_skills_antigravity_awesome_skills_readme"
     ],
-    "944": [
+    "942": [
       "skills_meta_skills_antigravity_awesome_skills_references_original_repo_readme_agent_cards"
     ],
-    "945": [
+    "943": [
       "skills_meta_skills_antigravity_awesome_skills_references_original_repo_readme_helium_mcp"
     ],
-    "946": [
+    "944": [
       "skills_meta_skills_antigravity_awesome_skills_references_original_repo_readme_sendblue_cli"
     ],
-    "947": [
+    "945": [
       "skills_meta_skills_claude_api_curl_examples"
     ],
-    "948": [
+    "946": [
       "skills_meta_skills_claude_api_curl_managed_agents"
     ],
-    "949": [
+    "947": [
       "skills_meta_skills_claude_api_go_managed_agents_readme"
     ],
-    "950": [
+    "948": [
       "skills_meta_skills_claude_api_java_managed_agents_readme_agentcreateparams"
     ],
-    "951": [
+    "949": [
       "skills_meta_skills_claude_api_java_managed_agents_readme_environmentcreateparams"
     ],
-    "952": [
+    "950": [
       "skills_meta_skills_claude_api_java_managed_agents_readme_sessioncreateparams"
     ],
-    "953": [
+    "951": [
       "skills_meta_skills_claude_api_php_claude_api_bedrock_client"
     ],
-    "954": [
+    "952": [
       "skills_meta_skills_claude_api_php_claude_api_client"
     ],
-    "955": [
+    "953": [
       "skills_meta_skills_claude_api_php_claude_api_foundry_client"
     ],
-    "956": [
+    "954": [
       "skills_meta_skills_claude_api_php_claude_api_vertex_client"
     ],
-    "957": [
+    "955": [
       "skills_meta_skills_claude_api_python_claude_api_readme_asyncanthropic"
     ],
-    "958": [
+    "956": [
       "skills_meta_skills_claude_api_readme"
     ],
-    "959": [
+    "957": [
       "skills_meta_skills_claude_api_ruby_managed_agents_readme_managed_agents_ruby"
     ],
-    "960": [
+    "958": [
       "skills_meta_skills_claude_api_shared_agent_design_agent_design_patterns"
     ],
-    "961": [
+    "959": [
       "skills_meta_skills_claude_api_shared_claude_platform_on_aws_claude_platform_on_aws"
     ],
-    "962": [
+    "960": [
       "skills_meta_skills_claude_api_shared_models_claude_fable_5"
     ],
-    "963": [
+    "961": [
       "skills_meta_skills_claude_api_typescript_claude_api_batches_messages_batches"
     ],
-    "964": [
+    "962": [
       "skills_meta_skills_claude_api_typescript_claude_api_tool_use_beta_zod_tool"
     ],
-    "965": [
+    "963": [
       "skills_meta_skills_cockpit_bridge_readme_cockpit_bridge"
     ],
-    "966": [
+    "964": [
       "skills_meta_skills_gemini_usage_readme_gemini_usage_tracker"
     ],
-    "967": [
+    "965": [
       "skills_meta_skills_kit_readme"
     ],
-    "968": [
+    "966": [
       "skills_meta_skills_kit_references_original_repo_readme"
     ],
-    "969": [
+    "967": [
       "skills_meta_skills_kit_skill_sveltekit"
     ],
-    "970": [
+    "968": [
       "skills_meta_skills_mcp_builder_license"
     ],
-    "971": [
+    "969": [
       "skills_meta_skills_mp_ask_matt_readme"
     ],
-    "972": [
+    "970": [
       "skills_meta_skills_mp_writing_great_skills_glossary_duplication"
     ],
-    "973": [
+    "971": [
       "skills_meta_skills_mp_writing_great_skills_glossary_no_op"
     ],
-    "974": [
+    "972": [
       "skills_meta_skills_mp_writing_great_skills_glossary_predictability"
     ],
-    "975": [
+    "973": [
       "skills_meta_skills_mp_writing_great_skills_glossary_premature_completion"
     ],
-    "976": [
+    "974": [
       "skills_meta_skills_mp_writing_great_skills_glossary_sediment"
     ],
-    "977": [
+    "975": [
       "skills_meta_skills_mp_writing_great_skills_glossary_sprawl"
     ],
-    "978": [
+    "976": [
       "skills_meta_skills_mp_writing_great_skills_readme"
     ],
-    "979": [
+    "977": [
       "skills_meta_skills_mp_writing_great_skills_skill_writing_great_skills"
     ],
-    "980": [
+    "978": [
       "skills_meta_skills_omnivoice_studio_readme"
     ],
-    "981": [
+    "979": [
       "skills_meta_skills_openhuman_readme"
     ],
-    "982": [
+    "980": [
       "skills_meta_skills_pi_dev_readme_pi_dev_tools"
     ],
-    "983": [
+    "981": [
       "skills_meta_skills_skill_creator_assets_eval_review_export_eval_set"
     ],
-    "984": [
+    "982": [
       "skills_meta_skills_skill_creator_license_apache_license"
     ],
-    "985": [
+    "983": [
       "skills_meta_skills_skill_creator_readme_skill_forge"
     ],
-    "986": [
+    "984": [
       "skills_meta_skills_skill_creator_references_schemas_analysis_json"
     ],
-    "987": [
+    "985": [
       "skills_meta_skills_skill_creator_references_schemas_benchmark_json"
     ],
-    "988": [
+    "986": [
       "skills_meta_skills_skill_creator_references_schemas_comparison_json"
     ],
-    "989": [
+    "987": [
       "skills_meta_skills_skill_creator_references_schemas_evals_json"
     ],
-    "990": [
+    "988": [
       "skills_meta_skills_skill_creator_references_schemas_history_json"
     ],
-    "991": [
+    "989": [
       "skills_meta_skills_skill_creator_scripts_init"
     ],
-    "992": [
+    "990": [
       "skills_meta_skills_supertonic_readme_supertonic_audio"
     ],
-    "993": [
+    "991": [
       "skills_meta_skills_syke_readme_syke_dev_tools"
     ],
-    "994": [
+    "992": [
       "skills_meta_skills_voicebox_readme_voicebox"
     ],
-    "995": [
+    "993": [
       "skills_meta_skills_voicebox_references_original_repo_readme_voicebox"
     ],
-    "996": [
+    "994": [
       "skills_misc_auto_prompt_readme"
     ],
-    "997": [
+    "995": [
       "skills_misc_codebase_memory_mcp_skill_codebase_memory_mcp"
     ],
-    "998": [
+    "996": [
       "skills_misc_engineering_excellence_references_yagni_yagni"
     ],
-    "999": [
+    "997": [
       "skills_misc_engineering_excellence_templates_adr_adr"
     ],
-    "1000": [
+    "998": [
       "skills_misc_engineering_excellence_templates_architecture_architecture"
     ],
-    "1001": [
+    "999": [
       "skills_misc_engineering_excellence_templates_engineering_report_engineering_report"
     ],
-    "1002": [
+    "1000": [
       "skills_misc_engineering_excellence_templates_openspec_openspec"
     ],
-    "1003": [
+    "1001": [
       "skills_misc_engineering_excellence_templates_pull_request_pull_request"
     ],
-    "1004": [
+    "1002": [
       "skills_misc_hallmark_references_anti_patterns_major"
     ],
-    "1005": [
+    "1003": [
       "skills_misc_hallmark_references_assets_icons"
     ],
-    "1006": [
+    "1004": [
       "skills_misc_hallmark_references_assets_library_illustrations"
     ],
-    "1007": [
+    "1005": [
       "skills_misc_hallmark_references_assets_logos"
     ],
-    "1008": [
+    "1006": [
       "skills_misc_hallmark_references_assets_mockups"
     ],
-    "1009": [
+    "1007": [
       "skills_misc_hallmark_references_assets_photography"
     ],
-    "1010": [
+    "1008": [
       "skills_misc_hallmark_references_assets_video"
     ],
-    "1011": [
+    "1009": [
       "skills_misc_hallmark_references_color_color"
     ],
-    "1012": [
+    "1010": [
       "skills_misc_hallmark_references_components_c4_sticky_bottom_bar"
     ],
-    "1013": [
+    "1011": [
       "skills_misc_hallmark_references_components_t2_logo_wall_hairline_t2"
     ],
-    "1014": [
+    "1012": [
       "skills_misc_hallmark_references_contract_contract"
     ],
-    "1015": [
+    "1013": [
       "skills_misc_hallmark_references_macrostructures_01_bento_grid_macro_bento_grid"
     ],
-    "1016": [
+    "1014": [
       "skills_misc_hallmark_references_macrostructures_02_long_document_macro_long_document"
     ],
-    "1017": [
+    "1015": [
       "skills_misc_hallmark_references_macrostructures_04_stat_led_macro_stat_led"
     ],
-    "1018": [
+    "1016": [
       "skills_misc_hallmark_references_macrostructures_05_workbench_macro_workbench"
     ],
-    "1019": [
+    "1017": [
       "skills_misc_hallmark_references_macrostructures_06_conversational_faq_macro_conversational_faq"
     ],
-    "1020": [
+    "1018": [
       "skills_misc_hallmark_references_macrostructures_07_manifesto_macro_manifesto"
     ],
-    "1021": [
+    "1019": [
       "skills_misc_hallmark_references_macrostructures_08_photographic_macro_photographic"
     ],
-    "1022": [
+    "1020": [
       "skills_misc_hallmark_references_macrostructures_11_catalogue_macro_catalogue"
     ],
-    "1023": [
+    "1021": [
       "skills_misc_hallmark_references_macrostructures_19_map_diagram"
     ],
-    "1024": [
+    "1022": [
       "skills_misc_hallmark_references_macrostructures_20_ecosystem_index"
     ],
-    "1025": [
+    "1023": [
       "skills_misc_hallmark_references_macrostructures_21_component_playground"
     ],
-    "1026": [
+    "1024": [
       "skills_misc_hallmark_references_themes_lumen_lumen"
     ],
-    "1027": [
+    "1025": [
       "skills_misc_hallmark_references_verbs_redesign_hallmark_redesign"
     ],
-    "1028": [
+    "1026": [
       "skills_misc_hallmark_skill_build"
     ],
-    "1029": [
+    "1027": [
       "skills_misc_hallmark_skill_design_context_gate"
     ],
-    "1030": [
+    "1028": [
       "skills_misc_hallmark_skill_pre_flight_scan"
     ],
-    "1031": [
+    "1029": [
       "skills_misc_hallmark_skill_project_memory"
     ],
-    "1032": [
+    "1030": [
       "skills_misc_hallmark_skill_theme_route"
     ],
-    "1033": [
+    "1031": [
       "skills_misc_mp_migrate_to_shoehorn_skill_migrate_to_shoehorn"
     ],
-    "1034": [
+    "1032": [
       "skills_misc_mp_resolving_merge_conflicts_readme_merge_conflict_resolver"
     ],
-    "1035": [
+    "1033": [
       "skills_misc_mp_resolving_merge_conflicts_skill_resolving_merge_conflicts"
     ],
-    "1036": [
+    "1034": [
       "skills_misc_nuxt_skill_nuxt"
     ],
-    "1037": [
+    "1035": [
       "skills_misc_skill_creator_eval_viewer_generate_review_py_path"
     ],
-    "1038": [
+    "1036": [
       "skills_misc_skill_creator_scripts_aggregate_benchmark_py_path"
     ],
-    "1039": [
+    "1037": [
       "skills_misc_skill_creator_scripts_improve_description_py_path"
     ],
-    "1040": [
+    "1038": [
       "skills_misc_skill_creator_scripts_package_skill_py_path"
     ],
-    "1041": [
+    "1039": [
       "skills_misc_skill_creator_scripts_run_eval_py_path"
     ],
-    "1042": [
+    "1040": [
       "skills_misc_skill_creator_scripts_run_loop_py_path"
     ],
-    "1043": [
+    "1041": [
       "skills_misc_skill_creator_scripts_utils_py_path"
     ],
-    "1044": [
+    "1042": [
       "skills_misc_system_design_101_skill"
     ],
-    "1045": [
+    "1043": [
       "skills_n8n_skill"
     ],
-    "1046": [
+    "1044": [
       "skills_refactor_skills"
     ],
-    "1047": [
+    "1045": [
       "skills_reference_data_science_official_docx_scripts_comment_py_path"
     ],
-    "1048": [
+    "1046": [
       "skills_reference_data_science_official_docx_scripts_office_helpers_simplify_redlines_py_path"
     ],
-    "1049": [
+    "1047": [
       "skills_reference_data_science_official_docx_scripts_office_pack_py_path"
     ],
-    "1050": [
+    "1048": [
       "skills_reference_data_science_official_docx_scripts_office_soffice_py_completedprocess"
     ],
-    "1051": [
+    "1049": [
       "skills_reference_data_science_official_docx_scripts_office_soffice_py_path"
     ],
-    "1052": [
+    "1050": [
       "skills_reference_data_science_official_docx_scripts_office_unpack_py_path"
     ],
-    "1053": [
+    "1051": [
       "skills_reference_data_science_official_docx_scripts_office_validators_docx_py_baseschemavalidator"
     ],
-    "1054": [
+    "1052": [
       "skills_reference_data_science_official_docx_scripts_office_validators_pptx_py_baseschemavalidator"
     ],
-    "1055": [
+    "1053": [
       "skills_reference_data_science_official_pptx_scripts_add_slide_py_path"
     ],
-    "1056": [
+    "1054": [
       "skills_reference_data_science_official_pptx_scripts_clean_py_path"
     ],
-    "1057": [
+    "1055": [
       "skills_reference_data_science_official_pptx_scripts_office_helpers_simplify_redlines_py_path"
     ],
-    "1058": [
+    "1056": [
       "skills_reference_data_science_official_pptx_scripts_office_pack_py_path"
     ],
-    "1059": [
+    "1057": [
       "skills_reference_data_science_official_pptx_scripts_office_soffice_py_completedprocess"
     ],
-    "1060": [
+    "1058": [
       "skills_reference_data_science_official_pptx_scripts_office_soffice_py_path"
     ],
-    "1061": [
+    "1059": [
       "skills_reference_data_science_official_pptx_scripts_office_unpack_py_path"
     ],
-    "1062": [
+    "1060": [
       "skills_reference_data_science_official_pptx_scripts_office_validators_docx_py_baseschemavalidator"
     ],
-    "1063": [
+    "1061": [
       "skills_reference_data_science_official_pptx_scripts_office_validators_pptx_py_baseschemavalidator"
     ],
-    "1064": [
+    "1062": [
       "skills_reference_data_science_official_pptx_scripts_thumbnail_py_image"
     ],
-    "1065": [
+    "1063": [
       "skills_reference_data_science_official_pptx_scripts_thumbnail_py_path"
     ],
-    "1066": [
+    "1064": [
       "skills_reference_data_science_official_xlsx_scripts_office_helpers_simplify_redlines_py_path"
     ],
-    "1067": [
+    "1065": [
       "skills_reference_data_science_official_xlsx_scripts_office_pack_py_path"
     ],
-    "1068": [
+    "1066": [
       "skills_reference_data_science_official_xlsx_scripts_office_soffice_py_completedprocess"
     ],
-    "1069": [
+    "1067": [
       "skills_reference_data_science_official_xlsx_scripts_office_soffice_py_path"
     ],
-    "1070": [
+    "1068": [
       "skills_reference_data_science_official_xlsx_scripts_office_unpack_py_path"
     ],
-    "1071": [
+    "1069": [
       "skills_reference_data_science_official_xlsx_scripts_office_validators_docx_py_baseschemavalidator"
     ],
-    "1072": [
+    "1070": [
       "skills_reference_data_science_official_xlsx_scripts_office_validators_pptx_py_baseschemavalidator"
     ],
-    "1073": [
+    "1071": [
       "skills_reference_devops_official_mcp_builder_scripts_connections_py_any"
     ],
-    "1074": [
+    "1072": [
       "skills_reference_devops_official_mcp_builder_scripts_evaluation_py_any"
     ],
-    "1075": [
+    "1073": [
       "skills_reference_devops_official_mcp_builder_scripts_evaluation_py_path"
     ],
-    "1076": [
+    "1074": [
       "skills_reference_marketing_media_official_slack_gif_creator_core_frame_composer_py_image"
     ],
-    "1077": [
+    "1075": [
       "skills_reference_marketing_media_official_slack_gif_creator_core_gif_builder_py_image"
     ],
-    "1078": [
+    "1076": [
       "skills_reference_marketing_media_official_slack_gif_creator_core_gif_builder_py_path"
     ],
-    "1079": [
+    "1077": [
       "skills_reference_marketing_media_official_slack_gif_creator_core_validators_py_path"
     ],
-    "1080": [
+    "1078": [
       "skills_reference_misc_official_skill_creator_eval_viewer_generate_review_py_path"
     ],
-    "1081": [
+    "1079": [
       "skills_reference_misc_official_skill_creator_scripts_aggregate_benchmark_py_path"
     ],
-    "1082": [
+    "1080": [
       "skills_reference_misc_official_skill_creator_scripts_improve_description_py_path"
     ],
-    "1083": [
+    "1081": [
       "skills_reference_misc_official_skill_creator_scripts_package_skill_py_path"
     ],
-    "1084": [
+    "1082": [
       "skills_reference_misc_official_skill_creator_scripts_run_eval_py_path"
     ],
-    "1085": [
+    "1083": [
       "skills_reference_misc_official_skill_creator_scripts_run_loop_py_path"
     ],
-    "1086": [
+    "1084": [
       "skills_reference_misc_official_skill_creator_scripts_utils_py_path"
     ],
-    "1087": [
+    "1085": [
       "skills_reference_stitch_official_stitch_upload_to_stitch_scripts_upload_to_stitch_py_any"
     ],
-    "1088": [
+    "1086": [
       "skills_reference_stitch_official_stitch_upload_to_stitch_scripts_upload_to_stitch_py_path"
     ],
-    "1089": [
+    "1087": [
       "skills_spec_kit_skill_speckit_implement"
     ],
-    "1090": [
+    "1088": [
       "skills_spec_kit_skill_speckit_plan"
     ],
-    "1091": [
+    "1089": [
       "skills_spec_kit_skill_speckit_specify"
     ],
-    "1092": [
+    "1090": [
       "skills_spec_kit_skill_speckit_tasks"
     ],
-    "1093": [
+    "1091": [
       "skills_stitch_design_stitch_extract_static_html_readme_stitch_html_extractor"
     ],
-    "1094": [
+    "1092": [
       "skills_stitch_design_stitch_remotion_resources_composition_checklist_screenslide_tsx"
     ],
-    "1095": [
+    "1093": [
       "skills_stitch_design_stitch_shadcn_ui_readme"
     ],
-    "1096": [
+    "1094": [
       "skills_stitch_design_stitch_shadcn_ui_skill"
     ],
-    "1097": [
+    "1095": [
       "skills_stitch_design_stitch_taste_design_readme"
     ],
-    "1098": [
+    "1096": [
       "skills_stitch_design_stitch_taste_design_skill"
     ],
-    "1099": [
+    "1097": [
       "skills_stitch_design_stitch_upload_to_stitch_readme"
     ],
-    "1100": [
+    "1098": [
       "skills_stitch_design_stitch_upload_to_stitch_skill"
     ],
-    "1101": [
+    "1099": [
       "skills_stitch_stitch_upload_to_stitch_scripts_upload_to_stitch_py_any"
     ],
-    "1102": [
+    "1100": [
       "skills_stitch_stitch_upload_to_stitch_scripts_upload_to_stitch_py_path"
     ],
-    "1103": [
+    "1101": [
       "skills_svelte_skill_svelte"
     ],
-    "1104": [
+    "1102": [
       "skills_vue_skill_vue"
     ],
-    "1105": [
+    "1103": [
       "skills_vuetify_skill_vuetify"
     ],
-    "1106": [
+    "1104": [
       "skills_workflows_and_orchestration_dispatching_parallel_agents_readme"
     ],
-    "1107": [
+    "1105": [
       "skills_workflows_and_orchestration_dispatching_parallel_agents_skill_dispatching_parallel_agents"
     ],
-    "1108": [
+    "1106": [
       "skills_workflows_and_orchestration_loopy_skill_loopy"
     ],
-    "1109": [
+    "1107": [
       "skills_workflows_and_orchestration_mp_handoff_skill_handoff"
     ],
-    "1110": [
+    "1108": [
       "skills_workflows_and_orchestration_mp_research_skill_research"
     ],
-    "1111": [
+    "1109": [
       "skills_workflows_and_orchestration_mp_scaffold_exercises_skill_scaffold_exercises"
     ],
-    "1112": [
+    "1110": [
       "skills_workflows_and_orchestration_mp_to_tickets_readme_to_tickets"
     ],
-    "1113": [
+    "1111": [
       "skills_workflows_and_orchestration_receiving_code_review_skill_receiving_code_review"
     ],
-    "1114": [
+    "1112": [
       "skills_workflows_and_orchestration_test_driven_development_testing_anti_patterns_testing_anti_patterns"
     ],
-    "1115": [
+    "1113": [
       "skills_workflows_and_orchestration_verification_before_completion_skill_verification_before_completion"
     ],
-    "1116": [
+    "1114": [
       "skills_zvec_skill_zvec"
     ],
-    "1117": [
+    "1115": [
       "stitch_mcp"
     ],
-    "1118": [
+    "1116": [
       "the_dispatcher"
     ],
-    "1119": [
+    "1117": [
       "tool_pypdf"
     ],
-    "1120": [
+    "1118": [
       "wiki__meta__index_wiki_index"
     ],
-    "1121": [
+    "1119": [
       "wiki_concepts_agentic_brain_agentic_brain"
     ],
-    "1122": [
+    "1120": [
       "wiki_concepts_core_engine_core_engine"
     ]
   },
@@ -6044,9 +6037,9 @@
     "75": 0.2,
     "76": 0.2,
     "77": 0.2,
-    "78": 0.24444444444444444,
+    "78": 0.28888888888888886,
     "79": 0.4888888888888889,
-    "80": 0.28888888888888886,
+    "80": 0.24444444444444444,
     "81": 0.24444444444444444,
     "82": 0.26666666666666666,
     "83": 0.2222222222222222,
@@ -6072,11 +6065,11 @@
     "103": 0.25,
     "104": 0.25,
     "105": 0.25,
-    "106": 0.42857142857142855,
-    "107": 0.25,
+    "106": 0.32142857142857145,
+    "107": 0.42857142857142855,
     "108": 0.25,
     "109": 0.25,
-    "110": 0.32142857142857145,
+    "110": 0.25,
     "111": 0.42857142857142855,
     "112": 0.42857142857142855,
     "113": 0.25,
@@ -6143,13 +6136,13 @@
     "174": 0.8,
     "175": 0.5,
     "176": 0.5,
-    "177": 0.6,
+    "177": 0.4,
     "178": 0.4,
     "179": 0.4,
     "180": 0.4,
     "181": 0.4,
-    "182": 0.4,
-    "183": 0.5,
+    "182": 0.5,
+    "183": 0.4,
     "184": 0.4,
     "185": 0.4,
     "186": 0.4,
@@ -6162,18 +6155,18 @@
     "193": 0.4,
     "194": 0.4,
     "195": 0.4,
-    "196": 0.4,
-    "197": 0.5,
+    "196": 0.5,
+    "197": 0.4,
     "198": 0.4,
     "199": 0.4,
     "200": 0.4,
     "201": 0.4,
-    "202": 0.4,
+    "202": 0.8333333333333334,
     "203": 0.8333333333333334,
     "204": 0.8333333333333334,
-    "205": 0.8333333333333334,
-    "206": 0.6666666666666666,
-    "207": 0.8333333333333334,
+    "205": 0.6666666666666666,
+    "206": 0.8333333333333334,
+    "207": 0.5,
     "208": 0.5,
     "209": 0.5,
     "210": 0.5,
@@ -6187,11 +6180,11 @@
     "218": 0.5,
     "219": 0.5,
     "220": 0.5,
-    "221": 0.5,
+    "221": 0.8333333333333334,
     "222": 0.8333333333333334,
-    "223": 0.8333333333333334,
-    "224": 0.5,
-    "225": 0.6666666666666666,
+    "223": 0.5,
+    "224": 0.6666666666666666,
+    "225": 0.5,
     "226": 0.5,
     "227": 0.5,
     "228": 0.8333333333333334,
@@ -7086,9 +7079,7 @@
     "1117": 1.0,
     "1118": 1.0,
     "1119": 1.0,
-    "1120": 1.0,
-    "1121": 1.0,
-    "1122": 1.0
+    "1120": 1.0
   },
   "gods": [
     {
