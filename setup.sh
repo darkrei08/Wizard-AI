@@ -639,8 +639,8 @@ WantedBy=default.target
 EOF
     chown -R "$USER:$USER" "$HOME/.config/systemd"
     REAL_UID=$(id -u "$USER")
-    sudo -u "$USER" XDG_RUNTIME_DIR="/run/user/$REAL_UID" systemctl --user daemon-reload || true
-    sudo -u "$USER" XDG_RUNTIME_DIR="/run/user/$REAL_UID" systemctl --user enable wz-ai-update.service || true
+    sudo -u "$USER" XDG_RUNTIME_DIR="/run/user/$REAL_UID" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$REAL_UID/bus" systemctl --user daemon-reload || true
+    sudo -u "$USER" XDG_RUNTIME_DIR="/run/user/$REAL_UID" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$REAL_UID/bus" systemctl --user enable wz-ai-update.service || true
     echo -e "${GREEN}  ✓ systemd service installed for user $USER.${NC}"
   else
     echo -e "${RED}⚠ cron and systemctl not found. Auto-updates cannot be configured.${NC}"

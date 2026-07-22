@@ -10,9 +10,18 @@ const command = args[0];
 
 const PLATFORM = os.platform(); // 'win32', 'linux', 'darwin'
 
+function getSystemdEnv() {
+  const uid = typeof os.userInfo === 'function' ? os.userInfo().uid : process.getuid();
+  return {
+    ...process.env,
+    XDG_RUNTIME_DIR: process.env.XDG_RUNTIME_DIR || `/run/user/${uid}`,
+    DBUS_SESSION_BUS_ADDRESS: process.env.DBUS_SESSION_BUS_ADDRESS || `unix:path=/run/user/${uid}/bus`
+  };
+}
+
 function runCommand(cmd, ignoreError = false) {
   try {
-    return execSync(cmd, { stdio: 'inherit' });
+    return execSync(cmd, { stdio: 'inherit', env: getSystemdEnv() });
   } catch (e) {
     if (!ignoreError) process.exit(1);
   }
@@ -20,7 +29,7 @@ function runCommand(cmd, ignoreError = false) {
 
 function runCommandSilent(cmd) {
   try {
-    return execSync(cmd, { stdio: 'pipe' }).toString().trim();
+    return execSync(cmd, { stdio: 'pipe', env: getSystemdEnv() }).toString().trim();
   } catch (e) {
     return null;
   }
