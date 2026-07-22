@@ -1,9 +1,15 @@
 {
   "concurrency": 8,
   "modelAliases": {
-    "fast": "anthropic/claude-3-5-haiku",
-    "smart": "anthropic/claude-sonnet-4",
-    "deep": "anthropic/claude-opus-4"
+    "fast": "google/gemini-3.6-flash:low",
+    "smart": "anthropic/claude-sonnet-4-6:high",
+    "deep": "anthropic/claude-opus-4-6:max",
+    "developer-model": "google/gemini-3.1-pro:high",
+    "reviewer-model": "anthropic/claude-opus-4-6:high",
+    "scout-model": "google/gemini-3.6-flash:high",
+    "planner-model": "anthropic/claude-sonnet-4-6:high",
+    "security-model": "anthropic/claude-opus-4-6:high",
+    "designer-model": "anthropic/claude-sonnet-4-6:high"
   },
   "disabledAgentResources": {
     "skills": [],

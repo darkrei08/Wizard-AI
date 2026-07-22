@@ -1,6 +1,6 @@
 ---
-model: smart
-thinking: extended
+model: deep
+thinking: high
 tools: [read_file, list_dir, grep_search, write_file, run_command]
 description: Supreme Orchestrator - Routes tasks through the 5-Loop Pipeline, manages the 3-Tier Agent Swarm, and coordinates parallel fan-out via Shadow Clone Jutsu.
 ---

@@ -330,6 +330,31 @@ Wizard-AI seamlessly integrates with **Cockpit Tools** via the `wizard-ai proxy`
    ```
 *Note: Once enabled, simply run `pi` and it will automatically use your rotator accounts!*
 
+### 🔧 Pi Dynamic Configurator (`wz-ai-pi-configurator`)
+
+Automatically merge [vekexasia/pi-config](https://github.com/vekexasia/pi-config) patterns into your local `~/.pi/agent/` environment with **Cockpit Tools subscription-aware defaults**:
+
+```bash
+wz-ai-pi-configurator
+```
+
+What it does:
+- **Reads your Cockpit Tools tier** (free/pro/plus/ultra) and assigns the best default LLM + effort level
+- **Merges `models.json`** — adds Google (via rotator proxy), Anthropic (Claude Opus/Sonnet 4.6), and OpenAI Codex (GPT-5.6 Luna/Sol/Terra) without overwriting your existing entries
+- **Merges `settings.json`** — adds packages like `pi-web-access`, `pi-subagents`, `pi-goal`, `pi-vim` while preserving your local packages
+- **Role-based model aliases** — assigns the optimal model per workflow role (developer, reviewer, scout, planner, security, designer)
+
+### 📚 RepoDocs Wiki Generator (`wz-ai-repodocs`)
+
+Auto-generate source-cited wikis for any repository using [aryrabelo/repodocs](https://github.com/aryrabelo/repodocs). Integrated into **Loop 5 (Release)** for end-of-cycle documentation:
+
+```bash
+wz-ai-repodocs repodocs-all .
+```
+
+Output: `repo-docs/wiki.html` — self-contained, offline wiki where **every claim cites a file and line**. Runs via `uvx` (no install needed).
+
+
 ## 🏗️ Master Project Bootstrap
 
 Wizard-AI now includes the **`master-project-bootstrap`** skill, the ultimate meta-skill for initializing and architecting production-ready projects.

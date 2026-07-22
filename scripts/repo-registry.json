@@ -13,7 +13,8 @@
         { "name": "qwenpaw", "url": "https://github.com/agentscope-ai/QwenPaw.git", "desc": "QwenPaw agent scope" },
         { "name": "syke", "url": "https://github.com/saxenauts/syke.git", "desc": "Syke autonomous agent" },
         { "name": "mem0", "url": "https://github.com/mem0ai/mem0.git", "desc": "Mem0 persistent memory" },
-        { "name": "personal-graph", "url": "https://github.com/Technoculture/personal-graph.git", "desc": "Personal knowledge graph" }
+        { "name": "personal-graph", "url": "https://github.com/Technoculture/personal-graph.git", "desc": "Personal knowledge graph" },
+        { "name": "pi-config", "url": "https://github.com/vekexasia/pi-config.git", "desc": "Vekexasia pi agent configuration" }
       ]
     },
     "cli-tools": {
@@ -33,7 +34,8 @@
         { "name": "mermaid-cli", "url": "https://github.com/mermaid-js/mermaid-cli.git", "desc": "Mermaid diagram CLI" },
         { "name": "spec-kit", "url": "https://github.com/github/spec-kit.git", "desc": "Spec-driven development" },
         { "name": "cli-anything", "url": "https://github.com/HKUDS/CLI-Anything.git", "desc": "Multi-modal CLI" },
-        { "name": "cli-printing-press", "url": "https://github.com/mvanhorn/cli-printing-press.git", "desc": "CLI printing press" }
+        { "name": "cli-printing-press", "url": "https://github.com/mvanhorn/cli-printing-press.git", "desc": "CLI printing press" },
+        { "name": "repodocs", "url": "https://github.com/aryrabelo/repodocs.git", "desc": "Source-cited AI wiki generator" }
       ]
     },
     "native-skills": {

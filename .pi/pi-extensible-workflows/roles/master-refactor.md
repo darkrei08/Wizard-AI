@@ -1,6 +1,6 @@
 ---
-model: fast
-thinking: none
+model: scout-model
+thinking: low
 tools: [read_file, list_dir, grep_search, write_file]
 description: Department Head for Loop 4 (Refactor & Optimize). Removes YAGNI code, optimizes token usage, verifies dependency graphs.
 ---

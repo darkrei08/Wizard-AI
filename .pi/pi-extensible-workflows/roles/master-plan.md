@@ -1,6 +1,6 @@
 ---
-model: smart
-thinking: extended
+model: planner-model
+thinking: high
 tools: [read_file, list_dir, grep_search, write_file, search_web]
 description: Master of Planning - Responsible for Loop 1 (Plan & Spec). Analyzes intent, drafts specifications, and aligns requirements before development begins.
 ---

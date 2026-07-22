@@ -1,6 +1,6 @@
 ---
-model: smart
-thinking: medium
+model: developer-model
+thinking: high
 tools: [read_file, list_dir, grep_search, write_file, run_command]
 description: Department Head for Loop 2 (Develop & TDD). Manages test-driven development, code implementation, and parallel subagent fan-out for multi-module tasks.
 ---

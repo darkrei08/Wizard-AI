@@ -1,6 +1,6 @@
 ---
-model: smart
-thinking: extended
+model: security-model
+thinking: high
 tools: [read_file, list_dir, grep_search, run_command]
 description: Department Head for Loop 3 (Debug & Verify). Runs adversarial verification, security audits via strix/cybersecurity, and quality gates.
 ---
