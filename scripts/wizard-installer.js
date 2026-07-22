@@ -110,9 +110,6 @@ async function runAddInstallation(selectedRepos) {
       try {
         const git = simpleGit({ env: { ...process.env, GIT_LFS_SKIP_SMUDGE: '1' } });
         await git.clone(repo.url, destDir, [
-          "-c", "filter.lfs.smudge=",
-          "-c", "filter.lfs.process=",
-          "-c", "filter.lfs.required=false",
           "--depth", "1"
         ]);
       } catch (e) {
@@ -134,14 +131,14 @@ async function runAddInstallation(selectedRepos) {
         spawnSync("uv", ["pip", "install", "--python", venvPython, "-e", destDir], { stdio: buildStdio });
       }
     } else if (fs.existsSync(path.join(destDir, "package.json"))) {
-      spawnSync("npm", ["install", "--prefix", destDir, "--no-audit", "--no-fund"], { stdio: buildStdio });
+      spawnSync("npm", ["install", "--prefix", destDir, "--no-audit", "--no-fund", "--ignore-scripts"], { stdio: buildStdio });
     }
 
     if (repo.name === "ECC") {
-      spawnSync("npm", ["install", "-g", "--allow-scripts=ecc-universal", "ecc-universal"], { stdio: buildStdio });
+      spawnSync("npm", ["install", "-g", "--allow-scripts=ecc-universal", "ecc-universal"], { stdio: buildStdio, cwd: os.tmpdir() });
     }
     if (repo.name === "design.md") {
-      spawnSync("npm", ["install", "-g", "--allow-scripts=puppeteer", "@google/design.md"], { stdio: buildStdio });
+      spawnSync("npm", ["install", "-g", "--allow-scripts=puppeteer", "@google/design.md"], { stdio: buildStdio, cwd: os.tmpdir() });
     }
 
     installedCount++;
@@ -217,9 +214,6 @@ async function runUrlInstall(repoUrl, skillFilter, allAgents) {
   try {
     const git = simpleGit({ env: { ...process.env, GIT_LFS_SKIP_SMUDGE: '1' } });
     await git.clone(repoUrl, tmpDir, [
-      "-c", "filter.lfs.smudge=",
-      "-c", "filter.lfs.process=",
-      "-c", "filter.lfs.required=false",
       "--depth", "1"
     ]);
   } catch (e) {
