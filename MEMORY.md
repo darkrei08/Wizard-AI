@@ -105,7 +105,19 @@ Corretto refuso nel nome file 'wz-ai-sync-skills.ps1' su setup.ps1 e wz-ai-updat
 
 
 ## Session 2026-07-22T11:29:41.019Z
-- Resolved CRLF issues (nv: bash\r) for bash wrappers deployed via setup.sh on WSL by applying sed -i s/\r$//.
+- Resolved CRLF issues ( nv: bash\r) for bash wrappers deployed via setup.sh on WSL by applying sed -i s/\r$//.
 - Suppressed noisy cargo install errors when lean-ctx fallback fails on older Linux distros.
 - Created and closed GitHub issue #14.
 - Bumped version to v0.50.29, published to npm and GitHub Release.
+
+
+## [Session State Snapshot] - 2026-07-22 16:28:25
+- **D-Bus & Systemd User Bus Fix**: Resolved `$DBUS_SESSION_BUS_ADDRESS and $XDG_RUNTIME_DIR not defined` by passing environment variables in `scripts/wz-ai-proxy.js` and `setup.sh`.
+- **Systemd Cleanup**: Cleaned up legacy units (`ai-update.service`, `ai-proxy.service`) and reset failed states; systemd user scope restored to `State: running` (0 failed units).
+- **aisuite Dependency Fix**: Replaced `aisuite[all]` with `aisuite` in `setup.sh` and `setup.ps1` to eliminate the `google-cloud-aiplatform` missing `all` extra warning.
+- **Caveman Official Installer**: Integrated local `bin/install.js --all --non-interactive` execution in `setup.sh` and `setup.ps1`.
+- **Shell Parser Fix**: Sanitized section 7.5 headers in `setup.sh` (removed unescaped string parentheses and ampersands) to eliminate `ctive: command not found` errors.
+- **2-Way Skill Persistence System**: Documented bi-directional skill auto-backup engine (`wz-ai-sync-skills`) in `README.md` and `README.it.md` and updated terminal logs.
+- **Automated Model Data Scraper**: Created `scripts/fetch_latest_models.py` scraping 2970+ live models from LiteLLM DB, OpenRouter API, and Hugging Face Hub, updating `litellm` SKILL.md templates and live config (`~/.wizard-ai/configs/litellm-config.yaml`).
+- **UV Segfault Protection**: Fixed `uv` segfault re-install loop by auto-deleting corrupted prebuilt binaries and installing native OS packages (`pacman -S uv` / `apt-get install uv`).
+- **Releases**: Released and published versions `v0.50.35` through `v0.50.42` to GitHub and NPM (`@darkrei08/wizard-ai-cli`).

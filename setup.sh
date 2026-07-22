@@ -541,15 +541,15 @@ for skill_dir in "$HOME/.gemini/config/skills"/*; do
         if [ "$YES_MODE" -eq 0 ]; then
           read -p "Press Enter after you have completed any manual configuration above..." dummy
         else
-          echo -e "${YELLOW}  (auto-skipped manual config in --yes mode)${NC}"
+          echo -e "${YELLOW}  auto-skipped manual config in --yes mode${NC}"
         fi
       fi
     fi
   fi
 done
 
-# 7.6. Pi Integration & Cockpit Proxy Setup
-echo -e "\n${BLUE}[7.6/10] Pi Integration & Cockpit Proxy Setup...${NC}"
+# 7.6. Pi Integration and Cockpit Proxy Setup
+echo -e "\n${BLUE}[7.6/10] Pi Integration and Cockpit Proxy Setup...${NC}"
 PI_SETTINGS="$HOME/.pi/agent/settings.json"
 if command -v pi &>/dev/null || [ -f "$PI_SETTINGS" ]; then
   echo -e "${GREEN}✓ Pi environment detected. Injecting Wizard-AI as a native package...${NC}"
