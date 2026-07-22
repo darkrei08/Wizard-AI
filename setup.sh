@@ -77,6 +77,60 @@ export WIZARD_AI_DIR="$SCRIPT_DIR"
 export PATH="$HOME/.local/bin:$PATH"
 echo -e "${GREEN}✓ WIZARD_AI_DIR=\"$WIZARD_AI_DIR\"${NC}"
 
+# 0.5 Install System Dependencies
+echo -e "\n${BLUE}[0.5/10] Checking and installing system dependencies...${NC}"
+MISSING_PKGS=""
+if ! command -v node &>/dev/null || ! command -v npm &>/dev/null; then
+  MISSING_PKGS="nodejs npm"
+fi
+if ! command -v git &>/dev/null; then
+  MISSING_PKGS="$MISSING_PKGS git"
+fi
+if ! command -v curl &>/dev/null; then
+  MISSING_PKGS="$MISSING_PKGS curl"
+fi
+if ! command -v gcc &>/dev/null || ! command -v make &>/dev/null; then
+  MISSING_PKGS="$MISSING_PKGS build-tools"
+fi
+
+if [ -n "$MISSING_PKGS" ]; then
+  echo -e "${YELLOW}Missing base dependencies ($MISSING_PKGS). Installing automatically...${NC}"
+  
+  if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    OS_ID=$ID
+    OS_LIKE=${ID_LIKE:-""}
+  else
+    OS_ID=$(uname -s | tr '[:upper:]' '[:lower:]')
+    OS_LIKE=""
+  fi
+
+  if [[ "$OS_ID" == "ubuntu" || "$OS_ID" == "debian" || "$OS_LIKE" == *"debian"* || "$OS_LIKE" == *"ubuntu"* ]]; then
+    if ! command -v node &>/dev/null; then
+      echo -e "${CYAN}Adding NodeSource repository for Node.js 20...${NC}"
+      curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+    fi
+    apt-get update -y
+    apt-get install -y git curl build-essential pkg-config libssl-dev nodejs
+  elif [[ "$OS_ID" == "fedora" || "$OS_LIKE" == *"fedora"* || "$OS_LIKE" == *"rhel"* || "$OS_ID" == "centos" ]]; then
+    dnf install -y git curl gcc gcc-c++ make openssl-devel pkgconf-pkg-config nodejs npm
+  elif [[ "$OS_ID" == "arch" || "$OS_LIKE" == *"arch"* ]]; then
+    pacman -Syu --noconfirm git curl base-devel pkgconf openssl nodejs npm
+  elif [[ "$OS_ID" == "darwin" || "$(uname)" == "Darwin" ]]; then
+    if ! command -v brew &>/dev/null; then
+      echo -e "${RED}Homebrew is required on macOS but not installed. Please install it first: https://brew.sh/${NC}"
+    else
+      BREW_USER="${REAL_USER:-$USER}"
+      sudo -u "$BREW_USER" brew install git curl node pkg-config openssl
+    fi
+  else
+    echo -e "${RED}Unsupported OS for automatic dependency installation. Please install Node.js, npm, git, curl, and build tools manually.${NC}"
+  fi
+  echo -e "${GREEN}✓ System dependencies installed.${NC}"
+else
+  echo -e "${GREEN}✓ All system dependencies are already installed.${NC}"
+fi
+
 # 1. Check/Install UV
 echo -e "\n${BLUE}[1/10] Checking for modern Python & Package Manager (uv)...${NC}"
 if ! command -v uv &>/dev/null || [ -z "$(uv --version 2>/dev/null)" ]; then
