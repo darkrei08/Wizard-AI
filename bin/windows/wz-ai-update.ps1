@@ -38,35 +38,15 @@ $AiSkills = Join-Path $HOME '.wizard-ai'
 if (Test-Path $AiSkills) {
     Log "`n📚 Updating external skill repositories..." "Blue"
     
-    $CoreRepos = @{
-        'claude-mem' = 'https://github.com/thedotmack/claude-mem.git'
-        'headroom' = 'https://github.com/chopratejas/headroom.git'
-        'Infographic' = 'https://github.com/antvis/Infographic.git'
-        'cybersecurity-skills' = 'https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git'
-        'lean-ctx' = 'https://github.com/yvgude/lean-ctx.git'
-        'wslens' = 'https://github.com/vekexasia/wslens.git'
-        'ECC' = 'https://github.com/affaan-m/ECC.git'
-        'caveman' = 'https://github.com/JuliusBrussee/caveman.git'
-    }
-
-    foreach ($Repo in $CoreRepos.GetEnumerator()) {
-        $RepoDir = Join-Path $AiSkills $Repo.Key
-        if (-not (Test-Path $RepoDir)) {
-            Log "  -> Cloning missing repository $($Repo.Key)..." "Yellow"
-            if ($Quiet) { git clone --depth 1 --quiet $Repo.Value $RepoDir 2>$null } else { git clone --depth 1 $Repo.Value $RepoDir }
+    $UpdaterScript = Join-Path $WizardDir 'scripts\wz-ai-auto-updater.js'
+    if (Test-Path $UpdaterScript) {
+        if (Get-Command node -ErrorAction SilentlyContinue) {
+            node $UpdaterScript
         } else {
-            if (Test-Path (Join-Path $RepoDir '.git')) {
-                Log "  -> Updating $($Repo.Key)..." "Yellow"
-                Push-Location $RepoDir
-                $PreUpdateCommit = git rev-parse HEAD
-                if ($Quiet) { git pull --ff-only --quiet 2>$null } else { git pull --ff-only }
-                if ($LASTEXITCODE -ne 0) {
-                    Log "  [!] Update failed for $($Repo.Key). Rolling back to stable commit $PreUpdateCommit..." "Red"
-                    git reset --hard $PreUpdateCommit 2>$null | Out-Null
-                }
-                Pop-Location
-            }
+            Log "  [!] Node.js not found. Skipping advanced auto-update." "Yellow"
         }
+    } else {
+        Log "  [!] Auto-updater script not found at $UpdaterScript" "Yellow"
     }
 }
 

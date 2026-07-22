@@ -47,38 +47,16 @@ if [ -d "$AI_SKILLS" ]; then
   log "\n📚 Updating external skill repositories..."
   
   # List of core repositories
-  declare -A CORE_REPOS=(
-    ["claude-mem"]="https://github.com/thedotmack/claude-mem.git"
-    ["headroom"]="https://github.com/chopratejas/headroom.git"
-    ["Infographic"]="https://github.com/antvis/Infographic.git"
-    ["cybersecurity-skills"]="https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git"
-    ["lean-ctx"]="https://github.com/yvgude/lean-ctx.git"
-    ["stitch-skills"]="https://github.com/google-labs-code/stitch-skills.git"
-    ["design.md"]="https://github.com/google-labs-code/design.md.git"
-    ["wslens"]="https://github.com/vekexasia/wslens.git"
-    ["ECC"]="https://github.com/affaan-m/ECC.git"
-    ["caveman"]="https://github.com/JuliusBrussee/caveman.git"
-  )
-
-  for name in "${!CORE_REPOS[@]}"; do
-    repo_url="${CORE_REPOS[$name]}"
-    repo_dir="$AI_SKILLS/$name"
-    
-    if [ ! -d "$repo_dir" ]; then
-      log "  -> Cloning missing repository $name..."
-      if ! git clone --depth 1 "$repo_url" "$repo_dir" ${QUIET:+--quiet} 2>/dev/null; then
-        log "     ❌ Clone failed, cleaning up incomplete folder."
-        rm -rf "$repo_dir"
-      fi
+  UPDATER_SCRIPT="$WIZARD_DIR/scripts/wz-ai-auto-updater.js"
+  if [ -f "$UPDATER_SCRIPT" ]; then
+    if command -v node >/dev/null 2>&1; then
+      node "$UPDATER_SCRIPT"
     else
-      log "  -> Updating $name..."
-      local prev_skill_commit=$(git -C "$repo_dir" rev-parse HEAD 2>/dev/null || echo "")
-      if ! git -C "$repo_dir" pull --ff-only ${QUIET:+--quiet} 2>/dev/null; then
-        [ -n "$prev_skill_commit" ] && git -C "$repo_dir" reset --hard "$prev_skill_commit" --quiet 2>/dev/null || true
-        log "     ⚠ Update failed. Rolled back $name to ${prev_skill_commit}."
-      fi
+      log "  [!] Node.js not found. Skipping advanced auto-update."
     fi
-  done
+  else
+    log "  [!] Auto-updater script not found at $UPDATER_SCRIPT"
+  fi
 fi
 
 # 3. Update uv tools safely
