@@ -77,6 +77,22 @@ flowchart TB
 
 **PRE & POST Autoloop ルール：** 各セッションは、各反復の前後にコンテキストを圧縮し、メモリ (`MEMORY.md`) を同期し、プロジェクトグラフを自律的に更新します。
 
+### 🔧 Pi Dynamic Configurator (`wz-ai-pi-configurator`)
+
+[vekexasia/pi-config](https://github.com/vekexasia/pi-config) のパターンをローカルの `~/.pi/agent/` 環境に自動的に統合し、**Cockpit Tools** のサブスクリプション層に基づいたスマートなモデル選択とデフォルト設定を適用します。
+
+```bash
+wz-ai-pi-configurator
+```
+
+### 📚 RepoDocs Wiki Generator (`wz-ai-repodocs`)
+
+[aryrabelo/repodocs](https://github.com/aryrabelo/repodocs) を使用して、リポジトリのドキュメント化されたWikiを自動生成します。開発サイクルの最後に行われるドキュメント作成のため、**Loop 5 (Release)** に統合されています：
+
+```bash
+wz-ai-repodocs repodocs-all .
+```
+
 ## 🚀 クイック・スタート (`1コマンドで導入`)
 
 ```bash

@@ -91,6 +91,22 @@ Per sincronizzare manualmente in qualsiasi momento:
 wz-ai-sync-skills
 ```
 
+### 🔧 Pi Dynamic Configurator (`wz-ai-pi-configurator`)
+
+Integra automaticamente i pattern di [vekexasia/pi-config](https://github.com/vekexasia/pi-config) nel tuo ambiente locale `~/.pi/agent/` con impostazioni predefinite e scelta intelligente dei modelli basata sul tuo livello di abbonamento a **Cockpit Tools**:
+
+```bash
+wz-ai-pi-configurator
+```
+
+### 📚 RepoDocs Wiki Generator (`wz-ai-repodocs`)
+
+Genera automaticamente una wiki documentata per qualsiasi repository utilizzando [aryrabelo/repodocs](https://github.com/aryrabelo/repodocs). Integrato nel **Loop 5 (Release)** per la documentazione a fine ciclo:
+
+```bash
+wz-ai-repodocs repodocs-all .
+```
+
 ## 🚀 Avvio Rapido
 
 ```bash
