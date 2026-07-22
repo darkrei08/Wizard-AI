@@ -392,7 +392,7 @@ Copy-Item -Path (Join-Path $ScriptDir 'skills\skills.json') -Destination $Skills
 Write-Log "[ok] $SkillCount skills installed to $SkillsDst" -ForegroundColor Green
 
 Write-Log 'Syncing skills to Claude Code, Amp, and other agents...' -ForegroundColor Yellow
-& (Join-Path $LocalBin 'wz-ai sync-skills.ps1')
+& (Join-Path $LocalBin 'wz-ai-sync-skills.ps1')
 
 # 8. Auto-Update Configuration
 Write-Log ' '

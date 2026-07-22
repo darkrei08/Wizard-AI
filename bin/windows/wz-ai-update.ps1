@@ -86,7 +86,7 @@ if (Get-Command uv -ErrorAction SilentlyContinue) {
 }
 
 Log "`n🔄 Syncing agent skills..." "Blue"
-$SyncScript = Join-Path $HOME '.local\bin\wz-ai sync-skills.ps1'
+$SyncScript = Join-Path $HOME '.local\bin\wz-ai-sync-skills.ps1'
 if (Test-Path $SyncScript) {
     & $SyncScript | Out-Null
 }
