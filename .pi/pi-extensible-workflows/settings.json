@@ -2,14 +2,14 @@
   "concurrency": 8,
   "modelAliases": {
     "fast": "google/gemini-3.6-flash:low",
-    "smart": "anthropic/claude-sonnet-4-6:high",
-    "deep": "anthropic/claude-opus-4-6:max",
+    "smart": "google/gemini-3.1-pro:high",
+    "deep": "google/gemini-3.1-pro:max",
     "developer-model": "google/gemini-3.1-pro:high",
-    "reviewer-model": "anthropic/claude-opus-4-6:high",
+    "reviewer-model": "google/gemini-3.1-pro:high",
     "scout-model": "google/gemini-3.6-flash:high",
-    "planner-model": "anthropic/claude-sonnet-4-6:high",
-    "security-model": "anthropic/claude-opus-4-6:high",
-    "designer-model": "anthropic/claude-sonnet-4-6:high"
+    "planner-model": "google/gemini-3.1-pro:high",
+    "security-model": "google/gemini-3.1-pro:high",
+    "designer-model": "google/gemini-3.1-pro:high"
   },
   "disabledAgentResources": {
     "skills": [],
@@ -19,12 +19,12 @@
     "default": {
       "soft": {
         "tokens": 500000,
-        "costUsd": 5.0,
+        "costUsd": 5,
         "agentLaunches": 10
       },
       "hard": {
         "tokens": 1000000,
-        "costUsd": 15.0,
+        "costUsd": 15,
         "agentLaunches": 20
       }
     }
