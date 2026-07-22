@@ -116,7 +116,7 @@ async function runAddInstallation(selectedRepos) {
           "--depth", "1"
         ]);
       } catch (e) {
-        console.warn(pc.yellow(`[WARN] Failed to clone ${repo.name} from ${repo.url}. Skipping...`));
+        console.warn(pc.yellow(`[WARN] Failed to clone ${repo.name} from ${repo.url}. Error: ${e.message}`));
         continue;
       }
     }
