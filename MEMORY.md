@@ -75,3 +75,9 @@ Implementato e integrato il paradigma **4-Layer Format Stack (TOON/LEA)**.
 - Creata CLI `wz-ai-context` per testing dei formati (TOON, LEA, Markdown).
 - Aggiornate documentazioni di sistema (GEMINI.md, CLAUDE.md) con le nuove linee guida `pi-extensible-workflows` ibride e vincolo rigoroso su PRE/POST loop.
 - Modificato README.md introducendo la sezione SEO-optimized per "Agentic Context Engineering" e "Token Optimization".
+
+## [Session State Snapshot] - 2026-07-22 12:55:34
+Spiegata all'utente l'equivalenza tra l'installer npm (CLI) e il setup.bat per l'installazione dell'ecosistema (skill, python venv, caveman). Eseguito loop di controllo e verifica.
+
+## [Session State Snapshot] - 2026-07-22 12:59:54
+Bugfix in setup.ps1: l'installazione di Caveman (Invoke-Expression di uno script remoto con exit code) causava l'interruzione prematura dell'intero setup. Modificato per eseguire l'installazione in un processo powershell separato.
