@@ -93,8 +93,15 @@ if (Test-Path $SyncScript) {
 
 Log "`n🔄 Updating Caveman agent skill..." "Blue"
 try {
-    Invoke-RestMethod https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.ps1 | Invoke-Expression 2>$null | Out-Null
-    Log "  [ok] Caveman skill updated successfully across all agents." "Green"
+    $tempPs1 = Join-Path $env:TEMP "caveman_update.ps1"
+    Invoke-RestMethod https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.ps1 -OutFile $tempPs1
+    $proc = Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$tempPs1`"" -Wait -NoNewWindow -PassThru
+    Remove-Item $tempPs1 -ErrorAction SilentlyContinue
+    if ($proc.ExitCode -eq 0) {
+        Log "  [ok] Caveman skill updated successfully across all agents." "Green"
+    } else {
+        Log "  [!] Caveman skill update returned exit code $($proc.ExitCode)." "Yellow"
+    }
 } catch {
     Log "  [!] Failed to update Caveman automatically." "Yellow"
 }
