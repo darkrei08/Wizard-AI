@@ -108,8 +108,13 @@ async function runAddInstallation(selectedRepos) {
 
     if (!fs.existsSync(destDir)) {
       try {
-        const git = simpleGit();
-        await git.clone(repo.url, destDir, ["--depth", "1"]);
+        const git = simpleGit({ env: { ...process.env, GIT_LFS_SKIP_SMUDGE: '1' } });
+        await git.clone(repo.url, destDir, [
+          "-c", "filter.lfs.smudge=",
+          "-c", "filter.lfs.process=",
+          "-c", "filter.lfs.required=false",
+          "--depth", "1"
+        ]);
       } catch (e) {
         console.warn(pc.yellow(`[WARN] Failed to clone ${repo.name} from ${repo.url}. Skipping...`));
         continue;
@@ -210,8 +215,13 @@ async function runUrlInstall(repoUrl, skillFilter, allAgents) {
   s.start(`Cloning ${repoName}...`);
 
   try {
-    const git = simpleGit();
-    await git.clone(repoUrl, tmpDir, ["--depth", "1"]);
+    const git = simpleGit({ env: { ...process.env, GIT_LFS_SKIP_SMUDGE: '1' } });
+    await git.clone(repoUrl, tmpDir, [
+      "-c", "filter.lfs.smudge=",
+      "-c", "filter.lfs.process=",
+      "-c", "filter.lfs.required=false",
+      "--depth", "1"
+    ]);
   } catch (e) {
     s.stop("Clone failed");
     console.error(pc.red(`[ERROR] git clone failed for ${repoUrl}: ${e.message}`));
