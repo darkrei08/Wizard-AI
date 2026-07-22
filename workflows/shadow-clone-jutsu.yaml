@@ -1,0 +1,48 @@
+name: shadow-clone-jutsu
+description: >
+  Parallel fan-out workflow for resolving 2+ independent tasks concurrently.
+  Each "Shadow Clone" receives an isolated task scope and executes without
+  shared state. Results are aggregated and synthesized by the Orchestrator.
+  Replaces the manual multi_agent_resolution.md with programmatic JS execution.
+
+trigger:
+  conditions:
+    - "2+ independent problem domains identified"
+    - "Tasks have zero sequential dependencies"
+    - "Loop 2 or Loop 3 diagnostic event"
+  keywords:
+    - parallel
+    - fan-out
+    - shadow clone
+    - concurrent
+    - independent tasks
+
+roles_used:
+  - orchestrator
+  - worker-generic
+
+primitives_used:
+  - parallel
+  - agent
+  - checkpoint
+  - prompt
+  - phase
+  - log
+
+phases:
+  - name: dispatch
+    description: Classify and dispatch independent task scopes
+  - name: execute
+    description: Fan-out all clones via parallel()
+  - name: integrate
+    description: Human checkpoint for integration verification
+  - name: synthesize
+    description: Aggregate all clone results into unified report
+
+budget:
+  soft_limit:
+    tokens: 300000
+    agent_launches: 8
+  hard_limit:
+    tokens: 600000
+    agent_launches: 16

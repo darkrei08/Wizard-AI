@@ -1,0 +1,50 @@
+name: loop-2-develop
+description: >
+  Loop 2 (Develop & TDD) workflow using pi-extensible-workflows.
+  Executes test-driven development with parallel fan-out for multi-module tasks.
+  Phases: analyze → tdd-tests → implement → verify → handoff to Loop 3.
+
+trigger:
+  loop: "02. loop-2-develop"
+  complexity: [MEDIUM, HEAVY]
+  keywords:
+    - develop
+    - implement
+    - write code
+    - add feature
+    - create component
+    - tdd
+    - test-first
+
+roles_used:
+  - master-develop
+  - master-debug
+  - worker-generic
+
+primitives_used:
+  - parallel
+  - agent
+  - checkpoint
+  - prompt
+  - phase
+  - log
+
+phases:
+  - name: analyze
+    description: Analyze task scope and identify independent modules
+  - name: tdd-tests
+    description: Write failing tests in parallel (unit + integration)
+  - name: implement
+    description: Implement code to pass tests in parallel
+  - name: verify
+    description: Human checkpoint for implementation review
+  - name: handoff
+    description: Synthesize results and handoff to Loop 3
+
+budget:
+  soft_limit:
+    tokens: 500000
+    agent_launches: 10
+  hard_limit:
+    tokens: 1000000
+    agent_launches: 20
