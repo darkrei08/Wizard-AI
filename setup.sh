@@ -17,9 +17,14 @@ CYAN='\033[0;36m'
 BOLD='\033[1m'
 NC='\033[0m' # No Color
 
-echo -e "${CYAN}============================================================"
-echo -e "         🧙‍♂️  Wizard-AI Environment Setup Wizard"
-echo -e "============================================================${NC}"
+echo -e "\033[38;5;250m███████╗██╗  ██╗██╗██╗     ██╗     ███████╗\033[0m"
+echo -e "\033[38;5;248m██╔════╝██║ ██╔╝██║██║     ██║     ██╔════╝\033[0m"
+echo -e "\033[38;5;245m███████╗█████╔╝ ██║██║     ██║     ███████╗\033[0m"
+echo -e "\033[38;5;243m╚════██║██╔═██╗ ██║██║     ██║     ╚════██║\033[0m"
+echo -e "\033[38;5;240m███████║██║  ██╗██║███████╗███████╗███████║\033[0m"
+echo -e "\033[38;5;238m╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚══════╝\033[0m"
+echo -e "${CYAN}┌   ${BOLD}Wizard-AI — Open Agent Skills & Frameworks Installer${NC}\n"
+
 
 # 0. Parse arguments
 VERBOSE=0
@@ -334,22 +339,16 @@ if [ "$YES_MODE" -eq 1 ] || [ ! -t 0 ]; then
   SELECTED_REPOS="$REGISTRY_LINES"
 else
   # ── Interactive menu ──
-  echo -e ""
-  echo -e "${CYAN}╔══════════════════════════════════════════════════════════════╗${NC}"
-  echo -e "${CYAN}║${NC}  ${BOLD}🧙‍♂️  Wizard-AI — Skill & Framework Selector${NC}                ${CYAN}║${NC}"
-  echo -e "${CYAN}╠══════════════════════════════════════════════════════════════╣${NC}"
-  echo -e "${CYAN}║${NC}                                                            ${CYAN}║${NC}"
-  echo -e "${CYAN}║${NC}  How would you like to install skills & frameworks?        ${CYAN}║${NC}"
-  echo -e "${CYAN}║${NC}                                                            ${CYAN}║${NC}"
-  echo -e "${CYAN}║${NC}  ${BOLD}[1]${NC} 🚀 Install Everything ${GREEN}(Recommended)${NC}                   ${CYAN}║${NC}"
-  echo -e "${CYAN}║${NC}  ${BOLD}[2]${NC} 📦 Select by Category                               ${CYAN}║${NC}"
-  echo -e "${CYAN}║${NC}  ${BOLD}[3]${NC} 🔧 Select Individual Skills                         ${CYAN}║${NC}"
-  echo -e "${CYAN}║${NC}  ${BOLD}[4]${NC} ⏭️  Skip (install only core tools)                    ${CYAN}║${NC}"
-  echo -e "${CYAN}║${NC}                                                            ${CYAN}║${NC}"
-  echo -e "${CYAN}╚══════════════════════════════════════════════════════════════╝${NC}"
-  echo -e ""
-  read -p "> " INSTALL_MODE
+  echo -e "${CYAN}│${NC}"
+  echo -e "${CYAN}◇  ${BOLD}Skill & Framework Selection Mode:${NC}"
+  echo -e "${CYAN}│${NC}    ${BOLD}[1]${NC} 🚀 Install Everything ${GREEN}(Recommended — all $TOTAL_REPOS items)${NC}"
+  echo -e "${CYAN}│${NC}    ${BOLD}[2]${NC} 📦 Select by Category ${PURPLE}(Agent Frameworks, CLI Tools, Prompt Skills, etc.)${NC}"
+  echo -e "${CYAN}│${NC}    ${BOLD}[3]${NC} 🔧 Cherry-Pick Individual Skills"
+  echo -e "${CYAN}│${NC}    ${BOLD}[4]${NC} ⏭️  Skip (install only core tools)"
+  echo -e "${CYAN}│${NC}"
+  read -p "$(echo -e "${CYAN}◇  Selection > ${NC}")" INSTALL_MODE
   INSTALL_MODE="${INSTALL_MODE:-1}"
+
 
   case "$INSTALL_MODE" in
     1)

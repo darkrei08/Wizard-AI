@@ -282,22 +282,16 @@ if ($IsNonInteractive) {
     $SelectedItems = $AllItems
 } else {
     # ── Interactive menu ──
-    Write-Host ''
-    Write-Host '  ╔══════════════════════════════════════════════════════════════╗' -ForegroundColor Cyan
-    Write-Host '  ║  Wizard-AI — Skill & Framework Selector                     ║' -ForegroundColor Cyan
-    Write-Host '  ╠══════════════════════════════════════════════════════════════╣' -ForegroundColor Cyan
-    Write-Host '  ║                                                              ║' -ForegroundColor Cyan
-    Write-Host '  ║  How would you like to install skills & frameworks?          ║' -ForegroundColor Cyan
-    Write-Host '  ║                                                              ║' -ForegroundColor Cyan
-    Write-Host '  ║  [1] Install Everything (Recommended)                        ║' -ForegroundColor Cyan
-    Write-Host '  ║  [2] Select by Category                                      ║' -ForegroundColor Cyan
-    Write-Host '  ║  [3] Select Individual Skills                                ║' -ForegroundColor Cyan
-    Write-Host '  ║  [4] Skip (install only core tools)                          ║' -ForegroundColor Cyan
-    Write-Host '  ║                                                              ║' -ForegroundColor Cyan
-    Write-Host '  ╚══════════════════════════════════════════════════════════════╝' -ForegroundColor Cyan
-    Write-Host ''
-    $mode = Read-Host '> '
+    Write-Host '│' -ForegroundColor Cyan
+    Write-Host '◇  Skill & Framework Selection Mode:' -ForegroundColor Cyan
+    Write-Host '│    [1] 🚀 Install Everything (Recommended — all items)' -ForegroundColor White
+    Write-Host '│    [2] 📦 Select by Category (Agent Frameworks, CLI Tools, Prompt Skills, etc.)' -ForegroundColor White
+    Write-Host '│    [3] 🔧 Cherry-Pick Individual Skills' -ForegroundColor White
+    Write-Host '│    [4] ⏭️  Skip (install only core tools)' -ForegroundColor White
+    Write-Host '│' -ForegroundColor Cyan
+    $mode = Read-Host '◇  Selection > '
     if (-not $mode) { $mode = '1' }
+
 
     switch ($mode) {
         '1' {

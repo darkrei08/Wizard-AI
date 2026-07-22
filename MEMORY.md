@@ -2,7 +2,7 @@
 
 ## 📍 System Status & Architecture Overview
 
-- **Package**: `@darkrei08/wizard-ai-cli` (`v0.50.45`)
+- **Package**: `@darkrei08/wizard-ai-cli` (`v0.50.46`)
 - **Master Pipeline**: 11-Step Loop Engineering Pipeline (`0-loop-engine` -> `1-auto-router` MoE -> `01-05 Loops`)
 - **Skill Engine**: 219+ Skills synced across 10 Agent IDE targets:
   - `~/.gemini/config/skills`
@@ -31,6 +31,9 @@
 ---
 
 ## 📜 Key Changelog Snapshots
+
+### v0.50.46 (2026-07-22)
+- **`@clack/prompts` & `skills` CLI Visual Style**: Added ASCII banner, tree nodes (`┌ │ ◇ ● └`), box drawing summary panels, security risk assessment matrix, and mass deletion support (`wizard-installer.js`).
 
 ### v0.50.45 (2026-07-22)
 - **Interactive Skill & Framework Selector**: `setup.sh` and `setup.ps1` now show a caveman-style menu: `[1] Install Everything`, `[2] Select by Category`, `[3] Select Individual Skills`, `[4] Skip`.

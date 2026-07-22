@@ -7,6 +7,12 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
+## [0.50.46] - 2026-07-22
+
+### Added
+- **`@clack/prompts` & `skills` CLI Visual Overhaul**: `wizard-installer.js`, `setup.sh`, and `setup.ps1` updated with ASCII banner (`███████╗...`), tree nodes (`┌`, `│`, `◇`, `●`, `└`), box-drawing summary panels, and security risk assessment matrix.
+- **Mass Deletion / Selective Removal Mode**: `wizard-installer.js` now features mass deletion support (`node scripts/wizard-installer.js remove` or Option `[4]` in menu) to delete specific or all installed skills/repositories.
+
 ## [0.50.45] - 2026-07-22
 
 ### Added
