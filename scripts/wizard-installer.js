@@ -107,8 +107,13 @@ async function runAddInstallation(selectedRepos) {
     s.message(`Processing ${repo.name}...`);
 
     if (!fs.existsSync(destDir)) {
-      const git = simpleGit();
-      await git.clone(repo.url, destDir, ["--depth", "1"]);
+      try {
+        const git = simpleGit();
+        await git.clone(repo.url, destDir, ["--depth", "1"]);
+      } catch (e) {
+        console.warn(pc.yellow(`[WARN] Failed to clone ${repo.name} from ${repo.url}. Skipping...`));
+        continue;
+      }
     }
 
     // Dependency execution

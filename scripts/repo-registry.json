@@ -59,7 +59,7 @@
       "badge": "[MEMORY]",
       "description": "Persistent memory engines, vector stores, context pruning, and knowledge graph tools",
       "repos": [
-        { "name": "engram", "url": "https://github.com/koalazub/engram.git", "desc": "SQLite-backed agent memory" },
+        { "name": "engram", "url": "https://github.com/Gentleman-Programming/engram.git", "desc": "SQLite-backed agent memory" },
         { "name": "turbovec", "url": "https://github.com/RyanCodrai/turbovec.git", "desc": "TurboVec vector DB" },
         { "name": "zvec", "url": "https://github.com/alibaba/zvec.git", "desc": "ZVec vector DB" },
         { "name": "headroom", "url": "https://github.com/chopratejas/headroom.git", "desc": "Headroom context proxy" }
