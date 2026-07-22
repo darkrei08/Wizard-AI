@@ -45,7 +45,7 @@ done
 # --- Direction 2: Gemini → Wizard-AI repo (backup into categories) ---
 if [[ -n "${WIZARD_AI_DIR:-}" ]] && [[ -d "${WIZARD_AI_DIR}/skills" ]]; then
   echo ""
-  echo "  📦 Backing up new skills to repo..."
+  echo "  📦 Auto-Backup (2-Way Persistence): Checking for new agent skills..."
   backed_up=0
   for SKILL_DIR in "$SKILLS_SRC"/*/; do
     [[ -d "$SKILL_DIR" ]] || continue
@@ -57,18 +57,18 @@ if [[ -n "${WIZARD_AI_DIR:-}" ]] && [[ -d "${WIZARD_AI_DIR}/skills" ]]; then
       REPO_SKILL_DIR="$WIZARD_AI_DIR/skills/misc/$SKILL_NAME"
       mkdir -p "$REPO_SKILL_DIR"
       rsync -a --quiet "$SKILL_DIR" "$REPO_SKILL_DIR/" 2>/dev/null || cp -rf "$SKILL_DIR"* "$REPO_SKILL_DIR/" 2>/dev/null || true
-      echo "    + $SKILL_NAME (new → repo/skills/misc/)"
+      echo "    + $SKILL_NAME (new local skill → backed up to repo/skills/misc/)"
       backed_up=$((backed_up + 1))
     fi
   done
   if [[ $backed_up -eq 0 ]]; then
-    echo "    ✓ All skills already in sync with repo."
+    echo "    ✓ All local agent skills are fully backed up and in sync with the repository."
   else
-    echo "  ✅ $WIZARD_AI_DIR/skills/ ($backed_up new skills backed up to misc/)"
+    echo "  ✅ $WIZARD_AI_DIR/skills/ ($backed_up new skills backed up to repo/skills/misc/)"
   fi
 elif [[ -z "${WIZARD_AI_DIR:-}" ]]; then
   echo ""
-  echo "  ℹ️  \$WIZARD_AI_DIR not set — skipping repo backup."
+  echo "  ℹ️  \$WIZARD_AI_DIR not set — skipping repo auto-backup."
   echo "     Run setup.sh once to enable automatic repo backup."
 fi
 

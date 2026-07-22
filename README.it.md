@@ -77,6 +77,20 @@ Nell'ecosistema AI del 2026, l'ingegneria del contesto è il nuovo standard oro.
 
 **Regola del PRE & POST Autoloop:** Ogni sessione comprime il contesto, salva la memoria (`MEMORY.md`) e compila il grafo di progetto prima e dopo ogni iterazione, senza alcun intervento umano.
 
+## 🔄 Sistema di Sincronizzazione Bi-Direzionale e Persistenza Skill (2-Way Sync)
+
+Wizard-AI include un motore di persistenza bi-direzionale in tempo reale (`wz-ai-sync-skills`):
+
+1. **Direzione 1 (Propagazione Agenti)**: `~/.gemini/config/skills/` → `~/.claude/skills/`, `~/.config/amp/skills/`, `~/.agents/skills/`
+   Propaga tutte le skill master a ogni agente AI installato nel sistema (Claude Code, Gemini CLI, Antigravity, Amp, OpenCode), così che condividano tutti le medesime capacità.
+2. **Direzione 2 (Auto-Backup Automatico su Git Repo)**: `~/.gemini/config/skills/` → `Wizard-AI/skills/misc/`
+   Quando un agente AI genera o crea una nuova skill durante la conversazione in `~/.gemini/config/skills/`, lo script la rileva automaticamente e ne crea un backup nella repository Git sotto `skills/misc/`. Questo impedisce che le skill apprese vengano perse e le rende subito visibili con `git status` per i commit del team.
+
+Per sincronizzare manualmente in qualsiasi momento:
+```bash
+wz-ai-sync-skills
+```
+
 ## 🚀 Avvio Rapido
 
 ```bash

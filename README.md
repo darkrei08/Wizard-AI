@@ -350,13 +350,19 @@ Skills are `SKILL.md` files that teach AI agents **when and how** to use a tool.
 
 **`setup.sh` installs skills once** to `~/.gemini/config/skills/`. Running `wizard-ai sync-skills` then copies them to all other agent directories automatically.
 
-### Syncing Custom Skills
+### 🔄 2-Way Skill Synchronization & Persistence System
+
+Wizard-AI implements a bi-directional persistence engine (`wz-ai-sync-skills`):
+
+1. **Direction 1 (Propagation):** `~/.gemini/config/skills/` → `~/.claude/skills/`, `~/.config/amp/skills/`, `~/.agents/skills/`
+   Propagates all master skills to every installed AI agent on your system so all agents share the same capabilities.
+2. **Direction 2 (Auto-Backup to Git Repo):** `~/.gemini/config/skills/` → `Wizard-AI/skills/misc/`
+   When an AI agent generates, learns, or creates a new skill dynamically in `~/.gemini/config/skills/`, `wz-ai-sync-skills` detects the new skill and automatically backs it up into the Git repository under `skills/misc/`. This prevents newly learned skills from being lost on system cleanup and makes them instantly trackable via `git status` for team commits.
 
 Whenever you write a new skill or modify an existing one, run:
 ```bash
-wizard-ai sync-skills
+wz-ai-sync-skills
 ```
-This script synchronizes your modifications back to your cloned repository under `skills/` and propagates them to other agents.
 
 ---
 
