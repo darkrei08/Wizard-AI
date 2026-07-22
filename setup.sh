@@ -99,39 +99,13 @@ rm -rf "$HOME/.wizard-ai/venv" 2>/dev/null || true
 uv venv "$HOME/.wizard-ai/venv" --seed $QUIET_OPT
 VENV_PYTHON="$HOME/.wizard-ai/venv/bin/python"
 
-# Auto-install system dependencies for turbovec if possible
-echo -e "${YELLOW}Checking system dependencies (Rust/Cargo & OpenBLAS) for turbovec...${NC}"
-if command -v apt-get &>/dev/null; then
-  if ! dpkg -s libopenblas-dev &>/dev/null || ! command -v cargo &>/dev/null; then
-    echo -e "${YELLOW}Installing libopenblas-dev and cargo via apt-get...${NC}"
-    apt-get update -yqq && apt-get install -yqq cargo libopenblas-dev
-  fi
-elif command -v pacman &>/dev/null; then
-  if ! pacman -Qs openblas &>/dev/null || ! command -v cargo &>/dev/null; then
-    echo -e "${YELLOW}Installing openblas and rust via pacman...${NC}"
-    pacman -Sy --noconfirm rust openblas
-  fi
-elif command -v dnf &>/dev/null; then
-  if ! rpm -q openblas-devel &>/dev/null || ! command -v cargo &>/dev/null; then
-    echo -e "${YELLOW}Installing openblas-devel and cargo via dnf...${NC}"
-    dnf install -y cargo openblas-devel
-  fi
-elif command -v brew &>/dev/null; then
-  if ! sudo -u "$REAL_USER" brew list openblas &>/dev/null || ! command -v cargo &>/dev/null; then
-    echo -e "${YELLOW}Installing openblas and rust via brew...${NC}"
-    sudo -u "$REAL_USER" brew install rust openblas
-  fi
-fi
 
-echo -e "${YELLOW}Installing llmlingua, flashrank, and turbovec inside the venv...${NC}"
+
+echo -e "${YELLOW}Installing llmlingua and flashrank inside the venv...${NC}"
 uv pip install $QUIET_OPT --python "$VENV_PYTHON" \
-  llmlingua flashrank transformers torch accelerate aisuite \
-  "git+https://github.com/RyanCodrai/turbovec.git#subdirectory=turbovec-python" \
+  llmlingua flashrank "aisuite[all]" \
   || {
-       echo -e "${RED}❌ Failed to install Python dependencies. Se turbovec fallisce, potresti non avere i compilatori C++/Rust o OpenBLAS installati.${NC}"
-       echo -e "${RED}Per favore installa: rust (cargo) e openblas prima di eseguire lo script, es:${NC}"
-       echo -e "${RED}Arch: sudo pacman -S rust openblas${NC}"
-       echo -e "${RED}Ubuntu: sudo apt install cargo libopenblas-dev${NC}"
+       echo -e "${RED}❌ Failed to install Python dependencies.${NC}"
        exit 1
      }
 echo -e "${GREEN}✓ Virtual environment ready at ~/.wizard-ai/venv/${NC}"

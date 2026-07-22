@@ -87,3 +87,6 @@ Eseguito commit, bump versione a v0.50.24, git push e npm publish.
 
 ## [Session State Snapshot] - 2026-07-22 13:02:54
 Bugfix esteso a wz-ai-update.ps1 e rilasciato con versione v0.50.25 su GitHub ed npm.
+
+## [Session State Snapshot] - 2026-07-22 13:04:56
+Corretto refuso nel nome file 'wz-ai-sync-skills.ps1' su setup.ps1 e wz-ai-update.ps1. Rilasciato come v0.50.26.
