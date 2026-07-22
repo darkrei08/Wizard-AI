@@ -37,20 +37,13 @@ for arg in "$@"; do
   esac
 done
 
-# 0. Enforce sudo and fix user environment
-if [ "$EUID" -ne 0 ]; then
-  echo -e "\n${RED}[ERROR] This script requires elevated privileges to install global dependencies (npm/cargo)."
-  echo -e "Please run the installer with sudo:"
-  echo -e "  sudo ./setup.sh${NC}\n"
-  exit 1
-fi
-
-if [ -n "${SUDO_USER:-}" ]; then
-  REAL_USER="$SUDO_USER"
-  REAL_HOME=$(getent passwd "$REAL_USER" | cut -d: -f6)
+# 0. User environment resolution
+REAL_USER="${SUDO_USER:-$USER}"
+REAL_HOME="$HOME"
+if [ -n "${SUDO_USER:-}" ] && [ "$SUDO_USER" != "root" ]; then
+  REAL_HOME=$(getent passwd "$REAL_USER" 2>/dev/null | cut -d: -f6 || echo "/home/$REAL_USER")
   export HOME="$REAL_HOME"
   export USER="$REAL_USER"
-  # Also override some env vars to prevent uv/cargo from defaulting to /root
   export CARGO_HOME="$REAL_HOME/.cargo"
   export UV_TOOL_DIR="$REAL_HOME/.local/share/uv/tools"
 fi
@@ -916,9 +909,13 @@ ExecStart=$HOME/.local/bin/wz-ai-update --quiet
 WantedBy=default.target
 EOF
     chown -R "$USER:$USER" "$HOME/.config/systemd"
-    REAL_UID=$(id -u "$USER")
-    sudo -u "$USER" XDG_RUNTIME_DIR="/run/user/$REAL_UID" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$REAL_UID/bus" systemctl --user daemon-reload || true
-    sudo -u "$USER" XDG_RUNTIME_DIR="/run/user/$REAL_UID" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$REAL_UID/bus" systemctl --user enable wz-ai-update.service || true
+    if [ -n "${SUDO_USER:-}" ]; then
+      sudo -u "$USER" XDG_RUNTIME_DIR="/run/user/$REAL_UID" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$REAL_UID/bus" systemctl --user daemon-reload || true
+      sudo -u "$USER" XDG_RUNTIME_DIR="/run/user/$REAL_UID" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$REAL_UID/bus" systemctl --user enable wz-ai-update.service || true
+    else
+      systemctl --user daemon-reload || true
+      systemctl --user enable wz-ai-update.service || true
+    fi
     echo -e "${GREEN}  ✓ systemd service installed for user $USER.${NC}"
   else
     echo -e "${RED}⚠ cron and systemctl not found. Auto-updates cannot be configured.${NC}"

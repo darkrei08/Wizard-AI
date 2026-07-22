@@ -31,24 +31,24 @@ function run(cmd, args, opts) {
 
 const subcmd = process.argv[2];
 
-// Handle --help and --version before anything else
-if (!subcmd || subcmd === "--help" || subcmd === "-h") {
+// 1. Handle --help and --version
+if (subcmd === "--help" || subcmd === "-h") {
   const ver = require("./package.json").version;
   console.log(`wizard-ai v${ver}`);
   console.log("Usage: npx @darkrei08/wizard-ai-cli [command]\n");
   console.log("Commands:");
-  console.log("  (default)    Clone & setup Wizard-AI into ~/.wizard-ai");
-  console.log("  skills       Interactive skills manager");
-  console.log("  install      Install skills by category");
-  console.log("  remove       Remove installed skills");
-  console.log("  test         Run wizard-test suite");
-  console.log("  proxy        Start wz-ai-proxy");
+  console.log("  (default/skills) Launch interactive skills & framework manager");
+  console.log("  setup            Clone & run full platform environment installer");
+  console.log("  install          Install skills by category");
+  console.log("  remove           Remove installed skills");
+  console.log("  test             Run wizard-test suite");
+  console.log("  proxy            Start wz-ai-proxy");
   console.log("\nFlags:");
-  console.log("  --sudo       Escalate setup.sh to sudo (for global installs)");
-  console.log("  --verbose    Verbose output");
+  console.log("  --sudo           Escalate setup.sh to sudo (if needed)");
+  console.log("  --verbose        Verbose output");
   process.exit(0);
 }
-if (subcmd === "--version" || subcmd === "-V") {
+if (subcmd === "--version" || subcmd === "-v" || subcmd === "-V") {
   console.log(require("./package.json").version);
   process.exit(0);
 }
@@ -61,16 +61,15 @@ if (subcmd === "proxy") {
   }
 }
 
-if (subcmd === "skills" || subcmd === "install" || subcmd === "remove" || subcmd === "delete") {
+if (!subcmd || subcmd === "skills" || subcmd === "install" || subcmd === "add" || subcmd === "remove" || subcmd === "delete") {
   const installerScript = path.join(__dirname, "scripts", "wizard-installer.js");
   if (fs.existsSync(installerScript)) {
-    const status = run("node", [installerScript, ...process.argv.slice(3)]);
+    const status = run("node", [installerScript, ...process.argv.slice(!subcmd ? 2 : 3)]);
     process.exit(status === null ? 1 : status);
   }
 }
 
 if (subcmd === "test" || subcmd === "webnative-inspect" || subcmd === "webnative") {
-
   const testScript = path.join(__dirname, "scripts", "wizard-test.js");
   if (fs.existsSync(testScript)) {
     const status = run("node", [testScript, ...process.argv.slice(subcmd === "test" ? 3 : 2)]);
