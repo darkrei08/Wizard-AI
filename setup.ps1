@@ -224,14 +224,21 @@ if (Get-Command npm -ErrorAction SilentlyContinue) {
 
 Write-Log "Installing Caveman agent skill globally..." -ForegroundColor Yellow
 try {
-    $tempPs1 = Join-Path $env:TEMP "caveman_install.ps1"
-    Invoke-RestMethod https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.ps1 -OutFile $tempPs1
-    $proc = Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$tempPs1`"" -Wait -NoNewWindow -PassThru
-    Remove-Item $tempPs1 -ErrorAction SilentlyContinue
-    if ($proc.ExitCode -eq 0) {
+    $cavemanJs = Join-Path $AiSkills "caveman\bin\install.js"
+    if (Test-Path $cavemanJs) {
+        $env:GITHUB_TOKEN = ""
+        node $cavemanJs --all --non-interactive 2>$null
         Write-Log "  [ok] Caveman skill installed successfully." -ForegroundColor Green
     } else {
-        Write-Log "  [!] Caveman skill installation returned exit code $($proc.ExitCode)." -ForegroundColor Yellow
+        $tempPs1 = Join-Path $env:TEMP "caveman_install.ps1"
+        Invoke-RestMethod https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.ps1 -OutFile $tempPs1
+        $proc = Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$tempPs1`" --all --non-interactive" -Wait -NoNewWindow -PassThru
+        Remove-Item $tempPs1 -ErrorAction SilentlyContinue
+        if ($proc.ExitCode -eq 0) {
+            Write-Log "  [ok] Caveman skill installed successfully." -ForegroundColor Green
+        } else {
+            Write-Log "  [!] Caveman skill installation returned exit code $($proc.ExitCode)." -ForegroundColor Yellow
+        }
     }
 } catch {
     Write-Log "  [!] Failed to install caveman. You can install manually: irm https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.ps1 | iex" -ForegroundColor Red
