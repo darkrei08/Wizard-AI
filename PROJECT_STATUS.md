@@ -5,7 +5,7 @@ Questo documento funge da memoria contestuale per tracciare lo stato di avanzame
 ## 🎯 Obiettivo Principale
 Wizard-AI punta a essere l'ecosistema locale definitivo per integrare, gestire e monetizzare workflow e skill per AI agent (Claude, Gemini, Cursor) in modo unificato, tramite un hub web locale e una potente CLI bash/Python.
 
-## 🟢 Stato Attuale: Alpha Avanzata (v0.5.0)
+## 🟢 Stato Attuale: Alpha Avanzata (v0.50.20)
 Il sistema è funzionante e le API interne comunicano correttamente con i binari CLI e la GUI web. L'architettura è stabile. Le 155 skill degli AI agent sono state recentemente ristrutturate in percorsi gerarchici (core, frontend, backend, devops, data-science, memory-knowledge, workflows) e governate da meta-workflow come `workflow-production-cycle`.
 
 ### Componenti Principali Implementati
