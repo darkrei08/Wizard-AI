@@ -1,6 +1,6 @@
 {
   "name": "@darkrei08/wizard-ai-cli",
-  "version": "0.50.50",
+  "version": "0.50.51",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
@@ -55,7 +55,12 @@
     "vitest": "^4.1.10"
   },
   "dependencies": {
+    "@clack/prompts": "^1.7.0",
     "@toon-format/toon": "^2.3.1",
-    "pi-extensible-workflows": "^1.0.1"
+    "@vercel/detect-agent": "^1.2.3",
+    "pi-extensible-workflows": "^1.0.1",
+    "picocolors": "^1.1.1",
+    "simple-git": "^3.36.0",
+    "xdg-basedir": "^5.1.0"
   }
 }
