@@ -2,7 +2,7 @@ import os
 import shutil
 from pathlib import Path
 
-base_dir = Path("/home/ema/Scrivania/altri repooo/Wizard-AI/skills")
+base_dir = Path(__file__).parent.resolve()
 
 categories = {
     "00-core-engine": [

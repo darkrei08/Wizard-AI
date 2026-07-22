@@ -14,11 +14,27 @@ TARGETS=(
   "$HOME/.config/amp/skills"
   "$HOME/.agents/skills"
   "$HOME/.config/agents/skills"
+  "$HOME/.cursor/skills"
+  "$HOME/.windsurf/skills"
+  "$HOME/.opencode/skills"
+  "$HOME/.pi/skills"
+  "$HOME/.pi/agent/skills"
 )
 
 # Load wizard-ai env if not already set
 if [[ -z "${WIZARD_AI_DIR:-}" ]] && [[ -f "$HOME/.config/wizard-ai/env" ]]; then
   source "$HOME/.config/wizard-ai/env"
+# --- Direction 0: Wizard-AI Repo -> Gemini Config Skills ---
+if [[ -n "${WIZARD_AI_DIR:-}" ]] && [[ -d "${WIZARD_AI_DIR}/skills" ]]; then
+  mkdir -p "$SKILLS_SRC"
+  while IFS= read -r -d '' skill_md; do
+    s_dir=$(dirname "$skill_md")
+    s_name=$(basename "$s_dir")
+    if [[ ! -d "$SKILLS_SRC/$s_name" ]]; then
+      mkdir -p "$SKILLS_SRC/$s_name"
+      cp -rf "$s_dir"/. "$SKILLS_SRC/$s_name/" 2>/dev/null || true
+    fi
+  done < <(find "${WIZARD_AI_DIR}/skills" "${WIZARD_AI_DIR}/.agents/skills" -name "SKILL.md" -type f -print0 2>/dev/null)
 fi
 
 echo "🔄 Syncing AI skills from: $SKILLS_SRC"

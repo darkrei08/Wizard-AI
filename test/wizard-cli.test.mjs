@@ -50,4 +50,22 @@ describe('Wizard-AI CLI Environment & Platform Structure', () => {
     expect(pkg.bin['ai-test']).toBe('scripts/wizard-test.js');
     expect(pkg.scripts['webnative-inspect']).toContain('wizard-test.js');
   });
+
+  it('should have cross-OS platform setup script parity and skill discovery in setup.sh and setup.ps1', () => {
+    const shContent = fs.readFileSync(path.join(rootDir, 'setup.sh'), 'utf-8');
+    const psContent = fs.readFileSync(path.join(rootDir, 'setup.ps1'), 'utf-8');
+
+    expect(shContent).toContain('$SCRIPT_DIR/skills');
+    expect(psContent).toContain('Interactive Skill Setup');
+  });
+
+  it('should have cross-OS Windows CLI wrappers and registered cross-os-refactor workflow', () => {
+    expect(fs.existsSync(path.join(rootDir, 'bin/windows/wz-ai-os.ps1'))).toBe(true);
+    expect(fs.existsSync(path.join(rootDir, 'bin/windows/wz-ai-skill-doctor.ps1'))).toBe(true);
+
+    const indexContent = fs.readFileSync(path.join(rootDir, 'index.js'), 'utf-8');
+    expect(indexContent).toContain('cross-os-refactor');
+    expect(fs.existsSync(path.join(rootDir, 'workflows/cross-os-refactor.js'))).toBe(true);
+    expect(fs.existsSync(path.join(rootDir, 'scripts/wizard-installer.js'))).toBe(true);
+  });
 });

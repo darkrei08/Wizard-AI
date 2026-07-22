@@ -171,13 +171,41 @@ module.exports = async function (api) {
 
       // Register named workflows that can be invoked by name
       workflows: {
+        'loop-1-plan': {
+          description: 'Loop 1: Plan & Spec exploration and alignment workflow',
+          script: fs.readFileSync(path.join(__dirname, 'workflows', 'loop-1-plan.js'), 'utf-8'),
+        },
         'loop-2-develop': {
-          description: 'TDD development workflow with parallel fan-out for multi-module tasks',
+          description: 'Loop 2: TDD development workflow with parallel fan-out for multi-module tasks',
           script: fs.readFileSync(path.join(__dirname, 'workflows', 'loop-2-develop.js'), 'utf-8'),
+        },
+        'loop-3-debug': {
+          description: 'Loop 3: Debug & Verify workflow for bug diagnosis and verification',
+          script: fs.readFileSync(path.join(__dirname, 'workflows', 'loop-3-debug.js'), 'utf-8'),
+        },
+        'loop-4-refactor': {
+          description: 'Loop 4: Refactor & Optimize workflow for AST structure and token squeezing',
+          script: fs.readFileSync(path.join(__dirname, 'workflows', 'loop-4-refactor.js'), 'utf-8'),
+        },
+        'loop-5-release': {
+          description: 'Loop 5: Release & Learn workflow for semver bump, changelog, and graph update',
+          script: fs.readFileSync(path.join(__dirname, 'workflows', 'loop-5-release.js'), 'utf-8'),
+        },
+        'workflow-frontend-design': {
+          description: 'Frontend Design Aesthetics, UI scraping, and token extraction workflow',
+          script: fs.readFileSync(path.join(__dirname, 'workflows', 'workflow-frontend-design.js'), 'utf-8'),
+        },
+        'workflow-research-scraping': {
+          description: 'Research & Web Scraping workflow for market pulse and source analysis',
+          script: fs.readFileSync(path.join(__dirname, 'workflows', 'workflow-research-scraping.js'), 'utf-8'),
         },
         'shadow-clone-jutsu': {
           description: 'Parallel fan-out for 2+ independent tasks without shared state',
           script: fs.readFileSync(path.join(__dirname, 'workflows', 'shadow-clone-jutsu.js'), 'utf-8'),
+        },
+        'cross-os-refactor': {
+          description: 'Cross-OS refactoring, skill setup audit, and multi-agent validation workflow',
+          script: fs.readFileSync(path.join(__dirname, 'workflows', 'cross-os-refactor.js'), 'utf-8'),
         },
       },
     });

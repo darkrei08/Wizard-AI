@@ -216,6 +216,21 @@ clone_skill_repo() {
   else
     echo -e "${GREEN}✓ $dest_name is already present.${NC}"
   fi
+
+  # Auto-install framework / skill dependencies per OS specification
+  if [ -d "$dest_dir" ]; then
+    if [ -f "$dest_dir/bin/install.js" ]; then
+      GITHUB_TOKEN="" node "$dest_dir/bin/install.js" --all --non-interactive 2>/dev/null || true
+    elif [ -f "$dest_dir/install.sh" ]; then
+      bash "$dest_dir/install.sh" 2>/dev/null || true
+    elif [ -f "$dest_dir/setup.sh" ]; then
+      bash "$dest_dir/setup.sh" 2>/dev/null || true
+    elif [ -f "$dest_dir/pyproject.toml" ] || [ -f "$dest_dir/setup.py" ]; then
+      uv pip install --python "$VENV_PYTHON" -e "$dest_dir" $QUIET_OPT 2>/dev/null || true
+    elif [ -f "$dest_dir/package.json" ] && command -v npm &>/dev/null; then
+      npm install --prefix "$dest_dir" --no-audit --no-fund 2>/dev/null || true
+    fi
+  fi
 }
 clone_skill_repo "https://github.com/thedotmack/claude-mem.git" "claude-mem"
 clone_skill_repo "https://github.com/chopratejas/headroom.git" "headroom"
@@ -227,6 +242,46 @@ clone_skill_repo "https://github.com/google-labs-code/stitch-skills.git" "stitch
 clone_skill_repo "https://github.com/google-labs-code/design.md.git" "design.md"
 clone_skill_repo "https://github.com/SpinaBuilds/goodcode.git" "goodcode"
 clone_skill_repo "https://github.com/mvanhorn/last30days-skill.git" "last30days-skill"
+clone_skill_repo "https://github.com/earendil-works/pi.git" "earendil-pi"
+clone_skill_repo "https://github.com/tinyhumansai/openhuman.git" "openhuman"
+clone_skill_repo "https://github.com/agentscope-ai/QwenPaw.git" "QwenPaw"
+clone_skill_repo "https://github.com/saxenauts/syke.git" "syke"
+clone_skill_repo "https://github.com/mem0ai/mem0.git" "mem0"
+clone_skill_repo "https://github.com/Technoculture/personal-graph.git" "personal-graph"
+clone_skill_repo "https://github.com/safishamsi/graphify.git" "graphify"
+clone_skill_repo "https://github.com/rmedranollamas/geminiusage.git" "geminiusage"
+clone_skill_repo "https://github.com/BerriAI/litellm.git" "litellm"
+clone_skill_repo "https://github.com/microsoft/LLMLingua.git" "LLMLingua"
+clone_skill_repo "https://github.com/PrithivirajDamodaran/FlashRank.git" "FlashRank"
+clone_skill_repo "https://github.com/ojuschugh1/sqz.git" "sqz"
+clone_skill_repo "https://github.com/microsoft/markitdown.git" "markitdown"
+clone_skill_repo "https://github.com/mermaid-js/mermaid-cli.git" "mermaid-cli"
+clone_skill_repo "https://github.com/tenfoldmarc/wiki-brain-skill.git" "wiki-brain-skill"
+clone_skill_repo "https://github.com/oraios/serena.git" "serena"
+clone_skill_repo "https://github.com/github/spec-kit.git" "spec-kit"
+clone_skill_repo "https://github.com/sickn33/antigravity-awesome-skills.git" "antigravity-awesome-skills"
+clone_skill_repo "https://github.com/VoltAgent/awesome-agent-skills.git" "awesome-agent-skills"
+clone_skill_repo "https://github.com/HKUDS/CLI-Anything.git" "cli-anything"
+clone_skill_repo "https://github.com/mvanhorn/cli-printing-press.git" "cli-printing-press"
+clone_skill_repo "https://github.com/virgiliojr94/book-to-skill.git" "book-to-skill"
+clone_skill_repo "https://github.com/pbakaus/impeccable.git" "impeccable"
+clone_skill_repo "https://github.com/jlcodes99/cockpit-tools.git" "cockpit-tools"
+clone_skill_repo "https://github.com/jamiepine/voicebox.git" "voicebox"
+clone_skill_repo "https://github.com/datawhalechina/easy-vibe.git" "easy-vibe"
+clone_skill_repo "https://github.com/debpalash/OmniVoice-Studio.git" "omnivoice-studio"
+clone_skill_repo "https://github.com/supertone-inc/supertonic.git" "supertonic"
+clone_skill_repo "https://github.com/heygen-com/hyperframes.git" "hyperframes"
+clone_skill_repo "https://github.com/iOfficeAI/AionUi.git" "aionui"
+clone_skill_repo "https://github.com/Aejkatappaja/phantom-ui.git" "phantom-ui"
+clone_skill_repo "https://github.com/pocketbase/pocketbase.git" "pocketbase"
+clone_skill_repo "https://github.com/trailbaseio/trailbase.git" "trailbase"
+clone_skill_repo "https://github.com/alibaba/zvec.git" "zvec"
+clone_skill_repo "https://github.com/RyanCodrai/turbovec.git" "turbovec"
+clone_skill_repo "https://github.com/aldinokemal/go-whatsapp-web-multidevice.git" "go-whatsapp"
+clone_skill_repo "https://github.com/asternic/wuzapi.git" "wuzapi"
+clone_skill_repo "https://github.com/rmyndharis/OpenWA.git" "openwa"
+clone_skill_repo "https://github.com/ToniR7/express-typescript-starter.git" "express-typescript-starter"
+clone_skill_repo "https://github.com/andrewyng/aisuite.git" "aisuite"
 
 echo -e "\n${BLUE}Cloning/Verifying ECC and caveman repositories inside ~/.wizard-ai/...${NC}"
 clone_skill_repo "https://github.com/affaan-m/ECC.git" "ECC"
@@ -471,9 +526,9 @@ while IFS= read -r -d '' skill_md; do
   mkdir -p "$SKILLS_DEST/$skill_name"
   cp -r "$skill_dir"/. "$SKILLS_DEST/$skill_name/"
   ((SKILL_COUNT++)) || true
-done < <(find "$SCRIPT_DIR/.agents/skills" -mindepth 2 -name "SKILL.md" -type f -print0)
+done < <(find "$SCRIPT_DIR/skills" "$SCRIPT_DIR/.agents/skills" -name "SKILL.md" -type f -print0 2>/dev/null)
 # Also copy skills.json for reference
-cp -f "$SCRIPT_DIR/.agents/skills.json" "$SKILLS_DEST/" 2>/dev/null || true
+cp -f "$SCRIPT_DIR/skills/skills.json" "$SKILLS_DEST/" 2>/dev/null || cp -f "$SCRIPT_DIR/.agents/skills.json" "$SKILLS_DEST/" 2>/dev/null || true
 echo -e "${GREEN}✓ $SKILL_COUNT skills installed to ~/.gemini/config/skills/${NC}"
 
 echo -e "${YELLOW}Syncing skills to Claude Code, Amp, and other agents...${NC}"

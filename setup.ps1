@@ -187,12 +187,80 @@ function Clone-SkillRepo($Url, $DestName) {
     } else {
         Write-Log "  [ok] $DestName is already present." -ForegroundColor Green
     }
+
+    # Auto-install framework / skill dependencies per OS specification
+    if (Test-Path $DestDir) {
+        $InstallPs1 = Join-Path $DestDir 'install.ps1'
+        $SetupPs1   = Join-Path $DestDir 'setup.ps1'
+        $InstallJs  = Join-Path $DestDir 'bin\install.js'
+        $PyProj     = Join-Path $DestDir 'pyproject.toml'
+        $SetupPy    = Join-Path $DestDir 'setup.py'
+        $PkgJson    = Join-Path $DestDir 'package.json'
+
+        if (Test-Path $InstallPs1) {
+            try { & $InstallPs1 2>$null } catch {}
+        } elseif (Test-Path $SetupPs1) {
+            try { & $SetupPs1 2>$null } catch {}
+        } elseif (Test-Path $InstallJs) {
+            try { $env:GITHUB_TOKEN=""; node $InstallJs --all --non-interactive 2>$null } catch {}
+        } elseif ((Test-Path $PyProj) -or (Test-Path $SetupPy)) {
+            try { uv pip install --python $VenvPython -e $DestDir --quiet 2>$null } catch {}
+        } elseif (Test-Path $PkgJson) {
+            try { npm install --prefix $DestDir --no-audit --no-fund 2>$null } catch {}
+        }
+    }
 }
 
 Clone-SkillRepo 'https://github.com/thedotmack/claude-mem.git' 'claude-mem'
 Clone-SkillRepo 'https://github.com/chopratejas/headroom.git' 'headroom'
 Clone-SkillRepo 'https://github.com/antvis/Infographic.git' 'Infographic'
 Clone-SkillRepo 'https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git' 'cybersecurity-skills'
+Clone-SkillRepo 'https://github.com/AgriciDaniel/claude-blog.git' 'claude-blog'
+Clone-SkillRepo 'https://github.com/AgriciDaniel/claude-seo.git' 'claude-seo'
+Clone-SkillRepo 'https://github.com/google-labs-code/stitch-skills.git' 'stitch-skills'
+Clone-SkillRepo 'https://github.com/google-labs-code/design.md.git' 'design.md'
+Clone-SkillRepo 'https://github.com/SpinaBuilds/goodcode.git' 'goodcode'
+Clone-SkillRepo 'https://github.com/mvanhorn/last30days-skill.git' 'last30days-skill'
+Clone-SkillRepo 'https://github.com/earendil-works/pi.git' 'earendil-pi'
+Clone-SkillRepo 'https://github.com/tinyhumansai/openhuman.git' 'openhuman'
+Clone-SkillRepo 'https://github.com/agentscope-ai/QwenPaw.git' 'QwenPaw'
+Clone-SkillRepo 'https://github.com/saxenauts/syke.git' 'syke'
+Clone-SkillRepo 'https://github.com/mem0ai/mem0.git' 'mem0'
+Clone-SkillRepo 'https://github.com/Technoculture/personal-graph.git' 'personal-graph'
+Clone-SkillRepo 'https://github.com/safishamsi/graphify.git' 'graphify'
+Clone-SkillRepo 'https://github.com/rmedranollamas/geminiusage.git' 'geminiusage'
+Clone-SkillRepo 'https://github.com/BerriAI/litellm.git' 'litellm'
+Clone-SkillRepo 'https://github.com/microsoft/LLMLingua.git' 'LLMLingua'
+Clone-SkillRepo 'https://github.com/PrithivirajDamodaran/FlashRank.git' 'FlashRank'
+Clone-SkillRepo 'https://github.com/ojuschugh1/sqz.git' 'sqz'
+Clone-SkillRepo 'https://github.com/microsoft/markitdown.git' 'markitdown'
+Clone-SkillRepo 'https://github.com/mermaid-js/mermaid-cli.git' 'mermaid-cli'
+Clone-SkillRepo 'https://github.com/tenfoldmarc/wiki-brain-skill.git' 'wiki-brain-skill'
+Clone-SkillRepo 'https://github.com/oraios/serena.git' 'serena'
+Clone-SkillRepo 'https://github.com/github/spec-kit.git' 'spec-kit'
+Clone-SkillRepo 'https://github.com/sickn33/antigravity-awesome-skills.git' 'antigravity-awesome-skills'
+Clone-SkillRepo 'https://github.com/VoltAgent/awesome-agent-skills.git' 'awesome-agent-skills'
+Clone-SkillRepo 'https://github.com/HKUDS/CLI-Anything.git' 'cli-anything'
+Clone-SkillRepo 'https://github.com/mvanhorn/cli-printing-press.git' 'cli-printing-press'
+Clone-SkillRepo 'https://github.com/virgiliojr94/book-to-skill.git' 'book-to-skill'
+Clone-SkillRepo 'https://github.com/pbakaus/impeccable.git' 'impeccable'
+Clone-SkillRepo 'https://github.com/jlcodes99/cockpit-tools.git' 'cockpit-tools'
+Clone-SkillRepo 'https://github.com/jamiepine/voicebox.git' 'voicebox'
+Clone-SkillRepo 'https://github.com/datawhalechina/easy-vibe.git' 'easy-vibe'
+Clone-SkillRepo 'https://github.com/debpalash/OmniVoice-Studio.git' 'omnivoice-studio'
+Clone-SkillRepo 'https://github.com/supertone-inc/supertonic.git' 'supertonic'
+Clone-SkillRepo 'https://github.com/heygen-com/hyperframes.git' 'hyperframes'
+Clone-SkillRepo 'https://github.com/iOfficeAI/AionUi.git' 'aionui'
+Clone-SkillRepo 'https://github.com/Aejkatappaja/phantom-ui.git' 'phantom-ui'
+Clone-SkillRepo 'https://github.com/pocketbase/pocketbase.git' 'pocketbase'
+Clone-SkillRepo 'https://github.com/trailbaseio/trailbase.git' 'trailbase'
+Clone-SkillRepo 'https://github.com/alibaba/zvec.git' 'zvec'
+Clone-SkillRepo 'https://github.com/RyanCodrai/turbovec.git' 'turbovec'
+Clone-SkillRepo 'https://github.com/aldinokemal/go-whatsapp-web-multidevice.git' 'go-whatsapp'
+Clone-SkillRepo 'https://github.com/asternic/wuzapi.git' 'wuzapi'
+Clone-SkillRepo 'https://github.com/rmyndharis/OpenWA.git' 'openwa'
+Clone-SkillRepo 'https://github.com/ToniR7/express-typescript-starter.git' 'express-typescript-starter'
+Clone-SkillRepo 'https://github.com/andrewyng/aisuite.git' 'aisuite'
 
 Write-Log "Cloning/Verifying ECC and caveman repositories inside ~/.wizard-ai/..." -ForegroundColor Cyan
 Clone-SkillRepo 'https://github.com/vekexasia/wslens.git' 'wslens'
@@ -401,7 +469,39 @@ Write-Log "[ok] $SkillCount skills installed to $SkillsDst" -ForegroundColor Gre
 Write-Log 'Syncing skills to Claude Code, Amp, and other agents...' -ForegroundColor Yellow
 & (Join-Path $LocalBin 'wz-ai-sync-skills.ps1')
 
-# 8. Auto-Update Configuration
+# 7.5. Interactive Skill Setup and Configuration
+Write-Log ' '
+Write-Log '[7.5/8] Interactive Skill Setup and Configuration...' -ForegroundColor Blue
+Get-ChildItem -Path $SkillsDst -Directory | ForEach-Object {
+    $SkillDir = $_.FullName
+    $SkillName = $_.Name
+    $SetupPs1 = Join-Path $SkillDir 'scripts\setup.ps1'
+    $InstallPs1 = Join-Path $SkillDir 'scripts\install.ps1'
+    $SetupSh = Join-Path $SkillDir 'scripts\setup.sh'
+    $InstallSh = Join-Path $SkillDir 'scripts\install.sh'
+    $SetupJs = Join-Path $SkillDir 'scripts\setup.js'
+    
+    $ScriptToRun = $null
+    if (Test-Path $SetupPs1) { $ScriptToRun = $SetupPs1 }
+    elseif (Test-Path $InstallPs1) { $ScriptToRun = $InstallPs1 }
+    elseif (Test-Path $SetupJs) { $ScriptToRun = "node $SetupJs" }
+    elseif (Test-Path $SetupSh) { $ScriptToRun = "bash $SetupSh" }
+    elseif (Test-Path $InstallSh) { $ScriptToRun = "bash $InstallSh" }
+
+    if ($ScriptToRun) {
+        Write-Log "  Found automated setup script for $SkillName: $ScriptToRun" -ForegroundColor Cyan
+        try {
+            if ($ScriptToRun.EndsWith('.ps1')) {
+                & $ScriptToRun
+            } else {
+                Invoke-Expression $ScriptToRun
+            }
+            Write-Log "  [ok] Setup completed for $SkillName." -ForegroundColor Green
+        } catch {
+            Write-Log "  [!] Setup for $SkillName returned warning: $($_.Exception.Message)" -ForegroundColor Yellow
+        }
+    }
+}
 Write-Log ' '
 Write-Log '[8/8] Auto-Update Configuration...' -ForegroundColor Blue
 Write-Log 'Do you want to enable automatic background updates at system logon? [Y/n] (Auto-yes in 10s) ' -ForegroundColor Yellow -NoNewline

@@ -11,7 +11,12 @@ $Targets = @(
     (Join-Path $HOME '.claude\skills'),
     (Join-Path $HOME '.config\amp\skills'),
     (Join-Path $HOME '.agents\skills'),
-    (Join-Path $HOME '.config\agents\skills')
+    (Join-Path $HOME '.config\agents\skills'),
+    (Join-Path $HOME '.cursor\skills'),
+    (Join-Path $HOME '.windsurf\skills'),
+    (Join-Path $HOME '.opencode\skills'),
+    (Join-Path $HOME '.pi\skills'),
+    (Join-Path $HOME '.pi\agent\skills')
 )
 
 # Load wizard-ai env if not already set (user env var is set by setup.ps1)
@@ -20,10 +25,19 @@ if (-not $WizardDir) {
     $WizardDir = [Environment]::GetEnvironmentVariable('WIZARD_AI_DIR', 'User')
 }
 
-if (-not (Test-Path $SkillsSrc)) {
-    Write-Host "[X] Skills source not found: $SkillsSrc" -ForegroundColor Red
-    Write-Host '    Run setup.ps1 first.'
-    exit 1
+$null = New-Item -ItemType Directory -Force -Path $SkillsSrc
+
+# --- Direction 0: Wizard-AI Repo -> Gemini Config Skills ---
+if ($WizardDir -and (Test-Path (Join-Path $WizardDir 'skills'))) {
+    Get-ChildItem -Path (Join-Path $WizardDir 'skills') -Filter 'SKILL.md' -Recurse -File -ErrorAction SilentlyContinue | ForEach-Object {
+        $SkillDir = $_.DirectoryName
+        $SkillName = Split-Path $SkillDir -Leaf
+        $Dest = Join-Path $SkillsSrc $SkillName
+        if (-not (Test-Path $Dest)) {
+            $null = New-Item -ItemType Directory -Force -Path $Dest
+            Copy-Item -Path (Join-Path $SkillDir '*') -Destination $Dest -Recurse -Force -ErrorAction SilentlyContinue
+        }
+    }
 }
 
 Write-Host "Syncing AI skills from: $SkillsSrc"

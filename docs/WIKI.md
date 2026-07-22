@@ -212,97 +212,115 @@ Below is the rigorous categorization of the arsenal at your disposal, which has 
 
 Reference list of tools, repositories, and frameworks relevant to AI and development.
 
-### Agents, Memory & Personal Profile (Digital Identity)
-- [OpenHuman](https://github.com/tinyhumansai/openhuman) - Personal data platform, Obsidian integration, and desktop AI harness.
-- [QwenPaw](https://github.com/agentscope-ai/QwenPaw) - Personal multi-channel and extendable AI assistant for local deployment.
-- [syke](https://github.com/saxenauts/syke) - Long-term memory agent based on the Persona model.
-- [Mem0](https://github.com/mem0ai/mem0) - Smart, personalized long-term memory layer for AI agents and assistants.
-- [personal-graph](https://github.com/Technoculture/personal-graph) - Lightweight personal knowledge graphs for LLMs (Python).
-- [Graphify](https://github.com/safishamsi/graphify) - Transforming inputs, code, and notes into knowledge graphs for LLMs.
-- [LLMWIKI](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) - Karpathy's gist on using LLMs for compounding personal wikis (Obsidian).
-- [Portfolio & Tech Example](https://github.com/micio86dev/portfolio) - Identity seed for LLM training or user context retrieval.
+### 🧠 3.1 Core Engine & Autonomous Agent Frameworks
 
-### Developer Tools, Optimization & Token Efficiency
-- [GeminiUsage](https://github.com/rmedranollamas/geminiusage) - CLI tool to track token and context consumption in terminal sessions.
-- [LiteLLM](https://github.com/BerriAI/litellm) - AI Gateway and unified SDK interfacing with 100+ LLM providers with cost tracking.
-- [LLMLingua](https://github.com/microsoft/LLMLingua) - Prompt compression library to reduce tokens by up to 20x with minimal performance loss.
-- [FlashRank](https://github.com/PrithivirajDamodaran/FlashRank) - Ultra-fast, CPU-optimized reranker for RAG context optimization.
-- [sqz](https://github.com/ojuschugh1/sqz) - CLI output, JSON, and log context compressor for token-efficient agent sessions.
-- [MarkItDown](https://github.com/microsoft/markitdown) - Python utility/library to convert various formats to Markdown for LLMs and RAG.
-- [Mermaid CLI](https://github.com/mermaid-js/mermaid-cli) - Command-line tool to generate images and vector graphics from Mermaid markdown files.
-- [Claude-Mem](https://github.com/thedotmack/claude-mem) - Long-term persistent memory and semantic indexing system for LLMs.
-- [wiki-brain-skill](https://github.com/tenfoldmarc/wiki-brain-skill) - Claude Code skill implementing Karpathy's LLM Wiki pattern using Graphify.
-- [ECC](https://github.com/affaan-m/ECC) - Optimization framework for AI agents (commands, skills, hooks, and MCP).
-- [Serena](https://github.com/oraios/serena) - LSP-based semantic code search and MCP server for programming agents.
-- [Spec-Kit](https://github.com/github/spec-kit) - Specification-driven development (SDD) toolkit for AI agents.
-- [Antigravity Awesome Skills](https://github.com/sickn33/antigravity-awesome-skills/releases/tag/v11.2.0) - Ready-to-use skill collection for AI agents.
-- [awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills) - System-level best practices and skill collection.
-- [CLI-Anything](https://github.com/HKUDS/CLI-Anything) - Framework to expose arbitrary software as a CLI for AI agents.
-- [CLI-Printing-Press](https://github.com/mvanhorn/cli-printing-press) - Compact agent-native interfaces to minimize token footprint.
-- [Book-to-Skill](https://github.com/virgiliojr94/book-to-skill/tree/master) - Convert documents and books into AI skills.
-- [Impeccable](https://github.com/pbakaus/impeccable) - High-fidelity UI/UX testing and visual regression for agents.
-- [Cockpit Tools](https://github.com/jlcodes99/cockpit-tools) - Local proxy that bypasses free API limits (e.g. Gemini Free) by channeling massive requests (like ai-graph semantic extraction) through the monthly IDE subscription. Native cross-platform integration.
+#### 🧠 Skill per LLM (`[🧠 SKILL PER LLM]`)
+- [0-loop-engine](.agents/skills/00-core-engine/0-loop-engine) `[🧠 SKILL PER LLM]` - Master Orchestrator del pipeline deterministico 5-loop (`01 → 05`).
+- [auto-router](.agents/skills/00-core-engine/1-auto-router) `[🧠 SKILL PER LLM]` - Classifier ed Auto-Router MoE per intenti e complessità.
+- [superpowers](.agents/skills/00-core-engine/superpowers) `[🧠 SKILL PER LLM]` - Pacchetto di 11 skill avanzate per Subagent-Driven Development (TDD, brainstorming, spec).
 
-### Audio, Video & Emotion (Multimodal)
-- [Voicebox](https://github.com/jamiepine/voicebox) - Multi-engine offline speech processing and synthesis.
-- [Easy-Vibe](https://github.com/datawhalechina/easy-vibe) - AI-powered video and image enhancement (vibe coding curriculum).
-- [OmniVoice-Studio](https://github.com/debpalash/OmniVoice-Studio) - Professional voice cloning and production (offline).
-- [Supertonic](https://github.com/supertone-inc/supertonic) - On-device audio processing and enhancement.
-- [Hyperframes](https://github.com/heygen-com/hyperframes) - HTML-based UI rendering, frame management, and video generation.
+#### ⚡ Software CLI & Framework Terminale (`[⚡ SOFTWARE CLI]`)
+- [Pi Agent Framework](https://github.com/earendil-works/pi) `[⚡ SOFTWARE CLI]` - Framework agentico estensibile e runner di workflow multi-agente.
+- [ECC](https://github.com/affaan-m/ECC) `[⚡ SOFTWARE CLI]` - Framework CLI per Claude Code (comandi, skill, hook ed MCP).
+- [caveman](https://github.com/JuliusBrussee/caveman) `[⚡ SOFTWARE CLI]` - Output squeezer agentico per riduzione token del 75%.
+- [goodcode](https://github.com/SpinaBuilds/goodcode) `[⚡ SOFTWARE CLI]` - Orchestratore CLI multi-agente esaustivo per audit e sviluppo.
+- [OpenHuman](https://github.com/tinyhumansai/openhuman) `[⚡ SOFTWARE CLI]` - Personal data harness e CLI agentico.
+- [QwenPaw](https://github.com/agentscope-ai/QwenPaw) `[⚡ SOFTWARE CLI]` - Assistente AI locale estensibile da terminale.
 
-### Languages & Runtimes
-- [Python](https://github.com/python/cpython)
-- [Node.js](https://nodejs.org/)
-- [Bun](https://github.com/oven-sh/bun)
-- [Deno](https://github.com/denoland/deno)
-- [QuickJS](https://github.com/quickjs-ng/quickjs)
+---
 
-### Frontend Frameworks & UI
-- [Next.js](https://github.com/vercel/next.js)
-- [Vue.js](https://github.com/vuejs/core)
-- [React](https://github.com/facebook/react)
-- [SvelteKit](https://github.com/sveltejs/kit)
-- [Gatsby](https://github.com/gatsbyjs/gatsby)
-- [Angular](https://github.com/angular/angular)
-- [Vuetify](https://github.com/vuetifyjs/vuetify)
-- [Svelte](https://github.com/sveltejs/svelte)
-- [Nuxt](https://github.com/nuxt/nuxt)
-- [Astro](https://astro.build/)
-- [AionUi](https://github.com/iOfficeAI/AionUi/tree/main) - UI component library.
-- [phantom-ui](https://github.com/Aejkatappaja/phantom-ui) - Framework-agnostic skeleton loader (Web Components).
-- [PageSpeed Insights](https://pagespeed.web.dev/) - Web performance analysis tool.
+### 🗜️ 3.2 Token Squeezing, Memory & Context Intelligence
 
-### Backend Frameworks, CMS & Databases
-- [Laravel](https://github.com/laravel/laravel)
-- [WordPress](https://github.com/WordPress/WordPress)
-- [MySQL](https://github.com/mysql/mysql-server)
-- [MongoDB](https://github.com/mongodb/mongo)
-- [Kafka](https://github.com/apache/kafka)
-- [PocketBase](https://github.com/pocketbase/pocketbase) - Single file backend with realtime DB, auth, and storage.
-- [TrailBase](https://github.com/trailbaseio/trailbase) - Rust-based realtime server and DB using SQLite.
-- [Pi.dev](https://pi.dev) - Serverless integration and development platform.
-- [Zvec](https://github.com/alibaba/zvec) - The "SQLite" alternative for vector databases. In-process DB optimized for local RAG.
-- [TurboVec](https://github.com/RyanCodrai/turbovec) - Implementation of Google TurboQuant. High performance vector quantization and indexing (up to 16x compression).
+#### 🧠 Skill per LLM (`[🧠 SKILL PER LLM]`)
+- [wiki-brain-skill](https://github.com/tenfoldmarc/wiki-brain-skill) `[🧠 SKILL PER LLM]` - Skill per la gestione della Wiki personale in Obsidian.
+- [book-to-skill](https://github.com/virgiliojr94/book-to-skill/tree/master) `[🧠 SKILL PER LLM]` - Convertitore di manuali e PDF in skill riutilizzabili per agenti.
 
-### APIs & Messaging (WhatsApp Integration)
-- [go-whatsapp-web-multidevice](https://github.com/aldinokemal/go-whatsapp-web-multidevice) - Multi-device WhatsApp bridge (`GoWA`).
-- [Wuzapi](https://github.com/asternic/wuzapi) - REST API based on whatsmeow for WhatsApp interaction (`WuzAPI`).
-- [OpenWA](https://github.com/rmyndharis/OpenWA) - Node.js & Baileys multi-device WebSocket/HTTP engine (`OpenWA`). Integrated natively into **WaForge v2.15.0+** alongside `WuzAPI` and `GoWA` via the **Multi-Engine Hybrid Router & Load Balancer** (`lib/whatsapp-engine.ts`) with automatic failover and Round-Robin campaign distribution. Features resilient Cockpit LLM fallback and secure admin recovery (`bun run admin:reset-password --email <email> --password <pass>`).
+#### ⚡ Software CLI & Motori di Compressione (`[⚡ SOFTWARE CLI]`)
+- [sqz](https://github.com/ojuschugh1/sqz) `[⚡ SOFTWARE CLI]` - Utility CLI per la compressione di log, JSON e payload terminale (`ai-squeeze`).
+- [LLMLingua](https://github.com/microsoft/LLMLingua) `[⚡ SOFTWARE CLI]` - Libreria e CLI per la compressione prompt fino a 20x (`ai-compress`).
+- [FlashRank](https://github.com/PrithivirajDamodaran/FlashRank) `[⚡ SOFTWARE CLI]` - Reranker ultra-veloce CPU da terminale per contesti RAG (`ai-rerank`).
+- [Serena](https://github.com/oraios/serena) `[⚡ SOFTWARE CLI]` - Server LSP e motore di ricerca semantica del codice (`ai-serena`).
+- [Graphify](https://github.com/safishamsi/graphify) `[⚡ SOFTWARE CLI]` - Generator CLI di grafi di conoscenza da codice e documenti (`ai-graph`).
+- [Claude-Mem](https://github.com/thedotmack/claude-mem) `[⚡ SOFTWARE CLI]` - Motore CLI di memoria semantica persistente tra sessioni (`ai-mem`).
+- [GeminiUsage](https://github.com/rmedranollamas/geminiusage) `[⚡ SOFTWARE CLI]` - CLI monitor dei consumi di token ed API (`ai-usage`).
+- [LiteLLM](https://github.com/BerriAI/litellm) `[⚡ SOFTWARE CLI]` - Local API Gateway e proxy di rotazione per 100+ LLM.
+- [MarkItDown](https://github.com/microsoft/markitdown) `[⚡ SOFTWARE CLI]` - Utility Python da terminale per conversione documenti in Markdown (`ai-convert`).
 
-### Mobile Development
-- [Flutter](https://github.com/flutter/flutter)
-- [React Native](https://github.com/facebook/react-native)
-- [Ionic](https://github.com/ionic-team/ionic-framework)
-- [Android Studio](https://developer.android.com/studio)
-- [Firebase](https://firebase.google.com/)
+#### 🖥️ Applicazioni Grafiche & Server Vector DB (`[🖥️ APP GRAFICA / DESKTOP]`)
+- [Zvec](https://github.com/alibaba/zvec) `[🖥️ APP GRAFICA / DESKTOP]` - In-process vector database engine con visualizzazione dati.
+- [TurboVec](https://github.com/RyanCodrai/turbovec) `[🖥️ APP GRAFICA / DESKTOP]` - Daemon di quantizzazione ed indicizzazione vettoriale ad alte prestazioni.
 
-### Automation & Orchestration
-- [Zapier](https://zapier.com/)
-- [n8n](https://github.com/n8n-io/n8n)
-- [Airflow](https://github.com/apache/airflow)
-- [AWS Lambda](https://aws.amazon.com/lambda/)
-- **caveman**: A skill/plugin that makes an AI agent output fewer tokens (~75% reduction) while keeping full technical accuracy.
-- **auto-npm-publish**: A skill to help users configure NPM tokens, GitHub Secrets, sync package.json versions, and proactively check for GitHub action deprecations.
+---
+
+### 🎨 3.3 Frontend, UI Aesthetics & Design Systems
+
+#### 🧠 Skill per LLM (`[🧠 SKILL PER LLM]`)
+- [taste-skill](.agents/skills/1-frontend-and-ui/taste-skill) `[🧠 SKILL PER LLM]` - Regole anti-slop per layout, spaziature e palette cromatiche tailormade.
+- [awesome-design](.agents/skills/1-frontend-and-ui/awesome-design) `[🧠 SKILL PER LLM]` - Iniezione di stili di brand specifici (Vercel, Cursor, Claude).
+- [Stitch Skills](https://github.com/google-labs-code/stitch-skills) `[🧠 SKILL PER LLM]` - Suite di skill per generazione e migrazione componenti Google Stitch.
+- [design.md Spec](https://github.com/google-labs-code/design.md) `[🧠 SKILL PER LLM]` - Regole di specifiche e validazione token `DESIGN.md`.
+- [Impeccable](https://github.com/pbakaus/impeccable) `[🧠 SKILL PER LLM]` - Regole per testing visuale e regressione UI.
+- [Infographic Builder](.agents/skills/1-frontend-and-ui/infographic) `[🧠 SKILL PER LLM]` - Generatore dichiarativo AI di infografiche e grafici.
+
+#### ⚡ Software CLI (`[⚡ SOFTWARE CLI]`)
+- [Mermaid CLI](https://github.com/mermaid-js/mermaid-cli) `[⚡ SOFTWARE CLI]` - CLI per la rendering da riga di comando di diagrammi Mermaid.
+- [CLI-Anything](https://github.com/HKUDS/CLI-Anything) `[⚡ SOFTWARE CLI]` - Framework per esporre qualsiasi software come CLI per agenti.
+
+#### 🖥️ Applicazioni Grafiche, UI Harness & Visual Tools (`[🖥️ APP GRAFICA / DESKTOP]`)
+- [AionUi](https://github.com/iOfficeAI/AionUi) `[🖥️ APP GRAFICA / DESKTOP]` - Applicazione Desktop GUI e libreria di componenti visuali per agenti AI.
+- [phantom-ui](https://github.com/Aejkatappaja/phantom-ui) `[🖥️ APP GRAFICA / DESKTOP]` - Interfaccia grafica Web Components e skeleton loader visuale.
+
+---
+
+### 🛠️ 3.4 DevOps, Quality Gates, Testing & Security
+
+#### 🧠 Skill per LLM (`[🧠 SKILL PER LLM]`)
+- [Anthropic Cybersecurity Skills](https://github.com/mukul975/Anthropic-Cybersecurity-Skills) `[🧠 SKILL PER LLM]` - 762+ regole e direttive di sicurezza per codice sicuro.
+- [auto-branch](.agents/skills/4-domain-workflows/devops/official/auto-branch) `[🧠 SKILL PER LLM]` - Convenzioni ed automazioni di branching Git.
+- [auto-release](.agents/skills/4-domain-workflows/devops/official/auto-release) `[🧠 SKILL PER LLM]` - Gestione semver e changelog release.
+
+#### ⚡ Software CLI & Tool di Test (`[⚡ SOFTWARE CLI]`)
+- [Spec-Kit](https://github.com/github/spec-kit) `[⚡ SOFTWARE CLI]` - Toolkit CLI per sviluppo guidato da specifiche (SDD).
+- [strix](.agents/skills/4-domain-workflows/devops/official/strix) `[⚡ SOFTWARE CLI]` - Agenti CLI di pentesting ed analisi vulnerabilità.
+- [auto-debug](.agents/skills/4-domain-workflows/devops/official/auto-debug) `[⚡ SOFTWARE CLI]` - Analizzatore ed auto-correttore di qualità prima del merge.
+
+#### 🖥️ Applicazioni Grafiche & Desktop Backend (`[🖥️ APP GRAFICA / DESKTOP]`)
+- [Cockpit Tools](https://github.com/jlcodes99/cockpit-tools) `[🖥️ APP GRAFICA / DESKTOP]` - Proxy locale con interfaccia visuale per la gestione token/account IDE.
+- [wslens](https://github.com/vekexasia/wslens) `[🖥️ APP GRAFICA / DESKTOP]` - Software grafico per il controllo e cattura visuale delle finestre Windows.
+
+---
+
+### 💬 3.5 Multimodal, Audio/Video & Messaging Microservices
+
+#### 🧠 Skill per LLM (`[🧠 SKILL PER LLM]`)
+- [claude-blog](https://github.com/AgriciDaniel/claude-blog) `[🧠 SKILL PER LLM]` - Skill per scrittura articoli e posizionamento SEO.
+- [claude-seo](https://github.com/AgriciDaniel/claude-seo) `[🧠 SKILL PER LLM]` - Skill per audit SEO tecnico e schema.org.
+- [last30days-skill](https://github.com/mvanhorn/last30days-skill) `[🧠 SKILL PER LLM]` - Research skill per analisi sentiment sulle community.
+- [easy-vibe](https://github.com/datawhalechina/easy-vibe) `[🧠 SKILL PER LLM]` - Curriculum e direttive per la produzione di video/immagini.
+
+#### 🖥️ Applicazioni Grafiche Desktop & Microservizi (`[🖥️ APP GRAFICA / DESKTOP]`)
+- [Voicebox](https://github.com/jamiepine/voicebox) `[🖥️ APP GRAFICA / DESKTOP]` - Applicazione desktop grafica offline per sintesi vocale ed elaborazione audio.
+- [OmniVoice-Studio](https://github.com/debpalash/OmniVoice-Studio) `[🖥️ APP GRAFICA / DESKTOP]` - Studio di produzione audio e clonazione voce grafica offline.
+- [Supertonic](https://github.com/supertone-inc/supertonic) `[🖥️ APP GRAFICA / DESKTOP]` - Engine di elaborazione audio on-device con interfaccia di controllo.
+- [Hyperframes](https://github.com/heygen-com/hyperframes) `[🖥️ APP GRAFICA / DESKTOP]` - Frame renderer visuale ed ambiente di generazione video HTML.
+- [go-whatsapp-web-multidevice](https://github.com/aldinokemal/go-whatsapp-web-multidevice) `[🖥️ APP GRAFICA / DESKTOP]` - Microservizio REST WhatsApp con dashboard di scansione QR Code visuale (`GoWA`).
+- [Wuzapi](https://github.com/asternic/wuzapi) `[🖥️ APP GRAFICA / DESKTOP]` - API REST WhatsApp con interfaccia web per gestione sessioni (`WuzAPI`).
+- [OpenWA](https://github.com/rmyndharis/OpenWA) `[🖥️ APP GRAFICA / DESKTOP]` - Engine WebSocket/HTTP con pannello di controllo admin web per campagne.
+
+---
+
+### 🏗️ 3.6 Starter Templates & Benchmarks
+
+#### 🏗️ Starter Templates & Framework (`[STARTER TEMPLATE]`)
+- [express-typescript-starter](https://github.com/ToniR7/express-typescript-starter) `[STARTER TEMPLATE]` - Progetto base pronto per la produzione Express + TypeScript.
+- [aisuite](https://github.com/andrewyng/aisuite) `[BENCHMARK FRAMEWORK]` - Framework Python per test A/B e benchmarking comparativo dei modelli LLM.
+
+### 🛠️ Linguaggi, Runtime & Framework di Sviluppo
+- **Linguaggi & Runtime**: [Python](https://github.com/python/cpython), [Node.js](https://nodejs.org/), [Bun](https://github.com/oven-sh/bun), [Deno](https://github.com/denoland/deno), [QuickJS](https://github.com/quickjs-ng/quickjs).
+- **Framework Frontend**: [Next.js](https://github.com/vercel/next.js), [Vue.js](https://github.com/vuejs/core), [React](https://github.com/facebook/react), [SvelteKit](https://github.com/sveltejs/kit), [Gatsby](https://github.com/gatsbyjs/gatsby), [Angular](https://github.com/angular/angular), [Vuetify](https://github.com/vuetifyjs/vuetify), [Nuxt](https://github.com/nuxt/nuxt), [Astro](https://astro.build/).
+- **Backend & Database**: [Laravel](https://github.com/laravel/laravel), [WordPress](https://github.com/WordPress/WordPress), [MySQL](https://github.com/mysql/mysql-server), [MongoDB](https://github.com/mongodb/mongo), [Kafka](https://github.com/apache/kafka).
+- **Sviluppo Mobile**: [Flutter](https://github.com/flutter/flutter), [React Native](https://github.com/facebook/react-native), [Ionic](https://github.com/ionic-team/ionic-framework), [Android Studio](https://developer.android.com/studio), [Firebase](https://firebase.google.com/).
+- **Automazione & Workflow**: [Zapier](https://zapier.com/), [n8n](https://github.com/n8n-io/n8n), [Airflow](https://github.com/apache/airflow), [AWS Lambda](https://aws.amazon.com/lambda/).
 
 ## 🔗 4. Wizard-AI Ecosystem: Skill Chaining
 

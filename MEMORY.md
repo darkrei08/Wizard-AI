@@ -121,3 +121,14 @@ Corretto refuso nel nome file 'wz-ai-sync-skills.ps1' su setup.ps1 e wz-ai-updat
 - **Automated Model Data Scraper**: Created `scripts/fetch_latest_models.py` scraping 2970+ live models from LiteLLM DB, OpenRouter API, and Hugging Face Hub, updating `litellm` SKILL.md templates and live config (`~/.wizard-ai/configs/litellm-config.yaml`).
 - **UV Segfault Protection**: Fixed `uv` segfault re-install loop by auto-deleting corrupted prebuilt binaries and installing native OS packages (`pacman -S uv` / `apt-get install uv`).
 - **Releases**: Released and published versions `v0.50.35` through `v0.50.42` to GitHub and NPM (`@darkrei08/wizard-ai-cli`).
+
+## [Session State Snapshot] - 2026-07-22 16:58:00
+- **Expanded Multi-Agent & IDE Target Syncing**: Updated `wz-ai-sync-skills` and `wz-ai-sync-skills.ps1` to sync 88+ skills to `.gemini`, `.claude`, `.amp`, `.agents`, `.cursor`, `.windsurf`, `.opencode`, and `.pi` (`~/.pi/skills` & `~/.pi/agent/skills`).
+- **Full OS-Specific Build & Install Pipeline**: Updated `setup.sh` and `setup.ps1` to clone, build, and link all 52 external skill repositories tracked in the Wiki per OS guidelines (`node bin/install.js`, `install.sh`/`install.ps1`, `uv pip`, `npm`).
+- **earendil-works/pi Framework Integration**: Added native support for `earendil-works/pi` in setup scripts, skill sync, and Wiki documentation ([docs/WIKI.md](file:///home/ema/Scrivania/altri%20repooo/Wizard-AI/docs/WIKI.md), [WIKI.md](file:///home/ema/Scrivania/altri%20repooo/Wizard-AI/WIKI.md)).
+- **Interactive Terminal Skill & Framework Installer**: Built `scripts/wizard-installer.js` and wired `wz-ai install` to launch a rich ANSI interactive terminal menu with category filters and `--all` non-interactive support.
+- **2-Level Nested Hierarchy & Software Nature Categorization**: Reorganized the Wiki and terminal installer by Macro Domain Area AND Software Nature Subcategory (`[🧠 SKILL PER LLM]`, `[⚡ SOFTWARE CLI]`, `[🖥️ APP GRAFICA / DESKTOP]`, `[🏗️ STARTER TEMPLATE]`).
+- **Meta-Skill & CLI Installer Auto-Wiki Injection**: Upgraded `skills/00-core-engine/wizard-ai-installer/SKILL.md` and `bin/wz-ai-install` to prompt for Software Nature and automatically inject formatted entries into `docs/WIKI.md` and `WIKI.md`.
+- **Knowledge Graph Rebuilt**: Ran `graphify .` (`wz-ai-graph .`) to update the knowledge graph in `graphify-out/`.
+- **Vitest Scope Fix**: Added `vitest.config.mjs` to isolate Wizard-AI test execution (149ms runtime, 7/7 tests passing).
+- **Release**: Bumped version to `v0.50.43`.

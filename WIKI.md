@@ -121,6 +121,7 @@ Welcome to the Wizard-AI knowledge base. All skills and workflows are organized 
 | Skill | Slash Command | Mnemonic / Description |
 |---|---|---|
 | [π Pi.dev Tools](.agents/skills/4-domain-workflows/devops/official/pi-dev) | — | Development tools for the Pi.dev platform. |
+| [π Pi Framework](https://github.com/earendil-works/pi) | — | Universal extensible AI agent framework and multi-agent workflow runner by Earendil Works. |
 | [⚡ FlashRank](.agents/skills/4-domain-workflows/devops/official/flashrank) | — | Re-rank documents by relevance before LLM ingestion. Top-K most relevant first. |
 | [✅ Branch Finisher](.agents/skills/4-domain-workflows/devops/awesome-agent-skills/finishing-a-development-branch) | — | Implementation done, tests pass — now decide: merge, PR, or cleanup. |
 | [✔️ Verify Before Done](.agents/skills/4-domain-workflows/devops/awesome-agent-skills/verification-before-completion) | — | About to claim 'done'? Run the tests first. Evidence before assertions. |

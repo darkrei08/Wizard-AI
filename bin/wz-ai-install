@@ -69,11 +69,14 @@ CATEGORY_SET=0
 FORCE=0
 NO_SYNC=0
 
+NATURE="cli"
+
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --name)     SKILL_NAME="$2"; shift 2 ;;
     --path)     SKILL_PATH="$2"; shift 2 ;;
     --category) CATEGORY="$2"; CATEGORY_SET=1; shift 2 ;;
+    --nature)   NATURE="$2"; shift 2 ;;
     --force)    FORCE=1;         shift   ;;
     --no-sync)  NO_SYNC=1;       shift   ;;
     --help|-h)  usage ;;
@@ -84,7 +87,14 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-# ── Interactive prompts if arguments are missing ────────────────────────────────
+# ── Interactive terminal installer if no arguments passed ───────────────────────
+if [[ -z "$SKILL_NAME" ]] && [[ -z "$SKILL_PATH" ]] && [[ $# -eq 0 ]]; then
+  SCRIPT_INSTALLER="$WIZARD_DIR/scripts/wizard-installer.js"
+  if [[ -f "$SCRIPT_INSTALLER" ]]; then
+    exec node "$SCRIPT_INSTALLER" "$@"
+  fi
+fi
+
 if [[ -z "$SKILL_NAME" ]]; then
   echo -e "${CYAN}Enter skill name (e.g. my-cool-skill):${NC}"
   read -r SKILL_NAME
@@ -109,6 +119,20 @@ if [[ "$CATEGORY_SET" -eq 0 ]]; then
       CATEGORY="${VALID_CATEGORIES[$idx]}"
     fi
   fi
+
+  echo -e "${CYAN}Select Software Nature:${NC}"
+  echo -e "  ${BOLD}1${NC}. [🧠 SKILL PER LLM] Directives, prompt rules & system prompts"
+  echo -e "  ${BOLD}2${NC}. [⚡ SOFTWARE CLI] Executable command line tool, binary or LSP server"
+  echo -e "  ${BOLD}3${NC}. [🖥️ APP GRAFICA / DESKTOP] GUI desktop app, audio/video studio or web dashboard"
+  echo -e "  ${BOLD}4${NC}. [🏗️ STARTER TEMPLATE] Project scaffolding template or benchmark framework"
+  read -r NAT_CHOICE
+  case "$NAT_CHOICE" in
+    1) NATURE="skill" ;;
+    2) NATURE="cli" ;;
+    3) NATURE="gui" ;;
+    4) NATURE="template" ;;
+    *) NATURE="cli" ;;
+  esac
 fi
 
 if ! is_valid_category "$CATEGORY"; then

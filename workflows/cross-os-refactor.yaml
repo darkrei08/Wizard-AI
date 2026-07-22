@@ -1,0 +1,13 @@
+name: cross-os-refactor
+description: "Programmatic JavaScript multi-agent orchestration for cross-OS refactoring, skill setup audit, and CLI wrapper parity across Linux, macOS, WSL, and Windows."
+category: "Master Orchestration"
+executable: "workflows/cross-os-refactor.js"
+roles:
+  - master-refactor
+  - worker-generic
+  - orchestrator
+phases:
+  - analyze-os-env
+  - parallel-cross-os-validation
+  - checkpoint-review
+  - synthesis

@@ -152,14 +152,21 @@ Then sync the updated binary:
 cp "$WIZARD_AI_DIR/bin/wz-ai help" "$HOME/.local/bin/wz-ai help"
 ```
 
-### Step 6: Update the Resources Wiki
+### Step 6: Update the Resources Wiki with 2-Level Nested Taxonomy
 
-Append the new skill to the unified wiki document:
+When registering a new skill/tool/repo in the Wiki, you MUST classify it across two dimensions:
+1. **Macro Domain Area**: `3.1 Core Engine & Frameworks`, `3.2 Token Squeezing, Memory & Context`, `3.3 Frontend, UI Aesthetics & Design`, `3.4 DevOps, Quality Gates & Security`, `3.5 Multimodal, Audio/Video & Messaging`, `3.6 Starter Templates`.
+2. **Software Nature Subcategory**:
+   - `[🧠 SKILL PER LLM]`: Prompt directives, system rules, and markdown skill packs read by LLMs.
+   - `[⚡ SOFTWARE CLI]`: Executable command-line tools, binary context squeezers, LSP servers, and API gateways.
+   - `[🖥️ APP GRAFICA / DESKTOP]`: Desktop GUI applications, visual studios, realtime DB dashboards, and visual microservices.
+   - `[🏗️ STARTER TEMPLATE]`: Project scaffolding starters and model benchmarking frameworks.
+
+Inject the new entry into both `$WIZARD_AI_DIR/docs/WIKI.md` and `$WIZARD_AI_DIR/WIKI.md` under the exact Macro Domain section and Software Nature subheader:
 
 ```bash
-echo "- **<tool-name>**: Description of what it does." \
-  >> "$WIZARD_AI_DIR/docs/WIKI.md"
-# If applicable, also append to WIKI.it.md
+# Example injection format:
+# - [tool-name](url) `[⚡ SOFTWARE CLI]` - Brief description of what it does.
 ```
 
 ### Step 7: Sync Skills to All Agents

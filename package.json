@@ -1,6 +1,6 @@
 {
   "name": "@darkrei08/wizard-ai-cli",
-  "version": "0.50.42",
+  "version": "0.50.43",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
@@ -18,7 +18,7 @@
     "scripts/"
   ],
   "scripts": {
-    "test": "vitest run",
+    "test": "vitest run test/",
     "test:watch": "vitest",
     "test:cli": "node scripts/wizard-test.js run",
     "webnative-inspect": "node scripts/wizard-test.js webnative-inspect",
