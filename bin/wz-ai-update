@@ -92,7 +92,13 @@ if command -v uv >/dev/null 2>&1; then
   fi
 fi
 
-# 4. Sync skills
+# 4. Fetch latest models & Sync skills
+FETCH_SCRIPT="$WIZARD_DIR/scripts/fetch_latest_models.py"
+if [ -f "$FETCH_SCRIPT" ] && command -v python3 >/dev/null 2>&1; then
+  log "\n📡 Fetching latest models from LiteLLM, OpenRouter & HuggingFace..."
+  python3 "$FETCH_SCRIPT" >/dev/null 2>&1 || true
+fi
+
 if command -v wz-ai-sync-skills >/dev/null 2>&1; then
   log "\n🔄 Syncing agent skills..."
   wz-ai-sync-skills >/dev/null 2>&1 || true
