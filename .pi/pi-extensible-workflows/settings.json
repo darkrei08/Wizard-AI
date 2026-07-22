@@ -1,0 +1,22 @@
+{
+  "concurrency": 8,
+  "modelAliases": {
+    "fast": "anthropic/claude-3-5-haiku",
+    "smart": "anthropic/claude-sonnet-4",
+    "deep": "anthropic/claude-opus-4"
+  },
+  "budget": {
+    "default": {
+      "soft": {
+        "tokens": 500000,
+        "costUsd": 5.0,
+        "agentLaunches": 10
+      },
+      "hard": {
+        "tokens": 1000000,
+        "costUsd": 15.0,
+        "agentLaunches": 20
+      }
+    }
+  }
+}
