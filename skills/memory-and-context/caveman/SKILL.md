@@ -13,15 +13,13 @@ You can use the wrapper script `wz-ai caveman` to install the hooks or configure
 
 ### Examples
 
-- List supported agents:
-  `wz-ai caveman --list`
-
-- Install rules for the current workspace:
-  `wz-ai caveman --with-init`
+- Install or update Caveman rules for all detected AI agents on your machine:
+  `wz-ai caveman`
 
 - Uninstall the skill:
   `wz-ai caveman --uninstall`
 
 ## Integration
 
-Caveman integrates natively into Claude Code, Cursor, Windsurf, Cline, Copilot, and others by injecting rule files or hooks. When active, agents will speak like a caveman. Brain big. Mouth small.
+Caveman integrates natively into Claude Code, Cursor, Windsurf, Cline, Copilot, and 30+ other agents by injecting rule files or hooks. When active, agents will speak like a caveman. Brain big. Mouth small.
+No npm installation is required; the wrapper downloads and runs the official `install.ps1` script automatically.

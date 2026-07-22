@@ -1,4 +1,4 @@
-﻿# wz-ai-update.ps1 — Automates the update process for Wizard-AI and external skills.
+# wz-ai-update.ps1 — Automates the update process for Wizard-AI and external skills.
 
 param (
     [switch]$Quiet
@@ -105,10 +105,18 @@ if (Get-Command uv -ErrorAction SilentlyContinue) {
     }
 }
 
+Log "`n🔄 Syncing agent skills..." "Blue"
 $SyncScript = Join-Path $HOME '.local\bin\wz-ai sync-skills.ps1'
 if (Test-Path $SyncScript) {
-    Log "`n🔄 Syncing agent skills..." "Blue"
     & $SyncScript | Out-Null
+}
+
+Log "`n🔄 Updating Caveman agent skill..." "Blue"
+try {
+    Invoke-RestMethod https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.ps1 | Invoke-Expression 2>$null | Out-Null
+    Log "  [ok] Caveman skill updated successfully across all agents." "Green"
+} catch {
+    Log "  [!] Failed to update Caveman automatically." "Yellow"
 }
 
 Log "`n✅ Update complete!" "Green"

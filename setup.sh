@@ -170,7 +170,7 @@ clone_skill_repo "https://github.com/JuliusBrussee/caveman.git" "caveman"
 if command -v npm &>/dev/null; then
   echo -e "\n${BLUE}Attempting optional NPM global installations (ECC, caveman, design.md)...${NC}"
   npm install -g --allow-scripts=ecc-universal ecc-universal 2>/dev/null || echo -e "${YELLOW}Note: ecc-universal npm install skipped/failed (using cloned git repo).${NC}"
-  npm install -g "$HOME/.wizard-ai/caveman" 2>/dev/null || echo -e "${YELLOW}Note: caveman global install skipped (using cloned git repo).${NC}"
+  curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash 2>/dev/null || echo -e "${YELLOW}Note: caveman install failed.${NC}"
   npm install -g --allow-scripts=puppeteer @google/design.md 2>/dev/null || echo -e "${YELLOW}Note: @google/design.md npm install skipped/failed.${NC}"
 else
   echo -e "${YELLOW}NPM not found. Using cloned git repos for ECC and caveman.${NC}"

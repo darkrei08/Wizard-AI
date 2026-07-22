@@ -216,11 +216,18 @@ Clone-SkillRepo 'https://github.com/affaan-m/ECC.git' 'ECC'
 Clone-SkillRepo 'https://github.com/JuliusBrussee/caveman.git' 'caveman'
 
 if (Get-Command npm -ErrorAction SilentlyContinue) {
-    Write-Log "Attempting optional NPM global installations (ECC, caveman)..." -ForegroundColor Yellow
+    Write-Log "Attempting optional NPM global installations (ECC)..." -ForegroundColor Yellow
     try { npm install -g ecc-universal 2>$null } catch { Write-Log "Note: ecc-universal npm install skipped." -ForegroundColor DarkGray }
-    try { npm install -g https://github.com/JuliusBrussee/caveman.git 2>$null } catch { Write-Log "Note: caveman npm git install skipped (using cloned repo in ~/.wizard-ai/caveman)." -ForegroundColor DarkGray }
 } else {
-    Write-Log "NPM not found. Using cloned git repos for ECC and caveman." -ForegroundColor Yellow
+    Write-Log "NPM not found. Using cloned git repos for ECC." -ForegroundColor Yellow
+}
+
+Write-Log "Installing Caveman agent skill globally..." -ForegroundColor Yellow
+try {
+    Invoke-RestMethod https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.ps1 | Invoke-Expression
+    Write-Log "  [ok] Caveman skill installed successfully." -ForegroundColor Green
+} catch {
+    Write-Log "  [!] Failed to install caveman. You can install manually: irm https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.ps1 | iex" -ForegroundColor Red
 }
 Clone-SkillRepo 'https://github.com/yvgude/lean-ctx.git' 'lean-ctx'
 

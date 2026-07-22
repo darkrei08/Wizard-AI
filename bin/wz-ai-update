@@ -55,6 +55,9 @@ if [ -d "$AI_SKILLS" ]; then
     ["lean-ctx"]="https://github.com/yvgude/lean-ctx.git"
     ["stitch-skills"]="https://github.com/google-labs-code/stitch-skills.git"
     ["design.md"]="https://github.com/google-labs-code/design.md.git"
+    ["wslens"]="https://github.com/vekexasia/wslens.git"
+    ["ECC"]="https://github.com/affaan-m/ECC.git"
+    ["caveman"]="https://github.com/JuliusBrussee/caveman.git"
   )
 
   for name in "${!CORE_REPOS[@]}"; do
@@ -95,7 +98,19 @@ if command -v uv >/dev/null 2>&1; then
   # Auto-inject updated CLI skills into the master skills folder
   if command -v graphify >/dev/null 2>&1; then
     log "  -> Auto-injecting graphify skill updates..."
-    graphify antigravity install >/dev/null 2>&1 || true
+    graphify install >/dev/null 2>&1 || true
+    
+    GRAPHIFY_SRC="$HOME/.claude/skills/graphify"
+    GRAPHIFY_DST="$WIZARD_DIR/skills/devops-and-tools/graphify"
+    if [ -d "$GRAPHIFY_SRC" ] && [ -d "$GRAPHIFY_DST" ]; then
+      cp -r "$GRAPHIFY_SRC/"* "$GRAPHIFY_DST/"
+      # Force update version cache
+      GRAPHIFY_VERSION=$(graphify --version | sed 's/graphify //')
+      if [ -n "$GRAPHIFY_VERSION" ]; then
+        echo "$GRAPHIFY_VERSION" > "$GRAPHIFY_DST/.graphify_version"
+        log "  [ok] Graphify skill synchronized to v$GRAPHIFY_VERSION"
+      fi
+    fi
   fi
 fi
 
@@ -103,6 +118,13 @@ fi
 if command -v wz-ai-sync-skills >/dev/null 2>&1; then
   log "\n🔄 Syncing agent skills..."
   wz-ai-sync-skills >/dev/null 2>&1 || true
+fi
+
+log "\n🔄 Updating Caveman agent skill..."
+if curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash 2>/dev/null >/dev/null; then
+    log "  [ok] Caveman skill updated successfully across all agents."
+else
+    log "  [!] Failed to update Caveman automatically."
 fi
 
 log "\n✅ Update complete!"
