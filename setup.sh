@@ -278,8 +278,10 @@ clone_skill_repo() {
       echo -e "${CYAN}  ↳ Installing npm packages for $dest_name...${NC}"
       if [ "$VERBOSE" -eq 1 ]; then
         npm install --prefix "$dest_dir" --no-audit --no-fund || true
+        npm --prefix "$dest_dir" approve-scripts --allow-scripts-pending || true
       else
         npm install --prefix "$dest_dir" --no-audit --no-fund >/dev/null 2>&1 || true
+        npm --prefix "$dest_dir" approve-scripts --allow-scripts-pending >/dev/null 2>&1 || true
       fi
     fi
   fi

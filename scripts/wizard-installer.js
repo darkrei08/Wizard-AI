@@ -132,6 +132,7 @@ async function runAddInstallation(selectedRepos) {
       }
     } else if (fs.existsSync(path.join(destDir, "package.json"))) {
       spawnSync("npm", ["install", "--prefix", destDir, "--no-audit", "--no-fund", "--ignore-scripts"], { stdio: buildStdio });
+      spawnSync("npm", ["--prefix", destDir, "approve-scripts", "--allow-scripts-pending"], { stdio: buildStdio });
     }
 
     if (repo.name === "ECC") {

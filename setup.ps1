@@ -266,6 +266,7 @@ function Clone-SkillRepo {
         } elseif (Test-Path $PkgJson) {
             Write-Log "  > Installing npm packages for $DestName..." -ForegroundColor Cyan
             try { npm install --prefix $DestDir --no-audit --no-fund } catch {}
+            try { npm --prefix $DestDir approve-scripts --allow-scripts-pending } catch {}
         }
     }
 }
