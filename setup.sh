@@ -233,9 +233,9 @@ clone_skill_repo() {
   if [ ! -d "$dest_dir" ]; then
     echo -e "${YELLOW}  ↳ Cloning ${dest_name} from ${url}...${NC}"
     if [ "$VERBOSE" -eq 1 ]; then
-      git clone --depth 1 "$url" "$dest_dir" || { INSTALL_FAIL=$((INSTALL_FAIL+1)); FAILED_REPOS="$FAILED_REPOS $dest_name"; echo -e "${RED}  ✗ Clone failed for $dest_name${NC}"; return; }
+      git clone --recurse-submodules --shallow-submodules --depth 1 "$url" "$dest_dir" || { INSTALL_FAIL=$((INSTALL_FAIL+1)); FAILED_REPOS="$FAILED_REPOS $dest_name"; echo -e "${RED}  ✗ Clone failed for $dest_name${NC}"; return; }
     else
-      git clone --depth 1 $QUIET_OPT "$url" "$dest_dir" 2>/dev/null || { INSTALL_FAIL=$((INSTALL_FAIL+1)); FAILED_REPOS="$FAILED_REPOS $dest_name"; echo -e "${RED}  ✗ Clone failed for $dest_name${NC}"; return; }
+      git clone --recurse-submodules --shallow-submodules --depth 1 $QUIET_OPT "$url" "$dest_dir" 2>/dev/null || { INSTALL_FAIL=$((INSTALL_FAIL+1)); FAILED_REPOS="$FAILED_REPOS $dest_name"; echo -e "${RED}  ✗ Clone failed for $dest_name${NC}"; return; }
     fi
     echo -e "${GREEN}  ✓ ${dest_name} cloned.${NC}"
     INSTALL_OK=$((INSTALL_OK + 1))
