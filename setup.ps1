@@ -262,11 +262,20 @@ function Clone-SkillRepo {
             try { $env:GITHUB_TOKEN=''; node $InstallJs --all --non-interactive } catch {}
         } elseif ((Test-Path $PyProj) -or (Test-Path $SetupPy)) {
             Write-Log "  > Building Python package for $DestName..." -ForegroundColor Cyan
-            try { uv pip install --python $VenvPython -e $DestDir } catch {}
+            if ($VerboseMode) {
+                try { uv pip install --python $VenvPython -e $DestDir } catch {}
+            } else {
+                try { $null = uv pip install --python $VenvPython -e $DestDir 2>&1 } catch {}
+            }
         } elseif (Test-Path $PkgJson) {
             Write-Log "  > Installing npm packages for $DestName..." -ForegroundColor Cyan
-            try { npm install --prefix $DestDir --no-audit --no-fund } catch {}
-            try { npm --prefix $DestDir approve-scripts --allow-scripts-pending } catch {}
+            if ($VerboseMode) {
+                try { npm install --prefix $DestDir --no-audit --no-fund } catch {}
+                try { npm --prefix $DestDir approve-scripts --allow-scripts-pending } catch {}
+            } else {
+                try { $null = npm install --prefix $DestDir --no-audit --no-fund 2>&1 } catch {}
+                try { $null = npm --prefix $DestDir approve-scripts --allow-scripts-pending 2>&1 } catch {}
+            }
         }
     }
 }
