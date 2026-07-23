@@ -14,7 +14,7 @@ log(`Shadow Clone Jutsu activated. Dispatching ${Object.keys(tasks).length} clon
 const taskMap = {};
 for (const [name, description] of Object.entries(tasks)) {
   taskMap[name] = () => agent(
-    prompt('Execute this isolated task scope:\n\n{description}\n\nRules:\n- Work ONLY within your assigned scope\n- Do NOT explore beyond assigned files\n- Return structured results', { description }),
+    prompt('[MANDATORY: Adhere to GEMINI.md global rules and utilize appropriate master skills (e.g. engineering-excellence, loop skills)] Execute this isolated task scope:\n\n{description}\n\nRules:\n- Work ONLY within your assigned scope\n- Do NOT explore beyond assigned files\n- Return structured results', { description }),
     { role: 'worker-generic' }
   );
 }
@@ -38,7 +38,7 @@ if (!approved) {
 // Final synthesis
 phase('synthesize');
 return await agent(
-  prompt('Synthesize the results from all Shadow Clones into a unified report:\n\n{results}', 
+  prompt('[MANDATORY: Adhere to GEMINI.md global rules and utilize appropriate master skills (e.g. engineering-excellence, loop skills)] Synthesize the results from all Shadow Clones into a unified report:\n\n{results}', 
     { results: JSON.stringify(results) }
   ),
   { role: 'orchestrator' }
