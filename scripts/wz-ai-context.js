@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * wz-ai-context — Wizard-AI Context Engineering CLI
+ * wizard-ai context — Wizard-AI Context Engineering CLI
  * 
  * Unified CLI for the 4-Layer Format Stack:
  *   - TOON conversion (JSON → TOON, TOON → JSON)
@@ -11,11 +11,11 @@
  *   - Format comparison benchmarks
  * 
  * Usage:
- *   wz-ai-context toon <file.json>              Convert JSON to TOON
- *   wz-ai-context lea <dir>                     Auto-encode project context as LEA
- *   wz-ai-context compress <dir> [--format lea]  Compress project context
- *   wz-ai-context compare <file.json>            Compare format token efficiency
- *   wz-ai-context estimate <file>                Estimate token count
+ *   wizard-ai context toon <file.json>              Convert JSON to TOON
+ *   wizard-ai context lea <dir>                     Auto-encode project context as LEA
+ *   wizard-ai context compress <dir> [--format lea]  Compress project context
+ *   wizard-ai context compare <file.json>            Compare format token efficiency
+ *   wizard-ai context estimate <file>                Estimate token count
  */
 
 'use strict';
@@ -32,14 +32,14 @@ const {
   compressContext,
   estimateTokens,
   compareFormats,
-} = require('./wz-ai-context-formats.js');
+} = require('./wizard-ai context-formats.js');
 
 const args = process.argv.slice(2);
 const command = args[0];
 
 function usage() {
   console.log(`
-🪄 wz-ai-context — Wizard-AI Context Engineering CLI
+🪄 wizard-ai context — Wizard-AI Context Engineering CLI
 
 Commands:
   toon <file.json> [--label name]    Convert JSON array to TOON format

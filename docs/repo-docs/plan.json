@@ -1,7 +1,7 @@
 [
   {
     "slug": "overview",
-    "title": "Overview",
+    "title": "Panoramica",
     "purpose": "What this repository is, what it does, and how its pieces fit together.",
     "files": [
       "README.md",
@@ -16,7 +16,7 @@
   },
   {
     "slug": "installation",
-    "title": "Installation & Setup",
+    "title": "Installazione e Setup",
     "purpose": "How to install, configure, and run the project.",
     "files": [
       "README.md",
@@ -25,7 +25,7 @@
   },
   {
     "slug": "architecture",
-    "title": "Architecture",
+    "title": "Architettura",
     "purpose": "The high-level structure, main modules, and how data/control flows between them.",
     "files": [
       "skills\\stitch-design\\stitch-extract-static-html\\scripts\\snapshot.ts",
@@ -44,7 +44,7 @@
   },
   {
     "slug": "component-skills",
-    "title": "Component: skills",
+    "title": "Componente: skills",
     "purpose": "How the `skills` component is organized and what it is responsible for.",
     "files": [
       "skills\\stitch-design\\stitch-extract-static-html\\scripts\\snapshot.ts",
@@ -63,7 +63,7 @@
   },
   {
     "slug": "component-bin",
-    "title": "Component: bin",
+    "title": "Componente: bin",
     "purpose": "How the `bin` component is organized and what it is responsible for.",
     "files": [
       "bin\\wz-ai-os",
@@ -82,7 +82,7 @@
   },
   {
     "slug": "component-scripts",
-    "title": "Component: scripts",
+    "title": "Componente: scripts",
     "purpose": "How the `scripts` component is organized and what it is responsible for.",
     "files": [
       "scripts\\publish_viral_campaign.py",
@@ -101,7 +101,7 @@
   },
   {
     "slug": "component-hub",
-    "title": "Component: hub",
+    "title": "Componente: hub",
     "purpose": "How the `hub` component is organized and what it is responsible for.",
     "files": [
       "hub\\js\\app.js",
@@ -118,7 +118,7 @@
   },
   {
     "slug": "component-workflows",
-    "title": "Component: workflows",
+    "title": "Componente: workflows",
     "purpose": "How the `workflows` component is organized and what it is responsible for.",
     "files": [
       "workflows\\loop-2-develop.js",
@@ -134,7 +134,7 @@
   },
   {
     "slug": "component-agent",
-    "title": "Component: agent",
+    "title": "Componente: agent",
     "purpose": "How the `agent` component is organized and what it is responsible for.",
     "files": [
       "agent\\skills\\caveman-compress\\scripts\\compress.py",
@@ -148,7 +148,7 @@
   },
   {
     "slug": "development",
-    "title": "Development & Testing",
+    "title": "Sviluppo e Test",
     "purpose": "How to contribute, run the tests, and understand the CI pipeline.",
     "files": [
       "CONTRIBUTING.md",

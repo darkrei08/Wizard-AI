@@ -1,27 +1,27 @@
-# 🛠️ Available Commands
+# 🛠️ Commands
 
-After installation, these commands are available in your terminal:
+Available terminal commands:
 
-| Command | Tool | Description |
+| Command | Tool | Action |
 |---|---|---|
-| `wizard-ai hub` | Local GUI | Open the dashboard and marketplace in your browser |
-| `wizard-ai help` | Hub | Show all available tools with usage examples |
-| `wizard-ai update` | Updater | Manually pull latest updates for Wizard-AI (includes cross-platform desktop notifications) |
-| `wizard-ai graph [path]` | Graphify | Build knowledge graphs. **Automatically connects to Cockpit Tools to save API Keys!** |
-| `wizard-ai compress --file f.txt` | LLMLingua | Compress prompts/context up to 20x |
-| `headroom` | Headroom | Context compression and API proxy (60-95% fewer tokens) |
-| `wizard-ai caveman` | Caveman | Cut agent output tokens by ~75% while keeping accuracy |
-| `wizard-ai ponytail "prompt"` | Ponytail | Acts as a lazy senior dev to prevent over-engineering |
-| `wizard-ai compare "prompt"` | aisuite | A/B test a prompt across multiple LLM models |
-| `wizard-ai rerank --query "X"` | FlashRank | Re-rank passages by relevance |
-| `wizard-ai squeeze` | Sqz | Compress CLI output / JSON / logs |
-| `wizard-ai convert document.pdf` | MarkItDown | Convert any file to clean Markdown |
-| `wizard-ai session-save "msg"` | Session Save | Save current session context to MEMORY.md |
-| `wizard-ai mem store "text"` | claude-mem | Store a persistent semantic memory |
-| `wizard-ai usage` | GeminiUsage | Track token consumption and budget |
-| `serena find-usages` | Serena | Semantic code search & LSP navigation |
-| `wizard-ai sync-skills` | Sync | Propagate skills to all AI agents |
-| `book-to-skill doc.pdf` | book-to-skill| Convert books/docs into AI skills |
-| `litellm --port 4000` | LiteLLM | Unified LLM API gateway |
-| `wizard-antigravity` | pi-antigravity-rotator | Multi-account rotation proxy for Cockpit Tools |
-| `wizard-ai proxy` | Cockpit Proxy | Manage the Cockpit Tools proxy daemon |
+| `wizard-ai hub` | Local GUI | Open dashboard in browser |
+| `wizard-ai help` | Hub | Show tools & examples |
+| `wizard-ai update` | Updater | Pull updates (with notifications) |
+| `wizard-ai graph [path]` | Graphify | Build knowledge graph. Saves API Keys via Cockpit. |
+| `wizard-ai compress --file f.txt`| LLMLingua | Compress prompt 20x |
+| `headroom` | Headroom | Compress context (60-95%) |
+| `wizard-ai caveman` | Caveman | Compress AI output 75% |
+| `wizard-ai ponytail "prompt"` | Ponytail | Prevent over-engineering |
+| `wizard-ai compare "prompt"` | aisuite | A/B test prompt across LLMs |
+| `wizard-ai rerank --query "X"` | FlashRank | Re-rank passages |
+| `wizard-ai squeeze` | Sqz | Compress CLI/JSON output |
+| `wizard-ai convert doc.pdf` | MarkItDown | Convert file to Markdown |
+| `wizard-ai session-save "msg"` | Session Save| Save session to MEMORY.md |
+| `wizard-ai mem store "text"` | claude-mem | Store persistent memory |
+| `wizard-ai usage` | GeminiUsage | Track token budget |
+| `serena find-usages` | Serena | Semantic code search |
+| `wizard-ai sync-skills` | Sync | Propagate skills |
+| `book-to-skill doc.pdf` | book-to-skill| Convert book to skill |
+| `litellm --port 4000` | LiteLLM | API gateway |
+| `wizard-antigravity` | Rotator | Multi-account Cockpit proxy |
+| `wizard-ai proxy` | Cockpit Proxy | Manage proxy daemon |

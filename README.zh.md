@@ -77,20 +77,20 @@ flowchart TB
 
 **PRE & POST Autoloop 规则：** 每次会话在每次迭代前后都会自动压缩上下文、同步记忆 (`MEMORY.md`) 并更新项目图。
 
-### 🔧 Pi Dynamic Configurator (`wz-ai-pi-configurator`)
+### 🔧 Pi Dynamic Configurator (`wizard-ai pi-configurator`)
 
 将 [vekexasia/pi-config](https://github.com/vekexasia/pi-config) 模式自动集成到您的本地 `~/.pi/agent/` 环境中，并根据 **Cockpit Tools** 订阅级别提供智能模型选择和默认设置：
 
 ```bash
-wz-ai-pi-configurator
+wizard-ai pi-configurator
 ```
 
-### 📚 RepoDocs Wiki Generator (`wz-ai-repodocs`)
+### 📚 RepoDocs Wiki Generator (`wizard-ai repodocs`)
 
 使用 [aryrabelo/repodocs](https://github.com/aryrabelo/repodocs) 自动为任何仓库生成带有引用源的 Wiki。集成在 **Loop 5 (Release)** 中，用于开发周期结束时的文档生成：
 
 ```bash
-wz-ai-repodocs repodocs-all .
+wizard-ai repodocs repodocs-all .
 ```
 
 ## 🚀 快速安装 (`一键初始化`)
