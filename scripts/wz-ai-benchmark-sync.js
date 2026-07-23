@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 /**
- * wz-ai-benchmark-sync.js — Live Benchmark Scraper
+ * wizard-ai benchmark-sync.js — Live Benchmark Scraper
  * 
  * Fetches the latest LLM benchmarks from trusted online sources:
  * - LMSys Chatbot Arena (Reasoning / General)
  * - Aider Leaderboard (Coding)
  * 
- * Generates a normalized scoring JSON used by `wz-ai-pi-configurator.js`
+ * Generates a normalized scoring JSON used by `wizard-ai pi-configurator.js`
  * to dynamically assign the best models to agent roles.
  */
 

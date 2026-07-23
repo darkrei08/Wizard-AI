@@ -43,7 +43,11 @@ if (subcmd === "--help" || subcmd === "-h") {
   console.log("  install          Install skills by category from registry");
   console.log("  remove           Remove installed skills");
   console.log("  test             Run wizard-test suite");
-  console.log("  proxy            Start wz-ai-proxy");
+  console.log("  proxy            Start wizard-ai proxy");
+  console.log("  pi-configurator  Run Pi Dynamic Configurator");
+  console.log("  repodocs         Run RepoDocs Wiki Generator");
+  console.log("  context          Run context manager");
+  console.log("  benchmark-sync   Run live benchmark scraper");
   console.log("\nURL Install Flags:");
   console.log("  --skill <name>   Install only the named skill from the repo");
   console.log("  --all-agents     Install to all known agent paths without prompting");
@@ -78,6 +82,22 @@ if (!subcmd || subcmd === "skills" || subcmd === "install" || subcmd === "add" |
     process.exit(status === null ? 1 : status);
   }
 }
+
+const subcommandMap = {
+  "pi-configurator": "wz-ai-pi-configurator.js",
+  "repodocs": "wz-ai-repodocs.js",
+  "context": "wz-ai-context.js",
+  "benchmark-sync": "wz-ai-benchmark-sync.js",
+};
+
+if (subcommandMap[subcmd]) {
+  const script = path.join(__dirname, "scripts", subcommandMap[subcmd]);
+  if (fs.existsSync(script)) {
+    const status = run("node", [script, ...process.argv.slice(3)]);
+    process.exit(status === null ? 1 : status);
+  }
+}
+
 
 if (subcmd === "test" || subcmd === "webnative-inspect" || subcmd === "webnative") {
   const testScript = path.join(__dirname, "scripts", "wizard-test.js");

@@ -77,20 +77,20 @@ En el ecosistema de IA de 2026, la ingeniería de contexto es el nuevo estándar
 
 **Regla del PRE & POST Autoloop:** Cada sesión comprime el contexto, sincroniza la memoria (`MEMORY.md`) y actualiza el grafo del proyecto antes y después de cada iteración de manera autónoma.
 
-### 🔧 Pi Dynamic Configurator (`wz-ai-pi-configurator`)
+### 🔧 Pi Dynamic Configurator (`wizard-ai pi-configurator`)
 
 Integra automáticamente los patrones de [vekexasia/pi-config](https://github.com/vekexasia/pi-config) en tu entorno local `~/.pi/agent/` con ajustes predeterminados y asignación inteligente de modelos basados en el nivel de suscripción a **Cockpit Tools**:
 
 ```bash
-wz-ai-pi-configurator
+wizard-ai pi-configurator
 ```
 
-### 📚 RepoDocs Wiki Generator (`wz-ai-repodocs`)
+### 📚 RepoDocs Wiki Generator (`wizard-ai repodocs`)
 
 Genera automáticamente una wiki documentada para cualquier repositorio utilizando [aryrabelo/repodocs](https://github.com/aryrabelo/repodocs). Integrado en el **Loop 5 (Release)** para la documentación al final del ciclo:
 
 ```bash
-wz-ai-repodocs repodocs-all .
+wizard-ai repodocs repodocs-all .
 ```
 
 ## 🚀 Inicio Rápido (`One-Command Setup`)

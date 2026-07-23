@@ -5,7 +5,7 @@ phase('brainstorm');
 log('Loop 1 (Plan): Exploring user intent, requirements, and design parameters...');
 
 const exploration = await agent(
-  prompt('Explore intent, background context, and requirements for task:\n\n{task}\n\nFormulate architectural design choices and open questions.', { task: args?.task || 'Plan feature' }),
+  prompt('[MANDATORY: Adhere to GEMINI.md global rules and utilize appropriate master skills (e.g. engineering-excellence, loop skills)] Explore intent, background context, and requirements for task:\n\n{task}\n\nFormulate architectural design choices and open questions.', { task: args?.task || 'Plan feature' }),
   { role: 'master-plan' }
 );
 
@@ -22,12 +22,12 @@ if (!alignedSpec) {
 
 phase('generate-spec');
 const specDoc = await agent(
-  prompt('Generate a formal implementation specification (.spec.md) and task breakdown based on:\n\n{exploration}', { exploration }),
+  prompt('[MANDATORY: Adhere to GEMINI.md global rules and utilize appropriate master skills (e.g. engineering-excellence, loop skills)] Generate a formal implementation specification (.spec.md) and task breakdown based on:\n\n{exploration}', { exploration }),
   { role: 'master-plan' }
 );
 
 phase('handoff-to-develop');
 return await agent(
-  prompt('Synthesize spec and prepare handoff to Loop 2 (Develop & TDD):\n\n{specDoc}', { specDoc }),
+  prompt('[MANDATORY: Adhere to GEMINI.md global rules and utilize appropriate master skills (e.g. engineering-excellence, loop skills)] Synthesize spec and prepare handoff to Loop 2 (Develop & TDD):\n\n{specDoc}', { specDoc }),
   { role: 'master-develop' }
 );

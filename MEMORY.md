@@ -33,7 +33,7 @@
 ## 📜 Key Changelog Snapshots
 
 ### v0.50.47 (2026-07-22)
-- **Executable Resolver & Syntax Fix**: Added `wizard-ai-cli` to `package.json` `bin` map; fixed syntax error in `wz-ai-sync-skills`.
+- **Executable Resolver & Syntax Fix**: Added `wizard-ai-cli` to `package.json` `bin` map; fixed syntax error in `wizard-ai sync-skills`.
 
 ### v0.50.46 (2026-07-22)
 - **`@clack/prompts` & `skills` CLI Visual Style**: Added ASCII banner, tree nodes (`┌ │ ◇ ● └`), box drawing summary panels, security risk assessment matrix, and mass deletion support (`wizard-installer.js`).

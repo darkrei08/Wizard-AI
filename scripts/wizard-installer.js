@@ -132,6 +132,7 @@ async function runAddInstallation(selectedRepos) {
       }
     } else if (fs.existsSync(path.join(destDir, "package.json"))) {
       spawnSync("npm", ["install", "--prefix", destDir, "--no-audit", "--no-fund", "--ignore-scripts"], { stdio: buildStdio });
+      spawnSync("npm", ["--prefix", destDir, "approve-scripts", "--allow-scripts-pending"], { stdio: buildStdio });
     }
 
     if (repo.name === "ECC") {
@@ -149,7 +150,7 @@ async function runAddInstallation(selectedRepos) {
 
   const s2 = spinner();
   s2.start("Syncing skills to AI Agent IDE targets...");
-  const syncScript = isWin ? path.join(wizardHome, "bin", "windows", "wz-ai-sync-skills.ps1") : path.join(wizardHome, "bin", "wz-ai-sync-skills");
+  const syncScript = isWin ? path.join(wizardHome, "bin", "windows", "wizard-ai sync-skills.ps1") : path.join(wizardHome, "bin", "wizard-ai sync-skills");
   if (fs.existsSync(syncScript)) {
     spawnSync(isWin ? "powershell" : "bash", [isWin ? "-ExecutionPolicy Bypass -File " + syncScript : syncScript], { stdio: buildStdio });
   }

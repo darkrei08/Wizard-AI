@@ -10,10 +10,10 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 ## [0.50.47] - 2026-07-22
 
 ### Fixed
-- **Executable Resolver & Syntax Bug Fix (`cli.js`, `bin/wz-ai-sync-skills`)**:
+- **Executable Resolver & Syntax Bug Fix (`cli.js`, `bin/wizard-ai sync-skills`)**:
   - Registered `"wizard-ai-cli"` in `package.json` `bin` map so `npx @darkrei08/wizard-ai-cli` works directly.
   - Added subcommands (`skills`, `install`, `remove`, `delete`) to `cli.js`.
-  - Fixed missing `fi` syntax error on line 26 of `bin/wz-ai-sync-skills`.
+  - Fixed missing `fi` syntax error on line 26 of `bin/wizard-ai sync-skills`.
 
 ## [0.50.46] - 2026-07-22
 
@@ -42,7 +42,7 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 ## [0.50.43] - 2026-07-22
 
 ### Added
-- **Multi-Agent & IDE Target Syncing (`wz-ai-sync-skills`)**: Expanded skill synchronizers (`wz-ai-sync-skills` and `wz-ai-sync-skills.ps1`) to propagate all 88+ skills across `.gemini`, `.claude`, `.amp`, `.agents`, `.cursor`, `.windsurf`, `.opencode`, and `.pi` (`~/.pi/skills` & `~/.pi/agent/skills`).
+- **Multi-Agent & IDE Target Syncing (`wizard-ai sync-skills`)**: Expanded skill synchronizers (`wizard-ai sync-skills` and `wizard-ai sync-skills.ps1`) to propagate all 88+ skills across `.gemini`, `.claude`, `.amp`, `.agents`, `.cursor`, `.windsurf`, `.opencode`, and `.pi` (`~/.pi/skills` & `~/.pi/agent/skills`).
 - **Complete OS-Specific Build & Install Pipeline**: Enhanced `setup.sh` and `setup.ps1` to clone, build, and link all 52 external skill repositories tracked in the Wiki per OS guidelines (`bin/install.js`, `install.sh`/`install.ps1`, `uv pip`, `npm`).
 - **Pi Agent Framework Integration (`earendil-works/pi`)**: Added native integration and wiki tracking for the Pi Agent Framework across POSIX and Windows setups.
 - **Interactive Terminal Skill & Framework Installer (`scripts/wizard-installer.js`)**: Built an interactive ANSI CLI installer launched via `wz-ai install` with category filters and `--all` non-interactive support.

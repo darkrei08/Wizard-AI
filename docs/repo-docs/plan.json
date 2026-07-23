@@ -1,0 +1,168 @@
+[
+  {
+    "slug": "overview",
+    "title": "Panoramica",
+    "purpose": "What this repository is, what it does, and how its pieces fit together.",
+    "files": [
+      "README.md",
+      "package.json",
+      "skills\\stitch-design\\stitch-extract-static-html\\scripts\\snapshot.ts",
+      "skills\\stitch-design\\stitch-extract-static-html\\scripts\\extract_inline_html.ts",
+      "setup.sh",
+      "bin\\wz-ai-os",
+      "bin\\wz-ai-branch",
+      "skills\\meta-skills\\skill-creator\\eval-viewer\\generate_review.py"
+    ]
+  },
+  {
+    "slug": "installation",
+    "title": "Installazione e Setup",
+    "purpose": "How to install, configure, and run the project.",
+    "files": [
+      "README.md",
+      "package.json"
+    ]
+  },
+  {
+    "slug": "architecture",
+    "title": "Architettura",
+    "purpose": "The high-level structure, main modules, and how data/control flows between them.",
+    "files": [
+      "skills\\stitch-design\\stitch-extract-static-html\\scripts\\snapshot.ts",
+      "skills\\stitch-design\\stitch-extract-static-html\\scripts\\extract_inline_html.ts",
+      "setup.sh",
+      "bin\\wz-ai-os",
+      "bin\\wz-ai-branch",
+      "skills\\meta-skills\\skill-creator\\eval-viewer\\generate_review.py",
+      "bin\\wz-ai-install",
+      "skills\\stitch-design\\stitch-extract-static-html\\scripts\\post_process.ts",
+      "hub\\js\\app.js",
+      "bin\\wz-ai-release",
+      "scripts\\publish_viral_campaign.py",
+      "scripts\\wz-ai-proxy.js"
+    ]
+  },
+  {
+    "slug": "component-skills",
+    "title": "Componente: skills",
+    "purpose": "How the `skills` component is organized and what it is responsible for.",
+    "files": [
+      "skills\\stitch-design\\stitch-extract-static-html\\scripts\\snapshot.ts",
+      "skills\\stitch-design\\stitch-extract-static-html\\scripts\\extract_inline_html.ts",
+      "skills\\meta-skills\\skill-creator\\eval-viewer\\generate_review.py",
+      "skills\\stitch-design\\stitch-extract-static-html\\scripts\\post_process.ts",
+      "skills\\meta-skills\\mcp-builder\\scripts\\evaluation.py",
+      "skills\\meta-skills\\skill-creator\\scripts\\aggregate_benchmark.py",
+      "skills\\meta-skills\\skill-creator\\scripts\\run_loop.py",
+      "skills\\meta-skills\\skill-creator\\scripts\\generate_report.py",
+      "skills\\caveman-compress\\scripts\\compress.py",
+      "skills\\memory-and-context\\caveman-compress\\scripts\\compress.py",
+      "skills\\meta-skills\\skill-creator\\scripts\\run_eval.py",
+      "skills\\frontend-and-ui\\web-artifacts-builder\\scripts\\init-artifact.sh"
+    ]
+  },
+  {
+    "slug": "component-bin",
+    "title": "Componente: bin",
+    "purpose": "How the `bin` component is organized and what it is responsible for.",
+    "files": [
+      "bin\\wz-ai-os",
+      "bin\\wz-ai-branch",
+      "bin\\wz-ai-install",
+      "bin\\wz-ai-release",
+      "bin\\wz-ai-zvec",
+      "bin\\wz-ai-debug",
+      "bin\\wz-ai-help",
+      "bin\\wz-ai-optimize",
+      "bin\\wz-ai-prompt",
+      "bin\\wz-ai-scaffold",
+      "bin\\wz-ai-mem",
+      "bin\\wz-ai-quota"
+    ]
+  },
+  {
+    "slug": "component-scripts",
+    "title": "Componente: scripts",
+    "purpose": "How the `scripts` component is organized and what it is responsible for.",
+    "files": [
+      "scripts\\publish_viral_campaign.py",
+      "scripts\\wz-ai-proxy.js",
+      "scripts\\wizard-installer.js",
+      "scripts\\wz-ai-pi-configurator.js",
+      "scripts\\wz-ai-context-formats.js",
+      "scripts\\fetch_latest_models.py",
+      "scripts\\wz-ai-context.js",
+      "scripts\\wz-ai-benchmark-sync.js",
+      "scripts\\wz-ai-auto-updater.js",
+      "scripts\\update_skills.js",
+      "scripts\\fetch_repos_knowledge.py",
+      "scripts\\generate_missing_skills.py"
+    ]
+  },
+  {
+    "slug": "component-hub",
+    "title": "Componente: hub",
+    "purpose": "How the `hub` component is organized and what it is responsible for.",
+    "files": [
+      "hub\\js\\app.js",
+      "hub\\api\\server.py",
+      "hub\\js\\dashboard.js",
+      "hub\\api\\db.py",
+      "hub\\js\\marketplace.js",
+      "hub\\js\\auth.js",
+      "hub\\js\\installer.js",
+      "hub\\js\\telemetry.js",
+      "hub\\api\\log_event.py",
+      "hub\\js\\chat.js"
+    ]
+  },
+  {
+    "slug": "component-workflows",
+    "title": "Componente: workflows",
+    "purpose": "How the `workflows` component is organized and what it is responsible for.",
+    "files": [
+      "workflows\\loop-2-develop.js",
+      "workflows\\cross-os-refactor.js",
+      "workflows\\shadow-clone-jutsu.js",
+      "workflows\\workflow-frontend-design.js",
+      "workflows\\loop-4-refactor.js",
+      "workflows\\loop-1-plan.js",
+      "workflows\\loop-3-debug.js",
+      "workflows\\workflow-research-scraping.js",
+      "workflows\\loop-5-release.js"
+    ]
+  },
+  {
+    "slug": "component-agent",
+    "title": "Componente: agent",
+    "purpose": "How the `agent` component is organized and what it is responsible for.",
+    "files": [
+      "agent\\skills\\caveman-compress\\scripts\\compress.py",
+      "agent\\skills\\caveman-compress\\scripts\\validate.py",
+      "agent\\skills\\caveman-compress\\scripts\\detect.py",
+      "agent\\skills\\caveman-compress\\scripts\\cli.py",
+      "agent\\skills\\caveman-compress\\scripts\\benchmark.py",
+      "agent\\skills\\caveman-compress\\scripts\\__init__.py",
+      "agent\\skills\\caveman-compress\\scripts\\__main__.py"
+    ]
+  },
+  {
+    "slug": "development",
+    "title": "Sviluppo e Test",
+    "purpose": "How to contribute, run the tests, and understand the CI pipeline.",
+    "files": [
+      "CONTRIBUTING.md",
+      ".github\\workflows\\auto-merge.yml",
+      ".github\\workflows\\ci.yml",
+      ".github\\workflows\\npm-publish.yml"
+    ]
+  },
+  {
+    "slug": "changelog",
+    "title": "Changelog",
+    "purpose": "Notable changes across releases, summarized from the changelog.",
+    "files": [
+      "CHANGELOG.md"
+    ]
+  }
+]

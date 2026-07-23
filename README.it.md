@@ -79,7 +79,7 @@ Nell'ecosistema AI del 2026, l'ingegneria del contesto è il nuovo standard oro.
 
 ## 🔄 Sistema di Sincronizzazione Bi-Direzionale e Persistenza Skill (2-Way Sync)
 
-Wizard-AI include un motore di persistenza bi-direzionale in tempo reale (`wz-ai-sync-skills`):
+Wizard-AI include un motore di persistenza bi-direzionale in tempo reale (`wizard-ai sync-skills`):
 
 1. **Direzione 1 (Propagazione Agenti)**: `~/.gemini/config/skills/` → `~/.claude/skills/`, `~/.config/amp/skills/`, `~/.agents/skills/`
    Propaga tutte le skill master a ogni agente AI installato nel sistema (Claude Code, Gemini CLI, Antigravity, Amp, OpenCode), così che condividano tutti le medesime capacità.
@@ -88,23 +88,23 @@ Wizard-AI include un motore di persistenza bi-direzionale in tempo reale (`wz-ai
 
 Per sincronizzare manualmente in qualsiasi momento:
 ```bash
-wz-ai-sync-skills
+wizard-ai sync-skills
 ```
 
-### 🔧 Pi Dynamic Configurator (`wz-ai-pi-configurator`)
+### 🔧 Pi Dynamic Configurator (`wizard-ai pi-configurator`)
 
 Integra automaticamente i pattern di [vekexasia/pi-config](https://github.com/vekexasia/pi-config) nel tuo ambiente locale `~/.pi/agent/` con impostazioni predefinite e scelta intelligente dei modelli basata sul tuo livello di abbonamento a **Cockpit Tools**:
 
 ```bash
-wz-ai-pi-configurator
+wizard-ai pi-configurator
 ```
 
-### 📚 RepoDocs Wiki Generator (`wz-ai-repodocs`)
+### 📚 RepoDocs Wiki Generator (`wizard-ai repodocs`)
 
 Genera automaticamente una wiki documentata per qualsiasi repository utilizzando [aryrabelo/repodocs](https://github.com/aryrabelo/repodocs). Integrato nel **Loop 5 (Release)** per la documentazione a fine ciclo:
 
 ```bash
-wz-ai-repodocs repodocs-all .
+wizard-ai repodocs repodocs-all .
 ```
 
 ## 🚀 Avvio Rapido

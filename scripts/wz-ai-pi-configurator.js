@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 /**
- * wz-ai-pi-configurator.js — Dynamic Pi Agent Configurator
+ * wizard-ai pi-configurator.js — Dynamic Pi Agent Configurator
  * 
  * Reads Cockpit Tools subscription tier + available models,
  * auto-assigns the best default model per role, and allows
  * manual overrides via CLI flags or interactive prompts.
  * 
  * Usage:
- *   wz-ai-pi-configurator                    # auto-detect from Cockpit
- *   wz-ai-pi-configurator --model gemini-3.6-flash-high --effort high
- *   wz-ai-pi-configurator --interactive      # interactive model picker
+ *   wizard-ai pi-configurator                    # auto-detect from Cockpit
+ *   wizard-ai pi-configurator --model gemini-3.6-flash-high --effort high
+ *   wizard-ai pi-configurator --interactive      # interactive model picker
  */
 
 const { readFileSync, writeFileSync, existsSync, mkdirSync } = require('node:fs');
@@ -23,7 +23,7 @@ const HOME = homedir();
 const PI_DIR = join(HOME, '.pi', 'agent');
 const CONFIG_SKILL_DIR = join(HOME, '.gemini', 'config', 'skills', 'pi-config');
 const CACHE_FILE = join(CONFIG_SKILL_DIR, 'live_benchmarks.json');
-const SYNC_SCRIPT = join(__dirname, 'wz-ai-benchmark-sync.js');
+const SYNC_SCRIPT = join(__dirname, 'wizard-ai benchmark-sync.js');
 const COCKPIT_READER = join(HOME, '.gemini', 'config', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs');
 const WORKFLOW_SETTINGS = join(HOME, '.pi', 'agent', 'pi-extensible-workflows', 'settings.json');
 
@@ -145,9 +145,9 @@ function printHelp() {
 ${pc.cyan('🪄 Wizard-AI Pi Configurator')}
 
 ${pc.bold('Usage:')}
-  wz-ai-pi-configurator                             ${pc.gray('# Auto-detect from Cockpit Tools')}
-  wz-ai-pi-configurator --interactive                ${pc.gray('# Interactive model picker')}
-  wz-ai-pi-configurator --model <id> --effort <lvl>  ${pc.gray('# Manual override')}
+  wizard-ai pi-configurator                             ${pc.gray('# Auto-detect from Cockpit Tools')}
+  wizard-ai pi-configurator --interactive                ${pc.gray('# Interactive model picker')}
+  wizard-ai pi-configurator --model <id> --effort <lvl>  ${pc.gray('# Manual override')}
 
 ${pc.bold('Options:')}
   --model <id>       Override default model (e.g. gemini-3.6-flash-high, claude-opus-4-6-thinking)

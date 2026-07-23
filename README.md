@@ -330,12 +330,12 @@ Wizard-AI seamlessly integrates with **Cockpit Tools** via the `wizard-ai proxy`
    ```
 *Note: Once enabled, simply run `pi` and it will automatically use your rotator accounts!*
 
-### 🔧 Pi Dynamic Configurator (`wz-ai-pi-configurator`)
+### 🔧 Pi Dynamic Configurator (`wizard-ai pi-configurator`)
 
 Automatically merge [vekexasia/pi-config](https://github.com/vekexasia/pi-config) patterns into your local `~/.pi/agent/` environment with **Cockpit Tools subscription-aware defaults**:
 
 ```bash
-wz-ai-pi-configurator
+wizard-ai pi-configurator
 ```
 
 What it does:
@@ -344,12 +344,12 @@ What it does:
 - **Merges `settings.json`** — adds packages like `pi-web-access`, `pi-subagents`, `pi-goal`, `pi-vim` while preserving your local packages
 - **Role-based model aliases** — assigns the optimal model per workflow role (developer, reviewer, scout, planner, security, designer)
 
-### 📚 RepoDocs Wiki Generator (`wz-ai-repodocs`)
+### 📚 RepoDocs Wiki Generator (`wizard-ai repodocs`)
 
 Auto-generate source-cited wikis for any repository using [aryrabelo/repodocs](https://github.com/aryrabelo/repodocs). Integrated into **Loop 5 (Release)** for end-of-cycle documentation:
 
 ```bash
-wz-ai-repodocs repodocs-all .
+wizard-ai repodocs repodocs-all .
 ```
 
 Output: `repo-docs/wiki.html` — self-contained, offline wiki where **every claim cites a file and line**. Runs via `uvx` (no install needed).
@@ -383,16 +383,16 @@ Skills are `SKILL.md` files that teach AI agents **when and how** to use a tool.
 
 ### 🔄 2-Way Skill Synchronization & Persistence System
 
-Wizard-AI implements a bi-directional persistence engine (`wz-ai-sync-skills`):
+Wizard-AI implements a bi-directional persistence engine (`wizard-ai sync-skills`):
 
 1. **Direction 1 (Propagation):** `~/.gemini/config/skills/` → `~/.claude/skills/`, `~/.config/amp/skills/`, `~/.agents/skills/`
    Propagates all master skills to every installed AI agent on your system so all agents share the same capabilities.
 2. **Direction 2 (Auto-Backup to Git Repo):** `~/.gemini/config/skills/` → `Wizard-AI/skills/misc/`
-   When an AI agent generates, learns, or creates a new skill dynamically in `~/.gemini/config/skills/`, `wz-ai-sync-skills` detects the new skill and automatically backs it up into the Git repository under `skills/misc/`. This prevents newly learned skills from being lost on system cleanup and makes them instantly trackable via `git status` for team commits.
+   When an AI agent generates, learns, or creates a new skill dynamically in `~/.gemini/config/skills/`, `wizard-ai sync-skills` detects the new skill and automatically backs it up into the Git repository under `skills/misc/`. This prevents newly learned skills from being lost on system cleanup and makes them instantly trackable via `git status` for team commits.
 
 Whenever you write a new skill or modify an existing one, run:
 ```bash
-wz-ai-sync-skills
+wizard-ai sync-skills
 ```
 
 ---
