@@ -1,0 +1,135 @@
+{
+  "installation": {
+    "files": {
+      "README.md": "ada55bbb947e8d26f17d83ca6d4a23df7961b186f8ac56759cf777367303cd7e",
+      "package.json": "a7f703229ebb3781eae4082987d6d959ffd2f98bec227e16e27d2022f9e00640"
+    }
+  },
+  "component-skills": {
+    "files": {
+      "skills\\stitch-design\\stitch-extract-static-html\\scripts\\snapshot.ts": "e6492bbc131dfd780b3b06116b72cc824dbac9f2b3c059afdb49d3efd6135a83",
+      "skills\\stitch-design\\stitch-extract-static-html\\scripts\\extract_inline_html.ts": "02c4445baeecb494346bdbec089f451dac64ba7dcd89e97cf3004b22fd54e077",
+      "skills\\meta-skills\\skill-creator\\eval-viewer\\generate_review.py": "9eb06e76558996e32ba4d7b1599a74bb3340ac2fb42f2c2280b4ec6532f9c859",
+      "skills\\stitch-design\\stitch-extract-static-html\\scripts\\post_process.ts": "80b01412ac6df15a66e4f0739e448fba7cd2df0d1b95075b476de7fd282895a9",
+      "skills\\meta-skills\\mcp-builder\\scripts\\evaluation.py": "eb32fd16fe42411a874de830f5b535c235ae07288d13b605c8784b8aae157f9d",
+      "skills\\meta-skills\\skill-creator\\scripts\\aggregate_benchmark.py": "bd010915f5dd453a9ba3b69d4e200a3e088437962f135ba2a21b205b16325f66",
+      "skills\\meta-skills\\skill-creator\\scripts\\run_loop.py": "615fef476820bfce84256ceac086dca5a014442b416c883475e24dfbd994f8d0",
+      "skills\\meta-skills\\skill-creator\\scripts\\generate_report.py": "85fe2c4bcb977fb52b92c93b52fb9a12d9dd8617105590dcbb3ab02449c8c2b2",
+      "skills\\caveman-compress\\scripts\\compress.py": "529335df6f857f9413021d6a6009f913443b8559849b3b1e79439bc8c49c93bc",
+      "skills\\memory-and-context\\caveman-compress\\scripts\\compress.py": "529335df6f857f9413021d6a6009f913443b8559849b3b1e79439bc8c49c93bc",
+      "skills\\meta-skills\\skill-creator\\scripts\\run_eval.py": "080a2e2f0bf2ea5b98803871cb7ffecb031ea223b1fb205f9693c76701296c31",
+      "skills\\frontend-and-ui\\web-artifacts-builder\\scripts\\init-artifact.sh": "355e5dd4382aaaee91f01f1627eaeab30b2676ffa8d9b3ec328a1ae450ebccaa"
+    }
+  },
+  "component-bin": {
+    "files": {
+      "bin\\wz-ai-os": "388caa80c055ec38cb893ca196ad226fcf2fb7ebb1acce6784f56c6650e0c895",
+      "bin\\wz-ai-branch": "bef340a095e0544f62c3ec5ba4e934322bfcbcb6786b0885aaef21a744a51227",
+      "bin\\wz-ai-install": "766822d5c7d534e34f706940c04eda41af01f92d4314c671c7d8d0abb3a838a6",
+      "bin\\wz-ai-release": "97a689143041587f0c0cb8a00f7915fa8110a5aecb6cf41098fb4e39e76d7986",
+      "bin\\wz-ai-zvec": "0e3e424c117e84dabe6f207297b372a4703043d3d9db28af9b34e3ee49139ca1",
+      "bin\\wz-ai-debug": "1b1d81afcfd986eb8ffb2c69ec6d9c95eef3e40bdd065dfc0d6b6722fc50f42a",
+      "bin\\wz-ai-help": "4b2c2a6de20cc1b778176696c78895ba9d7c09cdbf5e33dc6cfd5a3895c8d8cd",
+      "bin\\wz-ai-optimize": "bddc4859821f02827489ba78adca5264637950279147cd27f40262fbec31f0cc",
+      "bin\\wz-ai-prompt": "d131eaa2db8a817fe2aab1e340e8f97a35c1a0359f3d56161cb8cc8b56e600ab",
+      "bin\\wz-ai-scaffold": "815dbd4996781c821d00574a8c2b8aaeecd1b90e2d11bf813d8019a9e24a3119",
+      "bin\\wz-ai-mem": "b4bf4fdd8b9e17f1a91c82a2da9d6e27f0c90a3eb5e7cc2a672c8f5a88e8f31e",
+      "bin\\wz-ai-quota": "d8a0e50d7b7c148c3165fcd00887b410c53a287e49d6fccdad37ba4d5cbb04cd"
+    }
+  },
+  "overview": {
+    "files": {
+      "README.md": "ada55bbb947e8d26f17d83ca6d4a23df7961b186f8ac56759cf777367303cd7e",
+      "package.json": "a7f703229ebb3781eae4082987d6d959ffd2f98bec227e16e27d2022f9e00640",
+      "skills\\stitch-design\\stitch-extract-static-html\\scripts\\snapshot.ts": "e6492bbc131dfd780b3b06116b72cc824dbac9f2b3c059afdb49d3efd6135a83",
+      "skills\\stitch-design\\stitch-extract-static-html\\scripts\\extract_inline_html.ts": "02c4445baeecb494346bdbec089f451dac64ba7dcd89e97cf3004b22fd54e077",
+      "setup.sh": "d2f1e76c1b39f3af8fd103e87bef85bd67f92bbd2e938edae615024c79930abf",
+      "bin\\wz-ai-os": "388caa80c055ec38cb893ca196ad226fcf2fb7ebb1acce6784f56c6650e0c895",
+      "bin\\wz-ai-branch": "bef340a095e0544f62c3ec5ba4e934322bfcbcb6786b0885aaef21a744a51227",
+      "skills\\meta-skills\\skill-creator\\eval-viewer\\generate_review.py": "9eb06e76558996e32ba4d7b1599a74bb3340ac2fb42f2c2280b4ec6532f9c859"
+    }
+  },
+  "architecture": {
+    "files": {
+      "skills\\stitch-design\\stitch-extract-static-html\\scripts\\snapshot.ts": "e6492bbc131dfd780b3b06116b72cc824dbac9f2b3c059afdb49d3efd6135a83",
+      "skills\\stitch-design\\stitch-extract-static-html\\scripts\\extract_inline_html.ts": "02c4445baeecb494346bdbec089f451dac64ba7dcd89e97cf3004b22fd54e077",
+      "setup.sh": "d2f1e76c1b39f3af8fd103e87bef85bd67f92bbd2e938edae615024c79930abf",
+      "bin\\wz-ai-os": "388caa80c055ec38cb893ca196ad226fcf2fb7ebb1acce6784f56c6650e0c895",
+      "bin\\wz-ai-branch": "bef340a095e0544f62c3ec5ba4e934322bfcbcb6786b0885aaef21a744a51227",
+      "skills\\meta-skills\\skill-creator\\eval-viewer\\generate_review.py": "9eb06e76558996e32ba4d7b1599a74bb3340ac2fb42f2c2280b4ec6532f9c859",
+      "bin\\wz-ai-install": "766822d5c7d534e34f706940c04eda41af01f92d4314c671c7d8d0abb3a838a6",
+      "skills\\stitch-design\\stitch-extract-static-html\\scripts\\post_process.ts": "80b01412ac6df15a66e4f0739e448fba7cd2df0d1b95075b476de7fd282895a9",
+      "hub\\js\\app.js": "b39b32f9db5fa7349d10e657c2e57a95b08e5f8ce8961939b084dcdb0e69c6f5",
+      "bin\\wz-ai-release": "97a689143041587f0c0cb8a00f7915fa8110a5aecb6cf41098fb4e39e76d7986",
+      "scripts\\publish_viral_campaign.py": "8da4775fc28ba6cc90f90f5b222d1b9c4c908c713b226e0f665fafe92001ad9e",
+      "scripts\\wz-ai-proxy.js": "7b2a9ca1b8cf3cc475c167cc216818492514633e9db0bbc13e75dc740b96ad2b"
+    }
+  },
+  "component-hub": {
+    "files": {
+      "hub\\js\\app.js": "b39b32f9db5fa7349d10e657c2e57a95b08e5f8ce8961939b084dcdb0e69c6f5",
+      "hub\\api\\server.py": "71f0ec819f8cbf46971efc851f97ecb4f30e420a610f1db0fa6e369a80fb9a2f",
+      "hub\\js\\dashboard.js": "9660591272b4c817f6ed90be8f6a04f70009dbfc6da2e7bd57a5b19c889b9860",
+      "hub\\api\\db.py": "cb79b5c68a7dd660332091d0067e8ea10e6a5c68a77927da1e4c351702e63332",
+      "hub\\js\\marketplace.js": "b7aa241387a8d296cb67aa8db01b82787d21a7c473bc009fadbcadc3e4ef7d8e",
+      "hub\\js\\auth.js": "116146138d4cc82e51a46ca7e55e14aa3da48ddb6e2e3534dc1e193b6f200278",
+      "hub\\js\\installer.js": "f4a6a58ea0fb502e891867f55f187fb0dacb48bf2dd7046ca735043829509c8c",
+      "hub\\js\\telemetry.js": "210c0267c30e0c0eab88787f911c87a081b40e2cac799425dcb6fa1b35dfaf68",
+      "hub\\api\\log_event.py": "c94928cc92db34761422593ee5b717421d96f37338d794b562f536d8a938454b",
+      "hub\\js\\chat.js": "acdb7a83e1ed07c959a199021f886c324b47211722fa51a01feec2e937b54870"
+    }
+  },
+  "component-workflows": {
+    "files": {
+      "workflows\\loop-2-develop.js": "b283cef7cc1b3ae956a5209200dad5ffe2e281129628c529cd388e5c4f129612",
+      "workflows\\cross-os-refactor.js": "1265cfc58bf52405d205182855e58a01b826a7f80cab9bb63e4541a2025ad9e6",
+      "workflows\\shadow-clone-jutsu.js": "b9103c9e37b6ae43fca16e91cc8c547d57a31c6681aba4fb7fff29c80214f899",
+      "workflows\\workflow-frontend-design.js": "26f446f7421b801685931d91db93e4bfba8c4078290485c4cc1d71996681e85c",
+      "workflows\\loop-4-refactor.js": "2b247474472385d6ccef1256842d5128db34ecda520c033919ff430ecce1045f",
+      "workflows\\loop-1-plan.js": "625ae33678c3fb8d3b0575d21d846fe481a444b162a58c777cd6b7b6d5223e08",
+      "workflows\\loop-3-debug.js": "3a9015a3b72c027ebf57e945fdd046013adcead15ebfacf5b1721ac50ad8cc84",
+      "workflows\\workflow-research-scraping.js": "7bd386e296bfe0fc0c20eb66c1622d7bd1bb07477a14ed42790e45a0e4c567ad",
+      "workflows\\loop-5-release.js": "eeaf5dde4dfb2710342f36a00885017f1af767a949e29b7ba9306ceb9e7b8367"
+    }
+  },
+  "component-agent": {
+    "files": {
+      "agent\\skills\\caveman-compress\\scripts\\compress.py": "529335df6f857f9413021d6a6009f913443b8559849b3b1e79439bc8c49c93bc",
+      "agent\\skills\\caveman-compress\\scripts\\validate.py": "f15c9de7299f9a4e72d4adf10bd7d98e80d6b1a5a6606e1423d7dca58f426b45",
+      "agent\\skills\\caveman-compress\\scripts\\detect.py": "d69fb4c8289880a5c48647ed356bf692f7c03e547255d72587ef116c0c1c98ca",
+      "agent\\skills\\caveman-compress\\scripts\\cli.py": "7db968e7e0208a4225a15c03ed52edee0460c043e9e2f7343b1a6312bc61d0bc",
+      "agent\\skills\\caveman-compress\\scripts\\benchmark.py": "54fa7eb7c803183bda707bc0b3949a351c1351f8d06a24d758c3490d0cdefa76",
+      "agent\\skills\\caveman-compress\\scripts\\__init__.py": "a1dfce8f9102299499ecf397909dc3b1cc73cd60a4da7d853316025383ea74be",
+      "agent\\skills\\caveman-compress\\scripts\\__main__.py": "c13eb66970ae37b8b044f428b309e67868814b90a8bb408806f3316ce4dfbc5b"
+    }
+  },
+  "changelog": {
+    "files": {
+      "CHANGELOG.md": "afd6ed9e839b96793caace6596ecc6b10904df0180fa84c1fe12f237bd18e77f"
+    }
+  },
+  "development": {
+    "files": {
+      "CONTRIBUTING.md": "5a080bde890f6b4d8639a3de1f1198cac6fefe254d9505dc136bf7ecf4e81d50",
+      ".github\\workflows\\auto-merge.yml": "113fc8b71be3407870be7eb90d8e0a83abd68f44eb21c5f90feaa0eeaa0ce9cf",
+      ".github\\workflows\\ci.yml": "6ec1ec4f4a16e9182d9f9d1fe90643712aa5899527e290ed9853d169d0d7c368",
+      ".github\\workflows\\npm-publish.yml": "0d5a57edb073a67a06388ba06a620de3267110393a81f5e3a068ee449509414f"
+    }
+  },
+  "component-scripts": {
+    "files": {
+      "scripts\\publish_viral_campaign.py": "8da4775fc28ba6cc90f90f5b222d1b9c4c908c713b226e0f665fafe92001ad9e",
+      "scripts\\wz-ai-proxy.js": "7b2a9ca1b8cf3cc475c167cc216818492514633e9db0bbc13e75dc740b96ad2b",
+      "scripts\\wizard-installer.js": "14b32085269a92c8e4d97661a9adc02f6a4c053956ebd46d313cca242dccc1a5",
+      "scripts\\wz-ai-pi-configurator.js": "2ed35d3f409db70c55e8eadb7f455b53979e5f94b8d9931ab12aedb91f9cc8c5",
+      "scripts\\wz-ai-context-formats.js": "636a81bd6b075577f417308c3f9d52fa5c238a94b6310fe667f7161141078cee",
+      "scripts\\fetch_latest_models.py": "5dab4ef680a3c345f9144ae3ee8a3b1a2eecdb1a6834ae09e74a0e37b25f281b",
+      "scripts\\wz-ai-context.js": "338d101946059706969d51abe810d0db0b9109b27fb880f76a84096fdad76fc3",
+      "scripts\\wz-ai-benchmark-sync.js": "20ff1450e3540264e25525d1646c44fee83e487e6258139b8c97dbe9d9aec057",
+      "scripts\\wz-ai-auto-updater.js": "89c96c49ea54810c925a7c3e43eaf54c5a3add595d0e88fb302e5ae64dfa1df2",
+      "scripts\\update_skills.js": "e20dd0d42b538c02a8cbda042b62f9dde30dea3bcbd4b19dfad213bb9e5152f0",
+      "scripts\\fetch_repos_knowledge.py": "a8f13d810af305fd97236244555abb3c3d1b89b461ff0da3efdc1b97752cbfc4",
+      "scripts\\generate_missing_skills.py": "d544e6a0e3dd47d7f030047b57a0c51d2119a0e38d981671e7fe12902e54e817"
+    }
+  }
+}
