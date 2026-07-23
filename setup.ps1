@@ -225,9 +225,9 @@ function Clone-SkillRepo {
     if (-not (Test-Path $DestDir)) {
         Write-Log "  > Cloning $DestName from $Url..." -ForegroundColor Yellow
         if ($VerboseMode) {
-            git clone --depth 1 $Url $DestDir
+            git clone --recurse-submodules --shallow-submodules --depth 1 $Url $DestDir
         } else {
-            git clone --depth 1 --quiet $Url $DestDir 2>$null
+            git clone --recurse-submodules --shallow-submodules --depth 1 --quiet $Url $DestDir 2>$null
         }
         if ($LASTEXITCODE -ne 0) {
             $script:InstallFail++
