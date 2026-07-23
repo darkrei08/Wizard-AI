@@ -1,0 +1,3 @@
+Let me check the knowledge graph for relevant symbols, then read the source file in slices.
+
+Rgraph.json is running…

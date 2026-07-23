@@ -1,0 +1,327 @@
+[
+  {
+    "slug": "overview",
+    "title": "Overview",
+    "purpose": "Introduce wizard-ai as a loop-engineering CLI for Claude Code and summarize the problem it solves, its architecture, and its major subsystems.",
+    "files": [
+      "README.md",
+      "package.json"
+    ]
+  },
+  {
+    "slug": "installation",
+    "title": "Installation",
+    "purpose": "Document the npm, manual, and Docker installation paths and what the installer places on disk.",
+    "files": [
+      "README.md",
+      "setup.sh",
+      "scripts/wizard-installer.js",
+      "bin/wizard-ai-init",
+      "bin/wz-ai-npm-setup"
+    ]
+  },
+  {
+    "slug": "architecture",
+    "title": "Architecture",
+    "purpose": "Describe the CLI dispatcher, entry points, and how bin/ commands route into scripts/ and skills/.",
+    "files": [
+      "cli.js",
+      "index.js",
+      "bin/wz-ai",
+      "bin/wizard-ai",
+      "package.json"
+    ]
+  },
+  {
+    "slug": "loop-engineering-workflows",
+    "title": "5 Sequenced Loop-Engineering Workflows (01\u00e2\u2020\u201905)",
+    "purpose": "Explain the 01-05 compress/dedupe/memory/design-QA/spec-validate workflow sequence and its command mapping.",
+    "files": [
+      "README.md",
+      "bin/wz-ai-compress",
+      "bin/wz-ai-caveman",
+      "bin/wz-ai-mem",
+      "bin/wz-ai-design",
+      "bin/wz-ai-spec"
+    ]
+  },
+  {
+    "slug": "caveman-compress-engine",
+    "title": "Caveman-Compress Engine",
+    "purpose": "Document the token-compression detect/compress/validate/benchmark pipeline and its CLI entry points.",
+    "files": [
+      "agent/skills/caveman-compress/scripts/compress.py",
+      "agent/skills/caveman-compress/scripts/detect.py",
+      "agent/skills/caveman-compress/scripts/validate.py",
+      "agent/skills/caveman-compress/scripts/benchmark.py",
+      "agent/skills/caveman-compress/scripts/cli.py",
+      "skills/memory-and-context/caveman-compress/scripts/compress.py",
+      "bin/wz-ai-caveman",
+      "bin/wz-ai-compress"
+    ]
+  },
+  {
+    "slug": "memory-context-system",
+    "title": "Memory & Context System",
+    "purpose": "Cover session memory persistence, the Windows fallback path, and the context-format layer used across the CLI.",
+    "files": [
+      "bin/wz-ai-mem",
+      "bin/windows/lib/ai_mem_fallback.py",
+      "scripts/wz-ai-context.js",
+      "scripts/wz-ai-context-formats.js",
+      "bin/wz-ai-lean",
+      "bin/wz-ai-lean-ctx",
+      "bin/wz-ai-headroom"
+    ]
+  },
+  {
+    "slug": "proxy-cockpit-integration",
+    "title": "AI Proxy & Cockpit Tools",
+    "purpose": "Explain the wz-ai-proxy request router and its cockpit-bridge integration for tool calls.",
+    "files": [
+      "scripts/wz-ai-proxy.js",
+      "bin/wz-ai-proxy",
+      "skills/meta-skills/cockpit-bridge/scripts/cockpit-reader.mjs"
+    ]
+  },
+  {
+    "slug": "pi-dynamic-configurator",
+    "title": "Pi Dynamic Configurator",
+    "purpose": "Document how wz-ai-pi-configurator auto-detects and configures AI provider endpoints.",
+    "files": [
+      "scripts/wz-ai-pi-configurator.js"
+    ]
+  },
+  {
+    "slug": "repodocs-wiki-generator",
+    "title": "RepoDocs Wiki Generator",
+    "purpose": "Describe the wiki-planner/wiki-writer fan-out pipeline that generates DeepWiki-style docs for a target repo.",
+    "files": [
+      "scripts/wz-ai-repodocs.js",
+      "bin/wz-ai-llmwiki",
+      "bin/ai-llmwiki"
+    ]
+  },
+  {
+    "slug": "skills-marketplace-sync",
+    "title": "Skills Marketplace & 2-Way Sync",
+    "purpose": "Explain how skills are kept synchronized between agent/skills, .claude/skills, and skills/, and how they are validated.",
+    "files": [
+      "README.md",
+      "scripts/update_skills.js",
+      "bin/wz-ai-sync-skills",
+      "bin/wz-ai-skill-doctor"
+    ]
+  },
+  {
+    "slug": "hub-dashboard",
+    "title": "Local Hub Dashboard",
+    "purpose": "Document the local web GUI (server, database, and JS modules) launched by wz-ai-hub.",
+    "files": [
+      "hub/api/server.py",
+      "hub/api/db.py",
+      "hub/api/log_event.py",
+      "hub/js/app.js",
+      "hub/js/auth.js",
+      "hub/js/chat.js",
+      "hub/js/dashboard.js",
+      "hub/js/installer.js",
+      "hub/js/marketplace.js",
+      "hub/js/telemetry.js",
+      "bin/wz-ai-hub"
+    ]
+  },
+  {
+    "slug": "master-project-bootstrap",
+    "title": "Master Project Bootstrap",
+    "purpose": "Document how wz-ai-init scans a brownfield project and scaffolds the .wz-ai/ context directory.",
+    "files": [
+      "README.md",
+      "bin/wizard-ai-init",
+      "bin/wz-ai-os",
+      "bin/wz-ai-scaffold"
+    ]
+  },
+  {
+    "slug": "security",
+    "title": "Security: Audit Tooling & Trust Boundaries",
+    "purpose": "Cover the Strix security-audit CLI, the git-guardrails pre-commit hook, and CodeQL CI scanning as the repo's threat-model surface.",
+    "files": [
+      "bin/wz-ai-strix",
+      "skills/devops-and-tools/mp-git-guardrails/scripts/block-dangerous-git.sh",
+      "README.md"
+    ]
+  },
+  {
+    "slug": "brainstorming-design-review-skill",
+    "title": "Brainstorming / Design-Review Skill",
+    "purpose": "Document the local server.cjs design-review tool and its start/stop scripts, the most-connected module in the codebase.",
+    "files": [
+      "skills/architecture-and-design/brainstorming/scripts/server.cjs",
+      "skills/architecture-and-design/brainstorming/SKILL.md",
+      "skills/architecture-and-design/brainstorming/scripts/helper.js",
+      "skills/architecture-and-design/brainstorming/scripts/start-server.sh",
+      "skills/architecture-and-design/brainstorming/scripts/stop-server.sh"
+    ]
+  },
+  {
+    "slug": "office-document-authoring-skill",
+    "title": "Office Document Authoring (docx/pptx/xlsx)",
+    "purpose": "Explain the shared BaseSchemaValidator architecture and pack/unpack/validate pipeline used by the docx, pptx, and xlsx skills.",
+    "files": [
+      "skills/docs-and-coauthoring/docx/scripts/office/validate.py",
+      "skills/docs-and-coauthoring/docx/scripts/office/pack.py",
+      "skills/docs-and-coauthoring/docx/scripts/office/unpack.py",
+      "skills/docs-and-coauthoring/docx/scripts/accept_changes.py",
+      "skills/docs-and-coauthoring/docx/scripts/comment.py",
+      "skills/docs-and-coauthoring/pptx/scripts/office/validate.py",
+      "skills/docs-and-coauthoring/pptx/scripts/add_slide.py",
+      "skills/docs-and-coauthoring/pptx/scripts/clean.py",
+      "skills/docs-and-coauthoring/pptx/scripts/thumbnail.py",
+      "skills/docs-and-coauthoring/xlsx/scripts/office/validate.py",
+      "skills/docs-and-coauthoring/xlsx/scripts/recalc.py"
+    ]
+  },
+  {
+    "slug": "pdf-forms-skill",
+    "title": "PDF Forms Skill",
+    "purpose": "Document the PDF form field extraction, filling, and bounding-box validation scripts.",
+    "files": [
+      "skills/docs-and-coauthoring/pdf/scripts/check_bounding_boxes.py",
+      "skills/docs-and-coauthoring/pdf/scripts/check_fillable_fields.py",
+      "skills/docs-and-coauthoring/pdf/scripts/convert_pdf_to_images.py",
+      "skills/docs-and-coauthoring/pdf/scripts/create_validation_image.py",
+      "skills/docs-and-coauthoring/pdf/scripts/extract_form_field_info.py",
+      "skills/docs-and-coauthoring/pdf/scripts/extract_form_structure.py",
+      "skills/docs-and-coauthoring/pdf/scripts/fill_fillable_fields.py",
+      "skills/docs-and-coauthoring/pdf/scripts/fill_pdf_form_with_annotations.py"
+    ]
+  },
+  {
+    "slug": "slack-gif-creator-skill",
+    "title": "Slack GIF Creator Skill",
+    "purpose": "Document the frame composition, easing, and GIF-building pipeline used to generate Slack-compatible GIFs.",
+    "files": [
+      "skills/docs-and-coauthoring/slack-gif-creator/core/easing.py",
+      "skills/docs-and-coauthoring/slack-gif-creator/core/frame_composer.py",
+      "skills/docs-and-coauthoring/slack-gif-creator/core/gif_builder.py",
+      "skills/docs-and-coauthoring/slack-gif-creator/core/validators.py"
+    ]
+  },
+  {
+    "slug": "stitch-design-toolkit",
+    "title": "Stitch Design Toolkit",
+    "purpose": "Cover the static-HTML extraction, React component/native, and Remotion scaffolding scripts under stitch-design.",
+    "files": [
+      "skills/stitch-design/stitch-extract-static-html/scripts/extract_inline_html.ts",
+      "skills/stitch-design/stitch-extract-static-html/scripts/post_process.ts",
+      "skills/stitch-design/stitch-extract-static-html/scripts/snapshot.ts",
+      "skills/stitch-design/stitch-react-components/scripts/validate.js",
+      "skills/stitch-design/stitch-react-components/resources/component-template.tsx",
+      "skills/stitch-design/stitch-react-native/scripts/validate.js",
+      "skills/stitch-design/stitch-remotion/examples/WalkthroughComposition.tsx"
+    ]
+  },
+  {
+    "slug": "algorithmic-art-skill",
+    "title": "Algorithmic Art Skill",
+    "purpose": "Document the generator template used to scaffold algorithmic-art scripts.",
+    "files": [
+      "skills/docs-and-coauthoring/algorithmic-art/templates/generator_template.js"
+    ]
+  },
+  {
+    "slug": "hallmark-skill",
+    "title": "Hallmark Skill",
+    "purpose": "Document the genre-reference and component-cookbook knowledge base used by the hallmark skill.",
+    "files": [
+      "skills/misc/hallmark/references/genres/atmospheric.md",
+      "skills/misc/hallmark/references/component-cookbook.md"
+    ]
+  },
+  {
+    "slug": "webapp-testing-skill",
+    "title": "Webapp Testing Skill",
+    "purpose": "Document the browser console logging, element discovery, and local-server test harness examples.",
+    "files": [
+      "skills/devops-and-tools/webapp-testing/examples/console_logging.py",
+      "skills/devops-and-tools/webapp-testing/examples/element_discovery.py",
+      "skills/devops-and-tools/webapp-testing/examples/static_html_automation.py",
+      "skills/devops-and-tools/webapp-testing/scripts/with_server.py"
+    ]
+  },
+  {
+    "slug": "writing-skills",
+    "title": "Writing Skills",
+    "purpose": "Document the writing-skills package and its graph-rendering helper.",
+    "files": [
+      "skills/misc/writing-skills/SKILL.md",
+      "skills/misc/writing-skills/render-graphs.js"
+    ]
+  },
+  {
+    "slug": "mcp-builder-skill",
+    "title": "MCP Builder Skill",
+    "purpose": "Document the connection and evaluation scripts used to scaffold Model Context Protocol servers.",
+    "files": [
+      "skills/meta-skills/mcp-builder/scripts/connections.py",
+      "skills/meta-skills/mcp-builder/scripts/evaluation.py"
+    ]
+  },
+  {
+    "slug": "skill-creator-meta-skill",
+    "title": "Skill-Creator Meta-Skill",
+    "purpose": "Document the skill-packaging, validation, and eval-loop tooling used to author new skills.",
+    "files": [
+      "skills/meta-skills/skill-creator/SKILL.md",
+      "skills/meta-skills/skill-creator/scripts/utils.py",
+      "skills/meta-skills/skill-creator/scripts/quick_validate.py",
+      "skills/meta-skills/skill-creator/scripts/package_skill.py",
+      "skills/meta-skills/skill-creator/scripts/run_eval.py",
+      "skills/meta-skills/skill-creator/scripts/run_loop.py",
+      "skills/meta-skills/skill-creator/scripts/improve_description.py",
+      "skills/meta-skills/skill-creator/eval-viewer/generate_review.py"
+    ]
+  },
+  {
+    "slug": "awesome-agent-skills-integration",
+    "title": "Awesome Agent Skills Integration",
+    "purpose": "Document the vendored Awesome Agent Skills knowledge base and its role as a skill-discovery source.",
+    "files": [
+      "skills/awesome-agent-skills/SKILL.md",
+      "docs/external-repos/awesome-agent-skills/README.md"
+    ]
+  },
+  {
+    "slug": "spec-kit-integration",
+    "title": "Spec-Kit Integration",
+    "purpose": "Document the vendored spec-kit reference repo and how it feeds the spec-validation workflow.",
+    "files": [
+      "skills/misc/community/spec-kit/references/original-repo/README.md"
+    ]
+  },
+  {
+    "slug": "development",
+    "title": "Development",
+    "purpose": "Describe the CI workflows (CodeQL and dev-mode image builds) and local dev setup.",
+    "files": [
+      "package.json"
+    ]
+  },
+  {
+    "slug": "contributing",
+    "title": "Contributing",
+    "purpose": "Summarize the contribution guidelines from CONTRIBUTING.md.",
+    "files": [
+      "CONTRIBUTING.md"
+    ]
+  },
+  {
+    "slug": "changelog",
+    "title": "Changelog",
+    "purpose": "Summarize the release history recorded in CHANGELOG.md.",
+    "files": [
+      "CHANGELOG.md"
+    ]
+  }
+]

@@ -1,0 +1,670 @@
+{
+  "updated_at": "2026-07-23T09:49:19.310Z",
+  "models": [
+    {
+      "id": "claude-3-7-sonnet",
+      "coding": 95,
+      "reasoning": 95,
+      "speed": 85,
+      "isFallback": true
+    },
+    {
+      "id": "claude-3-5-sonnet",
+      "coding": 100,
+      "reasoning": 88,
+      "speed": 80,
+      "isFallback": false
+    },
+    {
+      "id": "o3-mini",
+      "coding": 92,
+      "reasoning": 94,
+      "speed": 70,
+      "isFallback": true
+    },
+    {
+      "id": "deepseek-r1",
+      "coding": 90,
+      "reasoning": 96,
+      "speed": 75,
+      "isFallback": true
+    },
+    {
+      "id": "gpt-4o",
+      "coding": 85,
+      "reasoning": 88,
+      "speed": 90,
+      "isFallback": false
+    },
+    {
+      "id": "deepseek-coder",
+      "coding": 88,
+      "reasoning": 85,
+      "speed": 85,
+      "isFallback": true
+    },
+    {
+      "id": "gemini-3.1-pro",
+      "coding": 82,
+      "reasoning": 85,
+      "speed": 85,
+      "isFallback": true
+    },
+    {
+      "id": "claude-3-opus",
+      "coding": 81,
+      "reasoning": 86,
+      "speed": 70,
+      "isFallback": false
+    },
+    {
+      "id": "gemini-1.5-pro",
+      "coding": 78,
+      "reasoning": 80,
+      "speed": 80,
+      "isFallback": false
+    },
+    {
+      "id": "gemini-3.6-flash",
+      "coding": 75,
+      "reasoning": 75,
+      "speed": 95,
+      "isFallback": true
+    },
+    {
+      "id": "o1",
+      "coding": 100,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "gemini-exp-1206--whole-",
+      "coding": 96,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "o1-preview",
+      "coding": 95,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "claude-3.5-sonnet-20240620",
+      "coding": 92,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "gpt-4o-mini",
+      "coding": 66,
+      "reasoning": 75,
+      "speed": 95,
+      "isFallback": false
+    },
+    {
+      "id": "claude-3-5-haiku-20241022",
+      "coding": 89,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "deepseek-coder-v2-0724",
+      "coding": 87,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "ollama-qwen2.5-coder-32b",
+      "coding": 87,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "deepseek-v2.5",
+      "coding": 86,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "deepseek-v2.5-1210",
+      "coding": 86,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "qwen2.5-coder-32b-instruct",
+      "coding": 85,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "o1-mini--whole-",
+      "coding": 84,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "deepseek-chat-v2-0628",
+      "coding": 83,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "gemini-2.0-flash-exp",
+      "coding": 83,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "qwen2.5-coder-14b-instruct",
+      "coding": 82,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "gemini-exp-1206--diff-",
+      "coding": 82,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "gpt-4-0613",
+      "coding": 80,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "gpt-4-0125-preview",
+      "coding": 79,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "gpt-4-0314",
+      "coding": 79,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "llama-3.1-405b-instruct--whole-",
+      "coding": 79,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "dracarys2-72b-instruct",
+      "coding": 79,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "gpt-4-1106-preview",
+      "coding": 78,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "qwen-2.5-72b-instruct--bf16-",
+      "coding": 78,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "mistral-large--2411-",
+      "coding": 78,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "openrouter-qwen-qwen-2.5-coder-32b-instruct",
+      "coding": 78,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "yi-lightning",
+      "coding": 78,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "gpt-4-turbo-2024-04-09--udiff-",
+      "coding": 76,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "llama-3.1-405b-instruct--diff-",
+      "coding": 76,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "nousresearch-hermes-3-llama-3.1-405b",
+      "coding": 76,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "ollama-qwen2.5.1-coder-7b-instruct-gguf-q8-0-32k",
+      "coding": 76,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "o1-mini",
+      "coding": 73,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "ollama-qwen2.5-coder-14b",
+      "coding": 73,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "gemini-exp-1114",
+      "coding": 72,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "mistral-large-2--2407-",
+      "coding": 71,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "llama-3.3-70b-instruct",
+      "coding": 71,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "llama-3.1-70b-instruct",
+      "coding": 70,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "grok-2",
+      "coding": 70,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "ollama-qwen2.5-32b-instruct-q8-0",
+      "coding": 70,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "gpt-3.5-turbo-0301",
+      "coding": 69,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "qwen2.5-coder-7b-instruct",
+      "coding": 69,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "gemini-exp-1121",
+      "coding": 69,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "gpt-4-turbo-2024-04-09--diff-",
+      "coding": 68,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "gpt-3.5-turbo-1106",
+      "coding": 67,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "qwen2-72b-instruct",
+      "coding": 66,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "claude-3-sonnet-20240229",
+      "coding": 65,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "grok-2-mini",
+      "coding": 65,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "llama-3.1-nemotron-70b-instruct-hf",
+      "coding": 65,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "yi-coder-9b-chat",
+      "coding": 64,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "ollama-qwen2.5-32b",
+      "coding": 64,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "nova-pro",
+      "coding": 64,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "qwen2.5-coder-7b-instruct-q8-0",
+      "coding": 62,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "codestral-2405",
+      "coding": 61,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "gpt-3.5-turbo-0125",
+      "coding": 60,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "gpt-3.5-turbo-0613",
+      "coding": 60,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "qwen2-72b-instruct-q8-0",
+      "coding": 59,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "llama3-70b-8192",
+      "coding": 58,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "codestral-22b-v0.1-q8-0",
+      "coding": 57,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "codestral-22b-v0.1-q4-k-m",
+      "coding": 57,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "claude-3-haiku",
+      "coding": 56,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "ollama-codestral",
+      "coding": 55,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "yi-coder-9b-chat-q4-0",
+      "coding": 54,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "wizardlm-2-8x22b",
+      "coding": 53,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "ollama-yi-coder-9b-chat-fp16",
+      "coding": 52,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "reflection-70b",
+      "coding": 50,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "qwen2.5-coder-3b-instruct",
+      "coding": 46,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "qwen1.5-110b-chat",
+      "coding": 45,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "gemini-1.5-flash",
+      "coding": 45,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "llama-3.1-8b-instruct",
+      "coding": 45,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "command-r---08-24-",
+      "coding": 45,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "command-r--08-24-",
+      "coding": 45,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "ollama-mistral-small",
+      "coding": 45,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "gemma2-27b-instruct-q8-0",
+      "coding": 43,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "codeqwen-7b-chat-v1.5-q8-0",
+      "coding": 41,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "ollama-mistral-nemo-12b-instruct-2407-q4-k-m",
+      "coding": 39,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "command-r-plus",
+      "coding": 38,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "ollama-codegeex4",
+      "coding": 38,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "qwen2.5-coder-1.5b-instruct",
+      "coding": 38,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "ollama-wojtek-opencodeinterpreter-6.7b",
+      "coding": 36,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "ollama-hermes3-8b-llama3.1-fp16",
+      "coding": 36,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "o1-mini-2024-09-12",
+      "coding": 32,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "ollama-llama3.2-3b-instruct-fp16",
+      "coding": 31,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "ollama-tulu3",
+      "coding": 31,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "ollama-hermes3",
+      "coding": 27,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "ollama-granite3-dense-8b",
+      "coding": 24,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    },
+    {
+      "id": "qwen2.5-coder-0.5b-instruct",
+      "coding": 17,
+      "reasoning": 50,
+      "speed": 50,
+      "isFallback": false
+    }
+  ]
+}

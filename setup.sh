@@ -833,6 +833,15 @@ else
   echo -e "${YELLOW}NPM not found. Cockpit Proxy setup skipped.${NC}"
 fi
 
+# 7.7. Auto-configure Pi Models from Cockpit
+echo -e "\n${BLUE}[7.7/10] Auto-configuring Pi Agent Models...${NC}"
+if command -v node &>/dev/null; then
+  echo -e "${YELLOW}Syncing benchmarks and mapping best Cockpit models to Pi roles...${NC}"
+  node "$WIZARD_AI_DIR/scripts/wz-ai-benchmark-sync.js" 2>/dev/null || true
+  node "$WIZARD_AI_DIR/scripts/wz-ai-pi-configurator.js" 2>/dev/null || echo -e "${RED}Failed to run pi-configurator.${NC}"
+else
+  echo -e "${YELLOW}Node.js not found. Skipping Pi auto-configuration.${NC}"
+fi
 
 # 8. Git & NPM Credentials Setup (Optional for Contributors)
 echo -e "\n${BLUE}[8/10] Git & NPM Credentials Setup (Optional for Contributors)...${NC}"

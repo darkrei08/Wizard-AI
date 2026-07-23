@@ -1,15 +1,16 @@
-# Graph Report - .  (2026-07-21)
+# Graph Report - wizard-ai  (2026-07-23)
 
 ## Corpus Check
-- cluster-only mode — file stats not available
+- 1506 files · ~1,254,872 words
+- Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 3711 nodes · 3509 edges · 1120 communities (354 shown, 766 thin omitted)
-- Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 173 edges (avg confidence: 0.8)
-- Token cost: 24,299 input · 14,606 output
+- 4814 nodes · 4848 edges · 1164 communities (447 shown, 717 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 146 edges (avg confidence: 0.78)
+- Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7a2b003a`
+- Built from commit: `f70a67c7`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -173,8 +174,8 @@
 - TTS Audio Research Papers
 - Architecture Decision Record Formats
 - AI Agent IDE Memory
+- PowerShell CLI Help System
 - Quota Management CLI Script
-- Release Management CLI Script
 - Local Agentic Hub Ecosystem
 - Kafka Java Scala Ecosystem
 - NVIDIA AI ML Infrastructure
@@ -236,6 +237,7 @@
 - Installer UI JavaScript
 - DevOps Worker Diagnostics
 - Discord Viral Campaign Publisher
+- PowerShell Skill Setup Script
 - Agentic Awesome Skills
 - Document Processing Tools
 - AI Auto-Debug Script
@@ -278,12 +280,12 @@
 - Syke CLI Memex Tool
 - Claude Graphify Obsidian Workflows
 - HITL Debug Loop Script
-- WuzAPI WhatsApp Integration
-- AI Graph CLI Script
+- Systematic Debugging Event Waiter
+- AI Memory PowerShell Script
 - AI Handoff CLI Script
 - AI Help CLI Script
 - AI Memory CLI Script
-- AI Strix CLI Script
+- Mineru Content Optimizer Script
 - AI Superpowers CLI Script
 - CLI-Anything Skill Repository
 - Tailwind Class Merge Utilities
@@ -358,7 +360,7 @@
 - Axios API Requests
 - Axios Error Handling
 - Book to Skill Script
-- Wizard AI Main Script
+- Python Resolution Script
 - Wizard AI Initialization Script
 - Wizard AI Testing Script
 - Core Wizard AI Script
@@ -444,7 +446,7 @@
 - Remotion Video Composition
 - Department Plan Execution
 - Data Worker Teaching Mode
-- Auto-Release Trigger Scripts
+- Repository Knowledge Fetching
 - Visual Companion Templates
 - Enterprise Development Protocol
 - Apache Airflow Skills
@@ -469,12 +471,12 @@
 - Git Guardrails Scripts
 - Git Security Guardrails
 - TrailBase Platform
-- OpenCoworker Agent Skills
+- Web App Console Testing
 - Algorithmic Art Viewer
 - Easy Vibe Library
 - OpenClaw Easy Vibe
 - HeyGen HyperFrames
-- TDD Workflow Agent
+- PDF to Image Conversion
 - Kotlin Android Native
 - Angular TypeScript Framework
 - Bun Qwik Framework Skills
@@ -549,22 +551,21 @@
 - Vue Theme Extraction
 - Stitch Design System Manager
 - Fetch React Components Script
+- React Component Validation
 - React Native Stitch Architecture
 - Fetch React Native Script
-- Walkthrough Screen Composition
 - Download Stitch Assets Script
+- Shadcn UI Auth Layout
 - Verify Shadcn Setup Script
 - Matt Pocock Skills Setup
-- Code Review Prompts
 - Systematic Debugging Polluter Script
 - Pull Request Templates
 - Auto-Merge GitHub Workflow
 - CI Quality Gates Workflow
 - Apache Airflow Documentation
-- Class Variance Authority Tool
-- English Contributing Guidelines
-- Italian Contributing Guidelines
-- Wizard-AI Design System
+- Wizard Test PowerShell Script
+- AI Caveman PowerShell Script
+- AI Compress PowerShell Script
 - Docker Compose Configuration
 - Mineru Docker Compose
 - Mineru Gradio Interface
@@ -600,10 +601,10 @@
 - Claude Fable AI Model
 - Gemini Pro AI Model
 - GPT Sol AI Model
+- Readme Splitter Python Script
 - Ask Matt Router Tool
 - Fullstack App Prompt Template
 - Wiki Brain Knowledge Base
-- Wizard-AI Project Wiki
 - Prompt Loop Engine Core
 - Headroom Tool Documentation
 - Loop One Planning Phase
@@ -623,11 +624,12 @@
 - Taste Skill Configuration
 - XLSX Spreadsheet Parser
 - Graphify Skill Configuration
+- Main JavaScript Entry File
 - Markdown Processing Skill
+- Binary Patching Python Script
+- Binary Patching Script V2
 - Wizard-AI Main Documentation
 - Loop Engine Documentation
-- Master Brain Documentation
-- Auto-Router Tool Documentation
 - Wizard Hub Tool Map
 - Shadow Clone Architecture Docs
 - Swarm King Documentation
@@ -730,10 +732,10 @@
 - WZ AI Strix
 - TrailBase AI Skill
 - TrailBase Framework
+- Web Element Discovery Script
+- Static HTML Automation Script
 - Web App Testing Tools
 - Generic Type Definitions
-- Generic Type Definitions
-- File Path Operations
 - AI Suite Platform
 - Algorithmic Art Skill
 - Claude Blog Writer
@@ -743,24 +745,24 @@
 - Document Co-Authoring Skill
 - Document Co-Authoring Skill
 - Word Documents Skill
+- Word Document Scripts
+- Word Office Helpers
 - Easy Vibe Skill
 - Internal Communications
-- Last 30 Days Skill
-- Reddit Integration
 - Twitter X Integration
 - YouTube Integration
 - PDF Toolkit Skill
+- PDF Fillable Fields Script
 - PDF Toolkit Skill
 - PowerPoint Skill
+- PowerPoint Scripts
 - PowerPoint Skill
 - Apache License Agreement
-- Slack GIF Creator
-- Anthropic Proprietary License
 - Excel Spreadsheets Skill
+- Excel Office Helpers
 - Excel Spreadsheets Skill
 - Code Review Agent
 - Engram AI Skill
-- Android Studio Skill
 - Angular Documentation
 - Angular AI Skill
 - Astro Documentation
@@ -928,10 +930,10 @@
 - Claude AWS Platform Tools
 - Claude Fable AI Model
 - API Message Batch Processing
+- Zod Schema Validation Tool
 - Cockpit Bridge Integration
 - Gemini API Usage Tracking
 - Toolkit Framework Components
-- SvelteKit Web Framework
 - SvelteKit Web Framework
 - MCP Builder Licensing
 - Expert Q&A Tools
@@ -954,9 +956,9 @@
 - Comparison JSON Data Schema
 - Evaluations JSON Data Schema
 - History JSON Data Schema
+- Skill Creator Python Scripts
 - Supertonic Audio Development Tools
 - Syke Development Tooling
-- VoiceBox Audio Generation Tools
 - VoiceBox Audio Generation Tools
 - Automated Prompting Tools
 - Codebase Memory Context Protocol
@@ -1009,7 +1011,7 @@
 - File Path Operations
 - System Design Skill
 - n8n Workflow Automation
-- File Path Operations
+- Skills Refactoring Script
 - File Path Operations
 - File Path Operations
 - Subprocess Execution Results
@@ -1085,6 +1087,27 @@
 - Knowledge Base Wiki Index
 - Agentic Brain Architecture
 - Core Execution Engine
+- Wiki Index
+- Agentic Brain
+- Core Engine
+- react.md
+- spring.md
+- architecture.md
+- ci.md
+- code-review.md
+- dependencies.md
+- docker.md
+- documentation.md
+- dry.md
+- engineering-principles.md
+- engineering-score.md
+- kiss.md
+- sdd.md
+- solid.md
+- technical-debt.md
+- testing.md
+- mp-domain-modeling/README.md
+- shadow-clone-jutsu.js
 
 ## God Nodes (most connected - your core abstractions)
 1. `Awesome Agent Skills KB` - 42 edges
@@ -1092,11 +1115,11 @@
 3. `BaseSchemaValidator` - 26 edges
 4. `BaseSchemaValidator` - 26 edges
 5. `BaseSchemaValidator` - 26 edges
-6. `Atmospheric Genre` - 19 edges
-7. `DOCXSchemaValidator` - 18 edges
-8. `DOCXSchemaValidator` - 18 edges
-9. `DOCXSchemaValidator` - 18 edges
-10. `Component Cookbook` - 17 edges
+6. `Writing Skills` - 23 edges
+7. `DOCXSchemaValidator` - 20 edges
+8. `DOCXSchemaValidator` - 20 edges
+9. `DOCXSchemaValidator` - 20 edges
+10. `spec-kit (by github)` - 20 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Carnival Theme` --references--> `Hallmark Diversification Log`  [EXTRACTED]
@@ -1147,11 +1170,9 @@
 - **Tier 1 — Supreme Orchestrator Skills** — skills_00_core_engine_show_active_skill_readme, skills_00_core_engine_wizard_ai_core_readme, skills_00_core_engine_wizard_ai_installer_readme [EXTRACTED 1.00]
 - **Wizard-AI Legal Documentation** — wizard_ai, docs_legal_cookie_policy, docs_legal_privacy_policy_it [INFERRED 0.90]
 - **Airflow Alternatives** — skills_airflow_skill_apache_airflow, skills_airflow_skill_luigi, skills_airflow_skill_oozie, skills_airflow_skill_azkaban [EXTRACTED 0.90]
-- **Airflow Core Dependencies** — skills_airflow_skill_apache_airflow, skills_airflow_skill_sqlalchemy, skills_airflow_skill_alembic, skills_airflow_skill_flask, skills_airflow_skill_werkzeug, skills_airflow_skill_celery, skills_airflow_skill_kubernetes [EXTRACTED 1.00]
 - **aisuite Supported LLM Providers** — skills_aisuite_skill_aisuite, skills_aisuite_skill_openai, skills_aisuite_skill_anthropic, skills_aisuite_skill_ollama [EXTRACTED 1.00]
 - **Web Frontend Framework Decision Matrix** — skills_architecture_and_design_brain_tech_stack_skill_astro5, skills_architecture_and_design_brain_tech_stack_skill_nuxt4, skills_architecture_and_design_brain_tech_stack_skill_qwik, skills_architecture_and_design_brain_tech_stack_skill_react [EXTRACTED 0.90]
 - **AI & Agentic Ecosystem Decision Matrix** — skills_architecture_and_design_brain_tech_stack_skill_mem0, skills_architecture_and_design_brain_tech_stack_skill_litellm [EXTRACTED 0.90]
-- **Product Management Skills** — skills_awesome_agent_skills_skill_dean_peters, skills_awesome_agent_skills_skill_pawel_huryn [INFERRED 0.90]
 - **Marketing and Advertising Skills** — skills_awesome_agent_skills_skill_corey_haines, skills_awesome_agent_skills_skill_kim_barrett [INFERRED 0.85]
 - **NVIDIA AI Skills Ecosystem** — skills_awesome_agent_skills_skill_nvidia_cudaq_guide, skills_awesome_agent_skills_skill_nvidia_megatron_bridge, skills_awesome_agent_skills_skill_nvidia_tensorrt_llm [INFERRED 0.90]
 - **Google Cloud Platform Skills** — skills_awesome_agent_skills_skill_gcp_alloydb, skills_awesome_agent_skills_skill_gcp_bigquery, skills_awesome_agent_skills_skill_gcp_gke [INFERRED 0.90]
@@ -1175,7 +1196,6 @@
 - **Tier 3 Worker (DevOps) Skills** — skills_memory_and_context_turbovec_readme, skills_memory_and_context_zvec_readme, skills_meta_skills_kit_readme, skills_meta_skills_litellm_readme [EXTRACTED 0.90]
 - **OmniVoice Core AI Dependencies** — skills_omnivoice_studio_skill_whisperx, skills_omnivoice_studio_skill_demucs, skills_omnivoice_studio_skill_pyannote [EXTRACTED 0.90]
 - **OpenWA WhatsApp Client Engines** — skills_openwa_skill_openwa, skills_openwa_skill_whatsapp_web_js, skills_openwa_skill_baileys [EXTRACTED 0.95]
-- **Portfolio Vue Islands** — skills_portfolio_skill_nav_vue, skills_portfolio_skill_themetoggle_vue, skills_portfolio_skill_langswitch_vue, skills_portfolio_skill_contactform_vue [EXTRACTED 1.00]
 - **QwenPaw Local Model Backends** — skills_qwenpaw_skill_qwenpaw_flash, skills_qwenpaw_skill_ollama, skills_qwenpaw_skill_lm_studio [EXTRACTED 1.00]
 - **Spec-Driven Development Flow** — skills_spec_kit_skill_speckit_specify, skills_spec_kit_skill_speckit_plan, skills_spec_kit_skill_speckit_tasks, skills_spec_kit_skill_speckit_implement [EXTRACTED 1.00]
 - **Syke Agent Workflow** — skills_syke_skill_syke_memex, skills_syke_skill_syke_ask, skills_syke_skill_syke_record [EXTRACTED 1.00]
@@ -1313,7 +1333,7 @@
 - **Document Processing Parsers** — global_pdf_parser, global_docx_parser, global_pptx_parser, global_xlsx_parser, global_markitdown [EXTRACTED 0.90]
 - **Production Loop Phases** — global_loop_1_plan, global_loop_2_develop, global_loop_3_debug, global_loop_4_refactor, global_loop_5_release [EXTRACTED 1.00]
 
-## Communities (1120 total, 766 thin omitted)
+## Communities (1164 total, 717 thin omitted)
 
 ### Community 0 - "WebSocket Server Setup"
 Cohesion: 0.06
@@ -1324,28 +1344,28 @@ Cohesion: 0.06
 Nodes (40): ABC, Anthropic, node, wizard-ai-core, create_connection(), MCPConnection, MCPConnectionHTTP, MCPConnectionSSE (+32 more)
 
 ### Community 2 - "Agent Skills Knowledge Base"
+Cohesion: 0.13
+Nodes (14): bugs, url, description, engines, node, files, homepage, license (+6 more)
+
+### Community 3 - "CLI Execution Utils"
 Cohesion: 0.05
 Nodes (44): Anthropic Claude, Apollo GraphQL Skills, Binance Skills, Claude Code, Codex, sametbrr/llm-wiki-manager, muratcankoylan/context-fundamentals, Corey Haines Marketing Skills (+36 more)
 
-### Community 3 - "CLI Execution Utils"
-Cohesion: 0.08
-Nodes (40): args, fail(), fs, gitCheck, os, path, run(), { spawnSync } (+32 more)
-
 ### Community 4 - "Node Package Configuration"
-Cohesion: 0.05
-Nodes (41): bin, ai-test, wizard-ai, wizard-test, bugs, url, description, devDependencies (+33 more)
-
-### Community 5 - "Animation Easing Functions"
 Cohesion: 0.06
 Nodes (35): apply_squash_stretch(), calculate_arc_motion(), ease_back_in(), ease_back_in_out(), ease_back_out(), ease_in_bounce(), ease_in_cubic(), ease_in_elastic() (+27 more)
 
-### Community 6 - "Database & Event Logging"
-Cohesion: 0.10
+### Community 5 - "Animation Easing Functions"
+Cohesion: 0.11
 Nodes (21): get_connection(), get_stats(), init_db(), _insert_mock_data(), Insert realistic mock data for the last 6 months to populate the chart., Retrieve aggregated stats for the dashboard., log_event(), fetch_trending_skills() (+13 more)
 
+### Community 6 - "Database & Event Logging"
+Cohesion: 0.11
+Nodes (32): AllStats, autoDetectTailwind(), buildHead(), camelToKebab(), createLimiter(), CssUrlRef, embedImages(), escapeRegExp() (+24 more)
+
 ### Community 7 - "Evaluation Report Generation"
-Cohesion: 0.10
-Nodes (27): generate_html(), main(), Generate HTML report from loop output data. If auto_refresh is True, adds a meta, _call_claude(), improve_description(), main(), Path, Run `claude -p` with the prompt on stdin and return the text response.      Prom (+19 more)
+Cohesion: 0.12
+Nodes (27): generate_html(), main(), Generate HTML report from loop output data. If auto_refresh is True, adds a meta, _call_claude(), improve_description(), main(), Path, Run `claude -p` with the prompt on stdin and return the text response.      Pr (+19 more)
 
 ### Community 8 - "Wizard-AI Legal Policies"
 Cohesion: 0.07
@@ -1353,11 +1373,11 @@ Nodes (30): Wizard-AI Cookie Policy, Wizard-AI Privacy Policy (IT), ., --base-di
 
 ### Community 9 - "Agent CLI Tools"
 Cohesion: 0.08
-Nodes (26): CLI-Anything: Towards Agent-Native Computer Use, Claude Code, CLI-Anything, cli-anything-blender, cli-anything-gimp, CLI-Hub, cli-printing-press, Codex (+18 more)
+Nodes (26): create_project MCP Tool, edit_screens MCP Tool, generate_screen_from_text MCP Tool, generate_variants MCP Tool, list_projects MCP Tool, Stitch Generate Design, DESIGN.md, metadata.json (+18 more)
 
 ### Community 10 - "Stitch Design MCP Tools"
-Cohesion: 0.08
-Nodes (26): create_project MCP Tool, edit_screens MCP Tool, generate_screen_from_text MCP Tool, generate_variants MCP Tool, list_projects MCP Tool, Stitch Generate Design, DESIGN.md, metadata.json (+18 more)
+Cohesion: 0.09
+Nodes (24): CLI-Anything: Towards Agent-Native Computer Use, Claude Code, CLI-Anything, CLI-Hub, cli-printing-press, Codex, discrawl, CLI-Anything README (+16 more)
 
 ### Community 11 - "Evaluation Viewer Server"
 Cohesion: 0.15
@@ -1372,8 +1392,16 @@ Cohesion: 0.10
 Nodes (22): Ft1 Mast-headed, Ft2 Inline single line, Ft3 Index columns, Ft5 Statement, Ft8 Marquee scroll, Gate 2, Gate 29, Gate 6 (+14 more)
 
 ### Community 14 - "Wizard-AI Proxy Configuration"
-Cohesion: 0.17
-Nodes (20): args, disableLinux(), disableMac(), disableWindows(), enableLinux(), enableMac(), enableWindows(), { execSync } (+12 more)
+Cohesion: 0.16
+Nodes (21): args, disableLinux(), disableMac(), disableWindows(), enableLinux(), enableMac(), enableWindows(), { execSync } (+13 more)
+
+### Community 15 - "Base Schema Validation"
+Cohesion: 0.05
+Nodes (18): _condense_xml(), pack(), Path, Pack a directory into a DOCX, PPTX, or XLSX file.  Validates with auto-repair,, _run_validation(), main(), Command line tool to validate Office document XML files against XSD schemas and, BaseSchemaValidator (+10 more)
+
+### Community 17 - "XML Schema Validation Tools"
+Cohesion: 0.05
+Nodes (18): _condense_xml(), pack(), Path, Pack a directory into a DOCX, PPTX, or XLSX file.  Validates with auto-repair,, _run_validation(), main(), Command line tool to validate Office document XML files against XSD schemas and, BaseSchemaValidator (+10 more)
 
 ### Community 18 - "Managed Agents Framework"
 Cohesion: 0.22
@@ -1385,7 +1413,7 @@ Nodes (20): Wizard-AI Ecosystem Mandatory Instructions, Loop 1: Plan, Loop 2: De
 
 ### Community 20 - "GIF Image Builder"
 Cohesion: 0.13
-Nodes (12): ndarray, GIFBuilder, Image, Path, Remove duplicate or near-duplicate consecutive frames.          Args:, Save frames as optimized GIF for Slack.          Args:             output_path:, Builder for creating optimized GIFs from frames., Initialize GIF builder.          Args:             width: Frame width in pixels (+4 more)
+Nodes (12): ndarray, GIFBuilder, Image, Path, Remove duplicate or near-duplicate consecutive frames.          Args:, Save frames as optimized GIF for Slack.          Args:             output_pat, Builder for creating optimized GIFs from frames., Initialize GIF builder.          Args:             width: Frame width in pixe (+4 more)
 
 ### Community 21 - "Algorithmic Art Generator"
 Cohesion: 0.11
@@ -1397,23 +1425,23 @@ Nodes (19): activateInSwitcher(), cmdAccounts(), cmdProvision(), cmdProvisionRot
 
 ### Community 23 - "Office Thumbnail Generation"
 Cohesion: 0.19
-Nodes (17): _ensure_shim(), get_soffice_env(), _needs_shim(), CompletedProcess, Path, Helper for running LibreOffice (soffice) in environments where AF_UNIX sockets m, run_soffice(), build_slide_list() (+9 more)
+Nodes (17): _ensure_shim(), get_soffice_env(), _needs_shim(), CompletedProcess, Path, Helper for running LibreOffice (soffice) in environments where AF_UNIX sockets, run_soffice(), build_slide_list() (+9 more)
 
 ### Community 24 - "AI Assistant Integrations"
 Cohesion: 0.16
 Nodes (17): Anthropic, Claude Code, Cloudflare, Awesome Agent Skills Repository, Cursor, Ego Lite, Figma, GitHub Copilot (+9 more)
 
 ### Community 25 - "DOCX Run Merging"
-Cohesion: 0.25
-Nodes (16): _can_merge(), _consolidate_text(), _find_elements(), _first_child_run(), _get_child(), _get_children(), _is_adjacent(), _is_run() (+8 more)
+Cohesion: 0.11
+Nodes (33): _can_merge(), _consolidate_text(), _find_elements(), _first_child_run(), _get_child(), _get_children(), _is_adjacent(), _is_run() (+25 more)
 
 ### Community 26 - "PPTX Run Merging"
-Cohesion: 0.25
-Nodes (16): _can_merge(), _consolidate_text(), _find_elements(), _first_child_run(), _get_child(), _get_children(), _is_adjacent(), _is_run() (+8 more)
+Cohesion: 0.11
+Nodes (33): _can_merge(), _consolidate_text(), _find_elements(), _first_child_run(), _get_child(), _get_children(), _is_adjacent(), _is_run() (+25 more)
 
 ### Community 27 - "XLSX Run Merging"
-Cohesion: 0.25
-Nodes (16): _can_merge(), _consolidate_text(), _find_elements(), _first_child_run(), _get_child(), _get_children(), _is_adjacent(), _is_run() (+8 more)
+Cohesion: 0.11
+Nodes (33): _can_merge(), _consolidate_text(), _find_elements(), _first_child_run(), _get_child(), _get_children(), _is_adjacent(), _is_run() (+25 more)
 
 ### Community 28 - "UI Component Libraries"
 Cohesion: 0.12
@@ -1421,7 +1449,7 @@ Nodes (16): Base UI, Radix UI, React, react-hook-form, shadcn/ui, Astro Skill, E
 
 ### Community 29 - "OS Package Installer"
 Cohesion: 0.22
-Nodes (12): wz-ai os script, _cargo_install(), detect_distro(), detect_os_type(), detect_package_manager(), _go_install(), _node_install(), _pip_install() (+4 more)
+Nodes (12): wz-ai-os script, _cargo_install(), detect_distro(), detect_os_type(), detect_package_manager(), _go_install(), _node_install(), _pip_install() (+4 more)
 
 ### Community 30 - "Stitch Design Guidelines"
 Cohesion: 0.12
@@ -1448,16 +1476,24 @@ Cohesion: 0.14
 Nodes (14): AgentShield, Claude Code, Codex, Cursor, ECC, ecc-universal, Gemini, GitHub Copilot (+6 more)
 
 ### Community 36 - "PDF Form Processing"
-Cohesion: 0.23
+Cohesion: 0.25
 Nodes (10): PdfReader, get_field_info(), get_full_annotation_field_id(), make_field_dict(), write_field_info(), fill_pdf_fields(), validation_error_for_field_value(), fill_pdf_form() (+2 more)
 
 ### Community 37 - "AI Development Environments"
 Cohesion: 0.14
 Nodes (14): Antigravity IDE, CLIProxyAPI, Cockpit Tools, CodeBuddy, Codex, Cursor, GitHub Copilot, Grok CLI (+6 more)
 
+### Community 38 - "DOCX Schema Validator"
+Cohesion: 0.07
+Nodes (49): benchmark_pair(), count_tokens(), main(), print_table(), Path, main(), print_usage(), backup_dir_for() (+41 more)
+
 ### Community 40 - "Excel Formula Recalculation"
-Cohesion: 0.22
-Nodes (12): _ensure_shim(), get_soffice_env(), _needs_shim(), CompletedProcess, Path, Helper for running LibreOffice (soffice) in environments where AF_UNIX sockets m, run_soffice(), has_gtimeout() (+4 more)
+Cohesion: 0.23
+Nodes (12): _ensure_shim(), get_soffice_env(), _needs_shim(), CompletedProcess, Path, Helper for running LibreOffice (soffice) in environments where AF_UNIX sockets, run_soffice(), has_gtimeout() (+4 more)
+
+### Community 41 - "DOCX Validation Logic"
+Cohesion: 0.06
+Nodes (49): Path, Path, Path, Path, benchmark_pair(), count_tokens(), main(), print_table() (+41 more)
 
 ### Community 42 - "Cockpit Developer Tools"
 Cohesion: 0.16
@@ -1480,16 +1516,16 @@ Cohesion: 0.36
 Nodes (12): add_comment(), _append_xml(), _encode_smart_quotes(), _ensure_comment_content_types(), _ensure_comment_relationships(), _find_para_id(), _generate_hex_id(), _get_next_rid() (+4 more)
 
 ### Community 47 - "DOCX Redline Simplification"
-Cohesion: 0.29
-Nodes (12): _can_merge_tracked(), _find_elements(), _get_author(), _get_authors_from_docx(), get_tracked_change_authors(), infer_author(), _is_element(), _merge_tracked_changes_in() (+4 more)
+Cohesion: 0.07
+Nodes (49): benchmark_pair(), count_tokens(), main(), print_table(), Path, main(), print_usage(), backup_dir_for() (+41 more)
 
 ### Community 48 - "PPTX Redline Simplification"
-Cohesion: 0.29
-Nodes (12): _can_merge_tracked(), _find_elements(), _get_author(), _get_authors_from_docx(), get_tracked_change_authors(), infer_author(), _is_element(), _merge_tracked_changes_in() (+4 more)
+Cohesion: 0.05
+Nodes (43): 1. Install Specify CLI, 2. Initialize a project, 3. Establish project principles, 4. Create the spec, 5. Create a technical implementation plan, 6. Break down into tasks, 7. Execute implementation, 🙏 Acknowledgements (+35 more)
 
 ### Community 49 - "XLSX Redline Simplification"
-Cohesion: 0.29
-Nodes (12): _can_merge_tracked(), _find_elements(), _get_author(), _get_authors_from_docx(), get_tracked_change_authors(), infer_author(), _is_element(), _merge_tracked_changes_in() (+4 more)
+Cohesion: 0.05
+Nodes (42): 🧠 Architettura: Mixture of Experts (MoE) Routing, Dal `brainstorming` / `mp-grill-with-docs`:, Dal `cybersecurity`:, Dal `enterprise-development-protocol`:, Dal `goodcode`:, Dal `ponytail` / YAGNI:, Dal `systematic-debugging` / `mp-diagnosing-bugs`:, Dal `test-driven-development` / `mp-tdd`: (+34 more)
 
 ### Community 50 - "Workflow Security Integration"
 Cohesion: 0.15
@@ -1501,7 +1537,7 @@ Nodes (13): Loop 1 Plan, Loop 2 Develop, Loop 3 Debug, Caveman, Codebase Memory 
 
 ### Community 52 - "Benchmark Aggregation Script"
 Cohesion: 0.23
-Nodes (12): aggregate_results(), calculate_stats(), generate_benchmark(), generate_markdown(), load_run_results(), main(), Path, Aggregate run results into summary statistics.      Returns run_summary with sta (+4 more)
+Nodes (12): aggregate_results(), calculate_stats(), generate_benchmark(), generate_markdown(), load_run_results(), main(), Path, Aggregate run results into summary statistics.      Returns run_summary with s (+4 more)
 
 ### Community 53 - "React Component Configuration"
 Cohesion: 0.15
@@ -1533,15 +1569,15 @@ Nodes (12): Alembic, Apache Airflow, Apache Magpie, Azkaban, Celery, Flask, Jinj
 
 ### Community 60 - "Document Tracked Changes Handling"
 Cohesion: 0.24
-Nodes (10): accept_changes(), Accept all tracked changes in a DOCX file using LibreOffice.  Requires LibreOffi, _setup_libreoffice_macro(), _ensure_shim(), get_soffice_env(), _needs_shim(), CompletedProcess, Path (+2 more)
+Nodes (10): accept_changes(), Accept all tracked changes in a DOCX file using LibreOffice.  Requires LibreOf, _setup_libreoffice_macro(), _ensure_shim(), get_soffice_env(), _needs_shim(), CompletedProcess, Path (+2 more)
 
 ### Community 61 - "PPTX File Cleanup"
 Cohesion: 0.41
-Nodes (11): clean_unused_files(), get_referenced_files(), get_slide_referenced_files(), get_slides_in_sldidlst(), Path, Remove unreferenced files from an unpacked PPTX directory.  Usage: python clean., remove_orphaned_files(), remove_orphaned_rels_files() (+3 more)
+Nodes (11): clean_unused_files(), get_referenced_files(), get_slide_referenced_files(), get_slides_in_sldidlst(), Path, Remove unreferenced files from an unpacked PPTX directory.  Usage: python clea, remove_orphaned_files(), remove_orphaned_rels_files() (+3 more)
 
 ### Community 62 - "GIF Frame Composer"
 Cohesion: 0.23
-Nodes (11): create_blank_frame(), create_gradient_background(), draw_circle(), draw_star(), draw_text(), Image, Create a vertical gradient background.      Args:         width: Frame width, Draw a 5-pointed star.      Args:         frame: PIL Image to draw on         ce (+3 more)
+Nodes (11): create_blank_frame(), create_gradient_background(), draw_circle(), draw_star(), draw_text(), Image, Create a vertical gradient background.      Args:         width: Frame width, Draw a 5-pointed star.      Args:         frame: PIL Image to draw on (+3 more)
 
 ### Community 63 - "Managed Agent Architecture"
 Cohesion: 0.18
@@ -1553,7 +1589,7 @@ Nodes (12): C4 Sticky Bottom Bar, N10 Floating On Scroll Morph, N11 Mega Menu, N
 
 ### Community 65 - "Stitch Screen Upload"
 Cohesion: 0.24
-Nodes (11): build_screen_request(), call_batch_create_screens(), encode_file(), main(), parse_args(), Any, Path, Build a CreateScreenRequest dict from a file.      For images, the file is set a (+3 more)
+Nodes (11): build_screen_request(), call_batch_create_screens(), encode_file(), main(), parse_args(), Any, Path, Build a CreateScreenRequest dict from a file.      For images, the file is set (+3 more)
 
 ### Community 66 - "Agent Superpowers Methodology"
 Cohesion: 0.20
@@ -1568,80 +1604,80 @@ Cohesion: 0.25
 Nodes (11): DevBoards Monorepo Architecture README, DevBoards Architecture Skill, Engineering Excellence README, Accessibility Guidelines, Environment Awareness, Frontend UX & Interaction, Production Readiness, Quality Gates (+3 more)
 
 ### Community 69 - "DOCX Redlining Validation"
-Cohesion: 0.25
-Nodes (3): main(), Command line tool to validate Office document XML files against XSD schemas and, RedliningValidator
+Cohesion: 0.07
+Nodes (26): Core insight: engine vs script, Decisions, Non-goals, Open questions / future, Portability status, Problem, PRP — goodcode, goodcode (+18 more)
 
 ### Community 70 - "PPTX Redlining Validation"
-Cohesion: 0.25
-Nodes (3): main(), Command line tool to validate Office document XML files against XSD schemas and, RedliningValidator
+Cohesion: 0.07
+Nodes (26): Core insight: engine vs script, Decisions, Non-goals, Open questions / future, Portability status, Problem, PRP — goodcode, goodcode (+18 more)
 
 ### Community 71 - "XLSX Redlining Validation"
-Cohesion: 0.25
-Nodes (3): main(), Command line tool to validate Office document XML files against XSD schemas and, RedliningValidator
-
-### Community 72 - "UI Theme Showcase"
 Cohesion: 0.18
 Nodes (11): Theme Showcase Document, Arctic Frost Theme, Botanical Garden Theme, Desert Rose Theme, Forest Canopy Theme, Golden Hour Theme, Midnight Galaxy Theme, Modern Minimalist Theme (+3 more)
 
-### Community 73 - "Design Asset Generation"
+### Community 72 - "UI Theme Showcase"
 Cohesion: 0.27
 Nodes (11): Assets, Generated Illustrations, Placeholder Strategy, Custom Craft, Design MD Reference, Export Formats, Hero Enrichment, Imagery Kit (+3 more)
 
+### Community 73 - "Design Asset Generation"
+Cohesion: 0.49
+Nodes (9): wz-ai-install script, fail(), info(), is_valid_category(), ok(), self_repair(), usage(), validate_skill() (+1 more)
+
 ### Community 74 - "Wizard-AI Installer Script"
 Cohesion: 0.49
-Nodes (9): wz-ai install script, fail(), info(), is_valid_category(), ok(), self_repair(), usage(), validate_skill() (+1 more)
+Nodes (9): wz-ai-lean script, check_binary(), cmd_benchmark(), cmd_gain(), cmd_info(), cmd_read(), cmd_setup(), cmd_status() (+1 more)
 
 ### Community 75 - "Wizard-AI Lean Script"
-Cohesion: 0.49
-Nodes (9): wz-ai lean script, check_binary(), cmd_benchmark(), cmd_gain(), cmd_info(), cmd_read(), cmd_setup(), cmd_status() (+1 more)
-
-### Community 76 - "Agent Swarm Orchestration"
 Cohesion: 0.20
 Nodes (10): Systemic Loop Sentinel, Real-Time Graph Watcher, Graphify, Prompt Loop Engine, Session Manager, Show Active Skill, Workflow Agentic Brain, Auto Router (MoE) (+2 more)
 
-### Community 77 - "Wizard-AI CLI Commands"
+### Community 76 - "Agent Swarm Orchestration"
 Cohesion: 0.20
 Nodes (10): wizard-ai convert, wizard-ai graph, wizard-ai headroom, wizard-ai last30days, wizard-ai optimize, wizard-ai ponytail, wizard-ai rerank, wizard-ai rtk (+2 more)
 
-### Community 78 - "AI Squeeze Workflow"
+### Community 77 - "Wizard-AI CLI Commands"
 Cohesion: 0.20
 Nodes (10): ai-squeeze, Loop 1 - Plan, Loop 2 - Develop, Loop 3 - Debug, MEMORY.md, Sqz, Loop 4 - Refactor, Loop 5 - Release (+2 more)
 
+### Community 78 - "AI Squeeze Workflow"
+Cohesion: 0.13
+Nodes (23): AGENT_TARGETS_ADDITIONAL, AGENT_TARGETS_UNIVERSAL, ALL_REPOS, args, CATEGORIES, { determineAgent }, fs, getConfigDir() (+15 more)
+
 ### Community 79 - "Base Document Validators"
-Cohesion: 0.24
-Nodes (5): Base validator with common validation logic for document files., Validator for Word document XML files against XSD schemas., Validation modules for Word document processing., Validator for PowerPoint presentation XML files against XSD schemas., Validator for tracked changes in Word documents.
+Cohesion: 0.49
+Nodes (8): _add_to_content_types(), _add_to_presentation_rels(), create_slide_from_layout(), duplicate_slide(), _get_next_slide_id(), get_next_slide_number(), Path, Add a new slide to an unpacked PPTX directory.  Usage: python add_slide.py <un
 
 ### Community 80 - "PPTX Slide Generator"
-Cohesion: 0.49
-Nodes (8): _add_to_content_types(), _add_to_presentation_rels(), create_slide_from_layout(), duplicate_slide(), _get_next_slide_id(), get_next_slide_number(), Path, Add a new slide to an unpacked PPTX directory.  Usage: python add_slide.py <unpa
+Cohesion: 0.27
+Nodes (3): main(), Command line tool to validate Office document XML files against XSD schemas and, RedliningValidator
 
 ### Community 81 - "PPTX Validation Modules"
-Cohesion: 0.24
-Nodes (5): Base validator with common validation logic for document files., Validator for Word document XML files against XSD schemas., Validation modules for Word document processing., Validator for PowerPoint presentation XML files against XSD schemas., Validator for tracked changes in Word documents.
+Cohesion: 0.08
+Nodes (23): Baseline brief template (cheap worker, Phase 1), Failure handling, /goodcode — Exhaustive Multi-Agent Orchestration (host-agnostic), Host adapter — READ FIRST, Model tiering (map tiers to your host), Modes (optional, like full-audit), Operating principle, Phase 0 — Frame & recon (+15 more)
 
 ### Community 82 - "XLSX Validation Modules"
-Cohesion: 0.24
-Nodes (5): Base validator with common validation logic for document files., Validator for Word document XML files against XSD schemas., Validation modules for Word document processing., Validator for PowerPoint presentation XML files against XSD schemas., Validator for tracked changes in Word documents.
-
-### Community 83 - "Hallmark Design Guidelines"
 Cohesion: 0.27
 Nodes (10): Hallmark Imagery Kit, Interaction and States, Layout and Space, Hallmark Macrostructures, Microinteractions, Hallmark Motion, Preview Examples, Responsive Guidelines (+2 more)
 
-### Community 84 - "LLM RAG Ecosystem"
+### Community 83 - "Hallmark Design Guidelines"
 Cohesion: 0.22
 Nodes (10): LangChain, LlamaIndex, LLMLingua, headroom, lean-ctx, RTK, SQZ, FAISS (+2 more)
 
-### Community 85 - "Agent Skill Packaging"
-Cohesion: 0.27
-Nodes (8): main(), package_skill(), Path, Check if a path should be excluded from packaging., Package a skill folder into a .skill file.      Args:         skill_path: Path t, should_exclude(), Basic validation of a skill, validate_skill()
+### Community 84 - "LLM RAG Ecosystem"
+Cohesion: 0.31
+Nodes (8): main(), package_skill(), Path, Check if a path should be excluded from packaging., Package a skill folder into a .skill file.      Args:         skill_path: Pat, should_exclude(), Basic validation of a skill, validate_skill()
 
-### Community 86 - "PocketBase Web Stack"
+### Community 85 - "Agent Skill Packaging"
 Cohesion: 0.20
 Nodes (10): PocketBase Dart SDK, PocketBase JavaScript SDK, PocketBase, SQLite, Astro 5, ContactForm.vue, PocketBase (Portfolio Usage), MicioDev Portfolio (+2 more)
 
-### Community 87 - "Wizard-AI RTK Script"
+### Community 86 - "PocketBase Web Stack"
 Cohesion: 0.56
-Nodes (8): wz-ai rtk script, check_binary(), cmd_info(), cmd_init(), cmd_install(), cmd_status(), cmd_wrap(), show_help()
+Nodes (8): wz-ai-rtk script, check_binary(), cmd_info(), cmd_init(), cmd_install(), cmd_status(), cmd_wrap(), show_help()
+
+### Community 87 - "Wizard-AI RTK Script"
+Cohesion: 0.22
+Nodes (9): args, fail(), fs, gitCheck, os, path, run(), { spawnSync } (+1 more)
 
 ### Community 88 - "PDF to Skill Extraction"
 Cohesion: 0.28
@@ -1660,894 +1696,1158 @@ Cohesion: 0.42
 Nodes (7): connect(), nextReconnectDelay(), reloadAfterRecovery(), sessionKey(), setStatus(), showTombstone(), websocketUrl()
 
 ### Community 92 - "Frontend Framework Skills"
-Cohesion: 0.22
-Nodes (9): Gatsby Original Repo README, Ionic Framework Skill README, Ionic Original Repo README, React Native Skill README, React Native Original Repo README, React Skill README, React Original Repo README, Vue Skill README (+1 more)
+Cohesion: 0.47
+Nodes (5): is_slack_ready(), Path, Quick check if GIF is ready for Slack.      Args:         gif_path: Path to G, Validate GIF for Slack (dimensions, size, frame count).      Args:         gi, validate_gif()
 
 ### Community 93 - "Vector Search Utilities"
 Cohesion: 0.22
-Nodes (9): MarkItDown, Mem0, TurboVec, ZVec, Book to Skill, LiteLLM Router, Master Project Bootstrap, mongodb (+1 more)
+Nodes (9): Gatsby Original Repo README, Ionic Framework Skill README, Ionic Original Repo README, React Native Skill README, React Native Original Repo README, React Skill README, React Original Repo README, Vue Skill README (+1 more)
 
 ### Community 94 - "MCP Server Builder"
+Cohesion: 0.22
+Nodes (9): MarkItDown, Mem0, TurboVec, ZVec, Book to Skill, LiteLLM Router, Master Project Bootstrap, mongodb (+1 more)
+
+### Community 95 - "Branch Management Script"
 Cohesion: 0.22
 Nodes (9): MCP Builder README, MCP Server Evaluation Guide, Evaluation Python Script, MCP Server Best Practices, Node/TypeScript MCP Server Guide, McpServer Class, registerTool Method, Zod Validation Schema (+1 more)
 
 ### Community 96 - "Design Application CLI"
-Cohesion: 0.57
-Nodes (7): wz-ai design script, check_installed(), cmd_apply(), cmd_list(), cmd_search(), cmd_show(), show_help()
-
-### Community 97 - "Headroom Compression Script"
-Cohesion: 0.57
-Nodes (7): wz-ai headroom script, check_binary(), cmd_compress(), cmd_info(), cmd_proxy(), cmd_status(), show_help()
+Cohesion: 0.33
+Nodes (8): combineGraphs(), { execSync }, extractDotBlocks(), extractGraphBody(), fs, main(), path, renderToSvg()
 
 ### Community 98 - "Optimization Pipeline Script"
-Cohesion: 0.43
-Nodes (6): wz-ai optimize script, cmd_evaluate(), cmd_loop(), cmd_pipeline(), cmd_status(), usage()
+Cohesion: 0.57
+Nodes (7): wz-ai-design script, check_installed(), cmd_apply(), cmd_list(), cmd_search(), cmd_show(), show_help()
 
 ### Community 99 - "Taste Management Script"
 Cohesion: 0.57
-Nodes (7): wz-ai taste script, check_installed(), cmd_info(), cmd_install(), cmd_list(), cmd_show(), show_help()
+Nodes (7): wz-ai-headroom script, check_binary(), cmd_compress(), cmd_info(), cmd_proxy(), cmd_status(), show_help()
 
 ### Community 100 - "Frontend JavaScript Frameworks"
-Cohesion: 0.25
-Nodes (8): Angular, GraphQL, React, Vue, Gatsby README, Gatsby, Ionic Framework README, Ionic Framework
+Cohesion: 0.43
+Nodes (6): wz-ai-optimize script, cmd_evaluate(), cmd_loop(), cmd_pipeline(), cmd_status(), usage()
 
 ### Community 101 - "Audio Processing AI Tools"
-Cohesion: 0.25
-Nodes (8): AudioSeal, Demucs, memxt, OmniVoice Studio, Opal, Pyannote, Tauri, WhisperX
+Cohesion: 0.57
+Nodes (7): wz-ai-taste script, check_installed(), cmd_info(), cmd_install(), cmd_list(), cmd_show(), show_help()
 
 ### Community 102 - "Multi-Agent Orchestration Skills"
 Cohesion: 0.25
-Nodes (8): CONTEXT.md (Shared Language Template), Dispatching Parallel Agents Skill, Hierarchical Agent Management Skill, PRP — Goodcode Rationale, Exhaustive Multi-Agent Orchestration Skill, Loop 1: Plan & Spec Skill, Loop 2: Develop & TDD Skill, Loop 3 — The Bug Hunter README
+Nodes (8): Angular, GraphQL, React, Vue, Gatsby README, Gatsby, Ionic Framework README, Ionic Framework
 
 ### Community 103 - "Node Testing System Commands"
 Cohesion: 0.25
-Nodes (5): args, fs, path, pkgPath, { spawnSync }
+Nodes (8): AudioSeal, Demucs, memxt, OmniVoice Studio, Opal, Pyannote, Tauri, WhisperX
+
+### Community 104 - "PowerPoint Schema Validation"
+Cohesion: 0.25
+Nodes (8): CONTEXT.md (Shared Language Template), Dispatching Parallel Agents Skill, Hierarchical Agent Management Skill, PRP — Goodcode Rationale, Exhaustive Multi-Agent Orchestration Skill, Loop 1: Plan & Spec Skill, Loop 2: Develop & TDD Skill, Loop 3 — The Bug Hunter README
 
 ### Community 105 - "Social Media Data Sources"
 Cohesion: 0.25
-Nodes (8): GitHub, Hacker News, Last 30 Days Pulse, Polymarket, Reddit, TikTok, X, YouTube
+Nodes (5): args, fs, path, pkgPath, { spawnSync }
 
 ### Community 106 - "PDF Form Automation Scripts"
+Cohesion: 0.08
+Nodes (23): Baseline brief template (cheap worker, Phase 1), Failure handling, /goodcode — Exhaustive Multi-Agent Orchestration (host-agnostic), Host adapter — READ FIRST, Model tiering (map tiers to your host), Modes (optional, like full-audit), Operating principle, Phase 0 — Frame & recon (+15 more)
+
+### Community 107 - "PDF Processing Libraries"
+Cohesion: 0.25
+Nodes (8): GitHub, Hacker News, Last 30 Days Pulse, Polymarket, Reddit, TikTok, X, YouTube
+
+### Community 108 - "PowerPoint Schema Validation"
 Cohesion: 0.25
 Nodes (8): PDF Forms Documentation, Check Bounding Boxes Script, Check Fillable Fields Script, Convert PDF to Images Script, Extract Form Field Info Script, Extract Form Structure Script, Fill Fillable Fields Script, Fill PDF Form With Annotations Script
 
-### Community 107 - "PDF Processing Libraries"
+### Community 109 - "PowerPoint Schema Validation"
 Cohesion: 0.25
 Nodes (8): PDF Processing Advanced Reference, pdf-lib, pdfjs-dist, pdfplumber, poppler-utils, pypdfium2, qpdf, reportlab
 
 ### Community 110 - "Frontend Web Portfolio Stack"
-Cohesion: 0.25
-Nodes (8): Astro 5, PocketBase, Portfolio Template, Tailwind CSS, Vue 3, GSAP, Motion, Taste Skill
-
-### Community 111 - "UI Design Reference Guidelines"
-Cohesion: 0.43
-Nodes (8): Anti-Patterns Reference, Assets Reference, Color Reference, Component Cookbook, Custom Craft Reference, Custom Theme Protocol, Floating Nav on Scroll, Hero Enrichment Reference
+Cohesion: 0.24
+Nodes (5): Base validator with common validation logic for document files., Validator for Word document XML files against XSD schemas., Validation modules for Word document processing., Validator for PowerPoint presentation XML files against XSD schemas., Validator for tracked changes in Word documents.
 
 ### Community 112 - "Code Graph Visualization Tools"
-Cohesion: 0.25
-Nodes (8): Claude Code, Graphify, NetworkX, Tree-sitter, HyperFrames, @hyperframes/core, Remotion, Impeccable
+Cohesion: 0.11
+Nodes (22): CACHE_FILE, COCKPIT_READER, CONFIG_SKILL_DIR, configurePiAgent(), { execSync }, getCockpitStatus(), getRoleAliases(), HOME (+14 more)
 
 ### Community 113 - "AI Coding Assistant Tools"
 Cohesion: 0.25
-Nodes (8): Claude Code, Graphify, Obsidian, Wiki Brain, Antigravity Awesome Skills, Codex CLI, Cursor, Gemini CLI
+Nodes (8): Astro 5, PocketBase, Portfolio Template, Tailwind CSS, Vue 3, GSAP, Motion, Taste Skill
 
 ### Community 114 - "Anthropic Claude Ecosystem"
+Cohesion: 0.43
+Nodes (8): Anti-Patterns Reference, Assets Reference, Color Reference, Component Cookbook, Custom Craft Reference, Custom Theme Protocol, Floating Nav on Scroll, Hero Enrichment Reference
+
+### Community 115 - "Agent Evaluation and Benchmarking"
+Cohesion: 0.25
+Nodes (8): Claude Code, Graphify, NetworkX, Tree-sitter, HyperFrames, @hyperframes/core, Remotion, Impeccable
+
+### Community 116 - "Typography and Layout Styles"
+Cohesion: 0.25
+Nodes (8): Claude Code, Graphify, Obsidian, Wiki Brain, Antigravity Awesome Skills, Codex CLI, Cursor, Gemini CLI
+
+### Community 117 - "UI Hero Component Layouts"
 Cohesion: 0.25
 Nodes (8): Anthropic PBC, Anthropic SDK, Claude API Skill, Claude Fable 5, Claude Haiku 4.5, Claude Opus 4.8, Claude Sonnet 4.6, Managed Agents
 
-### Community 115 - "Agent Evaluation and Benchmarking"
+### Community 118 - "UI Color Theme Collection"
 Cohesion: 0.29
 Nodes (8): Analyzer Agent, Comparator Agent, Grader Agent, aggregate_benchmark.py, generate_review.py, package_skill.py, run_loop.py, Skill Creator
 
-### Community 116 - "Typography and Layout Styles"
+### Community 119 - "AI Project Scaffold CLI"
 Cohesion: 0.32
 Nodes (8): Ft1 Mast-headed, Ft2 Inline-rule single line, Ft3 Index-style category list, Ft4 Dense typographic, Ft5 Statement, Ft6 Letter close, Ft7 Newsletter-first, Ft8 Marquee scroll
 
-### Community 117 - "UI Hero Component Layouts"
+### Community 120 - "Local Data CLI Tools"
 Cohesion: 0.29
 Nodes (8): H2 Split, H4 Stat-Led, H6 Photographic Fold, H7 Demo Video Clipped Edge, H8 Mockup Split, H9 Custom Illustration Centerpiece, Custom Craft Recipe, Hero Enrichment Recipe
 
-### Community 118 - "UI Color Theme Collection"
+### Community 121 - "Local AI Agent Systems"
 Cohesion: 0.25
 Nodes (8): Cobalt Theme, Hum Theme, Aurora Theme, Bloom Theme, Coral Theme, Lumen Theme, Midnight Theme, Specimen Theme
 
-### Community 119 - "AI Project Scaffold CLI"
-Cohesion: 0.52
-Nodes (6): wz-ai scaffold script, cmd_bun(), cmd_express(), cmd_list(), cmd_nuxt(), show_help()
-
-### Community 120 - "Local Data CLI Tools"
-Cohesion: 0.29
-Nodes (7): Claude Code, CLI Printing Press, Codex, discrawl, gogcli, Model Context Protocol (MCP), SQLite
-
-### Community 121 - "Local AI Agent Systems"
-Cohesion: 0.29
-Nodes (7): Agent OS, agentscope-ai, LM Studio, Ollama, QwenPaw, QwenPaw-Flash, ReMe
-
 ### Community 122 - "Software Product Planning Skills"
-Cohesion: 0.33
-Nodes (7): Domain Modeling Skill, Grilling Skill, Prototype Skill, Agent Briefs, Out of Scope Knowledge Base, Triage Workflow, Wayfinder Workflow
+Cohesion: 0.52
+Nodes (6): wz-ai-scaffold script, cmd_bun(), cmd_express(), cmd_list(), cmd_nuxt(), show_help()
 
 ### Community 123 - "CSS Layout Styling Tokens"
 Cohesion: 0.29
-Nodes (7): Slop-Test Gate 56, tokens.css, S1 Left-Margin Numbered, S2 Hanging, S3 Sticky Pinned, S4 Inline (No Break), S5 Bottom-Anchored
+Nodes (7): Claude Code, CLI Printing Press, Codex, discrawl, gogcli, Model Context Protocol (MCP), SQLite
 
 ### Community 124 - "Environment Setup Script Utilities"
-Cohesion: 0.38
-Nodes (6): clone_skill_repo(), install_uv_tool(), PATH, PYO3_USE_ABI3_FORWARD_COMPATIBILITY, setup.sh script, WIZARD_AI_DIR
+Cohesion: 0.29
+Nodes (7): Agent OS, agentscope-ai, LM Studio, Ollama, QwenPaw, QwenPaw-Flash, ReMe
 
 ### Community 125 - "Server Process Management Scripts"
-Cohesion: 0.43
-Nodes (4): command_has_server_id(), is_brainstorm_server(), mark_stopped(), stop-server.sh script
+Cohesion: 0.33
+Nodes (7): Domain Modeling Skill, Grilling Skill, Prototype Skill, Agent Briefs, Out of Scope Knowledge Base, Triage Workflow, Wayfinder Workflow
 
 ### Community 126 - "UI Data Grid Functions"
 Cohesion: 0.29
-Nodes (7): addRow, deleteRow, escapeHtml, render, updateQuery, updateSummary, updateTrigger
+Nodes (7): Slop-Test Gate 56, tokens.css, S1 Left-Margin Numbered, S2 Hanging, S3 Sticky Pinned, S4 Inline (No Break), S5 Bottom-Anchored
 
 ### Community 127 - "UI Interaction Design Rules"
 Cohesion: 0.38
-Nodes (7): Microinteraction Tells, Copy Rules, Microinteractions, Motion, Typography, Typography Two Plus One Rule, Load Visual Ruleset
+Nodes (6): clone_skill_repo(), install_uv_tool(), PATH, PYO3_USE_ABI3_FORWARD_COMPATIBILITY, setup.sh script, WIZARD_AI_DIR
 
 ### Community 128 - "CLI Package Manager Commands"
-Cohesion: 0.60
-Nodes (5): wz-ai caveman script, cmd_info(), cmd_install(), cmd_show_prompt(), show_help()
+Cohesion: 0.43
+Nodes (4): command_has_server_id(), is_brainstorm_server(), mark_stopped(), stop-server.sh script
 
 ### Community 129 - "DevOps Review Worker Tier"
-Cohesion: 0.33
-Nodes (6): Tier 3 — Worker (DevOps), Review Receiver, Review Requester, Systematic Debugger, Verify Before Done, DevOps Integration Chain
+Cohesion: 0.29
+Nodes (7): addRow, deleteRow, escapeHtml, render, updateQuery, updateSummary, updateTrigger
 
 ### Community 130 - "Software Development Workflow Guidelines"
-Cohesion: 0.40
-Nodes (6): Issue Tracker, Code Review, Implement, Mocking Guidelines, Test Driven Development, Test Guidelines
-
-### Community 131 - "Agent Automation Stack CLI"
-Cohesion: 0.33
-Nodes (6): AAS CLI, AAS Core, aas-stack.json, Claude Code, Codex CLI, Skill Workbench
+Cohesion: 0.38
+Nodes (7): Microinteraction Tells, Copy Rules, Microinteractions, Motion, Typography, Typography Two Plus One Rule, Load Visual Ruleset
 
 ### Community 132 - "AI Memory Vector Storage"
 Cohesion: 0.33
-Nodes (6): Bun, Chroma Vector Database, Claude Code, Claude-Mem, SQLite, uv
+Nodes (6): Tier 3 — Worker (DevOps), Review Receiver, Review Requester, Systematic Debugger, Verify Before Done, DevOps Integration Chain
 
 ### Community 133 - "WhatsApp Automation Web Servers"
-Cohesion: 0.33
-Nodes (6): Baileys, MCP Server, NestJS, OpenWA, rmyndharis, whatsapp-web.js
+Cohesion: 0.40
+Nodes (6): Issue Tracker, Code Review, Implement, Mocking Guidelines, Test Driven Development, Test Guidelines
 
 ### Community 134 - "Node CLI Package Publishing"
-Cohesion: 0.40
-Nodes (6): Loop 1 Plan, Releasing Documentation, cli.js, package.json, wizard-ai-cli Package, npm-publish GitHub Workflow
+Cohesion: 0.33
+Nodes (6): AAS CLI, AAS Core, aas-stack.json, Claude Code, Codex CLI, Skill Workbench
 
 ### Community 135 - "Diversified Design Theme Logs"
 Cohesion: 0.33
-Nodes (6): Hallmark Diversification Log, Carnival Theme, Brutal Theme, Manifesto Theme, Riso Theme, Sport Theme
+Nodes (6): Bun, Chroma Vector Database, Claude Code, Claude-Mem, SQLite, uv
 
 ### Community 136 - "Authentication UI Flow Script"
-Cohesion: 0.73
-Nodes (5): ensureDashboardNav(), init(), login(), logout(), updateUI()
+Cohesion: 0.33
+Nodes (6): Baileys, MCP Server, NestJS, OpenWA, rmyndharis, whatsapp-web.js
 
 ### Community 137 - "Event Telemetry Tracking System"
-Cohesion: 0.60
-Nodes (5): buffer_event(), flush_buffer(), get_config(), save_config(), track_event()
+Cohesion: 0.40
+Nodes (6): Loop 1 Plan, Releasing Documentation, cli.js, package.json, wizard-ai-cli Package, npm-publish GitHub Workflow
 
 ### Community 138 - "Cross-Platform AI Worker Models"
 Cohesion: 0.33
-Nodes (6): aisuite, Anthropic, Model Context Protocol (MCP), Ollama, OpenAI, OpenWorker
+Nodes (6): Hallmark Diversification Log, Carnival Theme, Brutal Theme, Manifesto Theme, Riso Theme, Sport Theme
 
 ### Community 139 - "Angular Material Web Stack"
-Cohesion: 0.33
-Nodes (6): Angular, Angular CLI, Angular Material, JavaScript, Node.js, TypeScript
+Cohesion: 0.73
+Nodes (5): ensureDashboardNav(), init(), login(), logout(), updateUI()
 
 ### Community 140 - "Office File Packaging Script"
 Cohesion: 0.60
-Nodes (5): _condense_xml(), pack(), Path, Pack a directory into a DOCX, PPTX, or XLSX file.  Validates with auto-repair, c, _run_validation()
+Nodes (5): buffer_event(), flush_buffer(), get_config(), save_config(), track_event()
 
 ### Community 141 - "Office File Unpacking Script"
-Cohesion: 0.60
-Nodes (5): _escape_smart_quotes(), _pretty_print_xml(), Path, Unpack Office files (DOCX, PPTX, XLSX) for editing.  Extracts the ZIP archive, p, unpack()
+Cohesion: 0.33
+Nodes (6): aisuite, Anthropic, Model Context Protocol (MCP), Ollama, OpenAI, OpenWorker
 
 ### Community 142 - "PPTX File Packaging Script"
-Cohesion: 0.60
-Nodes (5): _condense_xml(), pack(), Path, Pack a directory into a DOCX, PPTX, or XLSX file.  Validates with auto-repair, c, _run_validation()
+Cohesion: 0.33
+Nodes (6): Angular, Angular CLI, Angular Material, JavaScript, Node.js, TypeScript
 
 ### Community 143 - "PPTX File Unpacking Script"
-Cohesion: 0.60
-Nodes (5): _escape_smart_quotes(), _pretty_print_xml(), Path, Unpack Office files (DOCX, PPTX, XLSX) for editing.  Extracts the ZIP archive, p, unpack()
+Cohesion: 0.09
+Nodes (20): Before / After, Benchmarks, How It Work, <img src="../../docs/assets/dancing-rock.svg" width="20" height="20" alt="rock"/> Caveman (285 tokens), Install, 📄 Original (706 tokens), Part of Caveman, Security (+12 more)
 
 ### Community 144 - "Slack GIF Validation Script"
-Cohesion: 0.47
-Nodes (5): is_slack_ready(), Path, Quick check if GIF is ready for Slack.      Args:         gif_path: Path to GIF, Validate GIF for Slack (dimensions, size, frame count).      Args:         gif_p, validate_gif()
+Cohesion: 0.09
+Nodes (20): Before / After, Benchmarks, How It Work, <img src="../../docs/assets/dancing-rock.svg" width="20" height="20" alt="rock"/> Caveman (285 tokens), Install, 📄 Original (706 tokens), Part of Caveman, Security (+12 more)
 
 ### Community 145 - "XLSX File Packaging Script"
 Cohesion: 0.60
-Nodes (5): _condense_xml(), pack(), Path, Pack a directory into a DOCX, PPTX, or XLSX file.  Validates with auto-repair, c, _run_validation()
+Nodes (5): _condense_xml(), pack(), Path, Pack a directory into a DOCX, PPTX, or XLSX file.  Validates with auto-repair,, _run_validation()
 
 ### Community 146 - "XLSX File Unpacking Script"
-Cohesion: 0.60
-Nodes (5): _escape_smart_quotes(), _pretty_print_xml(), Path, Unpack Office files (DOCX, PPTX, XLSX) for editing.  Extracts the ZIP archive, p, unpack()
+Cohesion: 0.09
+Nodes (20): Before / After, Benchmarks, How It Work, <img src="../../docs/assets/dancing-rock.svg" width="20" height="20" alt="rock"/> Caveman (285 tokens), Install, 📄 Original (706 tokens), Part of Caveman, Security (+12 more)
 
 ### Community 147 - "UI Frontend Design Skills"
-Cohesion: 0.33
-Nodes (6): Awesome Design Skill, Canvas Design Skill, Frontend Design Skill, Infographic Builder Skill, Kinetics UI Skill, MengTo Skills
+Cohesion: 0.10
+Nodes (19): ARCHITECTURAL DECISIONS, AUTH UI (CRITICAL FEATURE EXAMPLE), DEFINITION OF DONE (DoD) — per milestone, DESIGN SYSTEM, DEVELOPMENT LOG — docs/DEVELOPMENT_STATUS.md, Enterprise Development Protocol (Mandatory), FUNCTION COMPLETION / INCOMPLETE CODE, FUNDAMENTAL RULES (+11 more)
 
 ### Community 148 - "Font and Art Licenses"
-Cohesion: 0.33
-Nodes (6): Arsenal SC Font License, Big Shoulders Font License, Boldonse Font License, Bricolage Grotesque Font License, Canvas Art License, Canvas Art Skill README
+Cohesion: 0.10
+Nodes (17): Implementer Subagent Prompt Template, Advantages, Constructing Reviewer Prompts, Durable Progress, Example Workflow, File Handoffs, Handling Implementer Status, Handling Reviewer ⚠️ Items (+9 more)
 
 ### Community 149 - "Document Extraction and Processing"
 Cohesion: 0.33
-Nodes (6): Docling, Book to Skill, cheatsheet.md, extract.py, glossary.md, patterns.md
+Nodes (6): Awesome Design Skill, Canvas Design Skill, Frontend Design Skill, Infographic Builder Skill, Kinetics UI Skill, MengTo Skills
 
 ### Community 150 - "Human-Agent Memory Interaction"
 Cohesion: 0.33
-Nodes (6): agentmemory, Composio, Memory Tree, OpenHuman, TokenJuice, openhuman Skill
+Nodes (6): Arsenal SC Font License, Big Shoulders Font License, Boldonse Font License, Bricolage Grotesque Font License, Canvas Art License, Canvas Art Skill README
 
 ### Community 151 - "Advanced Text-to-Speech Models"
 Cohesion: 0.33
-Nodes (6): Length-Aware Rotary Position Embedding for Text-Speech Alignment, ONNX Runtime, RobustSpeechFlow: Learning Robust Text-to-Speech Trajectories via Augmentation-based Contrastive Flow Matching, Training Flow Matching Models with Reliable Labels via Self-Purification, Supertonic, SupertonicTTS: Towards Highly Efficient and Streamlined Text-to-Speech System
+Nodes (6): Docling, Book to Skill, cheatsheet.md, extract.py, glossary.md, patterns.md
 
 ### Community 152 - "UI Design Theme Genres"
 Cohesion: 0.33
-Nodes (6): Modern-Minimal Genre, Theme: Cobalt, Theme: Coral, Playful Genre, Theme: Hum, Macrostructure: Letter
+Nodes (6): agentmemory, Composio, Memory Tree, OpenHuman, TokenJuice, openhuman Skill
 
 ### Community 153 - "Extensible Development Workflow Skills"
-Cohesion: 0.47
-Nodes (6): Kinetics UI, Loop 1: Plan, Loop 2: Develop, MengTo Skills, MinerU, Pi Extensible Workflows
+Cohesion: 0.33
+Nodes (6): Length-Aware Rotary Position Embedding for Text-Speech Alignment, ONNX Runtime, RobustSpeechFlow: Learning Robust Text-to-Speech Trajectories via Augmentation-based Contrastive Flow Matching, Training Flow Matching Models with Reliable Labels via Self-Purification, Supertonic, SupertonicTTS: Towards Highly Efficient and Streamlined Text-to-Speech System
 
 ### Community 154 - "Voice and Audio Processing"
 Cohesion: 0.33
-Nodes (6): OmniVoice-Studio, Demucs, memxt, Opal, Pyannote, WhisperX
+Nodes (6): Modern-Minimal Genre, Theme: Cobalt, Theme: Coral, Playful Genre, Theme: Hum, Macrostructure: Letter
+
+### Community 155 - "Static HTML Snapshot Tool"
+Cohesion: 0.60
+Nodes (5): Kinetics UI, Loop 1: Plan, Loop 2: Develop, MengTo Skills, MinerU
 
 ### Community 156 - "TTS Audio Research Papers"
 Cohesion: 0.33
+Nodes (6): OmniVoice-Studio, Demucs, memxt, Opal, Pyannote, WhisperX
+
+### Community 158 - "AI Agent IDE Memory"
+Cohesion: 0.33
 Nodes (6): LARoPE Paper, Self-Purifying Flow Matching Paper, SupertonicTTS Paper, ONNX Runtime, Supertonic, RobustSpeechFlow Paper
 
-### Community 157 - "Architecture Decision Record Formats"
+### Community 159 - "PowerShell CLI Help System"
 Cohesion: 0.33
 Nodes (6): ADR Format, Context Format, Domain Modeling, Grill Me, Grill with Docs, Grilling
 
-### Community 158 - "AI Agent IDE Memory"
+### Community 160 - "Quota Management CLI Script"
 Cohesion: 0.50
 Nodes (5): Antigravity IDE, Cockpit Tools, Session Memory, Notes on the User's World, Pi AI Agent
 
-### Community 160 - "Quota Management CLI Script"
-Cohesion: 0.60
-Nodes (4): get_cockpit_db_path(), get_cockpit_status(), main(), Legge lo stato delle quote e dei provider da Cockpit Tools.     Se il file non e
-
 ### Community 162 - "Local Agentic Hub Ecosystem"
-Cohesion: 0.40
-Nodes (5): Claude Code Configuration, Wizard-AI Local Hub UI, MEMORY.md (Persistent Memory & Session History), Master Optimizer & Agentic Brain Workflow Skill, Wizard-AI Hub Skill
-
-### Community 163 - "Kafka Java Scala Ecosystem"
-Cohesion: 0.40
-Nodes (5): Gradle, Java, Scala, Apache Kafka README, Apache Kafka
+Cohesion: 0.60
+Nodes (4): get_cockpit_db_path(), get_cockpit_status(), main(), Legge lo stato delle quote e dei provider da Cockpit Tools.     Se il file non
 
 ### Community 164 - "NVIDIA AI ML Infrastructure"
 Cohesion: 0.40
-Nodes (5): AI/ML Infrastructure, NVIDIA, Megatron-Bridge, NeMo-RL, NemoClaw
+Nodes (5): Claude Code Configuration, Wizard-AI Local Hub UI, MEMORY.md (Persistent Memory & Session History), Master Optimizer & Agentic Brain Workflow Skill, Wizard-AI Hub Skill
 
 ### Community 165 - "Tauri Desktop Application Stack"
 Cohesion: 0.40
-Nodes (5): Antigravity Manager, Cockpit Tools, Node.js, Rust, Tauri
+Nodes (5): Gradle, Java, Scala, Apache Kafka README, Apache Kafka
 
 ### Community 166 - "Express TypeScript Backend Starter"
 Cohesion: 0.40
-Nodes (5): Express.js, Express Typescript Starter, Oxlint, Vitest, Zod
+Nodes (5): AI/ML Infrastructure, NVIDIA, Megatron-Bridge, NeMo-RL, NemoClaw
 
 ### Community 167 - "Information Retrieval Ranking Models"
 Cohesion: 0.40
-Nodes (5): COS-Mix, FlashRank, ms-marco-TinyBERT-L-2-v2, rank-T5-flan, Openai tiktoken
+Nodes (5): Antigravity Manager, Cockpit Tools, Node.js, Rust, Tauri
 
 ### Community 168 - "Software Development Lifecycle Loops"
 Cohesion: 0.40
-Nodes (5): Loop 1: Plan & Spec, Loop 2: Develop & TDD, Loop 3: Debug & Verify, Loop 4: Refactor, Loop 5: Release
+Nodes (5): Express.js, Express Typescript Starter, Oxlint, Vitest, Zod
 
 ### Community 169 - "Anthropic Multi-Language SDKs"
 Cohesion: 0.40
-Nodes (5): BetaToolRunner, Anthropic C# SDK, Anthropic Go SDK, Claude API C#, Claude API Go
+Nodes (5): COS-Mix, FlashRank, ms-marco-TinyBERT-L-2-v2, rank-T5-flan, Openai tiktoken
 
 ### Community 170 - "Stitch Design System Integration"
-Cohesion: 0.50
-Nodes (5): Google Stitch, Taste Standard Design System, upload_to_stitch.py, stitch-taste-design Skill, stitch-upload-to-stitch Skill
+Cohesion: 0.40
+Nodes (5): Loop 1: Plan & Spec, Loop 2: Develop & TDD, Loop 3: Debug & Verify, Loop 4: Refactor, Loop 5: Release
 
 ### Community 171 - "Async API Client Methods"
 Cohesion: 0.40
-Nodes (5): AsyncClient, HTTPStatusError, example_search_users, _handle_api_error, _make_api_request
+Nodes (5): BetaToolRunner, Anthropic C# SDK, Anthropic Go SDK, Claude API C#, Claude API Go
 
 ### Community 172 - "Marketplace UI Rendering Functions"
+Cohesion: 0.50
+Nodes (5): Google Stitch, Taste Standard Design System, upload_to_stitch.py, stitch-taste-design Skill, stitch-upload-to-stitch Skill
+
+### Community 173 - "Telemetry Tracking Initialization Script"
+Cohesion: 0.40
+Nodes (5): AsyncClient, HTTPStatusError, example_search_users, _handle_api_error, _make_api_request
+
+### Community 174 - "Skill Metadata Processing Script"
 Cohesion: 0.80
 Nodes (4): init(), renderGrid(), renderTabs(), switchTab()
 
-### Community 174 - "Skill Metadata Processing Script"
+### Community 176 - "JavaScript Core Runtimes"
 Cohesion: 0.50
 Nodes (4): determineMetadata(), fs, path, processSkills()
 
-### Community 175 - "Codebase Architecture Design Improvement"
-Cohesion: 0.40
-Nodes (5): Codebase Design: Deepening, Codebase Design: Design It Twice, Codebase Design Skill, Architecture Improver HTML Report Format, Architecture Improver Skill
-
-### Community 176 - "JavaScript Core Runtimes"
-Cohesion: 0.40
-Nodes (5): Bun, Bun Install, Bun Test, JavaScriptCore, Node.js
-
 ### Community 177 - "Deno Rust JavaScript Runtime"
-Cohesion: 0.40
-Nodes (5): Deno, JSR, Rust, Tokio, V8
+Cohesion: 0.60
+Nodes (3): Clone-SkillRepo(), Install-UvTool(), Write-Log()
 
 ### Community 178 - "Graphify Data Processing Pipeline"
 Cohesion: 0.40
-Nodes (5): Graphify Build From JSON, Graphify Cluster, Graphify Detect, Graphify Extract, Graphify
+Nodes (5): Codebase Design: Deepening, Codebase Design: Design It Twice, Codebase Design Skill, Architecture Improver HTML Report Format, Architecture Improver Skill
 
 ### Community 179 - "Communication Document Templates"
 Cohesion: 0.40
-Nodes (5): 3P Updates Template, Company Newsletter Template, FAQ Answers Template, General Comms Template, Internal Comms Skill
+Nodes (5): Bun, Bun Install, Bun Test, JavaScriptCore, Node.js
 
 ### Community 180 - "Creator Social Media Scraping"
-Cohesion: 0.50
-Nodes (5): categories.py, Last 30 Days Skill, last30days.py, Polymarket, ScrapeCreators
+Cohesion: 0.40
+Nodes (5): Deno, JSR, Rust, Tokio, V8
 
 ### Community 181 - "Slack GIF Python Dependencies"
 Cohesion: 0.40
-Nodes (5): Slack GIF Creator README, Slack GIF Creator Requirements, ImageIO, NumPy, Pillow
+Nodes (5): Graphify Build From JSON, Graphify Cluster, Graphify Detect, Graphify Extract, Graphify
 
 ### Community 182 - "Multi-Platform JavaScript Frameworks"
 Cohesion: 0.40
-Nodes (5): Gatsby Framework, Ionic Framework, React Native, React Framework, Vue.js Framework
+Nodes (5): 3P Updates Template, Company Newsletter Template, FAQ Answers Template, General Comms Template, Internal Comms Skill
 
 ### Community 183 - "Markdown File Conversion Utilities"
-Cohesion: 0.40
-Nodes (5): convert, convert_local, convert_response, convert_stream, MarkItDown
+Cohesion: 0.50
+Nodes (5): categories.py, Last 30 Days Skill, last30days.py, Polymarket, ScrapeCreators
 
 ### Community 184 - "Personal Graph Database Tools"
 Cohesion: 0.40
-Nodes (5): libsql, Networkx, Personal Graph, PyG, Turso DB
+Nodes (5): Slack GIF Creator README, Slack GIF Creator Requirements, ImageIO, NumPy, Pillow
 
 ### Community 185 - "Anthropic PHP API Clients"
 Cohesion: 0.40
-Nodes (5): Anthropic PHP Agents API, Anthropic PHP Client, Anthropic PHP Environments API, Anthropic PHP Sessions API, Anthropic PHP Vaults API
+Nodes (5): Gatsby Framework, Ionic Framework, React Native, React Framework, Vue.js Framework
 
 ### Community 186 - "Claude Task Adaptive Thinking"
 Cohesion: 0.40
-Nodes (5): Adaptive Thinking, Claude Opus 4.6, Claude Opus 4.7, Claude Opus 4.8, Task Budget
+Nodes (5): convert, convert_local, convert_response, convert_stream, MarkItDown
 
 ### Community 187 - "LiteLLM Multi-Cloud Deployments"
 Cohesion: 0.40
-Nodes (5): LiteLLM README, LiteLLM Proxy Server, LiteLLM Python SDK, LiteLLM AWS Terraform Deployment, LiteLLM GCP Terraform Deployment
+Nodes (5): libsql, Networkx, Personal Graph, PyG, Turso DB
 
 ### Community 188 - "Issue Tracker Developer Rules"
 Cohesion: 0.40
-Nodes (5): Domain Docs Rules, GitHub Issue Tracker Rules, GitLab Issue Tracker Rules, Local Issue Tracker Rules, Setup Matt Pocock's Skills
+Nodes (5): Anthropic PHP Agents API, Anthropic PHP Client, Anthropic PHP Environments API, Anthropic PHP Sessions API, Anthropic PHP Vaults API
 
 ### Community 189 - "Qwen AI Agent Ecosystem"
 Cohesion: 0.40
-Nodes (5): QwenPaw Document, AgentScope, CoPaw, ModelScope, QwenPaw
+Nodes (5): Adaptive Thinking, Claude Opus 4.6, Claude Opus 4.7, Claude Opus 4.8, Task Budget
 
 ### Community 190 - "UI Grid Layout Components"
 Cohesion: 0.40
-Nodes (5): F1 Bento Grid Component, F2 Sticky-Scroll Stack Component, F3 Tabular Spec Sheet Component, F4 Step Sequence Component, F5 Annotated Screenshot Component
+Nodes (5): LiteLLM README, LiteLLM Proxy Server, LiteLLM Python SDK, LiteLLM AWS Terraform Deployment, LiteLLM GCP Terraform Deployment
 
 ### Community 191 - "Design Agency Portfolio Layouts"
 Cohesion: 0.40
-Nodes (5): 14islands, Bureau Borsche, Locomotive, Pentagram, Portfolio Grid
+Nodes (5): Domain Docs Rules, GitHub Issue Tracker Rules, GitLab Issue Tracker Rules, Local Issue Tracker Rules, Setup Matt Pocock's Skills
 
 ### Community 192 - "WhatsApp NestJS Backend Framework"
 Cohesion: 0.40
-Nodes (5): Baileys, NestJS, OpenWA, TypeORM, whatsapp-web.js
+Nodes (5): QwenPaw Document, AgentScope, CoPaw, ModelScope, QwenPaw
 
 ### Community 193 - "Local LLM Agent Utilities"
 Cohesion: 0.40
-Nodes (5): AgentScope, LM Studio, Ollama, QwenPaw, QwenPaw-Flash
+Nodes (5): F1 Bento Grid Component, F2 Sticky-Scroll Stack Component, F3 Tabular Spec Sheet Component, F4 Step Sequence Component, F5 Annotated Screenshot Component
 
 ### Community 194 - "React Native Mobile Stack"
-Cohesion: 0.50
-Nodes (5): Expo, React, React Native, React, React Native
+Cohesion: 0.40
+Nodes (5): 14islands, Bureau Borsche, Locomotive, Pentagram, Portfolio Grid
 
 ### Community 195 - "Stitch Site Build Templates"
 Cohesion: 0.40
-Nodes (5): next-prompt.md Example, SITE.md Example, Stitch Build Loop Skill, Baton File Schema, Site Template
+Nodes (5): Baileys, NestJS, OpenWA, TypeORM, whatsapp-web.js
 
 ### Community 196 - "React Data Table Component"
 Cohesion: 0.40
-Nodes (3): columns, data, User
+Nodes (5): AgentScope, LM Studio, Ollama, QwenPaw, QwenPaw-Flash
 
 ### Community 197 - "Desktop Voice AI Stack"
-Cohesion: 0.40
-Nodes (5): FastMCP, Qwen3, Tauri, Voicebox, Whisper
+Cohesion: 0.50
+Nodes (5): Expo, React, React Native, React, React Native
 
 ### Community 198 - "Agent Driven Development Workflows"
 Cohesion: 0.40
-Nodes (5): Executing Plans, Finishing a Development Branch, Subagent Driven Development, Using Git Worktrees, Writing Plans
+Nodes (5): next-prompt.md Example, SITE.md Example, Stitch Build Loop Skill, Baton File Schema, Site Template
 
 ### Community 199 - "Educational Content Format Templates"
 Cohesion: 0.40
-Nodes (5): Glossary Format, Learning Record Format, Mission Format, Resources Format, Teach
+Nodes (3): columns, data, User
 
 ### Community 200 - "AI Memory Fallback Script"
+Cohesion: 0.40
+Nodes (5): FastMCP, Qwen3, Tauri, Voicebox, Whisper
+
+### Community 201 - "AI Debug CLI Script"
+Cohesion: 0.40
+Nodes (5): Executing Plans, Finishing a Development Branch, Subagent Driven Development, Using Git Worktrees, Writing Plans
+
+### Community 202 - "AI Loop Sentinel Script"
+Cohesion: 0.40
+Nodes (5): Glossary Format, Learning Record Format, Mission Format, Resources Format, Teach
+
+### Community 203 - "AI Prompt Execution Script"
 Cohesion: 0.83
 Nodes (3): load(), main(), save()
 
-### Community 201 - "AI Debug CLI Script"
-Cohesion: 0.83
-Nodes (3): wz-ai debug script, gate_status(), usage()
-
-### Community 202 - "AI Loop Sentinel Script"
-Cohesion: 0.83
-Nodes (3): wz-ai loop-sentinel script, calculate_and_route(), show_banner()
-
 ### Community 204 - "AI Update Notification Script"
 Cohesion: 0.83
-Nodes (3): wz-ai update script, log(), show_notification()
+Nodes (3): wz-ai-debug script, gate_status(), usage()
 
 ### Community 205 - "Cockpit Tools and Graphify"
-Cohesion: 0.50
-Nodes (4): Commands Reference, Cockpit Tools, Token Reduction Graphify IT, Graphify
-
-### Community 206 - "Angular Framework Ecosystem"
-Cohesion: 0.50
-Nodes (4): Angular, Angular CLI, Angular Core, Angular Material
+Cohesion: 0.83
+Nodes (3): wz-ai-loop-sentinel script, calculate_and_route(), show_banner()
 
 ### Community 207 - "JavaScript Runtimes and Rust"
-Cohesion: 0.50
-Nodes (4): Bun, JavaScriptCore, Node.js, Rust
+Cohesion: 0.83
+Nodes (3): wz-ai-update script, log(), show_notification()
 
 ### Community 208 - "Deno Rust Architecture Runtimes"
 Cohesion: 0.50
-Nodes (4): Deno, Rust, Tokio, V8
+Nodes (4): Commands Reference, Cockpit Tools, Token Reduction Graphify IT, Graphify
 
 ### Community 209 - "Flutter and Dart Framework"
 Cohesion: 0.50
-Nodes (4): Dart, Flutter, Impeller, Skia
+Nodes (4): Angular, Angular CLI, Angular Core, Angular Material
 
 ### Community 210 - "LLM App Development Tools"
 Cohesion: 0.50
-Nodes (4): LangChain, LlamaIndex, LLMLingua, Prompt flow
+Nodes (4): Bun, JavaScriptCore, Node.js, Rust
 
 ### Community 211 - "MongoDB Database Ecosystem"
 Cohesion: 0.50
-Nodes (4): mongo, mongod, MongoDB, mongos
+Nodes (4): Deno, Rust, Tokio, V8
 
 ### Community 212 - "Micro Agent Framework"
 Cohesion: 0.50
-Nodes (4): OpenHuman, agentmemory, tinyagents, tinyflows
+Nodes (4): Dart, Flutter, Impeller, Skia
 
 ### Community 213 - "RAG and Graph Databases"
 Cohesion: 0.50
-Nodes (4): GraphDB, PersonalRM, RAG, VliteVSS
+Nodes (4): LangChain, LlamaIndex, LLMLingua, Prompt flow
 
 ### Community 214 - "PocketBase SDKs and Components"
 Cohesion: 0.50
-Nodes (4): PocketBase, pocketbase/dart-sdk, pocketbase/js-sdk, ContactForm.vue
+Nodes (4): mongo, mongod, MongoDB, mongos
 
 ### Community 215 - "Spec-Driven Development Tools"
 Cohesion: 0.50
-Nodes (4): Spec-Driven Development, Spec Kit, Specify CLI, uv
+Nodes (4): OpenHuman, agentmemory, tinyagents, tinyflows
 
 ### Community 216 - "SQZ CLI MCP Tools"
 Cohesion: 0.50
-Nodes (4): Claude Code, sqz, sqz-cli, sqz-mcp
+Nodes (4): GraphDB, PersonalRM, RAG, VliteVSS
 
 ### Community 217 - "Graphify Build and Analysis"
 Cohesion: 0.50
-Nodes (4): graphify.analyze, graphify.build, graphify.detect, Graphify Update Reference
+Nodes (4): PocketBase, pocketbase/dart-sdk, pocketbase/js-sdk, ContactForm.vue
 
 ### Community 218 - "Frontend App Routing State"
 Cohesion: 0.50
-Nodes (3): app, AppState, Routes
+Nodes (4): Spec-Driven Development, Spec Kit, Specify CLI, uv
 
 ### Community 219 - "Dashboard UI JavaScript"
-Cohesion: 0.83
-Nodes (3): fetchQuotaStatus(), init(), renderChart()
+Cohesion: 0.50
+Nodes (4): Claude Code, sqz, sqz-cli, sqz-mcp
 
 ### Community 220 - "Installer UI JavaScript"
-Cohesion: 0.83
-Nodes (3): complete(), init(), renderSteps()
+Cohesion: 0.50
+Nodes (4): graphify.analyze, graphify.build, graphify.detect, Graphify Update Reference
 
 ### Community 221 - "DevOps Worker Diagnostics"
 Cohesion: 0.50
-Nodes (4): Tier 3 — Worker (DevOps), Branch Finisher, Matt's Code Review, Matt's Bug Diagnosis
+Nodes (3): app, AppState, Routes
+
+### Community 222 - "Discord Viral Campaign Publisher"
+Cohesion: 0.83
+Nodes (3): fetchQuotaStatus(), init(), renderChart()
+
+### Community 223 - "PowerShell Skill Setup Script"
+Cohesion: 0.83
+Nodes (3): complete(), init(), renderSteps()
 
 ### Community 224 - "Agentic Awesome Skills"
 Cohesion: 0.50
-Nodes (4): AAS Core, Agentic Awesome Skills, Claude, Codex
-
-### Community 225 - "Document Processing Tools"
-Cohesion: 0.50
-Nodes (4): book-to-skill, Docling, ebooklib, pdftotext
+Nodes (4): Tier 3 — Worker (DevOps), Branch Finisher, Matt's Code Review, Matt's Bug Diagnosis
 
 ### Community 226 - "AI Auto-Debug Script"
-Cohesion: 0.83
-Nodes (3): ai-debug script, gate_status(), usage()
+Cohesion: 0.50
+Nodes (4): AAS Core, Agentic Awesome Skills, Claude, Codex
 
 ### Community 227 - "Git Pre-Commit Formatting Tools"
 Cohesion: 0.50
-Nodes (4): Husky, lint-staged, Prettier, Setup Pre-Commit
+Nodes (4): book-to-skill, Docling, ebooklib, pdftotext
 
 ### Community 228 - "Webapp Server Readiness Poller"
-Cohesion: 0.67
-Nodes (3): is_server_ready(), main(), Wait for server to be ready by polling the port.
+Cohesion: 0.83
+Nodes (3): ai-debug script, gate_status(), usage()
 
 ### Community 229 - "HyperFrames Video Generation Framework"
 Cohesion: 0.50
-Nodes (4): FFmpeg, HyperFrames Framework, Remotion, HyperFrames Skill
+Nodes (4): Husky, lint-staged, Prettier, Setup Pre-Commit
 
 ### Community 230 - "PDF Form Structure Extractor"
 Cohesion: 0.67
-Nodes (3): extract_form_structure(), main(), Extract form structure from a non-fillable PDF.  This script analyzes the PDF to
+Nodes (3): is_server_ready(), main(), Wait for server to be ready by polling the port.
 
 ### Community 231 - "React Presentation Generation Stack"
 Cohesion: 0.50
-Nodes (4): PptxGenJS Tutorial, React, React DOM Server, Sharp
+Nodes (4): FFmpeg, HyperFrames Framework, Remotion, HyperFrames Skill
 
 ### Community 232 - "Express TypeScript Test Stack"
-Cohesion: 0.50
-Nodes (4): Express, Express TypeScript Starter, Vitest, Zod
+Cohesion: 0.67
+Nodes (3): extract_form_structure(), main(), Extract form structure from a non-fillable PDF.  This script analyzes the PDF
 
 ### Community 233 - "Deno Architecture Documentation"
 Cohesion: 0.50
-Nodes (4): Deno Original Repo README, Rust, Tokio, V8
+Nodes (4): PptxGenJS Tutorial, React, React DOM Server, Sharp
 
 ### Community 234 - "Phantom UI Skeleton Generator"
 Cohesion: 0.50
-Nodes (4): phantom-ui README, @findify/skeleton-generator, page-skeleton-webpack-plugin, phantom-ui
+Nodes (4): Express, Express TypeScript Starter, Vitest, Zod
 
 ### Community 235 - "Portfolio Template Repositories"
 Cohesion: 0.50
-Nodes (4): Portfolio Template README, Portfolio Template, MicioDev Portfolio README, MicioDev Portfolio
+Nodes (4): Deno Original Repo README, Rust, Tokio, V8
 
 ### Community 236 - "React Tailwind UI Stack"
 Cohesion: 0.50
-Nodes (4): React, shadcn/ui, Tailwind CSS, Web Artifacts Builder
+Nodes (4): phantom-ui README, @findify/skeleton-generator, page-skeleton-webpack-plugin, phantom-ui
 
 ### Community 237 - "Wizard-AI Spec Kit Skills"
 Cohesion: 0.50
-Nodes (4): Gentle AI Skill, Engram, Wizard-AI Spec Kit, Loop 1 Plan Readme
+Nodes (4): Portfolio Template README, Portfolio Template, MicioDev Portfolio README, MicioDev Portfolio
 
 ### Community 238 - "Ionic Framework Ecosystem"
 Cohesion: 0.50
-Nodes (4): Ionic Framework, @ionic/angular, @ionic/core, @ionic/react
+Nodes (4): React, shadcn/ui, Tailwind CSS, Web Artifacts Builder
 
 ### Community 239 - "Chat Memory Search"
-Cohesion: 0.67
-Nodes (4): add, chat_with_memories, Memory, search
+Cohesion: 0.50
+Nodes (4): Gentle AI Skill, Engram, Wizard-AI Spec Kit, Loop 1 Plan Readme
 
 ### Community 240 - "Obsidian Wiki-Brain Graphify"
 Cohesion: 0.50
-Nodes (4): Graphify, LLM Wiki pattern, Obsidian, wiki-brain-skill
+Nodes (4): Ionic Framework, @ionic/angular, @ionic/core, @ionic/react
 
 ### Community 241 - "UI Design Skills"
-Cohesion: 0.50
-Nodes (4): Awesome Design, Kinetics UI, MengTo Skills, Taste Skill
+Cohesion: 0.67
+Nodes (4): add, chat_with_memories, Memory, search
 
 ### Community 242 - "AI Coding Assistant CLIs"
 Cohesion: 0.50
-Nodes (4): antigravity-awesome-skills, Claude Code, Cursor, Gemini CLI
+Nodes (4): Graphify, LLM Wiki pattern, Obsidian, wiki-brain-skill
 
 ### Community 243 - "Anthropic Tools Base Model"
 Cohesion: 0.50
-Nodes (4): Anthropic::BaseModel, Anthropic::BaseTool, GetWeather, GetWeatherInput
+Nodes (4): Awesome Design, Kinetics UI, MengTo Skills, Taste Skill
 
 ### Community 244 - "Claude API Concepts"
 Cohesion: 0.50
-Nodes (3): Claude Opus 4.8, Prompt Caching Concepts, messages.create()
+Nodes (4): antigravity-awesome-skills, Claude Code, Cursor, Gemini CLI
+
+### Community 245 - "Agent Session Events API"
+Cohesion: 0.50
+Nodes (4): Anthropic::BaseModel, Anthropic::BaseTool, GetWeather, GetWeatherInput
 
 ### Community 246 - "Cockpit Proxy Bridge Tools"
 Cohesion: 0.50
-Nodes (4): Cockpit Bridge, cockpit-reader.mjs, wz-ai proxy, Cockpit Tools
-
-### Community 247 - "Specification Driven Development Tools"
-Cohesion: 0.50
-Nodes (4): Engram, Gentle AI, Specification-Driven Development (SDD), Wizard-AI Spec Kit
+Nodes (3): Claude Opus 4.8, Prompt Caching Concepts, messages.create()
 
 ### Community 248 - "OmniVoice Audio Processing Tools"
 Cohesion: 0.50
-Nodes (4): Demucs, OmniVoice Studio, TTSBackend, WhisperX
+Nodes (4): Cockpit Bridge, cockpit-reader.mjs, wz-ai-proxy, Cockpit Tools
 
 ### Community 249 - "Engineering Excellence Guidelines"
 Cohesion: 0.50
-Nodes (4): Accessibility Guidelines, Performance Guidelines, Security Guidelines, Engineering Excellence Skill
+Nodes (4): Engram, Gentle AI, Specification-Driven Development (SDD), Wizard-AI Spec Kit
 
 ### Community 250 - "Engineering Excellence Standards"
 Cohesion: 0.50
-Nodes (4): Engineering Excellence, Engineering Excellence - i18n, Engineering Excellence - Performance, Engineering Excellence - SEO
+Nodes (4): Demucs, OmniVoice Studio, TTSBackend, WhisperX
 
 ### Community 251 - "Engineering Reference Documentation"
 Cohesion: 0.50
-Nodes (4): EE Accessibility Reference, EE Security Reference, EE TDD Reference, Engineering Excellence Skill
+Nodes (4): Engineering Excellence, Engineering Excellence - i18n, Engineering Excellence - Performance, Engineering Excellence - SEO
 
 ### Community 252 - "UI Typography Components"
 Cohesion: 0.50
-Nodes (4): H1 Marquee, H4 Stat-Led, H5 Letter Hero, T4 Numbered stat strip
+Nodes (4): EE Accessibility Reference, EE Security Reference, EE TDD Reference, Engineering Excellence Skill
 
 ### Community 253 - "Type Foundry Fonts"
 Cohesion: 0.50
-Nodes (4): Geist Pixel, Klim Type Foundry, Pangram Pangram, Type Specimen
+Nodes (4): H1 Marquee, H4 Stat-Led, H5 Letter Hero, T4 Numbered stat strip
 
 ### Community 254 - "Tiny Agents Framework"
 Cohesion: 0.50
-Nodes (4): agentmemory, OpenHuman, tinyagents, tinyflows
+Nodes (4): Geist Pixel, Klim Type Foundry, Pangram Pangram, Type Specimen
 
 ### Community 255 - "Personal Graph Database Stack"
 Cohesion: 0.50
-Nodes (4): dspy, libsql, Personal-Graph, VliteVSS
+Nodes (4): agentmemory, OpenHuman, tinyagents, tinyflows
 
 ### Community 256 - "SQZ CLI Engine Tools"
 Cohesion: 0.50
-Nodes (4): sqz, sqz-cli, sqz-engine, sqz-mcp
+Nodes (4): dspy, libsql, Personal-Graph, VliteVSS
 
 ### Community 257 - "Stitch Design Generator Reference"
 Cohesion: 0.50
-Nodes (4): Enhanced Prompt Example, Stitch Design Generator, Design Mappings, Prompt Keywords Reference
+Nodes (4): sqz, sqz-cli, sqz-engine, sqz-mcp
 
 ### Community 258 - "Stitch React Components Documentation"
 Cohesion: 0.50
-Nodes (4): Stitch to React Components, React Architecture Checklist, Stitch API Reference, Stitch Remotion Walkthrough
+Nodes (4): Enhanced Prompt Example, Stitch Design Generator, Design Mappings, Prompt Keywords Reference
 
-### Community 263 - "Syke CLI Memex Tool"
+### Community 259 - "React Native Stitch Card"
 Cohesion: 0.50
-Nodes (4): Syke, syke ask, syke memex, syke record
+Nodes (4): Stitch to React Components, React Architecture Checklist, Stitch API Reference, Stitch Remotion Walkthrough
 
 ### Community 264 - "Claude Graphify Obsidian Workflows"
 Cohesion: 0.50
-Nodes (4): Claude Code, Graphify, Obsidian, Wiki-Brain
+Nodes (4): Syke, syke ask, syke memex, syke record
 
 ### Community 265 - "HITL Debug Loop Script"
+Cohesion: 0.50
+Nodes (4): Claude Code, Graphify, Obsidian, Wiki-Brain
+
+### Community 266 - "Systematic Debugging Event Waiter"
 Cohesion: 0.83
 Nodes (3): capture(), hitl-loop.template.sh script, step()
 
-### Community 267 - "WuzAPI WhatsApp Integration"
+### Community 268 - "AI Memory PowerShell Script"
 Cohesion: 0.50
 Nodes (4): RabbitMQ, WhatsApp, Whatsmeow, WuzAPI
 
-### Community 276 - "CLI-Anything Skill Repository"
+### Community 277 - "Tailwind Class Merge Utilities"
 Cohesion: 0.67
 Nodes (3): CLI-Anything Repo README, CLI-Anything README, CLI-Anything SKILL
 
-### Community 277 - "Tailwind Class Merge Utilities"
+### Community 278 - "Gemini Usage Tracker Skill"
 Cohesion: 0.67
 Nodes (3): clsx, cn, tailwind-merge
 
-### Community 278 - "Gemini Usage Tracker Skill"
+### Community 279 - "Cybersecurity Prompts Repository"
 Cohesion: 0.67
 Nodes (3): Python, Gemini Usage README, Gemini Usage Tracker
 
-### Community 279 - "Cybersecurity Prompts Repository"
+### Community 280 - "Agent Client Runner Architecture"
 Cohesion: 0.67
 Nodes (3): Cybersecurity Prompts README (EN), Cybersecurity Prompts README (IT), Cybersecurity README
 
-### Community 280 - "Agent Client Runner Architecture"
+### Community 281 - "AI Coding Assistant Tools"
 Cohesion: 0.67
 Nodes (3): Agent, Client, Runner
 
-### Community 281 - "AI Coding Assistant Tools"
+### Community 282 - "Vue Navigation UI Components"
 Cohesion: 0.67
 Nodes (3): Claude Code, Easy-Vibe, OpenClaw
 
-### Community 282 - "Vue Navigation UI Components"
-Cohesion: 0.67
-Nodes (3): LangSwitch.vue, Nav.vue, ThemeToggle.vue
-
 ### Community 283 - "React Native Expo Stack"
 Cohesion: 0.67
-Nodes (3): Expo, React, React Native
+Nodes (3): LangSwitch.vue, Nav.vue, ThemeToggle.vue
 
 ### Community 284 - "Model Context Protocol Tools"
 Cohesion: 0.67
-Nodes (3): Model Context Protocol, Serena, uv
+Nodes (3): Expo, React, React Native
 
 ### Community 285 - "Pi Agent Core Tools"
 Cohesion: 0.67
-Nodes (3): Pi agent core, Syke, uv
+Nodes (3): Model Context Protocol, Serena, uv
 
 ### Community 286 - "Wizard-AI Hub Integrations"
 Cohesion: 0.67
-Nodes (3): GitHub, Stripe, Wizard-AI Hub
+Nodes (3): Pi agent core, Syke, uv
 
 ### Community 287 - "Claude SEO Research Workflows"
 Cohesion: 0.67
-Nodes (3): Claude Blog, Claude SEO, Workflow SEO Research
+Nodes (3): GitHub, Stripe, Wizard-AI Hub
 
 ### Community 288 - "Graphify Data Ingestion Watcher"
 Cohesion: 0.67
-Nodes (3): graphify.ingest, graphify.watch, Graphify Add Watch Reference
+Nodes (3): Claude Blog, Claude SEO, Workflow SEO Research
 
-### Community 290 - "Apache Kafka Skill Repository"
+### Community 289 - "Chat UI JavaScript Controller"
 Cohesion: 0.67
-Nodes (3): Apache Kafka README, Kafka README, Kafka SKILL
+Nodes (3): graphify.ingest, graphify.watch, Graphify Add Watch Reference
 
 ### Community 291 - "MongoDB Skill Repository"
 Cohesion: 0.67
-Nodes (3): MongoDB Repo README, MongoDB README, MongoDB SKILL
+Nodes (3): Apache Kafka README, Kafka README, Kafka SKILL
 
 ### Community 292 - "n8n Skill Repository"
 Cohesion: 0.67
-Nodes (3): n8n Repo README, n8n README, n8n SKILL
+Nodes (3): MongoDB Repo README, MongoDB README, MongoDB SKILL
 
 ### Community 293 - "PocketBase Skill Repository"
 Cohesion: 0.67
-Nodes (3): PocketBase Repo README, PocketBase README, PocketBase SKILL
+Nodes (3): n8n Repo README, n8n README, n8n SKILL
 
-### Community 296 - "Impeccable Standards Skill Repository"
+### Community 294 - "Matt Pocock Skills Installer"
 Cohesion: 0.67
-Nodes (3): Impeccable Standards README, Impeccable Original Repo README, Impeccable Standards Skill
+Nodes (3): PocketBase Repo README, PocketBase README, PocketBase SKILL
 
 ### Community 297 - "WuzAPI Skill Repository"
 Cohesion: 0.67
-Nodes (3): WuzAPI README, WuzAPI SKILL, WuzAPI Repo README
+Nodes (3): Impeccable Standards README, Impeccable Original Repo README, Impeccable Standards Skill
 
 ### Community 298 - "Graphify Configuration and Specifications"
 Cohesion: 0.67
-Nodes (3): Graphify Skill, Graphify Extraction Specification, Graphify Query Configuration
+Nodes (3): WuzAPI README, WuzAPI SKILL, WuzAPI Repo README
 
 ### Community 299 - "Linux Package Managers"
 Cohesion: 0.67
-Nodes (3): APT, Pacman, wz-ai os
+Nodes (3): Graphify Skill, Graphify Extraction Specification, Graphify Query Configuration
 
 ### Community 300 - "Playwright Webapp Testing"
 Cohesion: 0.67
-Nodes (3): Playwright Testing, Webapp Testing Skill, With Server Helper
+Nodes (3): APT, Pacman, wz-ai-os
 
 ### Community 301 - "AISuite Toolkit Documentation"
 Cohesion: 0.67
-Nodes (3): AISuite README, AISuite Toolkit, OpenCoworker
+Nodes (3): Playwright Testing, Webapp Testing Skill, With Server Helper
 
 ### Community 302 - "DOCX Processing Tools"
 Cohesion: 0.67
-Nodes (3): docx-js Library, DOCX Processing Skill, Pandoc Processing
+Nodes (3): AISuite README, AISuite Toolkit, OpenCoworker
 
-### Community 304 - "FlashRank Ranking Models"
+### Community 303 - "PDF Bounding Box Extraction"
 Cohesion: 0.67
-Nodes (3): FlashRank, ms-marco-MiniLM-L-12-v2, rank-T5-flan
+Nodes (3): docx-js Library, DOCX Processing Skill, Pandoc Processing
 
 ### Community 305 - "Flutter Dart Framework"
 Cohesion: 0.67
-Nodes (3): Dart SDK, Flutter, Skia
+Nodes (3): FlashRank, ms-marco-MiniLM-L-12-v2, rank-T5-flan
 
 ### Community 306 - "Vue Navigation Components"
 Cohesion: 0.67
-Nodes (3): LangSwitch.vue, Nav.vue, ThemeToggle.vue
+Nodes (3): Dart SDK, Flutter, Skia
 
 ### Community 307 - "Theme Factory Documentation"
 Cohesion: 0.67
-Nodes (3): Apache License 2.0, Theme Factory README, Theme Factory
+Nodes (3): LangSwitch.vue, Nav.vue, ThemeToggle.vue
 
 ### Community 308 - "UI Layout Variations"
 Cohesion: 0.67
-Nodes (3): S2 Hanging, S3 Sticky Pinned, S4 Inline (No Break)
+Nodes (3): Apache License 2.0, Theme Factory README, Theme Factory
 
 ### Community 309 - "Gatsby React GraphQL Stack"
 Cohesion: 0.67
-Nodes (3): Gatsby, GraphQL, React
+Nodes (3): S2 Hanging, S3 Sticky Pinned, S4 Inline (No Break)
 
 ### Community 310 - "Gemini Token Usage Tracker"
 Cohesion: 0.67
-Nodes (3): Gemini Usage Tracker, token_usage.py, tui.py
+Nodes (3): Gatsby, GraphQL, React
 
 ### Community 311 - "SvelteKit Vercel Deployment"
 Cohesion: 0.67
-Nodes (3): @sveltejs/adapter-vercel, @sveltejs/kit, SvelteKit
+Nodes (3): Gemini Usage Tracker, token_usage.py, tui.py
 
 ### Community 312 - "LiteLLM Proxy Protocol"
 Cohesion: 0.67
-Nodes (3): A2A Protocol, LiteLLM, LiteLLM Proxy Server
+Nodes (3): @sveltejs/adapter-vercel, @sveltejs/kit, SvelteKit
 
 ### Community 313 - "Prompt Compression Tools"
 Cohesion: 0.67
-Nodes (3): compress_prompt, PromptCompressor, structured_compress_prompt
+Nodes (3): A2A Protocol, LiteLLM, LiteLLM Proxy Server
 
 ### Community 314 - "Ranking and Reranking API"
 Cohesion: 0.67
-Nodes (3): Ranker, rerank, RerankRequest
+Nodes (3): compress_prompt, PromptCompressor, structured_compress_prompt
 
 ### Community 315 - "SQZ CLI Engine"
 Cohesion: 0.67
-Nodes (3): sqz-cli, sqz-engine, sqz-mcp
+Nodes (3): Ranker, rerank, RerankRequest
 
 ### Community 316 - "Vector Quantization Tools"
 Cohesion: 0.67
-Nodes (3): FAISS, TurboQuant, turbovec
+Nodes (3): sqz-cli, sqz-engine, sqz-mcp
 
 ### Community 317 - "Anthropic Python SDK"
+Cohesion: 0.67
+Nodes (3): FAISS, TurboQuant, turbovec
+
+### Community 318 - "Weather Tool Runner"
 Cohesion: 1.00
 Nodes (3): Anthropic Python SDK, Anthropic Python Files API, Anthropic Python Messages API
 
-### Community 318 - "Weather Tool Runner"
+### Community 319 - "Agent Environment Sessions"
 Cohesion: 0.67
 Nodes (3): beta_tool, get_weather, tool_runner
 
-### Community 319 - "Agent Environment Sessions"
+### Community 320 - "Anthropic API Error Handling"
 Cohesion: 0.67
 Nodes (3): agents.create, environments.create, sessions.create
 
-### Community 320 - "Anthropic API Error Handling"
+### Community 321 - "Multi-Agent Coordination"
 Cohesion: 0.67
 Nodes (3): Anthropic.APIError, Anthropic.BadRequestError, Anthropic.RateLimitError
 
-### Community 321 - "Multi-Agent Coordination"
+### Community 322 - "Claude Fallback Middleware"
 Cohesion: 1.00
 Nodes (3): Coordinator Agent, Session Thread, Subagent
 
-### Community 322 - "Claude Fallback Middleware"
+### Community 323 - "Claude Sonnet Models"
 Cohesion: 0.67
 Nodes (3): BetaFallbackState, BetaRefusalFallbackMiddleware, Claude Fable 5
 
-### Community 323 - "Claude Sonnet Models"
+### Community 324 - "Server-Side Tool Execution"
 Cohesion: 0.67
 Nodes (3): Claude Sonnet 4.5, Claude Sonnet 4.6, Effort Parameter
 
-### Community 325 - "Anthropic Authentication Errors"
+### Community 326 - "Router Skill Execution"
 Cohesion: 0.67
 Nodes (3): Anthropic.APIError, Anthropic.AuthenticationError, Anthropic.BadRequestError
 
-### Community 326 - "Router Skill Execution"
+### Community 327 - "Developer AI Tools"
 Cohesion: 0.67
 Nodes (3): Cognitive Load, Router Skill, User-Invoked
 
-### Community 327 - "Developer AI Tools"
-Cohesion: 0.67
-Nodes (3): pi-dev Skill, sqz tool, wz-ai lean-ctx tool
-
 ### Community 328 - "Feedback Run Management"
 Cohesion: 0.67
-Nodes (3): init, saveCurrentFeedback, showRun
+Nodes (3): pi-dev Skill, sqz tool, wz-ai-lean-ctx tool
 
 ### Community 329 - "Evaluation Metrics Schemas"
 Cohesion: 0.67
-Nodes (3): grading.json Schema, metrics.json Schema, timing.json Schema
+Nodes (3): init, saveCurrentFeedback, showRun
 
 ### Community 330 - "Craft and Asset References"
 Cohesion: 0.67
-Nodes (3): Assets Reference, Custom Craft Reference, Hero Enrichment Reference
+Nodes (3): grading.json Schema, metrics.json Schema, timing.json Schema
 
 ### Community 331 - "UI Component Library"
 Cohesion: 0.67
-Nodes (3): C1 Outlined Chip Component, C2 Inline Form as CTA Component, C3 Typographic Link Component
+Nodes (3): Assets Reference, Custom Craft Reference, Hero Enrichment Reference
 
 ### Community 332 - "Content Curation Framework"
 Cohesion: 0.67
-Nodes (3): Are.na, Craig Mod, Index-First
+Nodes (3): C1 Outlined Chip Component, C2 Inline Form as CTA Component, C3 Typographic Link Component
 
 ### Community 333 - "Planner Builder Bootstrap"
 Cohesion: 0.67
-Nodes (3): Loop 1 - The Planner, Loop 2 - The Builder, Master Bootstrap
+Nodes (3): Are.na, Craig Mod, Index-First
 
 ### Community 334 - "Vue UI Navigation Components"
 Cohesion: 0.67
-Nodes (3): LangSwitch.vue, Nav.vue, ThemeToggle.vue
+Nodes (3): Loop 1 - The Planner, Loop 2 - The Builder, Master Bootstrap
 
 ### Community 335 - "Model Context Protocol Tools"
 Cohesion: 0.67
-Nodes (3): Model Context Protocol (MCP), search_for_pattern, Serena
+Nodes (3): LangSwitch.vue, Nav.vue, ThemeToggle.vue
 
 ### Community 336 - "Design Format Specification"
 Cohesion: 0.67
-Nodes (3): DESIGN.md Spec Readme, DESIGN.md Format Specification, DESIGN.md Spec Skill
+Nodes (3): Model Context Protocol (MCP), search_for_pattern, Serena
 
 ### Community 337 - "HTML Extraction Scripts"
 Cohesion: 0.67
-Nodes (3): Extract Inline HTML Script, Snapshot Script, Stitch Extract Static HTML
+Nodes (3): DESIGN.md Spec Readme, DESIGN.md Format Specification, DESIGN.md Spec Skill
 
-### Community 342 - "Rust SQLite Trailbase Stack"
+### Community 338 - "React Activity Card Components"
 Cohesion: 0.67
-Nodes (3): Rust, SQLite, Trailbase
+Nodes (3): Extract Inline HTML Script, Snapshot Script, Stitch Extract Static HTML
 
 ### Community 343 - "FAISS Vector Quantization"
 Cohesion: 0.67
-Nodes (3): FAISS, TurboQuant, Turbovec
+Nodes (3): Rust, SQLite, Trailbase
 
 ### Community 344 - "UI Logic Prototyping"
 Cohesion: 0.67
+Nodes (3): FAISS, TurboQuant, Turbovec
+
+### Community 345 - "CLI Testing Scripts"
+Cohesion: 0.67
 Nodes (3): Logic Prototype, Prototype, UI Prototype
 
+### Community 712 - "File Path Operations"
+Cohesion: 0.24
+Nodes (13): args, autoEncodeLEA(), compareFormats(), compressContext(), encodeLEA(), estimateTokens(), fromTOON(), objToTOON() (+5 more)
+
+### Community 713 - "File Path Operations"
+Cohesion: 0.12
+Nodes (16): add_slide.py, clean.py, Common Pitfalls, Editing Content, Editing Presentations, Formatting Rules, Multi-Item Content, Other (+8 more)
+
+### Community 714 - "Schema Validation Components"
+Cohesion: 0.12
+Nodes (16): Documentation Variants to Test, Expected Results, Next Steps, NULL (Baseline - no skills doc), Scenario 1: Time Pressure + Confidence, Scenario 2: Sunk Cost + Works Already, Scenario 3: Authority + Speed Bias, Scenario 4: Familiarity + Efficiency (+8 more)
+
+### Community 715 - "Schema Validation Components"
+Cohesion: 0.12
+Nodes (15): 1. Authority, 2. Commitment, 3. Scarcity, 4. Social Proof, 5. Unity, 6. Reciprocity, 7. Liking, Ethical Use (+7 more)
+
+### Community 716 - "File Path Operations"
+Cohesion: 0.12
+Nodes (16): Code Examples, Common Rationalizations for Skipping Testing, Directory Structure, Discovery Workflow, Flowchart Usage, Match the Form to the Failure, Overview, Skill Creation Checklist (TDD Adapted) (+8 more)
+
+### Community 717 - "File Path Operations"
+Cohesion: 0.13
+Nodes (15): @clack/prompts, dependencies, @clack/prompts, pi-extensible-workflows, picocolors, simple-git, @toon-format/toon, @vercel/detect-agent (+7 more)
+
+### Community 718 - "File Path Operations"
+Cohesion: 0.13
+Nodes (13): Common Mistakes (Same as TDD), GREEN Phase: Write Minimal Skill (Make It Pass), Meta-Testing (When GREEN Isn't Working), Overview, Quick Reference (TDD Cycle), Real-World Impact, RED Phase: Baseline Testing (Watch It Fail), TDD Mapping for Skill Testing (+5 more)
+
+### Community 719 - "File Path Operations"
+Cohesion: 0.13
+Nodes (14): Consultant (Matt Pocock), The Brain — Token Optimization, Tier 1 — Supreme Orchestrator, Tier 1 — Supreme Orchestrator (Reference), Tier 2 — Department Heads, Tier 3 — Worker (Backend), Tier 3 — Worker (Data & Docs), Tier 3 — Worker (DevOps) (+6 more)
+
+### Community 720 - "Process Execution Handling"
+Cohesion: 0.14
+Nodes (12): cavecrew, Example chaining, How to invoke, Model overrides, See also, What it does, Auto-clarity (inherited), Chaining patterns (+4 more)
+
+### Community 721 - "File Path Operations"
+Cohesion: 0.14
+Nodes (12): caveman-help, Example output, How to invoke, See also, What it does, Caveman Help, Configure Default Mode, Deactivate (+4 more)
+
+### Community 722 - "File Path Operations"
+Cohesion: 0.14
+Nodes (12): cavecrew, Example chaining, How to invoke, Model overrides, See also, What it does, Auto-clarity (inherited), Chaining patterns (+4 more)
+
+### Community 723 - "Schema Validation Components"
+Cohesion: 0.14
+Nodes (12): caveman-help, Example output, How to invoke, See also, What it does, Caveman Help, Configure Default Mode, Deactivate (+4 more)
+
+### Community 724 - "Schema Validation Components"
+Cohesion: 0.14
+Nodes (12): cavecrew, Example chaining, How to invoke, Model overrides, See also, What it does, Auto-clarity (inherited), Chaining patterns (+4 more)
+
+### Community 725 - "Image Processing Components"
+Cohesion: 0.14
+Nodes (12): caveman-help, Example output, How to invoke, See also, What it does, Caveman Help, Configure Default Mode, Deactivate (+4 more)
+
+### Community 726 - "File Path Operations"
+Cohesion: 0.22
+Nodes (12): CACHE_FILE, fetchAiderLeaderboard(), fetchLMSysArena(), HOME, { homedir }, { join, dirname }, main(), mergeScores() (+4 more)
+
+### Community 727 - "File Path Operations"
+Cohesion: 0.17
+Nodes (11): Boundaries, Caveman Compress, Compress, Compression Rules, Pattern, Preserve EXACTLY (never modify), Preserve Structure, Process (+3 more)
+
+### Community 728 - "File Path Operations"
+Cohesion: 0.17
+Nodes (11): Boundaries, Caveman Compress, Compress, Compression Rules, Pattern, Preserve EXACTLY (never modify), Preserve Structure, Process (+3 more)
+
+### Community 729 - "Process Execution Handling"
+Cohesion: 0.17
+Nodes (12): bin, ai-test, skills-wizard, wizard-ai, wizard-ai-cli, wizard-installer, wizard-skills, wizard-test (+4 more)
+
+### Community 730 - "File Path Operations"
+Cohesion: 0.17
+Nodes (11): Boundaries, Caveman Compress, Compress, Compression Rules, Pattern, Preserve EXACTLY (never modify), Preserve Structure, Process (+3 more)
+
+### Community 731 - "File Path Operations"
+Cohesion: 0.17
+Nodes (11): Autonomous Online Skill Hunt (`skills.sh` + `wizard-ai-installer`), Fase 1: Ingestion & Conversion (`markitdown`, `ai-convert`), Fase 2: RAG / Semantic Filtering (`flashrank`, `ai-rerank`, `ai-llmwiki`, `ai-vector`), Fase 3: Token & Output Compression (`llmlingua`, `sqz`, `headroom`, `caveman`), Fase 4: Context Guarding & Pruning (`lean-ctx` / `ktx`), Fase 5: AST Pruning & Sharded Subagent Context (`pi.dev / Rust-Cline Wrappers`), Fase 6: Session Transition & Handoff (`mp-handoff` / `ai-handoff` + `session-manager` + `ai-llmwiki`), Master Optimizer & Agentic Brain Workflow (Unified) (+3 more)
+
+### Community 732 - "Schema Validation Components"
+Cohesion: 0.17
+Nodes (12): Advanced: Skills with executable code, [Analysis Title], Anti-patterns to avoid, Avoid offering too many options, Avoid Windows-style paths, Conditional workflow pattern, Examples pattern, Executive summary (+4 more)
+
+### Community 733 - "Schema Validation Components"
+Cohesion: 0.18
+Nodes (9): caveman-commit, Example output, How to invoke, See also, What it does, Auto-Clarity, Boundaries, Examples (+1 more)
+
+### Community 734 - "CLI Printing Tools"
+Cohesion: 0.18
+Nodes (9): caveman-review, Example output, How to invoke, See also, What it does, Auto-Clarity, Boundaries, Examples (+1 more)
+
+### Community 735 - "Security Audit Prompts"
+Cohesion: 0.18
+Nodes (9): caveman-commit, Example output, How to invoke, See also, What it does, Auto-Clarity, Boundaries, Examples (+1 more)
+
+### Community 736 - "Graphify GitHub References"
+Cohesion: 0.18
+Nodes (9): caveman-review, Example output, How to invoke, See also, What it does, Auto-Clarity, Boundaries, Examples (+1 more)
+
+### Community 737 - "Graphify Hooks Documentation"
+Cohesion: 0.18
+Nodes (9): caveman-commit, Example output, How to invoke, See also, What it does, Auto-Clarity, Boundaries, Examples (+1 more)
+
+### Community 761 - "Algorithmic Art Skill"
+Cohesion: 0.18
+Nodes (9): caveman-review, Example output, How to invoke, See also, What it does, Auto-Clarity, Boundaries, Examples (+1 more)
+
+### Community 762 - "Claude Blog Writer"
+Cohesion: 0.18
+Nodes (11): Avoid assuming tools are installed, Create verifiable intermediate outputs, MCP tool references, Next steps, Package dependencies, Returns: "OK" or lists conflicts, Runtime environment, Technical notes (+3 more)
+
+### Community 763 - "Claude Blog Skill"
+Cohesion: 0.20
+Nodes (10): Avoid deeply nested references, Naming conventions, Pattern 1: High-level guide with references, Pattern 2: Domain-specific organization, Pattern 3: Conditional details, Progressive disclosure patterns, Skill structure, Structure longer reference files with table of contents (+2 more)
+
+### Community 924 - "Context Compression AI Skill"
+Cohesion: 0.22
+Nodes (9): keywords, ai, claude, claude-code, cli, knowledge-graph, llm, skills (+1 more)
+
+### Community 925 - "FlashRank Evaluation AI Skill"
+Cohesion: 0.22
+Nodes (8): 1. Task Weight Classification (MoE Gating), 2. Primary Routing: 5 Sequenced Loop-Engineering Workflows (01 → 05), 3. Secondary Routing: Domain Workflows & Creative/Analytical Loop Expansion, 4. mattpocock Skills — Direct Routing, 5. Fallback Logic & MoE Combination, Auto-Router & MoE Classification (Master Router), 🚨 NEVER-STOP BATON-PASSING TRAJECTORY, Self-Improvement Constraint (Extracted Rule)
+
+### Community 926 - "Headroom Proxy AI Skill"
+Cohesion: 0.22
+Nodes (9): Avoid time-sensitive information, Common patterns, Content guidelines, Implement feedback loops, Skill authoring best practices, Template pattern, Use consistent terminology, Use workflows for complex tasks (+1 more)
+
+### Community 927 - "Lean Context AI Skill"
+Cohesion: 0.29
+Nodes (7): checkAndUpdate(), { execSync }, fs, https, httpsGet(), path, REPOS
+
+### Community 1037 - "File Path Operations"
+Cohesion: 0.29
+Nodes (5): caveman-stats, Example output, How to invoke, See also, What it does
+
+### Community 1038 - "File Path Operations"
+Cohesion: 0.29
+Nodes (5): caveman-stats, Example output, How to invoke, See also, What it does
+
+### Community 1039 - "File Path Operations"
+Cohesion: 0.29
+Nodes (6): args, pc, { resolve }, result, { spawnSync }, uvxArgs
+
+### Community 1040 - "File Path Operations"
+Cohesion: 0.29
+Nodes (5): caveman-stats, Example output, How to invoke, See also, What it does
+
+### Community 1041 - "System Design Skill"
+Cohesion: 0.29
+Nodes (7): 1. Explicit Negation in Rules, 2. Entry in Rationalization Table, 3. Red Flag Entry, 4. Update description, Plugging Each Hole, Re-verify After Refactoring, REFACTOR Phase: Close Loopholes (Stay Green)
+
+### Community 1042 - "n8n Workflow Automation"
+Cohesion: 0.33
+Nodes (6): scripts, release, test, test:cli, test:watch, webnative-inspect
+
+### Community 1043 - "Skills Refactoring Script"
+Cohesion: 0.33
+Nodes (5): Issue 1: ✅ [Architettura] Integrazione con Sistema Ibrido JS + YAML — [#8](https://github.com/darkrei08/Wizard-AI/issues/8), Issue 2: ✅ [Refactoring] Loop 2 in JavaScript — [#9](https://github.com/darkrei08/Wizard-AI/issues/9), Issue 3: ✅ [Ottimizzazione] Stato e Resumption — [#10](https://github.com/darkrei08/Wizard-AI/issues/10), Issue 4: ✅ [Refactoring Ibrido] Transizione Graduale — [#11](https://github.com/darkrei08/Wizard-AI/issues/11), Mega Refactoring: Integrazione di `pi-extensible-workflows` — ✅ COMPLETATO
+
+### Community 1047 - "Subprocess Execution Results"
+Cohesion: 0.33
+Nodes (5): Cursor, Frontend UX & Interaction, Semantic HTML, States, Touch Targets
+
+### Community 1048 - "File Path Operations"
+Cohesion: 0.33
+Nodes (5): Autonomous Discovery, Available Capabilities (Base Commands & Custom Wrappers), 🔗 Chaining Protocol & Mandatory Step Triggers across Loops (`Loop 01 ➔ 05`), General AI Rules for this System (Mandatory Loop Enforcement), Wizard-AI Hub (ai-help)
+
+### Community 1049 - "File Path Operations"
+Cohesion: 0.33
+Nodes (6): 1. Rich Description Field, 2. Keyword Coverage, 3. Descriptive Naming, 4. Token Efficiency (Critical), 5. Cross-Referencing Other Skills, Skill Discovery Optimization (SDO)
+
+### Community 1050 - "Base Schema Validation"
+Cohesion: 0.33
+Nodes (6): Address "Spirit vs Letter" Arguments, Build Rationalization Table, Bulletproofing Skills Against Rationalization, Close Every Loophole Explicitly, Create Red Flags List, Update SDO for Violation Symptoms
+
+### Community 1051 - "Base Schema Validation"
+Cohesion: 0.33
+Nodes (5): Anti-patterns, Core Standards, Project Structure, pyproject.toml Minimal, Python Development
+
+### Community 1052 - "File Path Operations"
+Cohesion: 0.40
+Nodes (5): devDependencies, @vitalets/google-translate-api, vitest, @vitalets/google-translate-api, vitest
+
+### Community 1053 - "File Path Operations"
+Cohesion: 0.40
+Nodes (4): auto-workflow → REDIRECT, Cosa è cambiato, Istruzioni, Mapping degli Step Originali
+
+### Community 1054 - "File Path Operations"
+Cohesion: 0.40
+Nodes (4): Capabilities, Overview, spec-kit Skill, Usage
+
+### Community 1055 - "File Path Operations"
+Cohesion: 0.40
+Nodes (4): Definition of done, The loop lens, The workspace, Vocabulary
+
+### Community 1056 - "Subprocess Execution Results"
+Cohesion: 0.40
+Nodes (4): [Analysis Title], Executive summary, Key findings, Recommendations
+
+### Community 1057 - "File Path Operations"
+Cohesion: 0.40
+Nodes (5): Anti-Patterns, ❌ Code in Flowcharts, ❌ Generic Labels, ❌ Multi-Language Dilution, ❌ Narrative Example
+
+### Community 1058 - "File Path Operations"
+Cohesion: 0.40
+Nodes (5): Discipline-Enforcing Skills (rules/requirements), Pattern Skills (mental models), Reference Skills (documentation/APIs), Technique Skills (how-to guides), Testing All Skill Types
+
+### Community 1059 - "Base Schema Validation"
+Cohesion: 0.40
+Nodes (5): GREEN: Write Minimal Skill, Micro-Test Wording Before Full Scenarios, RED-GREEN-REFACTOR for Skills, RED: Write Failing Test (Baseline), REFACTOR: Close Loopholes
+
+### Community 1060 - "Base Schema Validation"
+Cohesion: 0.40
+Nodes (5): Key Elements of Good Scenarios, Pressure Types, Testing Setup, VERIFY GREEN: Pressure Testing, Writing Pressure Scenarios
+
+### Community 1061 - "Image Processing Operations"
+Cohesion: 0.40
+Nodes (4): Setup, Use Cases for Agents, Using via `wz-ai`, wslens
+
+### Community 1062 - "File Path Operations"
+Cohesion: 0.50
+Nodes (3): Environment Awareness, Environment-specific configuration, Indexing by environment
+
+### Community 1063 - "File Path Operations"
+Cohesion: 0.50
+Nodes (4): Build evaluations first, Develop Skills iteratively with the agent, Evaluation and iteration, Observe how agents navigate Skills
+
+### Community 1064 - "File Path Operations"
+Cohesion: 0.50
+Nodes (4): Checklist for effective Skills, Code and scripts, Core quality, Testing
+
+### Community 1065 - "Subprocess Execution Results"
+Cohesion: 0.50
+Nodes (4): Concise is key, Core principles, Set appropriate degrees of freedom, Test with all models you plan to use
+
+### Community 1066 - "File Path Operations"
+Cohesion: 0.50
+Nodes (4): File Organization, Self-Contained Skill, Skill with Heavy Reference, Skill with Reusable Tool
+
+### Community 1067 - "File Path Operations"
+Cohesion: 0.50
+Nodes (4): Pattern, Reference, Skill Types, Technique
+
+### Community 1068 - "Base Schema Validation"
+Cohesion: 0.50
+Nodes (4): Example: TDD Skill Bulletproofing, Initial Test (Failed), Iteration 1 - Add Counter, Iteration 2 - Add Foundational Principle
+
+### Community 1069 - "Base Schema Validation"
+Cohesion: 0.67
+Nodes (3): publishConfig, access, registry
+
+### Community 1070 - "Generic Type Definitions"
+Cohesion: 0.67
+Nodes (3): repository, type, url
+
 ## Knowledge Gaps
-- **1756 isolated node(s):** `AppState`, `Routes`, `app`, `Claude Code Configuration`, `Changelog` (+1751 more)
+- **2456 isolated node(s):** `$schema`, `version`, `channel`, `ecosystem`, `command` (+2451 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **766 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **717 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `BaseSchemaValidator` connect `XML Schema Validation Tools` to `DOCX Validation Logic`, `XLSX Validation Modules`, `PowerPoint Schema Validation`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Why does `DOCXSchemaValidator` connect `DOCX Paragraph Validation` to `PPTX Validation Modules`, `PPTX Redlining Validation`, `PPTX File Packaging Script`, `XML Validator Preprocessing`?**
-  _High betweenness centrality (0.000) - this node is a cross-community bridge._
-- **Why does `BaseSchemaValidator` connect `XML Validator Preprocessing` to `PPTX Validation Modules`, `PowerPoint Schema Validation`, `DOCX Paragraph Validation`?**
+- **Why does `Testing Skills With Subagents` connect `File Path Operations` to `System Design Skill`, `Base Schema Validation`, `Base Schema Validation`?**
   _High betweenness centrality (0.000) - this node is a cross-community bridge._
 - **Are the 2 inferred relationships involving `BaseSchemaValidator` (e.g. with `DOCXSchemaValidator` and `PPTXSchemaValidator`) actually correct?**
   _`BaseSchemaValidator` has 2 INFERRED edges - model-reasoned connections that need verification._
@@ -2555,5 +2855,9 @@ _Questions this graph is uniquely positioned to answer:_
   _`BaseSchemaValidator` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 2 inferred relationships involving `BaseSchemaValidator` (e.g. with `DOCXSchemaValidator` and `PPTXSchemaValidator`) actually correct?**
   _`BaseSchemaValidator` has 2 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `AppState`, `Routes`, `app` to the rest of the system?**
-  _1756 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `$schema`, `version`, `channel` to the rest of the system?**
+  _2456 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `WebSocket Server Setup` be split into smaller, more focused modules?**
+  _Cohesion score 0.05868118572292801 - nodes in this community are weakly interconnected._
+- **Should `MCP Connection Management` be split into smaller, more focused modules?**
+  _Cohesion score 0.05656565656565657 - nodes in this community are weakly interconnected._

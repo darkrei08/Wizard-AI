@@ -65,5 +65,8 @@
     "picocolors": "^1.1.1",
     "simple-git": "^3.36.0",
     "xdg-basedir": "^5.1.0"
+  },
+  "overrides": {
+    "node-fetch": "npm:node-fetch-native@^1.6.7"
   }
 }

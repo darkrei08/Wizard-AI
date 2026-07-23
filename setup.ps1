@@ -385,9 +385,9 @@ if ($IsNonInteractive) {
 $script:SkillRepoTotal = $SelectedItems.Count
 
 if ($SelectedItems.Count -gt 0) {
-    Write-Log '' -ForegroundColor White
+    Write-Log ' ' -ForegroundColor White
     Write-Log "Installing $($SelectedItems.Count) selected repositories..." -ForegroundColor Green
-    Write-Log '' -ForegroundColor White
+    Write-Log ' ' -ForegroundColor White
 
     foreach ($item in $SelectedItems) {
         Clone-SkillRepo -Url $item.Url -DestName $item.Name -Badge $item.Badge
@@ -624,7 +624,7 @@ Get-ChildItem -Path $SkillsDst -Directory | ForEach-Object {
     elseif (Test-Path $InstallSh) { $ScriptToRun = "bash $InstallSh" }
 
     if ($ScriptToRun) {
-        Write-Log "  Found automated setup script for $SkillName: $ScriptToRun" -ForegroundColor Cyan
+        Write-Log "  Found automated setup script for $($SkillName): $ScriptToRun" -ForegroundColor Cyan
         try {
             if ($ScriptToRun.EndsWith('.ps1')) {
                 & $ScriptToRun
@@ -637,6 +637,21 @@ Get-ChildItem -Path $SkillsDst -Directory | ForEach-Object {
         }
     }
 }
+Write-Log ' '
+Write-Log '[7.6/8] Auto-configuring Pi Agent Models...' -ForegroundColor Blue
+if (Get-Command node -ErrorAction SilentlyContinue) {
+    Write-Log 'Syncing benchmarks and mapping best Cockpit models to Pi roles...' -ForegroundColor Yellow
+    try {
+        node (Join-Path $ScriptDir 'scripts\wz-ai-benchmark-sync.js')
+        node (Join-Path $ScriptDir 'scripts\wz-ai-pi-configurator.js')
+        Write-Log '  [ok] Pi auto-configuration completed.' -ForegroundColor Green
+    } catch {
+        Write-Log "  [!] Failed to configure Pi: $($_.Exception.Message)" -ForegroundColor Red
+    }
+} else {
+    Write-Log "  [!] Node.js not found. Skipping Pi auto-configuration." -ForegroundColor Yellow
+}
+
 Write-Log ' '
 Write-Log '[8/8] Auto-Update Configuration...' -ForegroundColor Blue
 Write-Log 'Do you want to enable automatic background updates at system logon? [Y/n] (Auto-yes in 10s) ' -ForegroundColor Yellow -NoNewline

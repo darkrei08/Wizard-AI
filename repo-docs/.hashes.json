@@ -1,0 +1,219 @@
+{
+  "installation": {
+    "files": {
+      "README.md": "2ded2a76c46350a6fc0905b85e3c57872289d5788c542694bf5db707ff52a828",
+      "setup.sh": "d2f1e76c1b39f3af8fd103e87bef85bd67f92bbd2e938edae615024c79930abf",
+      "scripts/wizard-installer.js": "e5c278aea20abe43aaf326320bdca5fe95f13f8c914690c3613fdda0856d91fa",
+      "bin/wizard-ai-init": "f84e5cb7672ccd0e26c2b2b2f54ff44a9876ec0d6a263ccf4a72d4531eb2296c",
+      "bin/wz-ai-npm-setup": "99cd61dbbe98667b3f3563ea6e8644583cd37c234e290e1da64055e0724db0fa"
+    }
+  },
+  "overview": {
+    "files": {
+      "README.md": "2ded2a76c46350a6fc0905b85e3c57872289d5788c542694bf5db707ff52a828",
+      "package.json": "7f69c72a990a7340bf15e93a79c0a3b3b0a67252d6685ca01476ddb07df949db"
+    }
+  },
+  "architecture": {
+    "files": {
+      "cli.js": "e0116272ec98598449464a483b534069ccedf08dde9a2db61bf7ea0be9a1a118",
+      "index.js": "9e117a9d328e00a3c1dfba116a6ae3c846fb8d42f4dc50c7ce266deaff6fed66",
+      "bin/wz-ai": "1ac74b1263a71274e6162ac9958aed5ff0b350b9f0c498bebe816d2fb3a2bb8b",
+      "bin/wizard-ai": "26d37a1b8b71cea67cbd33b3f0814798bb4a055fa71de4280820da580dd90456",
+      "package.json": "7f69c72a990a7340bf15e93a79c0a3b3b0a67252d6685ca01476ddb07df949db"
+    }
+  },
+  "caveman-compress-engine": {
+    "files": {
+      "agent/skills/caveman-compress/scripts/compress.py": "529335df6f857f9413021d6a6009f913443b8559849b3b1e79439bc8c49c93bc",
+      "agent/skills/caveman-compress/scripts/detect.py": "d69fb4c8289880a5c48647ed356bf692f7c03e547255d72587ef116c0c1c98ca",
+      "agent/skills/caveman-compress/scripts/validate.py": "f15c9de7299f9a4e72d4adf10bd7d98e80d6b1a5a6606e1423d7dca58f426b45",
+      "agent/skills/caveman-compress/scripts/benchmark.py": "54fa7eb7c803183bda707bc0b3949a351c1351f8d06a24d758c3490d0cdefa76",
+      "agent/skills/caveman-compress/scripts/cli.py": "7db968e7e0208a4225a15c03ed52edee0460c043e9e2f7343b1a6312bc61d0bc",
+      "skills/memory-and-context/caveman-compress/scripts/compress.py": "529335df6f857f9413021d6a6009f913443b8559849b3b1e79439bc8c49c93bc",
+      "bin/wz-ai-caveman": "f0aedecf5077bdee143e73fa0daea5ef611428344af21782c17d6f643637a3a1",
+      "bin/wz-ai-compress": "583d1796ac52e21a97f5fbadba3a6ea47528fad9b29cb80497c85428bbcbb0b7"
+    }
+  },
+  "proxy-cockpit-integration": {
+    "files": {
+      "scripts/wz-ai-proxy.js": "7b2a9ca1b8cf3cc475c167cc216818492514633e9db0bbc13e75dc740b96ad2b",
+      "bin/wz-ai-proxy": "1298a248796f2ed5c314529a5a1e52cdfb72a07043705d599325207ec25c0b23",
+      "skills/meta-skills/cockpit-bridge/scripts/cockpit-reader.mjs": "05a8f1aceb16f8eabb28df47e14d4b080d13360e7c7d5c187c16a8df3c61ff49"
+    }
+  },
+  "memory-context-system": {
+    "files": {
+      "bin/wz-ai-mem": "b4bf4fdd8b9e17f1a91c82a2da9d6e27f0c90a3eb5e7cc2a672c8f5a88e8f31e",
+      "bin/windows/lib/ai_mem_fallback.py": "4bc7fc8c3f4c39c4a55b1eaaeb7a422094eac3867fb55da1db8c695858c6c3bc",
+      "scripts/wz-ai-context.js": "2589b1880c7cf7f8e7102fc6c6262d31b7d274c8b2163bf5532722ae43db41a4",
+      "scripts/wz-ai-context-formats.js": "1e5cc2e249764c12efbd613fabe217cc62ab7abc5e3da14998d35e2ccd5e1b60",
+      "bin/wz-ai-lean": "f63821e984e92fe95ad553eed70b1e7d583435fb3ea9330f180c82580e389017",
+      "bin/wz-ai-lean-ctx": "f4a3dd1b2d1642062878d2e65ece2f56ca4bfabce3d4fefe0199438fdbda8395",
+      "bin/wz-ai-headroom": "cff92ca0c11aa36c880e5145b3a9bd4f8fec5ac65a0b657d3e993beb93952258"
+    }
+  },
+  "pi-dynamic-configurator": {
+    "files": {
+      "scripts/wz-ai-pi-configurator.js": "2b3a4c4cb0e7bc531507cfa6f2c2cef7e916a725b22c6a0351abded6c0bdbd38"
+    }
+  },
+  "repodocs-wiki-generator": {
+    "files": {
+      "scripts/wz-ai-repodocs.js": "2607ffe1f099a780313dd299116bb564f611b299c63770fdc83fb6dabc9b5015",
+      "bin/wz-ai-llmwiki": "24817eed4e1f14f3bf90f01ad8fd5b8c9c0084b6e5d3d314ded24f5dc6e81b80",
+      "bin/ai-llmwiki": "ba593e56f83d926e8454a02fed32af8f8b9ac288bb7937f7b8940ff11ff035b8"
+    }
+  },
+  "master-project-bootstrap": {
+    "files": {
+      "README.md": "2ded2a76c46350a6fc0905b85e3c57872289d5788c542694bf5db707ff52a828",
+      "bin/wizard-ai-init": "f84e5cb7672ccd0e26c2b2b2f54ff44a9876ec0d6a263ccf4a72d4531eb2296c",
+      "bin/wz-ai-os": "388caa80c055ec38cb893ca196ad226fcf2fb7ebb1acce6784f56c6650e0c895",
+      "bin/wz-ai-scaffold": "815dbd4996781c821d00574a8c2b8aaeecd1b90e2d11bf813d8019a9e24a3119"
+    }
+  },
+  "hub-dashboard": {
+    "files": {
+      "hub/api/server.py": "71f0ec819f8cbf46971efc851f97ecb4f30e420a610f1db0fa6e369a80fb9a2f",
+      "hub/api/db.py": "cb79b5c68a7dd660332091d0067e8ea10e6a5c68a77927da1e4c351702e63332",
+      "hub/api/log_event.py": "c94928cc92db34761422593ee5b717421d96f37338d794b562f536d8a938454b",
+      "hub/js/app.js": "b39b32f9db5fa7349d10e657c2e57a95b08e5f8ce8961939b084dcdb0e69c6f5",
+      "hub/js/auth.js": "116146138d4cc82e51a46ca7e55e14aa3da48ddb6e2e3534dc1e193b6f200278",
+      "hub/js/chat.js": "acdb7a83e1ed07c959a199021f886c324b47211722fa51a01feec2e937b54870",
+      "hub/js/dashboard.js": "9660591272b4c817f6ed90be8f6a04f70009dbfc6da2e7bd57a5b19c889b9860",
+      "hub/js/installer.js": "f4a6a58ea0fb502e891867f55f187fb0dacb48bf2dd7046ca735043829509c8c",
+      "hub/js/marketplace.js": "b7aa241387a8d296cb67aa8db01b82787d21a7c473bc009fadbcadc3e4ef7d8e",
+      "hub/js/telemetry.js": "210c0267c30e0c0eab88787f911c87a081b40e2cac799425dcb6fa1b35dfaf68",
+      "bin/wz-ai-hub": "b87c25382a7d71b32b897e679cb7e26e13fa033648309a49237cf040b2d2a499"
+    }
+  },
+  "security": {
+    "files": {
+      "bin/wz-ai-strix": "efcb19698555b90c180f7d6375451f4ff6631b0e831527707567ba0d08c09b7c",
+      "skills/devops-and-tools/mp-git-guardrails/scripts/block-dangerous-git.sh": "234922b83c0a1737ee7300806c21ac0f389b07aaeb65c2d71ccedafbc5e1ea4b",
+      "README.md": "2ded2a76c46350a6fc0905b85e3c57872289d5788c542694bf5db707ff52a828"
+    }
+  },
+  "brainstorming-design-review-skill": {
+    "files": {
+      "skills/architecture-and-design/brainstorming/scripts/server.cjs": "ee89af11506ac4933324c89a2cfb36b391fe611f82efb9eeb3b814e40825145f",
+      "skills/architecture-and-design/brainstorming/SKILL.md": "276a8659d080f7207bc85794a74f0f1eda85506f96aefe2514adcbb4113cd133",
+      "skills/architecture-and-design/brainstorming/scripts/helper.js": "78c3a22dd5e799623cab8908b0b03e764404efde2d2edc94a8814cf450a09e81",
+      "skills/architecture-and-design/brainstorming/scripts/start-server.sh": "a4e5ae84275bcaacd2f84345afeabe59cf7b00ba080e123da7cc1fb226f12847",
+      "skills/architecture-and-design/brainstorming/scripts/stop-server.sh": "0b5ccbbd57f62d3ed88993f7940b5ee0e5c0fc9b21c550c623da4f6292e47daf"
+    }
+  },
+  "office-document-authoring-skill": {
+    "files": {
+      "skills/docs-and-coauthoring/docx/scripts/office/validate.py": "8bdf0ac86ba8680b89adee06fa983f713dcb4368a65f29f3f82e3f57cd8419d6",
+      "skills/docs-and-coauthoring/docx/scripts/office/pack.py": "d16356af5b6f4bbb5303527ffb8b2aa71c0056f8bd144b745b46ef5e179fd8cc",
+      "skills/docs-and-coauthoring/docx/scripts/office/unpack.py": "b7822eb068648f154273559465ce9cb5d0768928efb4c92d0ab05d240c1b788c",
+      "skills/docs-and-coauthoring/docx/scripts/accept_changes.py": "4996798dfae55153079fd03b7c3b2fd7e9f4466a10c8101e7592d72d68b059fb",
+      "skills/docs-and-coauthoring/docx/scripts/comment.py": "dcb3e9784d402f5667848b696bf1f780e87e8100a9012c85b238a2d852d3c715",
+      "skills/docs-and-coauthoring/pptx/scripts/office/validate.py": "8bdf0ac86ba8680b89adee06fa983f713dcb4368a65f29f3f82e3f57cd8419d6",
+      "skills/docs-and-coauthoring/pptx/scripts/add_slide.py": "dc2b236fdc3ebd355df5df8b9e61845ca9a56f1dd2fb1e8013bf7516c67334b2",
+      "skills/docs-and-coauthoring/pptx/scripts/clean.py": "cb45bea18a8703c0e5a5a640e03f63ce6fcdd9a819b7c63df6a32fb9683b8a55",
+      "skills/docs-and-coauthoring/pptx/scripts/thumbnail.py": "51a85863a1c3588bf17d1be0aaa2584c8c404f6909889a7015ba933dfed143fb",
+      "skills/docs-and-coauthoring/xlsx/scripts/office/validate.py": "8bdf0ac86ba8680b89adee06fa983f713dcb4368a65f29f3f82e3f57cd8419d6",
+      "skills/docs-and-coauthoring/xlsx/scripts/recalc.py": "e8251c94ae0c6678b6793d56d2620dd2daf7c73e1da00db6c4aaf4d5e34acd8e"
+    }
+  },
+  "skills-marketplace-sync": {
+    "files": {
+      "README.md": "2ded2a76c46350a6fc0905b85e3c57872289d5788c542694bf5db707ff52a828",
+      "scripts/update_skills.js": "e20dd0d42b538c02a8cbda042b62f9dde30dea3bcbd4b19dfad213bb9e5152f0",
+      "bin/wz-ai-sync-skills": "37f2bb12205af47651a11e494f8536bdf02361b87c76eaef08aef99c4497801d",
+      "bin/wz-ai-skill-doctor": "98df212a469f00e014ba07275dc257b072d77834f60b84b03ba83b88883e4655"
+    }
+  },
+  "pdf-forms-skill": {
+    "files": {
+      "skills/docs-and-coauthoring/pdf/scripts/check_bounding_boxes.py": "213edf7e8fe10ab3a706a623cd07016fa6db45465015233c0a28e7fca0e4e6c2",
+      "skills/docs-and-coauthoring/pdf/scripts/check_fillable_fields.py": "e3e366b89c01d7b933f0d31af25fe8db883b5526e33b4159db2b30e2c8f9dfaf",
+      "skills/docs-and-coauthoring/pdf/scripts/convert_pdf_to_images.py": "b4d52defbcfe475330030d2deaf2402093817eb0a5edfa4f7d57d2f59ef8e2bc",
+      "skills/docs-and-coauthoring/pdf/scripts/create_validation_image.py": "051121494310288eba1dee18433363ef8e8b49cd735bd68420895293da4fb1bd",
+      "skills/docs-and-coauthoring/pdf/scripts/extract_form_field_info.py": "d87e07be681d8746d23e0f2f6e69cdc6678067b6ac8d85696de545f017f45a93",
+      "skills/docs-and-coauthoring/pdf/scripts/extract_form_structure.py": "3db87afd4ed3712e79943740239c26b35d025ed16be044e95b078600fc1597f6",
+      "skills/docs-and-coauthoring/pdf/scripts/fill_fillable_fields.py": "2685a26b6c06177a90b8e8037f163fd534c9c0f625bb3a4f1ff2d9c57b60f055",
+      "skills/docs-and-coauthoring/pdf/scripts/fill_pdf_form_with_annotations.py": "066f14a06cc96e0ed3e19463afc096661ca69c5cb78fc6c8a4fa967a3a0c2007"
+    }
+  },
+  "slack-gif-creator-skill": {
+    "files": {
+      "skills/docs-and-coauthoring/slack-gif-creator/core/easing.py": "241adbc2d649a1e762615fe5f4e56593b3b5a52e28f6c9dda492588d7e02d653",
+      "skills/docs-and-coauthoring/slack-gif-creator/core/frame_composer.py": "799c08c204d34bc14d5e781825c2d6eba0d08271d91cf191afb875c59b6566bf",
+      "skills/docs-and-coauthoring/slack-gif-creator/core/gif_builder.py": "f51ae17fea7d3736f790355aab2af6c69f3c4475a19e2da093f73db01edc59d3",
+      "skills/docs-and-coauthoring/slack-gif-creator/core/validators.py": "059502d3245e59d64110f42aa1e4b155b5e27cc582e57c861f47446898d66dd7"
+    }
+  },
+  "algorithmic-art-skill": {
+    "files": {
+      "skills/docs-and-coauthoring/algorithmic-art/templates/generator_template.js": "d4a1d449cbfb92b96009c8f2ad3b1c6cf6215d6ce75d68cf44a1aa7681077e88"
+    }
+  },
+  "hallmark-skill": {
+    "files": {
+      "skills/misc/hallmark/references/genres/atmospheric.md": "418c11b5e214220efda2f1d9a1981a28c090f4eaaf73a436714561c91514c61f",
+      "skills/misc/hallmark/references/component-cookbook.md": "f6fd760486c41f9a99495e3ec3c40a2bb7549e092ff428a07581a5ac4cfefd13"
+    }
+  },
+  "webapp-testing-skill": {
+    "files": {
+      "skills/devops-and-tools/webapp-testing/examples/console_logging.py": "8874ebbf84c99ba74a02b4c057baac4025581104b4bf67c769dd9e57cc5217ed",
+      "skills/devops-and-tools/webapp-testing/examples/element_discovery.py": "a45147eb7f2eac64991bbb8264a0b542fc42850a7a2225a078c2354c77e0768b",
+      "skills/devops-and-tools/webapp-testing/examples/static_html_automation.py": "b89ef06498e0ea0c2a0f760e06c5a7afcdbac15467b2be2e25f891620cad76ac",
+      "skills/devops-and-tools/webapp-testing/scripts/with_server.py": "d986b56a48b42d36562c34db100e8725f0535684d0d875348e729257abe2ab38"
+    }
+  },
+  "writing-skills": {
+    "files": {
+      "skills/misc/writing-skills/SKILL.md": "bd31933d8dbbc31bea6ec6986f6fb66be5443b20dafacac2e6b6673349161e34",
+      "skills/misc/writing-skills/render-graphs.js": "cfecc22868bcf1bcfebd7463a2f5b6c4092d6c68fdba17fb72d0b8619b654032"
+    }
+  },
+  "skill-creator-meta-skill": {
+    "files": {
+      "skills/meta-skills/skill-creator/SKILL.md": "e030e7685e26283b4a76f5202aa3ae8516fb41dde799be5ae8ea6393ec009fe9",
+      "skills/meta-skills/skill-creator/scripts/utils.py": "8c3ee3a5fcdec30986c89bb28abe575ae58aff5c49285d318b09dc1fc3be8ba5",
+      "skills/meta-skills/skill-creator/scripts/quick_validate.py": "5ede3a3efebbda01b5e1dfafe3ee024ac63e8a2c1a613ab7f0ccca8cb0d6e4f4",
+      "skills/meta-skills/skill-creator/scripts/package_skill.py": "abee1933ee415d1587e9326b8bb1a70c4751e93ba2fb3fb68b039d7775ed9529",
+      "skills/meta-skills/skill-creator/scripts/run_eval.py": "080a2e2f0bf2ea5b98803871cb7ffecb031ea223b1fb205f9693c76701296c31",
+      "skills/meta-skills/skill-creator/scripts/run_loop.py": "615fef476820bfce84256ceac086dca5a014442b416c883475e24dfbd994f8d0",
+      "skills/meta-skills/skill-creator/scripts/improve_description.py": "98260ac2100493629745ae36c60039f9d6c8f04fa5ff1b8f7a52422a3029405f",
+      "skills/meta-skills/skill-creator/eval-viewer/generate_review.py": "9eb06e76558996e32ba4d7b1599a74bb3340ac2fb42f2c2280b4ec6532f9c859"
+    }
+  },
+  "awesome-agent-skills-integration": {
+    "files": {
+      "skills/awesome-agent-skills/SKILL.md": "b6d2713889eac8a86362970b3dd611ede4022e837ad6ac4a352f53c17f95c132",
+      "docs/external-repos/awesome-agent-skills/README.md": "00b6a26042d06c26181dca08275d519fd673ea09418ef2cc3d2bd68ca40d91e7"
+    }
+  },
+  "spec-kit-integration": {
+    "files": {
+      "skills/misc/community/spec-kit/references/original-repo/README.md": "c933b8bb7b515867da007c932a49666f3c8a16f191badf442e3c904ed1dbcf22"
+    }
+  },
+  "development": {
+    "files": {
+      "package.json": "7f69c72a990a7340bf15e93a79c0a3b3b0a67252d6685ca01476ddb07df949db"
+    }
+  },
+  "contributing": {
+    "files": {
+      "CONTRIBUTING.md": "5a080bde890f6b4d8639a3de1f1198cac6fefe254d9505dc136bf7ecf4e81d50"
+    }
+  },
+  "changelog": {
+    "files": {
+      "CHANGELOG.md": "3d414deeb2a9064ee14b5ccd4bb015c8a2ee08baa9b848d020ae7625e45cb818"
+    }
+  },
+  "mcp-builder-skill": {
+    "files": {
+      "skills/meta-skills/mcp-builder/scripts/connections.py": "0bdeed1e9eb184124aa08bfae5f1ca41e04586d3532bb814a9a5a3d8268f01ab",
+      "skills/meta-skills/mcp-builder/scripts/evaluation.py": "eb32fd16fe42411a874de830f5b535c235ae07288d13b605c8784b8aae157f9d"
+    }
+  }
+}
