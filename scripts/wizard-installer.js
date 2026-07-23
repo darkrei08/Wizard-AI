@@ -319,6 +319,22 @@ async function runUrlInstall(repoUrl, skillFilter, allAgents) {
         };
         copyAll(skill.dir, dest);
         successCount++;
+
+        if (agent.name === "Pi") {
+          const piSettingsPath = path.join(os.homedir(), ".pi", "agent", "settings.json");
+          if (fs.existsSync(piSettingsPath)) {
+            try {
+              const settings = JSON.parse(fs.readFileSync(piSettingsPath, "utf8"));
+              if (!settings.skills) settings.skills = [];
+              if (!settings.skills.includes(dest)) {
+                settings.skills.push(dest);
+                fs.writeFileSync(piSettingsPath, JSON.stringify(settings, null, 2));
+              }
+            } catch (e) {
+              // ignore
+            }
+          }
+        }
       } catch (e) {
         // silently fail individual copy
       }
