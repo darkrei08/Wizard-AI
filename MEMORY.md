@@ -1,145 +1,16 @@
-# 🧠 Wizard-AI Session Memory & Architecture Knowledge Base
+# Session Memory (Wizard-AI Ecosystem)
 
-## 📍 System Status & Architecture Overview
+## Latest Actions & Decisions
+- **Folder Reorganization**: Relocated IDE configs to `.agents/`, standalone tools to `packages/`, and docs to `docs/` to keep the root pristine.
+- **Wiki Updates**: Automatically parsed and replaced 83 GitHub repo links across multilingual Wikis.
+- **Agent Rules Unification (Redirect Pattern)**: Unified `CLAUDE.md`, `GEMINI.md`, and all `00-master-rules.md` inside `.agents/` into a single master rulebook (`AGENTS.md`). IDE specific files now use a 2-line redirect to `AGENTS.md`.
+- **Golden Directives Injection**: Injected leaked prompt instructions (Zero Sycophancy, No Placeholders, Assume Expertise, Caveman mode) into the Master Rulebook.
+- **Merge Verification**: Verified that agent rule unification (`1461153`) cleanly merged on top of the `@clack/prompts` interactive installer refactoring (`v0.52.25` / `5e3ea06`) without conflicts.
 
-- **Package**: `@darkrei08/wizard-ai-cli` (`v0.50.47`)
-- **Master Pipeline**: 11-Step Loop Engineering Pipeline (`0-loop-engine` -> `1-auto-router` MoE -> `01-05 Loops`)
-- **Skill Engine**: 219+ Skills synced across 10 Agent IDE targets:
-  - `~/.gemini/config/skills`
-  - `~/.claude/skills`
-  - `~/.config/amp/skills`
-  - `~/.agents/skills`
-  - `~/.config/agents/skills`
-  - `~/.cursor/skills`
-  - `~/.windsurf/skills`
-  - `~/.opencode/skills`
-  - `~/.pi/skills`
-  - `~/.pi/agent/skills`
+## Current State
+- **Root**: Pristine. Contains only global configs (`AGENTS.md`, `README.md`, `setup.sh`).
+- **Agents**: Highly optimized, rule-compliant, and unified.
+- **Installer**: Refactored to Node.js `@clack/prompts` UI.
 
----
-
-## 🏛️ Core Principles & Conventions
-
-1. **2-Level Taxonomy Hierarchy**:
-   - **Macro Domain Areas**: `3.1 Core Engine`, `3.2 Token Squeezing & Context`, `3.3 Frontend & Design`, `3.4 DevOps & Security`, `3.5 Multimodal & Messaging`, `3.6 Starter Templates`.
-   - **Software Natures**: `[🧠 SKILL PER LLM]`, `[⚡ SOFTWARE CLI]`, `[🖥️ APP GRAFICA / DESKTOP]`, `[🏗️ STARTER TEMPLATE]`.
-2. **Context Efficiency Stack**: `RTK` (<10ms CLI wrapper) + `sqz` + `headroom` + `LLMLingua` + `caveman` + `TOON/LEA`.
-3. **Centralized Repo Registry**: All external repo definitions live in `scripts/repo-registry.json` — single source of truth consumed by `setup.sh`, `setup.ps1`, and `scripts/wizard-installer.js`.
-4. **Cross-OS Parity**: Every feature MUST be backed by both POSIX Bash (`setup.sh`, `bin/wz-ai-*`) and Windows PowerShell (`setup.ps1`, `bin/windows/wz-ai-*.ps1`).
-4. **Testing Isolation**: `vitest.config.mjs` explicitly limits test inclusion to `test/**/*.test.mjs` (runtime <150ms).
-
----
-
-## 📜 Key Changelog Snapshots
-
-### v0.50.47 (2026-07-22)
-- **Executable Resolver & Syntax Fix**: Added `wizard-ai-cli` to `package.json` `bin` map; fixed syntax error in `wizard-ai sync-skills`.
-
-### v0.50.46 (2026-07-22)
-- **`@clack/prompts` & `skills` CLI Visual Style**: Added ASCII banner, tree nodes (`┌ │ ◇ ● └`), box drawing summary panels, security risk assessment matrix, and mass deletion support (`wizard-installer.js`).
-
-### v0.50.45 (2026-07-22)
-- **Interactive Skill & Framework Selector**: `setup.sh` and `setup.ps1` now show a caveman-style menu: `[1] Install Everything`, `[2] Select by Category`, `[3] Select Individual Skills`, `[4] Skip`.
-- **Centralized `scripts/repo-registry.json`**: 53 repos, 5 categories, single source of truth for all installers.
-- **Post-Install Summary Dashboard**: Shows installed/skipped/failed counts after repo cloning.
-
-### v0.50.44 (2026-07-22)
-- **Verbose Build Logs & Progress Visibility**: Added `--verbose` / `-v` flag support to `setup.sh`, `setup.ps1`, `wz-ai-install`, and `wizard-installer.js`.
-- **Real-Time Step Counters**: Updated `clone_skill_repo` to output repository step progress (`[Repo 1/52]`) and explicit build action lines (`↳ Installing Node.js npm packages for phantom-ui...`).
-
-### v0.50.43 (2026-07-22)
-- **Multi-Agent Syncing**: Synced skills to Cursor, Windsurf, OpenCode, and Pi.
-- **Auto-Installation of 52 External Repos**: `setup.sh` and `setup.ps1` execute OS-specific build/install routines.
-- **earendil-works/pi Integration**: Added native support for Pi Agent Framework.
-- **Interactive Terminal Installer (`wz-ai install`)**: Launched ANSI category menu (`scripts/wizard-installer.js`).
-- **2-Level Taxonomy & Auto-Wiki Injection**: Upgraded Wiki ([docs/WIKI.md](docs/WIKI.md), [WIKI.md](WIKI.md)), `wz-ai-install`, and `wizard-ai-installer/SKILL.md`.
-
-### v0.50.12 - v0.50.42 (2026-07-20 to 2026-07-22)
-- **4-Layer Format Stack (TOON/LEA)**: Integrated `@toon-format/toon` for token reduction (40-75%).
-- **UV Segfault Protection**: Auto-fallbacks to OS native package manager when uv prebuilt binary fails.
-- **LiteLLM / Model Data Scraper**: Automated live model fetching (`scripts/fetch_latest_models.py`) updating 2970+ model specs.
-- **Systemd & D-Bus Fixes**: Resolved `$DBUS_SESSION_BUS_ADDRESS` and `$XDG_RUNTIME_DIR` environment propagation.
-
-## [Session State Snapshot] - 2026-07-26 15:48:23
-
-
-
-## [Session State Snapshot] - 2026-07-26 16:01:24
-Configurato auto-setup Cockpit Tools Rotator Proxy in setup.sh, setup.ps1, wizard-installer.js e wz-ai-proxy.js. Auto-detect percorsi Cockpit Tools su Linux, macOS e Windows.
-
-
-## [Session State Snapshot] - 2026-07-26 16:07:46
-Sviluppata estensione nativa Pi pi-cockpit-tools (@darkrei08/pi-cockpit-tools) e integrata nel repo Wizard-AI index.js e repo-registry.json. Push effettuato su GitHub.
-
-
-## [Session State Snapshot] - 2026-07-26 16:08:27
-Pacchetto pi-cockpit-proxy-setup aggiornato alla v1.1.0 (risoluzione dinamica dei percorsi multi-OS per cockpit-reader.mjs e supporto per wz-ai-proxy auto-setup), aggiunto al repo e pubblicato su GitHub.
-
-
-## [Session State Snapshot] - 2026-07-26 16:09:25
-Sviluppato CLI wrapper interattivo wz-ai-cockpit (scripts/wz-ai-cockpit.js, bin/wz-ai-cockpit, bin/windows/wz-ai-cockpit.ps1). Gestisce menu ANSI clack, cambio account per agenti LLM e auto-rotate in base alle quote.
-
-
-## [Session State Snapshot] - 2026-07-26 16:11:06
-Aggiunto menu interattivo a 2 step (Account + Selezione Modello) in wz-ai-cockpit e slash command /cockpit-model per Pi CLI. Push su GitHub.
-
-
-## [Session State Snapshot] - 2026-07-26 16:13:18
-Creata documentazione modulare e iper-linkata (docs/COCKPIT_PROXY_GUIDE.md, docs/PI_AGENT_WORKFLOWS.md, docs/TOKEN_EFFICIENCY_STACK.md, docs/SKILLS_TAXONOMY.md). Aggiornati README di Wizard-AI, pi-cockpit-proxy-setup e pi-cockpit-tools.
-
-
-## [Session State Snapshot] - 2026-07-26 16:14:19
-Risolto deploy dei wrapper wz-ai-cockpit e wz-ai-account in ~/.local/bin/. Ora 'wz-ai cockpit' funziona nativamente da qualsiasi posizione del terminale.
-
-
-## [Session State Snapshot] - 2026-07-26 16:16:37
-Potenziata dashboard interattiva wz-ai cockpit con menu Clack UI per cambio account, selezione modello predefinito, auto-rotate e verifica quote live.
-
-
-## [Session State Snapshot] - 2026-07-26 16:23:24
-Risolti errori di pi-extensible-workflows (thinking: off in worker-generic.md), onboarding di lean-ctx per tutti gli agenti (38/38 check superati) e pi install npm:pi-lean-ctx.
-
-
-## [Session State Snapshot] - 2026-07-26 16:23:54
-Fixed codebase-memory-mcp and lean-ctx MCP servers, verified token compression stack
-
-
-## [Session State Snapshot] - 2026-07-26 16:24:58
-Resumed session 019f9ea9-aeb1-7eb3-a4be-a6c2f3643a32: completed wiki repo-registry links, verified 59 external repos, all 7 unit tests passed, graphify graph updated
-
-
-## [Session State Snapshot] - 2026-07-26 16:26:03
-Development complete for session 019f9ea9-aeb1-7eb3-a4be-a6c2f3643a32: fixed MCP servers, updated external repos knowledge, verified all 7 unit tests, graphify built, all commits pushed to GitHub
-
-
-## [Session State Snapshot] - 2026-07-26 16:27:21
-Completato l'aggiornamento del comando help (wz-ai help) integrando tutti i wrapper binari per i 14 framework di Wizard-AI.
-
-
-## [Session State Snapshot] - 2026-07-26 16:30:07
-Unified token optimization pipeline executed
-
-
-## [Session State Snapshot] - 2026-07-26 16:30:16
-Integrata l'esecuzione unificata all-in-one della pipeline di ottimizzazione e memoria in wz-ai optimize auto.
-
-
-## [Session State Snapshot] - 2026-07-26 16:32:55
-Integrati i comandi pi-dcp (Dynamic Context Pruning) ed il sequencer a 5 Loop nei cicli automatici Pre-Prompt e Post-Prompt di wz-ai optimize auto.
-
-
-## [Session State Snapshot] - 2026-07-26 16:33:07
-Task loop optimization test
-
-
-## [Session State Snapshot] - 2026-07-26 16:34:40
-Aggiornato README.it.md con i link alle guide modulari, wz-ai optimize auto, wz-ai wiki GUI, wz-ai cockpit e wz-ai dcp. Push completato su GitHub.
-
-
-## [Session State Snapshot] - 2026-07-26 16:39:33
-Memory state saved before parallel subagent execution for Cockpit multi-CLI accounts & skill conflict cleanup.
-
-
-## [Session State Snapshot] - 2026-07-26 16:44:13
-Sviluppate funzionalità multi-CLI per Cockpit (scope globale/specifico), risolta auto-rotazione fallback su quota zero, ed eliminati i conflitti/duplicati tra skill in .pi/skills e .agents/skills.
-
+## Next Steps
+- Continue executing standard 5-Loop workflows for any subsequent user requests.

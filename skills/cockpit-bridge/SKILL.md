@@ -44,70 +44,35 @@ Format the output as a rich table with colored quota indicators:
 
 ## CLI Wrappers and Integration
 
-To make this seamless, Wizard-AI provides a dedicated CLI wrapper that automatically provisions Cockpit Tools accounts into the Pi Antigravity Proxy Rotator (`pi-antigravity-rotator`).
+Wizard-AI provides a unified suite of commands to easily integrate your Cockpit Tools accounts into Pi / Antigravity / Claude Code without rate limits.
 
-When a user wants to configure Pi to bypass the Gemini API free-tier limits using their Cockpit accounts, instruct them to run:
+### 1. Auto-Rotator (Raccomandato)
+The easiest way to bypass free-tier limits is to use the automated background proxy rotator. It automatically syncs accounts and rotates them instantly when you hit a rate limit.
 
-1. Install the rotator proxy:
-   ```bash
-   wz-ai proxy install
-   ```
-
-2. Iniziate l'account provisioning (estrae silenziosamente i tokens da Cockpit Tools):
-   ```bash
-   wz-ai proxy provision
-   ```
-
-3. Attivate il demone proxy in background (si avvierà in automatico all'accensione del PC):
-   ```bash
-   wz-ai proxy enable
-   ```
-
-4. Controllate i log del proxy in background:
-   ```bash
-   wz-ai proxy logs
-   ```
-
-This automates the entire process: reading from Cockpit Tools, normalizing the schema (tier and project ID validation), and configuring Pi's `models.json` and `auth.json` to use the `google-antigravity` provider.
-
-### Manual Commands (Legacy)
-If the user prefers the `pi-account-switcher` fallback or manual syncing:
-- `/cockpit-accounts` - Lists available accounts from Cockpit Tools
-- `/cockpit-status` - Shows the active account and token quota
-- `/cockpit-switch <email>` - Switches the active account
-- `/cockpit-sync` - Syncs the current account to pi's auth file
-- `/cockpit-provision` - Exports all accounts to `pi-account-switcher`
-
-### `cockpit-accounts`
-List all available accounts from Cockpit Tools.
+Just run this **single command** to install, provision, and enable the proxy:
 ```bash
-node "<SKILL_DIR>/scripts/cockpit-reader.mjs" accounts
-```
-Display each account with its email and whether it's the current active one (✅).
-
-### `cockpit-switch <email>`
-Switch to a different Cockpit Tools account and sync to pi agent.
-```bash
-node "<SKILL_DIR>/scripts/cockpit-reader.mjs" switch <email>
-```
-This will:
-1. Update Cockpit Tools' `current_account_id` and `current_account.json`
-2. Sync the OAuth token to pi's `~/.pi/agent/auth.json` (for pi-native auth)
-3. Set the active account in `pi-account-switcher`'s state
-4. Display the new account status
-
-### `cockpit-sync`
-Sync the current Cockpit Tools account to pi's auth.json (useful after Cockpit Tools desktop switch).
-```bash
-node "<SKILL_DIR>/scripts/cockpit-reader.mjs" sync
+wz-ai proxy setup
 ```
 
-### `cockpit-provision`
-Provisions all valid Cockpit Tools accounts into the `pi-account-switcher` extension.
+Once executed, you don't need to do anything else. Pi will automatically use your Cockpit accounts through the local proxy. 
+To check the status or logs, you can use:
+- `wz-ai proxy status`
+- `wz-ai proxy logs`
+
+### 2. Switch Manuale (Legacy / Opzionale)
+Se per qualche motivo non vuoi usare la rotazione automatica e preferisci switchare account manualmente (sia fuori che dentro a Pi):
+
+**Da terminale (Fuori da Pi):**
 ```bash
-node "<SKILL_DIR>/scripts/cockpit-reader.mjs" provision
+wz-ai cockpit switch <email>
 ```
-*Note: Ensure `pi-account-switcher` is installed via `pi install npm:pi-account-switcher` or `pi-multi-account` before using this, or it will create the config file from scratch.*
+*(Se lo scrivi senza argomenti o usi `wz-ai cockpit`, aprirà un comodo menu interattivo).*
+
+**Dalla chat (Dentro a Pi / Antigravity):**
+Puoi invocare nativamente i comandi slash:
+- `/cockpit-switch <email>` - Switcha l'account attivo
+- `/cockpit-accounts` - Mostra la lista degli account
+- `/cockpit-status` - Mostra le quote e lo stato dell'account corrente
 
 ## Security Model
 
