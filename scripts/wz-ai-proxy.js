@@ -135,7 +135,34 @@ function injectPiConfig() {
 
 const LOG_FILE = path.join(os.homedir(), '.pi-antigravity-rotator', 'proxy.log');
 
+function getCockpitReaderPath() {
+  const searchPaths = [
+    path.join(__dirname, '..', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+    path.join(os.homedir(), '.gemini', 'config', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+    path.join(os.homedir(), '.claude', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+    path.join(os.homedir(), '.config', 'amp', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+    path.join(os.homedir(), '.agents', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+    path.join(os.homedir(), '.pi', 'agent', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+    path.join(os.homedir(), '.pi', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+  ];
+  return searchPaths.find(p => fs.existsSync(p));
+}
+
+function provisionCockpitAccounts(silent = false) {
+  const readerPath = getCockpitReaderPath();
+  if (readerPath) {
+    if (silent) {
+      runCommandSilent(`node "${readerPath}" provision-rotator`);
+    } else {
+      console.log("Provisioning Cockpit Tools accounts into rotator...");
+      runCommand(`node "${readerPath}" provision-rotator`, true);
+    }
+  }
+  return readerPath;
+}
+
 function enableLinux() {
+  provisionCockpitAccounts();
   writeLitellmConfig();
   injectPiConfig();
   const serviceDir = path.join(os.homedir(), '.config', 'systemd', 'user');
@@ -146,12 +173,16 @@ function enableLinux() {
     console.error("pi-antigravity-rotator not found. Run 'wizard-ai proxy install' first.");
     process.exit(1);
   }
+
+  const readerPath = getCockpitReaderPath();
+  const execStartPreLine = readerPath ? `ExecStartPre=${process.execPath} "${readerPath}" provision-rotator\n` : '';
+
   const serviceContent = `[Unit]
 Description=Wizard-AI Cockpit Proxy Rotator
 After=network.target
 
 [Service]
-ExecStart=${ExecStart} start
+${execStartPreLine}ExecStart=${ExecStart} start
 Restart=always
 RestartSec=10
 
@@ -179,9 +210,36 @@ WantedBy=default.target
   fs.writeFileSync(path.join(serviceDir, 'wz-ai-proxy-litellm.service'), litellmServiceContent, 'utf8');
 
   runCommand('systemctl --user daemon-reload');
+
+  // Clean up stale override.conf — bindHost is now enforced in accounts.json by cockpit-reader
+  const overrideDir = path.join(serviceDir, 'wz-ai-proxy.service.d');
+  const overrideFile = path.join(overrideDir, 'override.conf');
+  if (fs.existsSync(overrideFile)) {
+    fs.unlinkSync(overrideFile);
+    // Remove dir if empty
+    try { fs.rmdirSync(overrideDir); } catch { /* not empty, fine */ }
+    runCommand('systemctl --user daemon-reload');
+  }
+
   runCommand('systemctl --user enable wz-ai-proxy.service wz-ai-proxy-litellm.service');
-  runCommand('systemctl --user start wz-ai-proxy.service wz-ai-proxy-litellm.service');
-  console.log("✅ Proxy and LiteLLM enabled and started via systemd (Ports: 51200, 4000).");
+  runCommand('systemctl --user restart wz-ai-proxy.service wz-ai-proxy-litellm.service');
+
+  // Post-start health check — wait up to 10s for proxy to be reachable
+  console.log("⏳ Waiting for proxy to become ready...");
+  let ready = false;
+  for (let i = 0; i < 10; i++) {
+    const result = runCommandSilent('pi-antigravity-rotator status');
+    if (result && result.includes('"accounts"')) {
+      ready = true;
+      break;
+    }
+    execSync('sleep 1');
+  }
+  if (ready) {
+    console.log("✅ Proxy and LiteLLM enabled and started via systemd (Ports: 51200, 4000).");
+  } else {
+    console.error("⚠️  Proxy started but health check failed. Check logs: journalctl --user -u wz-ai-proxy.service -f");
+  }
 }
 
 function disableLinux() {
@@ -196,6 +254,7 @@ function disableLinux() {
 }
 
 function enableMac() {
+  provisionCockpitAccounts();
   writeLitellmConfig();
   injectPiConfig();
   const plistDir = path.join(os.homedir(), 'Library', 'LaunchAgents');
@@ -286,6 +345,7 @@ function disableMac() {
 }
 
 function enableWindows() {
+  provisionCockpitAccounts();
   writeLitellmConfig();
   injectPiConfig();
   const startupDir = path.join(process.env.APPDATA, 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup');
@@ -412,50 +472,21 @@ try {
     }
   }
   else if (command === 'provision') {
-    console.log("Provisioning Cockpit Tools accounts...");
-    // Look for cockpit-reader in multiple possible locations
-    const searchPaths = [
-      path.join(__dirname, '..', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
-      path.join(os.homedir(), '.gemini', 'config', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
-      path.join(os.homedir(), '.claude', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
-      path.join(os.homedir(), '.config', 'amp', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
-      path.join(os.homedir(), '.agents', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
-      path.join(os.homedir(), '.pi', 'agent', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
-      path.join(os.homedir(), '.pi', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
-    ];
-    const readerPath = searchPaths.find(p => fs.existsSync(p));
-    if (readerPath) {
-      runCommand(`node "${readerPath}" provision-rotator`);
-    } else {
-      console.log("cockpit-bridge skill not found. Ensure Wizard-AI is installed correctly.");
-      console.log("Tip: Use 'wizard-ai proxy login' to add accounts directly via Google OAuth instead.");
-    }
+    provisionCockpitAccounts();
   } 
-  else if (command === 'auto-setup' || command === 'setup') {
+  else if (command === 'auto-setup' || command === 'setup' || command === 'boot' || command === 'sync') {
     console.log("🚀 Executing Automated Cockpit Tools & Rotator Proxy Setup...");
     
     // 1. Provision accounts from Cockpit Tools
     console.log("\n[1/3] Provisioning Cockpit Tools accounts...");
-    const searchPaths = [
-      path.join(__dirname, '..', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
-      path.join(os.homedir(), '.gemini', 'config', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
-      path.join(os.homedir(), '.claude', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
-      path.join(os.homedir(), '.config', 'amp', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
-      path.join(os.homedir(), '.agents', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
-      path.join(os.homedir(), '.pi', 'agent', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
-      path.join(os.homedir(), '.pi', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
-    ];
-    const readerPath = searchPaths.find(p => fs.existsSync(p));
-    if (readerPath) {
-      runCommand(`node "${readerPath}" provision-rotator`, true);
-    }
+    provisionCockpitAccounts();
 
     // 2. Inject Pi configuration
     console.log("\n[2/3] Injecting Pi CLI configuration (auth.json + models.json)...");
     injectPiConfig();
 
     // 3. Enable background daemon
-    console.log("\n[3/3] Enabling background daemon daemon...");
+    console.log("\n[3/3] Enabling background daemon...");
     if (PLATFORM === 'linux') enableLinux();
     else if (PLATFORM === 'darwin') enableMac();
     else if (PLATFORM === 'win32') enableWindows();
@@ -474,6 +505,7 @@ try {
   }
   else if (command === 'start') {
     console.log("Starting proxy in foreground...");
+    provisionCockpitAccounts();
     runCommand('pi-antigravity-rotator start');
   } 
   else if (command === 'enable') {

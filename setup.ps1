@@ -704,22 +704,10 @@ if (Get-Command npm -ErrorAction SilentlyContinue) {
         $WzAiProxyJs = Join-Path $PSScriptRoot 'scripts\wz-ai-proxy.js'
         if (Test-Path $WzAiProxyJs) {
             try {
-                Write-Log '  1. Provisioning Cockpit Tools accounts into rotator...' -ForegroundColor Cyan
-                node $WzAiProxyJs provision
+                Write-Log '  Executing Automated Cockpit Tools & Rotator Proxy Setup (Boot)...' -ForegroundColor Cyan
+                node $WzAiProxyJs boot
             } catch {
-                Write-Log "  [!] wz-ai-proxy provision warning: $($_.Exception.Message)" -ForegroundColor Yellow
-            }
-            try {
-                Write-Log '  2. Injecting Pi auth.json & models.json configuration...' -ForegroundColor Cyan
-                node $WzAiProxyJs pi-config
-            } catch {
-                Write-Log "  [!] wz-ai-proxy pi-config warning: $($_.Exception.Message)" -ForegroundColor Yellow
-            }
-            try {
-                Write-Log '  3. Enabling background proxy rotator daemon (Startup VBScript)...' -ForegroundColor Cyan
-                node $WzAiProxyJs enable
-            } catch {
-                Write-Log "  [!] wz-ai-proxy enable warning: $($_.Exception.Message)" -ForegroundColor Yellow
+                Write-Log "  [!] wz-ai-proxy boot warning: $($_.Exception.Message)" -ForegroundColor Yellow
             }
 
             Write-Log ' '

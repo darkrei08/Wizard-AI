@@ -851,10 +851,8 @@ if command -v npm &>/dev/null; then
       || sudo npm install -g pi-antigravity-rotator \
       || echo -e "${RED}Failed to install pi-antigravity-rotator.${NC}"
     
-    # Generate Pi's auth.json + models.json to route google provider through local rotator
-    "$HOME/.local/bin/wz-ai-proxy" pi-config || true
-    # Enable the background daemon
-    "$HOME/.local/bin/wz-ai-proxy" enable || true
+    # Provision Cockpit Tools accounts, inject Pi config, and enable background daemon
+    "$HOME/.local/bin/wz-ai-proxy" boot || true
 
     echo -e "\n${GREEN}✓ Proxy configured. Pi will route through the local rotator on port 51200.${NC}"
     echo -e "${CYAN}  To add Google accounts: wz-ai-proxy login${NC}"

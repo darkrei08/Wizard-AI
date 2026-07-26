@@ -139,3 +139,7 @@ Aggiornato README.it.md con i link alle guide modulari, wz-ai optimize auto, wz-
 ## [Session State Snapshot] - 2026-07-26 16:39:33
 Memory state saved before parallel subagent execution for Cockpit multi-CLI accounts & skill conflict cleanup.
 
+
+## [Session State Snapshot] - 2026-07-26 16:44:13
+Sviluppate funzionalità multi-CLI per Cockpit (scope globale/specifico), risolta auto-rotazione fallback su quota zero, ed eliminati i conflitti/duplicati tra skill in .pi/skills e .agents/skills.
+

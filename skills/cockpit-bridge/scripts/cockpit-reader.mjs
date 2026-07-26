@@ -553,7 +553,22 @@ function cmdProvisionRotator() {
     });
   }
 
-  existingConfig.accounts = [...keptAccounts, ...provisioned];
+  // Deduplicate: if a manual (non-Cockpit) account shares the same email as a
+  // Cockpit-provisioned one, remove the manual entry. Cockpit tokens are
+  // auto-refreshed and always fresher, so they take priority.
+  const cockpitEmails = new Set(provisioned.map(a => a.email.toLowerCase()));
+  const deduplicatedKept = keptAccounts.filter(a => {
+    const dominated = cockpitEmails.has((a.email || '').toLowerCase());
+    if (dominated) {
+      console.error(`[provision-rotator] Removing duplicate manual account: ${a.label || a.email} (superseded by Cockpit)`);
+    }
+    return !dominated;
+  });
+
+  // Always enforce security: bind to loopback only
+  existingConfig.bindHost = '127.0.0.1';
+
+  existingConfig.accounts = [...deduplicatedKept, ...provisioned];
   writeJson(configPath, existingConfig);
 
   console.log(JSON.stringify({
