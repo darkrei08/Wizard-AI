@@ -79,3 +79,7 @@ Pacchetto pi-cockpit-proxy-setup aggiornato alla v1.1.0 (risoluzione dinamica de
 ## [Session State Snapshot] - 2026-07-26 16:09:25
 Sviluppato CLI wrapper interattivo wz-ai-cockpit (scripts/wz-ai-cockpit.js, bin/wz-ai-cockpit, bin/windows/wz-ai-cockpit.ps1). Gestisce menu ANSI clack, cambio account per agenti LLM e auto-rotate in base alle quote.
 
+
+## [Session State Snapshot] - 2026-07-26 16:11:06
+Aggiunto menu interattivo a 2 step (Account + Selezione Modello) in wz-ai-cockpit e slash command /cockpit-model per Pi CLI. Push su GitHub.
+
