@@ -165,7 +165,7 @@ All tools and skills managed by Wizard-AI are open source. Here is the complete 
 - **[qwenpaw](https://github.com/agentscope-ai/QwenPaw.git)**: QwenPaw agent scope
 - **[syke](https://github.com/saxenauts/syke.git)**: Syke autonomous agent
 - **[mem0](https://github.com/mem0ai/mem0.git)**: Mem0 persistent memory
-- **[personal-graph](https://github.com/Technoculture/personal-graph.git)**: Personal knowledge graph
+- **[gentle-pi](https://github.com/Gentleman-Programming/gentle-pi.git)**: Gentle Pi Framework
 - **[pi-config](https://github.com/vekexasia/pi-config.git)**: Vekexasia pi agent configuration
 - **[pi-cockpit-tools](https://github.com/darkrei08/Wizard-AI.git)**: Cockpit Tools multi-account & rotator extension for Pi
 
@@ -192,6 +192,7 @@ All tools and skills managed by Wizard-AI are open source. Here is the complete 
 
 - **[antigravity-awesome-skills](https://github.com/sickn33/antigravity-awesome-skills.git)**: Antigravity skill pack
 - **[awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills.git)**: Community skill collection
+- **[crowdsec-skill](https://github.com/crowdsecurity/crowdsec-skill.git)**: CrowdSec cybersecurity skill
 - **[cybersecurity-skills](https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git)**: 754 cybersecurity skills
 - **[system_prompts_leaks](https://github.com/asgeirtj/system_prompts_leaks.git)**: Leaked system prompts corpus (ChatGPT, Claude, Gemini, Grok) for prompt security research
 - **[engineering-excellence](https://github.com/micio86dev/Engineering-Excellence.git)**: Framework-agnostic SDD/TDD engineering standard
@@ -208,6 +209,9 @@ All tools and skills managed by Wizard-AI are open source. Here is the complete 
 
 - **[engram](https://github.com/Gentleman-Programming/engram.git)**: SQLite-backed agent memory
 - **[turbovec](https://github.com/RyanCodrai/turbovec.git)**: TurboVec vector DB
+- **[personal-graph](https://github.com/Technoculture/personal-graph.git)**: Personal knowledge graph
+- **[llm_wiki](https://github.com/nashsu/llm_wiki.git)**: Cross-platform desktop application for knowledge bases
+- **[rag-anything](https://github.com/HKUDS/RAG-Anything.git)**: RAG architecture for diverse data modalities
 - **[zvec](https://github.com/alibaba/zvec.git)**: ZVec vector DB
 - **[headroom](https://github.com/chopratejas/headroom.git)**: Headroom context proxy
 
@@ -224,6 +228,7 @@ All tools and skills managed by Wizard-AI are open source. Here is the complete 
 
 - **[voicebox](https://github.com/jamiepine/voicebox.git)**: Voicebox audio processor
 - **[omnivoice-studio](https://github.com/debpalash/OmniVoice-Studio.git)**: OmniVoice Studio
+- **[camofox-browser](https://github.com/jo-inc/camofox-browser.git)**: Anti-detect browser for web scraping
 - **[supertonic](https://github.com/supertone-inc/supertonic.git)**: Supertonic audio tools
 - **[hyperframes](https://github.com/heygen-com/hyperframes.git)**: HeyGen video generation
 - **[wslens](https://github.com/vekexasia/wslens.git)**: WSLens GUI backend

@@ -6,6 +6,11 @@
       "description": "Standalone multi-agent harnesses, execution engines, and orchestrators",
       "repos": [
         {
+          "name": "gentle-pi",
+          "url": "https://github.com/Gentleman-Programming/gentle-pi.git",
+          "desc": "Gentle Pi Framework"
+        },
+        {
           "name": "earendil-pi",
           "url": "https://github.com/earendil-works/pi.git",
           "desc": "Pi Agent Framework"
@@ -130,6 +135,11 @@
       "description": "Agent directives, rulebooks, and specialized skill packs",
       "repos": [
         {
+          "name": "crowdsec-skill",
+          "url": "https://github.com/crowdsecurity/crowdsec-skill.git",
+          "desc": "CrowdSec cybersecurity skill"
+        },
+        {
           "name": "antigravity-awesome-skills",
           "url": "https://github.com/sickn33/antigravity-awesome-skills.git",
           "desc": "Antigravity skill pack"
@@ -202,6 +212,21 @@
       "description": "Persistent memory engines, vector stores, context pruning, and knowledge graph tools",
       "repos": [
         {
+          "name": "llm_wiki",
+          "url": "https://github.com/nashsu/llm_wiki.git",
+          "desc": "Cross-platform desktop application for knowledge bases"
+        },
+        {
+          "name": "personal-graph",
+          "url": "https://github.com/Technoculture/personal-graph.git",
+          "desc": "Personal knowledge graph"
+        },
+        {
+          "name": "rag-anything",
+          "url": "https://github.com/HKUDS/RAG-Anything.git",
+          "desc": "RAG architecture for diverse data modalities"
+        },
+        {
           "name": "zvec",
           "url": "https://github.com/alibaba/zvec.git",
           "desc": "ZVec vector DB"
@@ -250,6 +275,11 @@
       "badge": "[DESKTOP / SERVICE]",
       "description": "Desktop UI harnesses, audio/video studios, realtime DBs, and API bridges",
       "repos": [
+        {
+          "name": "camofox-browser",
+          "url": "https://github.com/jo-inc/camofox-browser.git",
+          "desc": "Anti-detect browser for web scraping"
+        },
         {
           "name": "voicebox",
           "url": "https://github.com/jamiepine/voicebox.git",
