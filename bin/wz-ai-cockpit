@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# wz-ai-cockpit - Interactive Account Switcher CLI wrapper for Cockpit Tools & AI Agents
+
+if [ -z "$WIZARD_AI_DIR" ]; then
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    WIZARD_AI_DIR="$(dirname "$SCRIPT_DIR")"
+fi
+
+node "$WIZARD_AI_DIR/scripts/wz-ai-cockpit.js" "$@"

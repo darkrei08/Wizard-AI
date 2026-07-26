@@ -71,3 +71,7 @@ Configurato auto-setup Cockpit Tools Rotator Proxy in setup.sh, setup.ps1, wizar
 ## [Session State Snapshot] - 2026-07-26 16:07:46
 Sviluppata estensione nativa Pi pi-cockpit-tools (@darkrei08/pi-cockpit-tools) e integrata nel repo Wizard-AI index.js e repo-registry.json. Push effettuato su GitHub.
 
+
+## [Session State Snapshot] - 2026-07-26 16:08:27
+Pacchetto pi-cockpit-proxy-setup aggiornato alla v1.1.0 (risoluzione dinamica dei percorsi multi-OS per cockpit-reader.mjs e supporto per wz-ai-proxy auto-setup), aggiunto al repo e pubblicato su GitHub.
+

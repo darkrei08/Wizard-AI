@@ -50,6 +50,8 @@ describe('Wizard-AI CLI Environment & Platform Structure', () => {
     const pkg = JSON.parse(fs.readFileSync(path.join(rootDir, 'package.json'), 'utf-8'));
     expect(pkg.bin['wizard-test']).toBe('./scripts/wizard-test.js');
     expect(pkg.bin['ai-test']).toBe('./scripts/wizard-test.js');
+    expect(pkg.bin['wz-ai-cockpit']).toBe('./scripts/wz-ai-cockpit.js');
+    expect(pkg.bin['wz-ai-account']).toBe('./scripts/wz-ai-cockpit.js');
     expect(pkg.scripts['webnative-inspect']).toContain('wizard-test.js');
   });
 
