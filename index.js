@@ -9,18 +9,24 @@ const fs = require('fs');
 
 module.exports = async function (api) {
   // Register slash commands
-  api.onCommand('wizard', () => {
-    console.log('🪄 Wizard-AI Pi Extension loaded.');
-    console.log('Available workflows: loop-2-develop, shadow-clone-jutsu');
+  api.registerCommand('wizard', {
+    description: 'Show Wizard-AI extension status and available workflows',
+    handler: (_args, ctx) => {
+      ctx.ui.notify('🪄 Wizard-AI Pi Extension loaded.\nAvailable workflows: loop-2-develop, shadow-clone-jutsu', 'info');
+    },
   });
 
   // Load Cockpit Tools Pi Extension
   try {
-    const cockpitExtension = require(path.join(__dirname, 'pi-cockpit-tools', 'index.js'));
+    const cockpitExtension = require(path.join(__dirname, 'packages', 'pi-cockpit-tools', 'index.js'));
     cockpitExtension(api);
   } catch (err) {
-    api.onCommand('cockpit', () => {
-      console.log('🛠️ Cockpit Tools Pi Extension loaded (standalone mode).');
+    if (process.env.WZ_AI_DEBUG) console.error(err);
+    api.registerCommand('cockpit', {
+      description: 'Cockpit Tools extension (standalone mode, failed to load)',
+      handler: (_args, ctx) => {
+        ctx.ui.notify('🛠️ Cockpit Tools Pi Extension loaded (standalone mode).', 'warning');
+      },
     });
   }
 

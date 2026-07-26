@@ -258,120 +258,155 @@ function syncPiAuth() {
 
 module.exports = function cockpitToolsExtension(api) {
   // Slash command: /cockpit or /cockpit-status
-  const handleStatus = () => {
+  const handleStatus = (_args, ctx) => {
     const st = getCockpitStatus();
     if (!st.ok) {
-      console.log('⚠️ Cockpit Tools not detected. Use /login for manual authentication.');
+      ctx.ui.notify('⚠️ Cockpit Tools not detected. Use /login for manual authentication.', 'warning');
       return;
     }
 
-    console.log('\n🚀 Cockpit Tools Bridge & Quota Monitor');
-    console.log(`   Account: ${st.currentAccount.email} (${st.currentAccount.tier})`);
-    console.log(`   Total Accounts Available: ${st.totalAccounts}\n`);
-    console.log('   Model Quotas:');
-    st.models.slice(0, 8).forEach(m => {
-      console.log(`   ${m.icon} ${m.displayName.padEnd(28)} : ${m.percentage}%`);
-    });
-    console.log('\n   Commands: /cockpit-accounts, /cockpit-switch <email>, /cockpit-provision, /cockpit-proxy status\n');
+    const lines = [
+      '🚀 Cockpit Tools Bridge & Quota Monitor',
+      `Account: ${st.currentAccount.email} (${st.currentAccount.tier})`,
+      `Total Accounts Available: ${st.totalAccounts}`,
+      '',
+      'Model Quotas:',
+      ...st.models.slice(0, 8).map(m => `${m.icon} ${m.displayName.padEnd(28)} : ${m.percentage}%`),
+      '',
+      'Commands: /cockpit-accounts, /cockpit-switch <email>, /cockpit-provision, /cockpit-proxy status',
+    ];
+    ctx.ui.notify(lines.join('\n'), 'info');
   };
 
-  api.onCommand('cockpit', handleStatus);
-  api.onCommand('cockpit-status', handleStatus);
+  api.registerCommand('cockpit', { description: 'Show current Cockpit account, tier, and model quotas', handler: handleStatus });
+  api.registerCommand('cockpit-status', { description: 'Show current Cockpit account, tier, and model quotas', handler: handleStatus });
 
   // Slash command: /cockpit-accounts
-  api.onCommand('cockpit-accounts', () => {
-    const { accounts, currentId } = loadCockpitAccounts();
-    if (accounts.length === 0) {
-      console.log('⚠️ No Cockpit Tools accounts found.');
-      return;
-    }
+  api.registerCommand('cockpit-accounts', {
+    description: 'List all Cockpit Tools accounts',
+    handler: (_args, ctx) => {
+      const { accounts, currentId } = loadCockpitAccounts();
+      if (accounts.length === 0) {
+        ctx.ui.notify('⚠️ No Cockpit Tools accounts found.', 'warning');
+        return;
+      }
 
-    console.log(`\n📋 Cockpit Tools Accounts (${accounts.length} total):\n`);
-    accounts.forEach((acc, i) => {
-      const isCurrent = acc.id === currentId ? ' (Active ✅)' : '';
-      console.log(`   ${i + 1}. ${acc.email || acc.id}${isCurrent}`);
-    });
-    console.log('\n   Use /cockpit-switch <email> to switch active account.\n');
+      const lines = [
+        `📋 Cockpit Tools Accounts (${accounts.length} total):`,
+        '',
+        ...accounts.map((acc, i) => `${i + 1}. ${acc.email || acc.id}${acc.id === currentId ? ' (Active ✅)' : ''}`),
+        '',
+        'Use /cockpit-switch <email> to switch active account.',
+      ];
+      ctx.ui.notify(lines.join('\n'), 'info');
+    },
   });
 
   // Slash command: /cockpit-switch <email>
-  api.onCommand('cockpit-switch', (email) => {
-    if (!email) {
-      console.log('Usage: /cockpit-switch <email>');
-      return;
-    }
+  api.registerCommand('cockpit-switch', {
+    description: 'Switch active Cockpit account and sync OAuth token to Pi',
+    handler: (args, ctx) => {
+      const email = (args || '').trim();
+      if (!email) {
+        ctx.ui.notify('Usage: /cockpit-switch <email>', 'warning');
+        return;
+      }
 
-    const { accounts } = loadCockpitAccounts();
-    const target = accounts.find(a => a.email && a.email.toLowerCase() === email.trim().toLowerCase());
-    const syncRes = syncPiAuth();
-    if (syncRes.ok) {
-      console.log(`✅ Switched active Cockpit account to: ${target.email}`);
-      console.log('   Pi auth.json successfully synced.');
-    } else {
-      console.log(`⚠️ Switched account in Cockpit, but failed to sync Pi auth: ${syncRes.error}`);
-    }
+      const dataDir = getCockpitDataDir();
+      const accountsFile = path.join(dataDir, 'accounts.json');
+      const { accounts } = loadCockpitAccounts();
+      const target = accounts.find(a => a.email && a.email.toLowerCase() === email.toLowerCase());
+      if (!target) {
+        ctx.ui.notify(`⚠️ Account "${email}" not found in Cockpit Tools.`, 'warning');
+        return;
+      }
+
+      const accountsData = readJson(accountsFile) || {};
+      accountsData.current_account_id = target.id;
+      writeJson(accountsFile, accountsData);
+
+      const syncRes = syncPiAuth();
+      if (syncRes.ok) {
+        ctx.ui.notify(`✅ Switched active Cockpit account to: ${target.email}\nPi auth.json successfully synced.`, 'info');
+      } else {
+        ctx.ui.notify(`⚠️ Switched account in Cockpit, but failed to sync Pi auth: ${syncRes.error}`, 'warning');
+      }
+    },
   });
 
   // Slash command: /cockpit-model <modelName>
-  api.onCommand('cockpit-model', (modelName) => {
-    if (!modelName) {
-      const st = getCockpitStatus();
-      console.log('\n🤖 Available Models for Active Account:');
-      if (st.ok && st.models) {
-        st.models.slice(0, 10).forEach((m, idx) => {
-          console.log(`   [${idx + 1}] ${m.icon} ${m.displayName.padEnd(28)} (${m.name}) : ${m.percentage}%`);
-        });
+  api.registerCommand('cockpit-model', {
+    description: 'Show or set the default model for the active account',
+    handler: (args, ctx) => {
+      const modelName = (args || '').trim();
+      if (!modelName) {
+        const st = getCockpitStatus();
+        const lines = ['🤖 Available Models for Active Account:'];
+        if (st.ok && st.models) {
+          st.models.slice(0, 10).forEach((m, idx) => {
+            lines.push(`[${idx + 1}] ${m.icon} ${m.displayName.padEnd(28)} (${m.name}) : ${m.percentage}%`);
+          });
+        }
+        lines.push('', 'Usage: /cockpit-model <modelName> (e.g. /cockpit-model gemini-3.6-flash-high)');
+        ctx.ui.notify(lines.join('\n'), 'info');
+        return;
       }
-      console.log('\n   Usage: /cockpit-model <modelName> (e.g. /cockpit-model gemini-3.6-flash-high)\n');
-      return;
-    }
 
-    const targetModel = modelName.trim();
-    const settingsPath = path.join(HOME, '.pi', 'agent', 'settings.json');
-    try {
-      const settings = readJson(settingsPath) || {};
-      settings.defaultModel = targetModel;
-      writeJson(settingsPath, settings);
-      console.log(`✅ Default Model updated in settings.json to: ${targetModel}`);
-    } catch (e) {
-      console.log(`❌ Failed to update model: ${e.message}`);
-    }
+      const settingsPath = path.join(HOME, '.pi', 'agent', 'settings.json');
+      try {
+        const settings = readJson(settingsPath) || {};
+        settings.defaultModel = modelName;
+        writeJson(settingsPath, settings);
+        ctx.ui.notify(`✅ Default Model updated in settings.json to: ${modelName}`, 'info');
+      } catch (e) {
+        ctx.ui.notify(`❌ Failed to update model: ${e.message}`, 'error');
+      }
+    },
   });
 
   // Slash command: /cockpit-sync
-  api.onCommand('cockpit-sync', () => {
-    const res = syncPiAuth();
-    if (res.ok) {
-      console.log(`✅ Synced current Cockpit account (${res.email}) to Pi auth.json.`);
-    } else {
-      console.log(`❌ Failed to sync Cockpit account: ${res.error}`);
-    }
+  api.registerCommand('cockpit-sync', {
+    description: 'Sync current Cockpit account to Pi auth.json',
+    handler: (_args, ctx) => {
+      const res = syncPiAuth();
+      if (res.ok) {
+        ctx.ui.notify(`✅ Synced current Cockpit account (${res.email}) to Pi auth.json.`, 'info');
+      } else {
+        ctx.ui.notify(`❌ Failed to sync Cockpit account: ${res.error}`, 'error');
+      }
+    },
   });
 
   // Slash command: /cockpit-provision
-  api.onCommand('cockpit-provision', () => {
-    const res = provisionRotator();
-    if (res.ok) {
-      console.log(`✅ Provisioned ${res.provisionedCount} Cockpit accounts into Proxy Rotator (${res.configPath}).`);
-    } else {
-      console.log('❌ Failed to provision Cockpit accounts into rotator.');
-    }
+  api.registerCommand('cockpit-provision', {
+    description: 'Provision all Cockpit accounts into pi-antigravity-rotator',
+    handler: (_args, ctx) => {
+      const res = provisionRotator();
+      if (res.ok) {
+        ctx.ui.notify(`✅ Provisioned ${res.provisionedCount} Cockpit accounts into Proxy Rotator (${res.configPath}).`, 'info');
+      } else {
+        ctx.ui.notify('❌ Failed to provision Cockpit accounts into rotator.', 'error');
+      }
+    },
   });
 
   // Slash command: /cockpit-proxy <cmd>
-  api.onCommand('cockpit-proxy', (subCmd) => {
-    const proxyScript = path.join(__dirname, '..', 'scripts', 'wz-ai-proxy.js');
-    if (!fs.existsSync(proxyScript)) {
-      console.log('⚠️ Proxy script wz-ai-proxy.js not found.');
-      return;
-    }
-    const cmd = subCmd ? subCmd.trim() : 'status';
-    try {
-      const output = execSync(`node "${proxyScript}" ${cmd}`, { encoding: 'utf8' });
-      console.log(output);
-    } catch (e) {
-      console.error(`Proxy command error: ${e.message}`);
-    }
+  api.registerCommand('cockpit-proxy', {
+    description: 'Manage local Proxy Rotator daemon (start, enable, disable, status, logs)',
+    handler: (args, ctx) => {
+      const proxyScript = path.join(__dirname, '..', 'scripts', 'wz-ai-proxy.js');
+      if (!fs.existsSync(proxyScript)) {
+        ctx.ui.notify('⚠️ Proxy script wz-ai-proxy.js not found.', 'warning');
+        return;
+      }
+      const cmd = args ? args.trim() : 'status';
+      try {
+        const output = execSync(`node "${proxyScript}" ${cmd}`, { encoding: 'utf8' });
+        ctx.ui.notify(output, 'info');
+      } catch (e) {
+        ctx.ui.notify(`Proxy command error: ${e.message}`, 'error');
+      }
+    },
   });
 
   console.log('🛠️ pi-cockpit-tools extension loaded.');
