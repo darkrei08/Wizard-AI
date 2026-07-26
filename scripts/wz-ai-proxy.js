@@ -403,7 +403,7 @@ function showLogs() {
 
 // ── Main Logic ──────────────────────────────────────────────────────────
 
-if (command === 'help') {
+if (command === 'help' || command === '--help' || command === '-h') {
   console.log("🚀 Wizard-AI Proxy Manager (Cross-Platform Daemon & Account Switcher)");
   console.log("");
   console.log("Usage: wz-ai proxy [command]");
