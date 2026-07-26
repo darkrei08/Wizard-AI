@@ -171,13 +171,13 @@ echo ""
 echo -e "${BOLD}${YELLOW}🧠 MEMORY & CONTEXT${RESET}"
 echo -e "  $(check_cmd wz-ai-session-save) ${BOLD}wizard-ai session-save${RESET}  Save current session context to MEMORY.md"
 echo -e "     ${BLUE}wizard-ai session-save \"completed feature X\"${RESET}"
-if [ -d "$HOME/.wizard-ai/claude-mem" ]; then
-  echo -e "  ✅ ${BOLD}claude-mem${RESET}       Persistent semantic memory across sessions"
-else
-  echo -e "  ❌ ${BOLD}claude-mem${RESET}       Persistent semantic memory (not installed)"
-fi
+echo -e "  $(check_cmd wz-ai-mem) ${BOLD}wizard-ai mem${RESET}           Persistent memory store & search"
 echo -e "     ${BLUE}wizard-ai mem store \"user prefers Python\"${RESET}"
 echo -e "     ${BLUE}wizard-ai mem search \"tech preferences\"${RESET}"
+echo -e "  $(check_cmd wz-ai-vector) ${BOLD}wizard-ai vector${RESET}        Vector RAG semantic search engine"
+echo -e "     ${BLUE}wizard-ai vector search \"query\"       ${RESET}"
+echo -e "  $(check_cmd wz-ai-zvec) ${BOLD}wizard-ai zvec${RESET}          ZVec vector storage engine"
+echo -e "     ${BLUE}wizard-ai zvec info                   ${RESET}"
 echo ""
 
 echo -e "${BOLD}${YELLOW}🔍 CODE INTELLIGENCE & SECURITY${RESET}"
@@ -191,12 +191,26 @@ echo -e "  $(check_cmd wz-ai-strix) ${BOLD}wizard-ai strix${RESET}         Auton
 echo -e "     ${BLUE}wizard-ai strix --target ./app-directory${RESET}"
 echo ""
 
-echo -e "${BOLD}${YELLOW}📚 KNOWLEDGE BUILDING${RESET}"
+echo -e "${BOLD}${YELLOW}📚 KNOWLEDGE BUILDING & DOCUMENT PARSING${RESET}"
 echo -e "  $(check_cmd book-to-skill) ${BOLD}book-to-skill${RESET}    Convert books/PDFs into AI skills"
 echo -e "     ${BLUE}book-to-skill document.pdf${RESET}"
+echo -e "  $(check_cmd wz-ai-mineru) ${BOLD}wizard-ai mineru${RESET}         MinerU OCR & PDF document parser"
+echo -e "     ${BLUE}wizard-ai mineru input.pdf            ${RESET}→ parse PDF to Markdown/JSON"
+echo -e "     ${BLUE}wizard-ai mineru-gui                  ${RESET}→ launch MinerU Web GUI"
+echo -e "  $(check_cmd wz-ai-prompt) ${BOLD}wizard-ai prompt${RESET}         Prompt Engineering Middleware"
+echo -e "     ${BLUE}wizard-ai prompt \"messy request\"       ${RESET}→ rewrite into structured XML prompt"
 echo ""
 
-echo -e "${BOLD}${YELLOW}⚙️  FRAMEWORK${RESET}"
+echo -e "${BOLD}${YELLOW}📈 SEO & CONTENT GENERATION${RESET}"
+echo -e "  $(check_cmd wz-ai-claude-seo) ${BOLD}wizard-ai claude-seo${RESET}     SEO Analysis & Audit Plugin"
+echo -e "     ${BLUE}wizard-ai claude-seo audit https://site.com${RESET}"
+echo -e "  $(check_cmd wz-ai-claude-blog) ${BOLD}wizard-ai claude-blog${RESET}    AI Blog Writing & SEO Article Generator"
+echo -e "     ${BLUE}wizard-ai claude-blog write \"topic\"   ${RESET}"
+echo ""
+
+echo -e "${BOLD}${YELLOW}⚙️  FRAMEWORK & CAPABILITIES${RESET}"
+echo -e "  $(check_cmd wz-ai-hub) ${BOLD}wizard-ai hub${RESET}            Capabilities & tools discovery engine"
+echo -e "     ${BLUE}wizard-ai hub                         ${RESET}→ list all available skills and tools"
 if [ -d "$HOME/.wizard-ai/ECC" ] || command -v ecc &>/dev/null; then
   ECC_SKILLS=$(ls ~/.wizard-ai/ECC/skills/ 2>/dev/null | wc -l || echo "Many")
   echo -e "  ✅ ${BOLD}ECC${RESET}              $ECC_SKILLS+ production-ready agent skills & hooks"
