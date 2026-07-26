@@ -404,28 +404,33 @@ function showLogs() {
 // ── Main Logic ──────────────────────────────────────────────────────────
 
 if (command === 'help') {
-  console.log("🚀 Wizard-AI Proxy Manager (Cross-Platform Daemon)");
-  console.log("Usage: wz-ai proxy <command>");
+  console.log("🚀 Wizard-AI Proxy Manager (Cross-Platform Daemon & Account Switcher)");
   console.log("");
-  console.log("  setup      - (RECOMMENDED) Auto-install, provision Cockpit accounts & start daemon");
-  console.log("  status     - Show the proxy rotation status (if running)");
-  console.log("  logs       - View live background logs");
-  console.log("  accounts   - List all accounts currently in the proxy (with quota)");
-  console.log("  disable    - Stop & remove the background daemon");
+  console.log("Usage: wz-ai proxy [command]");
   console.log("");
-  console.log("  [Manual Account Control]");
-  console.log("  switch     - Open interactive UI or force a specific account (e.g. switch <email>)");
-  console.log("  model      - Force a specific model (e.g. model <name>)");
+  console.log("  [Menù Interattivo]");
+  console.log("  (nessun comando)  - Apre il menù interattivo per gestire account e modelli (UI)");
   console.log("");
-  console.log("  [Advanced/Legacy]");
-  console.log("  install    - Install pi-antigravity-rotator globally");
-  console.log("  provision  - Import all Cockpit Tools accounts into the proxy");
-  console.log("  enable     - Register & start proxy as a background daemon");
-  console.log("  login      - Add a Google account to the rotator via OAuth manually");
-  console.log("  pi-config  - (Re)generate pi's auth.json + models.json to use the local proxy");
+  console.log("  [Automazione & Proxy Rotator]");
+  console.log("  setup        - (CONSIGLIATO) Installa, configura e avvia il demone rotatore automatico");
+  console.log("  status       - Mostra lo stato del demone e la quota complessiva");
+  console.log("  accounts     - Mostra tutti gli account disponibili nel proxy e la loro quota");
+  console.log("  logs         - Visualizza in tempo reale i log del demone in background");
+  console.log("  disable      - Ferma e disabilita il demone rotatore");
   console.log("");
-  console.log("Quick Start (The Silver Bullet):");
-  console.log("  wz-ai proxy setup    # Does everything automatically for Cockpit Tools users");
+  console.log("  [Controllo Manuale Cockpit]");
+  console.log("  switch       - Apre la UI di selezione (se senza parametri) o forza un account");
+  console.log("  model        - Apre la UI modelli (se senza parametri) o forza un modello");
+  console.log("  auto-rotate  - Forza manualmente la rotazione verso l'account con più quota");
+  console.log("");
+  console.log("  [Avanzate / Legacy]");
+  console.log("  install, provision, enable, login, pi-config");
+  console.log("");
+  console.log("Esempi Utili:");
+  console.log("  wz-ai proxy                  # Apre il menù interattivo (equivalente a switch)");
+  console.log("  wz-ai proxy setup            # 🎯 Installa e attiva la rotazione automatica (Fallo la prima volta!)");
+  console.log("  wz-ai proxy switch ema@..    # Passa manualmente all'account specificato");
+  console.log("  wz-ai proxy model gpt-4o     # Imposta gpt-4o come modello predefinito");
   process.exit(1);
 }
 
