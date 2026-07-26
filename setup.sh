@@ -766,12 +766,14 @@ for skill_dir in "$HOME/.gemini/config/skills"/*; do
     fi
     
     if [ $needs_setup -eq 1 ]; then
-      echo -e "\n  ${PURPLE}┌  🛠  Configuration available for skill: ${BOLD}${skill_name}${NC}"
+      echo -e "\n  ${PURPLE}╭────────────────────────────────────────────────────────╮${NC}"
+      echo -e "  ${PURPLE}│${NC} 🛠  ${BOLD}Configuration: ${CYAN}${skill_name}${NC}"
       
       if [ -n "$setup_info" ]; then
-        echo -e "  ${PURPLE}│${NC}  ${CYAN}Instructions from SKILL.md:${NC}"
+        echo -e "  ${PURPLE}├────────────────────────────────────────────────────────┤${NC}"
+        echo -e "  ${PURPLE}│${NC}  ${CYAN}Suggested Configurations & Instructions:${NC}"
         echo -e "$setup_info" | while IFS= read -r line; do
-          echo -e "  ${PURPLE}│${NC}  $line"
+          echo -e "  ${PURPLE}│${NC}    $line"
         done
         echo -e "  ${PURPLE}│${NC}"
       fi
@@ -781,32 +783,19 @@ for skill_dir in "$HOME/.gemini/config/skills"/*; do
       if [ -f "$install_script" ]; then script_to_run="$install_script"; fi
       
       if [ -n "$script_to_run" ]; then
+        echo -e "  ${PURPLE}├────────────────────────────────────────────────────────┤${NC}"
         echo -e "  ${PURPLE}│${NC}  ${CYAN}Found automated setup script: $(basename "$script_to_run")${NC}"
-        if [ "$YES_MODE" -eq 1 ]; then
-          run_setup="y"
-          echo -e "  ${PURPLE}│${NC}  ${YELLOW}Auto-running setup script...${NC}"
-        else
-          echo -ne "  ${PURPLE}│${NC}  Do you want to run the automated setup for ${skill_name} now? [Y/n] "
-          read run_setup
-        fi
-        if [[ ! "$run_setup" =~ ^[Nn]$ ]]; then
-          echo -e "  ${PURPLE}│${NC}  ${BLUE}Running $(basename "$script_to_run")...${NC}"
-          bash "$script_to_run" 2>&1 | while IFS= read -r line; do
-            echo -e "  ${PURPLE}│${NC}    $line"
-          done
-          echo -e "  ${PURPLE}│${NC}  ${GREEN}✓ Setup completed for ${skill_name}.${NC}"
-        else
-          echo -e "  ${PURPLE}│${NC}  ${YELLOW}Skipped automated setup.${NC}"
-        fi
+        echo -e "  ${PURPLE}│${NC}  ${GREEN}Auto-running setup script (forced)...${NC}"
+        echo -e "  ${PURPLE}│${NC}  ${BLUE}Running $(basename "$script_to_run")...${NC}"
+        bash "$script_to_run" 2>&1 | while IFS= read -r line; do
+          echo -e "  ${PURPLE}│${NC}      $line"
+        done
+        echo -e "  ${PURPLE}│${NC}  ${GREEN}✓ Setup completed for ${skill_name}.${NC}"
       else
-        if [ "$YES_MODE" -eq 0 ]; then
-          echo -ne "  ${PURPLE}│${NC}  Press Enter after you have completed any manual configuration above..."
-          read dummy
-        else
-          echo -e "  ${PURPLE}│${NC}  ${YELLOW}Auto-skipped manual config in --yes mode${NC}"
-        fi
+        echo -e "  ${PURPLE}├────────────────────────────────────────────────────────┤${NC}"
+        echo -e "  ${PURPLE}│${NC}  ${YELLOW}Auto-skipped manual wait (forced configuration)${NC}"
       fi
-      echo -e "  ${PURPLE}└────────────────────────────────────────────────────────${NC}"
+      echo -e "  ${PURPLE}╰────────────────────────────────────────────────────────╯${NC}"
     fi
   fi
 done
@@ -838,12 +827,8 @@ if command -v npm &>/dev/null; then
   done
 
   echo -e "${YELLOW}Configure Cockpit Tools Proxy Rotator for Pi (Multi-Account Load Balancing)? [Y/n]${NC}"
-  if [ "$YES_MODE" -eq 1 ]; then
-    RUN_COCKPIT="y"
-    echo -e "${YELLOW}  (auto-accepted in --yes mode)${NC}"
-  else
-    read -p "> " RUN_COCKPIT
-  fi
+  RUN_COCKPIT="y"
+  echo -e "${GREEN}  (auto-accepted - forced configuration)${NC}"
 
   if [[ ! "$RUN_COCKPIT" =~ ^[Nn]$ ]]; then
     echo -e "${CYAN}Running pi-cockpit-proxy-setup via npx...${NC}"
@@ -879,15 +864,10 @@ else
   echo -e "${YELLOW}Node.js not found. Skipping Pi auto-configuration.${NC}"
 fi
 
-# 8. Git & NPM Credentials Setup (Optional for Contributors)
 echo -e "\n${BLUE}[8/10] Git & NPM Credentials Setup (Optional for Contributors)...${NC}"
 echo -e "${YELLOW}Do you want to configure your GitHub & NPM credentials now? (e.g. for publishing or contributing) [y/N]${NC}"
-if [ "$YES_MODE" -eq 1 ]; then
-  CONFIRM_CREDS="n"
-  echo -e "${YELLOW}  (auto-skipped in --yes mode)${NC}"
-else
-  read -p "> " CONFIRM_CREDS
-fi
+CONFIRM_CREDS="n"
+echo -e "${YELLOW}  (auto-skipped - forced configuration)${NC}"
 if [[ "$CONFIRM_CREDS" =~ ^[Yy]$ ]]; then
   # NPM Token
   echo -e "${CYAN}Please enter your NPM Publishing Token (or press enter to skip):${NC}"
@@ -925,12 +905,7 @@ echo -e "\n${BLUE}[9/10] Auto-Update Configuration...${NC}"
 echo -e "${YELLOW}Do you want to enable automatic background updates at system boot? [Y/n] (Auto-yes in 10s)${NC}"
 
 ENABLE_UPDATE="Y"
-if [ "$YES_MODE" -eq 0 ]; then
-  read -t 10 -p "> " USER_INPUT || true
-  if [ -n "$USER_INPUT" ]; then
-    ENABLE_UPDATE="$USER_INPUT"
-  fi
-fi
+echo -e "${GREEN}  (auto-accepted - forced configuration)${NC}"
 
 if [[ "$ENABLE_UPDATE" =~ ^[Yy]$ ]]; then
   echo -e "${GREEN}✓ Enabling automatic background updates at boot...${NC}"
@@ -976,14 +951,9 @@ fi
 echo -e "\n${BLUE}[9.5/10] Optional: MinerU Docker Web UI...${NC}"
 if command -v docker &>/dev/null; then
   # Default to NO in non-interactive mode unless specified
-  deploy_mineru="N"
-  if [ -n "${INTERACTIVE:-}" ] || [ -t 0 ]; then
-    echo -e "${YELLOW}MinerU provides a Gradio Web UI via Docker for visual PDF parsing.${NC}"
-    read -p "Do you want to deploy the MinerU Web UI now? (y/N): " response
-    if [[ "$response" =~ ^[Yy]$ ]]; then
-      deploy_mineru="Y"
-    fi
-  fi
+  deploy_mineru="Y"
+  echo -e "${GREEN}MinerU provides a Gradio Web UI via Docker for visual PDF parsing.${NC}"
+  echo -e "${GREEN}  (auto-deploying - forced configuration)${NC}"
   
   if [ "$deploy_mineru" = "Y" ]; then
     echo -e "${GREEN}Starting MinerU Gradio Web UI...${NC}"

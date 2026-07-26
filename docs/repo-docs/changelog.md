@@ -1,15 +1,5 @@
-Reading CHANGELOG.md to build the changelog wiki page.
+Sto per leggere CHANGELOG.md a blocchi per costruire la pagina del changelog.
 
-**Tool: read**
+---
 
-
-{
-  "file_path": "C:\\Users\\Admin\\orca\\workspaces\\wizard-ai\\reoganize-normlaize\\CHANGELOG.md"
-}
-<system-reminder>Warning: the file exists but is shorter than the provided offset (200). The file has 90 lines.</system-reminder>
-
-
-{
-  "file_path": "C:\\Users\\Admin\\orca\\workspaces\\wizard-ai\\reoganize-normlaize\\CHANGELOG.md",
-  "limit": 90
-}
+*Tool call: **Read** — target: `C:\Users\Admin\Desktop\Altri repooo\wizard-ai\CHANGELOG.md`*

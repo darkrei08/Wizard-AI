@@ -29,12 +29,12 @@ const WORKFLOW_SETTINGS = join(HOME, '.pi', 'agent', 'pi-extensible-workflows', 
 
 // ── Tier → Default Model mapping ──────────────────────────────────────────
 const TIER_DEFAULTS = {
-  'ultra':     { model: 'claude-opus-4-6-thinking',  provider: 'anthropic', effort: 'max' },
-  'pro':       { model: 'claude-opus-4-6-thinking',  provider: 'anthropic', effort: 'max' },
-  'plus':      { model: 'gemini-3.1-pro-high',       provider: 'google',    effort: 'high' },
-  'free-tier': { model: 'gemini-3.6-flash-low',      provider: 'google',    effort: 'medium' },
-  'free':      { model: 'gemini-3.6-flash-low',      provider: 'google',    effort: 'medium' },
-  'unknown':   { model: 'gemini-3.6-flash-low',      provider: 'google',    effort: 'low' },
+  'ultra':     { model: 'claude-opus-4-6',           provider: 'claude-bridge', effort: 'max' },
+  'pro':       { model: 'claude-opus-4-6',           provider: 'claude-bridge', effort: 'max' },
+  'plus':      { model: 'gemini-3.1-pro-high',       provider: 'google',        effort: 'high' },
+  'free-tier': { model: 'gemini-3.6-flash-low',      provider: 'google',        effort: 'medium' },
+  'free':      { model: 'gemini-3.6-flash-low',      provider: 'google',        effort: 'medium' },
+  'unknown':   { model: 'gemini-3.6-flash-low',      provider: 'google',        effort: 'low' },
 };
 
 // ── Role → Model assignment per tier ──────────────────────────────────────
@@ -54,7 +54,7 @@ function getRoleAliases(tier, availableModels, benchmarks) {
 
   // Helper to map model ID back to provider prefix if missing
   const getFullId = (id) => {
-    if (id.includes('claude')) return `anthropic/${id}:high`;
+    if (id.includes('claude')) return `claude-bridge/${id}`;
     if (id.includes('gpt') || id.includes('o1') || id.includes('o3')) return `openai-codex/${id}:high`;
     if (id.includes('gemini')) return `google/${id}:high`;
     if (id.includes('deepseek')) return `deepseek/${id}:high`;
@@ -241,7 +241,7 @@ async function configurePiAgent() {
     selectedEffort = effortPick;
     
     // Infer provider from model name
-    if (selectedModel.includes('claude')) selectedProvider = 'anthropic';
+    if (selectedModel.includes('claude')) selectedProvider = 'claude-bridge';
     else if (selectedModel.includes('gpt')) selectedProvider = 'openai-codex';
     else selectedProvider = 'google';
     

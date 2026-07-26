@@ -634,17 +634,22 @@ Get-ChildItem -Path $SkillsDst -Directory | ForEach-Object {
     elseif (Test-Path $InstallSh) { $ScriptToRun = "bash $InstallSh" }
 
     if ($ScriptToRun) {
-        Write-Log "  Found automated setup script for $($SkillName): $ScriptToRun" -ForegroundColor Cyan
+        Write-Log "  ╭────────────────────────────────────────────────────────╮" -ForegroundColor Magenta
+        Write-Log "  │ 🛠  Configuration: $($SkillName)" -ForegroundColor Cyan
+        Write-Log "  ├────────────────────────────────────────────────────────┤" -ForegroundColor Magenta
+        Write-Log "  │  Found automated setup script for $($SkillName): $ScriptToRun" -ForegroundColor Cyan
+        Write-Log "  │  Auto-running setup script (forced)..." -ForegroundColor Green
         try {
             if ($ScriptToRun.EndsWith('.ps1')) {
                 & $ScriptToRun
             } else {
                 Invoke-Expression $ScriptToRun
             }
-            Write-Log "  [ok] Setup completed for $SkillName." -ForegroundColor Green
+            Write-Log "  │  [ok] Setup completed for $SkillName." -ForegroundColor Green
         } catch {
-            Write-Log "  [!] Setup for $SkillName returned warning: $($_.Exception.Message)" -ForegroundColor Yellow
+            Write-Log "  │  [!] Setup for $SkillName returned warning: $($_.Exception.Message)" -ForegroundColor Yellow
         }
+        Write-Log "  ╰────────────────────────────────────────────────────────╯" -ForegroundColor Magenta
     }
 }
 Write-Log ' '
@@ -683,12 +688,9 @@ if (Get-Command npm -ErrorAction SilentlyContinue) {
         }
     }
 
-    if (-not $IsNonInteractive) {
-        Write-Log 'Do you want to install and enable the background Cockpit Proxy Rotator for Pi? [Y/n]' -ForegroundColor Yellow
-        $RunCockpitProxy = Read-Host '>'
-    } else {
-        Write-Log '  (auto-accepted in non-interactive mode)' -ForegroundColor Yellow
-    }
+    $RunCockpitProxy = 'Y'
+    Write-Log 'Do you want to install and enable the background Cockpit Proxy Rotator for Pi? [Y/n]' -ForegroundColor Yellow
+    Write-Log '  (auto-accepted - forced configuration)' -ForegroundColor Green
 
     if ($RunCockpitProxy -notmatch '^[Nn]$') {
         Write-Log '  Installing and enabling background Proxy Rotator...' -ForegroundColor Cyan
@@ -741,27 +743,7 @@ Write-Log '[8/8] Auto-Update Configuration...' -ForegroundColor Blue
 Write-Log 'Do you want to enable automatic background updates at system logon? [Y/n] (Auto-yes in 10s) ' -ForegroundColor Yellow -NoNewline
 
 $EnableUpdate = 'Y'
-$TimeoutSeconds = 10
-$Watch = [System.Diagnostics.Stopwatch]::StartNew()
-try {
-    $Host.UI.RawUI.FlushInputBuffer()
-    while ($Watch.Elapsed.TotalSeconds -lt $TimeoutSeconds) {
-        if ($Host.UI.RawUI.KeyAvailable) {
-            $KeyInfo = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-            if ($KeyInfo.Character -ne 0) {
-                $Key = $KeyInfo.Character
-                Write-Log $Key
-                if ($Key -eq 'n' -or $Key -eq 'N') { $EnableUpdate = 'N' }
-                break
-            }
-        }
-        Start-Sleep -Milliseconds 100
-    }
-} catch {
-    Write-Log "[!] Interactive prompt not supported in this terminal. Defaulting to Y in $TimeoutSeconds seconds..." -ForegroundColor Yellow
-    Start-Sleep -Seconds $TimeoutSeconds
-}
-if (-not $Host.UI.RawUI.KeyAvailable) { Write-Log ' ' }
+Write-Log '  (auto-accepted - forced configuration)' -ForegroundColor Green
 
 $StartupFolder = [Environment]::GetFolderPath('Startup')
 $StartupShortcut = Join-Path $StartupFolder "WizardAI-AutoUpdate.lnk"
