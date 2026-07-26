@@ -66,6 +66,42 @@ flowchart TB
     class Router mainColor;
 ```
 
+---
+
+## 🧭 Guide Modulari & Documentazione
+
+Per una consultazione chiara e veloce, la documentazione di Wizard-AI è suddivisa in guide tematiche linkabili:
+
+| Guida | Argomento e Funzionalità |
+|-------|──────────────────────────|
+| 🛠️ **[Guida Cockpit Proxy](docs/COCKPIT_PROXY_GUIDE.md)** | Rotatore multi-account, estrazione token OAuth, switcher a 2 step (`wz-ai cockpit`), estensione Pi (`pi-cockpit-tools`) |
+| 🤖 **[Flussi Agente Pi & Swarm](docs/PI_AGENT_WORKFLOWS.md)** | Architettura Swarm 3-Tier, 5-Loop Pipeline (`01-05`), sharding agenti in parallelo (`shadow-clone-jutsu`) |
+| 🗜️ **[Stack di Efficienza Token](docs/TOKEN_EFFICIENCY_STACK.md)** | RTK CLI proxy, `sqz`, `headroom`, `@toon-format/toon`, formato LEA, modalità `caveman` |
+| 🧩 **[Tassonomia Skill & Indice](docs/SKILLS_TAXONOMY.md)** | 219+ skill specializzate suddivise per 5 macro aree di dominio |
+
+---
+
+## ⚡ Comandi Master Principali
+
+```bash
+# Esecuzione Unificata All-In-One (Pre-Prompt ➔ 5 Loop ➔ Post-Prompt)
+wz-ai optimize auto
+
+# Avvio Web GUI Interattiva D3.js del Grafo di Conoscenza (porta 8080)
+wz-ai wiki
+
+# Wizard Interattivo 2-Step (Account Cockpit ➔ Selezione Modello)
+wz-ai cockpit
+
+# Potatura Dinamica del Contesto (pi-dcp)
+wz-ai dcp
+
+# Guida Visiva Completa di Tutti i 66 Wrapper CLI
+wz-ai help
+```
+
+---
+
 ## 🧠 Agentic Context Engineering & The 4-Layer Format Stack
 
 Nell'ecosistema AI del 2026, l'ingegneria del contesto è il nuovo standard oro. Wizard-AI introduce il **4-Layer Format Stack**, progettato per azzerare le allucinazioni e ottimizzare radicalmente il consumo di token:
@@ -77,35 +113,7 @@ Nell'ecosistema AI del 2026, l'ingegneria del contesto è il nuovo standard oro.
 
 **Regola del PRE & POST Autoloop:** Ogni sessione comprime il contesto, salva la memoria (`MEMORY.md`) e compila il grafo di progetto prima e dopo ogni iterazione, senza alcun intervento umano.
 
-## 🔄 Sistema di Sincronizzazione Bi-Direzionale e Persistenza Skill (2-Way Sync)
-
-Wizard-AI include un motore di persistenza bi-direzionale in tempo reale (`wizard-ai sync-skills`):
-
-1. **Direzione 1 (Propagazione Agenti)**: `~/.gemini/config/skills/` → `~/.claude/skills/`, `~/.config/amp/skills/`, `~/.agents/skills/`
-   Propaga tutte le skill master a ogni agente AI installato nel sistema (Claude Code, Gemini CLI, Antigravity, Amp, OpenCode), così che condividano tutti le medesime capacità.
-2. **Direzione 2 (Auto-Backup Automatico su Git Repo)**: `~/.gemini/config/skills/` → `Wizard-AI/skills/misc/`
-   Quando un agente AI genera o crea una nuova skill durante la conversazione in `~/.gemini/config/skills/`, lo script la rileva automaticamente e ne crea un backup nella repository Git sotto `skills/misc/`. Questo impedisce che le skill apprese vengano perse e le rende subito visibili con `git status` per i commit del team.
-
-Per sincronizzare manualmente in qualsiasi momento:
-```bash
-wizard-ai sync-skills
-```
-
-### 🔧 Pi Dynamic Configurator (`wizard-ai pi-configurator`)
-
-Integra automaticamente i pattern di [vekexasia/pi-config](https://github.com/vekexasia/pi-config) nel tuo ambiente locale `~/.pi/agent/` con impostazioni predefinite e scelta intelligente dei modelli basata sul tuo livello di abbonamento a **Cockpit Tools**:
-
-```bash
-wizard-ai pi-configurator
-```
-
-### 📚 RepoDocs Wiki Generator (`wizard-ai repodocs`)
-
-Genera automaticamente una wiki documentata per qualsiasi repository utilizzando [aryrabelo/repodocs](https://github.com/aryrabelo/repodocs). Integrato nel **Loop 5 (Release)** per la documentazione a fine ciclo:
-
-```bash
-wizard-ai repodocs repodocs-all .
-```
+---
 
 ## 🚀 Avvio Rapido
 
@@ -113,4 +121,4 @@ wizard-ai repodocs repodocs-all .
 npx -y @darkrei08/wizard-ai-cli@latest
 ```
 
-Per l'installazione manuale, i comandi avanzati e la documentazione completa, fai riferimento al [README principale in lingua inglese](README.md).
+Per l'installazione manuale e la documentazione completa, fai riferimento al [README principale in lingua inglese](README.md) o alle [Guide Modulari](docs/COCKPIT_PROXY_GUIDE.md).
