@@ -36,7 +36,8 @@
         { "name": "spec-kit", "url": "https://github.com/github/spec-kit.git", "desc": "Spec-driven development" },
         { "name": "cli-anything", "url": "https://github.com/HKUDS/CLI-Anything.git", "desc": "Multi-modal CLI" },
         { "name": "cli-printing-press", "url": "https://github.com/mvanhorn/cli-printing-press.git", "desc": "CLI printing press" },
-        { "name": "repodocs", "url": "https://github.com/aryrabelo/repodocs.git", "desc": "Source-cited AI wiki generator" }
+        { "name": "repodocs", "url": "https://github.com/aryrabelo/repodocs.git", "desc": "Source-cited AI wiki generator" },
+        { "name": "pi-cockpit-proxy-setup", "url": "https://github.com/darkrei08/Wizard-AI.git", "desc": "Interactive installer for Pi & Cockpit Tools proxy" }
       ]
     },
     "native-skills": {

@@ -67,3 +67,7 @@
 ## [Session State Snapshot] - 2026-07-26 16:01:24
 Configurato auto-setup Cockpit Tools Rotator Proxy in setup.sh, setup.ps1, wizard-installer.js e wz-ai-proxy.js. Auto-detect percorsi Cockpit Tools su Linux, macOS e Windows.
 
+
+## [Session State Snapshot] - 2026-07-26 16:07:46
+Sviluppata estensione nativa Pi pi-cockpit-tools (@darkrei08/pi-cockpit-tools) e integrata nel repo Wizard-AI index.js e repo-registry.json. Push effettuato su GitHub.
+
