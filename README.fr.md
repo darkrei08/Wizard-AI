@@ -96,7 +96,7 @@ wizard-ai repodocs repodocs-all .
 ## 🚀 Démarrage Rapide (`One-Command Setup`)
 
 ```bash
-npx -y @darkrei08/wizard-ai-cli@latest
+npx -y @darkrei08/wizard-ai-cli@latest --verbose
 ```
 
 Pour l'installation manuelle et la documentation complète, consultez le [README principal en anglais](README.md).

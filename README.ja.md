@@ -96,7 +96,7 @@ wizard-ai repodocs repodocs-all .
 ## 🚀 クイック・スタート (`1コマンドで導入`)
 
 ```bash
-npx -y @darkrei08/wizard-ai-cli@latest
+npx -y @darkrei08/wizard-ai-cli@latest --verbose
 ```
 
 詳細な手動導入手順や完全なドキュメントは、[英語メインREADME](README.md) をご覧ください。

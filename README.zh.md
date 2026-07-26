@@ -96,7 +96,7 @@ wizard-ai repodocs repodocs-all .
 ## 🚀 快速安装 (`一键初始化`)
 
 ```bash
-npx -y @darkrei08/wizard-ai-cli@latest
+npx -y @darkrei08/wizard-ai-cli@latest --verbose
 ```
 
 查看完整的安装步骤与说明，请参阅 [主 README（英文）](README.md)。

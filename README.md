@@ -121,7 +121,7 @@ On Linux / macOS:
 ```bash
 ./setup.sh
 # Alternatively via npx:
-npx @darkrei08/wizard-ai-cli setup --verbose
+npx -y @darkrei08/wizard-ai-cli@latest setup --verbose
 ```
 
 On Windows (PowerShell):
