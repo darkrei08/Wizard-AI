@@ -14,7 +14,8 @@
         { "name": "syke", "url": "https://github.com/saxenauts/syke.git", "desc": "Syke autonomous agent" },
         { "name": "mem0", "url": "https://github.com/mem0ai/mem0.git", "desc": "Mem0 persistent memory" },
         { "name": "personal-graph", "url": "https://github.com/Technoculture/personal-graph.git", "desc": "Personal knowledge graph" },
-        { "name": "pi-config", "url": "https://github.com/vekexasia/pi-config.git", "desc": "Vekexasia pi agent configuration" }
+        { "name": "pi-config", "url": "https://github.com/vekexasia/pi-config.git", "desc": "Vekexasia pi agent configuration" },
+        { "name": "pi-cockpit-tools", "url": "https://github.com/darkrei08/Wizard-AI.git", "desc": "Cockpit Tools multi-account & rotator extension for Pi" }
       ]
     },
     "cli-tools": {

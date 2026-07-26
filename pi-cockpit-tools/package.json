@@ -1,0 +1,30 @@
+{
+  "name": "@darkrei08/pi-cockpit-tools",
+  "version": "1.0.0",
+  "description": "Pi Agent Framework Extension for Cockpit Tools: multi-account switching, quota monitoring, and local Proxy Rotator integration.",
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "keywords": [
+    "pi",
+    "pi-extension",
+    "pi-agent",
+    "cockpit-tools",
+    "ai-proxy",
+    "antigravity",
+    "rotator",
+    "multi-account"
+  ],
+  "author": "darkrei08",
+  "license": "AGPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darkrei08/Wizard-AI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/darkrei08/Wizard-AI/issues"
+  },
+  "homepage": "https://github.com/darkrei08/Wizard-AI#readme"
+}

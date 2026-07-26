@@ -14,9 +14,15 @@ module.exports = async function (api) {
     console.log('Available workflows: loop-2-develop, shadow-clone-jutsu');
   });
 
-  api.onCommand('cockpit', () => {
-    console.log('🛠️ Cockpit Tools Pi Extension loaded.');
-  });
+  // Load Cockpit Tools Pi Extension
+  try {
+    const cockpitExtension = require(path.join(__dirname, 'pi-cockpit-tools', 'index.js'));
+    cockpitExtension(api);
+  } catch (err) {
+    api.onCommand('cockpit', () => {
+      console.log('🛠️ Cockpit Tools Pi Extension loaded (standalone mode).');
+    });
+  }
 
   // Register Wizard-AI as a workflow extension
   try {
