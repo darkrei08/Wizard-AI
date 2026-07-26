@@ -44,6 +44,7 @@ Wrapper CLI globali.
 Ecosistema esclusivo Wizard-AI.
 
 ### 1. System Core & Routing
+- `prompt-loop-engine`: Orchestratore Master pipeline PRE/POST a 11 step.
 - `wizard-ai-hub`: Dashboard skill.
 - `auto-router`: Mappatura intenti utente → skill.
 - `wizard-ai-installer`: Installa skill esterne.
@@ -51,6 +52,7 @@ Ecosistema esclusivo Wizard-AI.
 - `os-detect`: Rileva OS pre-installazione.
 
 ### 2. Context & Token Optimization
+- `workflow-agentic-brain`: Ottimizzatore Master.
 - `caveman`: Comprime output AI (75%).
 - `llmlingua`/`ai-compress`: Compressione contesti massivi.
 - `headroom`: Proxy compressione (95%).
@@ -73,6 +75,8 @@ Ecosistema esclusivo Wizard-AI.
 - `book-to-skill`: PDF → Framework agenti.
 
 ### 5. Ingegneria Software & CI/CD
+- `workflow-production-cycle`: Workflow Master Git Flow + TDD.
+- `engineering-excellence`: Standard SDD/TDD agnostico dal framework (architettura, sicurezza, a11y, i18n, SEO).
 - `auto-workflow`: Git Flow + Superpowers.
 - `superpowers`: 11 skill Subagent-Driven Development.
 - `auto-branch`: Gestione branch.
@@ -83,6 +87,7 @@ Ecosistema esclusivo Wizard-AI.
 - `cybersecurity`: Linee guida sicurezza Anthropic.
 - `spec-kit`: Sviluppo orientato specifiche (SDD).
 - `strix`: Penetration testing autonomo.
+- `system_prompts_leaks`: Corpus system prompt trapelati (ChatGPT/Claude/Gemini/Grok) — riferimento per difesa prompt-injection e design system prompt.
 
 ### 6. Frontend, UI/UX, Design
 - `taste-skill`: Layout anti-slop alta gamma.
@@ -90,6 +95,8 @@ Ecosistema esclusivo Wizard-AI.
 - `awesome-design`: Stili brand (Vercel, Cursor, ecc.).
 - `infographic`: Grafici dichiarativi.
 - `design-md-spec`: Formato `DESIGN.md`.
+- `kinetics-ui`: Micro-interazioni spring-physics (ckissi/kinetics).
+- `mengto-skills`: Pacchetto workflow design UI/UX MengTo (70+).
 - `stitch-*`: Suite estrazione progetti Google Stitch. Genera design, React, React Native, mockup.
 
 ### 7. Scaffolding
