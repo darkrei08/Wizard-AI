@@ -260,195 +260,234 @@ async function runInteractiveMenu() {
     return runFallbackMenu();
   }
 
-  const status = getAccountStatus();
-  if (!status.ok) {
-    console.log(pc.yellow(`⚠️ ${status.message}`));
-    return;
-  }
+  const pause = async () => {
+    await prompts.text({ message: pc.dim('Press Enter to continue...') });
+  };
 
-  prompts.intro(pc.bold(pc.cyan('🛠️ Cockpit Tools — CLI Agent Account & Model Switcher')));
+  while (true) {
+    console.clear();
+    prompts.intro(pc.bold(pc.cyan('🛠️ Cockpit Tools — CLI Agent Account & Model Switcher')));
 
-  console.log(`  Active Account : ${pc.bold(status.currentAccount.email)} (${status.currentAccount.tier})`);
-  console.log(`  Average Quota  : ${status.currentAccount.statusIcon} ${status.currentAccount.avgQuota}%\n`);
-
-  const action = await prompts.select({
-    message: 'What would you like to do?',
-    options: [
-      { value: 'wizard', label: '👤 Switch Account & Model (Full 2-Step Wizard)', hint: 'Select account ➔ Pick default model' },
-      { value: 'model', label: '🎯 Change Default Model Only', hint: 'Pick model for active account' },
-      { value: 'rotate', label: '⚡ Auto-Rotate to Highest Quota', hint: 'Auto-select 100% quota account' },
-      { value: 'status', label: '📊 View Live Quotas & Models', hint: 'Print quota table for all accounts' },
-      { value: 'proxy', label: '📡 Proxy Rotator Status & Logs', hint: 'Check background daemon on port 51200' },
-    ],
-  });
-
-  if (prompts.isCancel(action)) {
-    prompts.cancel('Menu closed.');
-    return;
-  }
-
-  if (action === 'model') {
-    return runInteractiveModelMenu();
-  }
-
-  if (action === 'rotate') {
-    const res = autoRotateAccount();
-    if (res.ok) {
-      prompts.outro(pc.green(`⚡ Auto-rotated to: ${res.switchedTo} (${res.tier}) [Quota: ${res.quota}%]`));
-    } else {
-      prompts.outro(pc.red(`❌ Auto-rotation failed: ${res.message}`));
+    const status = getAccountStatus();
+    if (!status.ok) {
+      console.log(pc.yellow(`⚠️ ${status.message}`));
+      return;
     }
-    return;
-  }
 
-  if (action === 'status') {
-    runFallbackMenu();
-    return;
-  }
+    console.log(`\n  Active Account : ${pc.bold(status.currentAccount.email)} (${status.currentAccount.tier})`);
+    console.log(`  Average Quota  : ${status.currentAccount.statusIcon} ${status.currentAccount.avgQuota}%\n`);
 
-  if (action === 'proxy') {
-    try {
-      const proxyScript = path.join(__dirname, 'wz-ai-proxy.js');
-      execSync(`node "${proxyScript}" status`, { stdio: 'inherit' });
-    } catch (e) {}
-    return;
-  }
-
-  // STEP 1: Select Scope
-  const scopeRes = await prompts.select({
-    message: 'Step 1/3: Select Configuration Scope:',
-    options: [
-      { value: 'Global', label: 'Global (All CLI LLM Agents: Pi, Gemini CLI, Antigravity, Claude Code, Cursor, OpenCode)' },
-      { value: 'Specific', label: 'Specific CLI Agent' }
-    ]
-  });
-
-  if (prompts.isCancel(scopeRes)) {
-    prompts.cancel('Selection canceled.');
-    return;
-  }
-
-  let specificCli = null;
-  if (scopeRes === 'Specific') {
-    specificCli = await prompts.select({
-      message: 'Select Specific CLI Agent:',
+    const action = await prompts.select({
+      message: 'What would you like to do?',
       options: [
-        { value: 'pi', label: 'Pi CLI' },
-        { value: 'gemini', label: 'Gemini/Antigravity CLI' },
-        { value: 'claude', label: 'Claude Code' },
-        { value: 'opencode', label: 'OpenCode' },
-        { value: 'cursor', label: 'Cursor' }
+        { value: 'wizard', label: '👤 Switch Account & Model (Full 2-Step Wizard)', hint: 'Select account ➔ Pick default model' },
+        { value: 'model', label: '🎯 Change Default Model Only', hint: 'Pick model for active account' },
+        { value: 'rotate', label: '⚡ Auto-Rotate to Highest Quota', hint: 'Auto-select 100% quota account' },
+        { value: 'status', label: '📊 View Live Quotas & Models', hint: 'Print quota table for all accounts' },
+        { value: 'proxy', label: '📡 Proxy Rotator Status & Logs', hint: 'Check background daemon on port 51200' },
+        { value: 'exit', label: '❌ Exit Menu', hint: 'Close the interactive UI' },
+      ],
+    });
+
+    if (prompts.isCancel(action) || action === 'exit') {
+      prompts.outro('Menu closed.');
+      break;
+    }
+
+    if (action === 'model') {
+      await runInteractiveModelMenu(prompts, pc);
+      await pause();
+      continue;
+    }
+
+    if (action === 'rotate') {
+      const res = autoRotateAccount();
+      if (res.ok) {
+        console.log(pc.green(`\n⚡ Auto-rotated to: ${res.switchedTo} (${res.tier}) [Quota: ${res.quota}%]`));
+      } else {
+        console.log(pc.red(`\n❌ Auto-rotation failed: ${res.message}`));
+      }
+      await pause();
+      continue;
+    }
+
+    if (action === 'status') {
+      // Print clear status without the fallback menu's CLI help text
+      console.log(pc.cyan('\n📊 Live Quotas & Models:\n'));
+      status.accounts.forEach(a => {
+        const mark = a.isCurrent ? pc.green(' (Active ✅)') : '';
+        console.log(`  [${a.index}] ${a.statusIcon} ${a.email} — Tier: ${a.tier} | Quota: ${a.avgQuota}%${mark}`);
+      });
+      const models = getAvailableModels(status.currentAccount.id);
+      if (models.length > 0) {
+        console.log(pc.cyan('\n  Available Models for Active Account:'));
+        models.forEach((m, idx) => {
+          console.log(`    (${idx + 1}) ${m.icon} ${m.displayName} [${m.name}] — ${m.percentage}%`);
+        });
+      }
+      console.log('');
+      await pause();
+      continue;
+    }
+
+    if (action === 'proxy') {
+      try {
+        const proxyScript = path.join(__dirname, 'wz-ai-proxy.js');
+        execSync(`node "${proxyScript}" status`, { stdio: 'inherit' });
+      } catch (e) {
+        console.log(pc.red('\n❌ Proxy status failed or script not found.'));
+      }
+      await pause();
+      continue;
+    }
+
+    // STEP 1: Select Scope
+    const scopeRes = await prompts.select({
+      message: 'Step 1/3: Select Configuration Scope:',
+      options: [
+        { value: 'Global', label: 'Global (All CLI LLM Agents: Pi, Gemini CLI, Antigravity, Claude Code, Cursor, OpenCode)' },
+        { value: 'Specific', label: 'Specific CLI Agent' },
+        { value: 'Cancel', label: '🔙 Cancel (Go back)' }
       ]
     });
-    if (prompts.isCancel(specificCli)) {
-      prompts.cancel('Selection canceled.');
+
+    if (prompts.isCancel(scopeRes) || scopeRes === 'Cancel') {
+      continue;
+    }
+
+    let specificCli = null;
+    if (scopeRes === 'Specific') {
+      specificCli = await prompts.select({
+        message: 'Select Specific CLI Agent:',
+        options: [
+          { value: 'pi', label: 'Pi CLI' },
+          { value: 'gemini', label: 'Gemini/Antigravity CLI' },
+          { value: 'claude', label: 'Claude Code' },
+          { value: 'opencode', label: 'OpenCode' },
+          { value: 'cursor', label: 'Cursor' },
+          { value: 'Cancel', label: '🔙 Cancel (Go back)' }
+        ]
+      });
+      if (prompts.isCancel(specificCli) || specificCli === 'Cancel') {
+        continue;
+      }
+    }
+
+    // STEP 2: Select Account (Wizard)
+    const accountOptions = status.accounts.map(a => ({
+      value: a.email,
+      label: `${a.statusIcon} ${a.email} ${a.isCurrent ? pc.green('(Active ✅)') : ''}`,
+      hint: `Tier: ${a.tier} | Quota: ${a.avgQuota}%`,
+    }));
+    accountOptions.push({ value: 'Cancel', label: '🔙 Cancel (Go back)' });
+
+    const selectedEmail = await prompts.select({
+      message: 'Step 2/3: Select Account to activate across Pi & AI Agents:',
+      options: accountOptions,
+    });
+
+    if (prompts.isCancel(selectedEmail) || selectedEmail === 'Cancel') {
+      continue;
+    }
+
+    const switchRes = switchAccount(selectedEmail);
+    if (!switchRes.ok) {
+      console.log(pc.red(`\n❌ Failed to switch account: ${switchRes.message}`));
+      continue;
+    }
+
+    // STEP 3: Select Model
+    const models = getAvailableModels(switchRes.targetId);
+    if (models.length === 0) {
+      console.log(pc.green(`\n✨ Active account switched to: ${switchRes.switchedTo}`));
+      continue;
+    }
+
+    const modelOptions = models.map(m => ({
+      value: m.name,
+      label: `${m.icon} ${m.displayName} (${m.name})`,
+      hint: `Quota: ${m.percentage}%`,
+    }));
+    modelOptions.push({ value: 'Skip', label: '⏭️ Skip (Keep current model)' });
+
+    const selectedModel = await prompts.select({
+      message: 'Step 3/3: Select Default Model for Pi CLI & AI Agents:',
+      options: modelOptions,
+    });
+
+    if (prompts.isCancel(selectedModel) || selectedModel === 'Skip') {
+      console.log(pc.green(`\n✨ Account switched to ${switchRes.switchedTo}. Model unchanged.`));
+      continue;
+    }
+
+    const modelRes = switchModel(selectedModel);
+    
+    // Save to cli-accounts.json
+    const cliAccountsPath = path.join(HOME, '.wizard-ai', 'cli-accounts.json');
+    const cliAccounts = readJson(cliAccountsPath) || {};
+    if (scopeRes === 'Global') {
+      cliAccounts['global'] = { account: switchRes.switchedTo, model: modelRes.selectedModel };
+      ['pi', 'gemini', 'claude', 'opencode', 'cursor'].forEach(cli => {
+        cliAccounts[cli] = { account: switchRes.switchedTo, model: modelRes.selectedModel };
+      });
+    } else if (specificCli) {
+      cliAccounts[specificCli] = { account: switchRes.switchedTo, model: modelRes.selectedModel };
+    }
+    writeJson(cliAccountsPath, cliAccounts);
+
+    console.log(pc.green(`\n✨ Fully Configured! Active Account: ${switchRes.switchedTo} | Default Model: ${modelRes.selectedModel}\n`));
+    await pause();
+  }
+}
+
+async function runInteractiveModelMenu(passedPrompts = null, passedPc = null) {
+  let prompts = passedPrompts;
+  let pc = passedPc;
+  
+  if (!prompts) {
+    try {
+      prompts = require('@clack/prompts');
+      pc = require('picocolors');
+      prompts.intro(pc.bold(pc.cyan('🤖 Select Default Model for Pi CLI & AI Agents')));
+    } catch {
+      console.log('Use: wz-ai cockpit model <modelName>');
       return;
     }
   }
 
-  // STEP 2: Select Account (Wizard)
-  const accountOptions = status.accounts.map(a => ({
-    value: a.email,
-    label: `${a.statusIcon} ${a.email} ${a.isCurrent ? pc.green('(Active ✅)') : ''}`,
-    hint: `Tier: ${a.tier} | Quota: ${a.avgQuota}%`,
-  }));
-
-  const selectedEmail = await prompts.select({
-    message: 'Step 2/3: Select Account to activate across Pi & AI Agents:',
-    options: accountOptions,
-  });
-
-  if (prompts.isCancel(selectedEmail)) {
-    prompts.cancel('Selection canceled.');
-    return;
-  }
-
-  const switchRes = switchAccount(selectedEmail);
-  if (!switchRes.ok) {
-    prompts.outro(pc.red(`❌ Failed to switch account: ${switchRes.message}`));
-    return;
-  }
-
-  // STEP 2: Select Model
-  const models = getAvailableModels(switchRes.targetId);
-  if (models.length === 0) {
-    prompts.outro(pc.green(`✨ Active account switched to: ${switchRes.switchedTo}`));
-    return;
-  }
-
-  const modelOptions = models.map(m => ({
-    value: m.name,
-    label: `${m.icon} ${m.displayName} (${m.name})`,
-    hint: `Quota: ${m.percentage}%`,
-  }));
-
-  const selectedModel = await prompts.select({
-    message: 'Step 3/3: Select Default Model for Pi CLI & AI Agents:',
-    options: modelOptions,
-  });
-
-  if (prompts.isCancel(selectedModel)) {
-    prompts.outro(pc.green(`✨ Account switched to ${switchRes.switchedTo}. Model unchanged.`));
-    return;
-  }
-
-  const modelRes = switchModel(selectedModel);
-  
-  // Save to cli-accounts.json
-  const cliAccountsPath = path.join(HOME, '.wizard-ai', 'cli-accounts.json');
-  const cliAccounts = readJson(cliAccountsPath) || {};
-  if (scopeRes === 'Global') {
-    cliAccounts['global'] = { account: switchRes.switchedTo, model: modelRes.selectedModel };
-    ['pi', 'gemini', 'claude', 'opencode', 'cursor'].forEach(cli => {
-      cliAccounts[cli] = { account: switchRes.switchedTo, model: modelRes.selectedModel };
-    });
-  } else if (specificCli) {
-    cliAccounts[specificCli] = { account: switchRes.switchedTo, model: modelRes.selectedModel };
-  }
-  writeJson(cliAccountsPath, cliAccounts);
-
-  prompts.outro(pc.green(`✨ Fully Configured! Active Account: ${switchRes.switchedTo} | Default Model: ${modelRes.selectedModel}`));
-}
-
-function runInteractiveModelMenu() {
-  let prompts;
-  let pc;
-  try {
-    prompts = require('@clack/prompts');
-    pc = require('picocolors');
-  } catch {
-    console.log('Use: wz-ai cockpit model <modelName>');
-    return;
-  }
-
   const status = getAccountStatus();
   if (!status.ok) {
-    console.log(`⚠️ ${status.message}`);
+    console.log(pc ? pc.yellow(`⚠️ ${status.message}`) : `⚠️ ${status.message}`);
     return;
   }
 
   const models = getAvailableModels(status.currentAccount.id);
   if (models.length === 0) {
-    console.log('⚠️ No models found in active Cockpit account.');
+    console.log(pc ? pc.yellow('⚠️ No models found in active Cockpit account.') : '⚠️ No models found in active Cockpit account.');
     return;
   }
-
-  prompts.intro(pc.bold(pc.cyan('🤖 Select Default Model for Pi CLI & AI Agents')));
 
   const options = models.map(m => ({
     value: m.name,
     label: `${m.icon} ${m.displayName} (${m.name})`,
     hint: `Quota: ${m.percentage}%`,
   }));
+  options.push({ value: 'Cancel', label: '🔙 Cancel (Go back)' });
 
-  prompts.select({
+  const selectedModel = await prompts.select({
     message: `Active Account: ${status.currentAccount.email} — Pick model:`,
     options,
-  }).then(selectedModel => {
-    if (prompts.isCancel(selectedModel)) return;
-    const res = switchModel(selectedModel);
-    prompts.outro(pc.green(`✅ Default Model updated to: ${res.selectedModel}`));
   });
+
+  if (prompts.isCancel(selectedModel) || selectedModel === 'Cancel') {
+    return;
+  }
+  
+  const res = switchModel(selectedModel);
+  console.log(pc ? pc.green(`\n✅ Default Model updated to: ${res.selectedModel}`) : `\n✅ Default Model updated to: ${res.selectedModel}`);
+  if (!passedPrompts) {
+    prompts.outro('Menu closed.');
+  }
 }
 
 function runFallbackMenu() {
