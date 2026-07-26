@@ -1,6 +1,6 @@
 {
   "name": "pi-cockpit-proxy-setup",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Interactive installer and model selection CLI for Wizard-AI and Pi Agent with Cockpit Tools proxy rotation.",
   "main": "index.mjs",
   "type": "module",
