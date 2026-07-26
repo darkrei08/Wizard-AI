@@ -432,6 +432,16 @@ else {
     Write-Log '[ok] serena already installed.' -ForegroundColor Green
 }
 
+# Install lightpanda (headless browser for agents) - no native Windows binary, requires WSL2
+Write-Log 'Checking lightpanda (headless browser for agents)...' -ForegroundColor Yellow
+if (Get-Command wsl -ErrorAction SilentlyContinue) {
+    Write-Log '  [i] lightpanda has no native Windows binary. Install inside WSL2 (run once):' -ForegroundColor Yellow
+    Write-Log '      wsl -e bash -lc "curl -fL -o ~/.local/bin/lightpanda https://github.com/lightpanda-io/browser/releases/download/nightly/lightpanda-x86_64-linux && chmod a+x ~/.local/bin/lightpanda"' -ForegroundColor Yellow
+}
+else {
+    Write-Log '  [!] lightpanda requires WSL2 on Windows (no native binary). Install WSL2 first: wsl --install' -ForegroundColor Yellow
+}
+
 # 5. Fix sqz binary (pre-compiled native binary for token compression)
 Write-Log ' '
 Write-Log '[5/8] Placing pre-compiled sqz binary...' -ForegroundColor Blue

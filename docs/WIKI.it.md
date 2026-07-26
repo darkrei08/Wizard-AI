@@ -172,6 +172,7 @@ All tools and skills managed by Wizard-AI are open source. Here is the complete 
 ### ⚡ CLI Tools & Context Squeezers
 
 - **[sqz](https://github.com/ojuschugh1/sqz.git)**: Token compression CLI
+- **[lightpanda](https://github.com/lightpanda-io/browser.git)**: Browser headless ultra-leggero per agenti AI (Zig, non Chromium) — CDP, fetch/dump, agent mode nativo, MCP nativo
 - **[llmlingua](https://github.com/microsoft/LLMLingua.git)**: Prompt compression (Microsoft)
 - **[flashrank](https://github.com/PrithivirajDamodaran/FlashRank.git)**: Document re-ranking
 - **[serena](https://github.com/oraios/serena.git)**: Semantic code intelligence

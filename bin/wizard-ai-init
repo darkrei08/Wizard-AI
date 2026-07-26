@@ -47,6 +47,10 @@ cat << EOF > "$TARGET_DIR/.wizard-ai.json"
       "command": "uvx",
       "args": ["serena", "mcp"]
     },
+    "lightpanda": {
+      "command": "lightpanda",
+      "args": ["mcp"]
+    },
     "sqz": {
       "command": "sqz",
       "args": ["mcp"]
@@ -84,6 +88,10 @@ MCP_CONFIG='{
     "serena": {
       "command": "uvx",
       "args": ["serena", "mcp"]
+    },
+    "lightpanda": {
+      "command": "lightpanda",
+      "args": ["mcp"]
     },
     "sqz": {
       "command": "sqz",

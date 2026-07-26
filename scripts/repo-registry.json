@@ -27,6 +27,7 @@
         { "name": "llmlingua", "url": "https://github.com/microsoft/LLMLingua.git", "desc": "Prompt compression (Microsoft)" },
         { "name": "flashrank", "url": "https://github.com/PrithivirajDamodaran/FlashRank.git", "desc": "Document re-ranking" },
         { "name": "serena", "url": "https://github.com/oraios/serena.git", "desc": "Semantic code intelligence" },
+        { "name": "lightpanda", "url": "https://github.com/lightpanda-io/browser.git", "desc": "Ultra-light headless browser for AI agents (Zig, not Chromium)" },
         { "name": "graphify", "url": "https://github.com/safishamsi/graphify.git", "desc": "Knowledge graph builder" },
         { "name": "claude-mem", "url": "https://github.com/thedotmack/claude-mem.git", "desc": "Persistent LLM memory" },
         { "name": "geminiusage", "url": "https://github.com/rmedranollamas/geminiusage.git", "desc": "Gemini token tracker" },

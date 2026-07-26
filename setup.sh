@@ -533,6 +533,39 @@ else
   fi
 fi
 
+# Install lightpanda (ultra-light headless browser for AI agents — CDP, fetch/dump, native agent mode + MCP)
+echo -e "${YELLOW}Checking lightpanda (headless browser for agents)...${NC}"
+if command -v lightpanda &>/dev/null; then
+  echo -e "${GREEN}✓ lightpanda already installed.${NC}"
+elif command -v brew &>/dev/null; then
+  if brew install lightpanda-io/browser/lightpanda &>/dev/null; then
+    echo -e "${GREEN}  ✓ lightpanda installed via Homebrew.${NC}"
+  else
+    echo -e "${RED}  ❌ failed to install lightpanda via Homebrew.${NC}"
+  fi
+else
+  LP_OS=$(uname -s)
+  LP_ARCH=$(uname -m)
+  case "$LP_OS-$LP_ARCH" in
+    Linux-x86_64)  LP_ASSET="lightpanda-x86_64-linux" ;;
+    Linux-aarch64) LP_ASSET="lightpanda-aarch64-linux" ;;
+    Darwin-x86_64) LP_ASSET="lightpanda-x86_64-macos" ;;
+    Darwin-arm64)  LP_ASSET="lightpanda-aarch64-macos" ;;
+    *)             LP_ASSET="" ;;
+  esac
+  if [ -n "$LP_ASSET" ]; then
+    mkdir -p "$HOME/.local/bin"
+    if curl -fL -s "https://github.com/lightpanda-io/browser/releases/download/nightly/${LP_ASSET}" -o "$HOME/.local/bin/lightpanda" && chmod +x "$HOME/.local/bin/lightpanda"; then
+      echo -e "${GREEN}  ✓ lightpanda binary installed to ~/.local/bin/lightpanda (nightly, ${LP_ASSET}).${NC}"
+      echo -e "${YELLOW}  Note: glibc-linked Linux binary — musl distros (Alpine) need build-from-source instead.${NC}"
+    else
+      echo -e "${RED}  ❌ failed to download lightpanda binary.${NC}"
+    fi
+  else
+    echo -e "${YELLOW}  ⚠ Unsupported platform ($LP_OS-$LP_ARCH) for lightpanda prebuilt binary. See https://github.com/lightpanda-io/browser#build-from-sources${NC}"
+  fi
+fi
+
 # 5. Fix sqz binary (pre-compiled native binary for token compression)
 echo -e "\n${BLUE}[5/10] Placing pre-compiled sqz binary...${NC}"
 ARCH=$(uname -m)
@@ -741,6 +774,13 @@ if command -v pi &>/dev/null || [ -f "$PI_SETTINGS" ]; then
     else
       echo -e "${YELLOW}  ⚠ jq not found. Please add \"file://$WIZARD_AI_DIR\" to packages in $PI_SETTINGS manually.${NC}"
     fi
+  fi
+  
+  # Install pi-cockpit-tools extension
+  if [ -d "$WIZARD_AI_DIR/packages/pi-cockpit-tools" ]; then
+    mkdir -p "$HOME/.pi/agent/extensions"
+    ln -sf "$WIZARD_AI_DIR/packages/pi-cockpit-tools" "$HOME/.pi/agent/extensions/pi-cockpit-tools"
+    echo -e "${GREEN}  ✓ Linked pi-cockpit-tools extension to ~/.pi/agent/extensions/${NC}"
   fi
 fi
 

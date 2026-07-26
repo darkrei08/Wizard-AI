@@ -163,6 +163,7 @@ Welcome to the Wizard-AI knowledge base. All skills and workflows are organized 
 | [🤖 AI Suite](skills/aisuite) | — | Multi-LLM toolkit. Switch providers with one interface. |
 | [🦉 Strix Security](skills/strix) | — | Autonomous AI hackers for pentesting and vulnerability discovery. |
 | [🧪 Web App Testing](skills/webapp-testing) | — | Playwright-based testing for local web apps. Screenshots, logs, verification. |
+| [🐼 Lightpanda](skills/lightpanda) | — | Ultra-light headless browser (Zig, not Chromium) for AI agents — 9x faster, 16x less RAM than headless Chrome. CDP server, fetch/dump, native agent mode + MCP. |
 | [🧰 Kit Toolkit](skills/kit) | — | Development toolkit reference. |
 | [🩺 Matt's Bug Diagnosis](skills/mp-diagnosing-bugs) | — | Diagnosis loop for hard bugs and performance regressions. |
 | [🪝 Pre-Commit Setup](skills/mp-setup-pre-commit) | — | Husky + lint-staged + Prettier + type checking + tests on commit. |
