@@ -4,23 +4,7 @@
 # ----- Personal and private data -----
 local/.antigravitycli/
 # ----- External repositories (local clones — NOT submodules) -----
-/ECC/
-/Infographic/
-/claude-mem/
-/cybersecurity-skills/
-/design.md/
-/headroom/
-/lean-ctx/
-/stitch-skills/
-/wslens/
-/goodcode/
-/mem0/
-/openhuman/
-/personal-graph/
-/pi-config/
-/qwenpaw/
-/sqz/
-/syke/
+.local-clones/
 # ----- Output generati da tool -----
 *.log
 # ----- Sistema operativo -----

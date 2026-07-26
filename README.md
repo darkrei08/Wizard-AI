@@ -23,11 +23,14 @@ Instead of a monolithic manual, Wizard-AI is organized into hyperlinked modular 
 
 ## ⚡ Quick Start & Installation
 
-### 1. Unified Shell Installer (Cross-OS)
+### 1. Full Platform Guided Setup (Recommended)
+This is the interactive guided configuration wizard for first-time users. It configures `WIZARD_AI_DIR`, `.bashrc` aliases, and ensures all dependencies are present.
 
 On Linux / macOS:
 ```bash
 ./setup.sh
+# Alternatively via npx:
+npx @darkrei08/wizard-ai-cli setup --verbose
 ```
 
 On Windows (PowerShell):
@@ -35,12 +38,11 @@ On Windows (PowerShell):
 .\setup.ps1
 ```
 
-### 2. Interactive Terminal Engine
-
-Run the Clack UI installer (now with verbose skill installation tracking):
+### 2. Interactive Terminal Engine (Skills & Frameworks Manager)
+If you already ran the guided setup and just want to launch the Skill Manager directly. To see verbose logs printed to the video during skill installations, append the `--verbose` flag:
 
 ```bash
-npx -y @darkrei08/wizard-ai-cli@latest
+npx -y @darkrei08/wizard-ai-cli@latest --verbose
 ```
 
 ---
