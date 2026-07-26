@@ -106,6 +106,49 @@ function loadCurrentAccountFallback() {
   return readJson(join(dataDir, 'current_account.json'));
 }
 
+// ── Codex (OpenAI) Reader ───────────────────────────────────────────────────
+// Cockpit Tools stores Codex accounts alongside Google accounts in the same
+// data dir, under a separate codex_accounts.json index + codex_accounts/ dir.
+// Schema differs from Google: quota is { hourly_percentage, weekly_percentage }
+// (5h + weekly windows), not a models[] array. Verified against cockpit-tools
+// source (crates/cockpit-core/src/modules/codex_account.rs, models/codex.rs).
+
+function loadCodexAccounts() {
+  const dataDir = getCockpitDataDir();
+  const accountsFile = join(dataDir, 'codex_accounts.json');
+  const accountsData = readJson(accountsFile);
+  if (!accountsData || !Array.isArray(accountsData.accounts)) {
+    return { accounts: [], currentId: null, version: null };
+  }
+  return {
+    accounts: accountsData.accounts,
+    currentId: accountsData.current_account_id || null,
+    version: accountsData.version || null,
+  };
+}
+
+function loadCodexAccountDetail(accountId) {
+  const dataDir = getCockpitDataDir();
+  return readJson(join(dataDir, 'codex_accounts', `${accountId}.json`));
+}
+
+function sanitizeCodexAccount(detail) {
+  if (!detail) return null;
+  return {
+    id: detail.id,
+    email: detail.email || 'unknown',
+    plan_type: detail.plan_type || 'unknown',
+    auth_mode: detail.auth_mode || 'oauth',
+    requires_reauth: detail.requires_reauth || false,
+    quota: detail.quota ? {
+      hourly_percentage: detail.quota.hourly_percentage,
+      hourly_reset_time: detail.quota.hourly_reset_time,
+      weekly_percentage: detail.quota.weekly_percentage,
+      weekly_reset_time: detail.quota.weekly_reset_time,
+    } : null,
+  };
+}
+
 // ── Strip tokens from output (security) ────────────────────────────────────
 
 function sanitizeAccount(detail) {
@@ -153,6 +196,12 @@ function cmdStatus() {
     a => a.id?.startsWith('cockpit-')
   ).length || 0;
 
+  const codexAccountsData = loadCodexAccounts();
+  const codexDetail = codexAccountsData.currentId
+    ? loadCodexAccountDetail(codexAccountsData.currentId)
+    : null;
+  const codexSanitized = sanitizeCodexAccount(codexDetail);
+
   console.log(JSON.stringify({
     ok: true,
     current_account: {
@@ -168,6 +217,18 @@ function cmdStatus() {
     pi_account_switcher: {
       provisioned_accounts: provisionedCount,
       config_path: getPiAccountSwitcherConfig(),
+    },
+    openai_codex: {
+      ok: codexAccountsData.accounts.length > 0,
+      current_account: codexSanitized ? {
+        id: codexAccountsData.currentId,
+        email: codexSanitized.email,
+        plan_type: codexSanitized.plan_type,
+        auth_mode: codexSanitized.auth_mode,
+        requires_reauth: codexSanitized.requires_reauth,
+      } : null,
+      quota: codexSanitized?.quota || null,
+      total_accounts: codexAccountsData.accounts.length,
     },
   }, null, 2));
 }

@@ -99,6 +99,13 @@ if [ -f "$FETCH_SCRIPT" ] && command -v python3 >/dev/null 2>&1; then
   python3 "$FETCH_SCRIPT" >/dev/null 2>&1 || true
 fi
 
+# 4.5. Sync Cockpit Bridge quota-aware model aliases for pi-extensible-workflows
+COCKPIT_ALIAS_SCRIPT="$WIZARD_DIR/scripts/sync-cockpit-model-aliases.js"
+if [ -f "$COCKPIT_ALIAS_SCRIPT" ] && command -v node >/dev/null 2>&1; then
+  log "\n🔀 Syncing Cockpit Bridge model aliases (quota-aware)..."
+  node "$COCKPIT_ALIAS_SCRIPT" >/dev/null 2>&1 || true
+fi
+
 if command -v wz-ai-sync-skills >/dev/null 2>&1; then
   log "\n🔄 Syncing agent skills..."
   wz-ai-sync-skills >/dev/null 2>&1 || true
