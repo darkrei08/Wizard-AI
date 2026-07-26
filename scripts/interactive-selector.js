@@ -93,7 +93,7 @@ async function main() {
   }
 
   if (selectedLines.length > 0) {
-    note(\`Selected \${selectedLines.length} repositories for installation.\`, 'Selection Complete');
+    note(`Selected ${selectedLines.length} repositories for installation.`, 'Selection Complete');
     outro(pc.green('Proceeding with installation...'));
     if (outFile) {
       fs.writeFileSync(outFile, selectedLines.join('\n') + '\n');
