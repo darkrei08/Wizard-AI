@@ -44,7 +44,7 @@ async function main() {
   } else if (mode === 'category') {
     const catOptions = Object.entries(registry.categories).map(([ck, cv]) => ({
       value: ck,
-      label: '▸ ' + \`\${cv.name} (\${cv.repos.length} repos)\`
+      label: '▸ ' + `${cv.name} (${cv.repos.length} repos)`
     }));
 
     const selectedCats = await multiselect({
@@ -64,7 +64,7 @@ async function main() {
     for (const [ck, cv] of Object.entries(registry.categories)) {
       cv.repos.forEach(rp => {
         skillOptions.push({
-          value: \`\${ck}|\${rp.name}\`,
+          value: `${ck}|${rp.name}`,
           label: '▸ ' + rp.name
         });
       });
