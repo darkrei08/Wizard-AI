@@ -333,106 +333,35 @@ if [ "$YES_MODE" -eq 1 ] || [ ! -t 0 ]; then
   echo -e "${YELLOW}Installing all $TOTAL_REPOS repositories (--yes mode)...${NC}"
   SELECTED_REPOS="$REGISTRY_LINES"
 else
-  # ── Interactive menu ──
-  echo -e "${CYAN}│${NC}"
-  echo -e "${CYAN}◇  ${BOLD}Skill & Framework Selection Mode:${NC}"
-  echo -e "${CYAN}│${NC}    ${BOLD}[1]${NC} 🚀 Install Everything ${GREEN}(Recommended — all $TOTAL_REPOS items)${NC}"
-  echo -e "${CYAN}│${NC}    ${BOLD}[2]${NC} 📦 Select by Category ${PURPLE}(Agent Frameworks, CLI Tools, Prompt Skills, etc.)${NC}"
-  echo -e "${CYAN}│${NC}    ${BOLD}[3]${NC} 🔧 Cherry-Pick Individual Skills"
-  echo -e "${CYAN}│${NC}    ${BOLD}[4]${NC} ⏭️  Skip (install only core tools)"
-  echo -e "${CYAN}│${NC}"
-  read -p "$(echo -e "${CYAN}◇  Selection > ${NC}")" INSTALL_MODE
-  INSTALL_MODE="${INSTALL_MODE:-1}"
-
-
-  case "$INSTALL_MODE" in
-    1)
-      echo -e "${GREEN}Installing all $TOTAL_REPOS repositories...${NC}"
-      SELECTED_REPOS="$REGISTRY_LINES"
-      ;;
-    2)
-      # ── Category Selection ──
-      echo -e "\n${BOLD}Available Categories:${NC}\n"
-      for i in "${!CATEGORY_KEYS[@]}"; do
-        idx=$((i + 1))
-        echo -e "  ${BOLD}[${idx}]${NC} ${CATEGORY_NAMES[$i]}  ${PURPLE}(${CATEGORY_COUNTS[$i]} repos)${NC}  ${CYAN}${CATEGORY_BADGES[$i]}${NC}"
-        echo -e "      ${YELLOW}${CATEGORY_DESCS[$i]}${NC}"
-      done
-      echo -e ""
-      echo -e "Enter numbers separated by commas (e.g. ${BOLD}1,3,5${NC}) or ${BOLD}'all'${NC}:"
-      read -p "> " CAT_SELECTION
-      CAT_SELECTION="${CAT_SELECTION:-all}"
-
-      if [ "${CAT_SELECTION,,}" = "all" ]; then
-        SELECTED_REPOS="$REGISTRY_LINES"
-      else
-        IFS=',' read -ra CAT_INDICES <<< "$CAT_SELECTION"
-        for ci in "${CAT_INDICES[@]}"; do
-          ci=$(echo "$ci" | tr -d ' ')
-          ci=$((ci - 1))
-          if [ "$ci" -ge 0 ] && [ "$ci" -lt "${#CATEGORY_KEYS[@]}" ]; then
-            local_cat_key="${CATEGORY_KEYS[$ci]}"
-            SELECTED_REPOS="${SELECTED_REPOS}$(echo "$REGISTRY_LINES" | grep "^${local_cat_key}|")
-"
-          fi
-        done
-      fi
-      ;;
-    3)
-      # ── Individual Skill Selection ──
-      echo -e "\n${BOLD}All Available Skills & Frameworks:${NC}\n"
-      GLOBAL_IDX=0
-      ALL_ITEMS=()
-      CURRENT_CAT=""
-      while IFS='|' read -r cat_key cat_name badge repo_name url desc; do
-        if [ "$cat_key" != "$CURRENT_CAT" ]; then
-          CURRENT_CAT="$cat_key"
-          echo -e "\n  ${PURPLE}${cat_name}${NC}"
-        fi
-        GLOBAL_IDX=$((GLOBAL_IDX + 1))
-        ALL_ITEMS+=("$cat_key|$cat_name|$badge|$repo_name|$url|$desc")
-        printf "    ${BOLD}[%2d]${NC} %-28s ${CYAN}%-18s${NC} ${YELLOW}%s${NC}\n" "$GLOBAL_IDX" "$repo_name" "$badge" "$desc"
-      done <<< "$REGISTRY_LINES"
-      echo -e ""
-      echo -e "Enter numbers/ranges (e.g. ${BOLD}1,5,10-15${NC}) or ${BOLD}'all'${NC}:"
-      read -p "> " SKILL_SELECTION
-      SKILL_SELECTION="${SKILL_SELECTION:-all}"
-
-      if [ "${SKILL_SELECTION,,}" = "all" ]; then
-        SELECTED_REPOS="$REGISTRY_LINES"
-      else
-        # Parse comma-separated, support ranges (e.g. 10-15)
-        IFS=',' read -ra TOKENS <<< "$SKILL_SELECTION"
-        SELECTED_INDICES=()
-        for token in "${TOKENS[@]}"; do
-          token=$(echo "$token" | tr -d ' ')
-          if [[ "$token" == *"-"* ]]; then
-            IFS='-' read -r range_start range_end <<< "$token"
-            for ((ri=range_start; ri<=range_end; ri++)); do
-              SELECTED_INDICES+=("$ri")
-            done
-          else
-            SELECTED_INDICES+=("$token")
-          fi
-        done
-        for si in "${SELECTED_INDICES[@]}"; do
-          si_idx=$((si - 1))
-          if [ "$si_idx" -ge 0 ] && [ "$si_idx" -lt "${#ALL_ITEMS[@]}" ]; then
-            SELECTED_REPOS="${SELECTED_REPOS}${ALL_ITEMS[$si_idx]}
-"
-          fi
-        done
-      fi
-      ;;
-    4)
-      echo -e "${YELLOW}⏭️  Skipping skill & framework installation. Only core tools will be installed.${NC}"
-      SELECTED_REPOS=""
-      ;;
-    *)
-      echo -e "${YELLOW}Invalid selection. Installing everything...${NC}"
-      SELECTED_REPOS="$REGISTRY_LINES"
-      ;;
-  esac
+  # ── Interactive menu via Node.js (@clack/prompts) ──
+  if command -v npm &>/dev/null; then
+    if [ "$VERBOSE" -eq 0 ]; then
+      npm install --prefix "$SCRIPT_DIR" --no-audit --no-fund --quiet >/dev/null 2>&1 || true
+    else
+      npm install --prefix "$SCRIPT_DIR" --no-audit --no-fund || true
+    fi
+  fi
+  
+  # Run the interactive Node.js selector and capture only the output between our markers
+  # Note: The output meant for the user is sent to stderr (or we let node print directly
+  # to the TTY), but we capture stdout.
+  # Let's run it directly. Node process stdout is captured by raw_selection.
+  # If we capture stdout, clack/prompts might print the UI to stdout instead of stderr,
+  # making the menu invisible!
+  # Let's redirect stderr to /dev/tty so clack/prompts can render, but usually clack/prompts renders to stdout.
+  # A better way is to save the output to a temp file.
+  
+  TMP_SEL=$(mktemp)
+  # Execute node. The JS script should write the result to the temp file passed as argument.
+  node "$SCRIPT_DIR/scripts/interactive-selector.js" "$TMP_SEL"
+  
+  if [ -s "$TMP_SEL" ]; then
+    SELECTED_REPOS=$(cat "$TMP_SEL")
+  else
+    # Fallback if the user cancelled or skipped
+    SELECTED_REPOS=""
+  fi
+  rm -f "$TMP_SEL"
 fi
 
 # ── Execute installation for selected repos ─────────────────────────────────
