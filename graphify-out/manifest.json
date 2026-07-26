@@ -730,9 +730,9 @@
     "semantic_hash": "0a167d5fe1f66a991b7f12e3afd7aadc"
   },
   "package.json": {
-    "mtime": 1785075939.3924866,
-    "ast_hash": "e72b1fedc314a71471513d4edeaf8e73",
-    "semantic_hash": "e72b1fedc314a71471513d4edeaf8e73"
+    "mtime": 1785076388.4180179,
+    "ast_hash": "9d5582dd903bc0e1a11fd9fe38c0b89c",
+    "semantic_hash": "9d5582dd903bc0e1a11fd9fe38c0b89c"
   },
   "patch_bins.py": {
     "mtime": 1785022905.4684174,
@@ -750,9 +750,9 @@
     "semantic_hash": "d199b4cbb6d5b1f5ac288ddd5179bf80"
   },
   "pi-cockpit-proxy-setup/package.json": {
-    "mtime": 1785075186.1658318,
-    "ast_hash": "89bfb26dd10e25de48f9e5302c52f0e4",
-    "semantic_hash": "89bfb26dd10e25de48f9e5302c52f0e4"
+    "mtime": 1785076392.1180172,
+    "ast_hash": "d713be8725499e21b2009867553bd298",
+    "semantic_hash": "d713be8725499e21b2009867553bd298"
   },
   "pi-cockpit-tools/index.js": {
     "mtime": 1785075056.653432,
@@ -760,9 +760,9 @@
     "semantic_hash": "f84c06a838e2d74e849f941b378fce80"
   },
   "pi-cockpit-tools/package.json": {
-    "mtime": 1785074828.013805,
-    "ast_hash": "1a80c72a5252d573f39370037476b042",
-    "semantic_hash": "1a80c72a5252d573f39370037476b042"
+    "mtime": 1785076390.1260176,
+    "ast_hash": "87cf37d9f1f996f0264f9d8aeb8dcf5b",
+    "semantic_hash": "87cf37d9f1f996f0264f9d8aeb8dcf5b"
   },
   "raw/split-readme/split_readme.py": {
     "mtime": 1785022905.462184,
@@ -895,9 +895,9 @@
     "semantic_hash": "3a21f9d4854d977fc93aec2a89e4800a"
   },
   "skills-lock.json": {
-    "mtime": 1785073545.3500063,
-    "ast_hash": "4abeb075468fb02fe548cfe3365ad282",
-    "semantic_hash": "4abeb075468fb02fe548cfe3365ad282"
+    "mtime": 1785076479.9105635,
+    "ast_hash": "0861eea0d8418b1a9369b3cb633c7b8f",
+    "semantic_hash": "0861eea0d8418b1a9369b3cb633c7b8f"
   },
   "skills/algorithmic-art/templates/generator_template.js": {
     "mtime": 1785022905.4714644,

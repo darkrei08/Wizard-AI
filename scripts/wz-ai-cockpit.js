@@ -314,7 +314,39 @@ async function runInteractiveMenu() {
     return;
   }
 
-  // STEP 1: Select Account (Wizard)
+  // STEP 1: Select Scope
+  const scopeRes = await prompts.select({
+    message: 'Step 1/3: Select Configuration Scope:',
+    options: [
+      { value: 'Global', label: 'Global (All CLI LLM Agents: Pi, Gemini CLI, Antigravity, Claude Code, Cursor, OpenCode)' },
+      { value: 'Specific', label: 'Specific CLI Agent' }
+    ]
+  });
+
+  if (prompts.isCancel(scopeRes)) {
+    prompts.cancel('Selection canceled.');
+    return;
+  }
+
+  let specificCli = null;
+  if (scopeRes === 'Specific') {
+    specificCli = await prompts.select({
+      message: 'Select Specific CLI Agent:',
+      options: [
+        { value: 'pi', label: 'Pi CLI' },
+        { value: 'gemini', label: 'Gemini/Antigravity CLI' },
+        { value: 'claude', label: 'Claude Code' },
+        { value: 'opencode', label: 'OpenCode' },
+        { value: 'cursor', label: 'Cursor' }
+      ]
+    });
+    if (prompts.isCancel(specificCli)) {
+      prompts.cancel('Selection canceled.');
+      return;
+    }
+  }
+
+  // STEP 2: Select Account (Wizard)
   const accountOptions = status.accounts.map(a => ({
     value: a.email,
     label: `${a.statusIcon} ${a.email} ${a.isCurrent ? pc.green('(Active ✅)') : ''}`,
@@ -322,7 +354,7 @@ async function runInteractiveMenu() {
   }));
 
   const selectedEmail = await prompts.select({
-    message: 'Step 1/2: Select Account to activate across Pi & AI Agents:',
+    message: 'Step 2/3: Select Account to activate across Pi & AI Agents:',
     options: accountOptions,
   });
 
@@ -351,7 +383,7 @@ async function runInteractiveMenu() {
   }));
 
   const selectedModel = await prompts.select({
-    message: 'Step 2/2: Select Default Model for Pi CLI & AI Agents:',
+    message: 'Step 3/3: Select Default Model for Pi CLI & AI Agents:',
     options: modelOptions,
   });
 
@@ -361,6 +393,20 @@ async function runInteractiveMenu() {
   }
 
   const modelRes = switchModel(selectedModel);
+  
+  // Save to cli-accounts.json
+  const cliAccountsPath = path.join(HOME, '.wizard-ai', 'cli-accounts.json');
+  const cliAccounts = readJson(cliAccountsPath) || {};
+  if (scopeRes === 'Global') {
+    cliAccounts['global'] = { account: switchRes.switchedTo, model: modelRes.selectedModel };
+    ['pi', 'gemini', 'claude', 'opencode', 'cursor'].forEach(cli => {
+      cliAccounts[cli] = { account: switchRes.switchedTo, model: modelRes.selectedModel };
+    });
+  } else if (specificCli) {
+    cliAccounts[specificCli] = { account: switchRes.switchedTo, model: modelRes.selectedModel };
+  }
+  writeJson(cliAccountsPath, cliAccounts);
+
   prompts.outro(pc.green(`✨ Fully Configured! Active Account: ${switchRes.switchedTo} | Default Model: ${modelRes.selectedModel}`));
 }
 

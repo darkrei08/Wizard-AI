@@ -235,6 +235,11 @@
       "skillPath": "skills/claude-blog/SKILL.md",
       "computedHash": "3c25152bac799fb8b0a750bcb90a0db76d96beaeeaaf4fe3b8487e86dbf349f3"
     },
+    "claude-mem": {
+      "source": "local",
+      "sourceType": "local",
+      "skillPath": "skills/claude-mem/SKILL.md"
+    },
     "claude-seo": {
       "source": "AgriciDaniel/claude-seo",
       "sourceType": "github",
@@ -1105,6 +1110,11 @@
       "skillPath": "skills/system-design-101/SKILL.md",
       "computedHash": "dc2794bff82f6c73936fca4ae3e50ea57b9d90fe5728c3ee13c70a2a71d85c72"
     },
+    "system-prompts-leaks": {
+      "source": "local",
+      "sourceType": "local",
+      "skillPath": "skills/system-prompts-leaks/SKILL.md"
+    },
     "systematic-debugging": {
       "source": "local",
       "sourceType": "local",
@@ -1207,6 +1217,11 @@
       "skillPath": "skills/wizard-ai-installer/SKILL.md",
       "computedHash": "d372e33e447c34f899e3ee1ef6d173592b9c952b7829e7d3d85dd0c1138bd7be"
     },
+    "wizard-ai-orchestration": {
+      "source": "local",
+      "sourceType": "local",
+      "skillPath": "skills/wizard-ai-orchestration/SKILL.md"
+    },
     "wordpress": {
       "source": "local",
       "sourceType": "local",
@@ -1284,21 +1299,6 @@
       "sourceType": "github",
       "skillPath": "skills/zvec/SKILL.md",
       "computedHash": "07e5a81e7a68240155cac26382ddd5261774df472bccf649936419382e604093"
-    },
-    "claude-mem": {
-      "source": "local",
-      "sourceType": "local",
-      "skillPath": "skills/claude-mem/SKILL.md"
-    },
-    "system-prompts-leaks": {
-      "source": "local",
-      "sourceType": "local",
-      "skillPath": "skills/system-prompts-leaks/SKILL.md"
-    },
-    "wizard-ai-orchestration": {
-      "source": "local",
-      "sourceType": "local",
-      "skillPath": "skills/wizard-ai-orchestration/SKILL.md"
     }
   }
 }

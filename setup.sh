@@ -720,6 +720,19 @@ done < <(find "$SCRIPT_DIR/skills" "$SCRIPT_DIR/.agents/skills" -name "SKILL.md"
 cp -f "$SCRIPT_DIR/skills/skills.json" "$SKILLS_DEST/" 2>/dev/null || cp -f "$SCRIPT_DIR/.agents/skills.json" "$SKILLS_DEST/" 2>/dev/null || true
 echo -e "${GREEN}✓ $SKILL_COUNT skills installed to ~/.gemini/config/skills/${NC}"
 
+# Clean up duplicate skill folders inside project root to avoid Pi CLI collisions
+echo -e "${YELLOW}Cleaning up duplicate skills in project root...${NC}"
+for d in "$SCRIPT_DIR/.agents/skills"/* "$SCRIPT_DIR/.pi/skills"/* "$SCRIPT_DIR/skills"/*; do
+  if [ -d "$d" ]; then
+    skill_name=$(basename "$d")
+    if [ -d "$SKILLS_DEST/$skill_name" ]; then
+      if [[ "$d" == *".agents/skills"* ]] || [[ "$d" == *".pi/skills"* ]]; then
+        rm -rf "$d" 2>/dev/null || true
+      fi
+    fi
+  fi
+done
+
 echo -e "${YELLOW}Syncing skills to Claude Code, Amp, and other agents...${NC}"
 "$HOME/.local/bin/wz-ai-sync-skills"
 

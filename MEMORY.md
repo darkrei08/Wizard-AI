@@ -131,3 +131,11 @@ Integrati i comandi pi-dcp (Dynamic Context Pruning) ed il sequencer a 5 Loop ne
 ## [Session State Snapshot] - 2026-07-26 16:33:07
 Task loop optimization test
 
+
+## [Session State Snapshot] - 2026-07-26 16:34:40
+Aggiornato README.it.md con i link alle guide modulari, wz-ai optimize auto, wz-ai wiki GUI, wz-ai cockpit e wz-ai dcp. Push completato su GitHub.
+
+
+## [Session State Snapshot] - 2026-07-26 16:39:33
+Memory state saved before parallel subagent execution for Cockpit multi-CLI accounts & skill conflict cleanup.
+

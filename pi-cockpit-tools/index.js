@@ -160,8 +160,48 @@ function syncPiAuth() {
   const { accounts, currentId } = loadCockpitAccounts();
   if (accounts.length === 0) return { ok: false, error: 'no_accounts' };
 
-  const currentAcc = accounts.find(a => a.id === currentId) || accounts[0];
-  const detail = loadAccountDetail(currentAcc.id);
+  let currentAcc = accounts.find(a => a.id === currentId) || accounts[0];
+  let detail = loadAccountDetail(currentAcc.id);
+  
+  let avgQuota = 0;
+  if (detail && detail.quota && detail.quota.models) {
+      const validPcts = detail.quota.models.map(m => m.percentage).filter(p => typeof p === 'number');
+      if (validPcts.length > 0) {
+          avgQuota = Math.round(validPcts.reduce((a, b) => a + b, 0) / validPcts.length);
+      }
+  }
+
+  if (avgQuota <= 0) {
+      let best = null;
+      let maxQuota = -1;
+      for (const acc of accounts) {
+          const accDetail = loadAccountDetail(acc.id);
+          if (!accDetail) continue;
+          const models = accDetail.quota?.models || [];
+          let avg = 0;
+          const vPcts = models.map(m => m.percentage).filter(p => typeof p === 'number');
+          if (vPcts.length > 0) {
+              avg = Math.round(vPcts.reduce((a, b) => a + b, 0) / vPcts.length);
+          }
+          if (avg > maxQuota) {
+              maxQuota = avg;
+              best = acc;
+          }
+      }
+      
+      if (best && maxQuota > 0) {
+          const dataDir = getCockpitDataDir();
+          const accountsFile = path.join(dataDir, 'accounts.json');
+          const accountsData = readJson(accountsFile) || {};
+          accountsData.current_account_id = best.id;
+          writeJson(accountsFile, accountsData);
+          currentAcc = best;
+          detail = loadAccountDetail(best.id);
+      } else {
+          return { ok: false, error: 'All accounts exhausted or disabled: rotation returned no available account' };
+      }
+  }
+
   if (!detail || !detail.token) return { ok: false, error: 'no_token' };
 
   const authFile = path.join(HOME, '.pi', 'agent', 'auth.json');

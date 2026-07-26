@@ -156,6 +156,25 @@ async function runAddInstallation(selectedRepos) {
   }
   s2.stop("Sync complete.");
 
+  // Clean up duplicate skill folders in the project root to prevent Pi CLI collisions
+  const projectRoot = process.env.WIZARD_AI_DIR || process.cwd();
+  const dirsToClean = [".agents/skills", ".pi/skills"];
+  for (const relDir of dirsToClean) {
+    const targetDir = path.join(projectRoot, relDir);
+    if (fs.existsSync(targetDir)) {
+      try {
+        const skillsInDir = fs.readdirSync(targetDir);
+        for (const skill of skillsInDir) {
+          if (fs.existsSync(path.join(geminiSkills, skill))) {
+            fs.rmSync(path.join(targetDir, skill), { recursive: true, force: true });
+          }
+        }
+      } catch (e) {
+        // ignore
+      }
+    }
+  }
+
   // Auto-setup Cockpit Tools Proxy Rotator & Pi integration
   const proxyScript = path.join(__dirname, "wz-ai-proxy.js");
   if (fs.existsSync(proxyScript)) {
