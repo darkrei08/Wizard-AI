@@ -980,7 +980,7 @@ if command -v node &>/dev/null; then
       if echo "$EXTRA_TOOLS" | grep -q "understand-anything"; then
         echo -e "│  ${YELLOW}Installing Understand-Anything...${NC}"
         # using yes to skip prompts or run non-interactively
-        curl -fsSL https://raw.githubusercontent.com/Egonex-AI/Understand-Anything/main/install.sh | yes | bash 2>/dev/null || true
+        curl -fsSL https://raw.githubusercontent.com/Egonex-AI/Understand-Anything/main/install.sh | bash -s -- pi 2>/dev/null || true
       fi
     fi
 
