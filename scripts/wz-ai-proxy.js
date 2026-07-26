@@ -407,22 +407,21 @@ if (!command || command === 'help') {
   console.log("🚀 Wizard-AI Proxy Manager (Cross-Platform Daemon)");
   console.log("Usage: wz-ai proxy <command>");
   console.log("");
-  console.log("  install    - Install pi-antigravity-rotator globally");
-  console.log("  login      - Add a Google account to the rotator via OAuth");
-  console.log("  accounts   - List all accounts in the rotator (with quota)");
-  console.log("  provision  - Import all Cockpit Tools accounts into the proxy");
-  console.log("  start      - Start the proxy server in the foreground (blocking)");
-  console.log("  enable     - Register & start proxy as a background daemon (systemd/launchd/startup)");
-  console.log("  disable    - Stop & remove the background daemon");
+  console.log("  setup      - (RECOMMENDED) Auto-install, provision Cockpit accounts & start daemon");
   console.log("  status     - Show the proxy rotation status (if running)");
   console.log("  logs       - View live background logs");
+  console.log("  accounts   - List all accounts currently in the proxy (with quota)");
+  console.log("  disable    - Stop & remove the background daemon");
+  console.log("");
+  console.log("  [Advanced/Legacy]");
+  console.log("  install    - Install pi-antigravity-rotator globally");
+  console.log("  provision  - Import all Cockpit Tools accounts into the proxy");
+  console.log("  enable     - Register & start proxy as a background daemon");
+  console.log("  login      - Add a Google account to the rotator via OAuth manually");
   console.log("  pi-config  - (Re)generate pi's auth.json + models.json to use the local proxy");
   console.log("");
-  console.log("Quick Start:");
-  console.log("  1. wz-ai proxy install          # Install the rotator");
-  console.log("  2. wz-ai proxy login            # Add at least one Google account");
-  console.log("  3. wz-ai proxy enable           # Start as background daemon");
-  console.log("  4. pi                           # Pi now uses the rotator automatically");
+  console.log("Quick Start (The Silver Bullet):");
+  console.log("  wz-ai proxy setup    # Does everything automatically for Cockpit Tools users");
   process.exit(1);
 }
 
@@ -477,16 +476,28 @@ try {
   else if (command === 'auto-setup' || command === 'setup' || command === 'boot' || command === 'sync') {
     console.log("🚀 Executing Automated Cockpit Tools & Rotator Proxy Setup...");
     
-    // 1. Provision accounts from Cockpit Tools
-    console.log("\n[1/3] Provisioning Cockpit Tools accounts...");
+    console.log("\n[1/4] Installing pi-antigravity-rotator globally...");
+    const localPrefix = path.join(os.homedir(), '.local');
+    try {
+      runCommand(`npm install -g pi-antigravity-rotator --prefix "${localPrefix}"`);
+    } catch(e1) {
+      try {
+        runCommand('npm install -g pi-antigravity-rotator');
+      } catch(e2) {
+        console.log("⚠️ Local install failed (EACCES). Trying with sudo...");
+        runCommand('sudo npm install -g pi-antigravity-rotator');
+      }
+    }
+
+    console.log("\n[2/4] Provisioning Cockpit Tools accounts...");
     provisionCockpitAccounts();
 
-    // 2. Inject Pi configuration
-    console.log("\n[2/3] Injecting Pi CLI configuration (auth.json + models.json)...");
+    // 3. Inject Pi configuration
+    console.log("\n[3/4] Injecting Pi CLI configuration (auth.json + models.json)...");
     injectPiConfig();
 
-    // 3. Enable background daemon
-    console.log("\n[3/3] Enabling background daemon...");
+    // 4. Enable background daemon
+    console.log("\n[4/4] Enabling background daemon...");
     if (PLATFORM === 'linux') enableLinux();
     else if (PLATFORM === 'darwin') enableMac();
     else if (PLATFORM === 'win32') enableWindows();
