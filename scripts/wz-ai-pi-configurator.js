@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 /**
- * wizard-ai pi-configurator.js — Dynamic Pi Agent Configurator
+ * wz-ai pi-configurator.js — Dynamic Pi Agent Configurator
  * 
  * Reads Cockpit Tools subscription tier + available models,
  * auto-assigns the best default model per role, and allows
  * manual overrides via CLI flags or interactive prompts.
  * 
  * Usage:
- *   wizard-ai pi-configurator                    # auto-detect from Cockpit
- *   wizard-ai pi-configurator --model gemini-3.6-flash-high --effort high
- *   wizard-ai pi-configurator --interactive      # interactive model picker
+ *   wz-ai pi-configurator                    # auto-detect from Cockpit
+ *   wz-ai pi-configurator --model gemini-3.6-flash-high --effort high
+ *   wz-ai pi-configurator --interactive      # interactive model picker
  */
 
 const { readFileSync, writeFileSync, existsSync, mkdirSync } = require('node:fs');

@@ -405,7 +405,7 @@ function showLogs() {
 
 if (!command || command === 'help') {
   console.log("🚀 Wizard-AI Proxy Manager (Cross-Platform Daemon)");
-  console.log("Usage: wizard-ai proxy <command>");
+  console.log("Usage: wz-ai proxy <command>");
   console.log("");
   console.log("  install    - Install pi-antigravity-rotator globally");
   console.log("  login      - Add a Google account to the rotator via OAuth");
@@ -419,10 +419,10 @@ if (!command || command === 'help') {
   console.log("  pi-config  - (Re)generate pi's auth.json + models.json to use the local proxy");
   console.log("");
   console.log("Quick Start:");
-  console.log("  1. wizard-ai proxy install          # Install the rotator");
-  console.log("  2. wizard-ai proxy login            # Add at least one Google account");
-  console.log("  3. wizard-ai proxy enable           # Start as background daemon");
-  console.log("  4. pi                               # Pi now uses the rotator automatically");
+  console.log("  1. wz-ai proxy install          # Install the rotator");
+  console.log("  2. wz-ai proxy login            # Add at least one Google account");
+  console.log("  3. wz-ai proxy enable           # Start as background daemon");
+  console.log("  4. pi                           # Pi now uses the rotator automatically");
   process.exit(1);
 }
 
@@ -453,13 +453,13 @@ try {
     // Show all rotator accounts with their quota
     const configPath = path.join(os.homedir(), '.pi-antigravity-rotator', 'accounts.json');
     if (!fs.existsSync(configPath)) {
-      console.log("No accounts configured. Run 'wizard-ai proxy login' to add one.");
+      console.log("No accounts configured. Run 'wz-ai proxy login' to add one.");
       process.exit(0);
     }
     const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
     const accounts = config.accounts || [];
     if (accounts.length === 0) {
-      console.log("No accounts configured. Run 'wizard-ai proxy login' to add one.");
+      console.log("No accounts configured. Run 'wz-ai proxy login' to add one.");
     } else {
       console.log(`\n📋 Rotator Accounts (${accounts.length} total):\n`);
       accounts.forEach((a, i) => {
@@ -534,7 +534,7 @@ try {
     console.log("\nDone! Pi will now route all Google requests through the local rotator.");
   }
   else {
-    console.log(`Unknown command: ${command}. Run 'wizard-ai proxy help' for usage.`);
+    console.log(`Unknown command: ${command}. Run 'wz-ai proxy help' for usage.`);
   }
 } catch (e) {
   process.exit(1);
