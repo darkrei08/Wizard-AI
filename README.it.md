@@ -73,7 +73,7 @@ flowchart TB
 Per una consultazione chiara e veloce, la documentazione di Wizard-AI è suddivisa in guide tematiche linkabili:
 
 | Guida | Argomento e Funzionalità |
-|-------|──────────────────────────|
+|-------|--------------------------|
 | 🛠️ **[Guida Cockpit Proxy](docs/COCKPIT_PROXY_GUIDE.md)** | Rotatore multi-account, estrazione token OAuth, switcher a 2 step (`wz-ai cockpit`), estensione Pi (`pi-cockpit-tools`) |
 | 🤖 **[Flussi Agente Pi & Swarm](docs/PI_AGENT_WORKFLOWS.md)** | Architettura Swarm 3-Tier, 5-Loop Pipeline (`01-05`), sharding agenti in parallelo (`shadow-clone-jutsu`) |
 | 🗜️ **[Stack di Efficienza Token](docs/TOKEN_EFFICIENCY_STACK.md)** | RTK CLI proxy, `sqz`, `headroom`, `@toon-format/toon`, formato LEA, modalità `caveman` |

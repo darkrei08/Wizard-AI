@@ -27,7 +27,7 @@
 Instead of a monolithic manual, Wizard-AI is organized into hyperlinked modular guides:
 
 | Guide | Topic & Features |
-|-------|────────────────--|
+|-------|------------------|
 | 🛠️ **[Cockpit Tools Proxy Guide](docs/COCKPIT_PROXY_GUIDE.md)** | Multi-account rotation, OAuth token extraction, 2-step account/model switcher, `wz-ai proxy auto-setup` |
 | 🤖 **[Pi Agent Workflows](docs/PI_AGENT_WORKFLOWS.md)** | 3-Tier Agent Swarm, 5-Loop Pipeline (`01-05`), parallel subagent fan-out (`shadow-clone-jutsu`) |
 | 🗜️ **[Token Efficiency Stack](docs/TOKEN_EFFICIENCY_STACK.md)** | RTK CLI proxy, `sqz`, `headroom`, `@toon-format/toon`, LEA lossless context format, `caveman` mode |
