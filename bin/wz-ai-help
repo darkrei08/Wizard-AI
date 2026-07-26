@@ -77,7 +77,11 @@ echo -e "  $(check_cmd wz-ai-goodcode) ${BOLD}wizard-ai goodcode${RESET}      Ex
 echo -e "     ${BLUE}wizard-ai goodcode                    ${RESET}→ check skill info"
 echo ""
 
-echo -e "${BOLD}${YELLOW}📊 KNOWLEDGE GRAPH${RESET}"
+echo -e "${BOLD}${YELLOW}📊 KNOWLEDGE GRAPH & WIKI WEB GUI${RESET}"
+echo -e "  $(check_cmd wz-ai-wiki) ${BOLD}wizard-ai wiki${RESET}          Launch Web GUI Visualizer for LLM Wiki & Graphify"
+echo -e "     ${BLUE}wizard-ai wiki                        ${RESET}→ launch D3.js interactive web GUI on http://127.0.0.1:8080"
+echo -e "     ${BLUE}wizard-ai wiki status                 ${RESET}→ show node/edge statistics and graph status"
+echo -e "     ${BLUE}wizard-ai wiki update                 ${RESET}→ rebuild knowledge graph tree"
 echo -e "  $(check_cmd graphify) ${BOLD}graphify${RESET}         Build knowledge graphs from any codebase/docs"
 echo -e "     ${BLUE}wizard-ai graph .${RESET}                  → Run Graphify on current directory"
 echo -e "     ${BLUE}graphify query \"how does X work?\"${RESET}"

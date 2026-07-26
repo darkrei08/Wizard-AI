@@ -19,7 +19,9 @@
     "wizard-ai-pi-configurator": "./scripts/wz-ai-pi-configurator.js",
     "wizard-ai-benchmark-sync": "./scripts/wz-ai-benchmark-sync.js",
     "wz-ai-cockpit": "./scripts/wz-ai-cockpit.js",
-    "wz-ai-account": "./scripts/wz-ai-cockpit.js"
+    "wz-ai-account": "./scripts/wz-ai-cockpit.js",
+    "wz-ai-wiki": "./scripts/wz-ai-wiki.js",
+    "wizard-ai-wiki": "./scripts/wz-ai-wiki.js"
   },
   "files": [
     "cli.js",

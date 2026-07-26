@@ -15,17 +15,28 @@ def main():
         print(f"Error: Could not find WIKI.md at {wiki_path}")
         sys.exit(1)
 
-    with open(wiki_path, "r", encoding="utf-8") as f:
-        content = f.read()
+    import json
+    registry_path = os.path.join(repo_dir, "scripts", "repo-registry.json")
+    repos = []
 
-    # Regex to find GitHub repo links: https://github.com/owner/repo
-    # It stops at quotes, spaces, or closing parenthesis/brackets
-    pattern = r"https://github\.com/([a-zA-Z0-9_.-]+)/([a-zA-Z0-9_.-]+)"
-    matches = re.findall(pattern, content)
+    if os.path.exists(wiki_path):
+        with open(wiki_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        pattern = r"https://github\.com/([a-zA-Z0-9_.-]+)/([a-zA-Z0-9_.-]+)"
+        repos.extend(re.findall(pattern, content))
 
-    # Unique repos
-    repos = list(set(matches))
-    print(f"Found {len(repos)} unique GitHub repositories in WIKI.md.")
+    if os.path.exists(registry_path):
+        with open(registry_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        for cat_data in data.get("categories", {}).values():
+            for repo_info in cat_data.get("repos", []):
+                url = repo_info.get("url", "")
+                m = re.search(r"https://github\.com/([a-zA-Z0-9_.-]+)/([a-zA-Z0-9_.-]+)", url)
+                if m:
+                    repos.append((m.group(1), m.group(2)))
+
+    repos = list(set(repos))
+    print(f"Found {len(repos)} unique GitHub repositories across registry and WIKI.md.")
 
     os.makedirs(out_dir, exist_ok=True)
 

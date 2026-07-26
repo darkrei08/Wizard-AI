@@ -95,3 +95,15 @@ Risolto deploy dei wrapper wz-ai-cockpit e wz-ai-account in ~/.local/bin/. Ora '
 ## [Session State Snapshot] - 2026-07-26 16:16:37
 Potenziata dashboard interattiva wz-ai cockpit con menu Clack UI per cambio account, selezione modello predefinito, auto-rotate e verifica quote live.
 
+
+## [Session State Snapshot] - 2026-07-26 16:23:24
+Risolti errori di pi-extensible-workflows (thinking: off in worker-generic.md), onboarding di lean-ctx per tutti gli agenti (38/38 check superati) e pi install npm:pi-lean-ctx.
+
+
+## [Session State Snapshot] - 2026-07-26 16:23:54
+Fixed codebase-memory-mcp and lean-ctx MCP servers, verified token compression stack
+
+
+## [Session State Snapshot] - 2026-07-26 16:24:58
+Resumed session 019f9ea9-aeb1-7eb3-a4be-a6c2f3643a32: completed wiki repo-registry links, verified 59 external repos, all 7 unit tests passed, graphify graph updated
+
