@@ -43,6 +43,8 @@ if (subcmd === "--help" || subcmd === "-h") {
   console.log("  install          Install skills by category from registry");
   console.log("  remove           Remove installed skills");
   console.log("  test             Run wizard-test suite");
+  console.log("  cockpit          Launch interactive account & LLM model switcher (wz-ai cockpit)");
+  console.log("  account          Alias for cockpit");
   console.log("  proxy            Start wz-ai proxy");
   console.log("  pi-configurator  Run Pi Dynamic Configurator");
   console.log("  repodocs         Run RepoDocs Wiki Generator");
@@ -88,6 +90,9 @@ const subcommandMap = {
   "repodocs": "wz-ai-repodocs.js",
   "context": "wz-ai-context.js",
   "benchmark-sync": "wz-ai-benchmark-sync.js",
+  "cockpit": "wz-ai-cockpit.js",
+  "account": "wz-ai-cockpit.js",
+  "accounts": "wz-ai-cockpit.js",
 };
 
 if (subcommandMap[subcmd]) {

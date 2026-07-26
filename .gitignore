@@ -13,6 +13,14 @@ local/.antigravitycli/
 /lean-ctx/
 /stitch-skills/
 /wslens/
+/goodcode/
+/mem0/
+/openhuman/
+/personal-graph/
+/pi-config/
+/qwenpaw/
+/sqz/
+/syke/
 # ----- Output generati da tool -----
 *.log
 # ----- Sistema operativo -----
