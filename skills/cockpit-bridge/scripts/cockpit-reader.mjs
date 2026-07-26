@@ -663,6 +663,25 @@ async function cmdProvisionRotator() {
   // Always enforce security: bind to loopback only
   existingConfig.bindHost = '127.0.0.1';
 
+  // Enforce modelAliases for Cockpit / Antigravity UI model aliases
+  existingConfig.modelAliases = {
+    "gemini-3.6-flash-high": "gemini-2.5-flash",
+    "gemini-3.6-flash-medium": "gemini-2.5-flash",
+    "gemini-3.6-flash-low": "gemini-2.5-flash",
+    "gemini-3.6-flash-tiered": "gemini-2.5-flash",
+    "gemini-3.5-flash-high": "gemini-2.5-flash",
+    "gemini-3.5-flash-medium": "gemini-2.5-flash",
+    "gemini-3.5-flash-low": "gemini-2.5-flash",
+    "gemini-3-flash": "gemini-2.5-flash",
+    "gemini-3-flash-agent": "gemini-2.5-flash",
+    "gemini-3.1-pro-high": "gemini-2.5-pro",
+    "gemini-3.1-pro-low": "gemini-2.5-pro",
+    "gemini-pro-agent": "gemini-2.5-pro",
+    "claude-sonnet-4-6": "gemini-2.5-pro",
+    "claude-opus-4-6-thinking": "gemini-2.5-pro",
+    ...(existingConfig.modelAliases || {})
+  };
+
   existingConfig.accounts = [...deduplicatedKept, ...finalProvisioned];
   writeJson(configPath, existingConfig);
 
