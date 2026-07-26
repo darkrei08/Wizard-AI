@@ -683,9 +683,8 @@ fi
 
 # 6. Copy and configure CLI Wrappers
 echo -e "\n${BLUE}[6/10] Deploying custom AI CLI wrappers to ~/.local/bin/...${NC}"
-cp -p "$SCRIPT_DIR"/bin/* "$HOME/.local/bin/" 2>/dev/null || true
-chmod +x "$HOME/.local/bin"/ai-* 2>/dev/null || true
-chmod +x "$HOME/.local/bin"/book-to-skill 2>/dev/null || true
+cp -p "$SCRIPT_DIR"/bin/wz-ai* "$SCRIPT_DIR"/bin/ai-* "$SCRIPT_DIR"/bin/wizard-* "$SCRIPT_DIR"/bin/book-to-skill "$HOME/.local/bin/" 2>/dev/null || true
+chmod +x "$HOME/.local/bin"/wz-ai* "$HOME/.local/bin"/ai-* "$HOME/.local/bin"/wizard-* "$HOME/.local/bin"/book-to-skill 2>/dev/null || true
 # Fix CRLF line endings for WSL users cloning from Windows
 # IMPORTANT: only touch files WE just deployed (by basename from $SCRIPT_DIR/bin/),
 # never blanket-iterate $HOME/.local/bin/* — that dir also holds third-party

@@ -83,3 +83,7 @@ Sviluppato CLI wrapper interattivo wz-ai-cockpit (scripts/wz-ai-cockpit.js, bin/
 ## [Session State Snapshot] - 2026-07-26 16:11:06
 Aggiunto menu interattivo a 2 step (Account + Selezione Modello) in wz-ai-cockpit e slash command /cockpit-model per Pi CLI. Push su GitHub.
 
+
+## [Session State Snapshot] - 2026-07-26 16:13:18
+Creata documentazione modulare e iper-linkata (docs/COCKPIT_PROXY_GUIDE.md, docs/PI_AGENT_WORKFLOWS.md, docs/TOKEN_EFFICIENCY_STACK.md, docs/SKILLS_TAXONOMY.md). Aggiornati README di Wizard-AI, pi-cockpit-proxy-setup e pi-cockpit-tools.
+

@@ -2,7 +2,7 @@
 # wz-ai-help — Central hub for all AI tools and skills
 # Shows all available AI CLI tools with descriptions and usage hints
 
-set -euo pipefail
+# set -e disabled for display script
 
 BOLD='\033[1m'
 CYAN='\033[0;36m'
@@ -15,7 +15,11 @@ DIM='\033[2m'
 RESET='\033[0m'
 
 check_cmd() {
-  command -v "$1" &>/dev/null && echo "✅" || echo "❌"
+  if command -v "$1" &>/dev/null; then
+    echo "✅"
+  else
+    echo "❌"
+  fi
 }
 
 echo ""
@@ -113,6 +117,12 @@ echo -e "  ${BOLD}${CYAN}CLI cascade:${RESET}      ${BLUE}wizard-ai rtk wrap npm
 echo ""
 
 echo -e "${BOLD}${YELLOW}🌐 PROXY & PI INTEGRATION${RESET}"
+echo -e "  $(check_cmd wz-ai-cockpit) ${BOLD}wizard-ai cockpit${RESET}        Interactive Account & Model Switcher Wizard"
+echo -e "     ${BLUE}wizard-ai cockpit                             ${RESET}→ 2-step interactive wizard (Account ➔ Model)"
+echo -e "     ${BLUE}wizard-ai cockpit switch <email|index>        ${RESET}→ switch active account programmatically"
+echo -e "     ${BLUE}wizard-ai cockpit model [modelName]           ${RESET}→ switch default model for Pi CLI"
+echo -e "     ${BLUE}wizard-ai cockpit auto-rotate                 ${RESET}→ auto-switch to highest available quota"
+echo -e "     ${BLUE}wizard-ai cockpit status                      ${RESET}→ show account status & model quota table"
 echo -e "  $(check_cmd wz-ai-proxy) ${BOLD}wizard-ai proxy${RESET}          Manage the Cockpit/Antigravity Proxy for pi.dev"
 echo -e "     ${BLUE}wizard-ai proxy install                       ${RESET}→ install pi-antigravity-rotator"
 echo -e "     ${BLUE}wizard-ai proxy login                         ${RESET}→ add a Google account via OAuth"
