@@ -87,3 +87,7 @@ Aggiunto menu interattivo a 2 step (Account + Selezione Modello) in wz-ai-cockpi
 ## [Session State Snapshot] - 2026-07-26 16:13:18
 Creata documentazione modulare e iper-linkata (docs/COCKPIT_PROXY_GUIDE.md, docs/PI_AGENT_WORKFLOWS.md, docs/TOKEN_EFFICIENCY_STACK.md, docs/SKILLS_TAXONOMY.md). Aggiornati README di Wizard-AI, pi-cockpit-proxy-setup e pi-cockpit-tools.
 
+
+## [Session State Snapshot] - 2026-07-26 16:14:19
+Risolto deploy dei wrapper wz-ai-cockpit e wz-ai-account in ~/.local/bin/. Ora 'wz-ai cockpit' funziona nativamente da qualsiasi posizione del terminale.
+

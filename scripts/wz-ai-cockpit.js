@@ -266,12 +266,55 @@ async function runInteractiveMenu() {
     return;
   }
 
-  prompts.intro(pc.bold(pc.cyan('🛠️ Cockpit Tools — Account & Model Selector for Pi')));
+  prompts.intro(pc.bold(pc.cyan('🛠️ Cockpit Tools — CLI Agent Account & Model Switcher')));
 
   console.log(`  Active Account : ${pc.bold(status.currentAccount.email)} (${status.currentAccount.tier})`);
   console.log(`  Average Quota  : ${status.currentAccount.statusIcon} ${status.currentAccount.avgQuota}%\n`);
 
-  // STEP 1: Select Account
+  const action = await prompts.select({
+    message: 'What would you like to do?',
+    options: [
+      { value: 'wizard', label: '👤 Switch Account & Model (Full 2-Step Wizard)', hint: 'Select account ➔ Pick default model' },
+      { value: 'model', label: '🎯 Change Default Model Only', hint: 'Pick model for active account' },
+      { value: 'rotate', label: '⚡ Auto-Rotate to Highest Quota', hint: 'Auto-select 100% quota account' },
+      { value: 'status', label: '📊 View Live Quotas & Models', hint: 'Print quota table for all accounts' },
+      { value: 'proxy', label: '📡 Proxy Rotator Status & Logs', hint: 'Check background daemon on port 51200' },
+    ],
+  });
+
+  if (prompts.isCancel(action)) {
+    prompts.cancel('Menu closed.');
+    return;
+  }
+
+  if (action === 'model') {
+    return runInteractiveModelMenu();
+  }
+
+  if (action === 'rotate') {
+    const res = autoRotateAccount();
+    if (res.ok) {
+      prompts.outro(pc.green(`⚡ Auto-rotated to: ${res.switchedTo} (${res.tier}) [Quota: ${res.quota}%]`));
+    } else {
+      prompts.outro(pc.red(`❌ Auto-rotation failed: ${res.message}`));
+    }
+    return;
+  }
+
+  if (action === 'status') {
+    runFallbackMenu();
+    return;
+  }
+
+  if (action === 'proxy') {
+    try {
+      const proxyScript = path.join(__dirname, 'wz-ai-proxy.js');
+      execSync(`node "${proxyScript}" status`, { stdio: 'inherit' });
+    } catch (e) {}
+    return;
+  }
+
+  // STEP 1: Select Account (Wizard)
   const accountOptions = status.accounts.map(a => ({
     value: a.email,
     label: `${a.statusIcon} ${a.email} ${a.isCurrent ? pc.green('(Active ✅)') : ''}`,
@@ -279,7 +322,7 @@ async function runInteractiveMenu() {
   }));
 
   const selectedEmail = await prompts.select({
-    message: 'Step 1/2: Select Account to activate:',
+    message: 'Step 1/2: Select Account to activate across Pi & AI Agents:',
     options: accountOptions,
   });
 
@@ -294,7 +337,7 @@ async function runInteractiveMenu() {
     return;
   }
 
-  // STEP 2: Select Model for the chosen account
+  // STEP 2: Select Model
   const models = getAvailableModels(switchRes.targetId);
   if (models.length === 0) {
     prompts.outro(pc.green(`✨ Active account switched to: ${switchRes.switchedTo}`));

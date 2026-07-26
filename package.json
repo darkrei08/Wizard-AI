@@ -63,6 +63,7 @@
     "@clack/prompts": "^1.7.0",
     "@toon-format/toon": "^2.3.1",
     "@vercel/detect-agent": "^1.2.3",
+    "pi-cockpit-proxy-setup": "^1.0.0",
     "pi-extensible-workflows": "^1.0.1",
     "picocolors": "^1.1.1",
     "simple-git": "^3.36.0",
