@@ -12,9 +12,13 @@ const __dirname = path.dirname(__filename);
 const HOME = os.homedir();
 const isNonInteractive = process.argv.includes('--yes') || process.argv.includes('-y') || process.argv.includes('--all') || !process.stdin.isTTY;
 
-console.log("======================================================");
-console.log("🚀 Wizard-AI / Pi - Setup Proxy Cockpit e Selezione Modello");
-console.log("======================================================\n");
+const PURPLE = '\x1b[35m';
+const YELLOW = '\x1b[33m';
+const BOLD = '\x1b[1m';
+const NC = '\x1b[0m';
+
+console.log(`\n  ${PURPLE}┌  🚀  ${BOLD}Wizard-AI / Pi - Setup Proxy Cockpit e Selezione Modello${NC}`);
+console.log(`  ${PURPLE}└────────────────────────────────────────────────────────────────────────${NC}\n`);
 
 // 1. Resolve proxy script or command
 function runProxyCommand(cmd) {

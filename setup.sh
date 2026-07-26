@@ -766,14 +766,14 @@ for skill_dir in "$HOME/.gemini/config/skills"/*; do
     fi
     
     if [ $needs_setup -eq 1 ]; then
-      echo -e "\n${YELLOW}======================================================${NC}"
-      echo -e "${PURPLE}🛠  Configuration available for skill: ${BOLD}${skill_name}${NC}"
-      echo -e "${YELLOW}======================================================${NC}"
+      echo -e "\n  ${PURPLE}┌  🛠  Configuration available for skill: ${BOLD}${skill_name}${NC}"
       
       if [ -n "$setup_info" ]; then
-        echo -e "${CYAN}--- Instructions from SKILL.md ---${NC}"
-        echo -e "$setup_info"
-        echo -e "${CYAN}----------------------------------${NC}"
+        echo -e "  ${PURPLE}│${NC}  ${CYAN}Instructions from SKILL.md:${NC}"
+        echo -e "$setup_info" | while IFS= read -r line; do
+          echo -e "  ${PURPLE}│${NC}  $line"
+        done
+        echo -e "  ${PURPLE}│${NC}"
       fi
       
       script_to_run=""
@@ -781,26 +781,32 @@ for skill_dir in "$HOME/.gemini/config/skills"/*; do
       if [ -f "$install_script" ]; then script_to_run="$install_script"; fi
       
       if [ -n "$script_to_run" ]; then
-        echo -e "${CYAN}Found automated setup script: $(basename "$script_to_run")${NC}"
+        echo -e "  ${PURPLE}│${NC}  ${CYAN}Found automated setup script: $(basename "$script_to_run")${NC}"
         if [ "$YES_MODE" -eq 1 ]; then
           run_setup="y"
+          echo -e "  ${PURPLE}│${NC}  ${YELLOW}Auto-running setup script...${NC}"
         else
-          read -p "Do you want to run the automated setup for ${skill_name} now? [Y/n] " run_setup
+          echo -ne "  ${PURPLE}│${NC}  Do you want to run the automated setup for ${skill_name} now? [Y/n] "
+          read run_setup
         fi
         if [[ ! "$run_setup" =~ ^[Nn]$ ]]; then
-          echo -e "${BLUE}Running $script_to_run...${NC}"
-          bash "$script_to_run"
-          echo -e "${GREEN}✓ Setup completed for ${skill_name}.${NC}"
+          echo -e "  ${PURPLE}│${NC}  ${BLUE}Running $(basename "$script_to_run")...${NC}"
+          bash "$script_to_run" 2>&1 | while IFS= read -r line; do
+            echo -e "  ${PURPLE}│${NC}    $line"
+          done
+          echo -e "  ${PURPLE}│${NC}  ${GREEN}✓ Setup completed for ${skill_name}.${NC}"
         else
-          echo -e "${YELLOW}Skipped automated setup.${NC}"
+          echo -e "  ${PURPLE}│${NC}  ${YELLOW}Skipped automated setup.${NC}"
         fi
       else
         if [ "$YES_MODE" -eq 0 ]; then
-          read -p "Press Enter after you have completed any manual configuration above..." dummy
+          echo -ne "  ${PURPLE}│${NC}  Press Enter after you have completed any manual configuration above..."
+          read dummy
         else
-          echo -e "${YELLOW}  auto-skipped manual config in --yes mode${NC}"
+          echo -e "  ${PURPLE}│${NC}  ${YELLOW}Auto-skipped manual config in --yes mode${NC}"
         fi
       fi
+      echo -e "  ${PURPLE}└────────────────────────────────────────────────────────${NC}"
     fi
   fi
 done
