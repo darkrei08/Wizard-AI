@@ -238,10 +238,7 @@ function syncPiAuth() {
   const authFile = path.join(HOME, '.pi', 'agent', 'auth.json');
   const auth = readJson(authFile) || {};
 
-  auth.google = {
-    type: 'api_key',
-    key: 'cockpit-dummy-token',
-  };
+
   auth['google-antigravity'] = {
     type: 'oauth',
     refreshToken: detail.token.refresh_token,

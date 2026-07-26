@@ -955,46 +955,74 @@ echo -e "============================================================${NC}"
 # -------------------------------------------------------------
 echo -e "\n${BLUE}[11/11] Installing extra AI tools and MCP servers...${NC}"
 
-if command -v npm &>/dev/null; then
-  echo -e "${YELLOW}Installing ecc-universal...${NC}"
-  npm install -g ecc-universal 2>/dev/null || true
-fi
+if command -v node &>/dev/null; then
+  EXTRA_TOOLS_FILE=$(mktemp)
+  node "$SCRIPT_DIR/scripts/extra-tools-interactive.js" "$EXTRA_TOOLS_FILE"
+  if [ -s "$EXTRA_TOOLS_FILE" ]; then
+    EXTRA_TOOLS=$(cat "$EXTRA_TOOLS_FILE")
+    
+    if command -v npm &>/dev/null && echo "$EXTRA_TOOLS" | grep -q "ecc"; then
+      echo -e "${YELLOW}Installing ecc-universal...${NC}"
+      npm install -g ecc-universal 2>/dev/null || true
+    fi
 
-if command -v curl &>/dev/null; then
-  echo -e "${YELLOW}Installing codebase-memory-mcp...${NC}"
-  curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh | bash 2>/dev/null || true
+    if command -v curl &>/dev/null; then
+      if echo "$EXTRA_TOOLS" | grep -q "codebase-mcp"; then
+        echo -e "${YELLOW}Installing codebase-memory-mcp...${NC}"
+        curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh | bash 2>/dev/null || true
+      fi
 
-  echo -e "${YELLOW}Installing gentle-ai...${NC}"
-  curl -fsSL https://raw.githubusercontent.com/Gentleman-Programming/gentle-ai/main/scripts/install.sh | bash 2>/dev/null || true
+      if echo "$EXTRA_TOOLS" | grep -q "gentle-ai"; then
+        echo -e "${YELLOW}Installing gentle-ai...${NC}"
+        curl -fsSL https://raw.githubusercontent.com/Gentleman-Programming/gentle-ai/main/scripts/install.sh | bash -s -- --non-interactive 2>/dev/null || true
+      fi
 
-  echo -e "${YELLOW}Installing Understand-Anything...${NC}"
-  curl -fsSL https://raw.githubusercontent.com/Egonex-AI/Understand-Anything/main/install.sh | bash 2>/dev/null || true
-fi
+      if echo "$EXTRA_TOOLS" | grep -q "understand-anything"; then
+        echo -e "${YELLOW}Installing Understand-Anything...${NC}"
+        # using yes to skip prompts or run non-interactively
+        curl -fsSL https://raw.githubusercontent.com/Egonex-AI/Understand-Anything/main/install.sh | yes | bash 2>/dev/null || true
+      fi
+    fi
 
-if command -v cargo &>/dev/null; then
-  echo -e "${YELLOW}Installing rtk (Rust Token Killer)...${NC}"
-  cargo install rtk --quiet 2>/dev/null || true
-fi
+    if command -v cargo &>/dev/null && echo "$EXTRA_TOOLS" | grep -q "rtk"; then
+      echo -e "${YELLOW}Installing rtk (Rust Token Killer)...${NC}"
+      cargo install rtk --quiet 2>/dev/null || true
+    fi
 
-if command -v uv &>/dev/null; then
-  echo -e "${YELLOW}Installing headroom-ai...${NC}"
-  uv tool install --python 3.13 "headroom-ai[all]" 2>/dev/null || true
-  
-  echo -e "${YELLOW}Installing turbovec...${NC}"
-  uv tool install turbovec 2>/dev/null || true
-  
-  echo -e "${YELLOW}Installing raganything...${NC}"
-  uv tool install "raganything[all]" 2>/dev/null || true
-elif command -v pipx &>/dev/null; then
-  echo -e "${YELLOW}Installing headroom-ai, turbovec, raganything via pipx...${NC}"
-  pipx install "headroom-ai[all]" 2>/dev/null || true
-  pipx install turbovec 2>/dev/null || true
-  pipx install "raganything[all]" 2>/dev/null || true
-fi
+    if command -v uv &>/dev/null; then
+      if echo "$EXTRA_TOOLS" | grep -q "headroom"; then
+        echo -e "${YELLOW}Installing headroom-ai...${NC}"
+        uv tool install --python 3.13 "headroom-ai[all]" 2>/dev/null || true
+      fi
+      if echo "$EXTRA_TOOLS" | grep -q "turbovec"; then
+        echo -e "${YELLOW}Installing turbovec...${NC}"
+        uv tool install turbovec 2>/dev/null || true
+      fi
+      if echo "$EXTRA_TOOLS" | grep -q "raganything"; then
+        echo -e "${YELLOW}Installing raganything...${NC}"
+        uv tool install "raganything[all]" 2>/dev/null || true
+      fi
+    elif command -v pipx &>/dev/null; then
+      if echo "$EXTRA_TOOLS" | grep -q "headroom"; then
+        echo -e "${YELLOW}Installing headroom-ai via pipx...${NC}"
+        pipx install "headroom-ai[all]" 2>/dev/null || true
+      fi
+      if echo "$EXTRA_TOOLS" | grep -q "turbovec"; then
+        echo -e "${YELLOW}Installing turbovec via pipx...${NC}"
+        pipx install turbovec 2>/dev/null || true
+      fi
+      if echo "$EXTRA_TOOLS" | grep -q "raganything"; then
+        echo -e "${YELLOW}Installing raganything via pipx...${NC}"
+        pipx install "raganything[all]" 2>/dev/null || true
+      fi
+    fi
 
-if command -v brew &>/dev/null; then
-  echo -e "${YELLOW}Installing engram...${NC}"
-  brew install gentleman-programming/tap/engram 2>/dev/null || true
+    if command -v brew &>/dev/null && echo "$EXTRA_TOOLS" | grep -q "engram"; then
+      echo -e "${YELLOW}Installing engram...${NC}"
+      brew install gentleman-programming/tap/engram 2>/dev/null || true
+    fi
+  fi
+  rm -f "$EXTRA_TOOLS_FILE"
 fi
 echo -e "\n${GREEN}╭────────────────────────────────────────────────────────────╮${NC}"
 echo -e "${GREEN}│                  🚀 QUICK START GUIDE                      │${NC}"

@@ -11,11 +11,6 @@
           "desc": "Pi Agent Framework"
         },
         {
-          "name": "ecc",
-          "url": "https://github.com/affaan-m/ECC.git",
-          "desc": "Enhanced Claude Code"
-        },
-        {
           "name": "caveman",
           "url": "https://github.com/JuliusBrussee/caveman.git",
           "desc": "Caveman behavioral compression"
@@ -46,11 +41,6 @@
           "desc": "Mem0 persistent memory"
         },
         {
-          "name": "personal-graph",
-          "url": "https://github.com/Technoculture/personal-graph.git",
-          "desc": "Personal knowledge graph"
-        },
-        {
           "name": "pi-config",
           "url": "https://github.com/vekexasia/pi-config.git",
           "desc": "Vekexasia pi agent configuration"
@@ -59,56 +49,6 @@
           "name": "pi-cockpit-tools",
           "url": "https://github.com/darkrei08/Wizard-AI.git",
           "desc": "Cockpit Tools multi-account & rotator extension for Pi"
-        },
-        {
-          "name": "rtk",
-          "url": "https://github.com/rtk-ai/rtk.git",
-          "desc": "Rust Token Killer"
-        },
-        {
-          "name": "codebase-memory-mcp",
-          "url": "https://github.com/DeusData/codebase-memory-mcp.git",
-          "desc": "Codebase Memory MCP"
-        },
-        {
-          "name": "llm_wiki",
-          "url": "https://github.com/nashsu/llm_wiki.git",
-          "desc": "LLM Wiki"
-        },
-        {
-          "name": "lean-ctx",
-          "url": "https://github.com/yvgude/lean-ctx.git",
-          "desc": "Lean Context Intelligence"
-        },
-        {
-          "name": "gentle-pi",
-          "url": "https://github.com/Gentleman-Programming/gentle-pi.git",
-          "desc": "Gentle Pi"
-        },
-        {
-          "name": "gentle-ai",
-          "url": "https://github.com/Gentleman-Programming/gentle-ai.git",
-          "desc": "Gentle AI"
-        },
-        {
-          "name": "RAG-Anything",
-          "url": "https://github.com/HKUDS/RAG-Anything.git",
-          "desc": "RAG Anything"
-        },
-        {
-          "name": "crowdsec-skill",
-          "url": "https://github.com/crowdsecurity/crowdsec-skill.git",
-          "desc": "Crowdsec Skill"
-        },
-        {
-          "name": "Understand-Anything",
-          "url": "https://github.com/Egonex-AI/Understand-Anything.git",
-          "desc": "Understand Anything"
-        },
-        {
-          "name": "camofox-browser",
-          "url": "https://github.com/jo-inc/camofox-browser.git",
-          "desc": "Camofox Browser"
         }
       ]
     },
@@ -118,11 +58,6 @@
       "description": "Binary command-line utilities, LSP servers, and token context squeezers",
       "repos": [
         {
-          "name": "sqz",
-          "url": "https://github.com/ojuschugh1/sqz.git",
-          "desc": "Token compression CLI"
-        },
-        {
           "name": "llmlingua",
           "url": "https://github.com/microsoft/LLMLingua.git",
           "desc": "Prompt compression (Microsoft)"
@@ -131,16 +66,6 @@
           "name": "flashrank",
           "url": "https://github.com/PrithivirajDamodaran/FlashRank.git",
           "desc": "Document re-ranking"
-        },
-        {
-          "name": "serena",
-          "url": "https://github.com/oraios/serena.git",
-          "desc": "Semantic code intelligence"
-        },
-        {
-          "name": "lightpanda",
-          "url": "https://github.com/lightpanda-io/browser.git",
-          "desc": "Ultra-light headless browser for AI agents (Zig, not Chromium)"
         },
         {
           "name": "graphify",
@@ -277,24 +202,9 @@
       "description": "Persistent memory engines, vector stores, context pruning, and knowledge graph tools",
       "repos": [
         {
-          "name": "engram",
-          "url": "https://github.com/Gentleman-Programming/engram.git",
-          "desc": "SQLite-backed agent memory"
-        },
-        {
-          "name": "turbovec",
-          "url": "https://github.com/RyanCodrai/turbovec.git",
-          "desc": "TurboVec vector DB"
-        },
-        {
           "name": "zvec",
           "url": "https://github.com/alibaba/zvec.git",
           "desc": "ZVec vector DB"
-        },
-        {
-          "name": "headroom",
-          "url": "https://github.com/chopratejas/headroom.git",
-          "desc": "Headroom context proxy"
         }
       ]
     },
