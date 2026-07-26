@@ -782,9 +782,22 @@ Write-Log '============================================================' -Foregr
 Write-Log '      Wizard-AI Environment Installed Successfully!' -ForegroundColor Green
 Write-Log '============================================================' -ForegroundColor Green
 Write-Log ' '
-Write-Log ' '
-Write-Log 'To see all available tools, wrappers, and their usage, simply run:'
-Write-Log '  wz-ai help' -ForegroundColor Cyan
+Write-Log '╭────────────────────────────────────────────────────────────╮' -ForegroundColor Green
+Write-Log '│                  🚀 QUICK START GUIDE                      │' -ForegroundColor Green
+Write-Log '├────────────────────────────────────────────────────────────┤' -ForegroundColor Green
+Write-Log '│ 1. AI Agents & Cockpit Tools                               │' -ForegroundColor Green
+Write-Log '│    wz-ai proxy login        (Add Google Account)         │' -ForegroundColor Green
+Write-Log '│    wz-ai proxy setup        (Sync models to Pi)          │' -ForegroundColor Green
+Write-Log '│    wizard-ai pi-configurator (Auto-select AI models)     │' -ForegroundColor Green
+Write-Log '│                                                            │' -ForegroundColor Green
+Write-Log '│ 2. Scaffolding & Frameworks                                │' -ForegroundColor Green
+Write-Log '│    pi ''scaffold a new Qwik app''                          │' -ForegroundColor Green
+Write-Log '│    pi ''setup a Nuxt 4 project in ./dashboard''            │' -ForegroundColor Green
+Write-Log '│    pi ''bootstrap an Astro 5 landing page''                │' -ForegroundColor Green
+Write-Log '│                                                            │' -ForegroundColor Green
+Write-Log '│ 3. Master Initialization                                   │' -ForegroundColor Green
+Write-Log '│    pi ''run master-project-bootstrap here''                │' -ForegroundColor Green
+Write-Log '╰────────────────────────────────────────────────────────────╯' -ForegroundColor Green
 Write-Log ' '
 Write-Log 'Important: open a NEW terminal to load the updated PATH.' -ForegroundColor Yellow
 Write-Log ' '

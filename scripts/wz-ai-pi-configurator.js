@@ -150,7 +150,7 @@ ${pc.bold('Usage:')}
   wizard-ai pi-configurator --model <id> --effort <lvl>  ${pc.gray('# Manual override')}
 
 ${pc.bold('Options:')}
-  --model <id>       Override default model (e.g. gemini-3.6-flash-high, claude-opus-4-6-thinking)
+  --model <id>       Override default model (e.g. gemini-3.6-flash-high, claude-opus-4-6)
   --effort <level>   Override effort/thinking level (low, medium, high, max)
   --provider <name>  Override default provider (google, anthropic, openai-codex)
   --interactive, -i  Interactive model selection from available Cockpit models
