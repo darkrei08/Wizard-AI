@@ -662,6 +662,55 @@ if (Get-Command node -ErrorAction SilentlyContinue) {
     Write-Log "  [!] Node.js not found. Skipping Pi auto-configuration." -ForegroundColor Yellow
 }
 
+# 7.7. Pi Integration and Cockpit Proxy Setup (Antigravity Rotator)
+Write-Log ' '
+Write-Log '[7.7/8] Pi Integration and Cockpit Proxy Setup...' -ForegroundColor Blue
+if (Get-Command npm -ErrorAction SilentlyContinue) {
+    $RunCockpitProxy = 'Y'
+    if (-not $IsNonInteractive) {
+        Write-Log 'Do you want to install and enable the background Cockpit Proxy Rotator for Pi? [Y/n]' -ForegroundColor Yellow
+        $RunCockpitProxy = Read-Host '>'
+    } else {
+        Write-Log '  (auto-accepted in non-interactive mode)' -ForegroundColor Yellow
+    }
+
+    if ($RunCockpitProxy -notmatch '^[Nn]$') {
+        Write-Log '  Installing and enabling background Proxy Rotator...' -ForegroundColor Cyan
+        Write-Log '  The proxy will be installed and enabled as a background service to avoid quota (429) issues.' -ForegroundColor Yellow
+
+        npm install -g pi-antigravity-rotator 2>$null
+        if ($LASTEXITCODE -eq 0) {
+            Write-Log '  [ok] pi-antigravity-rotator installed.' -ForegroundColor Green
+        } else {
+            Write-Log "  [!] Failed to install pi-antigravity-rotator (exit code $LASTEXITCODE)." -ForegroundColor Red
+        }
+
+        $WzAiProxyPs1 = Join-Path $LocalBin 'wz-ai-proxy.ps1'
+        if (Test-Path $WzAiProxyPs1) {
+            try {
+                & $WzAiProxyPs1 pi-config
+            } catch {
+                Write-Log "  [!] wz-ai-proxy pi-config warning: $($_.Exception.Message)" -ForegroundColor Yellow
+            }
+            try {
+                & $WzAiProxyPs1 enable
+            } catch {
+                Write-Log "  [!] wz-ai-proxy enable warning: $($_.Exception.Message)" -ForegroundColor Yellow
+            }
+
+            Write-Log ' '
+            Write-Log '[ok] Proxy configured. Pi will route through the local rotator on port 51200.' -ForegroundColor Green
+            Write-Log '  To add Google accounts: wz-ai-proxy login' -ForegroundColor Cyan
+            Write-Log '  To see accounts:        wz-ai-proxy accounts' -ForegroundColor Cyan
+            Write-Log '  To check status:        wz-ai-proxy status' -ForegroundColor Cyan
+        } else {
+            Write-Log "  [!] $WzAiProxyPs1 not found (wrapper deploy step may have failed). Skipping proxy configuration." -ForegroundColor Yellow
+        }
+    }
+} else {
+    Write-Log '[!] npm not found. Cockpit Proxy setup skipped.' -ForegroundColor Yellow
+}
+
 Write-Log ' '
 Write-Log '[8/8] Auto-Update Configuration...' -ForegroundColor Blue
 Write-Log 'Do you want to enable automatic background updates at system logon? [Y/n] (Auto-yes in 10s) ' -ForegroundColor Yellow -NoNewline

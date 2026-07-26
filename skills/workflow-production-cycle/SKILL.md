@@ -71,7 +71,7 @@ Ogni task di sviluppo (feature, bugfix, refactoring, release) DEVE seguire quest
 ---
 
 ## ═══════════ FASE 3: ESECUZIONE & TDD ═══════════
-**Skills:** `subagent-driven-development`, `test-driven-development`, `cybersecurity`, `goodcode`, `spec-kit`
+**Skills:** `subagent-driven-development` (o `wizard-ai-orchestration` rigor: fresh-per-task), `test-driven-development`, `cybersecurity`, `goodcode`, `spec-kit`
 
 ### 3.1 Test-Driven Development (OBBLIGATORIO)
 Per ogni unità di lavoro, segui il ciclo:

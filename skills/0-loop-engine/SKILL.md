@@ -116,7 +116,7 @@ dove:
 
 - **Action 1: Query The Brain (`brain-tech-stack`)**: Before routing, semantically evaluate the benefits of the necessary frameworks for the user intent.
 - **Action 2: Dynamic Skill Injection**: Compose the Architectural Trinity (Basic Rules + Backend + Frontend) if the project is HEAVY.
-- **Action 3: Task Weight**: Calculate the`task_weight`(LIGHT, MEDIUM, HEAVY) e decidi se delegare a subagents (`4-swarm-manager`).
+- **Action 3: Task Weight**: Calculate the`task_weight`(LIGHT, MEDIUM, HEAVY) e decidi se delegare a subagents (`4-swarm-manager`, o `wizard-ai-orchestration` rigor: hierarchical).
 - Determine`task_weight`and apply the **Extended Routing Matrix (v2 — Loop-First):**
 
 #### Primary Routing: 5 Loop-Engineering Workflows
@@ -227,7 +227,7 @@ Each numbered loop has a deterministic JS counterpart in `workflows/` (`loop-1-p
    - `loop-3-debug` → `workflows/loop-3-debug.js`
    - `loop-4-refactor` → `workflows/loop-4-refactor.js`
    - `loop-5-release` → `workflows/loop-5-release.js`
-   - Fan-out / independent parallel tasks (`4-swarm-manager`, `3-shadow-clone-parallelism`) → `workflows/shadow-clone-jutsu.js`
+   - Fan-out / independent parallel tasks (`4-swarm-manager`, `3-shadow-clone-parallelism`, or `wizard-ai-orchestration`) → `workflows/shadow-clone-jutsu.js`
    - `workflow-frontend-design` → `workflows/workflow-frontend-design.js`
    Use `workflow_resume` if the run stops on a budget checkpoint, and `workflow_respond` to approve/reject the `checkpoint()` calls the script raises (e.g. `implementation-review`, `clone-integration`). Do not silently auto-approve checkpoints on HEAVY tasks — surface them to the user first.
 2. **If the `workflow` tool is NOT available** (Claude Code, other hosts without the extension): fall back to manually executing the loop's iterative cycle in-context, following the same phase order the script encodes:

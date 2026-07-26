@@ -4,6 +4,8 @@ description: "Host-agnostic exhaustive multi-agent orchestration for any coding 
 version: 0.1.0
 ---
 
+> **Superseded by** `wizard-ai-orchestration` (rigor: exhaustive). Kept for backward compatibility with existing references — see that skill for the current consolidated guidance.
+
 # /goodcode — Exhaustive Multi-Agent Orchestration (host-agnostic)
 
 ## Operating principle

@@ -3,6 +3,8 @@ name: 4-swarm-manager
 description: "Meta-skill defining the hierarchical management of subagents. Explains how a primary orchestrator agent should delegate tasks to specialized subagents using the Superpowers methodology."
 ---
 
+> **Superseded by** `wizard-ai-orchestration` (rigor: hierarchical). Kept for backward compatibility with existing references — see that skill for the current consolidated guidance.
+
 # 🤖 Workflow: Hierarchical Agent Management
 
 This meta-workflow outlines how the primary (orchestrator) AI agent should manage, delegate, and review work performed by parallel or sequential subagents. This applies to complex tasks that are broken down during the planning phase.

@@ -32,7 +32,7 @@ Before executing a task, DO NOT just match keywords. You must act as the **Seman
    - **HEAVY Weight (Score > 0.7)**: Route to loop-engineering workflow with Multi-Agent Handoff. Keywords: `architettura, refactoring, migrazione, progetto full-stack, release`.
 
 ## 1.b Multi-Agent Handoff (Swarm Strategy)
-If the task is HEAVY (e.g., "Build a full-stack web app"), do NOT execute everything in one context. Use `4-swarm-manager` and `dispatching-parallel-agents`:
+If the task is HEAVY (e.g., "Build a full-stack web app"), do NOT execute everything in one context. Use `4-swarm-manager` (or `wizard-ai-orchestration` rigor: hierarchical) and `dispatching-parallel-agents`:
 - **Sub-Agent 1 (Master API)**: Injected with backend rules + `engineering-excellence`. Builds the API.
 - **Sub-Agent 2 (Master UI)**: Injected with `stitch-taste-design`. Builds the frontend consuming the API.
 - **Sub-Agent 3 (Security Auditor)**: Injected with `cybersecurity`. Audits both.

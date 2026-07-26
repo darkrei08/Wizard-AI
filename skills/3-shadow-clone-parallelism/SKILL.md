@@ -3,6 +3,8 @@ name: 3-shadow-clone-parallelism
 description: Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies
 ---
 
+> **Superseded by** `wizard-ai-orchestration` (rigor: light). Kept for backward compatibility with existing references — see that skill for the current consolidated guidance.
+
 # Dispatching Parallel Agents
 
 ## Overview

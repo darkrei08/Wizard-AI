@@ -50,7 +50,7 @@ Queste skill trasformano le specifiche (`.spec.md`) e i task in codice funzionan
 
 ### 3. Categoria: Subagent Orchestration & Security Gate
 Queste skill gestiscono la scalabilità orizzontale e la sicurezza del codice scritto:
-- **`subagent-driven-development`**: *Quando usarla:* Per spezzettare task complessi (> 100 righe di codice o multi-modulo) in sub-agenti paralleli e indipendenti, assegnando a ciascuno un sottoinsieme di `task.md`.
+- **`subagent-driven-development`** (o `wizard-ai-orchestration` rigor: fresh-per-task): *Quando usarla:* Per spezzettare task complessi (> 100 righe di codice o multi-modulo) in sub-agenti paralleli e indipendenti, assegnando a ciascuno un sottoinsieme di `task.md`.
 - **`pi-extensible-workflows`**: *Quando usarla:* Come estensione deterministica per delegare, tramite job YAML/JSON, l'esecuzione parallela a sub-agent con un flow rigoroso e disaccoppiato da Pi.
 - **`dispatching-parallel-agents`**: *Quando usarla:* Per eseguire in parallelo task senza stato condiviso (es. scrivere test per 4 componenti separati contemporaneamente).
 - **`cybersecurity`**: *Quando usarla:* Durante la scrittura di qualsiasi endpoint API, query DB o form input. *Cosa fa:* Applica i 754 controlli OWASP/NIST per prevenire injection (SQLi, XSS, CSRF) e segreti hardcoded.
@@ -77,7 +77,7 @@ graph TD
     Guard --> ReadSpec[mp-implement / leggi .spec.md e task.md]
     
     ReadSpec --> SubCheck{Task > 100 righe o Multi-modulo?}
-    SubCheck -- Sì --> Subagents[subagent-driven-development / parallel fan-out]
+    SubCheck -- Sì --> Subagents[subagent-driven-development o wizard-ai-orchestration / parallel fan-out]
     SubCheck -- No --> TDD_Red[mp-tdd / Scrivi Test Rosso CHE FALLISCE]
     
     Subagents --> TDD_Red
@@ -117,11 +117,11 @@ Per ogni singolo task in `task.md` (`[/]`):
 4. **CHECKPOINT**: Aggiorna `task.md` segnando `[x]` solo dopo aver superato i Quality Gates.
    - **MANDATORY TDD OPTIMIZATION**: Se si supera il **50% della soglia massima di contesto**, innesca immediatamente `workflow-agentic-brain`. Usa **`sqz`** per comprimere l'output dei test, avvia il proxy **`headroom`** per scalare i limiti, attiva la potatura in background e prepara un **`mp-handoff`** se i token rischiano di degradare il ragionamento (allucinazioni). Usa **`caveman`** per limitare il verbosing.
 
-### Step 2.3: Department Head Orchestration & Tri-Skill Swarm (`subagent-driven-development`)
+### Step 2.3: Department Head Orchestration & Tri-Skill Swarm (`subagent-driven-development` / `wizard-ai-orchestration` rigor: fresh-per-task)
 Non delegare MAI task massivi o multi-dominio direttamente agli agenti operai (worker). Applica l'architettura a **3-Tier Swarm**:
 - **Crea i Master di Reparto (Tier 2):** Avvia agenti isolati con il ruolo di "Department Head" (es. Frontend Specialist, DB Architect). Ognuno riceve il suo budget token e le specifiche isolate.
 - **Esecuzione tramite Tri-Skill Combo:** I Department Head gestiranno autonomamente i propri worker (Tier 3) usando un mix dinamico:
-  1. Base: `subagent-driven-development` per isolare e spezzettare il dominio.
+  1. Base: `subagent-driven-development` (o `wizard-ai-orchestration` rigor: fresh-per-task) per isolare e spezzettare il dominio.
   2. Parallelo: `dispatching-parallel-agents` per eseguire task indipendenti simultaneamente (Fan-out).
   3. Esaustivo: `goodcode` per forzare una validazione avversaria e assoluta tra gli agenti prima del commit.
 - **Sincronizzazione Multi-Team:** Ispirati alle logiche di framework consolidati come **LangGraph** (per flussi stateful), **CrewAI** (per architetture a ruoli) o **Swarms/AutoGen** per garantire un handoff impeccabile tra i reparti.
