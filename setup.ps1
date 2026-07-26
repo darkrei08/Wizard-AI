@@ -291,102 +291,38 @@ if ($IsNonInteractive) {
     Write-Log "Installing all $TotalRepos repositories (non-interactive mode)..." -ForegroundColor Yellow
     $SelectedItems = $AllItems
 } else {
-    # -- Interactive menu --
-    Write-Host '|' -ForegroundColor Cyan
-    Write-Host '*  Skill & Framework Selection Mode:' -ForegroundColor Cyan
-    Write-Host '|    [1] [ALL] Install Everything (Recommended - all items)' -ForegroundColor White
-    Write-Host '|    [2] [CAT] Select by Category (Agent Frameworks, CLI Tools, Prompt Skills, etc.)' -ForegroundColor White
-    Write-Host '|    [3] [SEL] Cherry-Pick Individual Skills' -ForegroundColor White
-    Write-Host '|    [4] [SKIP] Skip (install only core tools)' -ForegroundColor White
-    Write-Host '|' -ForegroundColor Cyan
-    $mode = Read-Host '*  Selection > '
-    if (-not $mode) { $mode = '1' }
-
-
-    switch ($mode) {
-        '1' {
-            Write-Log "Installing all $TotalRepos repositories..." -ForegroundColor Green
-            $SelectedItems = $AllItems
+    # -- Interactive menu via Node.js (@clack/prompts) --
+    if (Get-Command npm -ErrorAction SilentlyContinue) {
+        if ($VerboseMode) {
+            npm install --prefix "$ScriptDir" --no-audit --no-fund
+        } else {
+            npm install --prefix "$ScriptDir" --no-audit --no-fund --quiet *>&1 | Out-Null
         }
-        '2' {
-            # -- Category Selection --
-            Write-Host ''
-            Write-Host '  Available Categories:' -ForegroundColor White
-            Write-Host ''
-            for ($i = 0; $i -lt $CategoryList.Count; $i++) {
-                $c = $CategoryList[$i]
-                $idx = $i + 1
-                Write-Host "    [$idx] $($c.Name)  ($($c.Count) repos)  $($c.Badge)" -ForegroundColor White
-                Write-Host "        $($c.Description)" -ForegroundColor DarkGray
-            }
-            Write-Host ''
-            Write-Host "  Enter numbers separated by commas (e.g. 1,3,5) or 'all':" -ForegroundColor White
-            $catSel = Read-Host '> '
-            if (-not $catSel) { $catSel = 'all' }
-
-            if ($catSel -eq 'all') {
-                $SelectedItems = $AllItems
-            } else {
-                $indices = $catSel -split ',' | ForEach-Object { [int]($_.Trim()) - 1 }
-                foreach ($ci in $indices) {
-                    if ($ci -ge 0 -and $ci -lt $CategoryList.Count) {
-                        $selKey = $CategoryList[$ci].Key
-                        $SelectedItems += $AllItems | Where-Object { $_.CatKey -eq $selKey }
-                    }
+    }
+    
+    $TmpSel = New-TemporaryFile
+    node "$ScriptDir\scripts\interactive-selector.js" $TmpSel.FullName
+    
+    $SelectedReposText = Get-Content $TmpSel.FullName -Raw -ErrorAction SilentlyContinue
+    Remove-Item $TmpSel.FullName -Force -ErrorAction SilentlyContinue
+    
+    $SelectedItems = @()
+    if ($SelectedReposText -and $SelectedReposText.Trim() -ne '') {
+        $lines = $SelectedReposText -split "`n"
+        foreach ($line in $lines) {
+            $line = $line.Trim()
+            if ($line -eq '') { continue }
+            $parts = $line -split '\|'
+            if ($parts.Count -ge 6) {
+                $SelectedItems += [PSCustomObject]@{
+                    CatKey  = $parts[0]
+                    CatName = $parts[1]
+                    Badge   = $parts[2]
+                    Name    = $parts[3]
+                    Url     = $parts[4]
+                    Desc    = $parts[5]
                 }
             }
-        }
-        '3' {
-            # -- Individual Skill Selection --
-            Write-Host ''
-            Write-Host '  All Available Skills & Frameworks:' -ForegroundColor White
-            $currentCat = ''
-            for ($i = 0; $i -lt $AllItems.Count; $i++) {
-                $item = $AllItems[$i]
-                if ($item.CatKey -ne $currentCat) {
-                    $currentCat = $item.CatKey
-                    Write-Host ''
-                    Write-Host "    $($item.CatName)" -ForegroundColor Magenta
-                }
-                $idx = $i + 1
-                $padName = $item.Name.PadRight(28)
-                $padBadge = $item.Badge.PadRight(18)
-                Write-Host "      [$($idx.ToString().PadLeft(2))] $padName $padBadge $($item.Desc)" -ForegroundColor White
-            }
-            Write-Host ''
-            Write-Host "  Enter numbers/ranges (e.g. 1,5,10-15) or 'all':" -ForegroundColor White
-            $skillSel = Read-Host '> '
-            if (-not $skillSel) { $skillSel = 'all' }
-
-            if ($skillSel -eq 'all') {
-                $SelectedItems = $AllItems
-            } else {
-                $tokens = $skillSel -split ','
-                $selIndices = @()
-                foreach ($tok in $tokens) {
-                    $tok = $tok.Trim()
-                    if ($tok -match '^(\d+)-(\d+)$') {
-                        $rs = [int]$Matches[1]; $re = [int]$Matches[2]
-                        for ($r = $rs; $r -le $re; $r++) { $selIndices += $r }
-                    } else {
-                        $selIndices += [int]$tok
-                    }
-                }
-                foreach ($si in $selIndices) {
-                    $siIdx = $si - 1
-                    if ($siIdx -ge 0 -and $siIdx -lt $AllItems.Count) {
-                        $SelectedItems += $AllItems[$siIdx]
-                    }
-                }
-            }
-        }
-        '4' {
-            Write-Log 'Skipping skill & framework installation. Only core tools will be installed.' -ForegroundColor Yellow
-            $SelectedItems = @()
-        }
-        default {
-            Write-Log 'Invalid selection. Installing everything...' -ForegroundColor Yellow
-            $SelectedItems = $AllItems
         }
     }
 }
