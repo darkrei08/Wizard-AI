@@ -1,6 +1,6 @@
 ---
 model: fast
-thinking: none
+thinking: off
 tools: [read_file, list_dir, grep_search, write_file]
 description: Generic Tier-3 worker agent for scoped, isolated tasks. Receives precise task scope from Department Heads.
 ---

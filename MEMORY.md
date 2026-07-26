@@ -91,3 +91,7 @@ Creata documentazione modulare e iper-linkata (docs/COCKPIT_PROXY_GUIDE.md, docs
 ## [Session State Snapshot] - 2026-07-26 16:14:19
 Risolto deploy dei wrapper wz-ai-cockpit e wz-ai-account in ~/.local/bin/. Ora 'wz-ai cockpit' funziona nativamente da qualsiasi posizione del terminale.
 
+
+## [Session State Snapshot] - 2026-07-26 16:16:37
+Potenziata dashboard interattiva wz-ai cockpit con menu Clack UI per cambio account, selezione modello predefinito, auto-rotate e verifica quote live.
+
