@@ -1,5 +1,6 @@
 const fs = require('fs');
-const { runSelect } = require('./tui.js');
+const { intro, select, multiselect, outro, isCancel, note } = require('@clack/prompts');
+const pc = require('picocolors');
 
 const outFile = process.argv[2];
 
@@ -15,58 +16,52 @@ const EXTRA_TOOLS = [
   { value: 'engram', label: 'Engram' }
 ];
 
-const WIZARD_ASCII = `\x1b[35m
-        ____ 
-      .'* *.'
-   __/_*_*(_
-  / _______ \\
- _\\_)/___\\(_/_ 
-/ _((\\- -/))_ \\
-\\ \\())(-)(()/ /
- ' \\(((()))/ '
-/ ' \\)).))/ ' \\
-\\__\\_\\.../_/__/
-\x1b[0m`;
+const GENTLE_ROSE_ASCII = `\x1b[38;5;189m               ⢀⡴⢪⠔⣉⠔⠋               \x1b[0m
+\x1b[38;5;189m                 ⠐⠈                        \x1b[0m
+\x1b[35m Wizard-AI: Ecosystem, Frameworks, Workflows \x1b[0m`;
 
 async function main() {
-  const mode = await runSelect(
-    'Wizard-AI Extra Tools Installer\n\nMenu',
-    [
-      { value: 'select', label: 'Select tools to install (Multi-select)' },
-      { value: 'all', label: 'Install All' },
-      { value: 'skip', label: 'Skip (do not install extra tools)' }
-    ],
-    false,
-    WIZARD_ASCII
-  );
+  console.clear();
+  console.log(GENTLE_ROSE_ASCII + '\n');
+  
+  intro(pc.inverse(' 🛠️  Wizard-AI Extra Tools Installer '));
 
-  if (!mode) process.exit(1);
+  const mode = await select({
+    message: 'Menu',
+    options: [
+      { value: 'select', label: '▸ Select tools to install (Multi-select)' },
+      { value: 'all', label: '▸ Install All' },
+      { value: 'skip', label: '▸ Skip (do not install extra tools)' }
+    ]
+  });
+
+  if (isCancel(mode)) process.exit(1);
 
   let selected = [];
   if (mode === 'all') {
     selected = EXTRA_TOOLS.map(t => t.value);
   } else if (mode === 'select') {
-    const res = await runSelect(
-      'Select tools to install:',
-      EXTRA_TOOLS,
-      true,
-      WIZARD_ASCII
-    );
-    if (!res) process.exit(1);
+    const res = await multiselect({
+      message: 'Select tools to install:',
+      options: EXTRA_TOOLS.map(t => ({ value: t.value, label: '▸ ' + t.label })),
+      required: false
+    });
+    if (isCancel(res)) process.exit(1);
     selected = res;
   } else {
-    console.log('\n\x1b[33m⏭️  Skipping extra tools.\x1b[0m');
+    outro(pc.yellow('⏭️  Skipping extra tools.'));
     if (outFile) fs.writeFileSync(outFile, '');
     process.exit(0);
   }
 
   if (selected.length > 0) {
-    console.log(`\n\x1b[32mProceeding with installation of ${selected.length} tools...\x1b[0m`);
+    note(`Selected ${selected.length} tools for installation.`, 'Selection Complete');
+    outro(pc.green('Proceeding with installation...'));
     if (outFile) {
       fs.writeFileSync(outFile, selected.join('\n') + '\n');
     }
   } else {
-    console.log('\n\x1b[33mNo tools selected.\x1b[0m');
+    outro(pc.yellow('No tools selected.'));
     if (outFile) fs.writeFileSync(outFile, '');
   }
 }

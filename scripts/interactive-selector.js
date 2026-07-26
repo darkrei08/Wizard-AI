@@ -1,38 +1,33 @@
 const fs = require('fs');
 const path = require('path');
-const { runSelect } = require('./tui.js');
+const { intro, select, multiselect, outro, isCancel, note } = require('@clack/prompts');
+const pc = require('picocolors');
 
 const outFile = process.argv[2];
 const registryPath = path.join(__dirname, 'repo-registry.json');
 const registry = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
 
-const WIZARD_ASCII = `\x1b[35m
-        ____ 
-      .'* *.'
-   __/_*_*(_
-  / _______ \\
- _\\_)/___\\(_/_ 
-/ _((\\- -/))_ \\
-\\ \\())(-)(()/ /
- ' \\(((()))/ '
-/ ' \\)).))/ ' \\
-\\__\\_\\.../_/__/
-\x1b[0m`;
+const GENTLE_ROSE_ASCII = `\x1b[38;5;189m               ⢀⡴⢪⠔⣉⠔⠋               \x1b[0m
+\x1b[38;5;189m                 ⠐⠈                        \x1b[0m
+\x1b[35m Wizard-AI: Ecosystem, Frameworks, Workflows \x1b[0m`;
 
 async function main() {
-  const mode = await runSelect(
-    'Wizard-AI Core Installer\n\nMenu',
-    [
-      { value: 'all', label: 'Install Everything (Recommended)' },
-      { value: 'category', label: 'Select by Category' },
-      { value: 'individual', label: 'Cherry-Pick Individual Skills' },
-      { value: 'skip', label: 'Skip (install only core tools)' }
-    ],
-    false,
-    WIZARD_ASCII
-  );
+  console.clear();
+  console.log(GENTLE_ROSE_ASCII + '\n');
 
-  if (!mode) process.exit(1);
+  intro(pc.inverse(' 🪄  Wizard-AI Core Installer '));
+
+  const mode = await select({
+    message: 'Menu',
+    options: [
+      { value: 'all', label: '▸ Install Everything (Recommended)' },
+      { value: 'category', label: '▸ Select by Category' },
+      { value: 'individual', label: '▸ Cherry-Pick Individual Skills' },
+      { value: 'skip', label: '▸ Skip (install only core tools)' }
+    ]
+  });
+
+  if (isCancel(mode)) process.exit(1);
 
   let selectedLines = [];
 
@@ -49,17 +44,16 @@ async function main() {
   } else if (mode === 'category') {
     const catOptions = Object.entries(registry.categories).map(([ck, cv]) => ({
       value: ck,
-      label: `${cv.name} (${cv.repos.length} repos)`
+      label: '▸ ' + \`\${cv.name} (\${cv.repos.length} repos)\`
     }));
 
-    const selectedCats = await runSelect(
-      'Select categories to install:',
-      catOptions,
-      true,
-      WIZARD_ASCII
-    );
+    const selectedCats = await multiselect({
+      message: 'Select categories to install:',
+      options: catOptions,
+      required: false
+    });
 
-    if (!selectedCats) process.exit(1);
+    if (isCancel(selectedCats)) process.exit(1);
 
     for (const ck of selectedCats) {
       const cv = registry.categories[ck];
@@ -70,20 +64,19 @@ async function main() {
     for (const [ck, cv] of Object.entries(registry.categories)) {
       cv.repos.forEach(rp => {
         skillOptions.push({
-          value: `${ck}|${rp.name}`,
-          label: rp.name
+          value: \`\${ck}|\${rp.name}\`,
+          label: '▸ ' + rp.name
         });
       });
     }
 
-    const selectedSkills = await runSelect(
-      'Select individual skills to install:',
-      skillOptions,
-      true,
-      WIZARD_ASCII
-    );
+    const selectedSkills = await multiselect({
+      message: 'Select individual skills to install:',
+      options: skillOptions,
+      required: false
+    });
 
-    if (!selectedSkills) process.exit(1);
+    if (isCancel(selectedSkills)) process.exit(1);
 
     for (const val of selectedSkills) {
       const [ck, repoName] = val.split('|');
@@ -94,18 +87,19 @@ async function main() {
       }
     }
   } else if (mode === 'skip') {
-    console.log('\n\x1b[33m⏭️  Skipping skill installation.\x1b[0m');
+    outro(pc.yellow('⏭️  Skipping skill installation. Only core tools will be installed.'));
     if (outFile) fs.writeFileSync(outFile, '');
     process.exit(0);
   }
 
   if (selectedLines.length > 0) {
-    console.log(`\n\x1b[32mProceeding with installation of ${selectedLines.length} repositories...\x1b[0m`);
+    note(\`Selected \${selectedLines.length} repositories for installation.\`, 'Selection Complete');
+    outro(pc.green('Proceeding with installation...'));
     if (outFile) {
       fs.writeFileSync(outFile, selectedLines.join('\n') + '\n');
     }
   } else {
-    console.log('\n\x1b[33mNo repositories selected.\x1b[0m');
+    outro(pc.yellow('No repositories selected.'));
     if (outFile) fs.writeFileSync(outFile, '');
   }
 }

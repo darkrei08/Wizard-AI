@@ -73,7 +73,7 @@ done
 # Export for the current session
 export WIZARD_AI_DIR="$SCRIPT_DIR"
 export PATH="$HOME/.local/bin:$PATH"
-echo -e "${GREEN}✓ WIZARD_AI_DIR=\"$WIZARD_AI_DIR\"${NC}"
+echo -e "│  ${GREEN}✓ WIZARD_AI_DIR=\"$WIZARD_AI_DIR\"${NC}"
 
 # 0.5 Install System Dependencies
 echo -e "\n${BLUE}[0.5/10] Checking and installing system dependencies...${NC}"
@@ -124,9 +124,9 @@ if [ -n "$MISSING_PKGS" ]; then
   else
     echo -e "${RED}Unsupported OS for automatic dependency installation. Please install Node.js, npm, git, curl, and build tools manually.${NC}"
   fi
-  echo -e "${GREEN}✓ System dependencies installed.${NC}"
+  echo -e "│  ${GREEN}✓ System dependencies installed.${NC}"
 else
-  echo -e "${GREEN}✓ All system dependencies are already installed.${NC}"
+  echo -e "│  ${GREEN}✓ All system dependencies are already installed.${NC}"
 fi
 
 # Ensure local user bin paths are exported in PATH before checking tools
@@ -143,7 +143,7 @@ if command -v uv &>/dev/null; then
   UV_VER=$(uv --version 2>/dev/null || echo "")
   if [ -n "$UV_VER" ]; then
     UV_OK=1
-    echo -e "${GREEN}✓ uv is already installed: ${UV_VER}${NC}"
+    echo -e "│  ${GREEN}✓ uv is already installed: ${UV_VER}${NC}"
   else
     echo -e "${YELLOW}Detected corrupted or segfaulting prebuilt uv binary. Cleaning up...${NC}"
     rm -f "$HOME/.local/bin/uv" "$HOME/.cargo/bin/uv" 2>/dev/null || true
@@ -151,7 +151,7 @@ if command -v uv &>/dev/null; then
 fi
 
 if [ "$UV_OK" -eq 0 ]; then
-  echo -e "${YELLOW}Installing native uv package manager...${NC}"
+  echo -e "│  ${YELLOW}Installing native uv package manager...${NC}"
   if command -v pacman &>/dev/null; then
     pacman -S --noconfirm uv 2>/dev/null || true
   elif command -v apt-get &>/dev/null; then
@@ -164,7 +164,7 @@ if [ "$UV_OK" -eq 0 ]; then
   fi
 
   if command -v uv &>/dev/null && [ -n "$(uv --version 2>/dev/null)" ]; then
-    echo -e "${GREEN}✓ uv installed successfully: $(uv --version 2>/dev/null)${NC}"
+    echo -e "│  ${GREEN}✓ uv installed successfully: $(uv --version 2>/dev/null)${NC}"
   else
     echo -e "${YELLOW}⚠ Prebuilt uv binary not compatible with system glibc/CPU. Falling back to python3 -m venv...${NC}"
   fi
@@ -189,7 +189,7 @@ if ! uv venv "$HOME/.wizard-ai/venv" --python 3.12 --seed $QUIET_OPT 2>/dev/null
 fi
 VENV_PYTHON="$HOME/.wizard-ai/venv/bin/python"
 
-echo -e "${YELLOW}Installing llmlingua and flashrank inside the venv...${NC}"
+echo -e "│  ${YELLOW}Installing llmlingua and flashrank inside the venv...${NC}"
 if ! uv pip install $QUIET_OPT --python "$VENV_PYTHON" llmlingua flashrank aisuite; then
   echo -e "${YELLOW}uv pip install failed. Falling back to standard pip...${NC}"
   "$VENV_PYTHON" -m pip install llmlingua flashrank aisuite || {
@@ -197,7 +197,7 @@ if ! uv pip install $QUIET_OPT --python "$VENV_PYTHON" llmlingua flashrank aisui
     exit 1
   }
 fi
-echo -e "${GREEN}✓ Virtual environment ready at ~/.wizard-ai/venv/${NC}"
+echo -e "│  ${GREEN}✓ Virtual environment ready at ~/.wizard-ai/venv/${NC}"
 
 # 3. Setting up external git skill & framework repositories (Interactive Selector)
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -330,7 +330,7 @@ SELECTED_REPOS=""  # newline-separated "name|url|badge" of repos to install
 
 if [ "$YES_MODE" -eq 1 ] || [ ! -t 0 ]; then
   # Non-interactive: install everything
-  echo -e "${YELLOW}Installing all $TOTAL_REPOS repositories (--yes mode)...${NC}"
+  echo -e "│  ${YELLOW}Installing all $TOTAL_REPOS repositories (--yes mode)...${NC}"
   SELECTED_REPOS="$REGISTRY_LINES"
 else
   # ── Interactive menu via Node.js (@clack/prompts) ──
@@ -471,13 +471,13 @@ if ! command -v serena &>/dev/null; then
     echo -e "${RED}  ❌ failed to install serena.${NC}"
   fi
 else
-  echo -e "${GREEN}✓ serena already installed.${NC}"
+  echo -e "│  ${GREEN}✓ serena already installed.${NC}"
 fi
 
 # Install lean-ctx (context intelligence binary)
 echo -e "${YELLOW}Checking lean-ctx (context intelligence)...${NC}"
 if command -v lean-ctx &>/dev/null; then
-  echo -e "${GREEN}✓ lean-ctx already installed.${NC}"
+  echo -e "│  ${GREEN}✓ lean-ctx already installed.${NC}"
 else
   # Pre-flight check for node/npm
   if command -v npm &>/dev/null; then
@@ -536,7 +536,7 @@ fi
 # Install lightpanda (ultra-light headless browser for AI agents — CDP, fetch/dump, native agent mode + MCP)
 echo -e "${YELLOW}Checking lightpanda (headless browser for agents)...${NC}"
 if command -v lightpanda &>/dev/null; then
-  echo -e "${GREEN}✓ lightpanda already installed.${NC}"
+  echo -e "│  ${GREEN}✓ lightpanda already installed.${NC}"
 elif command -v brew &>/dev/null; then
   if brew install lightpanda-io/browser/lightpanda &>/dev/null; then
     echo -e "${GREEN}  ✓ lightpanda installed via Homebrew.${NC}"
@@ -611,12 +611,12 @@ if [ -n "$SQZ_URL" ]; then
       mkdir -p "$PYTHON_DIR/sqz/_bin"
       cp -f "$TMP_DIR/sqz" "$PYTHON_DIR/sqz/_bin/sqz"
       chmod +x "$PYTHON_DIR/sqz/_bin/sqz"
-      echo -e "${GREEN}✓ sqz ${SQZ_VER} binary placed in Python site-packages ($ARCH).${NC}"
+      echo -e "│  ${GREEN}✓ sqz ${SQZ_VER} binary placed in Python site-packages ($ARCH).${NC}"
     else
       mkdir -p "$HOME/.local/bin"
       cp -f "$TMP_DIR/sqz" "$HOME/.local/bin/sqz"
       chmod +x "$HOME/.local/bin/sqz"
-      echo -e "${GREEN}✓ sqz ${SQZ_VER} binary placed in ~/.local/bin/sqz ($ARCH).${NC}"
+      echo -e "│  ${GREEN}✓ sqz ${SQZ_VER} binary placed in ~/.local/bin/sqz ($ARCH).${NC}"
     fi
   else
     echo -e "${RED}⚠ Downloaded sqz ${SQZ_VER} binary failed verification on this system ($ARCH).${NC}"
@@ -624,7 +624,7 @@ if [ -n "$SQZ_URL" ]; then
       echo -e "${YELLOW}⚠ Rolling back sqz to previous working version...${NC}"
       cp -f "$TMP_BAK/sqz.bak" "$PREV_SQZ_PATH"
       chmod +x "$PREV_SQZ_PATH"
-      echo -e "${GREEN}✓ Restored previous working sqz binary successfully.${NC}"
+      echo -e "│  ${GREEN}✓ Restored previous working sqz binary successfully.${NC}"
     else
       echo -e "${YELLOW}⚠ Attempting fallback to known stable release v1.0.5...${NC}"
       # Fallback to v1.0.5 if no previous version existed
@@ -636,7 +636,7 @@ if [ -n "$SQZ_URL" ]; then
       if [ -x "$TMP_DIR/sqz" ]; then
         cp -f "$TMP_DIR/sqz" "$HOME/.local/bin/sqz"
         chmod +x "$HOME/.local/bin/sqz"
-        echo -e "${GREEN}✓ Fallback sqz v1.0.5 installed to ~/.local/bin/sqz.${NC}"
+        echo -e "│  ${GREEN}✓ Fallback sqz v1.0.5 installed to ~/.local/bin/sqz.${NC}"
       fi
     fi
   fi
@@ -662,7 +662,7 @@ for name in $(ls "$SCRIPT_DIR/bin/"); do
 done
 # Create symlink for gemini-usage pointing to wz-ai-usage to avoid duplicate script files
 ln -sf wz-ai-usage "$HOME/.local/bin/gemini-usage"
-echo -e "${GREEN}✓ $(ls "$SCRIPT_DIR/bin/" | wc -l) wrapper scripts installed to ~/.local/bin/ (with gemini-usage symlinked)${NC}"
+echo -e "│  ${GREEN}✓ $(ls "$SCRIPT_DIR/bin/" | wc -l) wrapper scripts installed to ~/.local/bin/ (with gemini-usage symlinked)${NC}"
 
 # 7. Install Skills for all agents (hierarchical → flat)
 echo -e "\n${BLUE}[7/10] Installing AI agent skills...${NC}"
@@ -680,7 +680,7 @@ while IFS= read -r -d '' skill_md; do
 done < <(find "$SCRIPT_DIR/skills" "$SCRIPT_DIR/.agents/skills" -name "SKILL.md" -type f -print0 2>/dev/null)
 # Also copy skills.json for reference
 cp -f "$SCRIPT_DIR/skills/skills.json" "$SKILLS_DEST/" 2>/dev/null || cp -f "$SCRIPT_DIR/.agents/skills.json" "$SKILLS_DEST/" 2>/dev/null || true
-echo -e "${GREEN}✓ $SKILL_COUNT skills installed to ~/.gemini/config/skills/${NC}"
+echo -e "│  ${GREEN}✓ $SKILL_COUNT skills installed to ~/.gemini/config/skills/${NC}"
 
 # Clean up duplicate skill folders inside project root to avoid Pi CLI collisions
 echo -e "${YELLOW}Cleaning up duplicate skills in project root...${NC}"
@@ -766,7 +766,7 @@ done
 echo -e "\n${BLUE}[7.6/10] Pi Integration and Cockpit Proxy Setup...${NC}"
 PI_SETTINGS="$HOME/.pi/agent/settings.json"
 if command -v pi &>/dev/null || [ -f "$PI_SETTINGS" ]; then
-  echo -e "${GREEN}✓ Pi environment detected. Injecting Wizard-AI as a native package...${NC}"
+  echo -e "│  ${GREEN}✓ Pi environment detected. Injecting Wizard-AI as a native package...${NC}"
   if [ -f "$PI_SETTINGS" ]; then
     if command -v jq &>/dev/null; then
       jq '.packages |= (if type=="array" then . else [] end | if index("file://'"$WIZARD_AI_DIR"'") then . else . + ["file://'"$WIZARD_AI_DIR"'"] end)' "$PI_SETTINGS" > "${PI_SETTINGS}.tmp" && mv "${PI_SETTINGS}.tmp" "$PI_SETTINGS"
@@ -790,7 +790,7 @@ if command -v npm &>/dev/null; then
   for dir in "$HOME/.antigravity_cockpit" "$HOME/.local/share/cockpit-tools" "$HOME/.config/cockpit-tools" "$HOME/.wizard-ai/cockpit-tools"; do
     if [ -d "$dir" ] && ([ -f "$dir/accounts.json" ] || [ -f "$dir/account-token.key" ]); then
       COCKPIT_DETECTED=1
-      echo -e "${GREEN}✓ Auto-detected Cockpit Tools installation at: $dir${NC}"
+      echo -e "│  ${GREEN}✓ Auto-detected Cockpit Tools installation at: $dir${NC}"
       break
     fi
   done
@@ -877,7 +877,7 @@ ENABLE_UPDATE="Y"
 echo -e "${GREEN}  (auto-accepted - forced configuration)${NC}"
 
 if [[ "$ENABLE_UPDATE" =~ ^[Yy]$ ]]; then
-  echo -e "${GREEN}✓ Enabling automatic background updates at boot...${NC}"
+  echo -e "│  ${GREEN}✓ Enabling automatic background updates at boot...${NC}"
   if command -v crontab &>/dev/null; then
     CRON_CMD="@reboot $HOME/.local/bin/wz-ai-update --quiet"
     (crontab -u "$USER" -l 2>/dev/null | grep -v "wz-ai-update" ; echo "$CRON_CMD") | crontab -u "$USER" -
@@ -928,7 +928,7 @@ if command -v docker &>/dev/null; then
     echo -e "${GREEN}Starting MinerU Gradio Web UI...${NC}"
     if [ -f "$WIZARD_AI_DIR/docker/mineru/compose.yaml" ]; then
       docker compose -f "$WIZARD_AI_DIR/docker/mineru/compose.yaml" --profile gradio up -d || true
-      echo -e "${GREEN}✓ MinerU Web UI is starting at http://localhost:7860${NC}"
+      echo -e "│  ${GREEN}✓ MinerU Web UI is starting at http://localhost:7860${NC}"
     else
       echo -e "${RED}⚠ compose.yaml not found in docker/mineru/${NC}"
     fi
@@ -946,14 +946,14 @@ if [ -n "${SUDO_USER:-}" ]; then
 fi
 
 # 9. Final summary
-echo -e "\n${GREEN}============================================================"
-echo -e "     🎉  Wizard-AI Environment Installed Successfully! 🎉"
-echo -e "============================================================${NC}"
+echo -e "\n${GREEN}┌────────────────────────────────────────────────────────────┐"
+echo -e "│  🎉  Wizard-AI Environment Installed Successfully! 🎉      │"
+echo -e "└────────────────────────────────────────────────────────────┘${NC}"
 
 # -------------------------------------------------------------
 # Install Extra AI Tools & Binaries (Codebase MCP, RTK, etc.)
 # -------------------------------------------------------------
-echo -e "\n${BLUE}[11/11] Installing extra AI tools and MCP servers...${NC}"
+echo -e "│\n◇  ${BLUE}[11/11] Installing extra AI tools and MCP servers...${NC}"
 
 if command -v node &>/dev/null; then
   EXTRA_TOOLS_FILE=$(mktemp)
@@ -962,63 +962,63 @@ if command -v node &>/dev/null; then
     EXTRA_TOOLS=$(cat "$EXTRA_TOOLS_FILE")
     
     if command -v npm &>/dev/null && echo "$EXTRA_TOOLS" | grep -q "ecc"; then
-      echo -e "${YELLOW}Installing ecc-universal...${NC}"
+      echo -e "│  ${YELLOW}Installing ecc-universal...${NC}"
       npm install -g ecc-universal 2>/dev/null || true
     fi
 
     if command -v curl &>/dev/null; then
       if echo "$EXTRA_TOOLS" | grep -q "codebase-mcp"; then
-        echo -e "${YELLOW}Installing codebase-memory-mcp...${NC}"
+        echo -e "│  ${YELLOW}Installing codebase-memory-mcp...${NC}"
         curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh | bash 2>/dev/null || true
       fi
 
       if echo "$EXTRA_TOOLS" | grep -q "gentle-ai"; then
-        echo -e "${YELLOW}Installing gentle-ai...${NC}"
+        echo -e "│  ${YELLOW}Installing gentle-ai...${NC}"
         curl -fsSL https://raw.githubusercontent.com/Gentleman-Programming/gentle-ai/main/scripts/install.sh | bash -s -- --non-interactive 2>/dev/null || true
       fi
 
       if echo "$EXTRA_TOOLS" | grep -q "understand-anything"; then
-        echo -e "${YELLOW}Installing Understand-Anything...${NC}"
+        echo -e "│  ${YELLOW}Installing Understand-Anything...${NC}"
         # using yes to skip prompts or run non-interactively
         curl -fsSL https://raw.githubusercontent.com/Egonex-AI/Understand-Anything/main/install.sh | yes | bash 2>/dev/null || true
       fi
     fi
 
     if command -v cargo &>/dev/null && echo "$EXTRA_TOOLS" | grep -q "rtk"; then
-      echo -e "${YELLOW}Installing rtk (Rust Token Killer)...${NC}"
+      echo -e "│  ${YELLOW}Installing rtk (Rust Token Killer)...${NC}"
       cargo install rtk --quiet 2>/dev/null || true
     fi
 
     if command -v uv &>/dev/null; then
       if echo "$EXTRA_TOOLS" | grep -q "headroom"; then
-        echo -e "${YELLOW}Installing headroom-ai...${NC}"
+        echo -e "│  ${YELLOW}Installing headroom-ai...${NC}"
         uv tool install --python 3.13 "headroom-ai[all]" 2>/dev/null || true
       fi
       if echo "$EXTRA_TOOLS" | grep -q "turbovec"; then
-        echo -e "${YELLOW}Installing turbovec...${NC}"
+        echo -e "│  ${YELLOW}Installing turbovec...${NC}"
         uv tool install turbovec 2>/dev/null || true
       fi
       if echo "$EXTRA_TOOLS" | grep -q "raganything"; then
-        echo -e "${YELLOW}Installing raganything...${NC}"
+        echo -e "│  ${YELLOW}Installing raganything...${NC}"
         uv tool install "raganything[all]" 2>/dev/null || true
       fi
     elif command -v pipx &>/dev/null; then
       if echo "$EXTRA_TOOLS" | grep -q "headroom"; then
-        echo -e "${YELLOW}Installing headroom-ai via pipx...${NC}"
+        echo -e "│  ${YELLOW}Installing headroom-ai via pipx...${NC}"
         pipx install "headroom-ai[all]" 2>/dev/null || true
       fi
       if echo "$EXTRA_TOOLS" | grep -q "turbovec"; then
-        echo -e "${YELLOW}Installing turbovec via pipx...${NC}"
+        echo -e "│  ${YELLOW}Installing turbovec via pipx...${NC}"
         pipx install turbovec 2>/dev/null || true
       fi
       if echo "$EXTRA_TOOLS" | grep -q "raganything"; then
-        echo -e "${YELLOW}Installing raganything via pipx...${NC}"
+        echo -e "│  ${YELLOW}Installing raganything via pipx...${NC}"
         pipx install "raganything[all]" 2>/dev/null || true
       fi
     fi
 
     if command -v brew &>/dev/null && echo "$EXTRA_TOOLS" | grep -q "engram"; then
-      echo -e "${YELLOW}Installing engram...${NC}"
+      echo -e "│  ${YELLOW}Installing engram...${NC}"
       brew install gentleman-programming/tap/engram 2>/dev/null || true
     fi
   fi
