@@ -84,7 +84,6 @@ function injectPiConfig() {
       type: "api_key",
       key: "cockpit-dummy-token"
     };
-    auth.google = dummyKey;
     auth['claude-bridge'] = dummyKey;
     auth['openai-codex'] = dummyKey;
     fs.mkdirSync(path.dirname(authFile), { recursive: true });
