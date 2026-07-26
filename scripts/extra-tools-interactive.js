@@ -1,60 +1,72 @@
-const { intro, select, multiselect, outro, isCancel, note } = require('@clack/prompts');
-const pc = require('picocolors');
 const fs = require('fs');
+const { runSelect } = require('./tui.js');
 
 const outFile = process.argv[2];
 
 const EXTRA_TOOLS = [
-  { value: 'ecc', label: 'ECC Universal (Agent Framework)', hint: 'npm install -g ecc-universal' },
-  { value: 'codebase-mcp', label: 'Codebase Memory MCP', hint: 'AST-based structural code intelligence' },
-  { value: 'gentle-ai', label: 'Gentle AI', hint: 'Ecosystem, Frameworks, Workflows' },
-  { value: 'understand-anything', label: 'Understand Anything', hint: 'Codebase understanding tool' },
-  { value: 'rtk', label: 'RTK (Rust Token Killer)', hint: 'Context squeezer' },
-  { value: 'headroom', label: 'Headroom AI', hint: 'Context proxy' },
-  { value: 'turbovec', label: 'TurboVec', hint: 'Vector DB' },
-  { value: 'raganything', label: 'RAG Anything', hint: 'RAG system' },
-  { value: 'engram', label: 'Engram', hint: 'Agent memory' }
+  { value: 'ecc', label: 'ECC Universal (Agent Framework)' },
+  { value: 'codebase-mcp', label: 'Codebase Memory MCP' },
+  { value: 'gentle-ai', label: 'Gentle AI (Ecosystem)' },
+  { value: 'understand-anything', label: 'Understand Anything' },
+  { value: 'rtk', label: 'RTK (Rust Token Killer)' },
+  { value: 'headroom', label: 'Headroom AI' },
+  { value: 'turbovec', label: 'TurboVec' },
+  { value: 'raganything', label: 'RAG Anything' },
+  { value: 'engram', label: 'Engram' }
 ];
 
+const WIZARD_ASCII = `\x1b[35m
+        ____ 
+      .'* *.'
+   __/_*_*(_
+  / _______ \\
+ _\\_)/___\\(_/_ 
+/ _((\\- -/))_ \\
+\\ \\())(-)(()/ /
+ ' \\(((()))/ '
+/ ' \\)).))/ ' \\
+\\__\\_\\.../_/__/
+\x1b[0m`;
+
 async function main() {
-  intro(pc.inverse(' 🛠️  Wizard-AI Extra Tools Installer '));
+  const mode = await runSelect(
+    'Wizard-AI Extra Tools Installer\n\nMenu',
+    [
+      { value: 'select', label: 'Select tools to install (Multi-select)' },
+      { value: 'all', label: 'Install All' },
+      { value: 'skip', label: 'Skip (do not install extra tools)' }
+    ],
+    false,
+    WIZARD_ASCII
+  );
 
-  const mode = await select({
-    message: 'Install additional AI tools & MCP servers?',
-    options: [
-      { value: 'select', label: '📦 Select tools to install' },
-      { value: 'all', label: '🚀 Install All' },
-      { value: 'skip', label: '⏭️  Skip', hint: 'do not install extra tools' }
-    ]
-  });
-
-  if (isCancel(mode)) process.exit(1);
+  if (!mode) process.exit(1);
 
   let selected = [];
   if (mode === 'all') {
     selected = EXTRA_TOOLS.map(t => t.value);
   } else if (mode === 'select') {
-    const res = await multiselect({
-      message: 'Select tools to install:',
-      options: EXTRA_TOOLS,
-      required: false
-    });
-    if (isCancel(res)) process.exit(1);
+    const res = await runSelect(
+      'Select tools to install:',
+      EXTRA_TOOLS,
+      true,
+      WIZARD_ASCII
+    );
+    if (!res) process.exit(1);
     selected = res;
   } else {
-    outro(pc.yellow('⏭️  Skipping extra tools.'));
+    console.log('\n\x1b[33m⏭️  Skipping extra tools.\x1b[0m');
     if (outFile) fs.writeFileSync(outFile, '');
     process.exit(0);
   }
 
   if (selected.length > 0) {
-    note(`Selected ${selected.length} tools for installation.`, 'Selection Complete');
-    outro(pc.green('Proceeding with installation...'));
+    console.log(`\n\x1b[32mProceeding with installation of ${selected.length} tools...\x1b[0m`);
     if (outFile) {
       fs.writeFileSync(outFile, selected.join('\n') + '\n');
     }
   } else {
-    outro(pc.yellow('No tools selected.'));
+    console.log('\n\x1b[33mNo tools selected.\x1b[0m');
     if (outFile) fs.writeFileSync(outFile, '');
   }
 }
