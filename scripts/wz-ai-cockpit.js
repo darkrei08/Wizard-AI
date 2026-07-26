@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * wz-ai-cockpit.js — CLI Wrapper & Account Switcher Engine for AI Agents & Users
+ * wz-ai-cockpit.js — CLI Wrapper & Account/Model Switcher Engine for AI Agents & Users
  * 
- * Interactively switches accounts from Cockpit Tools across Pi CLI, Claude Code,
+ * Interactively switches accounts & models from Cockpit Tools across Pi CLI, Claude Code,
  * Antigravity, Gemini CLI, Cursor, Windsurf, OpenCode, and Codex.
  */
 
@@ -85,7 +85,6 @@ function getAccountStatus() {
     const isCurrent = acc.id === currentId;
     const models = detail?.quota?.models || [];
     
-    // Average model quota percentage
     let avgQuota = 100;
     if (models.length > 0) {
       const validPcts = models.map(m => m.percentage).filter(p => typeof p === 'number');
@@ -106,6 +105,7 @@ function getAccountStatus() {
       isCurrent,
       avgQuota,
       statusIcon,
+      models,
       token: detail?.token || null,
     };
   });
@@ -114,7 +114,24 @@ function getAccountStatus() {
   return { ok: true, currentAccount, accounts: list };
 }
 
-// ── Switch Account across all CLI Agent Targets ─────────────────────────────
+function getAvailableModels(accountId) {
+  const detail = loadAccountDetail(accountId);
+  const rawModels = detail?.quota?.models || [];
+  return rawModels.map(m => {
+    const pct = m.percentage ?? 100;
+    let icon = '🟢';
+    if (pct < 10) icon = '🔴';
+    else if (pct < 50) icon = '🟡';
+    return {
+      name: m.name,
+      displayName: m.display_name || m.name,
+      percentage: pct,
+      icon,
+    };
+  });
+}
+
+// ── Switch Account ─────────────────────────────────────────────────────────
 
 function switchAccount(targetEmailOrIndex) {
   const status = getAccountStatus();
@@ -123,12 +140,10 @@ function switchAccount(targetEmailOrIndex) {
   let target = null;
   const input = String(targetEmailOrIndex).trim().toLowerCase();
 
-  // Match by index (1-based)
   const idx = parseInt(input, 10);
   if (!isNaN(idx) && idx >= 1 && idx <= status.accounts.length) {
     target = status.accounts[idx - 1];
   } else {
-    // Match by email
     target = status.accounts.find(a => a.email.toLowerCase().includes(input));
   }
 
@@ -158,31 +173,74 @@ function switchAccount(targetEmailOrIndex) {
   }
   writeJson(piAuthFile, piAuth);
 
-  // 3. Sync to pi-antigravity-rotator accounts.json
+  // 3. Provision rotator
   try {
     const readerScript = path.join(__dirname, '..', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs');
     if (fs.existsSync(readerScript)) {
       execSync(`node "${readerScript}" provision-rotator`, { stdio: 'ignore' });
     }
-  } catch (e) {
-    // non-fatal
-  }
+  } catch (e) {}
 
   return {
     ok: true,
     switchedTo: target.email,
+    targetId: target.id,
     tier: target.tier,
     quota: target.avgQuota,
   };
 }
 
-// ── Auto-Rotate to Highest Quota Account ────────────────────────────────────
+// ── Switch Model ───────────────────────────────────────────────────────────
+
+function switchModel(modelName) {
+  if (!modelName) return { ok: false, message: 'No model name specified.' };
+  const targetModel = modelName.trim();
+
+  let updatedSettings = false;
+  let updatedSwitcher = false;
+
+  // 1. Update ~/.pi/agent/settings.json
+  const settingsPath = path.join(HOME, '.pi', 'agent', 'settings.json');
+  if (fs.existsSync(settingsPath)) {
+    try {
+      const settings = readJson(settingsPath) || {};
+      settings.defaultModel = targetModel;
+      writeJson(settingsPath, settings);
+      updatedSettings = true;
+    } catch (e) {}
+  }
+
+  // 2. Update ~/.pi/account-switcher/accounts.json
+  const accountsPath = path.join(HOME, '.pi', 'account-switcher', 'accounts.json');
+  if (fs.existsSync(accountsPath)) {
+    try {
+      const accConfig = readJson(accountsPath) || {};
+      if (Array.isArray(accConfig.accounts)) {
+        accConfig.accounts.forEach(acc => {
+          if (acc.id && acc.id.startsWith('cockpit-')) {
+            acc.model = targetModel;
+          }
+        });
+        writeJson(accountsPath, accConfig);
+        updatedSwitcher = true;
+      }
+    } catch (e) {}
+  }
+
+  return {
+    ok: true,
+    selectedModel: targetModel,
+    updatedSettings,
+    updatedSwitcher,
+  };
+}
+
+// ── Auto-Rotate ────────────────────────────────────────────────────────────
 
 function autoRotateAccount() {
   const status = getAccountStatus();
   if (!status.ok) return status;
 
-  // Sort by average quota descending
   const sorted = [...status.accounts].sort((a, b) => b.avgQuota - a.avgQuota);
   const best = sorted[0];
 
@@ -190,7 +248,7 @@ function autoRotateAccount() {
   return switchAccount(best.email);
 }
 
-// ── Interactive Clack Menu ──────────────────────────────────────────────────
+// ── Interactive Clack Menu (Account & Model Wizard) ─────────────────────────
 
 async function runInteractiveMenu() {
   let prompts;
@@ -199,7 +257,6 @@ async function runInteractiveMenu() {
     prompts = require('@clack/prompts');
     pc = require('picocolors');
   } catch {
-    // Fallback if clack is missing
     return runFallbackMenu();
   }
 
@@ -209,33 +266,100 @@ async function runInteractiveMenu() {
     return;
   }
 
-  prompts.intro(pc.bold(pc.cyan('🛠️ Cockpit Tools — CLI Agent Account Switcher')));
+  prompts.intro(pc.bold(pc.cyan('🛠️ Cockpit Tools — Account & Model Selector for Pi')));
 
   console.log(`  Active Account : ${pc.bold(status.currentAccount.email)} (${status.currentAccount.tier})`);
   console.log(`  Average Quota  : ${status.currentAccount.statusIcon} ${status.currentAccount.avgQuota}%\n`);
 
-  const options = status.accounts.map(a => ({
+  // STEP 1: Select Account
+  const accountOptions = status.accounts.map(a => ({
     value: a.email,
     label: `${a.statusIcon} ${a.email} ${a.isCurrent ? pc.green('(Active ✅)') : ''}`,
     hint: `Tier: ${a.tier} | Quota: ${a.avgQuota}%`,
   }));
 
   const selectedEmail = await prompts.select({
-    message: 'Select account to activate across Pi & AI CLI agents:',
-    options,
+    message: 'Step 1/2: Select Account to activate:',
+    options: accountOptions,
   });
 
   if (prompts.isCancel(selectedEmail)) {
-    prompts.cancel('Account switch canceled.');
+    prompts.cancel('Selection canceled.');
     return;
   }
 
-  const res = switchAccount(selectedEmail);
-  if (res.ok) {
-    prompts.outro(pc.green(`✨ Successfully switched active account to: ${res.switchedTo} (${res.tier})`));
-  } else {
-    prompts.outro(pc.red(`❌ Failed to switch account: ${res.message}`));
+  const switchRes = switchAccount(selectedEmail);
+  if (!switchRes.ok) {
+    prompts.outro(pc.red(`❌ Failed to switch account: ${switchRes.message}`));
+    return;
   }
+
+  // STEP 2: Select Model for the chosen account
+  const models = getAvailableModels(switchRes.targetId);
+  if (models.length === 0) {
+    prompts.outro(pc.green(`✨ Active account switched to: ${switchRes.switchedTo}`));
+    return;
+  }
+
+  const modelOptions = models.map(m => ({
+    value: m.name,
+    label: `${m.icon} ${m.displayName} (${m.name})`,
+    hint: `Quota: ${m.percentage}%`,
+  }));
+
+  const selectedModel = await prompts.select({
+    message: 'Step 2/2: Select Default Model for Pi CLI & AI Agents:',
+    options: modelOptions,
+  });
+
+  if (prompts.isCancel(selectedModel)) {
+    prompts.outro(pc.green(`✨ Account switched to ${switchRes.switchedTo}. Model unchanged.`));
+    return;
+  }
+
+  const modelRes = switchModel(selectedModel);
+  prompts.outro(pc.green(`✨ Fully Configured! Active Account: ${switchRes.switchedTo} | Default Model: ${modelRes.selectedModel}`));
+}
+
+function runInteractiveModelMenu() {
+  let prompts;
+  let pc;
+  try {
+    prompts = require('@clack/prompts');
+    pc = require('picocolors');
+  } catch {
+    console.log('Use: wz-ai cockpit model <modelName>');
+    return;
+  }
+
+  const status = getAccountStatus();
+  if (!status.ok) {
+    console.log(`⚠️ ${status.message}`);
+    return;
+  }
+
+  const models = getAvailableModels(status.currentAccount.id);
+  if (models.length === 0) {
+    console.log('⚠️ No models found in active Cockpit account.');
+    return;
+  }
+
+  prompts.intro(pc.bold(pc.cyan('🤖 Select Default Model for Pi CLI & AI Agents')));
+
+  const options = models.map(m => ({
+    value: m.name,
+    label: `${m.icon} ${m.displayName} (${m.name})`,
+    hint: `Quota: ${m.percentage}%`,
+  }));
+
+  prompts.select({
+    message: `Active Account: ${status.currentAccount.email} — Pick model:`,
+    options,
+  }).then(selectedModel => {
+    if (prompts.isCancel(selectedModel)) return;
+    const res = switchModel(selectedModel);
+    prompts.outro(pc.green(`✅ Default Model updated to: ${res.selectedModel}`));
+  });
 }
 
 function runFallbackMenu() {
@@ -246,7 +370,7 @@ function runFallbackMenu() {
   }
 
   console.log('\n======================================================');
-  console.log('🛠️ Cockpit Tools — CLI Agent Account Switcher');
+  console.log('🛠️ Cockpit Tools — CLI Agent Account & Model Switcher');
   console.log('======================================================\n');
   console.log(`Active Account: ${status.currentAccount.email} (${status.currentAccount.tier})\n`);
   console.log('Available Accounts:');
@@ -255,8 +379,17 @@ function runFallbackMenu() {
     console.log(`  [${a.index}] ${a.statusIcon} ${a.email} — Tier: ${a.tier} | Quota: ${a.avgQuota}%${mark}`);
   });
 
+  const models = getAvailableModels(status.currentAccount.id);
+  if (models.length > 0) {
+    console.log('\nAvailable Models for Active Account:');
+    models.slice(0, 8).forEach((m, idx) => {
+      console.log(`  (${idx + 1}) ${m.icon} ${m.displayName} [${m.name}] — ${m.percentage}%`);
+    });
+  }
+
   console.log('\nCommands:');
   console.log('  wz-ai cockpit switch <email|number>');
+  console.log('  wz-ai cockpit model <modelName>');
   console.log('  wz-ai cockpit auto-rotate');
   console.log('  wz-ai cockpit status\n');
 }
@@ -276,6 +409,19 @@ async function main() {
     } else {
       console.log(`❌ Error: ${res.message}`);
       process.exit(1);
+    }
+  } else if (command === 'model') {
+    const targetModel = args[1];
+    if (targetModel) {
+      const res = switchModel(targetModel);
+      if (res.ok) {
+        console.log(`✅ Default Model updated to: ${res.selectedModel}`);
+      } else {
+        console.log(`❌ Error: ${res.message}`);
+        process.exit(1);
+      }
+    } else {
+      runInteractiveModelMenu();
     }
   } else if (command === 'status' || command === 'json') {
     const status = getAccountStatus();
@@ -304,7 +450,7 @@ async function main() {
       process.exit(1);
     }
   } else {
-    // Default: interactive menu
+    // Default: 2-step interactive wizard (Account ➔ Model)
     await runInteractiveMenu();
   }
 }

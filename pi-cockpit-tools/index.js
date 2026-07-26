@@ -232,23 +232,38 @@ module.exports = function cockpitToolsExtension(api) {
 
     const { accounts } = loadCockpitAccounts();
     const target = accounts.find(a => a.email && a.email.toLowerCase() === email.trim().toLowerCase());
-    if (!target) {
-      console.log(`❌ Account "${email}" not found in Cockpit Tools.`);
-      return;
-    }
-
-    const dataDir = getCockpitDataDir();
-    const accountsFile = path.join(dataDir, 'accounts.json');
-    const accountsData = readJson(accountsFile) || {};
-    accountsData.current_account_id = target.id;
-    writeJson(accountsFile, accountsData);
-
     const syncRes = syncPiAuth();
     if (syncRes.ok) {
       console.log(`✅ Switched active Cockpit account to: ${target.email}`);
       console.log('   Pi auth.json successfully synced.');
     } else {
       console.log(`⚠️ Switched account in Cockpit, but failed to sync Pi auth: ${syncRes.error}`);
+    }
+  });
+
+  // Slash command: /cockpit-model <modelName>
+  api.onCommand('cockpit-model', (modelName) => {
+    if (!modelName) {
+      const st = getCockpitStatus();
+      console.log('\n🤖 Available Models for Active Account:');
+      if (st.ok && st.models) {
+        st.models.slice(0, 10).forEach((m, idx) => {
+          console.log(`   [${idx + 1}] ${m.icon} ${m.displayName.padEnd(28)} (${m.name}) : ${m.percentage}%`);
+        });
+      }
+      console.log('\n   Usage: /cockpit-model <modelName> (e.g. /cockpit-model gemini-3.6-flash-high)\n');
+      return;
+    }
+
+    const targetModel = modelName.trim();
+    const settingsPath = path.join(HOME, '.pi', 'agent', 'settings.json');
+    try {
+      const settings = readJson(settingsPath) || {};
+      settings.defaultModel = targetModel;
+      writeJson(settingsPath, settings);
+      console.log(`✅ Default Model updated in settings.json to: ${targetModel}`);
+    } catch (e) {
+      console.log(`❌ Failed to update model: ${e.message}`);
     }
   });
 

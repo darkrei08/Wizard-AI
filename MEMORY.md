@@ -75,3 +75,7 @@ Sviluppata estensione nativa Pi pi-cockpit-tools (@darkrei08/pi-cockpit-tools) e
 ## [Session State Snapshot] - 2026-07-26 16:08:27
 Pacchetto pi-cockpit-proxy-setup aggiornato alla v1.1.0 (risoluzione dinamica dei percorsi multi-OS per cockpit-reader.mjs e supporto per wz-ai-proxy auto-setup), aggiunto al repo e pubblicato su GitHub.
 
+
+## [Session State Snapshot] - 2026-07-26 16:09:25
+Sviluppato CLI wrapper interattivo wz-ai-cockpit (scripts/wz-ai-cockpit.js, bin/wz-ai-cockpit, bin/windows/wz-ai-cockpit.ps1). Gestisce menu ANSI clack, cambio account per agenti LLM e auto-rotate in base alle quote.
+
