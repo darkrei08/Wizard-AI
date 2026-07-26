@@ -543,10 +543,16 @@ function cmdProvisionRotator() {
     else if (tier.includes('ultra')) tier = 'ultra';
     else tier = 'unknown';
 
+    // Each account gets a unique projectId so the rotator's
+    // maxConcurrentRequestsPerProjectModel limit is applied independently.
+    // With a shared projectId, only 1 concurrent request was allowed across
+    // ALL Cockpit accounts for the same model — blocking 9 of 10 accounts.
+    const uniqueProjectId = `cockpit-${account.id.slice(0, 8)}`;
+
     provisioned.push({
       email,
       tier,
-      projectId: 'cockpit-proxy',
+      projectId: uniqueProjectId,
       refreshToken: detail.token.refresh_token,
       label: `Cockpit: ${email}`,
       syncedFromCockpit: true
