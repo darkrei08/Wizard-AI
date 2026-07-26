@@ -105,6 +105,9 @@ async function runAddInstallation(selectedRepos) {
   for (const repo of selectedRepos) {
     const destDir = path.join(wizardHome, repo.name);
     s.message(`Processing ${repo.name}...`);
+    if (isNonInteractive || isVerbose) {
+      console.log(pc.cyan(`\n📦 Processing ${repo.name}...`));
+    }
 
     if (!fs.existsSync(destDir)) {
       try {

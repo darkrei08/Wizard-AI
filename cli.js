@@ -43,7 +43,11 @@ if (subcmd === "--help" || subcmd === "-h") {
   console.log("  install          Install skills by category from registry");
   console.log("  remove           Remove installed skills");
   console.log("  test             Run wizard-test suite");
-  console.log("  cockpit          Launch interactive account & LLM model switcher (wz-ai cockpit)");
+  console.log("  cockpit          Launch interactive account & LLM model switcher");
+  console.log("    └─ switch <id> Switch directly to account (email or number)");
+  console.log("    └─ model <id>  Change default model directly");
+  console.log("    └─ auto-rotate Auto-switch to account with highest quota");
+  console.log("    └─ status      Show current quota and account status");
   console.log("  account          Alias for cockpit");
   console.log("  proxy            Start wz-ai proxy");
   console.log("  pi-configurator  Run Pi Dynamic Configurator");
