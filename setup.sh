@@ -974,7 +974,7 @@ if command -v node &>/dev/null; then
 
       if echo "$EXTRA_TOOLS" | grep -q "gentle-ai"; then
         echo -e "│  ${YELLOW}Installing gentle-ai...${NC}"
-        curl -fsSL https://raw.githubusercontent.com/Gentleman-Programming/gentle-ai/main/scripts/install.sh | bash -s -- --non-interactive 2>/dev/null || true
+        curl -fsSL https://raw.githubusercontent.com/Gentleman-Programming/gentle-ai/main/scripts/install.sh | bash 2>/dev/null || true
       fi
 
       if echo "$EXTRA_TOOLS" | grep -q "understand-anything"; then
