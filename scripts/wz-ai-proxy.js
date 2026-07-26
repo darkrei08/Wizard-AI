@@ -82,10 +82,13 @@ function injectPiConfig() {
     // and correctly relies on the OAuth token provided by the proxy!
     const dummyKey = {
       type: "api_key",
-      key: "cockpit-dummy-token"
+      key: " "
     };
-    auth['claude-bridge'] = dummyKey;
-    auth['openai-codex'] = dummyKey;
+    auth.google = dummyKey;
+    auth["claude-bridge"] = dummyKey;
+    auth["openai-codex"] = dummyKey;
+
+    
     fs.mkdirSync(path.dirname(authFile), { recursive: true });
     fs.writeFileSync(authFile, JSON.stringify(auth, null, 2), 'utf8');
     console.log("✅ Injected dummy API key (cockpit-dummy-token) into pi auth.json for multi-provider bypass.");
