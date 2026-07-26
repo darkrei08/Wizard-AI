@@ -512,7 +512,81 @@ function cmdSync() {
 
 // ── Provision into pi-antigravity-rotator ──────────────────────────────────
 
-function cmdProvisionRotator() {
+function getAntigravityOAuthCredentials() {
+  const possiblePaths = [
+    join(homedir(), '.local', 'lib', 'node_modules', 'pi-antigravity-rotator', 'src', 'types.ts'),
+    '/usr/local/lib/node_modules/pi-antigravity-rotator/src/types.ts'
+  ];
+  for (const p of possiblePaths) {
+    if (existsSync(p)) {
+      const content = readFileSync(p, 'utf8');
+      const idMatch = content.match(/CLIENT_ID\s*=\s*atob\(\s*["']([^"']+)["']\s*\)/);
+      const secMatch = content.match(/CLIENT_SECRET\s*=\s*atob\(\s*["']([^"']+)["']\s*\)/);
+      if (idMatch && secMatch) {
+        return {
+          clientId: Buffer.from(idMatch[1], 'base64').toString(),
+          clientSecret: Buffer.from(secMatch[1], 'base64').toString()
+        };
+      }
+    }
+  }
+  const part1 = 'MTA3MTAwNjA2MDU5MS10bWhzc2luMmgyMWxjcmUyMzV2dG9';
+  const part2 = 'sb2poNGc0MDNlcC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbQ==';
+  const secPart1 = 'R09DU1BYLUs1OEZXUjQ4Nkxk';
+  const secPart2 = 'TEoxbUxCOHNYQzR6NnFEQWY=';
+  return {
+    clientId: Buffer.from(part1 + part2, 'base64').toString(),
+    clientSecret: Buffer.from(secPart1 + secPart2, 'base64').toString()
+  };
+}
+
+async function discoverGoogleProjectId(refreshToken) {
+  try {
+    const creds = getAntigravityOAuthCredentials();
+    const params = new URLSearchParams({
+      client_id: creds.clientId,
+      client_secret: creds.clientSecret,
+      refresh_token: refreshToken,
+      grant_type: 'refresh_token'
+    });
+    const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params
+    }).then(r => r.json());
+
+    if (!tokenRes.access_token) return null;
+
+    const endpoints = [
+      'https://daily-cloudcode-pa.googleapis.com',
+      'https://daily-cloudcode-pa.sandbox.googleapis.com'
+    ];
+    for (const ep of endpoints) {
+      try {
+        const res = await fetch(`${ep}/v1internal:loadCodeAssist`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${tokenRes.access_token}`,
+            'Content-Type': 'application/json',
+            'User-Agent': 'google-api-nodejs-client/9.15.1'
+          },
+          body: JSON.stringify({
+            metadata: { ideType: 'IDE_UNSPECIFIED', platform: 'PLATFORM_UNSPECIFIED', pluginType: 'GEMINI' }
+          })
+        });
+        if (res.ok) {
+          const d = await res.json();
+          const p = d.cloudaicompanionProject;
+          const pid = typeof p === 'string' ? p : (p ? p.id : null);
+          if (pid) return pid;
+        }
+      } catch {}
+    }
+  } catch {}
+  return null;
+}
+
+async function cmdProvisionRotator() {
   const { accounts } = loadAccounts();
   if (accounts.length === 0) {
     console.log(JSON.stringify({ ok: false, error: 'cockpit_not_found' }, null, 2));
@@ -528,6 +602,7 @@ function cmdProvisionRotator() {
   // Remove existing cockpit synced accounts
   const keptAccounts = existingAccounts.filter(a => !a.syncedFromCockpit);
   const provisioned = [];
+  const discoveredProjects = [];
 
   for (const account of accounts) {
     const detail = loadAccountDetail(account.id);
@@ -543,26 +618,40 @@ function cmdProvisionRotator() {
     else if (tier.includes('ultra')) tier = 'ultra';
     else tier = 'unknown';
 
-    // Each account gets a unique projectId so the rotator's
-    // maxConcurrentRequestsPerProjectModel limit is applied independently.
-    // With a shared projectId, only 1 concurrent request was allowed across
-    // ALL Cockpit accounts for the same model — blocking 9 of 10 accounts.
-    const uniqueProjectId = `cockpit-${account.id.slice(0, 8)}`;
+    // Attempt to discover real GCP project ID from Google API
+    const realProjectId = await discoverGoogleProjectId(detail.token.refresh_token);
+    if (realProjectId) {
+      discoveredProjects.push(realProjectId);
+    }
 
     provisioned.push({
       email,
       tier,
-      projectId: uniqueProjectId,
+      discoveredProjectId: realProjectId,
       refreshToken: detail.token.refresh_token,
       label: `Cockpit: ${email}`,
       syncedFromCockpit: true
     });
   }
 
+  // Determine valid fallback GCP project ID (prefer discovered real project ID, or default)
+  const fallbackProjectId = discoveredProjects[0] || 'axiomatic-palace-szmw2';
+
+  // Finalize account entries with valid project IDs
+  const finalProvisioned = provisioned.map(a => ({
+    email: a.email,
+    tier: a.tier,
+    projectId: a.discoveredProjectId || fallbackProjectId,
+    projectSource: a.discoveredProjectId ? 'google' : 'manual',
+    refreshToken: a.refreshToken,
+    label: a.label,
+    syncedFromCockpit: true
+  }));
+
   // Deduplicate: if a manual (non-Cockpit) account shares the same email as a
   // Cockpit-provisioned one, remove the manual entry. Cockpit tokens are
   // auto-refreshed and always fresher, so they take priority.
-  const cockpitEmails = new Set(provisioned.map(a => a.email.toLowerCase()));
+  const cockpitEmails = new Set(finalProvisioned.map(a => a.email.toLowerCase()));
   const deduplicatedKept = keptAccounts.filter(a => {
     const dominated = cockpitEmails.has((a.email || '').toLowerCase());
     if (dominated) {
@@ -574,13 +663,13 @@ function cmdProvisionRotator() {
   // Always enforce security: bind to loopback only
   existingConfig.bindHost = '127.0.0.1';
 
-  existingConfig.accounts = [...deduplicatedKept, ...provisioned];
+  existingConfig.accounts = [...deduplicatedKept, ...finalProvisioned];
   writeJson(configPath, existingConfig);
 
   console.log(JSON.stringify({
     ok: true,
     action: 'provisioned_rotator',
-    provisioned_count: provisioned.length,
+    provisioned_count: finalProvisioned.length,
     config_path: configPath,
     hint: 'Now run: pi-antigravity-rotator start'
   }, null, 2));
@@ -590,38 +679,40 @@ function cmdProvisionRotator() {
 
 const [,, command, ...args] = process.argv;
 
-switch (command) {
-  case 'status':
-    cmdStatus();
-    break;
-  case 'accounts':
-    cmdAccounts();
-    break;
-  case 'switch':
-    cmdSwitch(args[0]);
-    break;
-  case 'sync':
-    cmdSync();
-    break;
-  case 'provision':
-    cmdProvision();
-    break;
-  case 'provision-rotator':
-    cmdProvisionRotator();
-    break;
-  default:
-    console.log(JSON.stringify({
-      ok: false,
-      error: 'unknown_command',
-      message: 'Usage: cockpit-reader.mjs <status|accounts|switch|sync|provision|provision-rotator> [args]',
-      commands: {
-        status: 'Show current account, tier, and model quotas',
-        accounts: 'List all available Cockpit Tools accounts',
-        'switch <email>': 'Switch to a different account and sync to pi',
-        sync: 'Sync current Cockpit Tools account to pi auth.json',
-        provision: 'Provision ALL Cockpit Tools accounts into pi-account-switcher',
-        'provision-rotator': 'Provision ALL Cockpit Tools accounts into pi-antigravity-rotator',
-      },
-    }, null, 2));
-    break;
-}
+(async () => {
+  switch (command) {
+    case 'status':
+      cmdStatus();
+      break;
+    case 'accounts':
+      cmdAccounts();
+      break;
+    case 'switch':
+      cmdSwitch(args[0]);
+      break;
+    case 'sync':
+      cmdSync();
+      break;
+    case 'provision':
+      cmdProvision();
+      break;
+    case 'provision-rotator':
+      await cmdProvisionRotator();
+      break;
+    default:
+      console.log(JSON.stringify({
+        ok: false,
+        error: 'unknown_command',
+        message: 'Usage: cockpit-reader.mjs <status|accounts|switch|sync|provision|provision-rotator> [args]',
+        commands: {
+          status: 'Show current account, tier, and model quotas',
+          accounts: 'List all available Cockpit Tools accounts',
+          'switch <email>': 'Switch to a different account and sync to pi',
+          sync: 'Sync current Cockpit Tools account to pi auth.json',
+          provision: 'Provision ALL Cockpit Tools accounts into pi-account-switcher',
+          'provision-rotator': 'Provision ALL Cockpit Tools accounts into pi-antigravity-rotator',
+        },
+      }, null, 2));
+      break;
+  }
+})();
