@@ -246,6 +246,13 @@ function syncPiAuth() {
     expires: Date.now() + 3600 * 1000,
     projectId: detail.token.project_id || 'cockpit-managed',
   };
+  auth['antigravity'] = {
+    type: 'oauth',
+    refreshToken: detail.token.refresh_token,
+    accessToken: detail.token.access_token || 'proxy-managed',
+    expires: Date.now() + 3600 * 1000,
+    projectId: detail.token.project_id || 'cockpit-managed',
+  };
 
   writeJson(authFile, auth);
   return { ok: true, email: detail.email || currentAcc.email };
