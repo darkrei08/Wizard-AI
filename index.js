@@ -26,20 +26,23 @@ module.exports = async function (api) {
 
   // Register Wizard-AI as a workflow extension
   try {
-    const { registerWorkflowExtension } = require('pi-extensible-workflows');
+    const { registerWorkflowExtension } = await import('pi-extensible-workflows');
 
     registerWorkflowExtension({
-      name: 'wizard-ai',
+      version: require('./package.json').version,
+      headline: 'Wizard-AI: 3-Tier Agent Swarm with 5-Loop Pipeline orchestration',
       description: 'Wizard-AI ecosystem: 3-Tier Agent Swarm with 5-Loop Pipeline orchestration, token optimization, and persistent memory.',
 
       // Expose reusable variables to all workflows
       variables: {
         wizardAiDir: {
           description: 'Root directory of the Wizard-AI installation',
+          schema: { type: 'string' },
           resolve: () => process.env.WIZARD_AI_DIR || path.join(require('os').homedir(), '.wizard-ai'),
         },
         projectMemory: {
           description: 'Current session memory state from MEMORY.md',
+          schema: { type: 'string' },
           resolve: (runContext) => {
             const memPath = path.join(runContext.cwd || process.cwd(), 'MEMORY.md');
             try {
@@ -51,6 +54,13 @@ module.exports = async function (api) {
         },
         tokenBudget: {
           description: 'Default token budget configuration for workflow runs',
+          schema: {
+            type: 'object',
+            properties: {
+              soft: { type: 'object', properties: { tokens: { type: 'number' }, agentLaunches: { type: 'number' } } },
+              hard: { type: 'object', properties: { tokens: { type: 'number' }, agentLaunches: { type: 'number' } } },
+            },
+          },
           resolve: () => ({
             soft: { tokens: 500000, agentLaunches: 10 },
             hard: { tokens: 1000000, agentLaunches: 20 },
@@ -78,7 +88,7 @@ module.exports = async function (api) {
               format: { type: 'string' },
             },
           },
-          handler: async ({ cwd, maxBytes = 2000, format = 'lea' }) => {
+          run: async ({ cwd, maxBytes = 2000, format = 'lea' }) => {
             const fmt = require(path.join(__dirname, 'scripts', 'wz-ai-context-formats.js'));
             const contextStr = fmt.compressContext(cwd, {
               format,
@@ -110,7 +120,7 @@ module.exports = async function (api) {
               savingsVsJson: { type: 'string' },
             },
           },
-          handler: async ({ label, data }) => {
+          run: async ({ label, data }) => {
             const fmt = require(path.join(__dirname, 'scripts', 'wz-ai-context-formats.js'));
             const toonStr = fmt.toTOON(label, data);
             const comparison = fmt.compareFormats(data, label);
@@ -138,7 +148,7 @@ module.exports = async function (api) {
               tokenEstimate: { type: 'number' },
             },
           },
-          handler: async ({ sources, evidence, instruction }) => {
+          run: async ({ sources, evidence, instruction }) => {
             const fmt = require(path.join(__dirname, 'scripts', 'wz-ai-context-formats.js'));
             const leaStr = fmt.encodeLEA({ sources, evidence, instruction });
             const est = fmt.estimateTokens(leaStr);
@@ -162,7 +172,7 @@ module.exports = async function (api) {
               recommendedLoop: { type: 'string' },
             },
           },
-          handler: async ({ fileCount = 1, lineCount = 0, hasTests = false }) => {
+          run: async ({ fileCount = 1, lineCount = 0, hasTests = false }) => {
             if (fileCount <= 2 && lineCount < 100 && !hasTests) {
               return { complexity: 'LIGHT', recommendedLoop: 'direct-execution' };
             }
@@ -173,52 +183,12 @@ module.exports = async function (api) {
           },
         },
       },
-
-
-      // Register named workflows that can be invoked by name
-      workflows: {
-        'loop-1-plan': {
-          description: 'Loop 1: Plan & Spec exploration and alignment workflow',
-          script: fs.readFileSync(path.join(__dirname, 'workflows', 'loop-1-plan.js'), 'utf-8'),
-        },
-        'loop-2-develop': {
-          description: 'Loop 2: TDD development workflow with parallel fan-out for multi-module tasks',
-          script: fs.readFileSync(path.join(__dirname, 'workflows', 'loop-2-develop.js'), 'utf-8'),
-        },
-        'loop-3-debug': {
-          description: 'Loop 3: Debug & Verify workflow for bug diagnosis and verification',
-          script: fs.readFileSync(path.join(__dirname, 'workflows', 'loop-3-debug.js'), 'utf-8'),
-        },
-        'loop-4-refactor': {
-          description: 'Loop 4: Refactor & Optimize workflow for AST structure and token squeezing',
-          script: fs.readFileSync(path.join(__dirname, 'workflows', 'loop-4-refactor.js'), 'utf-8'),
-        },
-        'loop-5-release': {
-          description: 'Loop 5: Release & Learn workflow for semver bump, changelog, and graph update',
-          script: fs.readFileSync(path.join(__dirname, 'workflows', 'loop-5-release.js'), 'utf-8'),
-        },
-        'workflow-frontend-design': {
-          description: 'Frontend Design Aesthetics, UI scraping, and token extraction workflow',
-          script: fs.readFileSync(path.join(__dirname, 'workflows', 'workflow-frontend-design.js'), 'utf-8'),
-        },
-        'workflow-research-scraping': {
-          description: 'Research & Web Scraping workflow for market pulse and source analysis',
-          script: fs.readFileSync(path.join(__dirname, 'workflows', 'workflow-research-scraping.js'), 'utf-8'),
-        },
-        'shadow-clone-jutsu': {
-          description: 'Parallel fan-out for 2+ independent tasks without shared state',
-          script: fs.readFileSync(path.join(__dirname, 'workflows', 'shadow-clone-jutsu.js'), 'utf-8'),
-        },
-        'cross-os-refactor': {
-          description: 'Cross-OS refactoring, skill setup audit, and multi-agent validation workflow',
-          script: fs.readFileSync(path.join(__dirname, 'workflows', 'cross-os-refactor.js'), 'utf-8'),
-        },
-      },
     });
 
     console.log('✅ Wizard-AI workflow extension registered successfully.');
   } catch (err) {
     // Graceful fallback if pi-extensible-workflows is not available
     console.log('ℹ️ pi-extensible-workflows not available. Running in standalone mode.');
+    if (process.env.WZ_AI_DEBUG) console.error(err);
   }
 };

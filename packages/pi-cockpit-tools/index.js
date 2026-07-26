@@ -14,6 +14,7 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 const { execSync } = require('child_process');
+const { createDecipheriv } = require('crypto');
 
 const HOME = os.homedir();
 
@@ -71,7 +72,37 @@ function loadCockpitAccounts() {
 function loadAccountDetail(accountId) {
   const dataDir = getCockpitDataDir();
   const detailFile = path.join(dataDir, 'accounts', `${accountId}.json`);
-  return readJson(detailFile);
+  const detail = readJson(detailFile);
+  if (!detail) return null;
+
+  // Cockpit Tools stores newer accounts with an encrypted token (AES-256-GCM)
+  // instead of a plaintext `token` field. Decrypt using the local key file.
+  if (!detail.token && detail.token_encrypted) {
+    try {
+      const keyFile = path.join(dataDir, 'account-token.key');
+      if (!fs.existsSync(keyFile)) return detail;
+
+      const key = Buffer.from(fs.readFileSync(keyFile, 'utf8').trim(), 'base64');
+      const enc = detail.token_encrypted;
+      const nonce = Buffer.from(enc.nonce, 'base64');
+      const ciphertextAndTag = Buffer.from(enc.ciphertext, 'base64');
+
+      // Last 16 bytes are the GCM authentication tag
+      const authTag = ciphertextAndTag.slice(-16);
+      const ciphertext = ciphertextAndTag.slice(0, -16);
+
+      const decipher = createDecipheriv('aes-256-gcm', key, nonce);
+      decipher.setAuthTag(authTag);
+      let decrypted = decipher.update(ciphertext, null, 'utf8');
+      decrypted += decipher.final('utf8');
+
+      detail.token = JSON.parse(decrypted);
+    } catch {
+      // Decryption failed — return detail without token
+    }
+  }
+
+  return detail;
 }
 
 function getCockpitStatus() {
@@ -209,12 +240,12 @@ function syncPiAuth() {
 
   auth.google = {
     type: 'api_key',
-    key: ' ',
+    key: 'cockpit-dummy-token',
   };
   auth['google-antigravity'] = {
     type: 'oauth',
-    refresh: detail.token.refresh_token,
-    access: detail.token.access_token || 'proxy-managed',
+    refreshToken: detail.token.refresh_token,
+    accessToken: detail.token.access_token || 'proxy-managed',
     expires: Date.now() + 3600 * 1000,
     projectId: detail.token.project_id || 'cockpit-managed',
   };
@@ -336,7 +367,8 @@ module.exports = function cockpitToolsExtension(api) {
     }
     const cmd = subCmd ? subCmd.trim() : 'status';
     try {
-      execSync(`node "${proxyScript}" ${cmd}`, { stdio: 'inherit' });
+      const output = execSync(`node "${proxyScript}" ${cmd}`, { encoding: 'utf8' });
+      console.log(output);
     } catch (e) {
       console.error(`Proxy command error: ${e.message}`);
     }

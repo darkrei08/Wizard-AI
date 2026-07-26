@@ -80,13 +80,16 @@ function injectPiConfig() {
     // We use a single space (" ") as the API key. This satisfies pi's local validation,
     // and when pi sends `x-goog-api-key:  `, the upstream Google API ignores it
     // and correctly relies on the OAuth token provided by the proxy!
-    auth.google = {
+    const dummyKey = {
       type: "api_key",
-      key: " "
+      key: "cockpit-dummy-token"
     };
+    auth.google = dummyKey;
+    auth['claude-bridge'] = dummyKey;
+    auth['openai-codex'] = dummyKey;
     fs.mkdirSync(path.dirname(authFile), { recursive: true });
     fs.writeFileSync(authFile, JSON.stringify(auth, null, 2), 'utf8');
-    console.log("✅ Injected dummy Google API key (blank space) into pi auth.json to bypass CLI validation.");
+    console.log("✅ Injected dummy API key (cockpit-dummy-token) into pi auth.json for multi-provider bypass.");
   } catch (e) {
     console.error("Warning: Failed to inject dummy auth key", e.message);
   }
@@ -100,12 +103,15 @@ function injectPiConfig() {
       modelsConfig = JSON.parse(fs.readFileSync(modelsFile, 'utf8'));
     }
     if (!modelsConfig.providers) modelsConfig.providers = {};
-    modelsConfig.providers.google = {
-      baseUrl: "http://127.0.0.1:51200/v1beta"
-    };
+    if (!modelsConfig.providers.google) modelsConfig.providers.google = {};
+    modelsConfig.providers.google.baseUrl = "http://127.0.0.1:51200/v1beta";
+    if (!modelsConfig.providers['claude-bridge']) modelsConfig.providers['claude-bridge'] = {};
+    modelsConfig.providers['claude-bridge'].baseUrl = "http://127.0.0.1:19528";
+    if (!modelsConfig.providers['openai-codex']) modelsConfig.providers['openai-codex'] = {};
+    modelsConfig.providers['openai-codex'].baseUrl = "http://127.0.0.1:19528";
     fs.mkdirSync(path.dirname(modelsFile), { recursive: true });
     fs.writeFileSync(modelsFile, JSON.stringify(modelsConfig, null, 2), 'utf8');
-    console.log("✅ Pi models.json: google provider → http://127.0.0.1:51200/v1beta (rotator proxy).");
+    console.log("✅ Pi models.json: google → :51200 (rotator), claude/openai → :19528 (cockpit).");
   } catch (e) {
     console.error("Warning: Failed to inject models config", e.message);
   }
