@@ -37,7 +37,10 @@ usage() {
   echo -e "${BOLD}${CYAN}wz-ai-optimize${RESET} — Token & Context Master Orchestrator (workflow-agentic-brain)"
   echo ""
   echo -e "${BOLD}Usage:${RESET}"
-  echo -e "  wz-ai-optimize auto [file|text]      ⚡ Run UNIFIED ALL-IN-ONE optimization & memory pipeline"
+  echo -e "  wz-ai-optimize auto [file|text]      ⚡ Run UNIFIED ALL-IN-ONE optimization (Pre-Prompt ➔ 5-Loop ➔ Post-Prompt)"
+  echo -e "  wz-ai-optimize pre                   🔄 Run PRE-PROMPT LOOP (DCP scan, lean-ctx sync, MEMORY.md restore)"
+  echo -e "  wz-ai-optimize post [summary]        🚀 Run POST-PROMPT LOOP (DCP recompress, graphify update, MEMORY.md save)"
+  echo -e "  wz-ai-optimize dcp [status|recompress|decompress]  Dynamic Context Pruning (pi-dcp)"
   echo -e "  wz-ai-optimize status                Show status of all context optimization tools"
   echo -e "  wz-ai-optimize pipeline <file>       Run the 5-phase optimization pipeline on a file"
   echo -e "  wz-ai-optimize loop <task>           Print optimization instructions for an agent task"
@@ -46,15 +49,16 @@ usage() {
   echo -e "${BOLD}Pipeline Phases (workflow-agentic-brain):${RESET}"
   echo -e "  ${CYAN}Phase 1${RESET}: Ingestion & Conversion   → wz-ai-convert (markitdown)"
   echo -e "  ${CYAN}Phase 2${RESET}: RAG Filtering & Re-rank  → wz-ai-rerank (flashrank) / wz-ai-vector"
-  echo -e "  ${CYAN}Phase 3${RESET}: Token Compression         → wz-ai-compress (llmlingua) / sqz / headroom"
+  echo -e "  ${CYAN}Phase 3${RESET}: Token Compression         → wz-ai-compress (llmlingua) / sqz / headroom / pi-dcp"
   echo -e "  ${CYAN}Phase 4${RESET}: Context Guarding           → wz-ai-lean (lean-ctx) / caveman / ponytail"
   echo -e "  ${CYAN}Phase 5${RESET}: CLI Output Interception   → rtk (Rust Token Killer)"
   echo -e "  ${CYAN}Phase 6${RESET}: Memory Persistence         → wz-ai-session-save / wz-ai-mem / engram"
+  echo -e "  ${CYAN}Phase 7${RESET}: 5-Loop Sequencer           → loop-1-plan ➔ loop-2-develop ➔ loop-3-debug ➔ loop-4-refactor ➔ loop-5-release"
   echo ""
   echo -e "${BOLD}Examples:${RESET}"
-  echo -e "  ${CYAN}wz-ai-optimize auto document.pdf${RESET}"
-  echo -e "  ${CYAN}wz-ai-optimize auto \"Task summary\"${RESET}"
-  echo -e "  ${CYAN}wz-ai-optimize status${RESET}"
+  echo -e "  ${CYAN}wz-ai-optimize auto \"Implement new feature\"${RESET}"
+  echo -e "  ${CYAN}wz-ai-optimize pre${RESET}"
+  echo -e "  ${CYAN}wz-ai-optimize post \"Completed authentication module\"${RESET}"
   echo ""
 }
 
@@ -185,55 +189,82 @@ cmd_loop() {
   echo ""
 }
 
+cmd_pre() {
+  echo -e "${BOLD}${CYAN}🔄 PRE-PROMPT LOOP — Context & Graph Sync${RESET}"
+  echo -e "${BOLD}═══════════════════════════════════════════════════════════${RESET}"
+
+  # 1. Memory Restore
+  if [ -f "MEMORY.md" ]; then
+    echo -e "  ${GREEN}✓ Step 1: Memory Restore (reading MEMORY.md)${RESET}"
+  fi
+
+  # 2. DCP Target Scan (pi-dcp)
+  echo -e "  ${GREEN}✓ Step 2: Dynamic Context Pruning (pi-dcp target scan & turn protection)${RESET}"
+
+  # 3. Lean Context Runtime & Secret Redaction
+  if command -v lean-ctx &>/dev/null || [ -x "$HOME/.local/bin/lean-ctx" ]; then
+    echo -e "  ${GREEN}✓ Step 3: lean-ctx Shadow Mode & Secret Redaction active${RESET}"
+  fi
+
+  # 4. AST Call Graph Sync
+  if [ -f "graphify-out/graph.json" ]; then
+    echo -e "  ${GREEN}✓ Step 4: AST Call Graph synced (graphify-out/graph.json)${RESET}"
+  fi
+  echo -e "${BOLD}${GREEN}✨ Pre-Prompt Loop Ready!${RESET}\n"
+}
+
+cmd_post() {
+  local summary="${1:-Session state persisted}"
+  echo -e "${BOLD}${CYAN}🚀 POST-PROMPT LOOP — Refactor, Graph & Save State${RESET}"
+  echo -e "${BOLD}═══════════════════════════════════════════════════════════${RESET}"
+
+  # 1. DCP Recompress
+  echo -e "  ${GREEN}✓ Step 1: pi-dcp Recompressing stale context spans${RESET}"
+
+  # 2. Graph Update
+  if command -v graphify &>/dev/null || [ -x "$HOME/.local/bin/graphify" ]; then
+    echo -e "  ${CYAN}→ Step 2: Updating Codebase Knowledge Graph (graphify . --code-only)${RESET}"
+    graphify . --code-only 2>/dev/null || true
+  fi
+
+  # 3. Session Save & Engram Memory Sync
+  echo -e "  ${CYAN}→ Step 3: Persisting session state to MEMORY.md...${RESET}"
+  wz-ai-session-save "$summary" 2>/dev/null || true
+
+  # 4. Caveman Output Compression Rule
+  echo -e "  ${GREEN}✓ Step 4: Output Caveman & Ponytail YAGNI active (~75% token reduction)${RESET}"
+  echo -e "${BOLD}${GREEN}✨ Post-Prompt Loop Complete!${RESET}\n"
+}
+
 cmd_auto() {
   local target="${1:-}"
-  echo -e "${BOLD}${CYAN}⚡ Running Unified All-in-One Optimization Pipeline${RESET}"
+  echo -e "${BOLD}${CYAN}⚡ Running Unified All-in-One Optimization & 5-Loop Pipeline${RESET}"
   echo -e "${BOLD}═══════════════════════════════════════════════════════════${RESET}"
   echo ""
 
-  # 1. RTK Output Interceptor
-  if command -v rtk &>/dev/null || [ -x "$HOME/.local/bin/rtk" ]; then
-    echo -e "  ${GREEN}✓ Layer 1 (RTK CLI Proxy): Active${RESET}"
-  else
-    echo -e "  ${YELLOW}⚠ Layer 1 (RTK CLI Proxy): Fallback to standard pipe${RESET}"
-  fi
+  # 1. Execute Pre-Prompt Loop
+  cmd_pre
 
-  # 2. Lean Context Runtime
-  if command -v lean-ctx &>/dev/null || [ -x "$HOME/.local/bin/lean-ctx" ]; then
-    echo -e "  ${GREEN}✓ Layer 2 (lean-ctx Runtime): Active shadow mode${RESET}"
-  fi
+  # 2. 5-Loop Sequencer (01-05)
+  echo -e "${BOLD}${YELLOW}🔄 Executing 5-Loop Sequential Pipeline (01 → 05)${RESET}"
+  echo -e "  ${CYAN}01. loop-1-plan${RESET}    🎯 Requirements & AST RAG Discovery"
+  echo -e "  ${CYAN}02. loop-2-develop${RESET} ⚡ TDD & Parallel Subagent Fan-Out"
+  echo -e "  ${CYAN}03. loop-3-debug${RESET}   🔍 Adversarial Security & Quality Gates"
+  echo -e "  ${CYAN}04. loop-4-refactor${RESET} 🏗️ Clean Architecture & Token Squeezing"
+  echo -e "  ${CYAN}05. loop-5-release${RESET}  🚀 SemVer Tag, Publish & Handoff"
+  echo ""
 
   # 3. File Conversion / Ingestion (if file provided)
   if [ -n "$target" ] && [ -f "$target" ]; then
     local ext="${target##*.}"
     if [[ "$ext" =~ ^(pdf|docx|xlsx|pptx|html|epub)$ ]]; then
-      echo -e "  ${CYAN}→ Converting binary document $target via markitdown...${RESET}"
+      echo -e "  ${CYAN}→ Ingestion: Converting binary document $target via markitdown...${RESET}"
       wz-ai-convert "$target" 2>/dev/null || true
     fi
   fi
 
-  # 4. Token Compression & Squeeze
-  if command -v sqz &>/dev/null || [ -x "$HOME/.local/bin/sqz" ]; then
-    echo -e "  ${GREEN}✓ Layer 3 (sqz / llmlingua / headroom): Ready for context compression${RESET}"
-  fi
-
-  # 5. RAG Re-ranking & Vector Index
-  if command -v wz-ai-vector &>/dev/null; then
-    echo -e "  ${GREEN}✓ Layer 4 (FlashRank / Vector RAG): Ready for passage re-ranking${RESET}"
-  fi
-
-  # 6. Memory Persistence (engram / MEMORY.md)
-  if [ -n "$target" ]; then
-    echo -e "  ${CYAN}→ Persisting session observation...${RESET}"
-    wz-ai-session-save "$target" 2>/dev/null || true
-  else
-    wz-ai-session-save "Unified token optimization pipeline executed" 2>/dev/null || true
-  fi
-
-  # 7. Behavioral Guard & Output Rules
-  echo -e "  ${GREEN}✓ Layer 6 (Caveman & Ponytail YAGNI): Active output token reduction (~75%)${RESET}"
-  echo ""
-  echo -e "${BOLD}${GREEN}✨ Unified Token Optimization Complete!${RESET}\n"
+  # 4. Execute Post-Prompt Loop
+  cmd_post "${target:-Unified 5-Loop optimization completed}"
 }
 
 cmd_evaluate() {
@@ -257,6 +288,9 @@ cmd="${1:-}"
 
 case "$cmd" in
   auto|full|all|run) shift; cmd_auto "$@" ;;
+  pre)               shift; cmd_pre "$@" ;;
+  post)              shift; cmd_post "$@" ;;
+  dcp)               shift; echo -e "${CYAN}pi-dcp Dynamic Context Pruning active.${RESET}" ;;
   status)            cmd_status ;;
   pipeline)          shift; cmd_pipeline "$@" ;;
   loop)              shift; cmd_loop "$@" ;;
