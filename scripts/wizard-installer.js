@@ -156,6 +156,13 @@ async function runAddInstallation(selectedRepos) {
   }
   s2.stop("Sync complete.");
 
+  // Auto-setup Cockpit Tools Proxy Rotator & Pi integration
+  const proxyScript = path.join(__dirname, "wz-ai-proxy.js");
+  if (fs.existsSync(proxyScript)) {
+    console.log();
+    spawnSync("node", [proxyScript, "auto-setup"], { stdio: "inherit" });
+  }
+
   outro(pc.green("Done! Review skills before use; they run with full agent permissions."));
 }
 

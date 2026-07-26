@@ -2,21 +2,18 @@
 name: wizard-ai-orchestration
 description: >
   Unified subagent orchestration skill. Dispatches isolated-context subagents
-  with precisely crafted instructions, parametrized by a rigor level instead
-  of separate skills. Use when facing 2+ independent tasks that can be worked
-  on without shared state or sequential dependencies; when executing
-  implementation plans with independent tasks in the current session; for
-  hierarchical delegation across specialized subagents on complex multi-domain
-  plans; or for exhaustive multi-agent audits, deep reviews, multi-source
-  research, design exploration, and large migrations where completeness beats
-  latency. Also covers caveman-compressed subagent presets (investigator /
-  builder / reviewer) as an output-format modifier on any rigor level.
-  Triggers: "delegate to subagent", "use cavecrew", "spawn
-  investigator/builder/reviewer", "save context", "compressed agent output",
-  "/goodcode", "goodcode", "orchestrate exhaustively", "fan out subagents",
-  "multi-agent deep dive", "be exhaustive", "dispatch parallel agents",
-  "subagent-driven development", "hierarchical agent management", multiple
-  independent test failures, complex multi-file implementation plans.
+  with precisely crafted instructions, parametrized by rigor level instead of
+  separate skills. Use for 2+ independent tasks with no shared state or
+  sequential dependency; executing implementation plans with independent
+  tasks; hierarchical delegation across specialized subagents on multi-domain
+  plans; or exhaustive multi-agent audits, deep reviews, multi-source
+  research, design exploration, and large migrations where completeness
+  beats speed. Also covers caveman-compressed subagent presets
+  (investigator/builder/reviewer) as an output modifier on any rigor level.
+  Triggers: delegate to subagent, use cavecrew, spawn
+  investigator/builder/reviewer, /goodcode, orchestrate exhaustively, fan
+  out subagents, multi-agent deep dive, be exhaustive, subagent-driven
+  development, multiple independent test failures, complex multi-file plans.
 ---
 
 # Wizard-AI Orchestration

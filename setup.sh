@@ -809,13 +809,24 @@ if command -v pi &>/dev/null || [ -f "$PI_SETTINGS" ]; then
 fi
 
 if command -v npm &>/dev/null; then
-  echo -e "${YELLOW}Do you want to configure the Cockpit Proxy and select a default model for Pi? [Y/n]${NC}"
+  # Auto-detect Cockpit Tools installation
+  COCKPIT_DETECTED=0
+  for dir in "$HOME/.antigravity_cockpit" "$HOME/.local/share/cockpit-tools" "$HOME/.config/cockpit-tools" "$HOME/.wizard-ai/cockpit-tools"; do
+    if [ -d "$dir" ] && ([ -f "$dir/accounts.json" ] || [ -f "$dir/account-token.key" ]); then
+      COCKPIT_DETECTED=1
+      echo -e "${GREEN}✓ Auto-detected Cockpit Tools installation at: $dir${NC}"
+      break
+    fi
+  done
+
+  echo -e "${YELLOW}Configure Cockpit Tools Proxy Rotator for Pi (Multi-Account Load Balancing)? [Y/n]${NC}"
   if [ "$YES_MODE" -eq 1 ]; then
     RUN_COCKPIT="y"
     echo -e "${YELLOW}  (auto-accepted in --yes mode)${NC}"
   else
     read -p "> " RUN_COCKPIT
   fi
+
   if [[ ! "$RUN_COCKPIT" =~ ^[Nn]$ ]]; then
     echo -e "${CYAN}Running pi-cockpit-proxy-setup via npx...${NC}"
     npx --yes pi-cockpit-proxy-setup || echo -e "${RED}Failed to run pi-cockpit-proxy-setup.${NC}"

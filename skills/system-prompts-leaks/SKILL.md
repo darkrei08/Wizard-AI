@@ -1,5 +1,5 @@
 ---
-name: system_prompts_leaks
+name: system-prompts-leaks
 description: "Reference documentation and knowledge base for system_prompts_leaks. Automatically generated from external repository README."
 ---
 

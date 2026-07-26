@@ -1,3 +1,10 @@
+---
+compiled: false
+ingested_at: '2026-07-26T13:48:05.166656+00:00'
+title: WIKI
+type: local_file
+---
+
 # Wiki: Wizard-AI Resources & Skills
 
 > 🇮🇹 [Leggi Italiano](WIKI.it.md)

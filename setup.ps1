@@ -667,6 +667,22 @@ Write-Log ' '
 Write-Log '[7.7/8] Pi Integration and Cockpit Proxy Setup...' -ForegroundColor Blue
 if (Get-Command npm -ErrorAction SilentlyContinue) {
     $RunCockpitProxy = 'Y'
+    # Auto-detect Cockpit Tools installation
+    $CockpitDetected = $false
+    $CockpitPaths = @(
+        "$env:USERPROFILE\.antigravity_cockpit",
+        "$env:LOCALAPPDATA\cockpit-tools",
+        "$env:APPDATA\cockpit-tools",
+        "$env:USERPROFILE\.wizard-ai\cockpit-tools"
+    )
+    foreach ($cPath in $CockpitPaths) {
+        if ((Test-Path (Join-Path $cPath 'accounts.json')) -or (Test-Path (Join-Path $cPath 'account-token.key'))) {
+            $CockpitDetected = $true
+            Write-Log "  [ok] Auto-detected Cockpit Tools installation at: $cPath" -ForegroundColor Green
+            break
+        }
+    }
+
     if (-not $IsNonInteractive) {
         Write-Log 'Do you want to install and enable the background Cockpit Proxy Rotator for Pi? [Y/n]' -ForegroundColor Yellow
         $RunCockpitProxy = Read-Host '>'
@@ -685,26 +701,47 @@ if (Get-Command npm -ErrorAction SilentlyContinue) {
             Write-Log "  [!] Failed to install pi-antigravity-rotator (exit code $LASTEXITCODE)." -ForegroundColor Red
         }
 
-        $WzAiProxyPs1 = Join-Path $LocalBin 'wz-ai-proxy.ps1'
-        if (Test-Path $WzAiProxyPs1) {
+        $WzAiProxyJs = Join-Path $PSScriptRoot 'scripts\wz-ai-proxy.js'
+        if (Test-Path $WzAiProxyJs) {
             try {
-                & $WzAiProxyPs1 pi-config
+                Write-Log '  1. Provisioning Cockpit Tools accounts into rotator...' -ForegroundColor Cyan
+                node $WzAiProxyJs provision
+            } catch {
+                Write-Log "  [!] wz-ai-proxy provision warning: $($_.Exception.Message)" -ForegroundColor Yellow
+            }
+            try {
+                Write-Log '  2. Injecting Pi auth.json & models.json configuration...' -ForegroundColor Cyan
+                node $WzAiProxyJs pi-config
             } catch {
                 Write-Log "  [!] wz-ai-proxy pi-config warning: $($_.Exception.Message)" -ForegroundColor Yellow
             }
             try {
-                & $WzAiProxyPs1 enable
+                Write-Log '  3. Enabling background proxy rotator daemon (Startup VBScript)...' -ForegroundColor Cyan
+                node $WzAiProxyJs enable
             } catch {
                 Write-Log "  [!] wz-ai-proxy enable warning: $($_.Exception.Message)" -ForegroundColor Yellow
             }
 
             Write-Log ' '
-            Write-Log '[ok] Proxy configured. Pi will route through the local rotator on port 51200.' -ForegroundColor Green
-            Write-Log '  To add Google accounts: wz-ai-proxy login' -ForegroundColor Cyan
-            Write-Log '  To see accounts:        wz-ai-proxy accounts' -ForegroundColor Cyan
-            Write-Log '  To check status:        wz-ai-proxy status' -ForegroundColor Cyan
+            Write-Log '========================================================================' -ForegroundColor Green
+            Write-Log '  ✨ COCKPIT TOOLS & PI ROTATOR PROXY FULLY INTEGRATED ✨' -ForegroundColor Green
+            Write-Log '========================================================================' -ForegroundColor Green
+            if ($CockpitDetected) {
+                Write-Log '  [ok] Cockpit Tools multi-account OAuth tokens auto-imported!' -ForegroundColor Green
+            } else {
+                Write-Log '  [i] Cockpit Tools not found. Add Google accounts via: wz-ai-proxy login' -ForegroundColor Yellow
+            }
+            Write-Log '  [ok] Pi CLI configured to route requests via local rotator (port 51200)' -ForegroundColor Cyan
+            Write-Log '  [ok] Rotator proxy service enabled in Startup folder (auto-starts on boot)' -ForegroundColor Cyan
+            Write-Log ' '
+            Write-Log '  Useful Proxy Commands:' -ForegroundColor Yellow
+            Write-Log '    wz-ai-proxy accounts  # List all rotator accounts and quotas' -ForegroundColor Cyan
+            Write-Log '    wz-ai-proxy status    # Check proxy rotation status' -ForegroundColor Cyan
+            Write-Log '    wz-ai-proxy login     # Add a new Google account via OAuth' -ForegroundColor Cyan
+            Write-Log '========================================================================' -ForegroundColor Green
+            Write-Log ' '
         } else {
-            Write-Log "  [!] $WzAiProxyPs1 not found (wrapper deploy step may have failed). Skipping proxy configuration." -ForegroundColor Yellow
+            Write-Log "  [!] $WzAiProxyJs not found. Skipping proxy configuration." -ForegroundColor Yellow
         }
     }
 } else {

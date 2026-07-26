@@ -59,3 +59,11 @@
 - **UV Segfault Protection**: Auto-fallbacks to OS native package manager when uv prebuilt binary fails.
 - **LiteLLM / Model Data Scraper**: Automated live model fetching (`scripts/fetch_latest_models.py`) updating 2970+ model specs.
 - **Systemd & D-Bus Fixes**: Resolved `$DBUS_SESSION_BUS_ADDRESS` and `$XDG_RUNTIME_DIR` environment propagation.
+
+## [Session State Snapshot] - 2026-07-26 15:48:23
+
+
+
+## [Session State Snapshot] - 2026-07-26 16:01:24
+Configurato auto-setup Cockpit Tools Rotator Proxy in setup.sh, setup.ps1, wizard-installer.js e wz-ai-proxy.js. Auto-detect percorsi Cockpit Tools su Linux, macOS e Windows.
+

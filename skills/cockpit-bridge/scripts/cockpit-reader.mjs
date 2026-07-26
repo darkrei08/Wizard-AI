@@ -14,6 +14,20 @@ import { createDecipheriv } from 'node:crypto';
 const HOME = homedir();
 
 function getCockpitDataDir() {
+  const candidates = [
+    join(HOME, '.antigravity_cockpit'),
+    join(HOME, '.local', 'share', 'cockpit-tools'),
+    join(HOME, '.config', 'cockpit-tools'),
+    join(HOME, '.wizard-ai', 'cockpit-tools'),
+    join(HOME, 'Library', 'Application Support', 'cockpit-tools'),
+    process.env.APPDATA ? join(process.env.APPDATA, 'cockpit-tools') : null,
+    process.env.LOCALAPPDATA ? join(process.env.LOCALAPPDATA, 'cockpit-tools') : null,
+  ].filter(Boolean);
+  for (const dir of candidates) {
+    if (existsSync(join(dir, 'accounts.json')) || existsSync(join(dir, 'account-token.key'))) {
+      return dir;
+    }
+  }
   return join(HOME, '.antigravity_cockpit');
 }
 

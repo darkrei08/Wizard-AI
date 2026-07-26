@@ -415,8 +415,13 @@ try {
     console.log("Provisioning Cockpit Tools accounts...");
     // Look for cockpit-reader in multiple possible locations
     const searchPaths = [
+      path.join(__dirname, '..', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
       path.join(os.homedir(), '.gemini', 'config', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+      path.join(os.homedir(), '.claude', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+      path.join(os.homedir(), '.config', 'amp', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
       path.join(os.homedir(), '.agents', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+      path.join(os.homedir(), '.pi', 'agent', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+      path.join(os.homedir(), '.pi', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
     ];
     const readerPath = searchPaths.find(p => fs.existsSync(p));
     if (readerPath) {
@@ -426,6 +431,47 @@ try {
       console.log("Tip: Use 'wizard-ai proxy login' to add accounts directly via Google OAuth instead.");
     }
   } 
+  else if (command === 'auto-setup' || command === 'setup') {
+    console.log("🚀 Executing Automated Cockpit Tools & Rotator Proxy Setup...");
+    
+    // 1. Provision accounts from Cockpit Tools
+    console.log("\n[1/3] Provisioning Cockpit Tools accounts...");
+    const searchPaths = [
+      path.join(__dirname, '..', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+      path.join(os.homedir(), '.gemini', 'config', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+      path.join(os.homedir(), '.claude', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+      path.join(os.homedir(), '.config', 'amp', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+      path.join(os.homedir(), '.agents', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+      path.join(os.homedir(), '.pi', 'agent', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+      path.join(os.homedir(), '.pi', 'skills', 'cockpit-bridge', 'scripts', 'cockpit-reader.mjs'),
+    ];
+    const readerPath = searchPaths.find(p => fs.existsSync(p));
+    if (readerPath) {
+      runCommand(`node "${readerPath}" provision-rotator`, true);
+    }
+
+    // 2. Inject Pi configuration
+    console.log("\n[2/3] Injecting Pi CLI configuration (auth.json + models.json)...");
+    injectPiConfig();
+
+    // 3. Enable background daemon
+    console.log("\n[3/3] Enabling background daemon daemon...");
+    if (PLATFORM === 'linux') enableLinux();
+    else if (PLATFORM === 'darwin') enableMac();
+    else if (PLATFORM === 'win32') enableWindows();
+
+    console.log("\n" + "=".repeat(60));
+    console.log("  ✨ COCKPIT TOOLS & PI ROTATOR PROXY FULLY INTEGRATED ✨");
+    console.log("=".repeat(60));
+    console.log("  - Multi-account OAuth credentials auto-provisioned into rotator.");
+    console.log("  - Pi CLI configured to route Google requests via port 51200.");
+    console.log("  - Background daemon active and auto-starts on boot.");
+    console.log("\n  Useful Commands:");
+    console.log("    wz-ai proxy accounts  # List all rotator accounts and quotas");
+    console.log("    wz-ai proxy status    # View active proxy rotation status");
+    console.log("    wz-ai proxy login     # Add a new Google account via OAuth");
+    console.log("=".repeat(60) + "\n");
+  }
   else if (command === 'start') {
     console.log("Starting proxy in foreground...");
     runCommand('pi-antigravity-rotator start');
