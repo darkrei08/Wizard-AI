@@ -1,6 +1,6 @@
 ---
 name: workflow-frontend-design
-description: "Meta-skill orchestrating frontend UI/UX design. Chains brand-guidelines, theme-factory, awesome-design, and taste-skill to generate premium, brand-consistent interfaces from scratch."
+description: "Meta-skill orchestrating frontend UI/UX design. Chains brand-guidelines, theme-factory, awesome-design, taste-skill, mengto-skills, and kinetics-ui to generate premium, brand-consistent, animated interfaces from scratch."
 ---
 
 # Frontend Design Workflow (Meta-Skill)
@@ -22,7 +22,14 @@ This meta-skill orchestrates a powerful frontend workflow by combining Anthropic
 4. **Apply Anti-Slop Formatting (`taste-skill`)**
    Ensure the final UI does not look like "AI slop". Refer to `taste-skill` rules for appropriate typography scales, canonical spacing, and micro-interactions.
 
+5. **Typography & Layout Pass (`mengto-skills`)**
+   Apply MengTo's Figma-to-code discipline: strict typographic hierarchy, high-contrast accessibility, asymmetrical layout. Run this after `taste-skill` to refine spacing/type decisions taste-skill left generic.
+
+6. **Motion Polish (`kinetics-ui`)**
+   Add spring-physics micro-interactions (hover, click feedback, toggles, loading states) to the components produced in steps 1-5. Skip this step for static/print-style artifacts where motion would contradict the direction.
+
 ## Execution Rules
 
-- Do not just generate boilerplate React/HTML. Always apply the 4 steps above.
+- Do not just generate boilerplate React/HTML. Always apply steps 1-6 above.
 - Ensure the final artifact is polished, accessible, and responsive.
+- If steps overlap (e.g. taste-skill and mengto-skills both propose a type scale), taste-skill's brief-specific decision wins — mengto-skills only fills gaps it left unspecified.

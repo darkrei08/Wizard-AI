@@ -1,9 +1,11 @@
 ---
 name: enterprise-development-protocol
-description: "Enterprise Development Protocol (Mandatory). Use this skill ALWAYS a priori for development to bring the project to a Production Ready state, eliminating technical debt and following strict development cycles."
+description: "Enterprise Development Protocol. Whole-project production-readiness audit (roadmap, DEVELOPMENT_STATUS.md, TASK_BOARD.md, gap analysis across modules). Use ONLY in 04. loop-4-refactor for multi-module audits — for single-task engineering standards during 02. loop-2-develop use `engineering-excellence` instead, not this."
 ---
 
-# Enterprise Development Protocol (Mandatory)
+# Enterprise Development Protocol
+
+> **Scope:** whole-project audit only (Loop 4). For per-task TDD/quality-gate standard during implementation (Loop 2), use `engineering-excellence` — do not run both on the same task, their DoD checklists overlap and would duplicate work.
 
 From this moment on, DO NOT work as a simple code generator.
 

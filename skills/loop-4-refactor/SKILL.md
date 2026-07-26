@@ -38,6 +38,7 @@ Queste skill riorganizzano il codice per renderlo modulare, coeso e disaccoppiat
 - **`ponytail` (`wz-ai ponytail`)**: *Quando usarla:* Quando il codice mostra segnali di over-engineering, design pattern speculativi o gerarchie di classi inutilmente complesse. *Cosa fa:* Applica la mentalità del "senior dev pigro", eliminando astrazioni premature (`YAGNI`) e riducendo le righe di codice.
 - **`mp-migrate-to-shoehorn`**: *Quando usarla:* Per migrazioni graduali di architettura (es. passaggio a un nuovo pattern o framework) in modo incrementale senza interrompere il servizio in produzione.
 - **`mp-domain-modeling`**: *Quando usarla:* Per disaccoppiare la logica di business dalla persistenza o dalla UI ridefinendo le entità del dominio.
+- **`enterprise-development-protocol`**: *Quando usarla:* SOLO per audit whole-project "production readiness" (roadmap a milestone, `DEVELOPMENT_STATUS.md`, `TASK_BOARD.md`, gap analysis su feature incomplete/debito tecnico esteso a più moduli). NON usarla per il singolo task di Loop 2 — li' vale `engineering-excellence` (standard per-task, già mandatory in `loop-2-develop` Step 2.2). Le due skill condividono lo stesso mandato (SDD/TDD/DoD/security/a11y) ma a scala diversa: non attivarle entrambe sullo stesso task, causerebbe doppio DoD e checklist duplicate.
 
 ### 2. Categoria: Token & Context Optimization (Risparmio Risorse LLM)
 Queste skill controllano e comprimono i payload inviati e ricevuti dal modello per evitare di intasare la context window:

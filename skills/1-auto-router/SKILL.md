@@ -49,6 +49,7 @@ These are the **primary numbered entry points** for any development task. Route 
 | **04. Refactoring & Ottimizzazione** — pulizia architettura, tech debt, compressione token | `loop-4-refactor` | `/loop-4`, `/loop-refactor`, `/optimize` | HEAVY | `refactor, migliora, architettura, ottimizza, clean up, riorganizza, tech debt, token` |
 | **05. Rilascio & Apprendimento** — merge su main, semver release, npm publish, handoff, memoria | `loop-5-release` | `/loop-5`, `/loop-release`, `/learn` | HEAVY | `release, pubblica, rilascia, deploy, versione, tag, bump, impara, documenta, wiki, mem` |
 
+**Execution handoff (`pi-extensible-workflows`):** once a loop is selected above, do NOT just narrate its phases. If the `workflow` tool is available, call it with the matching `workflows/<loop-name>.js` script (e.g. `loop-2-develop` → `workflows/loop-2-develop.js`) and pass `{ task: <user request> }` as args — see `0-loop-engine`'s Execution Pipeline section for the full mapping and the no-tool fallback. This applies to EVERY natural-language request routed here, not just explicit `/loop-*` commands.
 ## 3. Secondary Routing: Domain Workflows & Creative/Analytical Loop Expansion
 
 If the request spans specific creative, analytical, or specialized domains beyond core code development, route to the exact domain workflow.

@@ -76,6 +76,7 @@ Exclusive Wizard-AI ecosystem.
 
 ### 5. Software Engineering & CI/CD
 - `workflow-production-cycle`: Git Flow + TDD Master Workflow.
+- `engineering-excellence`: Framework-agnostic SDD/TDD standard (architecture, security, a11y, i18n, SEO).
 - `superpowers`: 11 Subagent-Driven Development skills.
 - `auto-branch`: Branch management.
 - `auto-release`: Semantic versioning (semver).
@@ -85,6 +86,7 @@ Exclusive Wizard-AI ecosystem.
 - `cybersecurity`: Anthropic security guidelines.
 - `spec-kit`: Specification-Driven Development (SDD).
 - `strix`: Autonomous penetration testing.
+- `system_prompts_leaks`: Leaked system prompts corpus (ChatGPT/Claude/Gemini/Grok) — reference for prompt-injection defense and system prompt design.
 
 ### 6. Frontend, UI/UX, Design
 - `taste-skill`: Premium anti-slop layouts.
@@ -92,6 +94,8 @@ Exclusive Wizard-AI ecosystem.
 - `awesome-design`: Brand styles (Vercel, Cursor, etc.).
 - `infographic`: Declarative charts.
 - `design-md-spec`: `DESIGN.md` format.
+- `kinetics-ui`: Spring-physics micro-interactions (ckissi/kinetics).
+- `mengto-skills`: MengTo UI/UX design workflow pack (70+).
 - `stitch-*`: Google Stitch integration suite. Generates design, React, React Native, mockups.
 
 ### 7. Scaffolding

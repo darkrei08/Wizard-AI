@@ -136,10 +136,22 @@ if (fs.existsSync(path.join(installDir, ".git"))) {
     );
   }
 } else if (fs.existsSync(installDir)) {
-  fail(
-    `${installDir} exists but is not a git checkout of Wizard-AI.\n` +
-      "Move it away, or set WIZARD_AI_DIR to your existing clone."
+  const backupDir = `${installDir}.bak-${Date.now()}`;
+  console.warn(
+    `[wizard-ai] ${installDir} exists but is not a git checkout of Wizard-AI.\n` +
+      `[wizard-ai] Backing it up to ${backupDir} and cloning fresh (set WIZARD_AI_DIR to reuse an existing clone instead).`
   );
+  try {
+    fs.renameSync(installDir, backupDir);
+  } catch (e) {
+    fail(
+      `Could not back up ${installDir} (${e.message}).\n` +
+        "Move it away manually, or set WIZARD_AI_DIR to your existing clone."
+    );
+  }
+  console.log(`[wizard-ai] Cloning Wizard-AI into ${installDir}...`);
+  const status = run("git", ["clone", "--depth", "1", REPO_URL, installDir]);
+  if (status !== 0) fail("git clone failed.");
 } else {
   console.log(`[wizard-ai] Cloning Wizard-AI into ${installDir}...`);
   const status = run("git", ["clone", "--depth", "1", REPO_URL, installDir]);

@@ -687,8 +687,15 @@ cp -p "$SCRIPT_DIR"/bin/* "$HOME/.local/bin/" 2>/dev/null || true
 chmod +x "$HOME/.local/bin"/ai-* 2>/dev/null || true
 chmod +x "$HOME/.local/bin"/book-to-skill 2>/dev/null || true
 # Fix CRLF line endings for WSL users cloning from Windows
-for file in "$HOME/.local/bin/"*; do
-  if [ -f "$file" ]; then
+# IMPORTANT: only touch files WE just deployed (by basename from $SCRIPT_DIR/bin/),
+# never blanket-iterate $HOME/.local/bin/* — that dir also holds third-party
+# npm/nvm-managed binaries (e.g. `pi`, `agy`) that may be symlinks. GNU `sed -i`
+# on a symlink deletes it and writes a flat standalone file in its place,
+# breaking relative imports (e.g. `import './config.js'`) the real package
+# depended on. See docs/AGENTIC_SKILLS_AUDIT.md / cli.js history for context.
+for name in $(ls "$SCRIPT_DIR/bin/"); do
+  file="$HOME/.local/bin/$name"
+  if [ -f "$file" ] && [ ! -L "$file" ]; then
     sed -i 's/\r$//' "$file" 2>/dev/null || true
   fi
 done

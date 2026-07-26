@@ -46,6 +46,8 @@
         { "name": "antigravity-awesome-skills", "url": "https://github.com/sickn33/antigravity-awesome-skills.git", "desc": "Antigravity skill pack" },
         { "name": "awesome-agent-skills", "url": "https://github.com/VoltAgent/awesome-agent-skills.git", "desc": "Community skill collection" },
         { "name": "cybersecurity-skills", "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git", "desc": "754 cybersecurity skills" },
+        { "name": "system_prompts_leaks", "url": "https://github.com/asgeirtj/system_prompts_leaks.git", "desc": "Leaked system prompts corpus (ChatGPT, Claude, Gemini, Grok) for prompt security research" },
+        { "name": "engineering-excellence", "url": "https://github.com/micio86dev/Engineering-Excellence.git", "desc": "Framework-agnostic SDD/TDD engineering standard" },
         { "name": "stitch-skills", "url": "https://github.com/google-labs-code/stitch-skills.git", "desc": "Google Stitch design skills" },
         { "name": "design.md", "url": "https://github.com/google-labs-code/design.md.git", "desc": "Design system spec" },
         { "name": "book-to-skill", "url": "https://github.com/virgiliojr94/book-to-skill.git", "desc": "Book-to-skill converter" },

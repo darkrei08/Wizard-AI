@@ -1,11 +1,11 @@
 ---
 name: show-active-skill
-description: "TRANSPARENCY ANNOUNCER — Core behavioral skill (Step 6 e Step 11). Enforces the AI to explicitly declare which skills, workflows, CoT step traversal logs, and token optimization gauges it is using via PRE and POST prompt headers/footers with an Antigravity-style vertical illuminated tree."
+description: "TRANSPARENCY ANNOUNCER — Core behavioral skill (Step 6 e Step 11 del 0-loop-engine). Enforces the AI to explicitly declare which skills, workflows, CoT step traversal logs, and token optimization gauges it is using via PRE and POST prompt headers/footers with an Antigravity-style vertical illuminated tree."
 ---
 
 # Show Active Skill (Transparency Announcer & Vertical Illuminated Tree)
 
-This is a **mandatory behavioral directive** for all your interactions within the Wizard-AI ecosystem. It implements **Step 6 (PRE-PROMPT)** and **Step 11 (POST-PROMPT)** of the `prompt-loop-engine`.
+This is a **mandatory behavioral directive** for all your interactions within the Wizard-AI ecosystem. It implements **Step 6 (PRE-PROMPT)** and **Step 11 (POST-PROMPT)** of the `0-loop-engine`.
 
 ## Goal
 To maintain absolute transparency with the user regarding:

@@ -214,14 +214,29 @@ Operational phases:
 
 Execution is delegated to the **loop or workflow** selected in Step 3. Each loop has its own internal iterative chain.
 
-**Loop-Engineering Execution:**
-If a loop has been selected, execution follows the iterative cycle defined in the loop's SKILL.md:
--`loop-develop`: ALIGN → SPECIFY → PLAN → EXECUTE → VERIFY → REVIEW → ITERATE
--`loop-debug`: DIAGNOSE → ISOLATE → FIX → TEST → VERIFY → ITERATE
--`loop-refactor`: ANALYZE → DESIGN → MODEL → PLAN → EXECUTE → VERIFY → REVIEW → ITERATE
--`loop-release`: VERIFY → REVIEW → MERGE → RELEASE → PUBLISH → INDEX → RECOVER
--`loop-learn`: RESEARCH → TEACH → VERIFY → FORMALIZE → PERSIST → SAVE → ITERATE
+**Loop-Engineering Execution (`pi-extensible-workflows` wiring):**
 
+Each numbered loop has a deterministic JS counterpart in `workflows/` (`loop-1-plan.js`...`loop-5-release.js`, plus `shadow-clone-jutsu.js` for fan-out and `workflow-frontend-design.js` for the frontend meta-skill). These are NOT prose descriptions to imitate — they are real scripts using the `pi-extensible-workflows` primitives (`agent`, `parallel`, `phase`, `checkpoint`, `prompt`).
+
+1. **If the `workflow` tool is available** (running under `pi.dev` with the `pi-extensible-workflows` extension installed — check `workflow_catalog` or attempt the call): route MEDIUM/HEAVY tasks by calling it directly instead of manually role-playing the phases:
+   ```
+   workflow({ name: '<loop-name>', script: 'workflows/<loop-file>.js', args: { task: '<user request>' }, concurrency: <from .pi/pi-extensible-workflows/settings.json> })
+   ```
+   - `loop-1-plan` → `workflows/loop-1-plan.js`
+   - `loop-2-develop` → `workflows/loop-2-develop.js`
+   - `loop-3-debug` → `workflows/loop-3-debug.js`
+   - `loop-4-refactor` → `workflows/loop-4-refactor.js`
+   - `loop-5-release` → `workflows/loop-5-release.js`
+   - Fan-out / independent parallel tasks (`4-swarm-manager`, `3-shadow-clone-parallelism`) → `workflows/shadow-clone-jutsu.js`
+   - `workflow-frontend-design` → `workflows/workflow-frontend-design.js`
+   Use `workflow_resume` if the run stops on a budget checkpoint, and `workflow_respond` to approve/reject the `checkpoint()` calls the script raises (e.g. `implementation-review`, `clone-integration`). Do not silently auto-approve checkpoints on HEAVY tasks — surface them to the user first.
+2. **If the `workflow` tool is NOT available** (Claude Code, other hosts without the extension): fall back to manually executing the loop's iterative cycle in-context, following the same phase order the script encodes:
+   - `loop-develop`: ALIGN → SPECIFY → PLAN → EXECUTE → VERIFY → REVIEW → ITERATE
+   - `loop-debug`: DIAGNOSE → ISOLATE → FIX → TEST → VERIFY → ITERATE
+   - `loop-refactor`: ANALYZE → DESIGN → MODEL → PLAN → EXECUTE → VERIFY → REVIEW → ITERATE
+   - `loop-release`: VERIFY → REVIEW → MERGE → RELEASE → PUBLISH → INDEX → RECOVER
+   - `loop-learn`: RESEARCH → TEACH → VERIFY → FORMALIZE → PERSIST → SAVE → ITERATE
+   Read the matching `workflows/<loop>.js` file first when possible — the phase names, prompts, and role assignments (`master-develop`, `master-debug`, `worker-generic`, `orchestrator`) in that script are the source of truth, not this list.
 **Golden Rule of Execution:**
 Before writing code or tackling complex designs, ALWAYS:
 1. Check if`brainstorming`/`mp-grill-with-docs`is applicable (design before implementation).

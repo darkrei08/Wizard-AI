@@ -1,6 +1,6 @@
 ---
 name: using-superpowers
-description: "SKILL DISCOVERY & LOADING — Step 5 del prompt-loop-engine. Scopre, ordina e carica le skill pertinenti al task prima dell'esecuzione. Non fa routing (delegato a auto-router)."
+description: "SKILL DISCOVERY & LOADING — Step 5 del 0-loop-engine. Scopre, ordina e carica le skill pertinenti al task prima dell'esecuzione. Non fa routing (delegato a 1-auto-router)."
 ---
 
 <SUBAGENT-STOP>
@@ -9,7 +9,7 @@ If you were dispatched as a subagent to execute a specific task, skip this skill
 
 # Skill Discovery & Loading (Step 5)
 
-Questa skill rappresenta lo **Step 5** del `prompt-loop-engine`. Il suo unico scopo è la **Discovery** e il **Loading** delle skill corrette, DOPO che `auto-router` ha classificato il task.
+Questa skill rappresenta lo **Step 5** del `0-loop-engine`. Il suo unico scopo è la **Discovery** e il **Loading** delle skill corrette, DOPO che `1-auto-router` ha classificato il task.
 
 <EXTREMELY-IMPORTANT>
 If you think there is even a 1% chance a skill might apply to what you are doing, you ABSOLUTELY MUST invoke the skill.
