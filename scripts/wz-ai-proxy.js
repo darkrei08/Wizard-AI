@@ -403,7 +403,7 @@ function showLogs() {
 
 // ── Main Logic ──────────────────────────────────────────────────────────
 
-if (!command || command === 'help') {
+if (command === 'help') {
   console.log("🚀 Wizard-AI Proxy Manager (Cross-Platform Daemon)");
   console.log("Usage: wz-ai proxy <command>");
   console.log("");
@@ -430,7 +430,11 @@ if (!command || command === 'help') {
 }
 
 try {
-  if (command === 'install') {
+  if (!command) {
+    const cockpitScript = path.join(__dirname, 'wz-ai-cockpit.js');
+    runCommand(`node "${cockpitScript}"`, true);
+  }
+  else if (command === 'install') {
     console.log("Installing pi-antigravity-rotator...");
     // Try local prefix first (no sudo needed), then global, then sudo global
     const localPrefix = path.join(os.homedir(), '.local');
