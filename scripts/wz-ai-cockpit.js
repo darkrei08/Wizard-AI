@@ -489,8 +489,9 @@ async function main() {
   if (command === 'switch') {
     const target = args[1];
     if (!target) {
-      console.log('Usage: wz-ai cockpit switch <email|number>');
-      process.exit(1);
+      // Fallback to interactive menu if no target provided
+      await runInteractiveMenu();
+      return;
     }
     const res = switchAccount(target);
     if (res.ok) {

@@ -413,6 +413,10 @@ if (!command || command === 'help') {
   console.log("  accounts   - List all accounts currently in the proxy (with quota)");
   console.log("  disable    - Stop & remove the background daemon");
   console.log("");
+  console.log("  [Manual Account Control]");
+  console.log("  switch     - Open interactive UI or force a specific account (e.g. switch <email>)");
+  console.log("  model      - Force a specific model (e.g. model <name>)");
+  console.log("");
   console.log("  [Advanced/Legacy]");
   console.log("  install    - Install pi-antigravity-rotator globally");
   console.log("  provision  - Import all Cockpit Tools accounts into the proxy");
@@ -543,6 +547,15 @@ try {
     console.log("(Re)generating Pi configuration to use local proxy...");
     injectPiConfig();
     console.log("\nDone! Pi will now route all Google requests through the local rotator.");
+  }
+  else if (['switch', 'model', 'auto-rotate', 'cockpit'].includes(command)) {
+    const cockpitScript = path.join(__dirname, 'wz-ai-cockpit.js');
+    const childArgs = process.argv.slice(3);
+    if (command === 'cockpit') {
+       runCommand(`node "${cockpitScript}" ${childArgs.join(' ')}`, true);
+    } else {
+       runCommand(`node "${cockpitScript}" ${command} ${childArgs.join(' ')}`, true);
+    }
   }
   else {
     console.log(`Unknown command: ${command}. Run 'wz-ai proxy help' for usage.`);
