@@ -55,7 +55,6 @@ function determineMetadata(skillName, content) {
 - **Category:** \`${category}\`
 - **Called by Loops:** \`${loops}\`
 - **Associated Workflows:** \`${workflows}\`
-- **Semantic Frameworks Integration:** \`[serena, turboquant/turbovec, claude-mem, graphify]\`
 
 > *This metadata ensures rapid semantic indexing and agentic traversal, allowing the LLM to instantly map relationships across the MoE architecture.*
 

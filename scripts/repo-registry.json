@@ -78,8 +78,6 @@
           "desc": "Knowledge graph builder"
         },
         {
-          "name": "claude-mem",
-          "url": "https://github.com/thedotmack/claude-mem.git",
           "desc": "Persistent LLM memory"
         },
         {

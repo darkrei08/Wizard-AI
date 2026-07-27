@@ -5,7 +5,6 @@ const { execSync } = require('child_process');
 
 // Extended list of external repositories and their GitHub paths
 const REPOS = {
-    "claude-mem": "thedotmack/claude-mem",
     "headroom": "chopratejas/headroom",
     "Infographic": "antvis/Infographic",
     "cybersecurity-skills": "mukul975/Anthropic-Cybersecurity-Skills",
