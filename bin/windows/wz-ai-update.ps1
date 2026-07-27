@@ -95,7 +95,9 @@ Log "`n🔄 Updating Caveman agent skill..." "Blue"
 try {
     $tempPs1 = Join-Path $env:TEMP "caveman_update.ps1"
     Invoke-RestMethod https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.ps1 -OutFile $tempPs1
+    $env:npm_config_allow_git = 'all'
     $proc = Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$tempPs1`"" -Wait -NoNewWindow -PassThru
+    Remove-Item env:\npm_config_allow_git -ErrorAction SilentlyContinue
     Remove-Item $tempPs1 -ErrorAction SilentlyContinue
     if ($proc.ExitCode -eq 0) {
         Log "  [ok] Caveman skill updated successfully across all agents." "Green"

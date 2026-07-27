@@ -112,7 +112,7 @@ if command -v wz-ai-sync-skills >/dev/null 2>&1; then
 fi
 
 log "\n🔄 Updating Caveman agent skill..."
-if curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash 2>/dev/null >/dev/null; then
+if curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | npm_config_allow_git=all bash 2>/dev/null >/dev/null; then
     log "  [ok] Caveman skill updated successfully across all agents."
 else
     log "  [!] Failed to update Caveman automatically."
