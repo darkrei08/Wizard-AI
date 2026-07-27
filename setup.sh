@@ -822,8 +822,12 @@ if command -v npm &>/dev/null; then
   echo -e "${GREEN}  (auto-accepted - forced configuration)${NC}"
 
   if [[ ! "$RUN_COCKPIT" =~ ^[Nn]$ ]]; then
-    echo -e "${CYAN}Running pi-cockpit-proxy-setup via npx...${NC}"
-    npx --yes pi-cockpit-proxy-setup || echo -e "${RED}Failed to run pi-cockpit-proxy-setup.${NC}"
+    echo -e "${CYAN}Running pi-cockpit-proxy-setup locally...${NC}"
+    if [ -f "$HOME/.wizard-ai/packages/pi-cockpit-proxy-setup/index.mjs" ]; then
+      node "$HOME/.wizard-ai/packages/pi-cockpit-proxy-setup/index.mjs" || echo -e "${RED}Failed to run pi-cockpit-proxy-setup.${NC}"
+    else
+      npx --yes pi-cockpit-proxy-setup || echo -e "${RED}Failed to run pi-cockpit-proxy-setup.${NC}"
+    fi
     
     echo -e "\n${CYAN}⚙️ Installing and enabling background Proxy Rotator...${NC}"
     echo -e "${YELLOW}Il proxy verrà installato e abilitato come servizio in background per evitare problemi di quota (429).${NC}"
