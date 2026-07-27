@@ -199,7 +199,6 @@ Welcome to the Wizard-AI knowledge base. All skills and workflows are organized 
 | [🔑 Claude API Reference](skills/claude-api) | — | Models, pricing, params, streaming, tool use, MCP, caching, tokens. |
 | [🕸️ Auto Graphify](skills/auto-graphify) | — | Auto-trigger knowledge graph generation after a prompt. |
 | [🕸️ Graphify](https://github.com/Graphify-Labs/graphify) | — | Turn anything into a persistent knowledge graph. God nodes, community detection, query. |
-| [🧠 Claude Memory](https://github.com/coleam00/claude-memory-compiler) | — | Persist and search memories across sessions. Long-term semantic memory. |
 
 ## Tier 3 — Worker (Stitch)
 
@@ -310,8 +309,6 @@ All tools and skills managed by Wizard-AI are open source. Here is the complete 
 - **[flashrank](https://github.com/PrithivirajDamodaran/FlashRank.git)**: Document re-ranking
 - **[serena](https://github.com/oraios/serena.git)**: Semantic code intelligence
 - **[graphify](https://github.com/safishamsi/graphify.git)**: Knowledge graph builder
-- **[claude-mem](https://github.com/thedotmack/claude-mem.git)**: Persistent LLM memory
-- **[geminiusage](https://github.com/rmedranollamas/geminiusage.git)**: Gemini token tracker
 - **[litellm](https://github.com/BerriAI/litellm.git)**: Universal LLM proxy
 - **[markitdown](https://github.com/microsoft/markitdown.git)**: File-to-Markdown converter
 - **[mermaid-cli](https://github.com/mermaid-js/mermaid-cli.git)**: Mermaid diagram CLI

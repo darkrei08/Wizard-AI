@@ -24,7 +24,6 @@ Garantisce autonomia totale. Nessun prompt utente aggiuntivo.
 2. **Protocollo Self-Questioning**: Prima di agire, agente dichiara:
    ```
    🔄 [AUTONOMOUS LOOP ENGINE] Loop Attivo: 0X. loop-X-...
-   🧠 [SELF-QUESTION] "Quale strada sviluppo/tool semantico (serena, graphify, turbovec, claude-mem) devo usare ora? Qual è condizione esatta per passare al loop successivo?"
    ```
 
 ## 2. Strumenti CLI Core
@@ -36,8 +35,6 @@ Wrapper CLI globali.
 - `ai-rerank`: Riordina passaggi RAG (FlashRank).
 - `ai-squeeze`: Comprime output CLI/JSON (Sqz).
 - `ai-convert`: Converte file in Markdown (MarkItDown).
-- `ai-mem`: Salva memoria semantica persistente (claude-mem).
-- `ai-usage`: Traccia uso token Gemini (GeminiUsage).
 - `ai-sync-skills`: Sincronizza skill.
 - `book-to-skill`: Converte PDF in skill.
 - `litellm`: Gateway API LLM.
@@ -76,7 +73,6 @@ Ecosistema esclusivo Wizard-AI.
 ### 3. Semantica & Memoria
 - `graphify`/`ai-graph`: Knowledge graph.
 - `auto-graphify`: Trigger update grafo.
-- `claude-mem`/`ai-mem`: Memoria cross-sessione.
 - `storybloq`: Gestore sessioni CLI.
 - `handoff`: Compatta log conversazione.
 - `wiki-brain-skill`: Wiki Obsidian.
@@ -189,8 +185,6 @@ All tools and skills managed by Wizard-AI are open source. Here is the complete 
 - **[flashrank](https://github.com/PrithivirajDamodaran/FlashRank.git)**: Document re-ranking
 - **[serena](https://github.com/oraios/serena.git)**: Semantic code intelligence
 - **[graphify](https://github.com/safishamsi/graphify.git)**: Knowledge graph builder
-- **[claude-mem](https://github.com/thedotmack/claude-mem.git)**: Persistent LLM memory
-- **[geminiusage](https://github.com/rmedranollamas/geminiusage.git)**: Gemini token tracker
 - **[litellm](https://github.com/BerriAI/litellm.git)**: Universal LLM proxy
 - **[markitdown](https://github.com/microsoft/markitdown.git)**: File-to-Markdown converter
 - **[mermaid-cli](https://github.com/mermaid-js/mermaid-cli.git)**: Mermaid diagram CLI

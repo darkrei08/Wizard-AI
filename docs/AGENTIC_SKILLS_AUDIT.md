@@ -20,7 +20,6 @@
 | (e) Sessione/memoria | `session-manager`, `handoff` |
 | (f) Skill discovery | `using-superpowers`, `show-active-skill`, `2-wizard-hub`, `skill-creator` |
 | (g) Git lifecycle | `auto-branch`, `auto-release`, `auto-trigger-release`, `finishing-a-development-branch` |
-| (h) Altro | `auto-graphify`, `auto-prompt`, `loopy`, `mp-loop-me`, `mp-triage`, `mp-wayfinder`, `grilling` family, `wizard-ai-installer`, `workflow-*-research/design/processing/integrations`, `writing-skills` |
 
 ## Sovrapposizioni trovate
 

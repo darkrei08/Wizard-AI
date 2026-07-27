@@ -262,8 +262,6 @@ All tools and skills managed by Wizard-AI are open source. Here is the complete 
 - **[flashrank](https://github.com/PrithivirajDamodaran/FlashRank.git)**: Document re-ranking
 - **[serena](https://github.com/oraios/serena.git)**: Semantic code intelligence
 - **[graphify](https://github.com/safishamsi/graphify.git)**: Knowledge graph builder
-- **[claude-mem](https://github.com/thedotmack/claude-mem.git)**: Persistent LLM memory
-- **[geminiusage](https://github.com/rmedranollamas/geminiusage.git)**: Gemini token tracker
 - **[litellm](https://github.com/BerriAI/litellm.git)**: Universal LLM proxy
 - **[markitdown](https://github.com/microsoft/markitdown.git)**: File-to-Markdown converter
 - **[mermaid-cli](https://github.com/mermaid-js/mermaid-cli.git)**: Mermaid diagram CLI
