@@ -22,6 +22,8 @@ Ogni task di sviluppo (feature, bugfix, refactoring, release) DEVE seguire quest
 
 ### 1.1 Esplorazione & Design
 - Esplora il contesto del progetto (file, docs, commit recenti)
+- **Vector RAG (Mandatory per repository grandi)**: Interroga il codice usando `wz-ai-vector` (basato su Turbovec) o `wz-ai-zvec` per la semantic search ad alte prestazioni.
+- **Advanced Orchestration**: Per delegare RAG asincrono o tool calls, usa `wz-ai-qwenpaw`.
 - Se il task è creativo (feature, componente, funzionalità): **usa `brainstorming`**
   - Chiedi domande ONE AT A TIME
   - Proponi 2-3 approcci con trade-off
