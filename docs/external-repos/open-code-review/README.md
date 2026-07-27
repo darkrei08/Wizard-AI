@@ -1,3 +1,7 @@
+# Open Code Review (by alibaba)
+
+Source: https://github.com/alibaba/open-code-review
+
 <div align="center">
   <a href="https://open-codereview.ai">
     <img src="imgs/logo-core.svg" alt="OpenCodeReview logo" width="180" />

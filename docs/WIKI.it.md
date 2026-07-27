@@ -181,6 +181,8 @@ All tools and skills managed by Wizard-AI are open source. Here is the complete 
 
 - **[sqz](https://github.com/ojuschugh1/sqz.git)**: Token compression CLI
 - **[lightpanda](https://github.com/lightpanda-io/browser.git)**: Browser headless ultra-leggero per agenti AI (Zig, non Chromium) — CDP, fetch/dump, agent mode nativo, MCP nativo
+- **[open-code-review](https://github.com/alibaba/open-code-review.git)**: Code review AI ibrida — pipeline deterministica + agent LLM (`ocr`), commenti a livello di riga
+- **[blume](https://github.com/haydenbleasel/blume.git)**: Generatore di siti di documentazione zero-config e AI-ready
 - **[llmlingua](https://github.com/microsoft/LLMLingua.git)**: Prompt compression (Microsoft)
 - **[flashrank](https://github.com/PrithivirajDamodaran/FlashRank.git)**: Document re-ranking
 - **[serena](https://github.com/oraios/serena.git)**: Semantic code intelligence

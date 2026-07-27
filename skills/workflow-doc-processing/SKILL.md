@@ -21,7 +21,11 @@ This meta-skill orchestrates the reading, parsing, and co-authoring of complex e
 4. **Iterative Writing (`doc-coauthoring`)**
    If the user asks to modify or write a new document based on the extracted data, use the `doc-coauthoring` skill to write professional, structured prose iteratively.
 
+5. **Publishing (`blume`)**
+   If the produced markdown/MDX must ship as a browsable documentation site (nav, local search, i18n, OpenAPI reference, `llms.txt` + MCP server for agents), hand it to `blume` — `blume init` once, then `blume dev` / `blume build`. `blume` is the publish stage only: it never writes content (that is `doc-coauthoring`) and never parses binaries (that is steps 1-2).
+
 ## Execution Rules
 
 - Never attempt to read binary documents directly. Always use the appropriate parser skill from this workflow.
 - Prioritize high-fidelity parsing (specialized skills) for complex layouts, and `markitdown` for fast, text-heavy extraction.
+- Run `blume validate` before publishing — `blume build` alone does not check links.

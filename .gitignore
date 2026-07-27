@@ -43,3 +43,6 @@ __pycache__/
 
 # CodeGraph index (local, large)
 .codegraph/
+
+# Agent research scratch dumps
+.cache/ocr-research/

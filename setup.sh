@@ -191,9 +191,9 @@ fi
 VENV_PYTHON="$HOME/.wizard-ai/venv/bin/python"
 
 echo -e "│  ${YELLOW}Installing llmlingua, flashrank, turbovec and zvec inside the venv...${NC}"
-if ! uv pip install $QUIET_OPT --python "$VENV_PYTHON" llmlingua flashrank aisuite turbovec zvec litellm numpy; then
+if ! uv pip install $QUIET_OPT --python "$VENV_PYTHON" llmlingua flashrank aisuite turbovec zvec litellm numpy qwenpaw repodocs; then
   echo -e "${YELLOW}uv pip install failed. Falling back to standard pip...${NC}"
-  "$VENV_PYTHON" -m pip install llmlingua flashrank aisuite turbovec zvec litellm numpy || {
+  "$VENV_PYTHON" -m pip install llmlingua flashrank aisuite turbovec zvec litellm numpy qwenpaw repodocs || {
     echo -e "${RED}❌ Failed to install Python dependencies.${NC}"
     exit 1
   }
@@ -546,6 +546,42 @@ else
     echo -e "${YELLOW}  ⚠ lean-ctx requires Node.js (npm) or Rust (cargo). Neither found.${NC}"
     echo -e "  Please install Node.js (https://nodejs.org) to enable context intelligence."
   fi
+fi
+
+# Install Open Code Review (ocr) — deterministic pipeline + LLM agent hybrid code review CLI
+echo -e "${YELLOW}Checking Open Code Review (ocr)...${NC}"
+if command -v ocr &>/dev/null; then
+  echo -e "│  ${GREEN}✓ ocr already installed.${NC}"
+elif command -v npm &>/dev/null; then
+  if npm install -g @alibaba-group/open-code-review 2>/dev/null \
+    || npm install -g @alibaba-group/open-code-review --prefix "$HOME/.local" 2>/dev/null; then
+    echo -e "${GREEN}  ✓ ocr installed (@alibaba-group/open-code-review).${NC}"
+  else
+    echo -e "${YELLOW}  ⚠ failed to install ocr. Run manually: npm install -g @alibaba-group/open-code-review${NC}"
+  fi
+else
+  echo -e "${YELLOW}  ⚠ ocr requires Node.js (npm). Skipped.${NC}"
+fi
+if command -v git &>/dev/null; then
+  OCR_GIT_VER=$(git --version | awk '{print $3}')
+  if [ "$(printf '%s\n' "2.41.0" "$OCR_GIT_VER" | sort -V | head -n1)" != "2.41.0" ]; then
+    echo -e "${YELLOW}  ⚠ ocr requires Git >= 2.41 (found $OCR_GIT_VER). Upgrade Git or reviews will fail.${NC}"
+  fi
+fi
+
+# Install blume (zero-config, AI-ready documentation site generator — drives a hidden Astro project)
+echo -e "${YELLOW}Checking blume (docs site generator)...${NC}"
+if command -v blume &>/dev/null; then
+  echo -e "│  ${GREEN}✓ blume already installed.${NC}"
+elif command -v npm &>/dev/null; then
+  if npm install -g blume 2>/dev/null \
+    || npm install -g blume --prefix "$HOME/.local" 2>/dev/null; then
+    echo -e "${GREEN}  ✓ blume installed.${NC}"
+  else
+    echo -e "${YELLOW}  ⚠ failed to install blume. Run manually: npm install -g blume${NC}"
+  fi
+else
+  echo -e "${YELLOW}  ⚠ blume requires Node.js >= 22.12 (npm). Skipped.${NC}"
 fi
 
 # Install lightpanda (ultra-light headless browser for AI agents — CDP, fetch/dump, native agent mode + MCP)

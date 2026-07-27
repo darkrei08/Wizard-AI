@@ -57,6 +57,7 @@ Queste skill garantiscono il **Loop-First Approach**: ogni ciclo deve arricchire
 - **`llmwiki` (`wz-ai llmwiki` / `wz-ai wiki`) & `wiki-brain`**: *Quando usarle:* **MANDATORY STEP TRIGGER** alla fine di ogni sessione per trasformare `MEMORY.md`, `walkthrough.md` e la documentazione in un knowledge graph interattivo accessibile da Web UI (`wz-ai llmwiki web / serve`).
 - **`rag-anything` (`turbovec / zvec / llmwiki` via `wz-ai vector / wz-ai zvec / wz-ai llmwiki`)**: *Quando usarla:* **MANDATORY STEP TRIGGER** per indicizzare vettorialmente i nuovi snippet di codice (`wz-ai vector add / wz-ai zvec add / wz-ai llmwiki ingest`).
 - **`book-to-skill`**: *Quando usarla:* **MANDATORY STEP TRIGGER** quando la sessione ha studiato documentazione esterna, manuali PDF o specifiche tecniche, trasformandole in nuove skill salvate nella cartella `skills/`.
+- **`blume`**: *Quando usarla:* Quando il progetto deve pubblicare documentazione leggibile da umani e agenti (non solo il knowledge graph interno). *Cosa fa:* Trasforma la cartella markdown/MDX in un sito docs di produzione (`blume build`) con ricerca locale, i18n, reference OpenAPI, `llms.txt` e MCP server. Esegui sempre `blume validate` prima del rilascio: `blume build` da solo non controlla i link. Distinzione: `wiki-brain`/`graphify` costruiscono il grafo interno per gli agenti, `blume` pubblica il sito esterno.
 
 ---
 

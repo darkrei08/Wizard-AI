@@ -126,6 +126,8 @@ Per ogni unità di lavoro, segui il ciclo:
   - Verifica che il fix non introduce regressioni
 
 ### 4.2 Code Review
+- **Gate deterministico primo**: `ocr review --from main --to HEAD -b "<requisito>"` (skill `open-code-review`) — difetti reali con posizione a livello di riga, ~1/9 dei token di un agente generico.
+- Poi `mp-code-review` per l'asse Spec: il diff corrisponde a cio' che la issue/PRD chiedeva?
 - Self-review del codice contro il piano originale
 - Classifica issue per severità: Critical (bloccante), Warning, Info
 - Critical issues DEVONO essere risolte prima di procedere

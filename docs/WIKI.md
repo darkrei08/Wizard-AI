@@ -166,6 +166,8 @@ Welcome to the Wizard-AI knowledge base. All skills and workflows are organized 
 | [🦉 Strix Security](skills/strix) | — | Autonomous AI hackers for pentesting and vulnerability discovery. |
 | [🧪 Web App Testing](skills/webapp-testing) | — | Playwright-based testing for local web apps. Screenshots, logs, verification. |
 | [🐼 Lightpanda](skills/lightpanda) | — | Ultra-light headless browser (Zig, not Chromium) for AI agents — 9x faster, 16x less RAM than headless Chrome. CDP server, fetch/dump, native agent mode + MCP. |
+| [🔬 Open Code Review](skills/open-code-review) | `ocr review` | Deterministic pipeline + LLM agent hybrid code review (Alibaba). Line-level comments, built-in NPE/thread-safety/XSS/SQLi ruleset. Primary review gate in Loop 3. |
+| [📘 Blume](skills/blume) | `blume dev` | Zero-config, AI-ready documentation site generator (hidden Astro project). Search, i18n, OG images, llms.txt + MCP server. Publish stage of Loop 5. |
 | [🧰 Kit Toolkit](skills/kit) | — | Development toolkit reference. |
 | [🩺 Matt's Bug Diagnosis](skills/systematic-debugging) | — | Diagnosis loop for hard bugs and performance regressions. |
 | [🪝 Pre-Commit Setup](skills/mp-setup-pre-commit) | — | Husky + lint-staged + Prettier + type checking + tests on commit. |
@@ -305,6 +307,8 @@ All tools and skills managed by Wizard-AI are open source. Here is the complete 
 
 - **[sqz](https://github.com/ojuschugh1/sqz.git)**: Token compression CLI
 - **[lightpanda](https://github.com/lightpanda-io/browser.git)**: Browser headless ultra-leggero per agenti AI (Zig, non Chromium) — CDP, fetch/dump, agent mode nativo, MCP nativo
+- **[open-code-review](https://github.com/alibaba/open-code-review.git)**: Deterministic + agent hybrid AI code review CLI (`ocr`)
+- **[blume](https://github.com/haydenbleasel/blume.git)**: Zero-config AI-ready documentation site generator
 - **[llmlingua](https://github.com/microsoft/LLMLingua.git)**: Prompt compression (Microsoft)
 - **[flashrank](https://github.com/PrithivirajDamodaran/FlashRank.git)**: Document re-ranking
 - **[serena](https://github.com/oraios/serena.git)**: Semantic code intelligence

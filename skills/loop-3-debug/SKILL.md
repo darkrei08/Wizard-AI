@@ -43,7 +43,8 @@ Queste skill impediscono di tentare correzioni casuali (`guess-and-check`) impon
 ### 2. Categoria: Verification Gates & Code Review (Controllo Qualità Pre-Merge)
 Queste skill garantiscono che nessun codice difettoso o non verificato superi il confine verso `main`:
 - **`verification-before-completion`**: *Quando usarla:* **MANDATORY BLOCKING GATE** prima di affermare che un bug è risolto o un task completato. *Cosa fa:* Vieta di fare affermazioni di successo senza aver eseguito un comando di test reale e mostrato l'output del terminale (`0 failures`).
-- **`mp-code-review`**: *Quando usarla:* Subito dopo che i test sono passati per analizzare il diff accumulato (`git diff main...HEAD`). *Cosa fa:* Esegue una revisione automatizzata cercando duplicazioni, violazioni di stile e vulnerabilità.
+- **`open-code-review` (`ocr`)**: *Quando usarla:* **PRIMO GATE AUTOMATICO** appena i test sono verdi, prima di qualsiasi review LLM prompt-driven. *Cosa fa:* Pipeline deterministica (selezione file, bundling, rule matching, positioning) + agent LLM: caccia difetti reali (NPE, thread-safety, XSS, SQL injection) con commenti a livello di riga. `ocr review --from main --to HEAD -b "<requisito>"` sul diff, `ocr scan --path <dir>` su codice sconosciuto senza diff. Recall volutamente basso: NON sostituisce i test ne' la review di spec.
+- **`mp-code-review`**: *Quando usarla:* Dopo `ocr`, per l'asse che `ocr` non copre: il diff corrisponde a quanto chiedeva la issue/PRD? *Cosa fa:* Revisione a due assi (Standards + Spec) in subagent paralleli. `ocr` giudica i difetti del codice, `mp-code-review` giudica l'intento.
 - **`receiving-code-review`**: *Quando usarla:* Quando si riceve feedback di code review (da un utente, da un altro agente o da una PR GitHub). *Cosa fa:* Impone rigore tecnico e verifica empirica dei suggerimenti prima di applicarli, rifiutando modifiche accondiscendenti o dannose.
 - **`requesting-code-review`**: *Quando usarla:* Per impacchettare le modifiche fatte in una descrizione formale di Pull Request prima di chiedere l'approvazione finale.
 
@@ -71,7 +72,10 @@ graph TD
     CheckGates -- No (Errori Lint / Test Falliti) --> SysFix
     CheckGates -- Sì (Limpido) --> VerGate[verification-before-completion / Mostra Evidenza Terminale]
     
-    VerGate --> Review[mp-code-review / Analisi Diff]
+    VerGate --> OCR["ocr review --from main --to HEAD / Gate Deterministico"]
+    OCR --> OCROut{Difetti bloccanti trovati?}
+    OCROut -- Sì --> SysFix
+    OCROut -- No --> Review[mp-code-review / Asse Spec + Standards]
     Review --> ReviewOut{Esito della Code Review?}
     
     ReviewOut -- Richiesta Correzione Minore --> RecRev[receiving-code-review / Applica Fix]
@@ -110,7 +114,20 @@ wz-ai debug check
 Prima di dichiarare che il bug è risolto o il codice è pronto per la review, DEVI copiare e mostrare l'esatto output del terminale che attesta il successo (`All tests passed`, `0 failures`). Non è ammesso dire "ho verificato ed è a posto" senza prove.
 </MANDATORY>
 
-### Step 3.5: Never-Stop Autonomous Handoff (`ZERO-STOP MANDATE`)
+### Step 3.5: Gate Deterministico di Code Review (`open-code-review`)
+Con i test verdi, esegui il gate automatico **prima** di qualsiasi review prompt-driven:
+```bash
+ocr review --from main --to HEAD -b "<requisito o descrizione PR>" --audience agent
+# codice sconosciuto o senza diff significativo:
+ocr scan --path <dir> --max-tokens-budget 200000
+```
+- `-b/--background` è il flag a piu' alto impatto sulla qualita': passagli il requisito reale.
+- Difetti bloccanti trovati -> torna allo Step 3.2 (fix mirato), poi rilancia `ocr review`.
+- Zero difetti -> passa a `mp-code-review` per l'asse Spec (il diff fa davvero cio' che la issue chiedeva?).
+- <MANDATORY> Recall di `ocr` è volutamente basso: un `ocr review` pulito NON autorizza a saltare i test ne' la review di spec. </MANDATORY>
+- Chiavi API solo da variabili d'ambiente (`ANTHROPIC_API_KEY`, `OCR_LLM_TOKEN`, ...). Mai una chiave letterale in `config.json`, script o YAML di CI.
+
+### Step 3.6: Never-Stop Autonomous Handoff (`ZERO-STOP MANDATE`)
 Una volta completata la diagnosi ed i test sono verdi, **NON FERMARTI E NON CHIEDERE ALL'UTENTE UN PROMPT DI CONFERMA**.
 Applica la regola del dialogo interno:
 `🧠 [SELF-QUESTION] "I test sono 100% verdi. Il codice necessita di un refactoring architetturale (`serena` + `codebase-design` in Loop 4) oppure è pulito ed è pronto per il rilascio in Loop 5?"`

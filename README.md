@@ -373,6 +373,8 @@ Wizard-AI isn't just a collection of prompts. It integrates the absolute best-in
 | **Browser/Web** | Headless Chrome (Heavy/Blocked) | **[Lightpanda](https://github.com/lightpanda-io/browser)**, **[Camofox](https://github.com/jo-inc/camofox-browser)** (Stealth & Ultra-Fast) |
 | **Security** | Basic/None | **[CrowdSec Skill](https://github.com/crowdsecurity/crowdsec-skill)**, **[ECC](https://github.com/affaan-m/ecc)** |
 | **Code Understanding**| Basic Regex/Grep | **[Serena](https://github.com/oraios/serena)** (AST), **[Understand-Anything](https://github.com/Egonex-AI/Understand-Anything)**, **[Personal-Graph](https://github.com/Technoculture/personal-graph)**, **[LLM Wiki](https://github.com/nashsu/llm_wiki)** |
+| **Code Review** | Prompt-only, drifting line numbers | **[Open Code Review](https://github.com/alibaba/open-code-review)** (deterministic pipeline + agent, line-level, ~1/9 tokens) |
+| **Documentation** | Hand-rolled docs sites | **[Blume](https://github.com/haydenbleasel/blume)** (zero-config Astro docs, `llms.txt` + MCP server for agents) |
 
 ### 🧠 Mandatory Multi-Agent Workflows
 By default, any agent launched under the Wizard-AI environment is strictly bound to **Infrastructure-as-Code (IaC)** principles. Complex tasks are strictly prevented from being executed monolithically in the main thread. Instead, they trigger asynchronous fan-outs using `parallel()` and subagent pools, performing adversarial reviews before any code is released.

@@ -124,6 +124,16 @@
           "name": "pi-cockpit-proxy-setup",
           "url": "https://github.com/darkrei08/Wizard-AI.git",
           "desc": "Interactive installer for Pi & Cockpit Tools proxy"
+        },
+        {
+          "name": "open-code-review",
+          "url": "https://github.com/alibaba/open-code-review.git",
+          "desc": "Deterministic + agent hybrid AI code review CLI (ocr)"
+        },
+        {
+          "name": "blume",
+          "url": "https://github.com/haydenbleasel/blume.git",
+          "desc": "Zero-config AI-ready documentation site generator"
         }
       ]
     },

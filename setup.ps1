@@ -163,7 +163,7 @@ $VenvDir = Join-Path $AiSkills 'venv'
 if ($QuietOpt) { uv venv $VenvDir --python 3.12 --seed --quiet } else { uv venv $VenvDir --python 3.12 --seed }
 $VenvPython = Join-Path $VenvDir 'Scripts\python.exe'
 Write-Log 'Installing llmlingua, flashrank, turbovec and zvec inside the venv (this can take a while)...' -ForegroundColor Yellow
-if ($QuietOpt) { uv pip install --quiet --python $VenvPython llmlingua flashrank aisuite turbovec zvec litellm numpy } else { uv pip install --python $VenvPython llmlingua flashrank aisuite turbovec zvec litellm numpy }
+if ($QuietOpt) { uv pip install --quiet --python $VenvPython llmlingua flashrank aisuite turbovec zvec litellm numpy qwenpaw repodocs } else { uv pip install --python $VenvPython llmlingua flashrank aisuite turbovec zvec litellm numpy qwenpaw repodocs }
 Write-Log "[ok] Virtual environment ready at $VenvDir" -ForegroundColor Green
 
 # 3. Setting up external git skill & framework repositories (Interactive Selector)
@@ -443,6 +443,51 @@ if (Get-Command wsl -ErrorAction SilentlyContinue) {
 }
 else {
     Write-Log '  [!] lightpanda requires WSL2 on Windows (no native binary). Install WSL2 first: wsl --install' -ForegroundColor Yellow
+}
+
+# Install Open Code Review (ocr) - deterministic pipeline + LLM agent hybrid code review CLI
+Write-Log 'Checking Open Code Review (ocr)...' -ForegroundColor Yellow
+if (Get-Command ocr -ErrorAction SilentlyContinue) {
+    Write-Log '  [ok] ocr already installed.' -ForegroundColor Green
+}
+elseif (Get-Command npm -ErrorAction SilentlyContinue) {
+    try {
+        npm install -g '@alibaba-group/open-code-review' 2>$null
+        Write-Log '  [ok] ocr installed (@alibaba-group/open-code-review).' -ForegroundColor Green
+    }
+    catch {
+        Write-Log '  [!] failed to install ocr. Run manually: npm install -g @alibaba-group/open-code-review' -ForegroundColor Yellow
+    }
+}
+else {
+    Write-Log '  [!] ocr requires Node.js (npm). Skipped.' -ForegroundColor Yellow
+}
+if (Get-Command git -ErrorAction SilentlyContinue) {
+    try {
+        $OcrGitVer = [version](((git --version) -split ' ')[2] -replace '\.windows.*$', '')
+        if ($OcrGitVer -lt [version]'2.41.0') {
+            Write-Log "  [!] ocr requires Git >= 2.41 (found $OcrGitVer). Upgrade Git or reviews will fail." -ForegroundColor Yellow
+        }
+    }
+    catch { Write-Log '  [i] Could not parse Git version - ocr requires Git >= 2.41.' -ForegroundColor DarkGray }
+}
+
+# Install blume (zero-config, AI-ready documentation site generator - drives a hidden Astro project)
+Write-Log 'Checking blume (docs site generator)...' -ForegroundColor Yellow
+if (Get-Command blume -ErrorAction SilentlyContinue) {
+    Write-Log '  [ok] blume already installed.' -ForegroundColor Green
+}
+elseif (Get-Command npm -ErrorAction SilentlyContinue) {
+    try {
+        npm install -g blume 2>$null
+        Write-Log '  [ok] blume installed.' -ForegroundColor Green
+    }
+    catch {
+        Write-Log '  [!] failed to install blume. Run manually: npm install -g blume' -ForegroundColor Yellow
+    }
+}
+else {
+    Write-Log '  [!] blume requires Node.js >= 22.12 (npm). Skipped.' -ForegroundColor Yellow
 }
 
 # 5. Fix sqz binary (pre-compiled native binary for token compression)
