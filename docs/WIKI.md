@@ -352,6 +352,8 @@ All tools and skills managed by Wizard-AI are open source. Here is the complete 
 
 - **[engram](https://github.com/Gentleman-Programming/engram.git)**: SQLite-backed agent memory
 - **[turbovec](https://github.com/RyanCodrai/turbovec.git)**: TurboVec vector DB
+- **[repodocs](https://github.com/aryrabelo/repodocs.git)**: Source-cited AI wiki generator (codebase to cited markdown)
+- **[blume](https://github.com/haydenbleasel/blume.git)**: Zero-config AI-ready documentation site generator (markdown to site)
 - **[personal-graph](https://github.com/Technoculture/personal-graph.git)**: Personal knowledge graph
 - **[llm_wiki](https://github.com/nashsu/llm_wiki.git)**: Cross-platform desktop application for knowledge bases
 - **[rag-anything](https://github.com/HKUDS/RAG-Anything.git)**: RAG architecture for diverse data modalities
