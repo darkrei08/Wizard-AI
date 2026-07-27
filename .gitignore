@@ -40,3 +40,6 @@ __pycache__/
 *.pyc
 # Local Pi runtime state
 .atl/
+
+# CodeGraph index (local, large)
+.codegraph/

@@ -162,8 +162,8 @@ Write-Log '[2/8] Preparing Python Virtual Environment for LLMLingua & FlashRank.
 $VenvDir = Join-Path $AiSkills 'venv'
 if ($QuietOpt) { uv venv $VenvDir --python 3.12 --seed --quiet } else { uv venv $VenvDir --python 3.12 --seed }
 $VenvPython = Join-Path $VenvDir 'Scripts\python.exe'
-Write-Log 'Installing llmlingua and flashrank inside the venv (this can take a while)...' -ForegroundColor Yellow
-if ($QuietOpt) { uv pip install --quiet --python $VenvPython llmlingua flashrank aisuite } else { uv pip install --python $VenvPython llmlingua flashrank aisuite }
+Write-Log 'Installing llmlingua, flashrank, turbovec and zvec inside the venv (this can take a while)...' -ForegroundColor Yellow
+if ($QuietOpt) { uv pip install --quiet --python $VenvPython llmlingua flashrank aisuite turbovec zvec litellm numpy } else { uv pip install --python $VenvPython llmlingua flashrank aisuite turbovec zvec litellm numpy }
 Write-Log "[ok] Virtual environment ready at $VenvDir" -ForegroundColor Green
 
 # 3. Setting up external git skill & framework repositories (Interactive Selector)

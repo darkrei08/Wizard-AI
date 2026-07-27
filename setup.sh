@@ -190,10 +190,10 @@ if ! uv venv "$HOME/.wizard-ai/venv" --python 3.12 --seed $QUIET_OPT 2>/dev/null
 fi
 VENV_PYTHON="$HOME/.wizard-ai/venv/bin/python"
 
-echo -e "│  ${YELLOW}Installing llmlingua and flashrank inside the venv...${NC}"
-if ! uv pip install $QUIET_OPT --python "$VENV_PYTHON" llmlingua flashrank aisuite; then
+echo -e "│  ${YELLOW}Installing llmlingua, flashrank, turbovec and zvec inside the venv...${NC}"
+if ! uv pip install $QUIET_OPT --python "$VENV_PYTHON" llmlingua flashrank aisuite turbovec zvec litellm numpy; then
   echo -e "${YELLOW}uv pip install failed. Falling back to standard pip...${NC}"
-  "$VENV_PYTHON" -m pip install llmlingua flashrank aisuite || {
+  "$VENV_PYTHON" -m pip install llmlingua flashrank aisuite turbovec zvec litellm numpy || {
     echo -e "${RED}❌ Failed to install Python dependencies.${NC}"
     exit 1
   }
@@ -479,6 +479,14 @@ if ! command -v serena &>/dev/null; then
   fi
 else
   echo -e "│  ${GREEN}✓ serena already installed.${NC}"
+fi
+
+# Force serena LSP backend: JetBrains backend needs a running IDE plugin,
+# which breaks symbolic tools for CLI-only agents.
+SERENA_CONFIG="$HOME/.serena/serena_config.yml"
+if [ -f "$SERENA_CONFIG" ] && grep -q "^language_backend: JetBrains" "$SERENA_CONFIG"; then
+  sed -i 's/^language_backend: JetBrains/language_backend: LSP/' "$SERENA_CONFIG"
+  echo -e "│  ${GREEN}✓ serena language_backend switched to LSP.${NC}"
 fi
 
 # Install lean-ctx (context intelligence binary)
