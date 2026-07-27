@@ -85,7 +85,7 @@ Per ogni unità di lavoro, segui il ciclo:
 4. **COMMIT**: Commit atomico con messaggio convenzionale
 
 ### 3.2 Subagent Delegation
-- Per task complessi, dispatcha subagent specializzati:
+- [MANDATORY MULTI-AGENT] Devi SEMPRE spawnare subagents in parallelo (es. `parallel()`, `goodcode` o background agent) invece di scrivere codice monolitico nel main thread:
   - Prompt iper-specifico con file path, skill da caricare, criteri di successo
   - Se task indipendenti → spawn paralleli
   - Se task sequenziali → attendi completamento in ordine

@@ -87,3 +87,18 @@ When asked to add or integrate new skills or tools, you MUST apply the **Compara
 2. **Deprecate or Merge**: Never keep duplicates. If the new skill is more advanced/efficient, deprecate the older one. If they are complementary, merge them or distinguish their triggers clearly.
 3. **Workflow Integration**: Wire the winning skill into the production loop (`02. loop-2-develop`, `03. loop-3-debug`, etc.).
 4. **Registry Update**: Document the decision and update `scripts/repo-registry.json` and the WIKI with the final cataloged structure.
+
+---
+
+## 7. 🤖 MANDATORY MULTI-AGENT & SKILL ROUTING (The "Production Standard")
+Whenever you execute development or production work, you **MUST NOT** operate as a single monolithic agent doing everything sequentially. You are strictly required to use **Multi-Agent Orchestration**:
+
+1. **Subagent Fan-Out for Development (Loop 2 & 3)**:
+   - When coding, debugging, or reviewing multiple files, you MUST spawn parallel subagents (via `parallel()` in `pi-extensible-workflows`, the `goodcode` orchestrator, or native `Agent` background tools).
+   - Divide the task into isolated scopes (e.g., frontend subagent, backend subagent, review subagent) and aggregate their results. **Never code heavy features sequentially in the main thread.**
+
+2. **Strict Hub & Wiki Adherence**:
+   - Do NOT guess how to do something or invent commands. If you need to install a tool, you MUST use `wizard-ai-installer`.
+   - If you need vector RAG, you MUST use `wz-ai-vector` (Turbovec/ZVec) or `wz-ai-qwenpaw`.
+   - If you don't know the exact syntax for a framework, you MUST read its `SKILL.md` file from `skills/` or look it up in `docs/WIKI.md`.
+   - Before any production deployment, you MUST follow `workflow-production-cycle` step-by-step.
