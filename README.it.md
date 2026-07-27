@@ -118,7 +118,7 @@ Nell'ecosistema AI del 2026, l'ingegneria del contesto è il nuovo standard oro.
 ## 🚀 Avvio Rapido
 
 ```bash
-npx -y @darkrei08/wizard-ai-cli@latest --verbose
+npx --no-cache -y @darkrei08/wizard-ai-cli@latest --verbose
 ```
 
 Per l'installazione manuale e la documentazione completa, fai riferimento al [README principale in lingua inglese](README.md) o alle [Guide Modulari](docs/COCKPIT_PROXY_GUIDE.md).

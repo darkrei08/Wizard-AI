@@ -121,7 +121,7 @@ On Linux / macOS:
 ```bash
 ./setup.sh
 # Alternatively via npx:
-npx -y @darkrei08/wizard-ai-cli@latest setup --verbose
+npx --no-cache -y @darkrei08/wizard-ai-cli@latest setup --verbose
 ```
 
 On Windows (PowerShell):
@@ -133,7 +133,7 @@ On Windows (PowerShell):
 If you already ran the guided setup and just want to launch the Skill Manager directly. To see verbose logs printed to the video during skill installations, append the `--verbose` flag:
 
 ```bash
-npx -y @darkrei08/wizard-ai-cli@latest --verbose
+npx --no-cache -y @darkrei08/wizard-ai-cli@latest --verbose
 ```
 
 ### 3. Run via Docker (Isolated Web GUI)
