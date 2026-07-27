@@ -1,11 +1,12 @@
 ---
 name: mem0
-description: "Reference documentation and knowledge base for mem0. Automatically generated from external repository README."
+description: "Vector semantic memory engine. NOTE: mem0 is for vector semantic memory, NOT for session state management. For session state, use engram."
 ---
 
 # mem0 Knowledge Base
 
-> **TRIGGER HOOK**: Read this file BEFORE answering or planning if the user prompt mentions `mem0`, `mem0`, or if you are tasked to work with this technology. This acts as your native integration knowledge base.
+> **TRIGGER HOOK**: Read this file BEFORE answering or planning if the user prompt mentions `mem0` or if you are tasked to work with vector semantic memory. 
+> **NOTE**: mem0 is for persistent vector semantic memory. It is NOT for tracking session state or step-by-step history. For persistent session state and MCP memory, use `engram`.
 
 ## Repository Information
 The following is the official documentation for mem0, downloaded from its GitHub repository to serve as your primary source of truth.

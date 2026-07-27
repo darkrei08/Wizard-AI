@@ -3,6 +3,8 @@ name: master-project-bootstrap
 description: The ultimate master skill to bootstrap, initialize, and architect any new project. It enforces Clean Architecture, SDD/TDD, Living Documents, and dynamically uses all Wizard-AI skills and frameworks based on project complexity.
 ---
 
+> **DISAMBIGUATION**: `master-project-bootstrap` is for DAY-0 new repos and project creation. Do not use for existing features.
+
 # Master Project Bootstrap 🚀
 
 This is the ultimate meta-skill for bootstrapping and managing software projects. When invoked or when tasked to start a new project, you MUST enforce these strict guidelines. This skill integrates the battle-tested architecture with the entire Wizard-AI skill ecosystem.

@@ -3,6 +3,8 @@ name: gentle-ai
 description: "Core ecosystem configurator for AI coding agents. Uses SDD, Engram, and standardized rulesets. Use to configure agent memory, system prompts, and tool contexts."
 ---
 
+> **DISAMBIGUATION**: `gentle-ai` is for configuring agent environments, system prompts, and Engram memory setup, not for orchestrating code writing.
+
 # /gentle-ai
 
 Gentle-AI is an ecosystem orchestrator and configurator for AI coding agents.

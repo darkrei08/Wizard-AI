@@ -113,7 +113,12 @@ cp "$HOME/.gemini/config/skills/reference/<category>/<author_or_repo>/<skill-nam
 Ogni nuova skill, framework o progetto installato DEVE essere classificato categorialmente e agganciato in modo persistente a uno dei **5 Loop Sequenziali Master (`01 → 05`)** di Wizard-AI, in modo che l'LLM sappia sempre in futuro dove trovarla e in quale fase del ciclo farla richiamare.
 </MANDATORY>
 
-1. **Analisi Categoriale e Assegnazione al Loop Target:**
+1. **Comparative Installation & Test (Anti-Duplicate Rule)**:
+   - Prima di installare, VERIFICA sempre le skill esistenti nello stesso dominio (es. frontend, debugging, API design).
+   - Compara regole, efficienza e funzionalità avanzate.
+   - Se la nuova skill è più efficiente, **depreca** la vecchia (aggiungi un disclaimer o eliminala). Se complementare, definisci confini netti.
+
+2. **Analisi Categoriale e Assegnazione al Loop Target:**
    L'LLM deve chiedersi (o chiedere all'utente se lo scopo è ambiguo): *"Qual è lo scopo operativo principale di questa nuova skill/framework/progetto e a quale dei 5 Loop Master appartiene?"*
    - `01. loop-1-plan` → Requisiti, Allineamento, Grilling, Specifiche, Ticketing e Scaffolding Architetturale.
    - `02. loop-2-develop` → Git Branching isolato, TDD (Red-Green-Refactor), Implementazione, Subagents, Sicurezza (OWASP/NIST) o Framework UI/Domain.

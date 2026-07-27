@@ -1,7 +1,9 @@
 ---
 name: rtk
-description: "RTK (Rust Token Killer) — CLI output compression proxy for AI agents. Intercepts shell command outputs (git, npm, ls, grep, etc.) and compresses them 60-90% before they enter the LLM's context window. Single Rust binary, zero deps, <10ms latency. Use when CLI output is verbose and wastes tokens."
+description: "RTK (Rust Token Killer) — CLI output compression proxy for AI agents. BOUNDARY: Use rtk for fast CLI stream compression. Do not use for file caching (use lean-ctx), static text (use sqz/llmlingua), or API proxying (use headroom)."
 ---
+
+> **DISAMBIGUATION**: `rtk` is strictly for fast CLI stream output compression.
 
 # RTK — Rust Token Killer
 
@@ -79,7 +81,11 @@ RTK is part of the **Phase 5 (CLI Output Interception)** in the `workflow-agenti
 | **Method** | Smart filtering + grouping | Structural compression |
 | **Best for** | git, npm, ls, grep, kubectl | JSON payloads, build logs, verbose APIs |
 
-## When to Use
+## When to Use (Skill Boundaries)
+- **rtk**: Use for fast CLI stream compression (intercepting `git log`, `npm test`, `kubectl get`, etc.).
+- **sqz / llmlingua**: Use for static text compression (text, JSON, logs you already have).
+- **lean-ctx**: Use for file caching, AST parsing, and shell gating.
+- **headroom**: Use for API proxying.
 - AI agent is running shell commands with verbose output
 - `git log`, `npm test`, `kubectl get` produce excessive tokens
 - You want automatic, zero-config compression of CLI interactions

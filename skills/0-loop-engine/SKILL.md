@@ -22,6 +22,8 @@ If you are a subagent, skip the PRE/POST pipeline but respect the domain skills.
 
 ---
 
+> **DISAMBIGUATION**: `0-loop-engine` is the standard dev cycle and orchestrator for everyday tasks. Use it for ongoing development, not DAY-0 setup.
+
 ## 🧠 Architecture: Mixture of Experts (MoE) Routing
 
 The loop uses a routing system inspired by the Mixture of Experts of modern LLMs. Each user prompt is analyzed by a **gating function** which calculates a relevance score for each skill/workflow and determines which pipeline steps to activate.

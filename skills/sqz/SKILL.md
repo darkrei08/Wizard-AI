@@ -1,7 +1,9 @@
 ---
 name: sqz
-description: "Reference documentation and knowledge base for sqz. Automatically generated from external repository README."
+description: "Reference documentation and knowledge base for sqz. BOUNDARY: Use sqz for static text compression, not for CLI streams (use rtk) or API proxying (use headroom)."
 ---
+
+> **DISAMBIGUATION**: `sqz` is for static text, file output, and prompt compression.
 
 # sqz Knowledge Base
 
@@ -65,6 +67,13 @@ Source: https://github.com/ojuschugh1/sqz
 </p>
 
 ---
+
+## When to Use (Skill Boundaries)
+- **sqz**: Use for compressing static text, JSON payloads, build logs, and verbose APIs when you have the text available.
+- **rtk**: Use for fast CLI stream compression (e.g. intercepting shell commands in real-time).
+- **lean-ctx**: Use for file caching, AST parsing, and shell gating.
+- **llmlingua**: Use for ML-powered prompt compression (static text).
+- **headroom**: Use for API proxying and LLM request routing.
 
 sqz compresses command output before it reaches your LLM. Single Rust binary, zero config.
 

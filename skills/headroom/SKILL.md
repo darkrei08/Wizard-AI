@@ -1,7 +1,9 @@
 ---
 name: headroom
-description: Context compression and API proxy for reducing token costs and latency
+description: Context compression and API proxy for reducing token costs and latency. BOUNDARY: Use headroom for API proxying. Do not use for fast CLI stream compression (use rtk), file caching (use lean-ctx), or static text compression (use sqz/llmlingua).
 ---
+
+> **DISAMBIGUATION**: `headroom` is an API proxy for token usage reduction and routing.
 
 # Headroom Token Compression
 
@@ -35,7 +37,11 @@ headroom proxy --port 8000 &
 # Configure Litellm/Agent to route through http://localhost:8000
 ```
 
-## When to trigger this skill:
+## When to trigger this skill (Skill Boundaries):
+- **headroom**: Use for API proxying and routing LLM requests through a proxy to cache/compress inputs/outputs.
+- **rtk**: Use for fast CLI stream compression.
+- **lean-ctx**: Use for file caching and shell gating.
+- **sqz / llmlingua**: Use for static text compression.
 - A user sends an extremely large prompt (e.g. paste of multiple log files).
 - You are fetching extensive tool output (like a 10,000 line grep) and need to compress it before returning it to your context.
 - When organizing the LLM context (e.g. running `wz-ai optimize` pipelines).

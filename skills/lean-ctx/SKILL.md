@@ -3,6 +3,8 @@ name: lean-ctx
 description: "Lean Context Intelligence for AI agents. Controls what your AI can see, remembers what it learns, guards what it touches. Reduces token usage by 60-90%. Use when context window is filling up, re-reading files wastes tokens, or you need persistent session memory."
 ---
 
+> **DISAMBIGUATION**: `lean-ctx` handles file caching, shell gating, and host environment management.
+
 # LeanCTX — Lean Context Intelligence
 
 Use `wz-ai lean` to control what your AI agents can see, compress file reads, persist session memory, and save 60-90% on tokens.

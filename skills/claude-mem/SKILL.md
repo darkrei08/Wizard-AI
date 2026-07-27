@@ -1,14 +1,13 @@
 ---
 name: claude-mem
-description: "Reference documentation and knowledge base for claude-mem. Automatically generated from external repository README."
+description: "[DEPRECATED] Use engram instead. claude-mem is deprecated."
 ---
 
-# claude-mem Knowledge Base
+# claude-mem Knowledge Base (DEPRECATED)
 
-> **TRIGGER HOOK**: Read this file BEFORE answering or planning if the user prompt mentions `claude-mem`, `claude-mem`, or if you are tasked to work with this technology. This acts as your native integration knowledge base.
-
-## Repository Information
-The following is the official documentation for claude-mem, downloaded from its GitHub repository to serve as your primary source of truth.
+> **DEPRECATED**: `claude-mem` is officially deprecated in the Wizard-AI ecosystem. Please use `engram` instead for all persistent memory operations.
+> 
+> Engram is the required standard for persistent memory operations, replacing claude-mem.
 
 ---
 

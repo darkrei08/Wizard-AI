@@ -3,6 +3,8 @@ name: workflow-production-cycle
 description: "MASTER PRODUCTION WORKFLOW — Ciclo end-to-end di produzione software. Fonde auto-workflow (Git Flow + Superpowers) con workflow-production-cycle (catena skill completa). Obbligatorio per OGNI task di sviluppo: dalla pianificazione al rilascio, con TDD, subagent, debugging, e release automatica."
 ---
 
+> **DISAMBIGUATION**: `workflow-production-cycle` is specifically for END-TO-END releases and deployments, not general development.
+
 # 🏭 Master Production Workflow (Unified)
 
 > **Fonde:** `auto-workflow` + `workflow-production-cycle` + regole chiave di `enterprise-development-protocol`
@@ -16,7 +18,7 @@ Ogni task di sviluppo (feature, bugfix, refactoring, release) DEVE seguire quest
 ---
 
 ## ═══════════ FASE 1: BRAINSTORM & PLANNING ═══════════
-**Skills:** `brainstorming`, `writing-plans`, `enterprise-development-protocol`
+**Skills:** `brainstorming` (superpowers), `loopkit-spec-first`, `enterprise-development-protocol`, `postgresql-table-design` (wshobson), `api-and-interface-design` (wshobson/addyosmani)
 
 ### 1.1 Esplorazione & Design
 - Esplora il contesto del progetto (file, docs, commit recenti)
@@ -71,7 +73,7 @@ Ogni task di sviluppo (feature, bugfix, refactoring, release) DEVE seguire quest
 ---
 
 ## ═══════════ FASE 3: ESECUZIONE & TDD ═══════════
-**Skills:** `subagent-driven-development` (o `wizard-ai-orchestration` rigor: fresh-per-task), `test-driven-development`, `cybersecurity`, `goodcode`, `spec-kit`
+**Skills:** `wizard-ai-orchestration`, `test-driven-development`, `cybersecurity`, `frontend-ui-engineering` (addyosmani), `anthropic-frontend-design`, `dammyjay93-interface-design`, `react-best-practices` (vercel-labs), `wsh-error-handling`
 
 ### 3.1 Test-Driven Development (OBBLIGATORIO)
 Per ogni unità di lavoro, segui il ciclo:
@@ -111,7 +113,7 @@ Per ogni unità di lavoro, segui il ciclo:
 ---
 
 ## ═══════════ FASE 4: REVIEW & QUALITY GATES ═══════════
-**Skills:** `requesting-code-review`, `systematic-debugging`, `goodcode`, `auto-debug`
+**Skills:** `loopkit-adversarial-verify`, `systematic-debugging` (superpowers), `goodcode`, `auto-debug`
 
 ### 4.1 Systematic Debug
 - Esegui test suite completa
@@ -165,7 +167,7 @@ git push origin main
 ---
 
 ## ═══════════ FASE 6: RELEASE & CLEANUP ═══════════
-**Skills:** `auto-release`, `auto-trigger-release`, `finishing-a-development-branch`
+**Skills:** `auto-release`, `awesome-changelog-generator` (composiohq), `auto-trigger-release`, `finishing-a-development-branch`
 
 ### 6.1 Release
 - Determina il bump type:
