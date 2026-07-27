@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const skillsDir = '/home/ema/.gemini/config/skills/';
+const skillsDir = 'require('os').homedir() + '/.gemini/config/skills/'';
 
 function determineMetadata(skillName, content) {
     let category = "Core System";

@@ -3,7 +3,7 @@
 # wz-ai-jupyter - Launches the local Wizard-AI Jupyter Server and displays the connection URL
 #
 
-JUPYTER_ENV="/home/ema/.jupyter_env"
+JUPYTER_ENV="$HOME/.jupyter_env"
 
 if [ ! -f "$JUPYTER_ENV/bin/jupyter" ]; then
     echo "❌ Error: Jupyter environment not found at $JUPYTER_ENV" >&2

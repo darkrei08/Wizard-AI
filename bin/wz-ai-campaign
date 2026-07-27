@@ -15,7 +15,7 @@ SCRIPT_DIR="$(cd -P "$(dirname "$SOURCE")/.." && pwd)"
 
 PYTHON_SCRIPT="$SCRIPT_DIR/scripts/publish_viral_campaign.py"
 if [ ! -f "$PYTHON_SCRIPT" ]; then
-    PYTHON_SCRIPT="/home/ema/Scrivania/altri repooo/Wizard-AI/scripts/publish_viral_campaign.py"
+    PYTHON_SCRIPT="$(dirname "$0")/../scripts/publish_viral_campaign.py"
 fi
 
 if [ ! -f "$PYTHON_SCRIPT" ]; then

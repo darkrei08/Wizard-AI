@@ -11,7 +11,7 @@ TARGET_DIR="${1:-.}"
 TARGET_DIR=$(cd "$TARGET_DIR" && pwd)
 
 # Detect current stable version from global package or git repo
-WIZARD_STABLE_VER=$(node -p "try { require('/home/ema/Scrivania/altri repooo/Wizard-AI/package.json').version } catch { '0.49.0' }" 2>/dev/null || echo "0.49.0")
+WIZARD_STABLE_VER=$(node -p "try { require('package.json').version } catch { '0.49.0' }" 2>/dev/null || echo "0.49.0")
 WIZARD_CHANNEL="${WIZARD_CHANNEL:-latest}"
 
 # If channel is 'stable', lock to the exact release version. If 'latest', point to latest global release.
@@ -40,7 +40,7 @@ cat << EOF > "$TARGET_DIR/.wizard-ai.json"
       "args": ["codebase-memory-mcp"]
     },
     "llmwiki": {
-      "command": "/home/ema/.local/bin/wz-ai-wiki",
+      "command": "$HOME/.local/bin/wz-ai-wiki",
       "args": ["mcp", "--base-dir", "."]
     },
     "serena": {
@@ -61,12 +61,12 @@ cat << EOF > "$TARGET_DIR/.wizard-ai.json"
     }
   },
   "tools": {
-    "wiki": "/home/ema/.local/bin/wz-ai-wiki",
-    "vector": "/home/ema/.local/bin/wz-ai-vector",
-    "graph": "/home/ema/.local/bin/wz-ai-graph",
-    "compress": "/home/ema/.local/bin/wz-ai-squeeze",
-    "context": "/home/ema/.local/bin/ai-context",
-    "session": "/home/ema/.local/bin/wz-ai-session-save"
+    "wiki": "$HOME/.local/bin/wz-ai-wiki",
+    "vector": "$HOME/.local/bin/wz-ai-vector",
+    "graph": "$HOME/.local/bin/wz-ai-graph",
+    "compress": "$HOME/.local/bin/wz-ai-squeeze",
+    "context": "$HOME/.local/bin/ai-context",
+    "session": "$HOME/.local/bin/wz-ai-session-save"
   }
 }
 EOF
@@ -86,7 +86,7 @@ MCP_CONFIG='{
       "args": ["codebase-memory-mcp"]
     },
     "llmwiki": {
-      "command": "/home/ema/.local/bin/wz-ai-wiki",
+      "command": "$HOME/.local/bin/wz-ai-wiki",
       "args": ["mcp", "--base-dir", "."]
     },
     "serena": {
@@ -169,13 +169,13 @@ echo "  ✓ Created/Updated mandatory agent guidelines: AGENTS.md, CLAUDE.md, GE
 # 4. Initialize graphify and llmwiki indices if not present
 if [ ! -d "$TARGET_DIR/graphify-out" ]; then
   echo "  ⏳ Initializing quick graphify skeleton..."
-  "/home/ema/.local/bin/wz-ai-graph" "$TARGET_DIR" --cluster-only 2>/dev/null || true
+  "$HOME/.local/bin/wz-ai-graph" "$TARGET_DIR" --cluster-only 2>/dev/null || true
 fi
 
 if [ -f "$TARGET_DIR/MEMORY.md" ]; then
   echo "  ⏳ Ingesting MEMORY.md into llmwiki..."
-  "/home/ema/.local/bin/wz-ai-wiki" --base-dir "$TARGET_DIR" ingest file "$TARGET_DIR/MEMORY.md" 2>/dev/null || true
-  "/home/ema/.local/bin/wz-ai-wiki" --base-dir "$TARGET_DIR" compile index 2>/dev/null || true
+  "$HOME/.local/bin/wz-ai-wiki" --base-dir "$TARGET_DIR" ingest file "$TARGET_DIR/MEMORY.md" 2>/dev/null || true
+  "$HOME/.local/bin/wz-ai-wiki" --base-dir "$TARGET_DIR" compile index 2>/dev/null || true
 fi
 
 echo "🚀 [Wizard-AI Plugin] Bootstrap Complete for $TARGET_DIR!"
