@@ -1,3 +1,8 @@
+---
+name: pi-antigravity
+description: "pi.dev package that brings advanced capabilities and enhancements to the Pi environment."
+---
+
 # pi-antigravity
 
 ## Description

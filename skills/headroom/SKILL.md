@@ -1,6 +1,6 @@
 ---
 name: headroom
-description: Context compression and API proxy for reducing token costs and latency. BOUNDARY: Use headroom for API proxying. Do not use for fast CLI stream compression (use rtk), file caching (use lean-ctx), or static text compression (use sqz/llmlingua).
+description: "Context compression and API proxy for reducing token costs and latency. BOUNDARY: Use headroom for API proxying. Do not use for fast CLI stream compression (use rtk), file caching (use lean-ctx), or static text compression (use sqz/llmlingua)."
 ---
 
 > **DISAMBIGUATION**: `headroom` is an API proxy for token usage reduction and routing.
