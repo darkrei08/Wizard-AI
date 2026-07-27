@@ -1525,7 +1525,7 @@ Nodes (43): 1. Install Specify CLI, 2. Initialize a project, 3. Establish projec
 
 ### Community 49 - "XLSX Redline Simplification"
 Cohesion: 0.05
-Nodes (42): 🧠 Architettura: Mixture of Experts (MoE) Routing, Dal `brainstorming` / `mp-grill-with-docs`:, Dal `cybersecurity`:, Dal `enterprise-development-protocol`:, Dal `goodcode`:, Dal `ponytail` / YAGNI:, Dal `systematic-debugging` / `mp-diagnosing-bugs`:, Dal `test-driven-development` / `mp-tdd`: (+34 more)
+Nodes (42): 🧠 Architettura: Mixture of Experts (MoE) Routing, Dal `brainstorming` / `grilling`:, Dal `cybersecurity`:, Dal `enterprise-development-protocol`:, Dal `goodcode`:, Dal `ponytail` / YAGNI:, Dal `systematic-debugging` / `systematic-debugging`:, Dal `test-driven-development` / `test-driven-development`: (+34 more)
 
 ### Community 50 - "Workflow Security Integration"
 Cohesion: 0.15
@@ -2661,7 +2661,7 @@ Nodes (11): Boundaries, Caveman Compress, Compress, Compression Rules, Pattern, 
 
 ### Community 731 - "File Path Operations"
 Cohesion: 0.17
-Nodes (11): Autonomous Online Skill Hunt (`skills.sh` + `wizard-ai-installer`), Fase 1: Ingestion & Conversion (`markitdown`, `ai-convert`), Fase 2: RAG / Semantic Filtering (`flashrank`, `ai-rerank`, `ai-llmwiki`, `ai-vector`), Fase 3: Token & Output Compression (`llmlingua`, `sqz`, `headroom`, `caveman`), Fase 4: Context Guarding & Pruning (`lean-ctx` / `ktx`), Fase 5: AST Pruning & Sharded Subagent Context (`pi.dev / Rust-Cline Wrappers`), Fase 6: Session Transition & Handoff (`mp-handoff` / `ai-handoff` + `session-manager` + `ai-llmwiki`), Master Optimizer & Agentic Brain Workflow (Unified) (+3 more)
+Nodes (11): Autonomous Online Skill Hunt (`skills.sh` + `wizard-ai-installer`), Fase 1: Ingestion & Conversion (`markitdown`, `ai-convert`), Fase 2: RAG / Semantic Filtering (`flashrank`, `ai-rerank`, `ai-llmwiki`, `ai-vector`), Fase 3: Token & Output Compression (`llmlingua`, `sqz`, `headroom`, `caveman`), Fase 4: Context Guarding & Pruning (`lean-ctx` / `ktx`), Fase 5: AST Pruning & Sharded Subagent Context (`pi.dev / Rust-Cline Wrappers`), Fase 6: Session Transition & Handoff (`handoff` / `ai-handoff` + `session-manager` + `ai-llmwiki`), Master Optimizer & Agentic Brain Workflow (Unified) (+3 more)
 
 ### Community 732 - "Schema Validation Components"
 Cohesion: 0.17

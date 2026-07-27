@@ -4,6 +4,8 @@
 
 Wiki centrale. Traccia tool core Wizard-AI, skill agenti, tecnologie esterne.
 Controlla prima di aggiungere nuove skill.
+> **Regola "Comparative Installation & Test"**: Quando si integrano o testano nuove funzionalità, librerie o skill, eseguire SEMPRE un'analisi comparativa rispetto alle soluzioni esistenti o alternative prima di finalizzare l'installazione o l'implementazione.
+
 
 ## 1. 5 Workflow Sequenziali (Loop Engineering)
 Pipeline deterministica (`0-loop-engine`). Sviluppo/refactoring segue 5 Loop (`01 → 05`).
@@ -43,6 +45,16 @@ Wrapper CLI globali.
 ## 3. Skill Agenti (48 Custom)
 Ecosistema esclusivo Wizard-AI.
 
+### Native LLM Prompt Skills & Packs
+- **react-best-practices**: Ottimizzazione delle prestazioni per React e Next.js (Vercel Engineering)
+- **anthropic-frontend-design**: Linee guida per il design frontend di Anthropic
+- **dammyjay93-interface-design**: Concetti di interface design
+- **awesome-changelog-generator**: Generazione automatizzata di changelog
+- **addy-frontend-ui**: Creazione di interfacce utente accessibili, responsive e di alta qualità
+- **addy-api-interface**: Linee guida per la progettazione di API e interfacce stabili
+- **loopkit-spec-first**: Scrittura delle specifiche dell'obiettivo su disco prima dell'azione
+- **loopkit-adversarial-verify**: Revisione avversaria delle modifiche al codice rispetto alle specifiche
+
 ### 1. System Core & Routing
 - `0-loop-engine`: Orchestratore Master pipeline PRE/POST a 11 step.
 - `2-wizard-hub`: Dashboard skill.
@@ -66,7 +78,7 @@ Ecosistema esclusivo Wizard-AI.
 - `auto-graphify`: Trigger update grafo.
 - `claude-mem`/`ai-mem`: Memoria cross-sessione.
 - `storybloq`: Gestore sessioni CLI.
-- `mp-handoff`: Compatta log conversazione.
+- `handoff`: Compatta log conversazione.
 - `wiki-brain-skill`: Wiki Obsidian.
 - `serena`: Ricerca LSP codice.
 

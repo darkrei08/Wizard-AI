@@ -16,8 +16,8 @@
 | (a) Master Orchestrator | `0-loop-engine`, `0-master-brain`, `workflow-production-cycle`, `master-project-bootstrap`, `gentle-ai`, `wizard-ai-core` |
 | (b) Router | `1-auto-router` (+ `wz-ai-loop-sentinel` bash, scollegato) |
 | (c) Subagent dispatch | `3-shadow-clone-parallelism`, `4-swarm-manager`, `5-goodcode-orchestrator`, `cavecrew`, `subagent-driven-development`, `orchestration`(Orca), `orca-cli`, `pi-extensible-workflows` |
-| (d) Standard di processo (SDD/TDD/gate) | `engineering-excellence`, `enterprise-development-protocol`, `test-driven-development`, `mp-tdd`, `systematic-debugging`, `diagnosing-bugs`/`mp-diagnosing-bugs`, `verification-before-completion`, `brainstorming`, `writing-plans`, `executing-plans`, `receiving-code-review`, `mp-code-review`, `finishing-a-development-branch`, `using-git-worktrees`, `loop-1-plan`…`loop-5-release` |
-| (e) Sessione/memoria | `session-manager`, `handoff`/`mp-handoff` |
+| (d) Standard di processo (SDD/TDD/gate) | `engineering-excellence`, `enterprise-development-protocol`, `test-driven-development`, `systematic-debugging`, `diagnosing-bugs`, `verification-before-completion`, `brainstorming`, `writing-plans`, `executing-plans`, `receiving-code-review`, `mp-code-review`, `finishing-a-development-branch`, `using-git-worktrees`, `loop-1-plan`…`loop-5-release` |
+| (e) Sessione/memoria | `session-manager`, `handoff` |
 | (f) Skill discovery | `using-superpowers`, `show-active-skill`, `2-wizard-hub`, `skill-creator` |
 | (g) Git lifecycle | `auto-branch`, `auto-release`, `auto-trigger-release`, `finishing-a-development-branch` |
 | (h) Altro | `auto-graphify`, `auto-prompt`, `loopy`, `mp-loop-me`, `mp-triage`, `mp-wayfinder`, `grilling` family, `wizard-ai-installer`, `workflow-*-research/design/processing/integrations`, `writing-skills` |
@@ -29,7 +29,7 @@
 3. **Router scollegato dal suo enforcement**: `1-auto-router` (prosa) e `wz-ai-loop-sentinel` (bash) classificano entrambi intent→loop con logica indipendente, nessuno dei due è autoritativo sull'altro.
 4. **Subagent dispatch, 6+ skill senza regola di selezione**: `3-shadow-clone-parallelism` vs `4-swarm-manager` vs `subagent-driven-development` vs `5-goodcode-orchestrator` descrivono lo stesso meccanismo base (subagent isolati, contesto shardato) differendo solo in cerimonia. Nessuna dice "usa questa invece di quella". `pi-extensible-workflows` (l'unico con motore reale) non referenzia nessuna delle altre quattro.
 5. **`test-driven-development` vs `mp-tdd`**: stesso trigger, stessa autorità sul ciclo RED-GREEN-REFACTOR, nessun cross-reference.
-6. **Sessione/memoria, 3 vie**: `session-manager`, `handoff`/`mp-handoff`, e `0-master-brain` (che dichiara di "fondere" `mp-handoff` in sé) rivendicano tutte la gestione dello stato di fine sessione.
+6. **Sessione/memoria, 3 vie**: `session-manager`, `handoff`, e `0-master-brain` (che dichiara di "fondere" `handoff` in sé) rivendicano tutte la gestione dello stato di fine sessione.
 7. **Riferimenti morti**: `using-superpowers` e `show-active-skill` puntavano a `prompt-loop-engine` (skill rinominata `0-loop-engine`, file vecchio cancellato) — **fixato in questa sessione**.
 8. **Doppioni file byte-identici o quasi**, stesso contenuto sotto due nomi/directory diversi (probabile causa: doppio canale di installazione, short-name + prefisso autore `mp-`):
    - `handoff` / `mp-handoff`

@@ -383,6 +383,26 @@
           "name": "addyosmani-skills",
           "url": "https://github.com/addyosmani/agent-skills.git",
           "desc": "Frontend and Engineering skills"
+        },
+        {
+          "name": "dammyjay93-interface-design",
+          "url": "https://skills.sh/dammyjay93/interface-design",
+          "desc": "Interface Design Layout"
+        },
+        {
+          "name": "react-best-practices",
+          "url": "https://skills.sh/vercel-labs/react-best-practices",
+          "desc": "React Best Practices"
+        },
+        {
+          "name": "awesome-changelog-generator",
+          "url": "https://skills.sh/composiohq/awesome-changelog-generator",
+          "desc": "Changelog Generator"
+        },
+        {
+          "name": "anthropic-frontend-design",
+          "url": "https://github.com/anthropics/claude-code",
+          "desc": "Anthropic Frontend Design"
         }
       ]
     }

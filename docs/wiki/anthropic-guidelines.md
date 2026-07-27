@@ -21,4 +21,4 @@ Prompts must be specific and context-aware.
 
 ## Active Learning Mandate
 Agents must regularly read and synthesize new external guides.
-When new features or tools are released by Anthropic, invoke a specialized researcher subagent to clone the documentation into this `wiki/`, update this file, and execute a `mp-handoff` to alert the Supreme Orchestrator.
+When new features or tools are released by Anthropic, invoke a specialized researcher subagent to clone the documentation into this `wiki/`, update this file, and execute a `handoff` to alert the Supreme Orchestrator.

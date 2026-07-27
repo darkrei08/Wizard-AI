@@ -1036,14 +1036,14 @@
 - mp-ask-matt/README.md
 - mp-code-review/README.md
 - mp-codebase-design/README.md
-- mp-diagnosing-bugs/README.md
+- systematic-debugging/README.md
 - mp-domain-modeling/README.md
 - mp-git-guardrails/README.md
 - block-dangerous-git.sh
-- mp-grill-me/README.md
-- mp-grill-with-docs/README.md
-- mp-grilling/README.md
-- mp-handoff/README.md
+- grilling/README.md
+- grilling/README.md
+- grilling/README.md
+- handoff/README.md
 - mp-implement/README.md
 - mp-improve-codebase-architecture/README.md
 - mp-migrate-to-shoehorn/README.md
@@ -1053,7 +1053,7 @@
 - mp-scaffold-exercises/README.md
 - mp-setup-matt-pocock-skills/README.md
 - mp-setup-pre-commit/README.md
-- mp-tdd/README.md
+- test-driven-development/README.md
 - mp-teach/README.md
 - mp-to-spec/README.md
 - mp-to-tickets/README.md
@@ -2491,7 +2491,7 @@ Nodes (10): accept_changes(), Accept all tracked changes in a DOCX file using Li
 
 ### Community 340 - "📝 Istruzioni Operative Passo-Passo (Esecuzione Loop 3)"
 Cohesion: 0.17
-Nodes (11): 🔍 03. Loop 3: Debug & Verify (Diagnose, Review & Quality Gates), 1. Categoria: Bug Diagnosis & Root Cause Analysis (Analisi Scientifica), 2. Categoria: Verification Gates & Code Review (Controllo Qualità Pre-Merge), 📂 Categorizzazione delle Skills, Progetti e Framework del Loop 3, 🔗 Concatenazione e Skill Chaining Tree (Loop 3), 📝 Istruzioni Operative Passo-Passo (Esecuzione Loop 3), Step 3.1: Diagnosi Scientifica e Riproduzione (`mp-diagnosing-bugs`), Step 3.2: Risoluzione Empirica e Verifica Isolată (`systematic-debugging`) (+3 more)
+Nodes (11): 🔍 03. Loop 3: Debug & Verify (Diagnose, Review & Quality Gates), 1. Categoria: Bug Diagnosis & Root Cause Analysis (Analisi Scientifica), 2. Categoria: Verification Gates & Code Review (Controllo Qualità Pre-Merge), 📂 Categorizzazione delle Skills, Progetti e Framework del Loop 3, 🔗 Concatenazione e Skill Chaining Tree (Loop 3), 📝 Istruzioni Operative Passo-Passo (Esecuzione Loop 3), Step 3.1: Diagnosi Scientifica e Riproduzione (`systematic-debugging`), Step 3.2: Risoluzione Empirica e Verifica Isolată (`systematic-debugging`) (+3 more)
 
 ### Community 341 - "📝 Istruzioni Operative Passo-Passo (Esecuzione Loop 4)"
 Cohesion: 0.17

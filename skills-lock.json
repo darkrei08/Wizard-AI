@@ -414,12 +414,6 @@
       "skillPath": "skills/gemini-usage/SKILL.md",
       "computedHash": "7ec8e3ab76ff78eebfec42f4e4414ef1bda6cc8e2c13fb4d712473ccd1c4c27b"
     },
-    "geminiusage": {
-      "source": "rmedranollamas/geminiusage",
-      "sourceType": "github",
-      "skillPath": "skills/geminiusage/SKILL.md",
-      "computedHash": "beae0aa6ee89a2533d79cf02908d6a198ee52da0595fc5e0d765b590e58a1cd2"
-    },
     "gentle-ai": {
       "source": "local",
       "sourceType": "local",

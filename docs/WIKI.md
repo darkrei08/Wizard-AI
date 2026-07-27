@@ -1,6 +1,8 @@
 # 📚 Wizard-AI Skill Wiki
 
 Welcome to the Wizard-AI knowledge base. All skills and workflows are organized according to the **3-Tier Agent Swarm** architecture.
+> **Comparative Installation & Test Rule**: When integrating or testing new features, libraries, or skills, ALWAYS perform a comparative analysis against existing or alternative solutions before finalizing the installation or implementation.
+
 
 ## Tier 1 — Supreme Orchestrator
 
@@ -165,7 +167,7 @@ Welcome to the Wizard-AI knowledge base. All skills and workflows are organized 
 | [🧪 Web App Testing](skills/webapp-testing) | — | Playwright-based testing for local web apps. Screenshots, logs, verification. |
 | [🐼 Lightpanda](skills/lightpanda) | — | Ultra-light headless browser (Zig, not Chromium) for AI agents — 9x faster, 16x less RAM than headless Chrome. CDP server, fetch/dump, native agent mode + MCP. |
 | [🧰 Kit Toolkit](skills/kit) | — | Development toolkit reference. |
-| [🩺 Matt's Bug Diagnosis](skills/mp-diagnosing-bugs) | — | Diagnosis loop for hard bugs and performance regressions. |
+| [🩺 Matt's Bug Diagnosis](skills/systematic-debugging) | — | Diagnosis loop for hard bugs and performance regressions. |
 | [🪝 Pre-Commit Setup](skills/mp-setup-pre-commit) | — | Husky + lint-staged + Prettier + type checking + tests on commit. |
 
 ## Tier 3 — Worker (Marketing & Media)
@@ -243,22 +245,22 @@ Welcome to the Wizard-AI knowledge base. All skills and workflows are organized 
 | [🏗️ Codebase Design](skills/mp-codebase-design) | — | Design deep modules with clean interfaces and testability. |
 | [🏥 Triage](skills/mp-triage) | — | Prioritize and categorize issues by urgency and impact. |
 | [👟 Migrate to Shoehorn](skills/mp-migrate-to-shoehorn) | — | Replace `as` type assertions with @total-typescript/shoehorn. |
-| [📋 Grill with Docs](skills/mp-grill-with-docs) | — | Grilling session backed by documentation evidence. |
+| [📋 Grill with Docs](skills/grilling) | — | Grilling session backed by documentation evidence. |
 | [📋 To Spec](skills/mp-to-spec) | — | Convert requirements into detailed specifications. |
 | [📐 Architecture Improver](skills/mp-improve-codebase-architecture) | — | Refactor codebase architecture for better maintainability. |
 | [📝 Scaffold Exercises](skills/mp-scaffold-exercises) | — | Create exercise directory structures with sections, problems, solutions. |
 | [🔀 Merge Conflict Resolver](skills/mp-resolving-merge-conflicts) | — | Step-by-step guide for resolving git merge/rebase conflicts. |
 | [🔄 Loopy](skills/loopy) | — | A library of practical AI-agent loops and an installable skill for finding, adapting, and designing repeatable agent workflows. |
-| [🔥 Grill Me](skills/mp-grill-me) | — | Interactive grilling session to resolve design decisions. |
-| [🔥 The Grilling](skills/mp-grilling) | — | Stress-test a plan relentlessly before building. No mercy. |
+| [🔥 Grill Me](skills/grilling) | — | Interactive grilling session to resolve design decisions. |
+| [🔥 The Grilling](skills/grilling) | — | Stress-test a plan relentlessly before building. No mercy. |
 | [🔬 Research](skills/mp-research) | — | Investigate a question against primary sources. Capture as Markdown. |
 | [🗺️ Domain Modeling](skills/mp-domain-modeling) | — | Pin down domain terms, ubiquitous language, architectural decisions. |
-| [🤝 Session Handoff](skills/mp-handoff) | — | Compact conversation into a handoff doc for the next session. |
-| [🧪 Matt's TDD](skills/mp-tdd) | — | Test-driven development, Matt Pocock style. Red-green-refactor. |
+| [🤝 Session Handoff](skills/handoff) | — | Compact conversation into a handoff doc for the next session. |
+| [🧪 Matt's TDD](skills/test-driven-development) | — | Test-driven development, Matt Pocock style. Red-green-refactor. |
 | [🧪 Prototype](skills/mp-prototype) | — | Build a throwaway prototype to answer a design question. |
 | [🧭 Wayfinder](skills/mp-wayfinder) | — | Navigate the Matt Pocock skill ecosystem. Find what you need. |
 
-## Uncategorized
+## 6. Sviluppo ## Uncategorized API Integrations
 
 | Skill | Slash Command | Mnemonic / Description |
 |---|---|---|
@@ -335,6 +337,15 @@ All tools and skills managed by Wizard-AI are open source. Here is the complete 
 - **[last30days-skill](https://github.com/mvanhorn/last30days-skill.git)**: Last 30 days research
 - **[claude-blog](https://github.com/AgriciDaniel/claude-blog.git)**: AI blog writing
 - **[claude-seo](https://github.com/AgriciDaniel/claude-seo.git)**: SEO analysis plugin
+
+- **[react-best-practices](skills/react-best-practices)**: React and Next.js performance optimization guidelines from Vercel Engineering
+- **[anthropic-frontend-design](skills/anthropic-frontend-design)**: Anthropic frontend design guidelines
+- **[dammyjay93-interface-design](skills/dammyjay93-interface-design)**: Interface design concepts
+- **[awesome-changelog-generator](skills/awesome-changelog-generator)**: Automated changelog generation
+- **[addy-frontend-ui](skills/addy-frontend-ui)**: Builds production-quality, accessible, responsive user-facing UIs
+- **[addy-api-interface](skills/addy-api-interface)**: Guides stable API and interface design
+- **[loopkit-spec-first](skills/loopkit-spec-first)**: Write the goal spec on disk before the agent acts
+- **[loopkit-adversarial-verify](skills/loopkit-adversarial-verify)**: Review a diff against the goal spec assuming the code is broken
 
 ### 🧠 Memory, Context & Knowledge Graph
 

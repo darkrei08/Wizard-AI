@@ -78,3 +78,12 @@ When working in this repository, you MUST respect the following boundaries:
 4. **`.cache/`**: Use this for temporary files, raw data dumps, and cloned repositories (`.local-clones/`).
 5. **`skills/`**: Only for `SKILL.md` definitions and their immediately related scripts/assets.
 6. **Root Directory**: Must remain pristine. Only global configs (`setup.sh`, `AGENTS.md`, `README.md`) are allowed.
+
+---
+
+## 7. ⚖️ Comparative Installation & Verification
+When asked to add or integrate new skills or tools, you MUST apply the **Comparative Installation Constraint**:
+1. **Overlap Audit**: Before saving, compare the new skill against currently installed skills in the same domain (e.g. Frontend, Debugging, SQL).
+2. **Deprecate or Merge**: Never keep duplicates. If the new skill is more advanced/efficient, deprecate the older one. If they are complementary, merge them or distinguish their triggers clearly.
+3. **Workflow Integration**: Wire the winning skill into the production loop (`02. loop-2-develop`, `03. loop-3-debug`, etc.).
+4. **Registry Update**: Document the decision and update `scripts/repo-registry.json` and the WIKI with the final cataloged structure.
