@@ -100,3 +100,24 @@ npx -y @darkrei08/wizard-ai-cli@latest --verbose
 ```
 
 查看完整的安装步骤与说明，请参阅 [主 README（英文）](README.md)。
+
+
+## 🚀 Real-World Agentic Use Cases
+
+Wizard-AI isn't a chatbot; it's a workforce. Here is what your terminal can autonomously achieve by combining the built-in skills:
+
+### 1. 🛡️ Autonomous Pentesting & Security Hardening
+**Skills Used:** `strix`, `cybersecurity`, `crowdsec-skill`, `ECC`
+Instead of running a basic linter, Wizard-AI deploys an autonomous hacker agent (`strix`) that attempts to exploit your codebase, generates proofs-of-concept, and rewrites the vulnerable code using strict NIST/OWASP protocols.
+
+### 2. 🎨 "Anti-Slop" UI/UX Frontend Engineering
+**Skills Used:** `taste-skill`, `hallmark`, `mengto-skills`, `kinetics-ui`
+Vanilla AIs generate generic, "bootstrap-looking" web pages. Wizard-AI reads your brief, enforces strict typographic rules, applies asymmetric layouts, and implements physics-based micro-interactions (`kinetics-ui`), outputting premium, agency-tier frontend code.
+
+### 3. 🕸️ Deep Semantic Architecture Refactoring
+**Skills Used:** `serena`, `codebase-memory-mcp`, `0-loop-engine`
+Don't ask the AI to "read this file". Wizard-AI queries the Abstract Syntax Tree (AST) via Serena, creates an interactive knowledge graph (`personal-graph`), and refactors circular dependencies across 50+ files simultaneously without losing context.
+
+### 4. 📈 SEO Research & Autonomous Blogging Pipeline
+**Skills Used:** `claude-seo`, `claude-blog`, `lightpanda`
+Need growth? The orchestration dispatches background agents to scrape live web data via stealth browsers (`camofox`, `lightpanda`), runs an E-E-A-T SEO audit, and generates high-ranking semantic clusters and articles autonomously.
