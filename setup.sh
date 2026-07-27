@@ -73,6 +73,7 @@ done
 # Export for the current session
 export WIZARD_AI_DIR="$SCRIPT_DIR"
 export PATH="$HOME/.local/bin:$PATH"
+export npm_config_allow_git="all" # Evita problemi EALLOWGIT in ambienti con policy npm restrittive
 echo -e "│  ${GREEN}✓ WIZARD_AI_DIR=\"$WIZARD_AI_DIR\"${NC}"
 
 # 0.5 Install System Dependencies
@@ -776,12 +777,27 @@ if command -v pi &>/dev/null || [ -f "$PI_SETTINGS" ]; then
     fi
   fi
   
+  if command -v pi &>/dev/null; then
+    echo -e "│  ${CYAN}Installing pi-antigravity package...${NC}"
+    pi install pi-antigravity || echo -e "${RED}  ⚠ Failed to install pi-antigravity.${NC}"
+  else
+    echo -e "│  ${YELLOW}⚠ Pi CLI (pi.dev) is not detected, skipping pi-antigravity install.${NC}"
+    echo -e "│  ${CYAN}To integrate pi-antigravity and other features, please install Pi:${NC}"
+    echo -e "│  ${GREEN}macOS/Linux: curl -fsSL https://pi.dev/install | bash${NC}"
+    echo -e "│  ${YELLOW}After installing Pi, run this setup script again.${NC}"
+  fi
+  
   # Install pi-cockpit-tools extension
   if [ -d "$WIZARD_AI_DIR/packages/pi-cockpit-tools" ]; then
     mkdir -p "$HOME/.pi/agent/extensions"
     ln -sf "$WIZARD_AI_DIR/packages/pi-cockpit-tools" "$HOME/.pi/agent/extensions/pi-cockpit-tools"
     echo -e "${GREEN}  ✓ Linked pi-cockpit-tools extension to ~/.pi/agent/extensions/${NC}"
   fi
+else
+  echo -e "│  ${YELLOW}⚠ Pi CLI (pi.dev) is not detected.${NC}"
+  echo -e "│  ${CYAN}To integrate pi-antigravity and other features, please install Pi:${NC}"
+  echo -e "│  ${GREEN}macOS/Linux: curl -fsSL https://pi.dev/install | bash${NC}"
+  echo -e "│  ${YELLOW}After installing Pi, run this setup script again.${NC}"
 fi
 
 if command -v npm &>/dev/null; then

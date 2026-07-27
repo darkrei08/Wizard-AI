@@ -353,6 +353,38 @@
           "desc": "AI benchmark framework"
         }
       ]
+    },
+    "skill-packs": {
+      "name": "📦 Master Skill Packs",
+      "badge": "[SKILLS]",
+      "description": "Curated collections of agent skills and behavior templates",
+      "repos": [
+        {
+          "name": "loopkit",
+          "url": "https://github.com/Archive228/loopkit.git",
+          "desc": "49 battle-tested skills harness"
+        },
+        {
+          "name": "loopy",
+          "url": "https://github.com/Forward-Future/loopy.git",
+          "desc": "Loop library companion skill"
+        },
+        {
+          "name": "superpowers",
+          "url": "https://github.com/obra/superpowers.git",
+          "desc": "TDD and debugging playbooks"
+        },
+        {
+          "name": "wshobson-agents",
+          "url": "https://github.com/wshobson/agents.git",
+          "desc": "API Design and Architecture skills"
+        },
+        {
+          "name": "addyosmani-skills",
+          "url": "https://github.com/addyosmani/agent-skills.git",
+          "desc": "Frontend and Engineering skills"
+        }
+      ]
     }
   }
 }

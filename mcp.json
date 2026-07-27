@@ -3,6 +3,10 @@
     "wizard-ai-core": {
       "command": "node",
       "args": ["bin/mcp-server.js"]
+    },
+    "serena": {
+      "command": "serena",
+      "args": ["start-mcp-server", "--project-from-cwd"]
     }
   },
   "globalContext": {
