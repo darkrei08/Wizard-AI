@@ -1,7 +1,7 @@
 {
   "categories": {
     "agent-frameworks": {
-      "name": "🤖 Autonomous Agent Frameworks & Runtimes",
+      "name": "\ud83e\udd16 Autonomous Agent Frameworks & Runtimes",
       "badge": "[AGENT FRAMEWORK]",
       "description": "Standalone multi-agent harnesses, execution engines, and orchestrators",
       "repos": [
@@ -58,7 +58,7 @@
       ]
     },
     "cli-tools": {
-      "name": "⚡ CLI Tools & Context Squeezers",
+      "name": "\u26a1 CLI Tools & Context Squeezers",
       "badge": "[CLI TOOL]",
       "description": "Binary command-line utilities, LSP servers, and token context squeezers",
       "repos": [
@@ -128,7 +128,7 @@
       ]
     },
     "native-skills": {
-      "name": "🧩 Native LLM Prompt Skills & Packs",
+      "name": "\ud83e\udde9 Native LLM Prompt Skills & Packs",
       "badge": "[NATIVE SKILL]",
       "description": "Agent directives, rulebooks, and specialized skill packs",
       "repos": [
@@ -205,7 +205,7 @@
       ]
     },
     "memory-knowledge": {
-      "name": "🧠 Memory, Context & Knowledge Graph",
+      "name": "\ud83e\udde0 Memory, Context & Knowledge Graph",
       "badge": "[MEMORY]",
       "description": "Persistent memory engines, vector stores, context pruning, and knowledge graph tools",
       "repos": [
@@ -232,7 +232,7 @@
       ]
     },
     "frontend-frameworks": {
-      "name": "🎨 Frontend Frameworks & UI Toolkits",
+      "name": "\ud83c\udfa8 Frontend Frameworks & UI Toolkits",
       "badge": "[FRONTEND]",
       "description": "Web and mobile frontend frameworks, design systems, and UI libraries",
       "repos": [
@@ -269,7 +269,7 @@
       ]
     },
     "graphical-and-services": {
-      "name": "🖥️ Graphical Apps, Desktop & Media Services",
+      "name": "\ud83d\udda5\ufe0f Graphical Apps, Desktop & Media Services",
       "badge": "[DESKTOP / SERVICE]",
       "description": "Desktop UI harnesses, audio/video studios, realtime DBs, and API bridges",
       "repos": [
@@ -336,7 +336,7 @@
       ]
     },
     "starter-templates": {
-      "name": "🏗️ Starter Templates & Benchmarks",
+      "name": "\ud83c\udfd7\ufe0f Starter Templates & Benchmarks",
       "badge": "[STARTER TEMPLATE]",
       "description": "Production API starters, scaffolding, and A/B test benchmarking libraries",
       "repos": [
@@ -353,7 +353,7 @@
       ]
     },
     "skill-packs": {
-      "name": "📦 Master Skill Packs",
+      "name": "\ud83d\udce6 Master Skill Packs",
       "badge": "[SKILLS]",
       "description": "Curated collections of agent skills and behavior templates",
       "repos": [
@@ -401,6 +401,59 @@
           "name": "anthropic-frontend-design",
           "url": "https://github.com/anthropics/claude-code",
           "desc": "Anthropic Frontend Design"
+        }
+      ]
+    },
+    "mcp-servers": {
+      "name": "Folder mcp-servers",
+      "badge": "[TOOL]",
+      "description": "",
+      "repos": [
+        {
+          "name": "rag-anything",
+          "url": "https://github.com/HKUDS/RAG-Anything.git",
+          "desc": "RAG Anything MCP"
+        },
+        {
+          "name": "understand-anything",
+          "url": "https://github.com/Egonex-AI/Understand-Anything.git",
+          "desc": "Understand Anything Codebase MCP"
+        }
+      ]
+    },
+    "web-scrapers": {
+      "name": "Folder web-scrapers",
+      "badge": "[TOOL]",
+      "description": "",
+      "repos": [
+        {
+          "name": "camofox",
+          "url": "https://github.com/jo-inc/camofox-browser.git",
+          "desc": "Camofox Stealth Browser"
+        }
+      ]
+    },
+    "security": {
+      "name": "Folder security",
+      "badge": "[TOOL]",
+      "description": "",
+      "repos": [
+        {
+          "name": "crowdsec-skill",
+          "url": "https://github.com/crowdsecurity/crowdsec-skill.git",
+          "desc": "CrowdSec Autonomous Security"
+        }
+      ]
+    },
+    "knowledge-management": {
+      "name": "Folder knowledge-management",
+      "badge": "[TOOL]",
+      "description": "",
+      "repos": [
+        {
+          "name": "llm_wiki",
+          "url": "https://github.com/nashsu/llm_wiki.git",
+          "desc": "LLM Wiki Agent"
         }
       ]
     }
