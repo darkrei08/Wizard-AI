@@ -823,8 +823,8 @@ if command -v npm &>/dev/null; then
 
   if [[ ! "$RUN_COCKPIT" =~ ^[Nn]$ ]]; then
     echo -e "${CYAN}Running pi-cockpit-proxy-setup locally...${NC}"
-    if [ -f "$HOME/.wizard-ai/packages/pi-cockpit-proxy-setup/index.mjs" ]; then
-      node "$HOME/.wizard-ai/packages/pi-cockpit-proxy-setup/index.mjs" || echo -e "${RED}Failed to run pi-cockpit-proxy-setup.${NC}"
+    if [ -f "$WIZARD_AI_DIR/packages/pi-cockpit-proxy-setup/index.mjs" ]; then
+      node "$WIZARD_AI_DIR/packages/pi-cockpit-proxy-setup/index.mjs" || echo -e "${RED}Failed to run pi-cockpit-proxy-setup.${NC}"
     else
       npx --yes pi-cockpit-proxy-setup || echo -e "${RED}Failed to run pi-cockpit-proxy-setup.${NC}"
     fi
