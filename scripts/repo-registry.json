@@ -225,6 +225,11 @@
           "desc": "RAG architecture for diverse data modalities"
         },
         {
+          "name": "turbovec",
+          "url": "https://github.com/RyanCodrai/turbovec.git",
+          "desc": "TurboVec vector DB"
+        },
+        {
           "name": "zvec",
           "url": "https://github.com/alibaba/zvec.git",
           "desc": "ZVec vector DB"

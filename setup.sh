@@ -389,6 +389,12 @@ if echo "$SELECTED_REPOS" | grep -q "ECC\|caveman\|design\.md"; then
     fi
     if echo "$SELECTED_REPOS" | grep -q "caveman"; then
       if [ -f "$HOME/.wizard-ai/caveman/bin/install.js" ]; then
+        # Patch invalid tool names for Gemini
+        for agent_file in "$HOME/.wizard-ai/caveman/agents"/cavecrew-*.md; do
+          if [ -f "$agent_file" ]; then
+            sed -i -e '/^tools:/ s/-/_/g' -e '/^tools:/ s/\([A-Z]\)/\L\1/g' "$agent_file"
+          fi
+        done
         echo -e "${CYAN}  ↳ Running caveman installer...${NC}"
         GITHUB_TOKEN="" node "$HOME/.wizard-ai/caveman/bin/install.js" --all --non-interactive 2>/dev/null || true
       fi
@@ -779,7 +785,7 @@ if command -v pi &>/dev/null || [ -f "$PI_SETTINGS" ]; then
   
   if command -v pi &>/dev/null; then
     echo -e "│  ${CYAN}Installing pi-antigravity package...${NC}"
-    pi install pi-antigravity || echo -e "${RED}  ⚠ Failed to install pi-antigravity.${NC}"
+    pi install npm:pi-antigravity || echo -e "${RED}  ⚠ Failed to install pi-antigravity.${NC}"
   else
     echo -e "│  ${YELLOW}⚠ Pi CLI (pi.dev) is not detected, skipping pi-antigravity install.${NC}"
     echo -e "│  ${CYAN}To integrate pi-antigravity and other features, please install Pi:${NC}"
@@ -1010,26 +1016,10 @@ if command -v node &>/dev/null; then
         echo -e "│  ${YELLOW}Installing headroom-ai...${NC}"
         uv tool install --python 3.13 "headroom-ai[all]" 2>/dev/null || true
       fi
-      if echo "$EXTRA_TOOLS" | grep -q "turbovec"; then
-        echo -e "│  ${YELLOW}Installing turbovec...${NC}"
-        uv tool install turbovec 2>/dev/null || true
-      fi
-      if echo "$EXTRA_TOOLS" | grep -q "raganything"; then
-        echo -e "│  ${YELLOW}Installing raganything...${NC}"
-        uv tool install "raganything[all]" 2>/dev/null || true
-      fi
     elif command -v pipx &>/dev/null; then
       if echo "$EXTRA_TOOLS" | grep -q "headroom"; then
         echo -e "│  ${YELLOW}Installing headroom-ai via pipx...${NC}"
         pipx install "headroom-ai[all]" 2>/dev/null || true
-      fi
-      if echo "$EXTRA_TOOLS" | grep -q "turbovec"; then
-        echo -e "│  ${YELLOW}Installing turbovec via pipx...${NC}"
-        pipx install turbovec 2>/dev/null || true
-      fi
-      if echo "$EXTRA_TOOLS" | grep -q "raganything"; then
-        echo -e "│  ${YELLOW}Installing raganything via pipx...${NC}"
-        pipx install "raganything[all]" 2>/dev/null || true
       fi
     fi
 

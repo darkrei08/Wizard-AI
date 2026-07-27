@@ -367,6 +367,9 @@ if (($selectedNames -contains 'ECC') -or ($selectedNames -contains 'caveman') -o
         if ($selectedNames -contains 'caveman') {
             $cavemanJs = Join-Path $AiSkills 'caveman\bin\install.js'
             if (Test-Path $cavemanJs) {
+                # Patch invalid tool names for Gemini
+                Get-ChildItem -Path "$DestDir\agents" -Filter "cavecrew-*.md" -File -ErrorAction SilentlyContinue | ForEach-Object { $c = Get-Content $_.FullName -Raw; $c = $c -replace "(?m)^tools:(.*)", { "tools:" + $args[0].Groups[1].Value.ToLower().Replace("-", "_") }; Set-Content -Path $_.FullName -Value $c -NoNewline }
+
                 Write-Log '  > Running caveman installer...' -ForegroundColor Cyan
                 try { $env:GITHUB_TOKEN=''; node $cavemanJs --all --non-interactive } catch {}
             }

@@ -11,8 +11,6 @@ const EXTRA_TOOLS = [
   { value: 'understand-anything', label: 'Understand Anything' },
   { value: 'rtk', label: 'RTK (Rust Token Killer)' },
   { value: 'headroom', label: 'Headroom AI' },
-  { value: 'turbovec', label: 'TurboVec' },
-  { value: 'raganything', label: 'RAG Anything' },
   { value: 'engram', label: 'Engram' }
 ];
 
