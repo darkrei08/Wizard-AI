@@ -7,6 +7,39 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
+## [0.52.54] - 2026-07-28
+
+### Added
+- **Gentleman Guardian Angel (GGA)**: Integrated the provider-agnostic AI code review tool into `Loop 3 Debug` and `Loop 5 Release`. Added `.gga` configuration file.
+- **Cross-Platform OS Constraint**: Enforced a hard rule in `1-auto-router` requiring agents to detect the OS via `os-detect` before executing shell commands.
+
+### Fixed
+- **Installation Redundancy**: Removed redundant `sqz` installations via `uv tool install` in `setup.ps1` to rely strictly on direct binary downloads.
+
+## [0.52.53] - 2026-07-28
+
+### Added
+- **Automated Compression & MCP Setup**: Introduced `scripts/install-compression-mcp.py` to securely fetch `lean-ctx` and `rtk` binaries and automatically wire `engram` and `codebase-memory-mcp` into Pi's `settings.json`.
+
+### Fixed
+- **NPM EALLOWSCRIPTS Crash**: Removed legacy `approve-scripts --allow-scripts-pending` commands from `setup.ps1` and `setup.sh` that broke on modern NPM.
+- **Git Submodule Flooding**: Optimized installation cloning with `--single-branch`, `--no-tags`, and silenced the visual output (`*>&1 | Out-Null`) to prevent terminal flooding.
+
+## [0.52.52] - 2026-07-28
+
+### Added
+- **AI-Native Repo Standard (ANR)**: Converted 60+ external repo clones into true Git submodules tracked in `docs/resources/Repositories-Skills/` to enable instant Semantic Search and Repodocs indexing.
+- **Dev Organizer Tooling**: Added `project-structure-enforcer`, `folder-structure-blueprint-generator`, and `ai-native-repo-template` to the skill registry and `WIKI.md`.
+- **llms.txt**: Generated an LLM-optimized project map file in the root.
+- **Agent Workspace**: Created `scripts/agent-workspace/` for ephemeral agent scratchpads.
+
+## [0.52.51] - 2026-07-28
+
+### Fixed
+- **Setup.ps1 Temp File Bug**: Replaced `New-TemporaryFile` with cross-platform `[System.IO.Path]::GetTempFileName()` to prevent initialization failures on Windows environments without PS 5.0+.
+- **Wrapper Generation Rule**: Mandated installer agents to output both `wz-ai-*.ps1` and Bash `wz-ai-*` wrapper formats.
+
+
 ## [0.50.47] - 2026-07-22
 
 ### Fixed
