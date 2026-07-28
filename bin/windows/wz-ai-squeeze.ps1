@@ -1,4 +1,4 @@
-# wz-ai squeeze — sqz wrapper for compressing CLI output, JSON, logs
+﻿# wz-ai squeeze — sqz wrapper for compressing CLI output, JSON, logs
 # Windows port of bin/wz-ai squeeze
 # Source: https://github.com/ojuschugh1/sqz
 

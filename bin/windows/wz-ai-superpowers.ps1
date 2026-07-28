@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 wz-ai-superpowers — Discover and rank relevant skills (Windows)
 #>

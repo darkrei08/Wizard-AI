@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 wz-ai-debug — Automated debug, lint, and test verification gate (Windows)
 #>

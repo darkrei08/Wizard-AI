@@ -1,4 +1,4 @@
-# wz-ai compress — LLMLingua prompt/context compressor (up to 20x token reduction)
+﻿# wz-ai compress — LLMLingua prompt/context compressor (up to 20x token reduction)
 # Windows port of bin/wz-ai compress
 # Source: https://github.com/microsoft/LLMLingua
 

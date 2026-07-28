@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Salva lo stato della sessione per le AI (Claude Code, Antigravity, ecc.)
 

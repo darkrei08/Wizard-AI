@@ -1,4 +1,4 @@
-# wz-ai usage — Track Gemini/AI token usage across sessions
+﻿# wz-ai usage — Track Gemini/AI token usage across sessions
 # Windows port of bin/wz-ai usage
 # Source: https://github.com/rmedranollamas/geminiusage
 

@@ -1,4 +1,4 @@
-# wz-ai headroom — Headroom proxy and context compression wrapper
+﻿# wz-ai headroom — Headroom proxy and context compression wrapper
 # Windows port of bin/wz-ai headroom
 
 $Cmd = Get-Command headroom -ErrorAction SilentlyContinue

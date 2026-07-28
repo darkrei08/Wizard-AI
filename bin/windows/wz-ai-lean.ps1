@@ -1,4 +1,4 @@
-# wz-ai lean — Lean Context Intelligence wrapper
+﻿# wz-ai lean — Lean Context Intelligence wrapper
 # Windows port of bin/wz-ai lean
 # Source: https://github.com/yvgude/lean-ctx
 

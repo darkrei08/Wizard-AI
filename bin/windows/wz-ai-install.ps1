@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 wz-ai-install — Install a new skill or CLI tool into Wizard-AI (Windows)
 #>

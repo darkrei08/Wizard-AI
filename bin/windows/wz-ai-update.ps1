@@ -1,4 +1,4 @@
-# wz-ai-update.ps1 — Automates the update process for Wizard-AI and external skills.
+﻿# wz-ai-update.ps1 — Automates the update process for Wizard-AI and external skills.
 
 param (
     [switch]$Quiet

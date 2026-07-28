@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 wz-ai-scaffold — Scaffold new project templates (Windows)
 #>

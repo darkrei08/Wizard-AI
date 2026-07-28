@@ -1,4 +1,4 @@
-# wz-ai graph — Graphify wrapper with convenient shortcuts
+﻿# wz-ai graph — Graphify wrapper with convenient shortcuts
 # Windows port of bin/wz-ai graph
 # Source: https://github.com/safishamsi/graphify
 

@@ -1,4 +1,4 @@
-# wz-ai sync-skills — Sync skills from ~\.gemini\config\skills\ to all agent paths.
+﻿# wz-ai sync-skills — Sync skills from ~\.gemini\config\skills\ to all agent paths.
 # Windows port of bin/wz-ai sync-skills
 #
 # Direction 1 (always): ~\.gemini\config\skills\ -> claude, amp, agents, etc.

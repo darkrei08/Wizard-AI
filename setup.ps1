@@ -1,4 +1,4 @@
-# setup.ps1 - Automated installation and setup script for the Wizard-AI environment.
+﻿# setup.ps1 - Automated installation and setup script for the Wizard-AI environment.
 # Supported Platform: Windows 10/11 (x86_64) - native PowerShell port of setup.sh
 #
 # Usage:  powershell -ExecutionPolicy Bypass -File setup.ps1
@@ -300,11 +300,11 @@ if ($IsNonInteractive) {
         }
     }
     
-    $TmpSel = New-TemporaryFile
-    node "$ScriptDir\scripts\interactive-selector.js" $TmpSel.FullName
+    $TmpSel = [System.IO.Path]::GetTempFileName()
+    node "$ScriptDir\scripts\interactive-selector.js" $TmpSel
     
-    $SelectedReposText = Get-Content $TmpSel.FullName -Raw -ErrorAction SilentlyContinue
-    Remove-Item $TmpSel.FullName -Force -ErrorAction SilentlyContinue
+    $SelectedReposText = Get-Content $TmpSel -Raw -ErrorAction SilentlyContinue
+    Remove-Item $TmpSel -Force -ErrorAction SilentlyContinue
     
     $SelectedItems = @()
     if ($SelectedReposText -and $SelectedReposText.Trim() -ne '') {

@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 wz-ai-skill-doctor — Self-Healing Skill Diagnostic Daemon for Windows
 #>

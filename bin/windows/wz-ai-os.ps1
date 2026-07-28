@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 wz-ai-os — Universal pre-install hook & meta-package-manager for Wizard-AI (Windows)
 #>

@@ -1,4 +1,4 @@
-# wz-ai mem — Persistent semantic memory for LLM sessions (claude-mem)
+﻿# wz-ai mem — Persistent semantic memory for LLM sessions (claude-mem)
 # Windows port of bin/wz-ai mem
 # Source: https://github.com/thedotmack/claude-mem
 

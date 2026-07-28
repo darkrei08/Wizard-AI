@@ -1,4 +1,4 @@
-# wz-ai convert — markitdown wrapper for converting files to Markdown
+﻿# wz-ai convert — markitdown wrapper for converting files to Markdown
 # Windows port of bin/wz-ai convert
 # Source: https://github.com/microsoft/markitdown
 

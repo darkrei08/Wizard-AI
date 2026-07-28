@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 wz-ai-goodcode — Exhaustive multi-agent orchestration wrapper (Windows)
 #>

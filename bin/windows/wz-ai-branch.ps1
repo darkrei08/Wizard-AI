@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 wz-ai-branch — Git branch lifecycle & naming automation (Windows)
 #>
