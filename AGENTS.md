@@ -75,9 +75,10 @@ When working in this repository, you MUST respect the following boundaries:
 1. **`.agents/`**: Place all IDE-specific configurations (`.claude`, `.cursor`, `.pi`, etc.) and autonomous agent workflows here. NEVER place agent configs at the root.
 2. **`docs/`**: Place all documentation, wikis, repo-docs, and graphify output here.
 3. **`packages/`**: Place all standalone projects, npm modules, frameworks, and external tools here. NEVER initialize generic `package.json` projects at the root.
-4. **`.cache/`**: Use this for temporary files, raw data dumps, and cloned repositories (`.local-clones/`).
-5. **`skills/`**: Only for `SKILL.md` definitions and their immediately related scripts/assets.
-6. **Root Directory**: Must remain pristine. Only global configs (`setup.sh`, `AGENTS.md`, `README.md`) are allowed.
+4. **`resources/Repositories-Skills/`**: Use this EXCLUSIVELY for local clones of external repositories used as reference for `repodocs`, `blume`, or agent analysis. NEVER clone third-party repos into the root.
+5. **`.cache/`**: Use this for temporary files, raw data dumps, and ephemeral files.
+6. **`skills/`**: Only for `SKILL.md` definitions and their immediately related scripts/assets.
+7. **Root Directory**: Must remain pristine. Only global configs (`setup.sh`, `AGENTS.md`, `README.md`) are allowed.
 
 ---
 
