@@ -20,6 +20,8 @@
     "wizard-ai-benchmark-sync": "scripts/wz-ai-benchmark-sync.js",
     "wz-ai-cockpit": "scripts/wz-ai-cockpit.js",
     "wz-ai-account": "scripts/wz-ai-cockpit.js",
+    "wz-ai-paperclip": "scripts/wz-ai-paperclip.js",
+    "wizard-ai-paperclip": "scripts/wz-ai-paperclip.js",
     "wz-ai-wiki": "scripts/wz-ai-wiki.js",
     "wizard-ai-wiki": "scripts/wz-ai-wiki.js"
   },
