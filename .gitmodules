@@ -1,0 +1,210 @@
+[submodule "docs/resources/Repositories-Skills/gentle-pi"]
+	path = docs/resources/Repositories-Skills/gentle-pi
+	url = https://github.com/Gentleman-Programming/gentle-pi.git
+[submodule "docs/resources/Repositories-Skills/earendil-pi"]
+	path = docs/resources/Repositories-Skills/earendil-pi
+	url = https://github.com/earendil-works/pi.git
+[submodule "docs/resources/Repositories-Skills/caveman"]
+	path = docs/resources/Repositories-Skills/caveman
+	url = https://github.com/JuliusBrussee/caveman.git
+[submodule "docs/resources/Repositories-Skills/goodcode"]
+	path = docs/resources/Repositories-Skills/goodcode
+	url = https://github.com/SpinaBuilds/goodcode.git
+[submodule "docs/resources/Repositories-Skills/openhuman"]
+	path = docs/resources/Repositories-Skills/openhuman
+	url = https://github.com/tinyhumansai/openhuman.git
+[submodule "docs/resources/Repositories-Skills/qwenpaw"]
+	path = docs/resources/Repositories-Skills/qwenpaw
+	url = https://github.com/agentscope-ai/QwenPaw.git
+[submodule "docs/resources/Repositories-Skills/syke"]
+	path = docs/resources/Repositories-Skills/syke
+	url = https://github.com/saxenauts/syke.git
+[submodule "docs/resources/Repositories-Skills/mem0"]
+	path = docs/resources/Repositories-Skills/mem0
+	url = https://github.com/mem0ai/mem0.git
+[submodule "docs/resources/Repositories-Skills/pi-config"]
+	path = docs/resources/Repositories-Skills/pi-config
+	url = https://github.com/vekexasia/pi-config.git
+[submodule "docs/resources/Repositories-Skills/pi-cockpit-tools"]
+	path = docs/resources/Repositories-Skills/pi-cockpit-tools
+	url = https://github.com/darkrei08/Wizard-AI.git
+[submodule "docs/resources/Repositories-Skills/llmlingua"]
+	path = docs/resources/Repositories-Skills/llmlingua
+	url = https://github.com/microsoft/LLMLingua.git
+[submodule "docs/resources/Repositories-Skills/flashrank"]
+	path = docs/resources/Repositories-Skills/flashrank
+	url = https://github.com/PrithivirajDamodaran/FlashRank.git
+[submodule "docs/resources/Repositories-Skills/graphify"]
+	path = docs/resources/Repositories-Skills/graphify
+	url = https://github.com/safishamsi/graphify.git
+[submodule "docs/resources/Repositories-Skills/geminiusage"]
+	path = docs/resources/Repositories-Skills/geminiusage
+	url = https://github.com/rmedranollamas/geminiusage.git
+[submodule "docs/resources/Repositories-Skills/litellm"]
+	path = docs/resources/Repositories-Skills/litellm
+	url = https://github.com/BerriAI/litellm.git
+[submodule "docs/resources/Repositories-Skills/markitdown"]
+	path = docs/resources/Repositories-Skills/markitdown
+	url = https://github.com/microsoft/markitdown.git
+[submodule "docs/resources/Repositories-Skills/mermaid-cli"]
+	path = docs/resources/Repositories-Skills/mermaid-cli
+	url = https://github.com/mermaid-js/mermaid-cli.git
+[submodule "docs/resources/Repositories-Skills/spec-kit"]
+	path = docs/resources/Repositories-Skills/spec-kit
+	url = https://github.com/github/spec-kit.git
+[submodule "docs/resources/Repositories-Skills/cli-anything"]
+	path = docs/resources/Repositories-Skills/cli-anything
+	url = https://github.com/HKUDS/CLI-Anything.git
+[submodule "docs/resources/Repositories-Skills/cli-printing-press"]
+	path = docs/resources/Repositories-Skills/cli-printing-press
+	url = https://github.com/mvanhorn/cli-printing-press.git
+[submodule "docs/resources/Repositories-Skills/repodocs"]
+	path = docs/resources/Repositories-Skills/repodocs
+	url = https://github.com/aryrabelo/repodocs.git
+[submodule "docs/resources/Repositories-Skills/pi-cockpit-proxy-setup"]
+	path = docs/resources/Repositories-Skills/pi-cockpit-proxy-setup
+	url = https://github.com/darkrei08/Wizard-AI.git
+[submodule "docs/resources/Repositories-Skills/open-code-review"]
+	path = docs/resources/Repositories-Skills/open-code-review
+	url = https://github.com/alibaba/open-code-review.git
+[submodule "docs/resources/Repositories-Skills/blume"]
+	path = docs/resources/Repositories-Skills/blume
+	url = https://github.com/haydenbleasel/blume.git
+[submodule "docs/resources/Repositories-Skills/crowdsec-skill"]
+	path = docs/resources/Repositories-Skills/crowdsec-skill
+	url = https://github.com/crowdsecurity/crowdsec-skill.git
+[submodule "docs/resources/Repositories-Skills/awesome-agent-skills"]
+	path = docs/resources/Repositories-Skills/awesome-agent-skills
+	url = https://github.com/VoltAgent/awesome-agent-skills.git
+[submodule "docs/resources/Repositories-Skills/cybersecurity-skills"]
+	path = docs/resources/Repositories-Skills/cybersecurity-skills
+	url = https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git
+[submodule "docs/resources/Repositories-Skills/system_prompts_leaks"]
+	path = docs/resources/Repositories-Skills/system_prompts_leaks
+	url = https://github.com/asgeirtj/system_prompts_leaks.git
+[submodule "docs/resources/Repositories-Skills/engineering-excellence"]
+	path = docs/resources/Repositories-Skills/engineering-excellence
+	url = https://github.com/micio86dev/Engineering-Excellence.git
+[submodule "docs/resources/Repositories-Skills/stitch-skills"]
+	path = docs/resources/Repositories-Skills/stitch-skills
+	url = https://github.com/google-labs-code/stitch-skills.git
+[submodule "docs/resources/Repositories-Skills/design.md"]
+	path = docs/resources/Repositories-Skills/design.md
+	url = https://github.com/google-labs-code/design.md.git
+[submodule "docs/resources/Repositories-Skills/book-to-skill"]
+	path = docs/resources/Repositories-Skills/book-to-skill
+	url = https://github.com/virgiliojr94/book-to-skill.git
+[submodule "docs/resources/Repositories-Skills/wiki-brain-skill"]
+	path = docs/resources/Repositories-Skills/wiki-brain-skill
+	url = https://github.com/tenfoldmarc/wiki-brain-skill.git
+[submodule "docs/resources/Repositories-Skills/impeccable"]
+	path = docs/resources/Repositories-Skills/impeccable
+	url = https://github.com/pbakaus/impeccable.git
+[submodule "docs/resources/Repositories-Skills/last30days-skill"]
+	path = docs/resources/Repositories-Skills/last30days-skill
+	url = https://github.com/mvanhorn/last30days-skill.git
+[submodule "docs/resources/Repositories-Skills/claude-blog"]
+	path = docs/resources/Repositories-Skills/claude-blog
+	url = https://github.com/AgriciDaniel/claude-blog.git
+[submodule "docs/resources/Repositories-Skills/claude-seo"]
+	path = docs/resources/Repositories-Skills/claude-seo
+	url = https://github.com/AgriciDaniel/claude-seo.git
+[submodule "docs/resources/Repositories-Skills/llm_wiki"]
+	path = docs/resources/Repositories-Skills/llm_wiki
+	url = https://github.com/nashsu/llm_wiki.git
+[submodule "docs/resources/Repositories-Skills/personal-graph"]
+	path = docs/resources/Repositories-Skills/personal-graph
+	url = https://github.com/Technoculture/personal-graph.git
+[submodule "docs/resources/Repositories-Skills/rag-anything"]
+	path = docs/resources/Repositories-Skills/rag-anything
+	url = https://github.com/HKUDS/RAG-Anything.git
+[submodule "docs/resources/Repositories-Skills/turbovec"]
+	path = docs/resources/Repositories-Skills/turbovec
+	url = https://github.com/RyanCodrai/turbovec.git
+[submodule "docs/resources/Repositories-Skills/zvec"]
+	path = docs/resources/Repositories-Skills/zvec
+	url = https://github.com/alibaba/zvec.git
+[submodule "docs/resources/Repositories-Skills/aionui"]
+	path = docs/resources/Repositories-Skills/aionui
+	url = https://github.com/iOfficeAI/AionUi.git
+[submodule "docs/resources/Repositories-Skills/phantom-ui"]
+	path = docs/resources/Repositories-Skills/phantom-ui
+	url = https://github.com/Aejkatappaja/phantom-ui.git
+[submodule "docs/resources/Repositories-Skills/mengto-skills"]
+	path = docs/resources/Repositories-Skills/mengto-skills
+	url = https://github.com/MengTo/Skills.git
+[submodule "docs/resources/Repositories-Skills/infographic"]
+	path = docs/resources/Repositories-Skills/infographic
+	url = https://github.com/antvis/Infographic.git
+[submodule "docs/resources/Repositories-Skills/kinetics-ui"]
+	path = docs/resources/Repositories-Skills/kinetics-ui
+	url = https://github.com/ckissi/kinetics.git
+[submodule "docs/resources/Repositories-Skills/easy-vibe"]
+	path = docs/resources/Repositories-Skills/easy-vibe
+	url = https://github.com/datawhalechina/easy-vibe.git
+[submodule "docs/resources/Repositories-Skills/camofox-browser"]
+	path = docs/resources/Repositories-Skills/camofox-browser
+	url = https://github.com/jo-inc/camofox-browser.git
+[submodule "docs/resources/Repositories-Skills/voicebox"]
+	path = docs/resources/Repositories-Skills/voicebox
+	url = https://github.com/jamiepine/voicebox.git
+[submodule "docs/resources/Repositories-Skills/omnivoice-studio"]
+	path = docs/resources/Repositories-Skills/omnivoice-studio
+	url = https://github.com/debpalash/OmniVoice-Studio.git
+[submodule "docs/resources/Repositories-Skills/supertonic"]
+	path = docs/resources/Repositories-Skills/supertonic
+	url = https://github.com/supertone-inc/supertonic.git
+[submodule "docs/resources/Repositories-Skills/hyperframes"]
+	path = docs/resources/Repositories-Skills/hyperframes
+	url = https://github.com/heygen-com/hyperframes.git
+[submodule "docs/resources/Repositories-Skills/wslens"]
+	path = docs/resources/Repositories-Skills/wslens
+	url = https://github.com/vekexasia/wslens.git
+[submodule "docs/resources/Repositories-Skills/pocketbase"]
+	path = docs/resources/Repositories-Skills/pocketbase
+	url = https://github.com/pocketbase/pocketbase.git
+[submodule "docs/resources/Repositories-Skills/trailbase"]
+	path = docs/resources/Repositories-Skills/trailbase
+	url = https://github.com/trailbaseio/trailbase.git
+[submodule "docs/resources/Repositories-Skills/go-whatsapp"]
+	path = docs/resources/Repositories-Skills/go-whatsapp
+	url = https://github.com/aldinokemal/go-whatsapp-web-multidevice.git
+[submodule "docs/resources/Repositories-Skills/wuzapi"]
+	path = docs/resources/Repositories-Skills/wuzapi
+	url = https://github.com/asternic/wuzapi.git
+[submodule "docs/resources/Repositories-Skills/openwa"]
+	path = docs/resources/Repositories-Skills/openwa
+	url = https://github.com/rmyndharis/OpenWA.git
+[submodule "docs/resources/Repositories-Skills/cockpit-tools"]
+	path = docs/resources/Repositories-Skills/cockpit-tools
+	url = https://github.com/jlcodes99/cockpit-tools.git
+[submodule "docs/resources/Repositories-Skills/express-typescript-starter"]
+	path = docs/resources/Repositories-Skills/express-typescript-starter
+	url = https://github.com/ToniR7/express-typescript-starter.git
+[submodule "docs/resources/Repositories-Skills/aisuite"]
+	path = docs/resources/Repositories-Skills/aisuite
+	url = https://github.com/andrewyng/aisuite.git
+[submodule "docs/resources/Repositories-Skills/loopkit"]
+	path = docs/resources/Repositories-Skills/loopkit
+	url = https://github.com/Archive228/loopkit.git
+[submodule "docs/resources/Repositories-Skills/loopy"]
+	path = docs/resources/Repositories-Skills/loopy
+	url = https://github.com/Forward-Future/loopy.git
+[submodule "docs/resources/Repositories-Skills/superpowers"]
+	path = docs/resources/Repositories-Skills/superpowers
+	url = https://github.com/obra/superpowers.git
+[submodule "docs/resources/Repositories-Skills/wshobson-agents"]
+	path = docs/resources/Repositories-Skills/wshobson-agents
+	url = https://github.com/wshobson/agents.git
+[submodule "docs/resources/Repositories-Skills/addyosmani-skills"]
+	path = docs/resources/Repositories-Skills/addyosmani-skills
+	url = https://github.com/addyosmani/agent-skills.git
+[submodule "docs/resources/Repositories-Skills/anthropic-frontend-design"]
+	path = docs/resources/Repositories-Skills/anthropic-frontend-design
+	url = https://github.com/anthropics/claude-code
+[submodule "docs/resources/Repositories-Skills/understand-anything"]
+	path = docs/resources/Repositories-Skills/understand-anything
+	url = https://github.com/Egonex-AI/Understand-Anything.git
+[submodule "docs/resources/Repositories-Skills/camofox"]
+	path = docs/resources/Repositories-Skills/camofox
+	url = https://github.com/jo-inc/camofox-browser.git
