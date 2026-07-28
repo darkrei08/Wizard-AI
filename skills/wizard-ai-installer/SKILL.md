@@ -60,28 +60,33 @@ Determine what type of tool it is:
 > 3. **Smoke Testing (`Verification Check`):** Always verify execution (`--help`, `--version`, `bash -n`) after downloading or cloning.
 > 4. **Rollback on Failure:** If verification or build fails, immediately restore the previous working version (`$pkg@$prev_ver`, `git reset --hard $prev_commit`, or `.bak` restore). If no previous version existed (`fresh install`), clean up any incomplete directories (`rm -rf $name`) to prevent broken environment states.
 
-### Step 2: Create the Wrapper Script
+### Step 2: Create the Wrapper Scripts
 
-Create a bash wrapper script named `ai-<tool-name>` (or similar logical name).
+Create the wrapper scripts named `wz-ai-<tool-name>` so the command can be called as `wz-ai <tool-name>` through the main CLI. You MUST create both a Bash script (for Linux/macOS) and a PowerShell script (for Windows).
 
-1. Save to the repo's `bin/` directory:
-   ```bash
-   # Create at:
-   "$WIZARD_AI_DIR/bin/ai-<tool-name>"
-   ```
-
-2. The script header MUST follow this template (no hardcoded absolute paths):
+1. **Bash Wrapper**: Save to `$WIZARD_AI_DIR/bin/wz-ai-<tool-name>`
    ```bash
    #!/usr/bin/env bash
-   # ai-<tool-name> — Short description
+   # wz-ai-<tool-name> — Short description
    # Source: https://github.com/author/repo
    set -euo pipefail
+   
+   # ... execution logic ...
+   ```
+   *Make it executable:* `chmod +x "$WIZARD_AI_DIR/bin/wz-ai-<tool-name>"`
+
+2. **PowerShell Wrapper**: Save to `$WIZARD_AI_DIR/bin/windows/wz-ai-<tool-name>.ps1`
+   ```powershell
+   # wz-ai-<tool-name> — Short description
+   # Source: https://github.com/author/repo
+   
+   # ... execution logic ...
    ```
 
-3. Make it executable and copy to system path:
+3. **Deploy to System Path**:
    ```bash
-   chmod +x "$WIZARD_AI_DIR/bin/ai-<tool-name>"
-   cp "$WIZARD_AI_DIR/bin/ai-<tool-name>" "$HOME/.local/bin/"
+   cp "$WIZARD_AI_DIR/bin/wz-ai-<tool-name>" "$HOME/.local/bin/"
+   cp "$WIZARD_AI_DIR/bin/windows/wz-ai-<tool-name>.ps1" "$HOME/.local/bin/"
    ```
 
 ### Step 3: Write the SKILL.md Documentation
@@ -151,8 +156,8 @@ Edit `"$WIZARD_AI_DIR/setup.sh"`:
 
 Edit `"$WIZARD_AI_DIR/bin/wz-ai help"` and add a new entry in the appropriate category:
 ```bash
-echo -e "  $(check_cmd ai-<tool>) ${BOLD}ai-<tool>${RESET}   Brief description"
-echo -e "     ${BLUE}ai-<tool> --example${RESET}"
+echo -e "  $(check_cmd wz-ai-<tool>) ${BOLD}wz-ai-<tool>${RESET}   Brief description"
+echo -e "     ${BLUE}wz-ai-<tool> --example${RESET}"
 ```
 
 Then sync the updated binary:
@@ -189,6 +194,6 @@ wz-ai sync-skills
 
 Once all 7 steps are completed, present a concise summary to the user:
 - Name of the tool installed
-- Wrapper created (`ai-<tool>`)
+- Wrapper created (`wz-ai-<tool>`)
 - Confirmation that `setup.sh` and `wz-ai help` have been permanently updated
-- Command to test: `ai-<tool> --help`
+- Command to test: `wz-ai-<tool> --help`
