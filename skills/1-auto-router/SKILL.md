@@ -66,6 +66,7 @@ If the request spans specific creative, analytical, or specialized domains beyon
 | **Universal Context Compression & AST Pruning** ("Too long", "Reduce tokens", "Compress") | `workflow-agentic-brain` | Esegui Pruning AST (`pi.dev` wrapper) e delegazione a subagent shardati (`pi-subagents`) | `wz-ai compress`, `wz-ai squeeze`, `lean-ctx`, `caveman` |
 | **Security Audit & Pentesting** ("Security check", "Vulnerabilities") | `cybersecurity` / `strix` | Fan-out di subagent in parallelo su singoli moduli architetturali | `strix`, `cybersecurity`, `goodcode` |
 | **Start a New Project / Bootstrap** ("Initialize", "Scaffold", "Nuovo progetto") | `loop-1-plan` + `master-project-bootstrap` | Pipeline sequenziale completa 01→05 con isolamento branch e TDD | `scaffold`, `master-project-bootstrap` |
+| **Repository Organization & Agent Training** ("Riordina repo", "Organizza", "Blueprint") | `loop-4-refactor` / `loop-1-plan` | Estrai struttura directory e file per validazione confini architetturali | `ai-native-repo-template`, `folder-structure-blueprint-generator`, `project-structure-enforcer` |
 
 ## 4. mattpocock Skills — Direct Routing
 

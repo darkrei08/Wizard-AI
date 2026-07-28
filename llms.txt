@@ -1,0 +1,20 @@
+# Wizard-AI Repository Context
+
+This repository is optimized for AI agents using the AI-Native Repo Template (ANR) standard.
+
+## Directory Structure
+- `bin/`: CLI entrypoints and bash wrappers (wz-ai-*).
+- `docs/`: Knowledge base, documentation, graphify outputs, and external repo submodules (under `docs/resources/`).
+- `scripts/`: Internal tools, Node.js scripts for syncing, configuring, and installing.
+- `skills/`: The core of Wizard-AI. Contains hundreds of agent skills organized by category.
+- `test/`: Integration and unit tests for the CLI and frameworks.
+- `workflows/`: Deterministic multi-agent execution scripts (`pi-extensible-workflows`).
+
+## Architectural Boundaries (Project Structure Enforcer)
+1. **Root Directory**: Must remain pristine. No temporary files or one-off scripts.
+2. **Scripts**: Any ad-hoc Python/Bash scripts developed during sessions must go to `scripts/agent-workspace/`.
+3. **Dependencies**: `packages/` is for standalone npm modules.
+4. **Skills Taxonomy**: New domain skills must be placed in `skills/reference/<category>/<author_or_repo>/<name>/`.
+
+## Memory & Context
+When modifying this repository, update `MEMORY.md` and adhere to `AGENTS.md` rules. Use `docs/WIKI.md` to reference available tools.
