@@ -234,7 +234,7 @@ clone_skill_repo() {
   if [ ! -d "$dest_dir" ]; then
     echo -e "${YELLOW}  ↳ Cloning ${dest_name} from ${url}...${NC}"
     if [ "$VERBOSE" -eq 1 ]; then
-      git clone --recurse-submodules --shallow-submodules --depth 1 "$url" "$dest_dir" || { INSTALL_FAIL=$((INSTALL_FAIL+1)); FAILED_REPOS="$FAILED_REPOS $dest_name"; echo -e "${RED}  ✗ Clone failed for $dest_name${NC}"; return; }
+      git clone --recurse-submodules --shallow-submodules --depth 1 --single-branch --no-tags \"$url\" \"$dest_dir\" || { INSTALL_FAIL=$((INSTALL_FAIL+1)); FAILED_REPOS="$FAILED_REPOS $dest_name"; echo -e "${RED}  ✗ Clone failed for $dest_name${NC}"; return; }
     else
       git clone --recurse-submodules --shallow-submodules --depth 1 $QUIET_OPT "$url" "$dest_dir" 2>/dev/null || { INSTALL_FAIL=$((INSTALL_FAIL+1)); FAILED_REPOS="$FAILED_REPOS $dest_name"; echo -e "${RED}  ✗ Clone failed for $dest_name${NC}"; return; }
     fi
@@ -279,10 +279,8 @@ clone_skill_repo() {
       echo -e "${CYAN}  ↳ Installing npm packages for $dest_name...${NC}"
       if [ "$VERBOSE" -eq 1 ]; then
         npm install --prefix "$dest_dir" --no-audit --no-fund || true
-        npm --prefix "$dest_dir" approve-scripts --allow-scripts-pending || true
       else
         npm install --prefix "$dest_dir" --no-audit --no-fund >/dev/null 2>&1 || true
-        npm --prefix "$dest_dir" approve-scripts --allow-scripts-pending >/dev/null 2>&1 || true
       fi
     fi
   fi

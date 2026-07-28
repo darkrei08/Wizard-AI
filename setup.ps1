@@ -77,6 +77,9 @@ $LocalBin = Join-Path $HOME '.local\bin'
 $AiSkills = Join-Path $HOME '.wizard-ai'
 
 # 0. Save WIZARD_AI_DIR so skills and wrappers can reference the repo portably
+Write-Log '[7.8/8] Configuring Compression Tools and MCP...' -ForegroundColor Blue
+    try { python (Join-Path $ScriptDir 'scripts\install-compression-mcp.py') } catch {}
+
 Write-Log ' '
 Write-Log '[0/8] Registering Wizard-AI installation path...' -ForegroundColor Blue
 $ConfigDir = Join-Path $HOME '.config\wizard-ai'
@@ -225,9 +228,9 @@ function Clone-SkillRepo {
     if (-not (Test-Path $DestDir)) {
         Write-Log "  > Cloning $DestName from $Url..." -ForegroundColor Yellow
         if ($VerboseMode) {
-            git clone --recurse-submodules --shallow-submodules --depth 1 $Url $DestDir
+            git clone --recurse-submodules --shallow-submodules --depth 1 --single-branch --no-tags $Url $DestDir
         } else {
-            git clone --recurse-submodules --shallow-submodules --depth 1 --quiet $Url $DestDir 2>$null
+            git clone --recurse-submodules --shallow-submodules --depth 1 --single-branch --no-tags --quiet $Url $DestDir *>&1 | Out-Null
         }
         if ($LASTEXITCODE -ne 0) {
             $script:InstallFail++
@@ -271,10 +274,8 @@ function Clone-SkillRepo {
             Write-Log "  > Installing npm packages for $DestName..." -ForegroundColor Cyan
             if ($VerboseMode) {
                 try { npm install --prefix $DestDir --no-audit --no-fund } catch {}
-                try { npm --prefix $DestDir approve-scripts --allow-scripts-pending } catch {}
             } else {
                 try { $null = npm install --prefix $DestDir --no-audit --no-fund 2>&1 } catch {}
-                try { $null = npm --prefix $DestDir approve-scripts --allow-scripts-pending 2>&1 } catch {}
             }
         }
     }
