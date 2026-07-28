@@ -16,9 +16,9 @@ Use this skill whenever:
 
 Run all gates with:
 ```bash
-ai-debug check           # full spec-kit (lint + format + type + tests)
-ai-debug check --fix     # same + auto-correct fixable issues
-ai-debug check --fast    # lint only (fastest)
+wz-ai debug check           # full spec-kit (lint + format + type + tests)
+wz-ai debug check --fix     # same + auto-correct fixable issues
+wz-ai debug check --fast    # lint only (fastest)
 ```
 
 ## Gate 1 — Lint (ruff)
@@ -74,7 +74,7 @@ python -m pytest --cov=. --cov-report=term-missing
 python -m pytest -m "not slow" -x
 ```
 
-## Gate 5 — Security Check (optional)
+## Gate 5 — Security Check (`cybersecurity`)
 
 ```bash
 # Check for known vulnerabilities in dependencies
@@ -83,6 +83,7 @@ pip-audit 2>/dev/null || echo "pip-audit not installed, skipping"
 # Check for hardcoded secrets
 grep -rn "password\|secret\|api_key\|token" --include="*.py" . | grep -v ".git\|test\|#"
 ```
+*Note: Consult the Anthropic Cybersecurity Skills library (`~/.wizard-ai/cybersecurity-skills/skills/`) to perform framework-aligned code reviews (e.g. checking for OWASP Top 10).*
 
 ## Project-Specific Debug: SQLite Logger
 
@@ -119,7 +120,7 @@ python -c "import sqlite3; [print(r) for r in sqlite3.connect('app_debug.sqlite'
 ### Step 2: Compress & Analyze (token-efficient)
 ```bash
 # Use sqz to compress verbose tracebacks before analysis
-cat /tmp/debug_output.txt | ai-squeeze
+cat /tmp/debug_output.txt | wz-ai squeeze
 ```
 
 ### Step 3: Identify Fix Pattern
@@ -136,7 +137,7 @@ cat /tmp/debug_output.txt | ai-squeeze
 ### Step 4: Apply Fix & Verify
 ```bash
 # After fixing, always re-run the spec-kit
-ai-debug check
+wz-ai debug check
 
 # If all gates pass, commit the fix
 git add -p   # review each change
@@ -176,8 +177,8 @@ jobs:
 ## Rules for AI Agents
 
 - NEVER skip Gate 1 (linting) before a commit.
-- ALWAYS run `ai-debug check --fix` after a series of edits to auto-correct style issues.
-- Use `ai-squeeze` to compress large tracebacks before putting them in context.
+- ALWAYS run `wz-ai debug check --fix` after a series of edits to auto-correct style issues.
+- Use `wz-ai squeeze` to compress large tracebacks before putting them in context.
 - Use `python db_viewers.py` to inspect the project's built-in SQLite debug log.
 - If tests fail with cryptic errors, check the SQLite logger first.
 - After auto-correcting, always run a dry-run to confirm (`ruff check .` with no `--fix`).

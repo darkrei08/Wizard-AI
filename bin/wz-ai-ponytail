@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# wz-ai-ponytail — AI skill to cut output tokens by acting like a lazy senior dev
+# Source: https://github.com/DietrichGebert/ponytail
+set -euo pipefail
+
+SKILL_PATH="${WIZARD_AI_DIR:-$HOME/.config/wizard-ai}/skills/ponytail/SKILL.md"
+
+if [ -f "$SKILL_PATH" ]; then
+    cat "$SKILL_PATH"
+else
+    # Fallback if WIZARD_AI_DIR is not set properly
+    cat "$HOME/.gemini/config/skills/ponytail/SKILL.md" 2>/dev/null || echo "Ponytail skill not found."
+fi
+
+# If arguments or stdin are provided, output them after the system prompt
+if [ $# -gt 0 ]; then
+    echo ""
+    echo "$@"
+elif [ ! -t 0 ]; then
+    echo ""
+    cat
+fi

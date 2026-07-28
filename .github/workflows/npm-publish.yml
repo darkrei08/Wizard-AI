@@ -12,6 +12,8 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     permissions:
       contents: read
       id-token: write # required for npm provenance
@@ -24,9 +26,15 @@ jobs:
         with:
           node-version: 22
           registry-url: https://registry.npmjs.org
+          scope: '@darkrei08'
 
       - name: Sanity check launcher
         run: node --check cli.js
+
+      - name: Verify npm token
+        run: npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish
         run: npm publish --access public --provenance

@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# wz-ai-lean-ctx — Alias for wz-ai-lean (Lean Context Intelligence)
+# Source: https://github.com/yvgude/lean-ctx
+#
+# This wrapper unifies the dual wz-ai-lean / wz-ai-lean-ctx invocation.
+# All logic resides in wz-ai-lean (150+ lines with build fallback, help,
+# subcommands). This file simply forwards to it.
+set -euo pipefail
+
+# ── Locate wz-ai-lean (the canonical wrapper) ──────────────────────────
+AI_LEAN_CMD=""
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+if [ -x "$SCRIPT_DIR/wz-ai-lean" ]; then
+    AI_LEAN_CMD="$SCRIPT_DIR/wz-ai-lean"
+elif command -v wz-ai-lean &>/dev/null; then
+    AI_LEAN_CMD="wz-ai-lean"
+elif [ -x "$HOME/.local/bin/wz-ai-lean" ]; then
+    AI_LEAN_CMD="$HOME/.local/bin/wz-ai-lean"
+elif [ -x "$HOME/.wizard-ai/bin/wz-ai-lean" ]; then
+    AI_LEAN_CMD="$HOME/.wizard-ai/bin/wz-ai-lean"
+fi
+
+if [ -z "$AI_LEAN_CMD" ]; then
+    echo "❌ wz-ai-lean not found. Ensure Wizard-AI bin/ is in PATH." >&2
+    exit 1
+fi
+
+exec "$AI_LEAN_CMD" "$@"

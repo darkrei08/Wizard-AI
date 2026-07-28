@@ -1,0 +1,186 @@
+[
+  {
+    "slug": "overview",
+    "title": "Overview",
+    "purpose": "What this repository is, what it does, and how its pieces fit together.",
+    "files": [
+      "README.md",
+      "package.json",
+      "ECC/ecc2/src/tui/dashboard.rs",
+      "claude-mem/workers/sync-hub/worker-configuration.d.ts",
+      "ECC/ecc2/src/main.rs",
+      "headroom/headroom/proxy/handlers/openai.py",
+      "headroom/headroom/cli/wrap.py",
+      "ECC/ecc2/src/session/manager.rs"
+    ]
+  },
+  {
+    "slug": "installation",
+    "title": "Installation & Setup",
+    "purpose": "How to install, configure, and run the project.",
+    "files": [
+      "README.md",
+      "package.json"
+    ]
+  },
+  {
+    "slug": "architecture",
+    "title": "Architecture",
+    "purpose": "The high-level structure, main modules, and how data/control flows between them.",
+    "files": [
+      "ECC/ecc2/src/tui/dashboard.rs",
+      "claude-mem/workers/sync-hub/worker-configuration.d.ts",
+      "ECC/ecc2/src/main.rs",
+      "headroom/headroom/proxy/handlers/openai.py",
+      "headroom/headroom/cli/wrap.py",
+      "ECC/ecc2/src/session/manager.rs",
+      "ECC/ecc2/src/session/store.rs",
+      "ECC/tests/hooks/hooks.test.js",
+      "headroom/headroom/transforms/content_router.py",
+      "headroom/headroom/proxy/server.py",
+      "headroom/headroom/proxy/handlers/anthropic.py",
+      "docs/repo-docs/assets/mermaid.min.js"
+    ]
+  },
+  {
+    "slug": "component-lean-ctx",
+    "title": "Component: lean-ctx",
+    "purpose": "How the `lean-ctx` component is organized and what it is responsible for.",
+    "files": [
+      "lean-ctx/rust/src/proxy_setup.rs",
+      "lean-ctx/rust/tests/intensive_benchmarks.rs",
+      "lean-ctx/rust/src/core/config/tests.rs",
+      "lean-ctx/rust/src/core/shell_allowlist/tests.rs",
+      "lean-ctx/rust/src/core/config/mod.rs",
+      "lean-ctx/rust/src/core/shell_allowlist/mod.rs",
+      "lean-ctx/rust/src/shell/compress/tests.rs",
+      "lean-ctx/rust/src/http_server/team/mod.rs",
+      "lean-ctx/rust/src/http_server/mod.rs",
+      "lean-ctx/rust/src/shell/exec.rs",
+      "lean-ctx/rust/src/core/rules_canonical.rs",
+      "lean-ctx/rust/src/setup/mod.rs"
+    ]
+  },
+  {
+    "slug": "component-headroom",
+    "title": "Component: headroom",
+    "purpose": "How the `headroom` component is organized and what it is responsible for.",
+    "files": [
+      "headroom/headroom/proxy/handlers/openai.py",
+      "headroom/headroom/cli/wrap.py",
+      "headroom/headroom/transforms/content_router.py",
+      "headroom/headroom/proxy/server.py",
+      "headroom/headroom/proxy/handlers/anthropic.py",
+      "headroom/headroom/proxy/helpers.py",
+      "headroom/crates/headroom-core/src/transforms/live_zone.rs",
+      "headroom/headroom/prediction/feature_extractor.py",
+      "headroom/headroom/transforms/code_compressor.py",
+      "headroom/headroom/proxy/memory_handler.py",
+      "headroom/tests/test_memory/test_traffic_learner.py",
+      "headroom/headroom/proxy/handlers/streaming.py"
+    ]
+  },
+  {
+    "slug": "component-cybersecurity-skills",
+    "title": "Component: cybersecurity-skills",
+    "purpose": "How the `cybersecurity-skills` component is organized and what it is responsible for.",
+    "files": [
+      "cybersecurity-skills/skills/performing-post-quantum-cryptography-migration/scripts/agent.py",
+      "cybersecurity-skills/skills/implementing-gdpr-data-subject-access-request/scripts/agent.py",
+      "cybersecurity-skills/skills/performing-privacy-impact-assessment/scripts/agent.py",
+      "cybersecurity-skills/skills/deploying-active-directory-honeytokens/scripts/agent.py",
+      "cybersecurity-skills/skills/detecting-command-and-control-over-dns/scripts/agent.py",
+      "cybersecurity-skills/skills/implementing-browser-isolation-for-zero-trust/scripts/agent.py",
+      "cybersecurity-skills/skills/auditing-tls-certificate-transparency-logs/scripts/agent.py",
+      "cybersecurity-skills/skills/implementing-hardware-security-key-authentication/scripts/agent.py",
+      "cybersecurity-skills/skills/implementing-attack-surface-management/scripts/agent.py",
+      "cybersecurity-skills/skills/executing-red-team-engagement-planning/scripts/process.py",
+      "cybersecurity-skills/skills/performing-purple-team-atomic-testing/scripts/agent.py",
+      "cybersecurity-skills/skills/performing-soc2-type2-audit-preparation/scripts/agent.py"
+    ]
+  },
+  {
+    "slug": "component-claude-mem",
+    "title": "Component: claude-mem",
+    "purpose": "How the `claude-mem` component is organized and what it is responsible for.",
+    "files": [
+      "claude-mem/workers/sync-hub/worker-configuration.d.ts",
+      "claude-mem/src/services/sqlite/SessionStore.ts",
+      "claude-mem/openclaw/test-install.sh",
+      "claude-mem/src/server/routes/v1/ServerV1PostgresRoutes.ts",
+      "claude-mem/src/npx-cli/commands/install.ts",
+      "claude-mem/openclaw/install.sh",
+      "claude-mem/src/services/worker-service.ts",
+      "claude-mem/tests/worker/sync/cloud-sync.test.ts",
+      "claude-mem/src/services/sync/CloudSync.ts",
+      "claude-mem/src/services/sync/ChromaMcpManager.ts",
+      "claude-mem/workers/sync-hub/test/sync-hub.test.ts",
+      "claude-mem/src/services/sync/ChromaSync.ts"
+    ]
+  },
+  {
+    "slug": "component-infographic",
+    "title": "Component: Infographic",
+    "purpose": "How the `Infographic` component is organized and what it is responsible for.",
+    "files": [
+      "Infographic/__tests__/unit/syntax/parse-syntax.test.ts",
+      "Infographic/site/src/components/Layout/HomeContent.tsx",
+      "Infographic/site/src/components/AIPlayground/index.tsx",
+      "Infographic/src/designs/structures/sequence-interaction.tsx",
+      "Infographic/src/designs/structures/sequence-cylinders-3d.tsx",
+      "Infographic/__tests__/unit/jsx/utils/bounds.test.tsx",
+      "Infographic/src/exporter/svg.ts",
+      "Infographic/src/templates/built-in.ts",
+      "Infographic/src/designs/structures/hierarchy-tree.tsx",
+      "Infographic/shared/datasets.ts",
+      "Infographic/site/src/components/LiveEditor/EditorPanel.tsx",
+      "Infographic/src/designs/structures/hierarchy-structure.tsx"
+    ]
+  },
+  {
+    "slug": "component-ecc",
+    "title": "Component: ECC",
+    "purpose": "How the `ECC` component is organized and what it is responsible for.",
+    "files": [
+      "ECC/ecc2/src/tui/dashboard.rs",
+      "ECC/ecc2/src/main.rs",
+      "ECC/ecc2/src/session/manager.rs",
+      "ECC/ecc2/src/session/store.rs",
+      "ECC/tests/hooks/hooks.test.js",
+      "ECC/tests/ci/validators.test.js",
+      "ECC/tests/lib/utils.test.js",
+      "ECC/tests/lib/session-manager.test.js",
+      "ECC/ecc2/src/worktree/mod.rs",
+      "ECC/skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "ECC/tests/lib/session-aliases.test.js",
+      "ECC/ecc2/src/config/mod.rs"
+    ]
+  },
+  {
+    "slug": "development",
+    "title": "Development & Testing",
+    "purpose": "How to contribute, run the tests, and understand the CI pipeline.",
+    "files": [
+      "CONTRIBUTING.md",
+      ".github/workflows/auto-merge.yml",
+      ".github/workflows/ci.yml",
+      ".github/workflows/npm-publish.yml",
+      "ECC/integrations/aura/tests/__init__.py",
+      "ECC/integrations/aura/tests/fixtures.py",
+      "ECC/integrations/aura/tests/test_adapter.py",
+      "ECC/skills/continuous-learning-v2/scripts/test_parse_instinct.py",
+      "ECC/skills/skill-comply/tests/test_grader.py",
+      "ECC/skills/skill-comply/tests/test_parser.py",
+      "ECC/skills/skill-comply/tests/test_runner.py",
+      "ECC/tests/__init__.py"
+    ]
+  },
+  {
+    "slug": "changelog",
+    "title": "Changelog",
+    "purpose": "Notable changes across releases, summarized from the changelog.",
+    "files": [
+      "CHANGELOG.md"
+    ]
+  }
+]

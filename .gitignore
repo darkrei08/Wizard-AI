@@ -1,48 +1,17 @@
 # =============================================================
 # Wizard-AI — .gitignore
 # =============================================================
-
 # ----- Personal and private data -----
 local/.antigravitycli/
-
 # ----- External repositories (local clones — NOT submodules) -----
-# These are downloaded by setup.sh, they don't belong to the repo
-local/cloned-repos/ECC/
-local/cloned-repos/claude-mem/
-local/cloned-repos/serena/
-local/cloned-repos/wiki-brain-skill/
-local/cloned-repos/impeccable/
-local/cloned-repos/spec-kit/
-# If you cloned other repos here, add them manually
-local/cloned-repos/*/
-
-# ----- Python -----
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-.Python
-*.egg-info/
-dist/
-build/
-.eggs/
-
-# ----- Ambienti virtuali -----
-.venv/
-venv/
-env/
-.env
-
+.local-clones/
 # ----- Output generati da tool -----
-graphify-out/
 *.log
-
 # ----- Sistema operativo -----
 .DS_Store
 Thumbs.db
 desktop.ini
 *~
-
 # ----- Editor -----
 .vscode/
 .idea/
@@ -51,3 +20,29 @@ desktop.ini
 .cursor/
 resources/Repositories-Skills/
 node_modules/
+graphify-out/cache/
+.agents/
+# ----- Secret manuals & keys -----
+.secret_*
+.private_*
+*.secret.md
+*.private.md
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+.gemini/
+caveman/
+earendil-pi/
+ecc/
+__pycache__/
+*.pyc
+# Local Pi runtime state
+.atl/
+
+# CodeGraph index (local, large)
+.codegraph/
+
+# Agent research scratch dumps
+.cache/ocr-research/

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# wz-ai-claude-blog — AI Blog Writing & SEO Optimization Skill
+# Source: https://github.com/AgriciDaniel/claude-blog
+set -euo pipefail
+echo "claude-blog is a Claude Code skill. It doesn't have a standalone CLI executable, but provides sub-skills."

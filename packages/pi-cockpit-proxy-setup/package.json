@@ -1,0 +1,37 @@
+{
+  "name": "pi-cockpit-proxy-setup",
+  "version": "1.2.3",
+  "description": "Interactive installer and model selection CLI for Wizard-AI and Pi Agent with Cockpit Tools proxy rotation.",
+  "main": "index.mjs",
+  "type": "module",
+  "bin": {
+    "pi-cockpit-setup": "./index.mjs"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "keywords": [
+    "pi",
+    "wizard-ai",
+    "cockpit",
+    "proxy",
+    "llm",
+    "skills",
+    "multi-account",
+    "rotator"
+  ],
+  "author": "darkrei08",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darkrei08/Wizard-AI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/darkrei08/Wizard-AI/issues"
+  },
+  "homepage": "https://github.com/darkrei08/Wizard-AI#readme"
+}

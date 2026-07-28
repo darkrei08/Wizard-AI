@@ -1,0 +1,181 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# Wizard-AI Universal Repo Plugin & MCP Bridge Bootstrapper (wizard-ai-init)
+# Initializes any repository with LLMWiki, Serena, SQZ, Graphify, and KTX support
+# and creates mandatory agent instruction files (AGENTS.md, CLAUDE.md, GEMINI.md).
+# ==============================================================================
+
+set -euo pipefail
+
+TARGET_DIR="${1:-.}"
+TARGET_DIR=$(cd "$TARGET_DIR" && pwd)
+
+# Detect current stable version from global package or git repo
+WIZARD_STABLE_VER=$(node -p "try { require('package.json').version } catch { '0.49.0' }" 2>/dev/null || echo "0.49.0")
+WIZARD_CHANNEL="${WIZARD_CHANNEL:-latest}"
+
+# If channel is 'stable', lock to the exact release version. If 'latest', point to latest global release.
+if [ "$WIZARD_CHANNEL" = "stable" ]; then
+  ACTIVE_VER="$WIZARD_STABLE_VER"
+else
+  ACTIVE_VER="latest ($WIZARD_STABLE_VER)"
+fi
+
+echo "🪄 [Wizard-AI Plugin] Initializing AI Agent Ecosystem inside: $TARGET_DIR (Channel: $WIZARD_CHANNEL, Version: $ACTIVE_VER)"
+
+# 1. Create .wizard-ai.json configuration
+cat << EOF > "$TARGET_DIR/.wizard-ai.json"
+{
+  "\$schema": "https://wizard-ai.org/schema/v1/project.json",
+  "version": "$WIZARD_STABLE_VER",
+  "channel": "$WIZARD_CHANNEL",
+  "ecosystem": "Wizard-AI",
+  "mcpServers": {
+    "engram": {
+      "command": "uvx",
+      "args": ["engram", "mcp"]
+    },
+    "codebase-memory-mcp": {
+      "command": "uvx",
+      "args": ["codebase-memory-mcp"]
+    },
+    "llmwiki": {
+      "command": "$HOME/.local/bin/wz-ai-wiki",
+      "args": ["mcp", "--base-dir", "."]
+    },
+    "serena": {
+      "command": "uvx",
+      "args": ["serena", "mcp"]
+    },
+    "headroom": {
+      "command": "headroom",
+      "args": ["mcp"]
+    },
+    "lightpanda": {
+      "command": "lightpanda",
+      "args": ["mcp"]
+    },
+    "sqz": {
+      "command": "sqz",
+      "args": ["mcp"]
+    }
+  },
+  "tools": {
+    "wiki": "$HOME/.local/bin/wz-ai-wiki",
+    "vector": "$HOME/.local/bin/wz-ai-vector",
+    "graph": "$HOME/.local/bin/wz-ai-graph",
+    "compress": "$HOME/.local/bin/wz-ai-squeeze",
+    "context": "$HOME/.local/bin/ai-context",
+    "session": "$HOME/.local/bin/wz-ai-session-save"
+  }
+}
+EOF
+echo "  ✓ Created .wizard-ai.json (Version: $WIZARD_STABLE_VER, Channel: $WIZARD_CHANNEL)"
+
+# 2. Setup IDE MCP server configs (.vscode/mcp.json, .cursor/mcp.json, .gemini/mcp.json)
+mkdir -p "$TARGET_DIR/.vscode" "$TARGET_DIR/.cursor" "$TARGET_DIR/.gemini"
+
+MCP_CONFIG='{
+  "mcpServers": {
+    "engram": {
+      "command": "uvx",
+      "args": ["engram", "mcp"]
+    },
+    "codebase-memory-mcp": {
+      "command": "uvx",
+      "args": ["codebase-memory-mcp"]
+    },
+    "llmwiki": {
+      "command": "$HOME/.local/bin/wz-ai-wiki",
+      "args": ["mcp", "--base-dir", "."]
+    },
+    "serena": {
+      "command": "uvx",
+      "args": ["serena", "mcp"]
+    },
+    "headroom": {
+      "command": "headroom",
+      "args": ["mcp"]
+    },
+    "lightpanda": {
+      "command": "lightpanda",
+      "args": ["mcp"]
+    },
+    "sqz": {
+      "command": "sqz",
+      "args": ["mcp"]
+    }
+  }
+}'
+
+echo "$MCP_CONFIG" > "$TARGET_DIR/.vscode/mcp.json"
+echo "$MCP_CONFIG" > "$TARGET_DIR/.cursor/mcp.json"
+echo "$MCP_CONFIG" > "$TARGET_DIR/.gemini/mcp.json"
+echo "  ✓ Configured MCP Servers in .vscode/mcp.json, .cursor/mcp.json, .gemini/mcp.json"
+
+# 2.b Security Audit: Ensure .gitignore protects secrets, .env, and local IDE configs
+touch "$TARGET_DIR/.gitignore"
+for IGNORE_ITEM in ".env" ".env.*" "!.env.example" "*.pem" "*.key" "credentials.json" ".cursor/" ".gemini/" ".vscode/"; do
+  if ! grep -Fq "$IGNORE_ITEM" "$TARGET_DIR/.gitignore" 2>/dev/null; then
+    echo "$IGNORE_ITEM" >> "$TARGET_DIR/.gitignore"
+  fi
+done
+echo "  ✓ Security Audit: Standardized .gitignore exclusions for credentials and local state"
+
+# 3. Create/Update mandatory agent instructions (AGENTS.md, CLAUDE.md, GEMINI.md)
+INSTRUCTION_BLOCK='# 🪄 Wizard-AI Project Ecosystem — Mandatory Agent Instructions
+
+> **MANDATORY PROTOCOL**: You are operating inside a **Wizard-AI Enabled Repository**.
+> You MUST strictly obey the following 5-Loop sequential workflow, mandatory step triggers, and token compression rules on EVERY task.
+
+---
+
+## 🔄 The 5-Loop Sequential Pipeline (`01. loop-1-plan` ➔ `05. loop-5-release`)
+
+1. **`01. loop-1-plan` (Discovery, Requirements & RAG Strategy)**
+   - **MANDATORY**: Before proposing plans or modifying files, you MUST query the semantic knowledge base (`wz-ai-wiki query / search` or `wz-ai-vector search`) and AST call graph (`serena`).
+   - **External Docs**: If the task involves documentation or manuals, invoke `book-to-skill`.
+   - **Context Pruning**: Pass search output through `sqz` or `ktx` (`lean-ctx`) to prune boilerplate before reading (>60% savings).
+
+2. **`02. loop-2-develop` (TDD, Subagents & Implementation)**
+   - Write tests first where applicable.
+   - For multi-file heavy tasks (`HEAVY`), dispatch parallel subagents with sharded AST context.
+
+3. **`03. loop-3-debug` (Adversarial Verification, Quality & Security Gates)**
+   - **MANDATORY SECURITY AUDIT (`cybersecurity` / `strix`)**: You MUST verify that all paths and file access boundaries are standardized/sanitizied (`path.resolve()`, `os.homedir()`) and against path traversal. You MUST verify that NO API keys (`GEMINI_API_KEY`, `OPENAI_API_KEY`, `TOKEN`, `DB_PASSWORD`) or secrets are hardcoded in code or configs; they MUST be read via environment variables (`process.env` / `.env` git-ignored).
+   - Run linter/typechecker (`wz-ai-llmwiki lint check` or project linter) and automated test suites (`bun test` / `npm test`).
+
+4. **`04. loop-4-refactor` (Clean Architecture & Token Squeezing)**
+   - Remove YAGNI code (`ponytail` mindset). Verify dependency graphs via `wz-ai-graph query`.
+
+5. **`05. loop-5-release` (Handoff, Memory Sync & Graph Compilation)**
+   - **MANDATORY POST-GATE 1**: Run `wz-ai-graph . --update` to refresh the code relationship map (`graphify-out/`).
+   - **MANDATORY POST-GATE 2**: Run `wz-ai-wiki ingest / compile` (or `wz-ai-llmwiki`) to crystallize session markdown files (`MEMORY.md`, `walkthrough.md`) into the multilingual knowledge graph.
+   - **MANDATORY POST-GATE 3**: Run `wz-ai-session-save "<summary>"` to persist session state on `MEMORY.md`.
+
+---
+
+## 🗜️ Mandatory Context & Output Optimization Rules
+- **Output Compression (`sqz`)**: Never pipe raw verbose JSON, build logs, or large git outputs into your context. Always pipe through `wz-ai-squeeze` (`sqz`).
+- **Response Efficiency (`caveman`)**: Keep your conversational explanation concise (~75% token reduction) while retaining 100% technical code accuracy.
+- **MCP Tool Priority**: When available, prefer calling `llmwiki` / `serena` MCP tools directly over spawning heavy terminal shell commands.
+'
+
+echo "$INSTRUCTION_BLOCK" > "$TARGET_DIR/AGENTS.md"
+echo "$INSTRUCTION_BLOCK" > "$TARGET_DIR/CLAUDE.md"
+echo "$INSTRUCTION_BLOCK" > "$TARGET_DIR/GEMINI.md"
+echo "  ✓ Created/Updated mandatory agent guidelines: AGENTS.md, CLAUDE.md, GEMINI.md"
+
+# 4. Initialize graphify and llmwiki indices if not present
+if [ ! -d "$TARGET_DIR/graphify-out" ]; then
+  echo "  ⏳ Initializing quick graphify skeleton..."
+  "$HOME/.local/bin/wz-ai-graph" "$TARGET_DIR" --cluster-only 2>/dev/null || true
+fi
+
+if [ -f "$TARGET_DIR/MEMORY.md" ]; then
+  echo "  ⏳ Ingesting MEMORY.md into llmwiki..."
+  "$HOME/.local/bin/wz-ai-wiki" --base-dir "$TARGET_DIR" ingest file "$TARGET_DIR/MEMORY.md" 2>/dev/null || true
+  "$HOME/.local/bin/wz-ai-wiki" --base-dir "$TARGET_DIR" compile index 2>/dev/null || true
+fi
+
+echo "🚀 [Wizard-AI Plugin] Bootstrap Complete for $TARGET_DIR!"

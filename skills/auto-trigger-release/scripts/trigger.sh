@@ -26,11 +26,11 @@ git commit -m "$COMMIT_MSG"
 
 echo "[Auto-Release-Trigger] Commit successful. Triggering release pipeline..."
 
-# 5. Call ai-release (assuming it's available in PATH from auto-release skill)
-if command -v ai-release &> /dev/null; then
-  ai-release
+# 5. Call wz-ai-release (assuming it's available in PATH from auto-release skill)
+if command -v wz-ai-release &> /dev/null; then
+  wz-ai-release
 else
-  echo "[Auto-Release-Trigger] ai-release command not found. Bumping version locally..."
+  echo "[Auto-Release-Trigger] wz-ai-release command not found. Bumping version locally..."
   npm version patch --no-git-tag-version || true
   git commit -am "chore: bump version" || true
   git push

@@ -1,4 +1,4 @@
-# LLM Routing Policy for ai-prompt
+# LLM Routing Policy for wz-ai-prompt
 # This file defines the behavior for the XML structuring middleware.
 # It enforces a multi-level fallback strategy integrating the latest providers.
 # 1. Primary fast/cheap model for standard prompt rewriting.

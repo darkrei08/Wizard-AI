@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# wz-ai-wiki — Launcher for Wizard-AI Wiki & Knowledge Graph Web GUI
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+if [ -f "$SCRIPT_DIR/scripts/wz-ai-wiki.js" ]; then
+    exec node "$SCRIPT_DIR/scripts/wz-ai-wiki.js" "$@"
+elif [ -f "./scripts/wz-ai-wiki.js" ]; then
+    exec node "./scripts/wz-ai-wiki.js" "$@"
+elif [ -f "$HOME/.wizard-ai/scripts/wz-ai-wiki.js" ]; then
+    exec node "$HOME/.wizard-ai/scripts/wz-ai-wiki.js" "$@"
+else
+    echo "Error: wz-ai-wiki.js not found."
+    exit 1
+fi

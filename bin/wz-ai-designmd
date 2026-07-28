@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# wz-ai-designmd — Linter, differ, and exporter for the DESIGN.md format
+# Source: https://github.com/google-labs-code/design.md
+set -euo pipefail
+
+# Source env if WIZARD_AI_DIR is not set
+if [ -z "${WIZARD_AI_DIR:-}" ] && [ -f "$HOME/.config/wizard-ai/env" ]; then
+  source "$HOME/.config/wizard-ai/env"
+fi
+if [ -z "${WIZARD_AI_DIR:-}" ]; then
+  DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+  WIZARD_AI_DIR="$(dirname "$DIR")"
+fi
+
+# Telemetry hook
+python3 "$WIZARD_AI_DIR/hub/api/log_event.py" "wz-ai-designmd" "execute" 100 0.15 &
+
+exec npx -y @google/design.md "$@"

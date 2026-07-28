@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# wz-ai-qwenpaw - Wizard-AI wrapper for QwenPaw (AgentScope)
+# Integrates the QwenPaw RAG/Agentic utilities.
+
+VENV_PYTHON="$HOME/.wizard-ai/venv/bin/python"
+[ -x "$VENV_PYTHON" ] || VENV_PYTHON="python3"
+
+if ! "$VENV_PYTHON" -c "import qwenpaw" &> /dev/null; then
+    echo "❌ QwenPaw not installed. Run './setup.sh' or: uv pip install --python \"$VENV_PYTHON\" qwenpaw"
+    exit 1
+fi
+
+exec "$VENV_PYTHON" -m qwenpaw "$@"

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://wizard-ai.org/schema/v1/project.json",
+  "version": "0.49.0",
+  "channel": "latest",
+  "ecosystem": "Wizard-AI",
+  "mcpServers": {
+    "llmwiki": {
+      "command": "ai-wiki",
+      "args": [
+        "mcp",
+        "--base-dir",
+        "."
+      ]
+    },
+    "serena": {
+      "command": "serena",
+      "args": [
+        "start-mcp-server",
+        "--project-from-cwd"
+      ]
+    },
+    "sqz": {
+      "command": "sqz",
+      "args": [
+        "mcp"
+      ]
+    }
+  },
+  "tools": {
+    "wiki": "ai-wiki",
+    "vector": "ai-vector",
+    "graph": "ai-graph",
+    "compress": "ai-squeeze",
+    "context": "ai-context",
+    "session": "ai-session-save",
+    "installer": "wz-ai-installer"
+  }
+}

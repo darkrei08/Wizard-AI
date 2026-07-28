@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# wz-ai-mem — Persistent semantic memory for LLM sessions (Engram)
+if command -v engram &>/dev/null; then
+    exec engram "$@"
+else
+    echo "Engram not found in PATH." >&2
+    exit 1
+fi

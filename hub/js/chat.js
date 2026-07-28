@@ -6,8 +6,10 @@ window.chat = {
         
         if (!text) return;
         
+        const safeText = window.escapeHtml ? window.escapeHtml(text) : text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        
         // Append user msg
-        this.appendMessage(text, 'user');
+        this.appendMessage(safeText, 'user');
         input.value = '';
         
         // Simulate thinking

@@ -10,12 +10,27 @@ Thank you for your interest in contributing to Wizard-AI! This document explains
 
 ```
 wizard-ai/
+├── .agents/      # IDE configs (.claude, .cursor) and autonomous workflows
 ├── bin/          # CLI wrapper scripts installed to ~/.local/bin/
+├── docs/         # Reference guides, architecture specs, and wikis
+├── packages/     # Standalone projects, frameworks, and tools
 ├── skills/       # SKILL.md definitions for AI agents
-├── docs/         # Reference guides and documentation
 ├── setup.sh      # Automated installation script
 └── README.md     # Main documentation
 ```
+
+---
+
+## 📂 Repository Architecture Standards
+
+To maintain a clean and sustainable ecosystem, all new installations, skills, and tools must adhere to strict boundaries:
+
+1. **`.agents/`**: MUST contain all IDE-specific configurations (`.claude`, `.cursor`, `.pi`, etc.) and autonomous agent workflows. Do NOT place agent configs at the root.
+2. **`docs/`**: Central knowledge base (`wiki/`, `repo-docs/`, `graphify-out/`). See [Architecture Specs](docs/repo-docs/architecture.md) for full details.
+3. **`packages/`**: Standalone projects, npm modules, frameworks, and external tools (e.g., an MCP server, a React app). Do NOT initialize generic `package.json` projects at the root.
+4. **`.cache/`**: Temporary files, raw data dumps, and cloned repositories (`.local-clones/`).
+5. **`skills/`**: Strictly reserved for `SKILL.md` definitions and their immediately related scripts/assets.
+6. **Root Directory**: Must remain pristine. Only global configs (`setup.sh`, `AGENTS.md`, `README.md`).
 
 ---
 
@@ -77,8 +92,8 @@ Add the installation in the appropriate block:
 uv tool install packagename
 
 # For GitHub repositories:
-if [ ! -d "$HOME/.ai-skills/repo-name" ]; then
-  git clone --quiet https://github.com/author/repo "$HOME/.ai-skills/repo-name"
+if [ ! -d "$HOME/.wizard-ai/repo-name" ]; then
+  git clone --quiet https://github.com/author/repo "$HOME/.wizard-ai/repo-name"
 fi
 ```
 

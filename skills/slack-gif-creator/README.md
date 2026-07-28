@@ -1,0 +1,11 @@
+# 🎞️ Slack GIF Creator
+
+**What is it?**
+Knowledge and utilities for creating animated GIFs optimized for Slack. Provides constraints, validation tools, and animation concepts. Use when users request animated GIFs for Slack like "make me a GIF of X doing Y for Slack."
+
+**How to remember it:**
+Animated GIFs optimized for Slack. Constraints, validation, concepts.
+
+**Slash Command:** —
+
+**Part of:** Tier 3 — Worker (Marketing & Media)

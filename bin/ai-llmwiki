@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Symlink shim for wz-ai-llmwiki
+exec "$(dirname "$0")/wz-ai-llmwiki" "$@"

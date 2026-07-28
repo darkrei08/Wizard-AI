@@ -3,6 +3,8 @@ name: subagent-driven-development
 description: Use when executing implementation plans with independent tasks in the current session
 ---
 
+> **Superseded by** `wizard-ai-orchestration` (rigor: fresh-per-task). Kept for backward compatibility with existing references — see that skill for the current consolidated guidance.
+
 # Subagent-Driven Development
 
 Execute plan by dispatching a fresh implementer subagent per task, a task review (spec compliance + code quality) after each, and a broad whole-branch review at the end.

@@ -46,14 +46,19 @@ window.marketplace = {
             
             let delay = 1;
             this.skillsInstalled.forEach(skill => {
+                const safeName = window.escapeHtml ? window.escapeHtml(skill.name) : skill.name;
+                const safeAuthor = window.escapeHtml ? window.escapeHtml(skill.author) : skill.author;
+                const safeDesc = window.escapeHtml ? window.escapeHtml(skill.desc) : skill.desc;
+                const safeIcon = window.escapeHtml ? window.escapeHtml(skill.icon) : skill.icon;
+                
                 container.innerHTML += `
                     <div class="card skill-card animate-slide-up delay-${delay > 3 ? 3 : delay}">
                         <div class="skill-card-header">
-                            <div class="skill-card-title"><span class="icon">${skill.icon}</span> ${skill.name}</div>
+                            <div class="skill-card-title"><span class="icon">${safeIcon}</span> ${safeName}</div>
                             <div class="badge badge-warning">★ ${skill.rating}</div>
                         </div>
-                        <div class="skill-card-author">by ${skill.author}</div>
-                        <div class="skill-card-desc">${skill.desc}</div>
+                        <div class="skill-card-author">by ${safeAuthor}</div>
+                        <div class="skill-card-desc">${safeDesc}</div>
                         <div class="skill-card-footer">
                             <span class="text-muted" style="font-size:0.8rem;">${skill.uses} utilizzi</span>
                             <button class="btn btn-outline" disabled>Già Installata</button>
@@ -77,28 +82,36 @@ window.marketplace = {
                     else if (index === 1) rankClass = 'top-2';
                     else if (index === 2) rankClass = 'top-3';
                     
+                    const safeName = window.escapeHtml ? window.escapeHtml(skill.name) : skill.name;
+                    const safeAuthor = window.escapeHtml ? window.escapeHtml(skill.author) : skill.author;
+                    const safeDesc = window.escapeHtml ? window.escapeHtml(skill.desc) : skill.desc;
+                    const safeIcon = window.escapeHtml ? window.escapeHtml(skill.icon) : skill.icon;
+                    // For the alert, we need to replace single quotes
+                    const safeNameForAlert = safeName.replace(/'/g, "\\'");
+                    
                     html += `
                         <div class="trending-item">
                             <div class="trending-rank ${rankClass}">#${index + 1}</div>
-                            <div style="font-size: 2rem; margin-right: 1rem;">${skill.icon}</div>
+                            <div style="font-size: 2rem; margin-right: 1rem;">${safeIcon}</div>
                             <div style="flex-grow: 1;">
-                                <div style="font-weight: 600; font-size: 1.1rem; color: var(--text-primary);">${skill.name}</div>
-                                <div style="font-size: 0.85rem; color: var(--text-secondary);">${skill.desc}</div>
+                                <div style="font-weight: 600; font-size: 1.1rem; color: var(--text-primary);">${safeName}</div>
+                                <div style="font-size: 0.85rem; color: var(--text-secondary);">${safeDesc}</div>
                             </div>
                             <div style="text-align: right; margin-right: 1.5rem; display: none; @media(min-width: 768px){display: block;}">
-                                <div style="color: var(--accent-primary); font-size: 0.85rem;">${skill.author}</div>
+                                <div style="color: var(--accent-primary); font-size: 0.85rem;">${safeAuthor}</div>
                                 <div class="text-muted" style="font-size: 0.8rem;">${skill.uses} installs</div>
                             </div>
-                            <button class="btn btn-primary" onclick="alert('Usa il comando nel terminale:\\nnpx skills add ${skill.name.toLowerCase().replace(' ', '-')}');">Installa</button>
+                            <button class="btn btn-primary" onclick="alert('Usa il comando nel terminale:\\nnpx skills add ${safeNameForAlert.toLowerCase().replace(/ /g, '-')}');">Installa</button>
                         </div>
                     `;
                 });
                 html += '</div>';
                 container.innerHTML = html;
             } catch (e) {
+                const safeError = window.escapeHtml ? window.escapeHtml(e.message) : e.message;
                 container.innerHTML = `
                     <div class="card w-full animate-fade-in" style="border-color: rgba(239, 68, 68, 0.3);">
-                        <div class="text-error text-center">Impossibile scaricare da skills.sh: ${e.message}</div>
+                        <div class="text-error text-center">Impossibile scaricare da skills.sh: ${safeError}</div>
                     </div>
                 `;
             }

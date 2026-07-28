@@ -1,0 +1,126 @@
+# wz-ai help - Central hub for all AI tools and skills
+# Windows port of bin/wz-ai help
+# Shows all available AI CLI tools with descriptions and usage hints
+
+function Check-Cmd($Name) {
+    if (Get-Command $Name -ErrorAction SilentlyContinue) { return '[OK]' } else { return '[--]' }
+}
+
+function Section($Title) {
+    Write-Host $Title -ForegroundColor Yellow
+}
+
+function Tool($Status, $Name, $Desc) {
+    if ($Status -eq '[OK]') {
+        Write-Host "  $Status " -ForegroundColor Green -NoNewline
+    } else {
+        Write-Host "  $Status " -ForegroundColor Red -NoNewline
+    }
+    Write-Host ("{0,-17}" -f $Name) -NoNewline
+    Write-Host $Desc
+}
+
+function Example($Text) {
+    Write-Host "     $Text" -ForegroundColor Blue
+}
+
+Write-Host ''
+Write-Host '=============================================================' -ForegroundColor Cyan
+Write-Host "          AI Tools & Skills Hub - $env:COMPUTERNAME" -ForegroundColor Cyan
+Write-Host '=============================================================' -ForegroundColor Cyan
+Write-Host ''
+
+Section 'KNOWLEDGE GRAPH'
+Tool (Check-Cmd graphify) 'graphify' 'Build knowledge graphs from any codebase/docs'
+Example 'wz-ai graph .                  -> Run Graphify on current directory'
+Example 'graphify query "how does X work?"'
+Write-Host ''
+
+Section 'TOKEN OPTIMIZATION'
+Tool (Check-Cmd wz-ai compress) 'wz-ai compress' 'Compress prompts/context up to 20x (LLMLingua)'
+Example 'wz-ai compress --file doc.txt --ratio 0.5'
+Tool (Check-Cmd headroom) 'headroom' 'Context compression and API proxy (60-95% fewer tokens)'
+Example 'echo "large context" | headroom compress'
+Tool (Check-Cmd wz-ai caveman) 'wz-ai caveman' 'Cut agent output tokens by ~75% while keeping accuracy'
+Example 'wz-ai caveman --with-init'
+Tool (Check-Cmd wz-ai ponytail) 'wz-ai ponytail' 'Acts as a lazy senior dev to prevent over-engineering (YAGNI)'
+Example 'wz-ai ponytail "write a datepicker"'
+Tool (Check-Cmd wz-ai rerank) 'wz-ai rerank' 'Re-rank passages by relevance (FlashRank RAG)'
+Example 'wz-ai rerank --query "X" --passages docs.json'
+Tool (Check-Cmd sqz) 'sqz' 'Compress CLI output / JSON / logs'
+Example 'command | wz-ai squeeze'
+Tool (Check-Cmd markitdown) 'markitdown' 'Convert any file to Markdown for LLM ingestion'
+Example 'wz-ai convert document.pdf'
+Write-Host ''
+
+Section 'LLM GATEWAY'
+Tool (Check-Cmd litellm) 'litellm' 'Unified API for 100+ LLM providers + cost tracking'
+Example 'litellm --model gemini/gemini-2.0-flash --port 4000'
+Write-Host ''
+
+Section 'USAGE & MONITORING'
+Tool (Check-Cmd wz-ai usage) 'wz-ai usage' 'Track Gemini CLI token/context usage'
+Example 'wz-ai usage'
+Write-Host ''
+
+Section 'MEMORY & CONTEXT'
+Tool (Check-Cmd wz-ai session-save) 'wz-ai session-save' 'Save current session context to MEMORY.md'
+Example 'wz-ai session-save "completed feature X"'
+if (Test-Path (Join-Path $HOME '.wizard-ai\claude-mem')) {
+    Tool '[OK]' 'claude-mem' 'Persistent semantic memory across sessions'
+} else {
+    Tool '[--]' 'claude-mem' 'Persistent semantic memory (not installed)'
+}
+Example 'wz-ai mem store "user prefers Python"'
+Example 'wz-ai mem search "tech preferences"'
+Write-Host ''
+
+Section 'CODE INTELLIGENCE'
+if (Get-Command serena -ErrorAction SilentlyContinue) {
+    Tool '[OK]' 'serena' 'Semantic code search & LSP navigation (MCP + CLI)'
+} else {
+    Tool '[--]' 'serena' 'Semantic code search (install: uv tool install serena-agent)'
+}
+Example 'serena find-usages MyClass'
+Write-Host ''
+
+Section 'KNOWLEDGE BUILDING'
+Tool (Check-Cmd book-to-skill) 'book-to-skill' 'Convert books/PDFs into AI skills'
+Example 'wz-ai book-to-skill document.pdf'
+Write-Host ''
+
+Section 'FRAMEWORK'
+$EccDir = Join-Path $HOME '.wizard-ai\ECC'
+if ((Test-Path $EccDir) -or (Get-Command ecc -ErrorAction SilentlyContinue)) {
+    Tool '[OK]' 'ECC' 'Production-ready agent skills and hooks'
+} else {
+    Tool '[--]' 'ECC' 'Agent skills framework (not installed)'
+}
+Example ('dir {0}\.wizard-ai\ECC\skills' -f $HOME)
+
+$CyberDir = Join-Path $HOME '.wizard-ai\cybersecurity-skills'
+if (Test-Path $CyberDir) {
+    $CyberSkills = (Get-ChildItem -Path (Join-Path $CyberDir 'skills') -ErrorAction SilentlyContinue | Measure-Object).Count
+    Tool '[OK]' 'Cybersecurity' ('{0}+ cybersecurity framework skills' -f $CyberSkills)
+} else {
+    Tool '[--]' 'Cybersecurity' 'Anthropic Cybersecurity Skills (not installed)'
+}
+Write-Host ''
+
+Section 'VISUALIZATION'
+$InfoDir = Join-Path $HOME '.wizard-ai\Infographic'
+if (Test-Path $InfoDir) {
+    Tool '[OK]' 'Infographic' 'AntV AI-powered declarative infographic generator'
+} else {
+    Tool '[--]' 'Infographic' 'AntV Infographic engine (not installed)'
+}
+Write-Host ''
+
+Write-Host '-------------------------------------------------------------' -ForegroundColor Magenta
+Write-Host ('Skills directory: {0}\.gemini\config\skills' -f $HOME)
+Write-Host ('Tools directory:  {0}\.wizard-ai' -f $HOME)
+Write-Host ('CLIs:             {0}\.local\bin' -f $HOME)
+Write-Host ''
+Write-Host 'Tip: all tools work as pipes -> cmd | wz-ai compress | wz-ai rerank' -ForegroundColor Cyan
+Write-Host ''
+

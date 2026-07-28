@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# wz-ai-dcp — Dynamic Context Pruning (pi-dcp) Wrapper
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+echo "======================================================"
+echo "✂️  pi-dcp — Dynamic Context Pruning & Turn Protection"
+echo "======================================================"
+echo ""
+echo "Commands available inside Pi CLI:"
+echo "  /dcp-compressions   List all active compression targets and status"
+echo "  /dcp-decompress N   Restore compression target #N"
+echo "  /dcp-recompress N   Re-apply compression target #N"
+echo "  /dcp-logs           View pi-dcp extension logs"
+echo ""
+
+if command -v wz-ai-optimize &>/dev/null; then
+    exec wz-ai-optimize dcp "$@"
+fi

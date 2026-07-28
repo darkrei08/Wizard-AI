@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# wz-ai-caveman — AI skill to cut output tokens by ~75% while maintaining accuracy
+# Source: https://github.com/JuliusBrussee/caveman
+set -euo pipefail
+
+BOLD='\033[1m'
+CYAN='\033[0;36m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+RESET='\033[0m'
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" || "${1:-}" == "help" ]]; then
+    echo -e "${BOLD}${CYAN}wz-ai-caveman${RESET} — Cut AI agent output tokens by ~75%"
+    echo ""
+    echo -e "Caveman is a skill injection system for AI agents."
+    echo -e "This command will download and run the official Caveman installer."
+    echo -e "It natively integrates into Claude Code, Cursor, Windsurf, Cline, Copilot, etc."
+    echo ""
+    echo -e "${BOLD}Usage:${RESET}"
+    echo -e "  wz-ai caveman             Run the installer across all agents"
+    echo -e "  wz-ai caveman --uninstall Uninstall the skill from all agents"
+    echo ""
+    exit 0
+fi
+
+echo -e "${CYAN}Caveman is a skill injection system for AI agents.${RESET}"
+echo -e "${YELLOW}Running official Caveman installer...${RESET}"
+
+if curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash -s -- "$@"; then
+    echo -e "${GREEN}✓ Caveman installation/update finished.${RESET}"
+else
+    echo -e "${RED}✗ Failed to run Caveman installer.${RESET}"
+    echo -e "${YELLOW}Try manually: curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash${RESET}"
+    exit 1
+fi

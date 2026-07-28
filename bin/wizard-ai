@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [ "$#" -eq 0 ]; then
+    echo "Usage: wizard-ai <command> [args...]"
+    echo "Run 'wizard-ai help' to see available commands."
+    exit 1
+fi
+
+COMMAND="$1"
+shift
+
+# Handle special cases where the script might not start with ai-
+if [ "$COMMAND" = "book-to-skill" ]; then
+    exec "$(dirname "$0")/book-to-skill" "$@"
+fi
+
+# Look for ai-<command> or just <command> in the bin directory
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if [ -x "$DIR/ai-$COMMAND" ]; then
+    exec "$DIR/ai-$COMMAND" "$@"
+elif [ -x "$DIR/$COMMAND" ]; then
+    exec "$DIR/$COMMAND" "$@"
+else
+    # Try looking in PATH
+    if command -v "ai-$COMMAND" >/dev/null 2>&1; then
+        exec "ai-$COMMAND" "$@"
+    else
+        echo "Error: Unknown command '$COMMAND'"
+        echo "Run 'wizard-ai help' to see available commands."
+        exit 1
+    fi
+fi

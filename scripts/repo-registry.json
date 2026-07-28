@@ -1,0 +1,476 @@
+{
+  "categories": {
+    "agent-frameworks": {
+      "name": "\ud83e\udd16 Autonomous Agent Frameworks & Runtimes",
+      "badge": "[AGENT FRAMEWORK]",
+      "description": "Standalone multi-agent harnesses, execution engines, and orchestrators",
+      "repos": [
+        {
+          "name": "gentle-pi",
+          "url": "https://github.com/Gentleman-Programming/gentle-pi.git",
+          "desc": "Gentle Pi Framework"
+        },
+        {
+          "name": "earendil-pi",
+          "url": "https://github.com/earendil-works/pi.git",
+          "desc": "Pi Agent Framework"
+        },
+        {
+          "name": "caveman",
+          "url": "https://github.com/JuliusBrussee/caveman.git",
+          "desc": "Caveman behavioral compression"
+        },
+        {
+          "name": "goodcode",
+          "url": "https://github.com/SpinaBuilds/goodcode.git",
+          "desc": "Multi-agent orchestration"
+        },
+        {
+          "name": "openhuman",
+          "url": "https://github.com/tinyhumansai/openhuman.git",
+          "desc": "OpenHuman agent harness"
+        },
+        {
+          "name": "qwenpaw",
+          "url": "https://github.com/agentscope-ai/QwenPaw.git",
+          "desc": "QwenPaw agent scope"
+        },
+        {
+          "name": "syke",
+          "url": "https://github.com/saxenauts/syke.git",
+          "desc": "Syke autonomous agent"
+        },
+        {
+          "name": "mem0",
+          "url": "https://github.com/mem0ai/mem0.git",
+          "desc": "Mem0 persistent memory"
+        },
+        {
+          "name": "pi-config",
+          "url": "https://github.com/vekexasia/pi-config.git",
+          "desc": "Vekexasia pi agent configuration"
+        },
+        {
+          "name": "pi-cockpit-tools",
+          "url": "https://github.com/darkrei08/Wizard-AI.git",
+          "desc": "Cockpit Tools multi-account & rotator extension for Pi"
+        }
+      ]
+    },
+    "cli-tools": {
+      "name": "\u26a1 CLI Tools & Context Squeezers",
+      "badge": "[CLI TOOL]",
+      "description": "Binary command-line utilities, LSP servers, and token context squeezers",
+      "repos": [
+        {
+          "name": "llmlingua",
+          "url": "https://github.com/microsoft/LLMLingua.git",
+          "desc": "Prompt compression (Microsoft)"
+        },
+        {
+          "name": "flashrank",
+          "url": "https://github.com/PrithivirajDamodaran/FlashRank.git",
+          "desc": "Document re-ranking"
+        },
+        {
+          "name": "graphify",
+          "url": "https://github.com/safishamsi/graphify.git",
+          "desc": "Knowledge graph builder"
+        },
+        {
+          "desc": "Persistent LLM memory"
+        },
+        {
+          "name": "geminiusage",
+          "url": "https://github.com/rmedranollamas/geminiusage.git",
+          "desc": "Gemini token tracker"
+        },
+        {
+          "name": "litellm",
+          "url": "https://github.com/BerriAI/litellm.git",
+          "desc": "Universal LLM proxy"
+        },
+        {
+          "name": "markitdown",
+          "url": "https://github.com/microsoft/markitdown.git",
+          "desc": "File-to-Markdown converter"
+        },
+        {
+          "name": "mermaid-cli",
+          "url": "https://github.com/mermaid-js/mermaid-cli.git",
+          "desc": "Mermaid diagram CLI"
+        },
+        {
+          "name": "spec-kit",
+          "url": "https://github.com/github/spec-kit.git",
+          "desc": "Spec-driven development"
+        },
+        {
+          "name": "cli-anything",
+          "url": "https://github.com/HKUDS/CLI-Anything.git",
+          "desc": "Multi-modal CLI"
+        },
+        {
+          "name": "cli-printing-press",
+          "url": "https://github.com/mvanhorn/cli-printing-press.git",
+          "desc": "CLI printing press"
+        },
+        {
+          "name": "repodocs",
+          "url": "https://github.com/aryrabelo/repodocs.git",
+          "desc": "Source-cited AI wiki generator"
+        },
+        {
+          "name": "pi-cockpit-proxy-setup",
+          "url": "https://github.com/darkrei08/Wizard-AI.git",
+          "desc": "Interactive installer for Pi & Cockpit Tools proxy"
+        },
+        {
+          "name": "open-code-review",
+          "url": "https://github.com/alibaba/open-code-review.git",
+          "desc": "Deterministic + agent hybrid AI code review CLI (ocr)"
+        },
+        {
+          "name": "blume",
+          "url": "https://github.com/haydenbleasel/blume.git",
+          "desc": "Zero-config AI-ready documentation site generator"
+        }
+      ]
+    },
+    "native-skills": {
+      "name": "\ud83e\udde9 Native LLM Prompt Skills & Packs",
+      "badge": "[NATIVE SKILL]",
+      "description": "Agent directives, rulebooks, and specialized skill packs",
+      "repos": [
+        {
+          "name": "crowdsec-skill",
+          "url": "https://github.com/crowdsecurity/crowdsec-skill.git",
+          "desc": "CrowdSec cybersecurity skill"
+        },
+        {
+          "name": "antigravity-awesome-skills",
+          "url": "https://github.com/sickn33/antigravity-awesome-skills.git",
+          "desc": "Antigravity skill pack"
+        },
+        {
+          "name": "awesome-agent-skills",
+          "url": "https://github.com/VoltAgent/awesome-agent-skills.git",
+          "desc": "Community skill collection"
+        },
+        {
+          "name": "cybersecurity-skills",
+          "url": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+          "desc": "754 cybersecurity skills"
+        },
+        {
+          "name": "system_prompts_leaks",
+          "url": "https://github.com/asgeirtj/system_prompts_leaks.git",
+          "desc": "Leaked system prompts corpus (ChatGPT, Claude, Gemini, Grok) for prompt security research"
+        },
+        {
+          "name": "engineering-excellence",
+          "url": "https://github.com/micio86dev/Engineering-Excellence.git",
+          "desc": "Framework-agnostic SDD/TDD engineering standard"
+        },
+        {
+          "name": "stitch-skills",
+          "url": "https://github.com/google-labs-code/stitch-skills.git",
+          "desc": "Google Stitch design skills"
+        },
+        {
+          "name": "design.md",
+          "url": "https://github.com/google-labs-code/design.md.git",
+          "desc": "Design system spec"
+        },
+        {
+          "name": "book-to-skill",
+          "url": "https://github.com/virgiliojr94/book-to-skill.git",
+          "desc": "Book-to-skill converter"
+        },
+        {
+          "name": "wiki-brain-skill",
+          "url": "https://github.com/tenfoldmarc/wiki-brain-skill.git",
+          "desc": "Wiki knowledge base"
+        },
+        {
+          "name": "impeccable",
+          "url": "https://github.com/pbakaus/impeccable.git",
+          "desc": "Impeccable standards"
+        },
+        {
+          "name": "last30days-skill",
+          "url": "https://github.com/mvanhorn/last30days-skill.git",
+          "desc": "Last 30 days research"
+        },
+        {
+          "name": "claude-blog",
+          "url": "https://github.com/AgriciDaniel/claude-blog.git",
+          "desc": "AI blog writing"
+        },
+        {
+          "name": "claude-seo",
+          "url": "https://github.com/AgriciDaniel/claude-seo.git",
+          "desc": "SEO analysis plugin"
+        }
+      ]
+    },
+    "memory-knowledge": {
+      "name": "\ud83e\udde0 Memory, Context & Knowledge Graph",
+      "badge": "[MEMORY]",
+      "description": "Persistent memory engines, vector stores, context pruning, and knowledge graph tools",
+      "repos": [
+        {
+          "name": "llm_wiki",
+          "url": "https://github.com/nashsu/llm_wiki.git",
+          "desc": "Cross-platform desktop application for knowledge bases"
+        },
+        {
+          "name": "personal-graph",
+          "url": "https://github.com/Technoculture/personal-graph.git",
+          "desc": "Personal knowledge graph"
+        },
+        {
+          "name": "rag-anything",
+          "url": "https://github.com/HKUDS/RAG-Anything.git",
+          "desc": "RAG architecture for diverse data modalities"
+        },
+        {
+          "name": "turbovec",
+          "url": "https://github.com/RyanCodrai/turbovec.git",
+          "desc": "TurboVec vector DB"
+        },
+        {
+          "name": "zvec",
+          "url": "https://github.com/alibaba/zvec.git",
+          "desc": "ZVec vector DB"
+        }
+      ]
+    },
+    "frontend-frameworks": {
+      "name": "\ud83c\udfa8 Frontend Frameworks & UI Toolkits",
+      "badge": "[FRONTEND]",
+      "description": "Web and mobile frontend frameworks, design systems, and UI libraries",
+      "repos": [
+        {
+          "name": "aionui",
+          "url": "https://github.com/iOfficeAI/AionUi.git",
+          "desc": "AionUI desktop harness"
+        },
+        {
+          "name": "phantom-ui",
+          "url": "https://github.com/Aejkatappaja/phantom-ui.git",
+          "desc": "Phantom UI components"
+        },
+        {
+          "name": "mengto-skills",
+          "url": "https://github.com/MengTo/Skills.git",
+          "desc": "MengTo UI/UX design skills"
+        },
+        {
+          "name": "infographic",
+          "url": "https://github.com/antvis/Infographic.git",
+          "desc": "Infographic generator"
+        },
+        {
+          "name": "kinetics-ui",
+          "url": "https://github.com/ckissi/kinetics.git",
+          "desc": "Spring-physics micro-interactions"
+        },
+        {
+          "name": "easy-vibe",
+          "url": "https://github.com/datawhalechina/easy-vibe.git",
+          "desc": "Easy Vibe multi-modal"
+        }
+      ]
+    },
+    "graphical-and-services": {
+      "name": "\ud83d\udda5\ufe0f Graphical Apps, Desktop & Media Services",
+      "badge": "[DESKTOP / SERVICE]",
+      "description": "Desktop UI harnesses, audio/video studios, realtime DBs, and API bridges",
+      "repos": [
+        {
+          "name": "camofox-browser",
+          "url": "https://github.com/jo-inc/camofox-browser.git",
+          "desc": "Anti-detect browser for web scraping"
+        },
+        {
+          "name": "voicebox",
+          "url": "https://github.com/jamiepine/voicebox.git",
+          "desc": "Voicebox audio processor"
+        },
+        {
+          "name": "omnivoice-studio",
+          "url": "https://github.com/debpalash/OmniVoice-Studio.git",
+          "desc": "OmniVoice Studio"
+        },
+        {
+          "name": "supertonic",
+          "url": "https://github.com/supertone-inc/supertonic.git",
+          "desc": "Supertonic audio tools"
+        },
+        {
+          "name": "hyperframes",
+          "url": "https://github.com/heygen-com/hyperframes.git",
+          "desc": "HeyGen video generation"
+        },
+        {
+          "name": "wslens",
+          "url": "https://github.com/vekexasia/wslens.git",
+          "desc": "WSLens GUI backend"
+        },
+        {
+          "name": "pocketbase",
+          "url": "https://github.com/pocketbase/pocketbase.git",
+          "desc": "PocketBase realtime DB"
+        },
+        {
+          "name": "trailbase",
+          "url": "https://github.com/trailbaseio/trailbase.git",
+          "desc": "TrailBase realtime DB"
+        },
+        {
+          "name": "go-whatsapp",
+          "url": "https://github.com/aldinokemal/go-whatsapp-web-multidevice.git",
+          "desc": "WhatsApp REST bridge"
+        },
+        {
+          "name": "wuzapi",
+          "url": "https://github.com/asternic/wuzapi.git",
+          "desc": "WuzAPI WhatsApp REST"
+        },
+        {
+          "name": "openwa",
+          "url": "https://github.com/rmyndharis/OpenWA.git",
+          "desc": "OpenWA WebSocket engine"
+        },
+        {
+          "name": "cockpit-tools",
+          "url": "https://github.com/jlcodes99/cockpit-tools.git",
+          "desc": "Cockpit local proxy"
+        }
+      ]
+    },
+    "starter-templates": {
+      "name": "\ud83c\udfd7\ufe0f Starter Templates & Benchmarks",
+      "badge": "[STARTER TEMPLATE]",
+      "description": "Production API starters, scaffolding, and A/B test benchmarking libraries",
+      "repos": [
+        {
+          "name": "express-typescript-starter",
+          "url": "https://github.com/ToniR7/express-typescript-starter.git",
+          "desc": "Express+TS starter"
+        },
+        {
+          "name": "aisuite",
+          "url": "https://github.com/andrewyng/aisuite.git",
+          "desc": "AI benchmark framework"
+        }
+      ]
+    },
+    "skill-packs": {
+      "name": "\ud83d\udce6 Master Skill Packs",
+      "badge": "[SKILLS]",
+      "description": "Curated collections of agent skills and behavior templates",
+      "repos": [
+        {
+          "name": "loopkit",
+          "url": "https://github.com/Archive228/loopkit.git",
+          "desc": "49 battle-tested skills harness"
+        },
+        {
+          "name": "loopy",
+          "url": "https://github.com/Forward-Future/loopy.git",
+          "desc": "Loop library companion skill"
+        },
+        {
+          "name": "superpowers",
+          "url": "https://github.com/obra/superpowers.git",
+          "desc": "TDD and debugging playbooks"
+        },
+        {
+          "name": "wshobson-agents",
+          "url": "https://github.com/wshobson/agents.git",
+          "desc": "API Design and Architecture skills"
+        },
+        {
+          "name": "addyosmani-skills",
+          "url": "https://github.com/addyosmani/agent-skills.git",
+          "desc": "Frontend and Engineering skills"
+        },
+        {
+          "name": "dammyjay93-interface-design",
+          "url": "https://skills.sh/dammyjay93/interface-design",
+          "desc": "Interface Design Layout"
+        },
+        {
+          "name": "react-best-practices",
+          "url": "https://skills.sh/vercel-labs/react-best-practices",
+          "desc": "React Best Practices"
+        },
+        {
+          "name": "awesome-changelog-generator",
+          "url": "https://skills.sh/composiohq/awesome-changelog-generator",
+          "desc": "Changelog Generator"
+        },
+        {
+          "name": "anthropic-frontend-design",
+          "url": "https://github.com/anthropics/claude-code",
+          "desc": "Anthropic Frontend Design"
+        }
+      ]
+    },
+    "mcp-servers": {
+      "name": "Folder mcp-servers",
+      "badge": "[TOOL]",
+      "description": "",
+      "repos": [
+        {
+          "name": "rag-anything",
+          "url": "https://github.com/HKUDS/RAG-Anything.git",
+          "desc": "RAG Anything MCP"
+        },
+        {
+          "name": "understand-anything",
+          "url": "https://github.com/Egonex-AI/Understand-Anything.git",
+          "desc": "Understand Anything Codebase MCP"
+        }
+      ]
+    },
+    "web-scrapers": {
+      "name": "Folder web-scrapers",
+      "badge": "[TOOL]",
+      "description": "",
+      "repos": [
+        {
+          "name": "camofox",
+          "url": "https://github.com/jo-inc/camofox-browser.git",
+          "desc": "Camofox Stealth Browser"
+        }
+      ]
+    },
+    "security": {
+      "name": "Folder security",
+      "badge": "[TOOL]",
+      "description": "",
+      "repos": [
+        {
+          "name": "crowdsec-skill",
+          "url": "https://github.com/crowdsecurity/crowdsec-skill.git",
+          "desc": "CrowdSec Autonomous Security"
+        }
+      ]
+    },
+    "knowledge-management": {
+      "name": "Folder knowledge-management",
+      "badge": "[TOOL]",
+      "description": "",
+      "repos": [
+        {
+          "name": "llm_wiki",
+          "url": "https://github.com/nashsu/llm_wiki.git",
+          "desc": "LLM Wiki Agent"
+        }
+      ]
+    }
+  }
+}

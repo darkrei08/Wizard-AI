@@ -1,308 +1,256 @@
-# Wiki delle Risorse e Skill Installate in Wizard-AI
+# Wiki: Risorse e Skill Wizard-AI
 
-> 🇬🇧 [Read this Wiki in English](WIKI.md)
+> 🇬🇧 [Read English](WIKI.md)
 
-Questa è la wiki centrale che traccia tutti i tool core di Wizard-AI, le skill degli agenti AI installate e le tecnologie di riferimento esterne. 
-**Prima di richiedere l'integrazione di una nuova skill**, controlla questa lista per verificare se un tool simile è già installato o tracciato.
+Wiki centrale. Traccia tool core Wizard-AI, skill agenti, tecnologie esterne.
+Controlla prima di aggiungere nuove skill.
+> **Regola "Comparative Installation & Test"**: Quando si integrano o testano nuove funzionalità, librerie o skill, eseguire SEMPRE un'analisi comparativa rispetto alle soluzioni esistenti o alternative prima di finalizzare l'installazione o l'implementazione.
+
+
+## 1. 5 Workflow Sequenziali (Loop Engineering)
+Pipeline deterministica (`0-loop-engine`). Sviluppo/refactoring segue 5 Loop (`01 → 05`).
+
+1. **`01. loop-1-plan`**: Pianificazione & Spec (`brainstorming` → `grill` → `task.md`).
+2. **`02. loop-2-develop`**: Sviluppo & TDD (Branch → Red-Green-Refactor → Subagent).
+3. **`03. loop-3-debug`**: Debug & Verifica (Diagnosi bug → Code review).
+4. **`04. loop-4-refactor`**: Refactoring & Ottimizzazione (Clean Code → Token Opt).
+5. **`05. loop-5-release`**: Rilascio & Memoria (Merge → SemVer → Handoff → `MEMORY.md`).
+
+> **Regola `loop-install-bind`:** Nuove skill `wizard-ai-installer` si agganciano automaticamente al Loop Target appropriato.
+
+### 🚨 Autoforzatura Kernel: Never-Stop & Self-Questioning (Regola 0)
+Garantisce autonomia totale. Nessun prompt utente aggiuntivo.
+1. **Never-Stop**: Innescato loop 01 o 02, agente non si ferma. Prosegue `01 → 05` finché test verdi e `MEMORY.md` salvata.
+2. **Protocollo Self-Questioning**: Prima di agire, agente dichiara:
+   ```
+   🔄 [AUTONOMOUS LOOP ENGINE] Loop Attivo: 0X. loop-X-...
+   ```
+
+## 2. Strumenti CLI Core
+Wrapper CLI globali.
+
+- `ai-help`: Hub comandi.
+- `ai-graph`: Crea knowledge graph (Graphify).
+- `ai-compress`: Comprime contesto 20x (LLMLingua).
+- `ai-rerank`: Riordina passaggi RAG (FlashRank).
+- `ai-squeeze`: Comprime output CLI/JSON (Sqz).
+- `ai-convert`: Converte file in Markdown (MarkItDown).
+- `ai-sync-skills`: Sincronizza skill.
+- `book-to-skill`: Converte PDF in skill.
+- `litellm`: Gateway API LLM.
+
+## 3. Skill Agenti (48 Custom)
+Ecosistema esclusivo Wizard-AI.
+
+### Native LLM Prompt Skills & Packs
+- **react-best-practices**: Ottimizzazione delle prestazioni per React e Next.js (Vercel Engineering)
+- **anthropic-frontend-design**: Linee guida per il design frontend di Anthropic
+- **dammyjay93-interface-design**: Concetti di interface design
+- **awesome-changelog-generator**: Generazione automatizzata di changelog
+- **addy-frontend-ui**: Creazione di interfacce utente accessibili, responsive e di alta qualità
+- **addy-api-interface**: Linee guida per la progettazione di API e interfacce stabili
+- **loopkit-spec-first**: Scrittura delle specifiche dell'obiettivo su disco prima dell'azione
+- **loopkit-adversarial-verify**: Revisione avversaria delle modifiche al codice rispetto alle specifiche
+
+### 1. System Core & Routing
+- `0-loop-engine`: Orchestratore Master pipeline PRE/POST a 11 step.
+- `2-wizard-hub`: Dashboard skill.
+- `1-auto-router`: Mappatura intenti utente → skill.
+- `wizard-ai-installer`: Installa skill esterne.
+- `show-active-skill`: Dichiara tool in uso.
+- `os-detect`: Rileva OS pre-installazione.
+
+### 2. Context & Token Optimization
+- `0-master-brain`: Ottimizzatore Master.
+- `caveman`: Comprime output AI (75%).
+- `llmlingua`/`ai-compress`: Compressione contesti massivi.
+- `headroom`: Proxy compressione (95%).
+- `sqz`/`ai-squeeze`: Comprime terminale/payload.
+- `flashrank`/`ai-rerank`: Ottimizzazione RAG.
+- `lean-ctx`: Isolamento contesto AI.
+- `0-master-brain`: Fonde auto-optimize, llmlingua, lean-ctx, sqz, ponytail, caveman, headroom.
+
+### 3. Semantica & Memoria
+- `graphify`/`ai-graph`: Knowledge graph.
+- `auto-graphify`: Trigger update grafo.
+- `storybloq`: Gestore sessioni CLI.
+- `handoff`: Compatta log conversazione.
+- `wiki-brain-skill`: Wiki Obsidian.
+- `serena`: Ricerca LSP codice.
+
+### 4. Data Processing
+- `markitdown`/`ai-convert`: Estrazione MD (Office/PDF/Img).
+- `book-to-skill`: PDF → Framework agenti.
+
+### 5. Ingegneria Software & CI/CD
+- `workflow-production-cycle`: Workflow Master Git Flow + TDD.
+- `engineering-excellence`: Standard SDD/TDD agnostico dal framework (architettura, sicurezza, a11y, i18n, SEO).
+- `wizard-ai-orchestration`: Orchestrazione subagent unificata (sostituisce shadow-clone, swarm-manager, goodcode-orchestrator, cavecrew).
+- `auto-branch`: Gestione branch.
+- `auto-release`: Versioni semantiche (semver).
+- `auto-trigger-release`: Pubblicazione auto fine task.
+- `auto-npm-publish`: Sync/pubblicazione NPM.
+- `auto-debug`: Auto-correzione pre-merge.
+- `cybersecurity`: Linee guida sicurezza Anthropic.
+- `spec-kit`: Sviluppo orientato specifiche (SDD).
+- `strix`: Penetration testing autonomo.
+- `system-prompts-leaks`: Corpus system prompt trapelati (ChatGPT/Claude/Gemini/Grok) — riferimento per difesa prompt-injection e design system prompt.
+
+### 6. Frontend, UI/UX, Design
+- `taste-skill`: Layout anti-slop alta gamma.
+- `hallmark`: Audit/estrazione design system.
+- `awesome-design`: Stili brand (Vercel, Cursor, ecc.).
+- `infographic`: Grafici dichiarativi.
+- `design-md-spec`: Formato `DESIGN.md`.
+- `kinetics-ui`: Micro-interazioni spring-physics (ckissi/kinetics).
+- `mengto-skills`: Pacchetto workflow design UI/UX MengTo (70+).
+- `stitch-*`: Suite estrazione progetti Google Stitch. Genera design, React, React Native, mockup.
+
+### 7. Scaffolding
+- `scaffold`/`ai-scaffold`: Progetti Prod-Ready (Express+TS, Nuxt).
+
+### 8. Orchestrazione & Prompting
+- `litellm`: Proxy gateway (100+ modelli).
+- `auto-prompt`: Riscrive prompt in XML.
+- `gemini-usage`: Monitor token.
+- `ecc`: Orchestratore sub-agenti.
+- `rtk` (`ai-rtk`): Rust Token Killer (output CLI compresso 60-90%).
+- `5-goodcode-orchestrator`: Audit multi-agente (o `wizard-ai-orchestration` per dispatch unificato).
+- `ai-loop-sentinel`: Rilevatore 5 Loop.
+- `ai-skill-doctor`: Demone auto-riparazione skill.
+
+## 4. Risorse Esterne & Tecnologie
+Tecnologie implementate come Skill AI native in `skills/`.
+Esempi:
+- **Identità**: OpenHuman, QwenPaw, Mem0, Syke.
+- **Efficienza**: FlashRank, MarkItDown, Serena, Spec-Kit.
+- **Audio/Video**: Voicebox, OmniVoice-Studio, Hyperframes.
+- **Framework Web**: Next.js, Vue, React, Nuxt, Astro.
+- **DB/Backend**: PocketBase, TrailBase, Kafka, Zvec.
+- **Mobile**: Flutter, React Native, Firebase.
+
+## 5. Skill Chaining (Esempi)
+Concatenazione skill automatizzata. Zero token sprecati.
+- **Nuovo Backend**: `scaffold` → `taste-skill` → `auto-debug` → `auto-release`.
+- **Refactoring**: `graphify` → `serena` → `workflow-production-cycle` + `caveman`.
+- **A/B Test Prompt**: `auto-prompt` → `ai-compare` → `ai-mem`.
+
+
+
+## 🛠️ Cockpit Tools & Proxy Rotator Quick Commands
+
+```bash
+# Menu Interattivo (Account + Modelli LLM):
+wz-ai cockpit
+
+# Cambio Account Diretto:
+wz-ai cockpit switch <email|numero>
+
+# Cambio Modello Predefinito:
+wz-ai cockpit model <nome-modello>
+
+# Auto-Rotazione Account su Quota Più Alta:
+wz-ai cockpit auto-rotate
+
+# Stato Quote e Account:
+wz-ai cockpit status
+```
+
 
 ---
 
-## 🧙‍♂️ 1. Strumenti CLI Core di Wizard-AI
+## 📚 Included Skills & Repositories Registry
 
-Questi sono i wrapper principali da riga di comando installati globalmente sul tuo sistema tramite Wizard-AI.
+All tools and skills managed by Wizard-AI are open source. Here is the complete list of managed repositories:
 
-- **`ai-help`**: Hub centrale e directory dei comandi.
-- **`ai-graph`**: Costruisce grafi di conoscenza dal codice (via Graphify).
-- **`ai-compress`**: Comprime prompt e contesto fino a 20x (via LLMLingua).
-- **`ai-rerank`**: Riordina i passaggi per pertinenza (via FlashRank).
-- **`ai-squeeze`**: Comprime output terminale / JSON / log (via Sqz).
-- **`ai-convert`**: Converte qualsiasi file in Markdown pulito (via MarkItDown).
-- **`ai-mem`**: Salva e ricerca memoria semantica persistente (via claude-mem).
-- **`ai-usage`**: Traccia il consumo dei token Gemini (via GeminiUsage).
-- **`ai-sync-skills`**: Sincronizzatore per propagare le skill agli altri agenti.
-- **`book-to-skill`**: Converte libri e PDF in skill per l'AI.
-- **`litellm`**: Gateway unificato per le API degli LLM.
+### 🤖 Autonomous Agent Frameworks & Runtimes
 
----
+- **[earendil-pi](https://github.com/earendil-works/pi.git)**: Pi Agent Framework
+- **[ecc](https://github.com/affaan-m/ECC.git)**: Enhanced Claude Code
+- **[caveman](https://github.com/JuliusBrussee/caveman.git)**: Caveman behavioral compression
+- **[goodcode](https://github.com/SpinaBuilds/goodcode.git)**: Multi-agent orchestration
+- **[openhuman](https://github.com/tinyhumansai/openhuman.git)**: OpenHuman agent harness
+- **[qwenpaw](https://github.com/agentscope-ai/QwenPaw.git)**: QwenPaw agent scope
+- **[syke](https://github.com/saxenauts/syke.git)**: Syke autonomous agent
+- **[mem0](https://github.com/mem0ai/mem0.git)**: Mem0 persistent memory
+- **[gentle-pi](https://github.com/Gentleman-Programming/gentle-pi.git)**: Gentle Pi Framework
+- **[pi-config](https://github.com/vekexasia/pi-config.git)**: Vekexasia pi agent configuration
+- **[pi-cockpit-tools](https://github.com/darkrei08/Wizard-AI.git)**: Cockpit Tools multi-account & rotator extension for Pi
 
-## 🔌 2. Skill degli Agenti Installate
+### ⚡ CLI Tools & Context Squeezers
 
-L'ecosistema vanta **33 skill e framework custom** esclusivi di Wizard-AI, oltre ai plugin di base forniti dagli agenti (es. Antigravity, Claude Code).
-Di seguito la categorizzazione rigorosa dell'arsenale a tua disposizione:
+- **[sqz](https://github.com/ojuschugh1/sqz.git)**: Token compression CLI
+- **[lightpanda](https://github.com/lightpanda-io/browser.git)**: Browser headless ultra-leggero per agenti AI (Zig, non Chromium) — CDP, fetch/dump, agent mode nativo, MCP nativo
+- **[open-code-review](https://github.com/alibaba/open-code-review.git)**: Code review AI ibrida — pipeline deterministica + agent LLM (`ocr`), commenti a livello di riga
+- **[blume](https://github.com/haydenbleasel/blume.git)**: Generatore di siti di documentazione zero-config e AI-ready
+- **[llmlingua](https://github.com/microsoft/LLMLingua.git)**: Prompt compression (Microsoft)
+- **[flashrank](https://github.com/PrithivirajDamodaran/FlashRank.git)**: Document re-ranking
+- **[serena](https://github.com/oraios/serena.git)**: Semantic code intelligence
+- **[graphify](https://github.com/safishamsi/graphify.git)**: Knowledge graph builder
+- **[litellm](https://github.com/BerriAI/litellm.git)**: Universal LLM proxy
+- **[markitdown](https://github.com/microsoft/markitdown.git)**: File-to-Markdown converter
+- **[mermaid-cli](https://github.com/mermaid-js/mermaid-cli.git)**: Mermaid diagram CLI
+- **[spec-kit](https://github.com/github/spec-kit.git)**: Spec-driven development
+- **[cli-anything](https://github.com/HKUDS/CLI-Anything.git)**: Multi-modal CLI
+- **[cli-printing-press](https://github.com/mvanhorn/cli-printing-press.git)**: CLI printing press
+- **[repodocs](https://github.com/aryrabelo/repodocs.git)**: Source-cited AI wiki generator
+- **[pi-cockpit-proxy-setup](https://github.com/darkrei08/Wizard-AI.git)**: Interactive installer for Pi & Cockpit Tools proxy
 
-### 🔮 Le 33 Skill Custom (Wizard-AI Core)
+### 🧩 Native LLM Prompt Skills & Packs
 
-#### 1. System Core & Routing (Fondamenta)
-- **`wizard-ai-hub`**: Scoperta e dashboard delle skill.
-- **`auto-router`**: Mappatura intelligente degli intenti colloquiali dell'utente verso le skill tecniche.
-- **`wizard-ai-installer`**: Installer autonomo per nuove skill esterne.
-- **`show-active-skill`**: Costringe l'AI a dichiarare quali tool e wrapper sta usando.
-- **`os-detect`**: Rilevatore di sistema operativo (Linux, macOS, Windows) pre-installazione.
+- **[antigravity-awesome-skills](https://github.com/sickn33/antigravity-awesome-skills.git)**: Antigravity skill pack
+- **[awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills.git)**: Community skill collection
+- **[crowdsec-skill](https://github.com/crowdsecurity/crowdsec-skill.git)**: CrowdSec cybersecurity skill
+- **[cybersecurity-skills](https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git)**: 754 cybersecurity skills
+- **[system_prompts_leaks](https://github.com/asgeirtj/system_prompts_leaks.git)**: Leaked system prompts corpus (ChatGPT, Claude, Gemini, Grok) for prompt security research
+- **[engineering-excellence](https://github.com/micio86dev/Engineering-Excellence.git)**: Framework-agnostic SDD/TDD engineering standard
+- **[stitch-skills](https://github.com/google-labs-code/stitch-skills.git)**: Google Stitch design skills
+- **[design.md](https://github.com/google-labs-code/design.md.git)**: Design system spec
+- **[book-to-skill](https://github.com/virgiliojr94/book-to-skill.git)**: Book-to-skill converter
+- **[wiki-brain-skill](https://github.com/tenfoldmarc/wiki-brain-skill.git)**: Wiki knowledge base
+- **[impeccable](https://github.com/pbakaus/impeccable.git)**: Impeccable standards
+- **[last30days-skill](https://github.com/mvanhorn/last30days-skill.git)**: Last 30 days research
+- **[claude-blog](https://github.com/AgriciDaniel/claude-blog.git)**: AI blog writing
+- **[claude-seo](https://github.com/AgriciDaniel/claude-seo.git)**: SEO analysis plugin
 
-#### 2. Context & Token Optimization (Risparmio Risorse)
-- **`caveman`**: Plugin/skill che comprime l'output dell'AI del 75% mantenendo l'accuratezza.
-- **`llmlingua` / `ai-compress`**: Compressione ultra-spinta dei contesti massivi.
-- **`sqz` / `ai-squeeze`**: Compressione output del terminale, payload e JSON.
-- **`flashrank` / `ai-rerank`**: Riordinamento chirurgico dei contesti documentali (RAG).
-- **`lean-ctx`**: Controllo e isolamento intelligente del contesto AI.
-- **`auto-optimize`**: Orchestratore che applica automaticamente i compressori in base alla necessità.
+### 🧠 Memory, Context & Knowledge Graph
 
-#### 3. Intelligenza Semantica e Memoria (Knowledge)
-- **`graphify` / `ai-graph`**: Costruttore dinamico di knowledge graph.
-- **`auto-graphify`**: Trigger automatico per aggiornare la mappa.
-- **`claude-mem` / `ai-mem`**: Memoria persistente e semantica cross-sessione.
-- **`storybloq` / `ai-storybloq`**: Gestore sessioni CLI (snapshot, ticket, memoria di stato).
-- **`handoff` / `ai-handoff`**: Compattatore di log conversazione per passaggio di consegne (handoff) tra agenti.
-- **`wiki-brain-skill`**: Integrazione della base di conoscenza in stile Obsidian.
-- **`serena`**: Ricerca semantica profonda e LSP all'interno del codice.
+- **[engram](https://github.com/Gentleman-Programming/engram.git)**: SQLite-backed agent memory
+- **[turbovec](https://github.com/RyanCodrai/turbovec.git)**: TurboVec vector DB
+- **[repodocs](https://github.com/aryrabelo/repodocs.git)**: Source-cited AI wiki generator (da codebase a markdown referenziato)
+- **[blume](https://github.com/haydenbleasel/blume.git)**: Generatore zero-config di siti docs pronti per l'AI (da markdown a sito web)
+- **[personal-graph](https://github.com/Technoculture/personal-graph.git)**: Personal knowledge graph
+- **[llm_wiki](https://github.com/nashsu/llm_wiki.git)**: Cross-platform desktop application for knowledge bases
+- **[rag-anything](https://github.com/HKUDS/RAG-Anything.git)**: RAG architecture for diverse data modalities
+- **[zvec](https://github.com/alibaba/zvec.git)**: ZVec vector DB
+- **[headroom](https://github.com/chopratejas/headroom.git)**: Headroom context proxy
 
-#### 4. Data & Document Processing (Ingestion)
-- **`markitdown` / `ai-convert`**: Estrazione markdown pulita da file Office, PDF, immagini.
-- **`book-to-skill`**: Converte interi manuali o libri PDF in framework assimilabili dagli agenti.
+### 🎨 Frontend Frameworks & UI Toolkits
 
-#### 5. Ingegneria del Software & CI/CD (Workflow)
-- **`auto-workflow`**: Applicazione rigorosa del Git Flow fuso con la metodologia Superpowers (isolamento, test, merge).
-- **`superpowers`**: Pacchetto di 11 skill avanzate per Subagent-Driven Development (es. `brainstorming`, `writing-plans`, `subagent-driven-development`, `test-driven-development`, `systematic-debugging`). Include il wrapper CLI `ai-superpowers`.
-- **`auto-branch`**: Gestione autonoma e convenzioni ferree sui branch.
-- **`auto-release` / `ai-release`**: Rilascio di versioni semantiche (semver) e changelog.
-- **`auto-trigger-release`**: Trigger automatico di pubblicazione a fine task.
-- **`auto-npm-publish`**: Gestione, configurazione e sync automatizzato su NPM.
-- **`auto-debug`**: Analizzatore di codice ed auto-correzione prima di procedere al merge.
-- **`spec-kit`**: Toolkit per lo sviluppo orientato alle specifiche (TDD/SDD).
+- **[aionui](https://github.com/iOfficeAI/AionUi.git)**: AionUI desktop harness
+- **[phantom-ui](https://github.com/Aejkatappaja/phantom-ui.git)**: Phantom UI components
+- **[mengto-skills](https://github.com/MengTo/Skills.git)**: MengTo UI/UX design skills
+- **[infographic](https://github.com/antvis/Infographic.git)**: Infographic generator
+- **[kinetics-ui](https://github.com/ckissi/kinetics.git)**: Spring-physics micro-interactions
+- **[easy-vibe](https://github.com/datawhalechina/easy-vibe.git)**: Easy Vibe multi-modal
 
-#### 6. Frontend, UI/UX e Design (Design System)
-- **`taste-skill`**: Framework "anti-slop" per forzare layout e spaziature di altissima gamma.
-- **`awesome-design`**: Iniezione di stili e linguaggi brand-specifici (Vercel, Cursor, Claude).
+### 🖥️ Graphical Apps, Desktop & Media Services
 
-#### 7. Scaffolding & Templates (Avvio Progetti)
-- **`scaffold` / `ai-scaffold`**: Generatore istantaneo di progetti Prod-Ready (es. Express+TS, Nuxt v4).
+- **[voicebox](https://github.com/jamiepine/voicebox.git)**: Voicebox audio processor
+- **[omnivoice-studio](https://github.com/debpalash/OmniVoice-Studio.git)**: OmniVoice Studio
+- **[camofox-browser](https://github.com/jo-inc/camofox-browser.git)**: Anti-detect browser for web scraping
+- **[supertonic](https://github.com/supertone-inc/supertonic.git)**: Supertonic audio tools
+- **[hyperframes](https://github.com/heygen-com/hyperframes.git)**: HeyGen video generation
+- **[wslens](https://github.com/vekexasia/wslens.git)**: WSLens GUI backend
+- **[pocketbase](https://github.com/pocketbase/pocketbase.git)**: PocketBase realtime DB
+- **[trailbase](https://github.com/trailbaseio/trailbase.git)**: TrailBase realtime DB
+- **[go-whatsapp](https://github.com/aldinokemal/go-whatsapp-web-multidevice.git)**: WhatsApp REST bridge
+- **[wuzapi](https://github.com/asternic/wuzapi.git)**: WuzAPI WhatsApp REST
+- **[openwa](https://github.com/rmyndharis/OpenWA.git)**: OpenWA WebSocket engine
+- **[cockpit-tools](https://github.com/jlcodes99/cockpit-tools.git)**: Cockpit local proxy
 
-#### 8. LLM Orchestration & Prompting (Controllo AI)
-- **`litellm`**: Proxy API Gateway locale per testare e ruotare oltre 100+ modelli.
-- **`auto-prompt`**: Middleware che intercetta i prompt disordinati e li struttura in XML perfetti.
-- **`gemini-usage`**: Monitor e tracciatore live dei costi e budget API.
-- **`ecc`**: (Enhanced Claude Code) Framework per orchestrare sub-agenti specializzati.
-- **`rtk`**: Toolkit AI nativo per estensioni.
+### 🏗️ Starter Templates & Benchmarks
 
----
+- **[express-typescript-starter](https://github.com/ToniR7/express-typescript-starter.git)**: Express+TS starter
+- **[aisuite](https://github.com/andrewyng/aisuite.git)**: AI benchmark framework
 
-### 🌐 Plugin degli Agenti di Base (Built-in)
-- **a11y-debugging**: Debugging dell'accessibilità web (ARAI, focus, contrasto) tramite Chrome DevTools.
-- **chrome-devtools**: Automazione del browser e debugging, ispezione della rete e performance.
-- **chrome-extensions**: Creazione e debugging di estensioni per Google Chrome (Manifest V3).
-- **debug-optimize-lcp**: Ottimizzazione del Largest Contentful Paint (LCP) e dei Core Web Vitals.
-- **memory-leak-debugging**: Diagnostica dei memory leak per applicazioni JavaScript/Node.js.
-- **modern-web-guidance**: Ricerca di best practice per lo sviluppo web moderno (UI, performance, API web).
-- **troubleshooting**: Risoluzione di problemi di connessione del browser.
-
-### 🔥 Firebase Plugin
-- **firebase-ai-logic-basics**: Integrazione dell'AI Logic (Gemini API) di Firebase in app web.
-- **firebase-app-hosting-basics**: Deploy di app web (Next.js/Angular) con Firebase App Hosting.
-- **firebase-auth-basics**: Setup di Firebase Authentication (gestione utenti e accessi).
-- **firebase-basics**: Configurazione di base di progetti Firebase tramite CLI.
-- **firebase-crashlytics**: Implementazione e analisi dei crash tramite Firebase Crashlytics.
-- **firebase-data-connect**: Creazione di backend Firebase basati su PostgreSQL.
-- **firebase-firestore**: Configurazione, query e gestione di database Cloud Firestore.
-- **firebase-hosting-basics**: Deploy su Firebase Hosting classico (per siti statici/SPA).
-- **firebase-remote-config-basics**: Gestione di feature flag e configurazione da remoto.
-- **firebase-security-rules-auditor**: Controllo e validazione della sicurezza per le regole di Firestore.
-- **xcode-project-setup**: Setup sicuro per progetti iOS/Xcode (integrazione dipendenze come Firebase).
-
-### 📱 Sviluppo Mobile (Android Plugin)
-- **android-cli**: Automazione di task Android (creazione progetti, gestione SDK, diagnostica).
-
-### 🧬 Scienze e Ricerca Biomedica (Science Plugin)
-- **alphafold-database-fetch-and-analyze**: Analisi di strutture proteiche previste da AlphaFold tramite ID UniProt.
-- **alphagenome-single-variant-analysis**: Analisi di varianti genetiche ed espressione genica (AlphaGenome).
-- **chembl-database**: Ricerca nel database ChEMBL (molecole bioattive, target, farmaci).
-- **clinical-trials-database**: Ricerca su ClinicalTrials.gov per studi clinici.
-- **clinvar-database**: Analisi clinica e patogenicità di varianti genomiche umane.
-- **dbsnp-database**: Ricerca e mappatura di varianti genetiche brevi (SNP) su NCBI.
-- **embl-ebi-ols**: Ricerca nel sistema di ontologie biomediche (OLS) dell'EMBL-EBI.
-- **encode-ccres-database**: Ricerca su elementi regolatori cis del genoma (ENCODE).
-- **ensembl-database**: Mappatura di ID, estrazione di sequenze genomiche ed effetti delle varianti.
-- **foldseek-structural-search**: Ricerca strutturale in 3D di proteine rispetto ai vari database.
-- **gnomad-database**: Interrogazione sulle frequenze alleliche e varianti da gnomAD.
-- **gtex-database**: Estrazione di dati di espressione RNA sui tessuti umani da GTEx.
-- **human-protein-atlas-database**: Localizzazione ed espressione delle proteine (HPA).
-- **interpro-database**: Identificazione di domini, famiglie e siti proteici.
-- **jaspar-database**: Interrogazione dei profili di legame dei fattori di trascrizione (TF).
-- **literature-search-arxiv**: Ricerca di articoli scientifici e paper su arXiv.
-- **literature-search-biorxiv**: Ricerca e download di preprint da bioRxiv/medRxiv.
-- **literature-search-europepmc**: Ricerca in Europe PMC per la letteratura biomedica.
-- **literature-search-openalex**: Interrogazione del database scolastico OpenAlex.
-- **ncbi-sequence-fetch**: Estrazione di sequenze proteiche e nucleotidiche dai database NCBI.
-- **openfda-database**: Ricerca di dati su farmaci, dispositivi e richiami (API openFDA).
-- **opentargets-database**: Identificazione di target terapeutici da Open Targets.
-- **pdb-database**: Ricerca e download di strutture biomolecolari 3D (Protein Data Bank).
-- **protein-sequence-msa**: Allineamento di sequenze multiple (MSA) tramite Clustal Omega.
-- **protein-sequence-similarity-search**: Ricerca di omologie per sequenze proteiche (MMseqs2/BLAST).
-- **pubchem-database**: Ricerca di dati per la cheminformatica e composti molecolari su PubChem.
-- **pubmed-database**: Ricerca e download di paper medici e trial clinici da PubMed.
-- **pymol**: Analisi, visualizzazione e rendering in 3D per le strutture proteiche.
-- **quickgo-database**: Mappatura tra geni e processi biologici tramite QuickGO/ECO.
-- **reactome-database**: Analisi dei pathway e associazioni sul database Reactome.
-- **string-database**: Analisi sulle interazioni proteina-proteina (PPI) da STRING.
-- **ucsc-conservation-and-tfbs**: Ricerca per l'evoluzione e conservazione genomica (UCSC).
-- **unibind-database**: Interrogazione dei siti di legame (TF-DNA) validati su UniBind.
-- **uniprot-database**: Ricerca di metadati proteici, tassonomia e funzioni in UniProt.
-
-### 🛠️ Utility e Competenze Core
-- **google-antigravity-sdk**: Progettazione e implementazione di agenti basati su SDK Antigravity (AGY).
-- **session-context-compressor**: Sintesi e compressione del contesto di sessione per agevolare il ripristino futuro.
-- **workflow-skill-creator**: Trasformazione di un workflow complesso dell'utente in una nuova skill riutilizzabile.
-- **science-skills-common**: Core logico condiviso (HTTP client e rate limiter) per le API scientifiche.
-- **uv**: Utility per l'installazione e verifica del gestore di pacchetti Python `uv`.
-- **wizard-ai-installer**: Meta-skill per installare, integrare e configurare autonomamente nuove skill e repository in Wizard-AI.
-
----
-
-## 📚 3. Risorse Esterne e Tecnologie
-
-> **🚀 UPDATE v0.19.0**: Tutte le tecnologie, linguaggi, automazioni e framework elencati in questa sezione sono stati formalmente implementati come **Skill AI native**! Puoi trovare le loro direttive per gli agenti sotto la directory `skills/` (es. `skills/react`, `skills/kafka`, `skills/pocketbase`).
-
-Lista di riferimento di tool, repository e framework rilevanti per l'AI e lo sviluppo.
-
-### Agenti, Memoria e Profilo Personale (Digital Identity)
-- [OpenHuman](https://github.com/tinyhumansai/openhuman) - Piattaforma per dati personali, Obsidian integration e desktop AI harness.
-- [QwenPaw](https://github.com/agentscope-ai/QwenPaw) - Assistente AI personale multi-canale ed estendibile installabile localmente.
-- [syke](https://github.com/saxenauts/syke) - Agente di memoria a lungo termine cross-harness basato sul modello Persona.
-- [Mem0](https://github.com/mem0ai/mem0) - Layer di memoria a lungo termine intelligente e personalizzato per agenti e assistenti AI.
-- [personal-graph](https://github.com/Technoculture/personal-graph) - Grafi di conoscenza personali leggeri per LLM (Python).
-- [Graphify](https://github.com/safishamsi/graphify) - Trasformazione di input, codice e note in knowledge graph per LLM.
-- [LLMWIKI](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) - Il gist di Karpathy sull'uso di LLM per basi di conoscenza personali (Obsidian).
-- [Esempio portfolio e tecnologie usate](https://github.com/micio86dev/portfolio) - Seed identitario per l'addestramento o il recupero dei dati dell'utente.
-
-### Developer Tools, Ottimizzazione e Token Efficiency
-- [GeminiUsage](https://github.com/rmedranollamas/geminiusage) - Tool CLI per tracciare token e contesto utilizzati su terminale.
-- [LiteLLM](https://github.com/BerriAI/litellm) - AI Gateway e SDK unificato per interfacciarsi con 100+ provider LLM con tracking di token/costi.
-- [LLMLingua](https://github.com/microsoft/LLMLingua) - Libreria di compressione dei prompt per ridurre i token fino a 20x mantenendo le performance dell'LLM.
-- [FlashRank](https://github.com/PrithivirajDamodaran/FlashRank) - Reranker ultra-veloce e leggero ottimizzato per CPU per limitare il contesto e i token nei sistemi RAG.
-- [sqz](https://github.com/ojuschugh1/sqz) - Tool di compressione del contesto per output CLI, JSON e log per sessioni agentiche token-efficienti.
-- [MarkItDown](https://github.com/microsoft/markitdown) - Utility e libreria Python per convertire svariati formati in Markdown per LLM e RAG.
-- [Mermaid CLI](https://github.com/mermaid-js/mermaid-cli) - Strumento da riga di comando per generare immagini e grafici vettoriali partendo da file markdown Mermaid.
-- [Claude-Mem](https://github.com/thedotmack/claude-mem) - Sistema di memoria persistente a lungo termine e indicizzazione semantica per LLM.
-- [wiki-brain-skill](https://github.com/tenfoldmarc/wiki-brain-skill) - Skill per Claude Code che implementa il pattern LLM Wiki di Karpathy, automatizzando l'ingestione, l'indicizzazione e il logging in Obsidian con Graphify.
-- [ECC](https://github.com/affaan-m/ECC) - Framework di ottimizzazione per agenti AI (comandi, skill, hook e configurazioni MCP).
-- [Serena](https://github.com/oraios/serena) - Toolkit per agenti di programmazione e server MCP per la ricerca/modifica semantica del codice basata su LSP.
-- [Spec-Kit](https://github.com/github/spec-kit) - Toolkit per lo sviluppo guidato dalle specifiche (SDD) tramite agenti AI.
-- [Antigravity Awesome Skills](https://github.com/sickn33/antigravity-awesome-skills/releases/tag/v11.2.0) - Collezione di skill pronti all'uso per agenti AI.
-- [awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills) - Raccolta di best practice e skill di sistema per agenti.
-- [CLI-Anything](https://github.com/HKUDS/CLI-Anything) - Framework per esporre software e applicazioni come CLI per agenti AI.
-- [CLI-Printing-Press](https://github.com/mvanhorn/cli-printing-press) - Sviluppo di interfacce compatte agent-native per ridurre i token.
-- [Book-to-Skill](https://github.com/virgiliojr94/book-to-skill/tree/master) - Conversione di documenti e libri in skill AI.
-- [Impeccable](https://github.com/pbakaus/impeccable) - Test UI/UX ad alta fedeltà e regressione visiva per agenti.
-- [Cockpit Tools](https://github.com/jlcodes99/cockpit-tools) - Proxy locale che aggira i limiti delle API gratuite (es. Gemini Free) incanalando le richieste massicce (come l'estrazione semantica di ai-graph) tramite l'abbonamento mensile dell'IDE. Integrazione cross-platform nativa.
-
-### Audio, Video ed Emozioni (Multimodale)
-- [Voicebox](https://github.com/jamiepine/voicebox) - Elaborazione e sintesi vocale multi-engine (locale).
-- [Easy-Vibe](https://github.com/datawhalechina/easy-vibe) - Miglioramento ed elaborazione video/immagini tramite AI (vibe coding curriculum).
-- [OmniVoice-Studio](https://github.com/debpalash/OmniVoice-Studio) - Produzione vocale professionale e voice cloning offline.
-- [Supertonic](https://github.com/supertone-inc/supertonic) - Processing ed enhancement audio on-device.
-- [Hyperframes](https://github.com/heygen-com/hyperframes) - Rendering UI, gestione frame e generazione video via HTML.
-
-### Linguaggi e Runtime
-- [Python](https://github.com/python/cpython)
-- [Node.js](https://nodejs.org/)
-- [Bun](https://github.com/oven-sh/bun)
-- [Deno](https://github.com/denoland/deno)
-- [QuickJS](https://github.com/quickjs-ng/quickjs)
-
-### Framework Frontend e UI
-- [Next.js](https://github.com/vercel/next.js)
-- [Vue.js](https://github.com/vuejs/core)
-- [React](https://github.com/facebook/react)
-- [SvelteKit](https://github.com/sveltejs/kit)
-- [Gatsby](https://github.com/gatsbyjs/gatsby)
-- [Angular](https://github.com/angular/angular)
-- [Vuetify](https://github.com/vuetifyjs/vuetify)
-- [Svelte](https://github.com/sveltejs/svelte)
-- [Nuxt](https://github.com/nuxt/nuxt)
-- [Astro](https://astro.build/)
-- [AionUi](https://github.com/iOfficeAI/AionUi/tree/main) - Libreria di componenti UI.
-- [phantom-ui](https://github.com/Aejkatappaja/phantom-ui) - Libreria per skeleton loader indipendenti dal framework (Web Components).
-- [PageSpeed Insights](https://pagespeed.web.dev/?hl=it) - Analisi delle performance web.
-
-### Framework Backend, CMS e Database
-- [Laravel](https://github.com/laravel/laravel)
-- [WordPress](https://github.com/WordPress/WordPress)
-- [MySQL](https://github.com/mysql/mysql-server)
-- [MongoDB](https://github.com/mongodb/mongo)
-- [Kafka](https://github.com/apache/kafka)
-- [PocketBase](https://github.com/pocketbase/pocketbase) - Backend leggero in singolo eseguibile con database realtime, auth e storage.
-- [TrailBase](https://github.com/trailbaseio/trailbase) - Server backend e database realtime scritto in Rust con SQLite.
-- [Pi.dev](https://pi.dev) - Piattaforma di sviluppo e integrazione serverless.
-- [Zvec](https://github.com/alibaba/zvec) - L'alternativa "SQLite" ai database vettoriali. Database vettoriale in-process ottimizzato per RAG locali.
-- [TurboVec](https://github.com/RyanCodrai/turbovec) - Implementazione di Google TurboQuant. Compressione dei vettori ad altissime performance (fino a 16x di compressione) mantenendo l'accuratezza semantica.
-
-
-### API e Integrazioni Messaging (WhatsApp)
-- [go-whatsapp-web-multidevice](https://github.com/aldinokemal/go-whatsapp-web-multidevice) - Bridge WhatsApp multi-device.
-- [Wuzapi](https://github.com/asternic/wuzapi) - API REST basata su whatsmeow per l'interazione con WhatsApp.
-
-### Sviluppo Mobile
-- [Flutter](https://github.com/flutter/flutter)
-- [React Native](https://github.com/facebook/react-native)
-- [Ionic](https://github.com/ionic-team/ionic-framework)
-- [Android Studio](https://developer.android.com/studio)
-- [Firebase](https://firebase.google.com/)
-
-### Automazioni ed Orchestrazione
-- [Zapier](https://zapier.com/)
-- [n8n](https://github.com/n8n-io/n8n)
-- [Airflow](https://github.com/apache/airflow)
-- [AWS Lambda](https://aws.amazon.com/lambda/)
-- **caveman**: Una skill/plugin che fa sì che un agente AI produca meno token (riduzione di circa il 75%) mantenendo la piena accuratezza tecnica.
-- **auto-npm-publish**: Una skill per aiutare a configurare token NPM, GitHub Secrets, mantenere sincronizzato il package.json e controllare eventuali deprecazioni o warning delle GitHub Actions.
-
-## 🔗 4. Ecosistema Wizard-AI: Concatenazione delle Skill (Skill Chaining)
-
-Per far comprendere l'enorme vastità dei progetti, repository e framework integrati all'interno di Wizard-AI, è fondamentale capire **a cosa serve ciascun pezzo** e **come combinarli (concatenarli)** in workflow automatizzati potenti.
-
-Gli agenti AI operano al meglio quando applicano il concetto di "Skill Chaining", ovvero l'uso consecutivo di più strumenti per raggiungere un obiettivo complesso a costo zero di token o tempo.
-
-### Panoramica dei Progetti e Framework Inclusi
-
-1. **Framework di Bootstrap e Avvio (Template Prod-Ready)**
-   - **[`express-typescript-starter`](https://github.com/ToniR7/express-typescript-starter)**: Fornisce un backend Node.js robusto con TypeScript, Zod, JWT, Helmet. Usato dalla skill `ai-scaffold express`.
-   - **[`nuxt` (v4)](https://github.com/nuxt/nuxt)**: Framework Vue.js full-stack. Usato dalla skill `ai-scaffold nuxt`.
-   *➡ A cosa servono? Evitano di sprecare token per chiedere all'AI di farsi scrivere la struttura del progetto, la sicurezza o l'infrastruttura di base da zero.*
-
-2. **Strumenti di Efficienza del Contesto (Token Reduction)**
-   - **[`LLMLingua`](https://github.com/microsoft/LLMLingua) (`ai-compress`)**: Riduce il prompt o contesto iniziale fino a 20x.
-   - **[`Sqz`](https://github.com/yasker/sqz) (`ai-squeeze`)**: Comprime log del terminale, payload JSON, e grossi file.
-   - **[`FlashRank`](https://github.com/PrithivirajDamodaran/FlashRank) (`ai-rerank`)**: Rimuove i paragrafi inutili da grandi documentazioni (RAG).
-   - **[`caveman`](../skills/caveman/SKILL.md) (`ai-caveman`)**: Intercetta l'output dell'AI e ne comprime la prolissità del 75%.
-   *➡ A cosa servono? Riducono massivamente i costi delle API e rendono l'AI più rapida ed efficiente.*
-
-3. **Intelligenza Semantica e Analisi**
-   - **[`Graphify`](https://github.com/AykutSarac/graphify) (`ai-graph`)**: Crea un grafo della conoscenza per esplorare la codebase.
-   - **[`Serena`](https://github.com/nathanrooy/serena) (`ai-serena`)**: Esplora e analizza semanticamente il codice sorgente (ricerca LSP).
-   - **[`claude-mem`](https://github.com/piero-io/claude-mem) (`ai-mem`)**: Persiste le memorie a lungo termine tra le varie conversazioni AI.
-   *➡ A cosa servono? Evitano le "allucinazioni" perché l'AI usa mappe concettuali invece di file grezzi.*
-
-4. **Operatività Avanzata, Testing e Pubblicazione**
-   - **[`aisuite`](https://github.com/andrewyng/aisuite) (`ai-compare`)**: Libreria Python unificata (inclusa nel venv). Usata per il Prompt Testing e A/B Benchmark di modelli multipli contemporaneamente.
-   - **[`auto-workflow`](../skills/auto-workflow/SKILL.md) / [`auto-release`](../skills/auto-release/SKILL.md)**: Applicano regole formali di Git Flow (isolamento, test, merge, tagging).
-
----
-
-### Esempi Pratici di "Skill Chaining" (Come concatenare le skill)
-
-**Scenario 1: Nuovo Backend Robusto e Testato**
-1. **`scaffold`**: Avvii un'API ("inizializza il progetto"). Wizard-AI clona l' `express-typescript-starter`.
-2. **`taste-skill`**: Dai istruzioni su come strutturare l'estetica se aggiungi un frontend.
-3. **`auto-debug`**: Chiedi di scrivere la logica. L'AI itera finché il codice non passa i controlli.
-4. **`auto-release`**: Quando finito, dici "pubblica la prima versione" e viene generato il tag semantico su Git.
-
-**Scenario 2: Refactoring di un Monolite**
-1. **`graphify`**: Chiedi di "analizzare l'architettura" (`ai-graph`). L'AI comprende la gerarchia completa.
-2. **`serena`**: Chiedi di trovare "tutti gli usi di questa vecchia API".
-3. **`auto-workflow`**: Isoli in un branch il refactoring, mentre **`caveman`** gestisce l'output sintetico senza chiacchiere.
-
-**Scenario 3: A/B Testing dei Prompt (Novità)**
-1. Sviluppi un prompt articolato aiutato da **`auto-prompt`**.
-2. Usi **`ai-compare`** (basato su `aisuite`) per lanciarlo su GPT-4, Claude 3.5 e Gemini contemporaneamente, vedendo fianco a fianco chi performa meglio.
-3. Lo salvi nella memoria semantica con **`ai-mem`** per usarlo in futuro.
-
-> Con Wizard-AI, tu (o il tuo agente AI) siete in grado di padroneggiare tutte le fasi ingegneristiche in maniera concatenata. Questo permette lo scaling estremo dello sviluppo "vibe coding".

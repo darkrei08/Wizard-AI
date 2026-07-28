@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# wz-ai-paperclip - Paperclip <-> pi-extensible-workflows <-> Wizard-AI bridge
+
+if [ -z "$WIZARD_AI_DIR" ]; then
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    WIZARD_AI_DIR="$(dirname "$SCRIPT_DIR")"
+fi
+
+node "$WIZARD_AI_DIR/scripts/wz-ai-paperclip.js" "$@"

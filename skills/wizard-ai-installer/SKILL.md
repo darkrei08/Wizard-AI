@@ -14,11 +14,11 @@ The Wizard-AI environment uses these standard paths — **all are relative to th
 | Variable / Path | Purpose |
 |---|---|
 | `$WIZARD_AI_DIR` | Root of the cloned Wizard-AI repository (set by `setup.sh`) |
-| `~/.ai-skills/` | Local Python tool installs, venvs, and cloned repos |
+| `~/.wizard-ai/` | Local Python tool installs, venvs, and cloned repos |
 | `~/.local/bin/` | Executable CLI wrappers (on `$PATH`) |
 | `~/.gemini/config/skills/` | Primary skill directory (Antigravity reads this) |
-| `~/.claude/skills/` | Claude Code skill directory (synced by `ai-sync-skills`) |
-| `~/.config/amp/skills/` | Amp skill directory (synced by `ai-sync-skills`) |
+| `~/.claude/skills/` | Claude Code skill directory (synced by `wz-ai sync-skills`) |
+| `~/.config/amp/skills/` | Amp skill directory (synced by `wz-ai sync-skills`) |
 
 Before starting, verify that `$WIZARD_AI_DIR` is set:
 
@@ -45,8 +45,17 @@ Before executing ANY installation commands or modifying the repository, you MUST
 Determine what type of tool it is:
 
 - **Python CLI / Package**: Install it globally using `uv tool install <package>`.
-- **GitHub Repository**: Clone it to `~/.ai-skills/<repo-name>`. If it requires dependencies, create a dedicated `uv venv` or install them using `uv pip`.
+- **GitHub Repository**: Clone it to `~/.wizard-ai/<repo-name>`. If it requires dependencies, create a dedicated `uv venv` or install them using `uv pip`.
 - **Node.js**: Use `npm install -g <package>`.
+
+### Step 1.5: Dynamic Version Checking & Safe Rollback
+
+> [!CAUTION]
+> **MANDATORY SAFEGUARD FOR ALL INSTALLATIONS AND UPGRADES (`bun`, `nuxt`, `node`, `python`, `rust`, etc.):**
+> 1. **Capture Previous Version (`PREV_VER`):** Before executing any install or upgrade (`uv tool install --force`, `npm install -g`, `git pull`), ALWAYS capture any previously installed version or commit (`prev_ver = $(command -v ...)`).
+> 2. **Dynamic Version Lookups:** Never hardcode binary versions (like `v1.0.5`). Dynamically query the GitHub Releases API (`api.github.com/repos/.../releases/latest`) when downloading binaries.
+> 3. **Smoke Testing (`Verification Check`):** Always verify execution (`--help`, `--version`, `bash -n`) after downloading or cloning.
+> 4. **Rollback on Failure:** If verification or build fails, immediately restore the previous working version (`$pkg@$prev_ver`, `git reset --hard $prev_commit`, or `.bak` restore). If no previous version existed (`fresh install`), clean up any incomplete directories (`rm -rf $name`) to prevent broken environment states.
 
 ### Step 2: Create the Wrapper Script
 
@@ -81,19 +90,50 @@ Create a structured `SKILL.md` that explains to other AI agents how to use this 
 - ❌ NEVER hardcode usernames or machine-specific paths
 - ✅ ALWAYS use `$WIZARD_AI_DIR`, `$HOME`, or `~` for paths
 - ✅ Mention BOTH the base command and the `ai-*` wrapper as interchangeable
+- 🏛️ **TAXONOMY GOLD RULE:** The root `skills/` directory MUST remain clean (only `workflows` and `reference`). All domain skills, frameworks, and external tools MUST be categorized inside `skills/reference/<category>/<author_or_repo>/` (e.g. `skills/reference/backend/official/`, `skills/reference/devops/mattpocock/`). Never install a new domain skill directly in `skills/`.
 
-Save to the primary skills directory:
+Save to the primary skills directory (respecting the category and author):
 ```bash
-mkdir -p "$HOME/.gemini/config/skills/<skill-name>"
+# E.g. category = "frontend", "devops", "backend"
+# E.g. author_or_repo = "official", "mattpocock", "community", or the github repo name
+mkdir -p "$HOME/.gemini/config/skills/reference/<category>/<author_or_repo>/<skill-name>"
 # Write SKILL.md there
 ```
 
-Then copy to the repo for permanent storage:
+Then copy to the repo for permanent storage (respecting the new taxonomy):
 ```bash
-mkdir -p "$WIZARD_AI_DIR/skills/<skill-name>"
-cp "$HOME/.gemini/config/skills/<skill-name>/SKILL.md" \
-   "$WIZARD_AI_DIR/skills/<skill-name>/SKILL.md"
+mkdir -p "$WIZARD_AI_DIR/skills/reference/<category>/<author_or_repo>/<skill-name>"
+cp "$HOME/.gemini/config/skills/reference/<category>/<author_or_repo>/<skill-name>/SKILL.md" \
+   "$WIZARD_AI_DIR/skills/reference/<category>/<author_or_repo>/<skill-name>/SKILL.md"
 ```
+
+### Step 3.5: Skill Categorization & Loop-Binding (`loop-install-bind`)
+
+<MANDATORY>
+Ogni nuova skill, framework o progetto installato DEVE essere classificato categorialmente e agganciato in modo persistente a uno dei **5 Loop Sequenziali Master (`01 → 05`)** di Wizard-AI, in modo che l'LLM sappia sempre in futuro dove trovarla e in quale fase del ciclo farla richiamare.
+</MANDATORY>
+
+1. **Comparative Installation & Test (Anti-Duplicate Rule)**:
+   - Prima di installare, VERIFICA sempre le skill esistenti nello stesso dominio (es. frontend, debugging, API design).
+   - Compara regole, efficienza e funzionalità avanzate.
+   - Se la nuova skill è più efficiente, **depreca** la vecchia (aggiungi un disclaimer o eliminala). Se complementare, definisci confini netti.
+
+2. **Analisi Categoriale e Assegnazione al Loop Target:**
+   L'LLM deve chiedersi (o chiedere all'utente se lo scopo è ambiguo): *"Qual è lo scopo operativo principale di questa nuova skill/framework/progetto e a quale dei 5 Loop Master appartiene?"*
+   - `01. loop-1-plan` → Requisiti, Allineamento, Grilling, Specifiche, Ticketing e Scaffolding Architetturale.
+   - `02. loop-2-develop` → Git Branching isolato, TDD (Red-Green-Refactor), Implementazione, Subagents, Sicurezza (OWASP/NIST) o Framework UI/Domain.
+   - `03. loop-3-debug` → Diagnosi Bug in 4 fasi, Risoluzione sistematica, Verification Gates e Code Review.
+   - `04. loop-4-refactor` → Refactoring Architetturale, Clean Code (`ponytail`), DDD e Ottimizzazione Risorse/Token (`caveman`, `sqz`, ecc.).
+   - `05. loop-5-release` → Merge su Main, Semantic Release, Pubblicazione NPM/Git, Handoff e Apprendimento Persistente (`MEMORY.md`).
+
+2. **Aggancio nel File SKILL.md del Loop Target (`Loop Chaining Tree`):**
+   - Apri e modifica il file del loop corrispondente (`$WIZARD_AI_DIR/skills/engine-loops/loop-X-.../SKILL.md`).
+   - Aggiungi la nuova skill sotto la sezione di categorizzazione corretta indicando: **Nome**, **Quando usarla** e **Come si concatena** con le altre skill del loop.
+   - Se necessario, aggiorna il diagramma di flusso Mermaid all'interno di quel loop per includere il nuovo nodo di esecuzione.
+
+3. **Registrazione nel Routing e Metadati (`auto-router` & `skills.json`):**
+   - Se la skill ha un trigger esplicito (es. `/nuova-skill` o keyword univoche), registralo nella tabella di routing del file `$WIZARD_AI_DIR/skills/reference/core/auto-router/SKILL.md`.
+   - Verifica che `skills.json` indicizzi correttamente la cartella della nuova skill.
 
 ### Step 4: Update the Global `setup.sh`
 
@@ -106,7 +146,7 @@ Edit `"$WIZARD_AI_DIR/setup.sh"`:
 
 ### Step 5: Update the Help Dashboard
 
-Edit `"$WIZARD_AI_DIR/bin/ai-help"` and add a new entry in the appropriate category:
+Edit `"$WIZARD_AI_DIR/bin/wz-ai help"` and add a new entry in the appropriate category:
 ```bash
 echo -e "  $(check_cmd ai-<tool>) ${BOLD}ai-<tool>${RESET}   Brief description"
 echo -e "     ${BLUE}ai-<tool> --example${RESET}"
@@ -114,17 +154,24 @@ echo -e "     ${BLUE}ai-<tool> --example${RESET}"
 
 Then sync the updated binary:
 ```bash
-cp "$WIZARD_AI_DIR/bin/ai-help" "$HOME/.local/bin/ai-help"
+cp "$WIZARD_AI_DIR/bin/wz-ai help" "$HOME/.local/bin/wz-ai help"
 ```
 
-### Step 6: Update the Resources Wiki
+### Step 6: Update the Resources Wiki with 2-Level Nested Taxonomy
 
-Append the new skill to the unified wiki document:
+When registering a new skill/tool/repo in the Wiki, you MUST classify it across two dimensions:
+1. **Macro Domain Area**: `3.1 Core Engine & Frameworks`, `3.2 Token Squeezing, Memory & Context`, `3.3 Frontend, UI Aesthetics & Design`, `3.4 DevOps, Quality Gates & Security`, `3.5 Multimodal, Audio/Video & Messaging`, `3.6 Starter Templates`.
+2. **Software Nature Subcategory**:
+   - `[🧠 SKILL PER LLM]`: Prompt directives, system rules, and markdown skill packs read by LLMs.
+   - `[⚡ SOFTWARE CLI]`: Executable command-line tools, binary context squeezers, LSP servers, and API gateways.
+   - `[🖥️ APP GRAFICA / DESKTOP]`: Desktop GUI applications, visual studios, realtime DB dashboards, and visual microservices.
+   - `[🏗️ STARTER TEMPLATE]`: Project scaffolding starters and model benchmarking frameworks.
+
+Inject the new entry into both `$WIZARD_AI_DIR/docs/WIKI.md` and `$WIZARD_AI_DIR/WIKI.md` under the exact Macro Domain section and Software Nature subheader:
 
 ```bash
-echo "- **<tool-name>**: Description of what it does." \
-  >> "$WIZARD_AI_DIR/docs/WIKI.md"
-# If applicable, also append to WIKI.it.md
+# Example injection format:
+# - [tool-name](url) `[⚡ SOFTWARE CLI]` - Brief description of what it does.
 ```
 
 ### Step 7: Sync Skills to All Agents
@@ -132,7 +179,7 @@ echo "- **<tool-name>**: Description of what it does." \
 Execute the sync script to broadcast the new skill to Claude, Amp, Antigravity, etc.:
 
 ```bash
-ai-sync-skills
+wz-ai sync-skills
 ```
 
 ## 3. Communication
@@ -140,5 +187,5 @@ ai-sync-skills
 Once all 7 steps are completed, present a concise summary to the user:
 - Name of the tool installed
 - Wrapper created (`ai-<tool>`)
-- Confirmation that `setup.sh` and `ai-help` have been permanently updated
+- Confirmation that `setup.sh` and `wz-ai help` have been permanently updated
 - Command to test: `ai-<tool> --help`

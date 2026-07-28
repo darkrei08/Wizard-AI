@@ -10,12 +10,27 @@ Grazie per voler contribuire a Wizard-AI! Questo documento spiega come aggiunger
 
 ```
 wizard-ai/
+├── .agents/      # Configurazioni IDE (.claude, .cursor) e workflow per agenti
 ├── bin/          # Script wrapper CLI installati in ~/.local/bin/
+├── docs/         # Guide, specifiche architetturali e wiki
+├── packages/     # Progetti standalone, framework e tool esterni
 ├── skills/       # Definizioni SKILL.md per gli agenti AI
-├── docs/         # Guide e documentazione di riferimento
 ├── setup.sh      # Script di installazione automatico
 └── README.md     # Documentazione principale
 ```
+
+---
+
+## 📂 Standard di Architettura del Repository
+
+Per mantenere un ecosistema pulito e sostenibile, tutte le nuove installazioni, skill e tool devono rispettare questi confini rigorosi:
+
+1. **`.agents/`**: DEVE contenere tutte le configurazioni specifiche per gli IDE (`.claude`, `.cursor`, `.pi`, ecc.) e i workflow autonomi. NON inserire file di configurazione degli agenti nella cartella root.
+2. **`docs/`**: Knowledge base centrale (`wiki/`, `repo-docs/`, `graphify-out/`). Vedi le [Specifiche Architetturali](docs/repo-docs/architecture.md) per i dettagli completi.
+3. **`packages/`**: Progetti standalone, moduli npm, framework e tool esterni (es. un server MCP, un'app React). NON inizializzare progetti generici `package.json` nella cartella root.
+4. **`.cache/`**: File temporanei, dump di dati grezzi e repository clonati (`.local-clones/`).
+5. **`skills/`**: Strettamente riservato alle definizioni `SKILL.md` e ai relativi script/asset.
+6. **Cartella Root**: Deve rimanere pulita. Sono ammessi solo i file di configurazione globali (`setup.sh`, `AGENTS.md`, `README.md`).
 
 ---
 
@@ -77,8 +92,8 @@ Aggiungi l'installazione nel blocco appropriato:
 uv tool install nomepacchetto
 
 # Per repository GitHub:
-if [ ! -d "$HOME/.ai-skills/nome-repo" ]; then
-  git clone --quiet https://github.com/autore/repo "$HOME/.ai-skills/nome-repo"
+if [ ! -d "$HOME/.wizard-ai/nome-repo" ]; then
+  git clone --quiet https://github.com/autore/repo "$HOME/.wizard-ai/nome-repo"
 fi
 ```
 

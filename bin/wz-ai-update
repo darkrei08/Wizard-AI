@@ -1,0 +1,137 @@
+#!/usr/bin/env bash
+# wz-ai-update — Automates the update process for Wizard-AI and external skills.
+
+set -euo pipefail
+
+QUIET=0
+if [[ "${1:-}" == "--quiet" ]]; then
+  QUIET=1
+fi
+
+log() {
+  if [ "$QUIET" -eq 0 ]; then
+    echo -e "$1"
+  fi
+}
+
+# Source env if WIZARD_AI_DIR is not set
+if [ -z "${WIZARD_AI_DIR:-}" ] && [ -f "$HOME/.config/wizard-ai/env" ]; then
+  source "$HOME/.config/wizard-ai/env"
+fi
+
+log "\n🧙‍♂️ Wizard-AI Update Process"
+log "================================="
+
+# 1. Update Wizard-AI repository
+# 1. Update Wizard-AI repository with safe rollback
+WIZARD_DIR="${WIZARD_AI_DIR:-$HOME/.wizard-ai}"
+if [ -d "$WIZARD_DIR/.git" ]; then
+  log "\n📦 Updating Wizard-AI repository..."
+  PREV_WIZARD_COMMIT=$(git -C "$WIZARD_DIR" rev-parse HEAD 2>/dev/null || echo "")
+  if ! git -C "$WIZARD_DIR" pull --ff-only ${QUIET:+--quiet} 2>/dev/null; then
+    log "  ⚠ git pull failed or conflicted. Maintaining current stable commit."
+  else
+    # Verify setup.sh and main scripts still parse cleanly
+    if [ -f "$WIZARD_DIR/setup.sh" ] && ! bash -n "$WIZARD_DIR/setup.sh" &>/dev/null; then
+      log "  ❌ Updated repository has syntax errors! Rolling back to ${PREV_WIZARD_COMMIT}..."
+      [ -n "$PREV_WIZARD_COMMIT" ] && git -C "$WIZARD_DIR" reset --hard "$PREV_WIZARD_COMMIT" --quiet 2>/dev/null || true
+    else
+      log "  ✓ Wizard-AI updated and verified cleanly."
+    fi
+  fi
+fi
+
+# 2. Update all skill repositories in ~/.wizard-ai/ with safe rollback
+AI_SKILLS="$HOME/.wizard-ai"
+if [ -d "$AI_SKILLS" ]; then
+  log "\n📚 Updating external skill repositories..."
+  
+  # List of core repositories
+  UPDATER_SCRIPT="$WIZARD_DIR/scripts/wz-ai-auto-updater.js"
+  if [ -f "$UPDATER_SCRIPT" ]; then
+    if command -v node >/dev/null 2>&1; then
+      node "$UPDATER_SCRIPT"
+    else
+      log "  [!] Node.js not found. Skipping advanced auto-update."
+    fi
+  else
+    log "  [!] Auto-updater script not found at $UPDATER_SCRIPT"
+  fi
+fi
+
+# 3. Update uv tools safely
+if command -v npm &>/dev/null; then
+  log "\n📦 Upgrading global NPM packages (Wizard-AI CLI, AI-OS, etc)..."
+  npm update -g ${QUIET:+--quiet} 2>/dev/null || log "  ⚠ npm update -g encountered warnings or partial errors (retaining working packages)."
+fi
+
+if command -v uv >/dev/null 2>&1; then
+  log "\n🛠️ Upgrading global CLI tools via uv..."
+  if [ "$QUIET" -eq 1 ]; then
+    uv tool upgrade --all --quiet >/dev/null 2>&1 || log "  ⚠ uv tool upgrade encountered minor issues, retained working tool versions."
+  else
+    uv tool upgrade --all || log "  ⚠ uv tool upgrade encountered minor issues, retained working tool versions."
+  fi
+
+  # Auto-inject updated CLI skills into the master skills folder
+  if command -v graphify >/dev/null 2>&1; then
+    log "  -> Auto-injecting graphify skill updates..."
+    graphify install >/dev/null 2>&1 || true
+    
+    GRAPHIFY_SRC="$HOME/.claude/skills/graphify"
+    GRAPHIFY_DST="$WIZARD_DIR/skills/devops-and-tools/graphify"
+    if [ -d "$GRAPHIFY_SRC" ] && [ -d "$GRAPHIFY_DST" ]; then
+      cp -r "$GRAPHIFY_SRC/"* "$GRAPHIFY_DST/"
+      # Force update version cache
+      GRAPHIFY_VERSION=$(graphify --version | sed 's/graphify //')
+      if [ -n "$GRAPHIFY_VERSION" ]; then
+        echo "$GRAPHIFY_VERSION" > "$GRAPHIFY_DST/.graphify_version"
+        log "  [ok] Graphify skill synchronized to v$GRAPHIFY_VERSION"
+      fi
+    fi
+  fi
+fi
+
+# 4. Fetch latest models & Sync skills
+FETCH_SCRIPT="$WIZARD_DIR/scripts/fetch_latest_models.py"
+if [ -f "$FETCH_SCRIPT" ] && command -v python3 >/dev/null 2>&1; then
+  log "\n📡 Fetching latest models from LiteLLM, OpenRouter & HuggingFace..."
+  python3 "$FETCH_SCRIPT" >/dev/null 2>&1 || true
+fi
+
+# 4.5. Sync Cockpit Bridge quota-aware model aliases for pi-extensible-workflows
+COCKPIT_ALIAS_SCRIPT="$WIZARD_DIR/scripts/sync-cockpit-model-aliases.js"
+if [ -f "$COCKPIT_ALIAS_SCRIPT" ] && command -v node >/dev/null 2>&1; then
+  log "\n🔀 Syncing Cockpit Bridge model aliases (quota-aware)..."
+  node "$COCKPIT_ALIAS_SCRIPT" >/dev/null 2>&1 || true
+fi
+
+if command -v wz-ai-sync-skills >/dev/null 2>&1; then
+  log "\n🔄 Syncing agent skills..."
+  wz-ai-sync-skills >/dev/null 2>&1 || true
+fi
+
+log "\n🔄 Updating Caveman agent skill..."
+if curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | npm_config_allow_git=all bash 2>/dev/null >/dev/null; then
+    log "  [ok] Caveman skill updated successfully across all agents."
+else
+    log "  [!] Failed to update Caveman automatically."
+fi
+
+log "\n✅ Update complete!"
+
+# Show cross-platform desktop notification
+show_notification() {
+  local title="Wizard-AI"
+  local msg="Aggiornamento ambiente e skill (wiki incluse) completato con successo!"
+  
+  if command -v notify-send >/dev/null 2>&1; then
+    # Linux (GNOME, KDE, XFCE, etc.)
+    notify-send "$title" "$msg" || true
+  elif command -v osascript >/dev/null 2>&1; then
+    # macOS
+    osascript -e "display notification \"$msg\" with title \"$title\"" || true
+  fi
+}
+
+show_notification

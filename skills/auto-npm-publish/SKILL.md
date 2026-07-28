@@ -21,13 +21,19 @@ If the user needs to publish to npm via GitHub Actions, guide them or automate t
    gh secret set NPM_TOKEN --body "<the-token>"
    ```
 
-## 2. Sync package.json Version
+## 2. Sync package.json Version e Rilascio
 
-Before pushing any new release, ensure that `package.json` matches the intended release version to avoid `Exit code 1` from `npm publish`.
+Il modo più robusto per garantire la corretta sincronizzazione e pubblicazione è usare lo script integrato (se presente):
 
 ```bash
-# Example: Syncing package.json version
-NEW_VERSION="0.6.2" # Without 'v'
+# Esegue il bump della versione in package.json, il push, crea la release GH e pubblica su NPM
+npm run release
+```
+
+Se si vuole procedere manualmente:
+```bash
+# Esempio: Sync manuale della versione in package.json
+NEW_VERSION="0.6.2" # Senza la 'v'
 sed -i "s/\"version\": \".*\"/\"version\": \"$NEW_VERSION\"/" package.json
 git add package.json
 ```
@@ -51,4 +57,4 @@ gh pr list --label dependencies
 ```
 
 ## Commands
-- `ai-npm-setup`: Starts an interactive setup for NPM tokens and workflow checks.
+- `wz-ai npm-setup`: Starts an interactive setup for NPM tokens and workflow checks.

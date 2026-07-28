@@ -1,0 +1,718 @@
+#!/usr/bin/env node
+// cockpit-reader.mjs — Cockpit Tools Bridge for AI Agents
+// Reads account/quota data from Cockpit Tools, syncs OAuth tokens to pi agent.
+// Integrates with pi-account-switcher for multi-account management.
+// SECURITY: Tokens are NEVER printed to stdout. Only email, tier, quotas.
+
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { homedir } from 'node:os';
+import { createDecipheriv } from 'node:crypto';
+
+// ── Path Resolution (dynamic, no hardcoded paths) ──────────────────────────
+
+const HOME = homedir();
+
+function getCockpitDataDir() {
+  const candidates = [
+    join(HOME, '.antigravity_cockpit'),
+    join(HOME, '.local', 'share', 'cockpit-tools'),
+    join(HOME, '.config', 'cockpit-tools'),
+    join(HOME, '.wizard-ai', 'cockpit-tools'),
+    join(HOME, 'Library', 'Application Support', 'cockpit-tools'),
+    process.env.APPDATA ? join(process.env.APPDATA, 'cockpit-tools') : null,
+    process.env.LOCALAPPDATA ? join(process.env.LOCALAPPDATA, 'cockpit-tools') : null,
+  ].filter(Boolean);
+  for (const dir of candidates) {
+    if (existsSync(join(dir, 'accounts.json')) || existsSync(join(dir, 'account-token.key'))) {
+      return dir;
+    }
+  }
+  return join(HOME, '.antigravity_cockpit');
+}
+
+function getPiAuthFile() {
+  return join(HOME, '.pi', 'agent', 'auth.json');
+}
+
+function getPiAccountSwitcherDir() {
+  return join(HOME, '.pi', 'account-switcher');
+}
+
+function getPiAccountSwitcherConfig() {
+  return join(getPiAccountSwitcherDir(), 'accounts.json');
+}
+
+// ── Safe JSON helpers ──────────────────────────────────────────────────────
+
+function readJson(filePath) {
+  try {
+    if (!existsSync(filePath)) return null;
+    return JSON.parse(readFileSync(filePath, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+function writeJson(filePath, data) {
+  const dir = dirname(filePath);
+  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+  writeFileSync(filePath, JSON.stringify(data, null, 2) + '\n', 'utf8');
+}
+
+// ── Cockpit Tools Reader ───────────────────────────────────────────────────
+
+function loadAccounts() {
+  const dataDir = getCockpitDataDir();
+  const accountsFile = join(dataDir, 'accounts.json');
+  const accountsData = readJson(accountsFile);
+  if (!accountsData || !Array.isArray(accountsData.accounts)) {
+    return { accounts: [], currentId: null, version: null };
+  }
+  return {
+    accounts: accountsData.accounts,
+    currentId: accountsData.current_account_id || null,
+    version: accountsData.version || null,
+  };
+}
+
+function loadAccountDetail(accountId) {
+  const dataDir = getCockpitDataDir();
+  const detailFile = join(dataDir, 'accounts', `${accountId}.json`);
+  const detail = readJson(detailFile);
+  if (!detail) return null;
+
+  // If token is already present in plain text, use it
+  if (detail.token) return detail;
+
+  // If token_encrypted exists, try to decrypt using local AES-256-GCM key
+  if (detail.token_encrypted) {
+    try {
+      const keyFile = join(dataDir, 'account-token.key');
+      if (!existsSync(keyFile)) return detail;
+
+      const keyB64 = readFileSync(keyFile, 'utf8').trim();
+      const key = Buffer.from(keyB64, 'base64');
+      const enc = detail.token_encrypted;
+      const nonce = Buffer.from(enc.nonce, 'base64');
+      const ciphertextAndTag = Buffer.from(enc.ciphertext, 'base64');
+
+      // AES-256-GCM: last 16 bytes are the authentication tag
+      const authTag = ciphertextAndTag.slice(-16);
+      const ciphertext = ciphertextAndTag.slice(0, -16);
+
+      const decipher = createDecipheriv('aes-256-gcm', key, nonce);
+      decipher.setAuthTag(authTag);
+      let decrypted = decipher.update(ciphertext, null, 'utf8');
+      decrypted += decipher.final('utf8');
+
+      detail.token = JSON.parse(decrypted);
+    } catch {
+      // Decryption failed — return detail without token
+    }
+  }
+
+  return detail;
+}
+
+function loadCurrentAccountFallback() {
+  const dataDir = getCockpitDataDir();
+  return readJson(join(dataDir, 'current_account.json'));
+}
+
+// ── Codex (OpenAI) Reader ───────────────────────────────────────────────────
+// Cockpit Tools stores Codex accounts alongside Google accounts in the same
+// data dir, under a separate codex_accounts.json index + codex_accounts/ dir.
+// Schema differs from Google: quota is { hourly_percentage, weekly_percentage }
+// (5h + weekly windows), not a models[] array. Verified against cockpit-tools
+// source (crates/cockpit-core/src/modules/codex_account.rs, models/codex.rs).
+
+function loadCodexAccounts() {
+  const dataDir = getCockpitDataDir();
+  const accountsFile = join(dataDir, 'codex_accounts.json');
+  const accountsData = readJson(accountsFile);
+  if (!accountsData || !Array.isArray(accountsData.accounts)) {
+    return { accounts: [], currentId: null, version: null };
+  }
+  return {
+    accounts: accountsData.accounts,
+    currentId: accountsData.current_account_id || null,
+    version: accountsData.version || null,
+  };
+}
+
+function loadCodexAccountDetail(accountId) {
+  const dataDir = getCockpitDataDir();
+  return readJson(join(dataDir, 'codex_accounts', `${accountId}.json`));
+}
+
+function sanitizeCodexAccount(detail) {
+  if (!detail) return null;
+  return {
+    id: detail.id,
+    email: detail.email || 'unknown',
+    plan_type: detail.plan_type || 'unknown',
+    auth_mode: detail.auth_mode || 'oauth',
+    requires_reauth: detail.requires_reauth || false,
+    quota: detail.quota ? {
+      hourly_percentage: detail.quota.hourly_percentage,
+      hourly_reset_time: detail.quota.hourly_reset_time,
+      weekly_percentage: detail.quota.weekly_percentage,
+      weekly_reset_time: detail.quota.weekly_reset_time,
+    } : null,
+  };
+}
+
+// ── Strip tokens from output (security) ────────────────────────────────────
+
+function sanitizeAccount(detail) {
+  if (!detail) return null;
+  return {
+    id: detail.id,
+    email: detail.email || detail.token?.email || 'unknown',
+    subscription_tier: detail.quota?.subscription_tier || 'unknown',
+    is_forbidden: detail.quota?.is_forbidden || false,
+    disabled: detail.disabled || false,
+    models: (detail.quota?.models || []).map(m => ({
+      name: m.name,
+      display_name: m.display_name,
+      percentage: m.percentage,
+      reset_time: m.reset_time,
+    })),
+    quota_last_updated: detail.quota?.last_updated
+      ? new Date(detail.quota.last_updated * 1000).toISOString()
+      : null,
+  };
+}
+
+// ── Commands ───────────────────────────────────────────────────────────────
+
+function cmdStatus() {
+  const { accounts, currentId } = loadAccounts();
+  if (accounts.length === 0) {
+    console.log(JSON.stringify({
+      ok: false,
+      error: 'cockpit_not_found',
+      message: 'Cockpit Tools not detected or no accounts configured.',
+      cockpit_data_dir: getCockpitDataDir(),
+    }, null, 2));
+    process.exit(0);
+  }
+
+  const currentAccount = accounts.find(a => a.id === currentId);
+  const detail = currentId ? loadAccountDetail(currentId) : null;
+  const fallback = loadCurrentAccountFallback();
+  const sanitized = sanitizeAccount(detail);
+
+  // Check pi-account-switcher provisioned state
+  const switcherConfig = readJson(getPiAccountSwitcherConfig());
+  const provisionedCount = switcherConfig?.accounts?.filter(
+    a => a.id?.startsWith('cockpit-')
+  ).length || 0;
+
+  const codexAccountsData = loadCodexAccounts();
+  const codexDetail = codexAccountsData.currentId
+    ? loadCodexAccountDetail(codexAccountsData.currentId)
+    : null;
+  const codexSanitized = sanitizeCodexAccount(codexDetail);
+
+  console.log(JSON.stringify({
+    ok: true,
+    current_account: {
+      id: currentId,
+      email: sanitized?.email || currentAccount?.email || fallback?.email || 'unknown',
+      subscription_tier: sanitized?.subscription_tier || 'unknown',
+      is_forbidden: sanitized?.is_forbidden || false,
+      disabled: sanitized?.disabled || false,
+    },
+    models: sanitized?.models || [],
+    quota_last_updated: sanitized?.quota_last_updated || null,
+    total_accounts: accounts.length,
+    pi_account_switcher: {
+      provisioned_accounts: provisionedCount,
+      config_path: getPiAccountSwitcherConfig(),
+    },
+    openai_codex: {
+      ok: codexAccountsData.accounts.length > 0,
+      current_account: codexSanitized ? {
+        id: codexAccountsData.currentId,
+        email: codexSanitized.email,
+        plan_type: codexSanitized.plan_type,
+        auth_mode: codexSanitized.auth_mode,
+        requires_reauth: codexSanitized.requires_reauth,
+      } : null,
+      quota: codexSanitized?.quota || null,
+      total_accounts: codexAccountsData.accounts.length,
+    },
+  }, null, 2));
+}
+
+function cmdAccounts() {
+  const { accounts, currentId } = loadAccounts();
+  if (accounts.length === 0) {
+    console.log(JSON.stringify({
+      ok: false,
+      error: 'cockpit_not_found',
+      message: 'Cockpit Tools not detected or no accounts configured.',
+    }, null, 2));
+    process.exit(0);
+  }
+
+  const result = accounts.map(a => {
+    const detail = loadAccountDetail(a.id);
+    const sanitized = sanitizeAccount(detail);
+    return {
+      id: a.id,
+      email: a.email || sanitized?.email || 'unknown',
+      is_current: a.id === currentId,
+      subscription_tier: sanitized?.subscription_tier || 'unknown',
+      disabled: sanitized?.disabled || false,
+      model_count: sanitized?.models?.length || 0,
+    };
+  });
+
+  console.log(JSON.stringify({ ok: true, accounts: result }, null, 2));
+}
+
+function cmdSwitch(targetEmail) {
+  if (!targetEmail) {
+    console.log(JSON.stringify({
+      ok: false,
+      error: 'missing_email',
+      message: 'Usage: cockpit-reader.mjs switch <email>',
+    }, null, 2));
+    process.exit(1);
+  }
+
+  const dataDir = getCockpitDataDir();
+  const { accounts } = loadAccounts();
+  const target = accounts.find(
+    a => a.email?.toLowerCase() === targetEmail.toLowerCase()
+  );
+
+  if (!target) {
+    console.log(JSON.stringify({
+      ok: false,
+      error: 'account_not_found',
+      message: `Account "${targetEmail}" not found in Cockpit Tools.`,
+      available: accounts.map(a => a.email),
+    }, null, 2));
+    process.exit(1);
+  }
+
+  // 1. Update accounts.json current_account_id
+  const accountsFile = join(dataDir, 'accounts.json');
+  const accountsData = readJson(accountsFile);
+  if (accountsData) {
+    accountsData.current_account_id = target.id;
+    writeJson(accountsFile, accountsData);
+  }
+
+  // 2. Update current_account.json
+  const currentFile = join(dataDir, 'current_account.json');
+  writeJson(currentFile, {
+    email: target.email,
+    updated_at: Math.floor(Date.now() / 1000),
+  });
+
+  // 3. Sync to pi auth.json (write-through)
+  const syncResult = syncToPiAuth(target.id);
+
+  // 4. Update pi-account-switcher active selection
+  const switcherResult = activateInSwitcher(target.id, target.email);
+
+  // 5. Read updated status
+  const detail = loadAccountDetail(target.id);
+  const sanitized = sanitizeAccount(detail);
+
+  console.log(JSON.stringify({
+    ok: true,
+    action: 'switched',
+    account: {
+      id: target.id,
+      email: target.email,
+      subscription_tier: sanitized?.subscription_tier || 'unknown',
+    },
+    models: sanitized?.models || [],
+    pi_auth_sync: syncResult,
+    pi_switcher_sync: switcherResult,
+  }, null, 2));
+}
+
+// ── Sync to pi auth.json (write-through) ───────────────────────────────────
+
+function syncToPiAuth(accountId) {
+  const detail = loadAccountDetail(accountId || loadAccounts().currentId);
+  if (!detail || !detail.token) {
+    return { ok: false, error: 'no_token', message: 'No OAuth token found for this account.' };
+  }
+
+  const piAuthFile = getPiAuthFile();
+  const token = detail.token;
+
+  // Write in pi-native format: keyed by provider name
+  // Cockpit Tools uses Google OAuth → provider is "google"
+  const authData = readJson(piAuthFile) || {};
+  authData.google = {
+    type: 'oauth',
+    refresh: token.refresh_token,
+    access: token.access_token,
+    expires: token.expiry_timestamp * 1000, // pi expects ms
+    email: detail.email || token.email,
+    source: 'cockpit-bridge',
+    synced_at: new Date().toISOString(),
+  };
+
+  try {
+    writeJson(piAuthFile, authData);
+    return { ok: true, email: detail.email || token.email };
+  } catch (err) {
+    return { ok: false, error: 'write_failed', message: err.message };
+  }
+}
+
+// ── Provision all Cockpit accounts into pi-account-switcher ────────────────
+
+function cmdProvision() {
+  const { accounts, currentId } = loadAccounts();
+  if (accounts.length === 0) {
+    console.log(JSON.stringify({
+      ok: false,
+      error: 'cockpit_not_found',
+      message: 'Cockpit Tools not detected or no accounts configured.',
+    }, null, 2));
+    process.exit(0);
+  }
+
+  const configPath = getPiAccountSwitcherConfig();
+  const existing = readJson(configPath) || { accounts: [], switchMode: 'env' };
+
+  // Remove previously provisioned cockpit accounts
+  const nonCockpit = existing.accounts.filter(a => !a.id?.startsWith('cockpit-'));
+
+  const provisioned = [];
+  const skipped = [];
+
+  for (const account of accounts) {
+    const detail = loadAccountDetail(account.id);
+    if (!detail || !detail.token) {
+      skipped.push({ email: account.email, reason: 'no_token' });
+      continue;
+    }
+
+    const email = detail.email || detail.token?.email || account.email;
+    const tier = detail.quota?.subscription_tier || 'unknown';
+    const disabled = detail.disabled || false;
+
+    if (disabled) {
+      skipped.push({ email, reason: 'disabled' });
+      continue;
+    }
+
+    const token = detail.token;
+    const cockpitAccountId = `cockpit-${account.id.slice(0, 8)}`;
+
+    // Create pi-account-switcher compatible account entry
+    const piAccount = {
+      id: cockpitAccountId,
+      label: `${email} (${tier}) — Cockpit`,
+      provider: 'google',
+      model: 'gemini-3.1-pro',
+      piAuth: {
+        provider: 'google',
+        entry: {
+          type: 'oauth',
+          refresh: token.refresh_token,
+          access: token.access_token,
+          expires: token.expiry_timestamp * 1000,
+        },
+      },
+    };
+
+    provisioned.push(piAccount);
+  }
+
+  // Merge: existing non-cockpit accounts + new cockpit accounts
+  const finalConfig = {
+    switchMode: 'env',
+    accounts: [...nonCockpit, ...provisioned],
+  };
+
+  writeJson(configPath, finalConfig);
+
+  // Also sync the current account to pi auth.json
+  const currentSync = currentId ? syncToPiAuth(currentId) : null;
+
+  console.log(JSON.stringify({
+    ok: true,
+    action: 'provisioned',
+    provisioned: provisioned.map(a => ({ id: a.id, label: a.label })),
+    skipped,
+    total_provisioned: provisioned.length,
+    total_skipped: skipped.length,
+    config_path: configPath,
+    current_account_synced: currentSync,
+    hint: 'Run /account:list in pi to see all provisioned accounts. Use /account:switch to switch.',
+  }, null, 2));
+}
+
+// ── Activate a specific cockpit account in pi-account-switcher ─────────────
+
+function activateInSwitcher(cockpitAccountId, email) {
+  const configPath = getPiAccountSwitcherConfig();
+  const config = readJson(configPath);
+  if (!config || !Array.isArray(config.accounts)) {
+    return { ok: false, message: 'pi-account-switcher not provisioned. Run: node cockpit-reader.mjs provision' };
+  }
+
+  const shortId = `cockpit-${cockpitAccountId.slice(0, 8)}`;
+  const found = config.accounts.find(a => a.id === shortId);
+  if (!found) {
+    return { ok: false, message: `Account cockpit-${cockpitAccountId.slice(0, 8)} not found in pi-account-switcher. Run provision first.` };
+  }
+
+  // Update pi-account-switcher state
+  const statePath = join(getPiAccountSwitcherDir(), 'state.json');
+  const state = readJson(statePath) || { selected: {} };
+  state.selected.google = shortId;
+  writeJson(statePath, state);
+
+  return { ok: true, activated: shortId, email };
+}
+
+// ── Sync current account ───────────────────────────────────────────────────
+
+function cmdSync() {
+  const { currentId } = loadAccounts();
+  if (!currentId) {
+    console.log(JSON.stringify({
+      ok: false,
+      error: 'no_current_account',
+      message: 'No current account set in Cockpit Tools.',
+    }, null, 2));
+    process.exit(1);
+  }
+
+  const authResult = syncToPiAuth(currentId);
+  const switcherResult = activateInSwitcher(currentId, null);
+  const detail = loadAccountDetail(currentId);
+  const sanitized = sanitizeAccount(detail);
+
+  console.log(JSON.stringify({
+    ok: true,
+    action: 'synced',
+    account: {
+      email: sanitized?.email || 'unknown',
+      subscription_tier: sanitized?.subscription_tier || 'unknown',
+    },
+    pi_auth_sync: authResult,
+    pi_switcher_sync: switcherResult,
+  }, null, 2));
+}
+
+// ── Provision into pi-antigravity-rotator ──────────────────────────────────
+
+function getAntigravityOAuthCredentials() {
+  const possiblePaths = [
+    join(homedir(), '.local', 'lib', 'node_modules', 'pi-antigravity-rotator', 'src', 'types.ts'),
+    '/usr/local/lib/node_modules/pi-antigravity-rotator/src/types.ts'
+  ];
+  for (const p of possiblePaths) {
+    if (existsSync(p)) {
+      const content = readFileSync(p, 'utf8');
+      const idMatch = content.match(/CLIENT_ID\s*=\s*atob\(\s*["']([^"']+)["']\s*\)/);
+      const secMatch = content.match(/CLIENT_SECRET\s*=\s*atob\(\s*["']([^"']+)["']\s*\)/);
+      if (idMatch && secMatch) {
+        return {
+          clientId: Buffer.from(idMatch[1], 'base64').toString(),
+          clientSecret: Buffer.from(secMatch[1], 'base64').toString()
+        };
+      }
+    }
+  }
+  const part1 = 'MTA3MTAwNjA2MDU5MS10bWhzc2luMmgyMWxjcmUyMzV2dG9';
+  const part2 = 'sb2poNGc0MDNlcC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbQ==';
+  const secPart1 = 'R09DU1BYLUs1OEZXUjQ4Nkxk';
+  const secPart2 = 'TEoxbUxCOHNYQzR6NnFEQWY=';
+  return {
+    clientId: Buffer.from(part1 + part2, 'base64').toString(),
+    clientSecret: Buffer.from(secPart1 + secPart2, 'base64').toString()
+  };
+}
+
+async function discoverGoogleProjectId(refreshToken) {
+  try {
+    const creds = getAntigravityOAuthCredentials();
+    const params = new URLSearchParams({
+      client_id: creds.clientId,
+      client_secret: creds.clientSecret,
+      refresh_token: refreshToken,
+      grant_type: 'refresh_token'
+    });
+    const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params
+    }).then(r => r.json());
+
+    if (!tokenRes.access_token) return null;
+
+    const endpoints = [
+      'https://daily-cloudcode-pa.googleapis.com',
+      'https://daily-cloudcode-pa.sandbox.googleapis.com'
+    ];
+    for (const ep of endpoints) {
+      try {
+        const res = await fetch(`${ep}/v1internal:loadCodeAssist`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${tokenRes.access_token}`,
+            'Content-Type': 'application/json',
+            'User-Agent': 'google-api-nodejs-client/9.15.1'
+          },
+          body: JSON.stringify({
+            metadata: { ideType: 'IDE_UNSPECIFIED', platform: 'PLATFORM_UNSPECIFIED', pluginType: 'GEMINI' }
+          })
+        });
+        if (res.ok) {
+          const d = await res.json();
+          const p = d.cloudaicompanionProject;
+          const pid = typeof p === 'string' ? p : (p ? p.id : null);
+          if (pid) return pid;
+        }
+      } catch {}
+    }
+  } catch {}
+  return null;
+}
+
+async function cmdProvisionRotator() {
+  const { accounts } = loadAccounts();
+  if (accounts.length === 0) {
+    console.log(JSON.stringify({ ok: false, error: 'cockpit_not_found' }, null, 2));
+    process.exit(0);
+  }
+
+  const configDir = join(homedir(), '.pi-antigravity-rotator');
+  const configPath = join(configDir, 'accounts.json');
+  
+  const existingConfig = readJson(configPath) || { proxyPort: 51200, accounts: [] };
+  const existingAccounts = Array.isArray(existingConfig.accounts) ? existingConfig.accounts : [];
+
+  // Remove existing cockpit synced accounts
+  const keptAccounts = existingAccounts.filter(a => !a.syncedFromCockpit);
+  const provisioned = [];
+  const discoveredProjects = [];
+
+  for (const account of accounts) {
+    const detail = loadAccountDetail(account.id);
+    if (!detail || !detail.token || detail.disabled) continue;
+
+    const email = detail.email || detail.token?.email || account.email;
+    let tier = detail.quota?.subscription_tier || 'unknown';
+    
+    // pi-antigravity-rotator expects strictly: "ultra", "pro", "plus", "free", or "unknown"
+    if (tier.includes('pro')) tier = 'pro';
+    else if (tier.includes('free')) tier = 'free';
+    else if (tier.includes('plus')) tier = 'plus';
+    else if (tier.includes('ultra')) tier = 'ultra';
+    else tier = 'unknown';
+
+    // Attempt to discover real GCP project ID from Google API
+    const realProjectId = await discoverGoogleProjectId(detail.token.refresh_token);
+    if (realProjectId) {
+      discoveredProjects.push(realProjectId);
+    }
+
+    provisioned.push({
+      email,
+      tier,
+      discoveredProjectId: realProjectId,
+      refreshToken: detail.token.refresh_token,
+      label: `Cockpit: ${email}`,
+      syncedFromCockpit: true
+    });
+  }
+
+  // Determine valid fallback GCP project ID (prefer discovered real project ID, or default)
+  const fallbackProjectId = discoveredProjects[0] || 'axiomatic-palace-szmw2';
+
+  // Finalize account entries with valid project IDs
+  const finalProvisioned = provisioned.map(a => ({
+    email: a.email,
+    tier: a.tier,
+    projectId: a.discoveredProjectId || fallbackProjectId,
+    projectSource: a.discoveredProjectId ? 'google' : 'manual',
+    refreshToken: a.refreshToken,
+    label: a.label,
+    syncedFromCockpit: true
+  }));
+
+  // Deduplicate: if a manual (non-Cockpit) account shares the same email as a
+  // Cockpit-provisioned one, remove the manual entry. Cockpit tokens are
+  // auto-refreshed and always fresher, so they take priority.
+  const cockpitEmails = new Set(finalProvisioned.map(a => a.email.toLowerCase()));
+  const deduplicatedKept = keptAccounts.filter(a => {
+    const dominated = cockpitEmails.has((a.email || '').toLowerCase());
+    if (dominated) {
+      console.error(`[provision-rotator] Removing duplicate manual account: ${a.label || a.email} (superseded by Cockpit)`);
+    }
+    return !dominated;
+  });
+
+  // Always enforce security: bind to loopback only
+  existingConfig.bindHost = '127.0.0.1';
+
+  existingConfig.accounts = [...deduplicatedKept, ...finalProvisioned];
+  writeJson(configPath, existingConfig);
+
+  console.log(JSON.stringify({
+    ok: true,
+    action: 'provisioned_rotator',
+    provisioned_count: finalProvisioned.length,
+    config_path: configPath,
+    hint: 'Now run: pi-antigravity-rotator start'
+  }, null, 2));
+}
+
+// ── CLI Entry Point ────────────────────────────────────────────────────────
+
+const [,, command, ...args] = process.argv;
+
+(async () => {
+  switch (command) {
+    case 'status':
+      cmdStatus();
+      break;
+    case 'accounts':
+      cmdAccounts();
+      break;
+    case 'switch':
+      cmdSwitch(args[0]);
+      break;
+    case 'sync':
+      cmdSync();
+      break;
+    case 'provision':
+      cmdProvision();
+      break;
+    case 'provision-rotator':
+      await cmdProvisionRotator();
+      break;
+    default:
+      console.log(JSON.stringify({
+        ok: false,
+        error: 'unknown_command',
+        message: 'Usage: cockpit-reader.mjs <status|accounts|switch|sync|provision|provision-rotator> [args]',
+        commands: {
+          status: 'Show current account, tier, and model quotas',
+          accounts: 'List all available Cockpit Tools accounts',
+          'switch <email>': 'Switch to a different account and sync to pi',
+          sync: 'Sync current Cockpit Tools account to pi auth.json',
+          provision: 'Provision ALL Cockpit Tools accounts into pi-account-switcher',
+          'provision-rotator': 'Provision ALL Cockpit Tools accounts into pi-antigravity-rotator',
+        },
+      }, null, 2));
+      break;
+  }
+})();
