@@ -208,3 +208,6 @@
 [submodule "docs/resources/Repositories-Skills/camofox"]
 	path = docs/resources/Repositories-Skills/camofox
 	url = https://github.com/jo-inc/camofox-browser.git
+[submodule "docs/resources/Repositories-Skills/gentleman-guardian-angel"]
+	path = docs/resources/Repositories-Skills/gentleman-guardian-angel
+	url = https://github.com/Gentleman-Programming/gentleman-guardian-angel.git

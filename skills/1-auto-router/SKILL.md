@@ -17,6 +17,15 @@ Before any step, execute the mandatory Self-Questioning (`Autoforzatura al Dialo
 `🧠 [SELF-QUESTION] "Quale strada di sviluppo o tool semantico devo usare ora per risolvere questo step col massimo rigore e qual è la condizione esatta per passare al loop successivo?"`
 </MANDATORY>
 
+
+## 0. MANDATORY PRE-FLIGHT CONSTRAINT: Platform Awareness
+Before executing ANY installation, script, or filesystem operation, you MUST explicitly detect the operating system (Windows, WSL, macOS, Linux). 
+- Use the `os-detect` skill.
+- NEVER assume bash is the default shell if running on native Windows (use PowerShell or explicitly call `bash` from Git Bash/WSL).
+- NEVER assume paths like `~/.local/bin` exist in Windows CMD without creating them.
+- Always conditionally branch your workflow execution based on the detected OS.
+
+
 ## 1. Semantic Intent Routing & Task Weight (MoE Gating v2)
 
 Before executing a task, DO NOT just match keywords. You must act as the **Semantic Orchestrator (Centralinista)**:
