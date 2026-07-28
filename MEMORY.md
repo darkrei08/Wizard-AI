@@ -20,3 +20,12 @@
 ## [Session State Snapshot] - 2026-07-27 00:30:18
 Autonomy enabled: auto-install/update wizard-ai. No prompts. Destructive actions excluded.
 
+
+## [Session State Snapshot] - 2026-07-28 13:21:50
+## Completamento Migrazione Architetturale & Release
+- **Completato**: Implementato standard ANR (AI-Native Repo Template) in ~/.wizard-ai/ (anonimizzato).
+- **Architettura**: Spostate le skill di riferimento (i-native-repo-template, older-structure-blueprint-generator, project-structure-enforcer) nei sottomoduli Git. Creato llms.txt per indicizzazione agenti.
+- **Ambiente**: Configurato scripts/agent-workspace/ per evitare inquinamento della root.
+- **Rilascio**: Creata release 0.52.52 su GitHub e NPM.
+- **Next Steps**: Eseguire enforcement delle regole di progetto sui file esistenti tramite script automatizzati nei prossimi task.
+
